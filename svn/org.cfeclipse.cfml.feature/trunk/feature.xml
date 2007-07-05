@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.cfeclipse.cfml.feature"
-      label="CFEclipse 1.3"
-      version="1.3"
-      provider-name="CFEclipse Crew"
-      os="aix,hpux,linux,macosx,qnx,solaris,win32"
-      arch="ia64,ia64_32,PA_RISC,ppc,sparc,x86,x86_64">
+      label="CFEclipse (including CFUnit and Frameworks)"
+      version="1.3.1.5"
+      provider-name="CFEclipse Project">
 
    <description url="http://www.cfeclipse.org">
       CFEclipse is a feature-rich CFML (ColdFusion Markup Language)
@@ -25,10 +23,10 @@ view, parses your code to find problems * And much more...
    </description>
 
    <copyright url="http://www.cfeclipse.org/copyright">
-      Copyright (c) 2004-2006 The CFEclipse Crew (http://cfeclipse.tigris.org)
+      Copyright (c) 2004-2007 The CFEclipse Crew (http://cfeclipse.tigris.org)
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
-&amp;quot;Software&amp;quot;), to deal in the Software without restriction,
+&amp;amp;quot;Software&amp;amp;quot;), to deal in the Software without restriction,
 including
 without limitation the rights to use, copy, modify, merge, publish,
 distribute, sublicense, and/or sell copies of the Software, and
@@ -36,7 +34,7 @@ to permit persons to whom the Software is furnished to do so,
 subject to the following conditions:
 The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED &amp;quot;AS IS&amp;quot;, WITHOUT WARRANTY
+THE SOFTWARE IS PROVIDED &amp;amp;quot;AS IS&amp;amp;quot;, WITHOUT WARRANTY
 OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -49,11 +47,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    <license url="http://www.eclipse.org/legal/epl-v10.html">
       Eclipse Public License - v 1.0
 THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS
-ECLIPSE PUBLIC LICENSE (&amp;quot;AGREEMENT&amp;quot;). ANY USE, REPRODUCTION
-OR DISTRIBUTION OF THE PROGRAM CONSTITUTES RECIPIENT&amp;apos;S ACCEPTANCE
+ECLIPSE PUBLIC LICENSE (&amp;amp;quot;AGREEMENT&amp;amp;quot;). ANY USE, REPRODUCTION
+OR DISTRIBUTION OF THE PROGRAM CONSTITUTES RECIPIENT&amp;amp;apos;S ACCEPTANCE
 OF THIS AGREEMENT.
 1. DEFINITIONS
-&amp;quot;Contribution&amp;quot; means:
+&amp;amp;quot;Contribution&amp;amp;quot; means:
 a) in the case of the initial Contributor, the initial code and
 documentation distributed under this Agreement, and
 b) in the case of each subsequent Contributor:
@@ -61,20 +59,20 @@ i) changes to the Program, and
 ii) additions to the Program;
 where such changes and/or additions to the Program originate
 from and are distributed by that particular Contributor. A Contribution
-&amp;apos;originates&amp;apos; from a Contributor if it was added to
+&amp;amp;apos;originates&amp;amp;apos; from a Contributor if it was added to
 the Program by such Contributor itself or anyone acting on such
-Contributor&amp;apos;s behalf. Contributions do not include additions
+Contributor&amp;amp;apos;s behalf. Contributions do not include additions
 to the Program which: (i) are separate modules of software distributed
 in conjunction with the Program under their own license agreement,
 and (ii) are not derivative works of the Program.
-&amp;quot;Contributor&amp;quot; means any person or entity that distributes
+&amp;amp;quot;Contributor&amp;amp;quot; means any person or entity that distributes
 the Program.
-&amp;quot;Licensed Patents &amp;quot; mean patent claims licensable by
+&amp;amp;quot;Licensed Patents &amp;amp;quot; mean patent claims licensable by
 a Contributor which are necessarily infringed by the use or sale
 of its Contribution alone or when combined with the Program.
-&amp;quot;Program&amp;quot; means the Contributions distributed in accordance
+&amp;amp;quot;Program&amp;amp;quot; means the Contributions distributed in accordance
 with this Agreement.
-&amp;quot;Recipient&amp;quot; means anyone who receives the Program under
+&amp;amp;quot;Recipient&amp;amp;quot; means anyone who receives the Program under
 this Agreement, including all Contributors.
 2. GRANT OF RIGHTS
 a) Subject to the terms of this Agreement, each Contributor hereby
@@ -105,7 +103,7 @@ to exercising the rights and licenses granted hereunder, each
 Recipient hereby assumes sole responsibility to secure any other
 intellectual property rights needed, if any. For example, if
 a third party patent license is required to allow Recipient to
-distribute the Program, it is Recipient&amp;apos;s responsibility
+distribute the Program, it is Recipient&amp;amp;apos;s responsibility
 to acquire that license before distributing the Program.
 d) Each Contributor represents that to its knowledge it has sufficient
 copyright rights in its Contribution, if any, to grant the copyright
@@ -148,9 +146,9 @@ the Program, the Contributor who includes the Program in a commercial
 product offering should do so in a manner which does not create
 potential liability for other Contributors. Therefore, if a Contributor
 includes the Program in a commercial product offering, such Contributor
-(&amp;quot;Commercial Contributor&amp;quot;) hereby agrees to defend
-and indemnify every other Contributor (&amp;quot;Indemnified Contributor&amp;quot;)
-against any losses, damages and costs (collectively &amp;quot;Losses&amp;quot;)
+(&amp;amp;quot;Commercial Contributor&amp;amp;quot;) hereby agrees to defend
+and indemnify every other Contributor (&amp;amp;quot;Indemnified Contributor&amp;amp;quot;)
+against any losses, damages and costs (collectively &amp;amp;quot;Losses&amp;amp;quot;)
 arising from claims, lawsuits and other legal actions brought
 by a third party against the Indemnified Contributor to the extent
 caused by the acts or omissions of such Commercial Contributor
@@ -167,7 +165,7 @@ For example, a Contributor might include the Program in a commercial
 product offering, Product X. That Contributor is then a Commercial
 Contributor. If that Commercial Contributor then makes performance
 claims, or offers warranties related to Product X, those performance
-claims and warranties are such Commercial Contributor&amp;apos;s
+claims and warranties are such Commercial Contributor&amp;amp;apos;s
 responsibility alone. Under this section, the Commercial Contributor
 would have to defend claims against the other Contributors related
 to those performance claims and warranties, and if a court requires
@@ -175,7 +173,7 @@ any other Contributor to pay any damages as a result, the Commercial
 Contributor must pay those damages.
 5. NO WARRANTY
 EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, THE PROGRAM
-IS PROVIDED ON AN &amp;quot;AS IS&amp;quot; BASIS, WITHOUT WARRANTIES
+IS PROVIDED ON AN &amp;amp;quot;AS IS&amp;amp;quot; BASIS, WITHOUT WARRANTIES
 OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED INCLUDING,
 WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF TITLE, NON-INFRINGEMENT,
 MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Each Recipient
@@ -205,16 +203,16 @@ valid and enforceable.
 If Recipient institutes patent litigation against any entity
 (including a cross-claim or counterclaim in a lawsuit) alleging
 that the Program itself (excluding combinations of the Program
-with other software or hardware) infringes such Recipient&amp;apos;s
-patent(s), then such Recipient&amp;apos;s rights granted under Section
+with other software or hardware) infringes such Recipient&amp;amp;apos;s
+patent(s), then such Recipient&amp;amp;apos;s rights granted under Section
 2(b) shall terminate as of the date such litigation is filed.
-All Recipient&amp;apos;s rights under this Agreement shall terminate
+All Recipient&amp;amp;apos;s rights under this Agreement shall terminate
 if it fails to comply with any of the material terms or conditions
 of this Agreement and does not cure such failure in a reasonable
 period of time after becoming aware of such noncompliance. If
-all Recipient&amp;apos;s rights under this Agreement terminate, Recipient
+all Recipient&amp;amp;apos;s rights under this Agreement terminate, Recipient
 agrees to cease use and distribution of the Program as soon as
-reasonably practicable. However, Recipient&amp;apos;s obligations
+reasonably practicable. However, Recipient&amp;amp;apos;s obligations
 under this Agreement and any licenses granted by Recipient relating
 to the Program shall continue and survive.
 Everyone is permitted to copy and distribute copies of this Agreement,
@@ -246,9 +244,21 @@ litigation.
    </license>
 
    <url>
-      <update label="CFEclipse Update" url="http://www.cfeclipse.org/update/"/>
-      <discovery label="CFEclipse" url="http://www.cfeclipse.org/update/"/>
+      <update label="CFEclipse Update Site" url="http://www.cfeclipse.org/update"/>
    </url>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.ui.browser"/>
+      <import plugin="org.cfeclipse.cfml"/>
+   </requires>
 
    <plugin
          id="org.cfeclipse.cfml"
@@ -262,5 +272,11 @@ litigation.
          install-size="0"
          version="0.0.0"
          fragment="true"/>
+
+   <plugin
+         id="org.cfeclipse.cfml.frameworks"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>
