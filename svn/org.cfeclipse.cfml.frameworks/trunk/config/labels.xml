@@ -179,4 +179,21 @@ Created on Mar 27, 2007 by markdrew
 		<node name="maxobjects" 					parent="cache" image="maxobjects.png" text="Maximum Objects"></node>
 		<node name="freememorypercentagethreshold" 	parent="cache" image="freememory.png" text="Free JVM Memory Percentage"></node>
 	</framework>
+	
+	<framework id="framework_lcds">
+		<node name="framework_lcds" />
+		<node name="service" text="Data management Config"/>
+		<node name="destination" text="Destination : {id}"/>
+		<node name="identity" text="Identity:{property}"/>
+		<node name="one-to-one" text="One-to-One:{property} ({destination})"/>
+		<node name="one-to-many" text="One-to-Many:{property} ({destination})"/>
+		<node name="many-to-one" text="Many-to-One:{property} ({destination})"/>
+		<node name="many-to-many" text="Many-to-Many:{property} ({destination})"/>
+		<node name="paging" text="Paging:{enabled}"/>
+		<node name="reconnect" text="Reconnect Policy : {fetch}"/>
+		<node name="cluster" text="Cluster ({ref})"/>
+		<node name="throttle-inbound" text="Inbond msg/sec {max-frequency} ({policy})"/>
+		<node name="throttle-outbound" text="Outbond msg/sec {max-frequency} ({policy})"/>
+	
+	</framework>
 </labels>

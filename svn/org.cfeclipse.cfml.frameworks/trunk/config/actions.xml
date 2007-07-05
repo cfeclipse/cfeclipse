@@ -241,4 +241,160 @@
 		]]>
 	</action>
 	
+		<action framework="framework_lcds" node="service" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Destination" type="right_click">	
+		<![CDATA[
+			<destination id="$${name}">
+				<adapter ref="coldfusion-dao"/>
+     				<channels>
+            				<channel ref="cf-rtmp"/>
+            				<channel ref="cf-polling-amf"/>
+     				</channels>
+				<properties>
+         				<component>$${component}</component>
+         				<scope>$${scope:application|request}</scope>
+         				<metadata>
+						<identity property="$${primary key}"/>
+					</metadata>
+     				</properties>
+			</destination>
+		]]>
+	</action>
+	
+
+	<action framework="framework_lcds" node="properties" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add HostName" type="right_click">	
+		<![CDATA[
+				<hostname>$${host}<hostname/>
+		]]>
+	</action>
+	<action framework="framework_lcds" node="properties" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Identity" type="right_click">	
+		<![CDATA[
+				<identity>$${server identity}<identity/>
+		]]>
+	</action>	
+	<action framework="framework_lcds" node="properties" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Use accessors" type="right_click">	
+		<![CDATA[
+				<use-accessors>$${use get/set:true|false}</use-accessors>
+		]]>
+	</action>
+	<action framework="framework_lcds" node="properties" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Object Type (CFC/Structs)" type="right_click">	
+		<![CDATA[
+				<use-structs>$${use structs:false|true}</use-structs>
+		]]>
+	</action>
+
+	<action framework="framework_lcds" node="properties" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Method Access Type" type="right_click">	
+		<![CDATA[
+                		<access>
+                			<method-access-level>$${access:remote|public}</method-access-level>
+                		</access>	
+		]]>
+	</action>	
+
+	<action framework="framework_lcds" node="properties" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Fill Method options" type="right_click">	
+		<![CDATA[
+ 				<server>
+ 					<fill-method>
+                  				<use-fill-contains>$${use fill-contains :false|true}</use-fill-contains>            
+                  				<auto-refresh>$${auto refresh:true|false}</auto-refresh>
+                  				<ordered>$${ ordered :false|true}</ordered>
+            				</fill-method>
+            			</server>
+		]]>
+	</action>	
+
+	<action framework="framework_lcds" node="properties" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Property Case" type="right_click">	
+		<![CDATA[
+             			<property-case>
+                 			<force-cfc-lowercase>$${cfc lowercase:false|true}</force-cfc-lowercase>
+				        <force-query-lowercase>$${query lowercase:false|true}</force-query-lowercase>
+ 					<force-struct-lowercase>$${struct lowercase:false|true}</force-struct-lowercase>
+            			</property-case>
+		]]>
+	</action>
+	<action framework="framework_lcds" node="properties" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="NetWork configuration" type="right_click">	
+		<![CDATA[
+             			<network/>
+		]]>
+	</action>
+
+	
+	<action framework="framework_lcds" node="metadata" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Identity" type="right_click">	
+		<![CDATA[
+				<identity property="$${primary key}"/>
+		]]>
+	</action>
+	
+	<!--<action framework="framework_lcds" node="metadata" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Relationship" type="right_click">	
+		<![CDATA[
+				<$${ type:one-to-one|one-to-many|many-to-one|many-to-many} property="$${property}" destination="$${destination :xpath("/root/framework_root/framework_lcds/service/destination/@id","|")}" lazy="$${lazy: true|false}" />
+		]]>
+	</action>-->
+	
+	<action framework="framework_lcds" node="metadata" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add One-to-One" type="right_click">	
+		<![CDATA[
+				<one-to-one property="$${property}" destination="$${destination :xpath("/root/framework_root/framework_lcds/service/destination/@id","|")}" lazy="$${lazy:true|false}" />
+		]]>
+	</action>	
+	
+	<action framework="framework_lcds" node="metadata" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add One-to-Many" type="right_click">	
+		<![CDATA[
+				<one-to-many property="$${property}" destination="$${destination :xpath("/root/framework_root/framework_lcds/service/destination/@id","|")}" lazy="$${lazy:true|false}" />
+		]]>
+	</action>
+
+	<action framework="framework_lcds" node="metadata" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Many-to-One" type="right_click">	
+		<![CDATA[
+				<many-to-one property="$${property}" destination="$${destination :xpath("/root/framework_root/framework_lcds/service/destination/@id","|")}" lazy="$${lazy:true|false}" />
+		]]>
+	</action>
+	<action framework="framework_lcds" node="metadata" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Add Many-to-Many" type="right_click">	
+		<![CDATA[
+				<many-to-many property="$${property}" destination="$${destination :xpath("/root/framework_root/framework_lcds/service/destination/@id","|")}" lazy="$${lazy:true|false}" />
+		]]>
+	</action>
+	
+	<action framework="framework_lcds" node="metadata" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Query Row Type" type="right_click">	
+		<![CDATA[
+				<CFQueryRowType>$${row type}</CFQueryRowType>
+		]]>
+	</action>	
+	
+
+	<action framework="framework_lcds" node="network" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Subscription Timeout" type="right_click">	
+		<![CDATA[
+				<subscription-timeout-minutes>$${timeout}</subscription-timeout-minutes>
+		]]>
+	</action>		
+	
+	<action framework="framework_lcds" node="network" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Paging" type="right_click">	
+		<![CDATA[
+				<paging enabled="$${enabled:true|false}" pageSize="$${size}"/>
+		]]>
+	</action>		
+	<action framework="framework_lcds" node="network" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Throttle Inbond" type="right_click">	
+		<![CDATA[
+				<throttle-inbound policy="$${inbond policy:ERROR|IGNORE}" max-frequency="$${inbond frequency:0}"/>
+		]]>
+	</action>
+	<action framework="framework_lcds" node="network" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Throttle Outbond" type="right_click">	
+		<![CDATA[
+        			<throttle-outbound policy="$${outbond policy:ERROR|IGNORE|REPLACE}" max-frequency="$${outbond frequency:0}"/>
+		]]>
+	</action>	
+	<action framework="framework_lcds" node="network" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Configure Cluster" type="right_click">	
+		<![CDATA[
+				<cluster ref="$${cluster}" />
+		]]>
+	</action>	
+	
+	<action framework="framework_lcds" node="network" class="org.cfeclipse.cfml.frameworks.actions.AddChild" label="Reconnect Polity" type="right_click">	
+		<![CDATA[
+				<reconnect fetch="$${policy:INSTANCE|IDENTITY}" />
+		]]>
+	</action>
+	
+	
+	
+    
+	
 </actions>

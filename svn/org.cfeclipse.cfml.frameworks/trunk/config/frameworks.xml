@@ -106,4 +106,16 @@ Created on Mar 27, 2007 by markdrew
 		</files>
 		<ignore node="config"/>
 	</framework>
+	
+		<framework name="LCDS" id="framework_lcds">
+		<files>
+			<file>data-management-config.xml</file>
+		</files>
+		<ignore node="adapters"/>
+		<ignore node="adapter"/>
+		<ignore node="channels"/>
+		<ignore node="channel"/>
+		<ignore node="adapter-definition"/>
+	</framework>
+	
 </frameworks>
