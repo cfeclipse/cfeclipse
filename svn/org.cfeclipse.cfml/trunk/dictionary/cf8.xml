@@ -6815,8 +6815,8 @@ cflayoutarea tag style attributes.
 			]]></help>
 					<values default="top">
 						<value option="top"/>
-						<value option="bottom"/
-					</value>
+						<value option="bottom"/>
+					</values>
 				</parameter>	
 			
 			
