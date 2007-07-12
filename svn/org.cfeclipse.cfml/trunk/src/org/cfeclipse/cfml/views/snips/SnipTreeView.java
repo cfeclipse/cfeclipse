@@ -37,6 +37,7 @@ import org.cfeclipse.cfml.preferences.SnipExPreferenceConstants;
 import org.cfeclipse.cfml.preferences.SnipExPreferencePage;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.wizards.snipex.SnippetToSnipExWizard;
+import org.eclipse.core.internal.resources.Folder;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -53,6 +54,7 @@ import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -123,6 +125,7 @@ public class SnipTreeView extends ViewPart
 	
 	protected Action insertAction, createFolderAction, createSnippetAction, editSnippetAction, refreshSnippetsAction, deleteSnippetAction, deleteFolderAction;
 	
+	protected Action refreshSnipEx;
 	protected Action exportToSnipEx;
 	protected Action openSnipExPage;
 	
@@ -389,6 +392,12 @@ public class SnipTreeView extends ViewPart
 			
 		};
 		
+		refreshSnipEx = new Action("Refresh SnipEx Server", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REFRESH)){
+			public void run(){
+				
+				System.out.println("Refreshing the snipex server");
+			}
+		};
 		
 		
 		insertAction = new Action(
@@ -542,7 +551,6 @@ public class SnipTreeView extends ViewPart
 			mgr.add(exportToSnipEx);
 		}
 		
-		//TODO: Add the import action here
 		
 		mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 		//mgr.add(deleteItemAction);
@@ -663,6 +671,29 @@ public class SnipTreeView extends ViewPart
 
 	
 	protected void reloadSnippets() {
+		
+		//Display a delete cache dialog
+		MessageBox warndialog = new MessageBox(this.getViewSite().getShell(),SWT.ICON_WARNING | SWT.YES | SWT.NO);
+		warndialog.setMessage("Also delete SnipEx cached snippets?");
+		
+		        int response = warndialog.open();
+		        
+		        
+		        if (response == SWT.YES){
+					String dir = CFMLPlugin.getDefault().getStateLocation().toString()+"/snipex";
+					File cacheFolder = new File(dir);
+					if(cacheFolder.exists() && cacheFolder.isDirectory()){
+							String[] list = cacheFolder.list();
+							for (int i = 0; i < list.length; i++) {
+								File cacheFile = new File(dir + File.separatorChar +  list[i]);
+									boolean delete = cacheFile.delete();
+								System.out.println("deleting " + cacheFile + " " + delete);
+								
+							}
+							
+					}
+				}
+		
 		treeViewer.setInput(getRootInput());		
 	}
 	
