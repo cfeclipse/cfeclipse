@@ -55,6 +55,11 @@ public class NewFileAction implements IEditorActionDelegate, IWorkbenchWindowAct
      * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#init(org.eclipse.ui.IWorkbenchWindow)
      */
     public void init(IWorkbenchWindow window) {
+    	IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
 
     }
     	protected ITextEditor editor = null;

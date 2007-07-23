@@ -168,27 +168,49 @@
       <editorContribution
             targetID="org.cfeclipse.cfml.editors.CFMLEditor"
             id="org.cfeclipse.cfml.editors.CFMLEditorActions">
+        
+         
          <menu
-               label="%menu.label.CFML"
-               path="window"
-               id="org.cfeclipse.cfml.cfmlmenu">
-            <separator
-                  name="maingroup">
-            </separator>
-            <separator
-                  name="output">
-            </separator>
+               id="org.cfeclipse.cfml.menus.source"
+               label="&amp;Source"
+               path="window">
+             <groupMarker
+                   name="output">
+             </groupMarker>
+             <separator
+                   name="insert">
+             </separator>
+             <groupMarker
+                   name="insert">
+             </groupMarker>
+             <separator
+                   name="format">
+             </separator>
+             <groupMarker
+                   name="format">
+             </groupMarker>
+         </menu> 
+         
+         <menu
+               id="org.cfeclipse.cfml.menus.browse"
+               label="&amp;Browse"
+               path="window">
+            <groupMarker
+                  name="browse">
+            </groupMarker>
          </menu>
-        <!-- Word Wrap -->
+      
+                 
+          <!-- Word Wrap -->
         <action
-               class="org.cfeclipse.cfml.editors.actions.WordWrapAction"
-               icon="icons/ctool16/wordwrap.gif"
-               id="org.cfeclipse.cfml.editors.actions.wordWrapAction"
-               label="%action.label.WordWrap"
-               state="false"
-               style="toggle"
-               toolbarPath="BasicCFEditorText"
-               tooltip="%action.tooltip.WordWrap"/>
+              class="org.cfeclipse.cfml.editors.actions.WordWrapAction"
+              icon="icons/ctool16/wordwrap.gif"
+              id="org.cfeclipse.cfml.editors.actions.wordWrapAction"
+              label="%action.label.WordWrap"
+              menubarPath="org.cfeclipse.cfml.menus.source/source"
+              state="false"
+              style="toggle"
+              tooltip="%action.tooltip.WordWrap"/>
 		<!-- cfcomment -->
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.CFComment"
@@ -196,8 +218,7 @@
                icon="icons/ctool16/comment.gif"
                tooltip="%action.tooltip.Comment"
                class="org.cfeclipse.cfml.editors.actions.CFCommentAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
-               toolbarPath="BasicCFEditorText"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.CFCommentAction">
          </action>
 		<!-- smart comment -->
@@ -207,8 +228,7 @@
                icon="icons/ctool16/smartcomment.gif"
                tooltip="%action.tooltip.AutoComment"
                class="org.cfeclipse.cfml.editors.actions.AutoCommentAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
-               toolbarPath="BasicCFEditorText"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.AutoCommentAction">
          </action>
 		<!-- Surround with #s -->
@@ -218,8 +238,7 @@
                icon="icons/ctool16/hash.gif"
                tooltip="%action.tooltip.Variable"
                class="org.cfeclipse.cfml.editors.actions.CFVariableAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
-               toolbarPath="BasicCFEditorText"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.CFVariableAction">
          </action>
 		<!-- Surround with single quotes -->
@@ -229,8 +248,7 @@
                icon="icons/ctool16/squote.gif"
                tooltip="%action.tooltip.SingleQuotes"
                class="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
-               toolbarPath="BasicCFEditorText"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction">
          </action>
 		<!-- Surround with double quotes -->
@@ -240,8 +258,7 @@
                icon="icons/ctool16/dquote.gif"
                tooltip="%action.tooltip.DoubleQuotes"
                class="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
-               toolbarPath="BasicCFEditorText"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction">
          </action>
 		<!-- Surround with simple cfoutputs -->
@@ -251,8 +268,7 @@
                icon="icons/ctool16/output.gif"
                tooltip="%action.tooltip.CFOutput"
                class="org.cfeclipse.cfml.editors.actions.CFOutputAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
-               toolbarPath="BasicCFEditorCommand"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.CFOutputAction">
          </action>
 		<!-- Surround with a simple cfdump -->
@@ -262,8 +278,7 @@
                icon="icons/ctool16/dump.gif"
                tooltip="%action.tooltip.CFDump"
                class="org.cfeclipse.cfml.editors.actions.CFDumpAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
-               toolbarPath="BasicCFEditorCommand"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.CFDumpAction">
          </action>
 		<!-- Surround with a cfscript -->
@@ -273,17 +288,16 @@
                icon="icons/ctool16/stop.gif"
                id="org.cfeclipse.cfml.editors.actions.CFAbortAction"
                label="%action.label.CFAbort"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
-               toolbarPath="BasicCFEditorCommand"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
                tooltip="%action.tooltip.CFAbort"/>
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.CFScript"
-               label="%action.label.CFScript"
-               icon="icons/ctool16/script.gif"
-               tooltip="%action.tooltip.CFScript"
                class="org.cfeclipse.cfml.editors.actions.CFScriptAction"
-               toolbarPath="BasicCFEditorCommand"
-               id="org.cfeclipse.cfml.editors.actions.CFScriptAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.CFScript"
+               icon="icons/ctool16/script.gif"
+               id="org.cfeclipse.cfml.editors.actions.CFScriptAction"
+               label="%action.label.CFScript"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
+               tooltip="%action.tooltip.CFScript">
          </action>
 		<!-- to lower case -->
          <action
@@ -292,8 +306,7 @@
                icon="icons/ctool16/tolower.gif"
                tooltip="%action.tooltip.ToLower"
                class="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
-               toolbarPath="BasicCFEditorText"
+               menubarPath="edit/additions"
                id="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction">
          </action>
 		<!-- to upper case -->
@@ -303,45 +316,46 @@
                icon="icons/ctool16/toupper.gif"
                tooltip="%action.tooltip.ToUpper"
                class="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
-               toolbarPath="BasicCFEditorText"
+               menubarPath="edit/additions"
                id="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction">
          </action>
 		<!-- insert date -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.InsertDate"
-               label="%action.label.InsertDate"
-               icon="icons/ctool16/time.gif"
-               tooltip="%action.tooltip.InsertDate"
                class="org.cfeclipse.cfml.editors.actions.InsertDateAction"
-               toolbarPath="BasicCFEditorCommand"
-               id="org.cfeclipse.cfml.editors.actions.InsertDateAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertDate"
+               icon="icons/ctool16/time.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertDateAction"
+               label="%action.label.InsertDate"
+               menubarPath="org.cfeclipse.cfml.menus.source/insert"
+               tooltip="%action.tooltip.InsertDate">
          </action>
          <!-- insert color -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.InsertColor"
-               label="%action.label.InsertColor"
-     		   icon="icons/ctool16/palette.gif"
-               tooltip="%action.tooltip.InsertColor"
                class="org.cfeclipse.cfml.editors.actions.InsertColorAction"
-               toolbarPath="BasicCFEditorCommand"
-               id="org.cfeclipse.cfml.editors.actions.InsertColorAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertColor"
+               icon="icons/ctool16/palette.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertColorAction"
+               label="%action.label.InsertColor"
+               menubarPath="org.cfeclipse.cfml.menus.source/insert"
+               tooltip="%action.tooltip.InsertColor">
          </action>
          <!-- insert an html br action (for Brian Sadler) -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.InsertBR"
-               label="%action.label.InsertBR"
-               tooltip="%action.tooltip.InsertBR"
                class="org.cfeclipse.cfml.editors.actions.InsertBRAction"
-               id="org.cfeclipse.cfml.editors.actions.InsertBRAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertBR"
+               id="org.cfeclipse.cfml.editors.actions.InsertBRAction"
+               label="%action.label.InsertBR"
+               menubarPath="org.cfeclipse.cfml.menus.source/insert"
+               tooltip="%action.tooltip.InsertBR">
          </action>
          <!-- insert an html nbsp action (for Michael Wolfe) -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.InsertNBSP"
-               label="%action.label.InsertEntity"
-               tooltip="%action.tooltip.InsertEntity"
                class="org.cfeclipse.cfml.editors.actions.InsertNBSPAction"
-               id="org.cfeclipse.cfml.editors.actions.InsertNBSPAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertNBSP"
+               id="org.cfeclipse.cfml.editors.actions.InsertNBSPAction"
+               label="%action.label.InsertEntity"
+               menubarPath="org.cfeclipse.cfml.menus.source/insert"
+               tooltip="%action.tooltip.InsertEntity">
          </action>
          <!-- insert an html strong tag action (for Michael Wolfe) -->
          <action
@@ -350,7 +364,7 @@
 			   icon="icons/ctool16/bold.gif"
                tooltip="%action.tooltip.InsertStrong"
                class="org.cfeclipse.cfml.editors.actions.StrongTagAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
+               menubarPath="org.cfeclipse.cfml.menus.source/insert"
                id="org.cfeclipse.cfml.editors.actions.StrongTagAction">
          </action>
          <!-- insert an html em tag action (for Michael Wolfe) -->
@@ -360,7 +374,7 @@
 			   icon="icons/ctool16/italic.gif"
                tooltip="%action.tooltip.InsertEm"
                class="org.cfeclipse.cfml.editors.actions.EmTagAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
+               menubarPath="org.cfeclipse.cfml.menus.source/insert"
                id="org.cfeclipse.cfml.editors.actions.EmTagAction">
          </action>
          <!-- insert an html p tag action (for Michael Wolfe) -->
@@ -370,7 +384,7 @@
 			   icon="icons/ctool16/paragraph.gif"
                tooltip="%action.tooltip.InsertP"
                class="org.cfeclipse.cfml.editors.actions.PTagAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
+               menubarPath="org.cfeclipse.cfml.menus.source/insert"
                id="org.cfeclipse.cfml.editors.actions.PTagAction">
          </action>
          <!-- repeat last tag (for Brian Sadler) -->
@@ -380,8 +394,7 @@
      		   icon="icons/ctool16/repeattag.gif"
                tooltip="%action.tooltip.RepeatLastTag"
                class="org.cfeclipse.cfml.editors.actions.LastActionAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
-               toolbarPath="BasicCFEditorCommand"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.LastActionAction">
          </action>
          <!-- jump to matching tag -->
@@ -389,183 +402,175 @@
                definitionId="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction"
                label="%action.label.JumpToMatchingTag"
                class="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/output"
+               menubarPath="navigate/additions"
                id="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction">
          </action>
          <!-- Trim trailing spaces from lines -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.RTrim"
-               label="%action.label.TrimSpaces"
-               tooltip="%action.tooltip.TrimSpaces"
                class="org.cfeclipse.cfml.editors.actions.RTrimAction"
-               id="org.cfeclipse.cfml.editors.actions.RTrimAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.RTrim"
+               id="org.cfeclipse.cfml.editors.actions.RTrimAction"
+               label="%action.label.TrimSpaces"
+               menubarPath="edit/additions"
+               tooltip="%action.tooltip.TrimSpaces">
          </action>
          <!-- Fold the selected text -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection"
-               label="%action.label.AddFoldingMarkers"
-               tooltip="%action.tooltip.AddFoldingMarkers"
                class="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelectionAction"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection">
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection"
+               id="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection"
+               label="%action.label.AddFoldingMarkers"
+               menubarPath="org.cfeclipse.cfml.menus.source/format"
+               tooltip="%action.tooltip.AddFoldingMarkers">
          </action>
          <!-- Remove folding markers from the selected text -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection"
-               label="%action.label.ClearFoldingMarkers"
-               tooltip="%action.tooltip.ClearFoldingMarkers"
                class="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelectionAction"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection">
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection"
+               id="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection"
+               label="%action.label.ClearFoldingMarkers"
+               menubarPath="org.cfeclipse.cfml.menus.source/format"
+               tooltip="%action.tooltip.ClearFoldingMarkers">
          </action>
          <!-- Collapse the selected text -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"
-               label="%action.label.CollapseText"
-               tooltip="%action.tooltip.CollapseText"
                class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelectionAction"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection">
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"
+               id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"
+               label="%action.label.CollapseText"
+               menubarPath="org.cfeclipse.cfml.menus.source/format"
+               tooltip="%action.tooltip.CollapseText">
          </action>
          <!-- Expand the selected text -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"
-               label="%action.label.ExpandSelected"
-               tooltip="%action.tooltip.ExpandSelected"
                class="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelectionAction"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection">
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"
+               id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"
+               label="%action.label.ExpandSelected"
+               menubarPath="org.cfeclipse.cfml.menus.source/format"
+               tooltip="%action.tooltip.ExpandSelected">
          </action>
          <!-- Expand all markers -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkers"
-               label="%action.label.ExpandAll"
-               tooltip="%action.tooltip.ExpandAll"
                class="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkersAction"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkers">
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkers"
+               id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkers"
+               label="%action.label.ExpandAll"
+               menubarPath="org.cfeclipse.cfml.menus.source/format"
+               tooltip="%action.tooltip.ExpandAll">
          </action>
          <!-- Collapse all markers -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkers"
-               label="%action.label.CollapseAll"
-               tooltip="%action.tooltip.CollapseAll"
                class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkersAction"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkers">
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkers"
+               id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkers"
+               label="%action.label.CollapseAll"
+               menubarPath="org.cfeclipse.cfml.menus.source/format"
+               tooltip="%action.tooltip.CollapseAll">
          </action>
          <!-- Expand matching markers -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
-               label="%action.label.ExpandMatching"
-               tooltip="%action.tooltip.ExpandMatching"
                class="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkersAction"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers">
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
+               id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
+               label="%action.label.ExpandMatching"
+               menubarPath="org.cfeclipse.cfml.menus.source/format"
+               tooltip="%action.tooltip.ExpandMatching">
          </action>
          <!-- Collapse matching markers -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
-               label="%action.label.CollapseMatching"
-               tooltip="%action.tooltip.CollapseMatching"
                class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkersAction"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
+               id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
+               label="%action.label.CollapseMatching"
+               menubarPath="org.cfeclipse.cfml.menus.source/format"
+               tooltip="%action.tooltip.CollapseMatching">
          </action>
          <!-- Toggle the expand/collapse state of the selected text -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"
-               label="%action.label.ExpandCollapse"
-               tooltip="%action.tooltip.ExpandCollapse"
                class="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelectionAction"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection">
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"
+               id="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"
+               label="%action.label.ExpandCollapse"
+               menubarPath="org.cfeclipse.cfml.menus.source/format"
+               tooltip="%action.tooltip.ExpandCollapse">
          </action>
          <!-- Reload the syntax dictionaries -->
          <action
-               toolbarPath="BasicCFEditorCommand"
                label="%action.label.ReloadDic"
                icon="icons/ctool16/dictsearch.gif"
                class="org.cfeclipse.cfml.editors.actions.ReloadDictionariesAction"
                tooltip="%action.tooltip.ReloadDic"
                definitionId="org.cfeclipse.cfml.editors.actions.ReloadDictionaries"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
+               menubarPath="file/additions"
                id="org.cfeclipse.cfml.editors.actions.ReloadDictionariesAction">
          </action>
 
          <!-- refresh the browser view action -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.RefreshBrowser"
-               label="%action.label.Refresh"
-               icon="icons/ctool16/refresh.gif"
-               tooltip="%action.tooltip.Refresh"
                class="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction"
-               toolbarPath="BasicCFEditorCommand"
-               id="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.RefreshBrowser"
+               icon="icons/ctool16/refresh.gif"
+               id="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction"
+               label="%action.label.Refresh"
+               menubarPath="org.cfeclipse.cfml.menus.browse/browse"
+               tooltip="%action.tooltip.Refresh">
          </action>
-         <!-- browse to root project URL action -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"
-               label="%action.label.BrowsetoRoot"
-               icon="icons/ctool16/home.gif"
-               tooltip="%action.tooltip.BrowsetoRoot"
-               class="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction"
-               toolbarPath="BasicCFEditorCommand"
-               id="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction">
-         </action>
-         <!-- browse to current page action -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"
-               label="%action.label.BrowseToCurrent"
-               icon="icons/ctool16/globe.gif"
-               tooltip="%action.tooltip.BrowseToCurrent"
-               class="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction"
-               toolbarPath="BasicCFEditorCommand"
-               id="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction">
-         </action>
+       
+        
          <!-- insert snippet action -->
          <action
-               toolbarPath="BasicCFEditorCommand"
-               label="%action.label.InsertSnippet"
                class="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
-               tooltip="%action.tooltip.InsertSnippet"
-               icon="icons/ctool16/insertsnip.gif"
                definitionId="org.cfeclipse.cfml.editors.actions.InsertSnippet"
-               id="org.cfeclipse.cfml.editors.actions.InsertSnippetAction">
+               icon="icons/ctool16/insertsnip.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
+               label="%action.label.InsertSnippet"
+               menubarPath="org.cfeclipse.cfml.menus.source/insert"
+               tooltip="%action.tooltip.InsertSnippet">
          </action>
           <!-- Get Online Help by Mark Drew aged 30 -->
          <action
-         	   toolbarPath="BasicCFEditorCommand"
-               definitionId="org.cfeclipse.cfml.editors.actions.GetHelp"
-               label="%action.label.GetTagHelp"
-               icon="icons/ctool16/help.gif"
-               tooltip="%action.tooltip.GetTagHelp"
                class="org.cfeclipse.cfml.editors.actions.GetHelpAction"
-               id="org.cfeclipse.cfml.editors.actions.GetHelpAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.GetHelp"
+               icon="icons/ctool16/help.gif"
+               id="org.cfeclipse.cfml.editors.actions.GetHelpAction"
+               label="%action.label.GetTagHelp"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
+               tooltip="%action.tooltip.GetTagHelp">
          </action>
           <!-- Launch Scribble Pad -->
          <action
-         	   toolbarPath="BasicCFEditorCommand"
-               definitionId="org.cfeclipse.cfml.editors.actions.LoadScribblePad"
-               label="%action.label.LoadScribble"
-               icon="icons/ctool16/scribble.gif"
-               tooltip="%action.tooltip.LoadScribble"
                class="org.cfeclipse.cfml.editors.actions.LoadScribblePadAction"
-               id="org.cfeclipse.cfml.editors.actions.LoadScribbleAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.LoadScribblePad"
+               icon="icons/ctool16/scribble.gif"
+               id="org.cfeclipse.cfml.editors.actions.LoadScribbleAction"
+               label="%action.label.LoadScribble"
+               menubarPath="navigate/additions"
+               tooltip="%action.tooltip.LoadScribble">
          </action>
           <!-- Locate in project tree -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.LocateInTreeAction"
-               label="%action.label.LocateInNavigator"
-               tooltip="%action.tooltip.LocateInNavigator"
                class="org.cfeclipse.cfml.editors.actions.LocateInTreeAction"
-               id="org.cfeclipse.cfml.editors.actions.LocateInTreeAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.LocateInTreeAction"
+               id="org.cfeclipse.cfml.editors.actions.LocateInTreeAction"
+               label="%action.label.LocateInNavigator"
+               menubarPath="navigate/additions"
+               tooltip="%action.tooltip.LocateInNavigator">
          </action>
           <!-- Locate in file system -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction"
-               label="%action.label.LocateInExplorer"
-               tooltip="%action.tooltip.LocateInExplorer"
                class="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction"
-               id="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction"
+               id="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction"
+               label="%action.label.LocateInExplorer"
+               menubarPath="navigate/additions"
+               tooltip="%action.tooltip.LocateInExplorer">
          </action>
          
          
 		<!-- external browser -->
  		<action
-               toolbarPath="BasicCFEditorCommand"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
+               menubarPath="org.cfeclipse.cfml.menus.browse/browse"
                label="Browse in secondary browser"
                class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
                tooltip="%action.tooltip.Browse"
@@ -574,8 +579,7 @@
                definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
          </action>
          <action
-               toolbarPath="BasicCFEditorCommand"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
+               menubarPath="org.cfeclipse.cfml.menus.browse/browse"
                label="%action.label.Browse"
                class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
                tooltip="%action.tooltip.Browse"
@@ -583,17 +587,35 @@
                id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
                definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID">
          </action>
-
-		<!-- open in secondary external browser -->
+		 <!-- browse to current page action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"
+               icon="icons/ctool16/globe.gif"
+               id="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction"
+               label="%action.label.BrowseToCurrent"
+               menubarPath="org.cfeclipse.cfml.menus.browse/browse"
+               tooltip="%action.tooltip.BrowseToCurrent">
+         </action>
+			  <!-- browse to root project URL action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"
+               icon="icons/ctool16/home.gif"
+               id="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction"
+               label="%action.label.BrowsetoRoot"
+               menubarPath="org.cfeclipse.cfml.menus.browse/browse"
+               tooltip="%action.tooltip.BrowsetoRoot">
+         </action>
           <!-- Launch new file dialog -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
-               label="%action.label.CreateNewFile"
-               icon="icons/obj16/new.gif"
-               tooltip="%action.tooltip.CreateNewFile"
-               toolbarPath="CFEditorResourceCommand"
                class="org.cfeclipse.cfml.editors.actions.NewFileAction"
-               id="org.cfeclipse.cfml.editors.actions.NewFileAction">
+               definitionId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
+               icon="icons/obj16/new.gif"
+               id="org.cfeclipse.cfml.editors.actions.NewFileAction"
+               label="%action.label.CreateNewFile"
+               menubarPath="file/additions"
+               tooltip="%action.tooltip.CreateNewFile">
          </action>
 		 <!-- Edit Tag Action -->
          <action
@@ -602,8 +624,7 @@
                icon="icons/obj16/default.gif"
                id="org.cfeclipse.cfml.editors.actions.EditTagAction"
                label="%action.label.EditTagAction"
-               menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
-               toolbarPath="CFEditorResourceCommand"
+               menubarPath="org.cfeclipse.cfml.menus.source/"
                tooltip="%action.tooltip.EditTagAction">
          </action>
          <action
@@ -612,14 +633,8 @@
                icon="icons/obj16/default.gif"
                id="org.cfeclipse.cfml.editors.actions.GotoFileAction"
                label="%action.label.GotoFileAction"
-              
-               >
-               <!-- menubarPath="org.cfeclipse.cfml.cfmlmenu/maingroup"
-               toolbarPath="CFEditorResourceCommand"
-               tooltip="%action.tooltip.EditTagAction"
-               -->
+               menubarPath="navigate/additions">
          </action>
-         
          <!--
          <menu
                id="org.cfeclipse.cfml.cfcmenu"
@@ -844,8 +859,7 @@
   
 	</extension>
    
-	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- Commands -->
+ <!-- Commands -->
    <extension
          point="org.eclipse.ui.commands">
       <!--
@@ -1327,6 +1341,8 @@
       </keyBinding>
        -->
    </extension>
+   
+   
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Views -->
    <extension
@@ -1887,5 +1903,283 @@
       <factory
             class="org.cfeclipse.cfml.editors.CFJavaFileEditorInputFactory"
             id="org.cfeclipse.cfml.CFJavaFileEditorInputFactory"/>
+   </extension>
+   <extension
+         point="org.eclipse.search.searchResultViewPages">
+      <viewPage
+            class="org.cfeclipse.cfml.search.SearchResultPage"
+            id="org.cfeclipse.cfml.search.search"
+            searchResultClass="org.cfeclipse.cfml.search.SearchResult">
+      </viewPage>
+   </extension>
+   
+   
+   <!-- detachable toolbar -->
+   
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.cfeclipse.cfml.actionsets"
+            label="CFEclipse"
+            visible="true">
+            
+                    
+          <!-- Word Wrap -->
+        <action
+              class="org.cfeclipse.cfml.editors.actions.WordWrapAction"
+              icon="icons/ctool16/wordwrap.gif"
+              id="org.cfeclipse.cfml.editors.actions.wordWrapAction"
+              label="%action.label.WordWrap"
+              state="false"
+              style="toggle"
+              toolbarPath="BasicCFEditorText"
+              tooltip="%action.tooltip.WordWrap"/>
+		<!-- cfcomment -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFComment"
+               label="%action.label.Comment"
+               icon="icons/ctool16/comment.gif"
+               tooltip="%action.tooltip.Comment"
+               class="org.cfeclipse.cfml.editors.actions.CFCommentAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.CFCommentAction">
+         </action>
+		<!-- smart comment -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.AutoComment"
+               label="%action.label.AutoComment"
+               icon="icons/ctool16/smartcomment.gif"
+               tooltip="%action.tooltip.AutoComment"
+               class="org.cfeclipse.cfml.editors.actions.AutoCommentAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.AutoCommentAction">
+         </action>
+		<!-- Surround with #s -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFVariable"
+               label="%action.label.Variable"
+               icon="icons/ctool16/hash.gif"
+               tooltip="%action.tooltip.Variable"
+               class="org.cfeclipse.cfml.editors.actions.CFVariableAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.CFVariableAction">
+         </action>
+		<!-- Surround with single quotes -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFSingleQuote"
+               label="%action.label.SingleQuotes"
+               icon="icons/ctool16/squote.gif"
+               tooltip="%action.tooltip.SingleQuotes"
+               class="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction">
+         </action>
+		<!-- Surround with double quotes -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"
+               label="%action.label.DoubleQuotes"
+               icon="icons/ctool16/dquote.gif"
+               tooltip="%action.tooltip.DoubleQuotes"
+               class="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction">
+         </action>
+		<!-- Surround with simple cfoutputs -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFOutput"
+               label="%action.label.CFOutput"
+               icon="icons/ctool16/output.gif"
+               tooltip="%action.tooltip.CFOutput"
+               class="org.cfeclipse.cfml.editors.actions.CFOutputAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="org.cfeclipse.cfml.editors.actions.CFOutputAction">
+         </action>
+		<!-- Surround with a simple cfdump -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFDump"
+               label="%action.label.CFDump"
+               icon="icons/ctool16/dump.gif"
+               tooltip="%action.tooltip.CFDump"
+               class="org.cfeclipse.cfml.editors.actions.CFDumpAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="org.cfeclipse.cfml.editors.actions.CFDumpAction">
+         </action>
+		<!-- Surround with a cfscript -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.CFAbortAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CFAbort"
+               icon="icons/ctool16/stop.gif"
+               id="org.cfeclipse.cfml.editors.actions.CFAbortAction"
+               label="%action.label.CFAbort"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.CFAbort"/>
+         <action
+               class="org.cfeclipse.cfml.editors.actions.CFScriptAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CFScript"
+               icon="icons/ctool16/script.gif"
+               id="org.cfeclipse.cfml.editors.actions.CFScriptAction"
+               label="%action.label.CFScript"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.CFScript">
+         </action>
+		<!-- to lower case -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
+               label="%action.label.ToLower"
+               icon="icons/ctool16/tolower.gif"
+               tooltip="%action.tooltip.ToLower"
+               class="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction">
+         </action>
+		<!-- to upper case -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
+               label="%action.label.ToUpper"
+               icon="icons/ctool16/toupper.gif"
+               tooltip="%action.tooltip.ToUpper"
+               class="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction">
+         </action>
+		<!-- insert date -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.InsertDateAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertDate"
+               icon="icons/ctool16/time.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertDateAction"
+               label="%action.label.InsertDate"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.InsertDate">
+         </action>
+         <!-- insert color -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.InsertColorAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertColor"
+               icon="icons/ctool16/palette.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertColorAction"
+               label="%action.label.InsertColor"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.InsertColor">
+         </action>
+         
+          <!-- repeat last tag (for Brian Sadler) -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.LastAction"
+               label="%action.label.RepeatLastTag"
+     		   icon="icons/ctool16/repeattag.gif"
+               tooltip="%action.tooltip.RepeatLastTag"
+               class="org.cfeclipse.cfml.editors.actions.LastActionAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="org.cfeclipse.cfml.editors.actions.LastActionAction">
+         </action>
+
+
+         <!-- refresh the browser view action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.RefreshBrowser"
+               icon="icons/ctool16/refresh.gif"
+               id="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction"
+               label="%action.label.Refresh"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.Refresh">
+         </action>
+       
+        
+         <!-- insert snippet action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertSnippet"
+               icon="icons/ctool16/insertsnip.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
+               label="%action.label.InsertSnippet"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.InsertSnippet">
+         </action>
+          <!-- Get Online Help by Mark Drew aged 30 -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.GetHelpAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.GetHelp"
+               icon="icons/ctool16/help.gif"
+               id="org.cfeclipse.cfml.editors.actions.GetHelpAction"
+               label="%action.label.GetTagHelp"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.GetTagHelp">
+         </action>
+          <!-- Launch Scribble Pad -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.LoadScribblePadAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.LoadScribblePad"
+               icon="icons/ctool16/scribble.gif"
+               id="org.cfeclipse.cfml.editors.actions.LoadScribbleAction"
+               label="%action.label.LoadScribble"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.LoadScribble">
+         </action>
+         
+		<!-- external browser -->
+ 		<action
+               toolbarPath="BasicCFEditorCommand"
+               label="Browse in secondary browser"
+               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               tooltip="%action.tooltip.Browse"
+               icon="icons/ctool16/browser_secondary.gif"
+               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction2"
+               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
+         </action>
+         <action
+               toolbarPath="BasicCFEditorCommand"
+               label="%action.label.Browse"
+               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               tooltip="%action.tooltip.Browse"
+               icon="icons/ctool16/browser_primary.gif"
+               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID">
+         </action>
+		 <!-- browse to current page action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"
+               icon="icons/ctool16/globe.gif"
+               id="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction"
+               label="%action.label.BrowseToCurrent"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.BrowseToCurrent">
+         </action>
+			  <!-- browse to root project URL action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"
+               icon="icons/ctool16/home.gif"
+               id="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction"
+               label="%action.label.BrowsetoRoot"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.BrowsetoRoot">
+         </action>
+          <!-- Launch new file dialog -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.NewFileAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
+               icon="icons/obj16/new.gif"
+               id="org.cfeclipse.cfml.editors.actions.NewFileAction"
+               label="%action.label.CreateNewFile"
+               toolbarPath="CFEditorResourceCommand"
+               tooltip="%action.tooltip.CreateNewFile">
+         </action>
+		 <!-- Edit Tag Action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.EditTagAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.EditTagAction"
+               icon="icons/obj16/default.gif"
+               id="org.cfeclipse.cfml.editors.actions.EditTagAction"
+               label="%action.label.EditTagAction"
+               toolbarPath="CFEditorResourceCommand"
+               tooltip="%action.tooltip.EditTagAction">
+         </action>
+            
+    
+         
+      </actionSet>
    </extension>   
 </plugin>

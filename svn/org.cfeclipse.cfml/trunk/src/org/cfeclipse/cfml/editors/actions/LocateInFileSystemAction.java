@@ -15,6 +15,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 // Removed for Eclipse 3.3
 //import org.eclipse.ui.internal.editors.text.JavaFileEditorInput;
@@ -28,7 +30,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class LocateInFileSystemAction implements IEditorActionDelegate {
+public class LocateInFileSystemAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 	ITextEditor editor = null;
 	/**
 	 * 
@@ -84,6 +86,19 @@ public class LocateInFileSystemAction implements IEditorActionDelegate {
 	public void selectionChanged(IAction action, ISelection selection) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
 	}
 
 }

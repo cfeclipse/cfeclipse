@@ -30,6 +30,8 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -38,7 +40,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * This takes the highlighted text and turns it into lower case - uses the 
  * helper class WordManipulator
  */
-public class ToLowerCaseAction extends WordManipulator implements IEditorActionDelegate {
+public class ToLowerCaseAction extends WordManipulator implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 
 	ITextEditor editor = null;
 	
@@ -76,4 +78,17 @@ public class ToLowerCaseAction extends WordManipulator implements IEditorActionD
 	}
 	
 	public void selectionChanged(IAction action, ISelection selection) {;}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
+	}
 }

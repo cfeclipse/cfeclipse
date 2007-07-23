@@ -33,6 +33,8 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 
@@ -42,7 +44,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * The adds cold fusion style comments around the selected text (or just sticks
  * in the comments if no text is selected) 
  */
-public class CFCommentAction extends GenericEncloserAction implements IEditorActionDelegate{
+public class CFCommentAction extends GenericEncloserAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 	protected ITextEditor editor = null;
 	
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
@@ -96,4 +98,17 @@ public class CFCommentAction extends GenericEncloserAction implements IEditorAct
 		}
 	}
 	public void selectionChanged(IAction action, ISelection selection){;}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
+	}
 }

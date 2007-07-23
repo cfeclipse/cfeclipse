@@ -41,6 +41,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -49,7 +51,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @author Stephen Milligan
  *
  */
-public class InsertSnippetAction extends Encloser implements IEditorActionDelegate {
+public class InsertSnippetAction extends Encloser implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 	
 	protected ITextEditor editor = null;
 	protected String start = "";
@@ -272,5 +274,16 @@ public class InsertSnippetAction extends Encloser implements IEditorActionDelega
 	}
 	
 	public void selectionChanged(IAction action, ISelection selection){;}
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
+	}
 	
 }

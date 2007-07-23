@@ -22,6 +22,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
@@ -40,7 +42,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * <cfparam name="attributes.var2" default="" type="string">
  * 
  */
-public class GenericNewFileAction  implements IEditorActionDelegate{
+public class GenericNewFileAction  implements IWorkbenchWindowActionDelegate,IEditorActionDelegate{
     protected ITextEditor editor = null;
     protected IFile file;
 	protected String filename = "untitled.cfm";
@@ -153,6 +155,19 @@ public class GenericNewFileAction  implements IEditorActionDelegate{
 		//word-sorted in the Preview page of the multi-page editor
 		String contents = this.contents;
 		return new ByteArrayInputStream(contents.getBytes());
+	}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
 	}
 	
 	

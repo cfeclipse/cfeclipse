@@ -19,9 +19,11 @@ import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-public class InsertGetAndSetAction implements IEditorActionDelegate{
+public class InsertGetAndSetAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate{
 	protected ICFDocument cfdocument = null;
 	protected ITextSelection docselection = null;
 	protected ITextEditor editor = null;
@@ -106,6 +108,17 @@ public class InsertGetAndSetAction implements IEditorActionDelegate{
 	
 	public void selectionChanged(IAction action, ISelection selection) {
 		// TODO Auto-generated method stub
+		
+	}
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
 		
 	}
 

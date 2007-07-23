@@ -33,6 +33,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
@@ -43,7 +45,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  *
  * Simple action to refresh the browser view
  */
-public class BrowseToProjectRootAction implements IEditorActionDelegate {
+public class BrowseToProjectRootAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 	protected ITextEditor editor = null;
 
 	private CFMLPropertyManager propertyManager;
@@ -92,5 +94,18 @@ public class BrowseToProjectRootAction implements IEditorActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){;}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
+	}
 
 }

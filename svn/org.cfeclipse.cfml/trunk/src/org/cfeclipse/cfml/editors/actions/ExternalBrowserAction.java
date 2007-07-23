@@ -43,6 +43,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.ui.ide.IDE;
@@ -55,7 +56,7 @@ import org.eclipse.ui.part.FileEditorInput;
  * @author Stephen Milligan
  * @version $Revision: 1.4 $
  */
-public class ExternalBrowserAction implements IEditorActionDelegate {
+public class ExternalBrowserAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
     
     IEditorPart editor = null;
     String externalBrowser = "";
@@ -258,5 +259,15 @@ public class ExternalBrowserAction implements IEditorActionDelegate {
     	
     	return properties.toString();
     }
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		this.editor = window.getActivePage().getActiveEditor();
+		
+	}
 
 }

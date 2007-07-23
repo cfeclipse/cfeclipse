@@ -22,6 +22,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 
@@ -29,7 +31,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @author Christopher Bradford
  *
  */
-public class JumpToMatchingTagAction implements IEditorActionDelegate {
+public class JumpToMatchingTagAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 
 	private ITextEditor editor = null;
 	private CFEPartitioner partitioner;
@@ -242,6 +244,19 @@ public class JumpToMatchingTagAction implements IEditorActionDelegate {
         statusLM.setMessage("No matching tag found.");
         return null;
     
-    };
+    }
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
+	};
     
 }

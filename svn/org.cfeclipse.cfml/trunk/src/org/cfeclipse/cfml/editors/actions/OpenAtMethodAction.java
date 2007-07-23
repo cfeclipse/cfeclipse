@@ -43,6 +43,8 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
@@ -58,7 +60,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * The file will be opened with whatever editor is associated with the file
  * type.
  */
-public class OpenAtMethodAction implements IEditorActionDelegate {
+public class OpenAtMethodAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 	protected ITextEditor editor = null;
 	protected String filename = "untitled.cfm";
 	protected IFile file;
@@ -208,4 +210,17 @@ public class OpenAtMethodAction implements IEditorActionDelegate {
     public boolean isSuccess() {
         return this.success;
     }
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
+	}
 }

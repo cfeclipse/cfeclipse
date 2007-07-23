@@ -33,6 +33,9 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 
 /**
@@ -40,7 +43,7 @@ import org.eclipse.ui.IEditorPart;
  * Class to find the matching bracker for the selected/highlighted
  *         bracket.
  */
-public class FindBracketAction implements IEditorActionDelegate
+public class FindBracketAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate
 {
 	private CFMLEditor editor;
 
@@ -140,5 +143,18 @@ public class FindBracketAction implements IEditorActionDelegate
 	public void selectionChanged(IAction action, ISelection selection)
 	{
 		// not sure anything needs to be done here
+	}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof CFMLEditor){
+			editor = (CFMLEditor)activeEditor;
+		}
+		
 	}
 }

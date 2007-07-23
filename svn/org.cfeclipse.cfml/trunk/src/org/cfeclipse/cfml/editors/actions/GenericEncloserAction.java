@@ -32,6 +32,8 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 
@@ -41,7 +43,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * This is the base class for actions that enclose stuff. Like auto adding ##
  * or quotes etc - it is also used for what other products call snippets 
  */
-public class GenericEncloserAction extends Encloser implements IEditorActionDelegate 
+public class GenericEncloserAction extends Encloser implements IWorkbenchWindowActionDelegate,IEditorActionDelegate 
 {	
 	protected ITextEditor editor = null;
 	protected String start = "";
@@ -120,4 +122,17 @@ public class GenericEncloserAction extends Encloser implements IEditorActionDele
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){;}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
+	}
 }

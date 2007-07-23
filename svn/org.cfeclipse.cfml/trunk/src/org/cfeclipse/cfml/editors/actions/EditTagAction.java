@@ -56,6 +56,8 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -65,7 +67,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @author mdrew
  *
  */
-public class EditTagAction implements IEditorActionDelegate{
+public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate{
 		protected Tag tag;
 		protected Shell shell;
 		protected IEditorPart ieditor;
@@ -438,6 +440,19 @@ public class EditTagAction implements IEditorActionDelegate{
 
 	public void selectionChanged(IAction action, ISelection selection) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
 		
 	}
 	

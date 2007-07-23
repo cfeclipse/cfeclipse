@@ -16,11 +16,13 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 
-public class EditFunctionAction implements IEditorActionDelegate {
+public class EditFunctionAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 
 	protected Function func;
 	protected Shell shell;
@@ -127,6 +129,19 @@ public class EditFunctionAction implements IEditorActionDelegate {
 
 	public void setIeditor(IEditorPart ieditor) {
 		this.ieditor = ieditor;
+	}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor)activeEditor;
+		}
+		
 	}
 	
 	
