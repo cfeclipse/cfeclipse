@@ -158,6 +158,7 @@ public class EditorPreferencePage extends PreferencePage
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SELECTION_BACKGROUND_SYSTEM_DEFAULT));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_WARN_READ_ONLY_FILES));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_NAVIGATION_SMART_HOME_END));
 		OverlayPreferenceStore.OverlayKey keys[] = new OverlayPreferenceStore.OverlayKey[overlayKeys.size()];
 		overlayKeys.toArray(keys);
 		return new OverlayPreferenceStore(getPreferenceStore(), keys);
@@ -249,6 +250,9 @@ public class EditorPreferencePage extends PreferencePage
 		String items[] = new String[] {"Outline box", "Solid box", "Bold text"};
 		CCombo bracketStyleCombo  = addComboList(appearanceComposite,"Bracket matching style",EditorPreferenceConstants.P_BRACKET_MATCHING_STYLE,items);
 		createDependency(bracketMatchingBox, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED, bracketStyleCombo);
+		
+		label = "Enable smart Home and End";
+		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_NAVIGATION_SMART_HOME_END, 0);
 		
 		Label l = new Label(appearanceComposite, 16384);
 		GridData gd = new GridData(256);

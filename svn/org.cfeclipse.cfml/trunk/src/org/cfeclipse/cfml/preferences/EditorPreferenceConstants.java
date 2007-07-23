@@ -9,6 +9,7 @@ package org.cfeclipse.cfml.preferences;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
+import org.eclipse.ui.texteditor.AbstractTextEditor;
 
 /**
  * @author Stephen Milligan
@@ -105,6 +106,9 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	
 	/** Preference key identifier for the editor toolbar */
 	public static final String P_SHOW_EDITOR_TOOLBAR = "cfeclipse.editor.showToolbar";
+
+	/** Preference key identifier for the "smart caret positioning" */
+	public static final String P_NAVIGATION_SMART_HOME_END = AbstractTextEditor.PREFERENCE_NAVIGATION_SMART_HOME_END;
 	
 	
 	
@@ -135,6 +139,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	 * <li>P_SELECTION_BACKGROUND_SYSTEM_DEFAULT - true</li>
 	 * <li>P_WARN_READ_ONLY_FILES - true</li>
 	 * <li>P_BRACKET_MATCHING_STYLE - BRACKET_MATCHING_BOLD</li>
+	 * <li>P_NAVIGATION_SMART_HOME_END - false</li>
 	 * </ul>
 	 * 
 	 */
@@ -165,6 +170,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_WARN_READ_ONLY_FILES,true);
 		store.setDefault(P_BRACKET_MATCHING_STYLE,BRACKET_MATCHING_BOLD);
 		store.setDefault(P_SHOW_EDITOR_TOOLBAR, false);
+		store.setDefault(P_NAVIGATION_SMART_HOME_END, false);
 	}
 	
 	

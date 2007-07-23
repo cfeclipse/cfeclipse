@@ -44,6 +44,7 @@ import org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction;
 import org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction;
 import org.cfeclipse.cfml.editors.actions.LocateInTreeAction;
 import org.cfeclipse.cfml.editors.actions.RTrimAction;
+import org.cfeclipse.cfml.editors.actions.TextEditorWordNavigationAction;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.cfeclipse.cfml.editors.decoration.DecorationSupport;
 import org.cfeclipse.cfml.editors.dnd.CFEDragDropListener;
@@ -89,10 +90,14 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ST;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DropTarget;
+import org.eclipse.swt.dnd.DropTargetAdapter;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -103,7 +108,9 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.dialogs.SaveAsDialog;
+import org.eclipse.ui.dnd.IDragAndDropService;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
@@ -174,6 +181,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	public static final String EDITOR_HYPERLINKS_ENABLED = AbstractDecoratedTextEditorPreferenceConstants.EDITOR_HYPERLINKS_ENABLED;
 	
 	public static final String ID = "org.cfeclipse.cfml.editors.CFMLEditor";
+	
+	private static final String TEMPLATE_PROPOSALS= "template_proposals_action"; //$NON-NLS-1$
+	
 	protected ColorManager colorManager;
 
 	protected CFConfiguration configuration;
@@ -200,6 +210,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 	private DragSource dragsource;
 
+	
 
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
@@ -380,7 +391,47 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		// line tracking.
 		//projectionViewer.getTextWidget().setWordWrap(true);
 
-		createDragAndDrop(projectionViewer);
+		
+		
+		StyledText tw = getSourceViewer().getTextWidget();
+		
+		// Add a 'TextTransfer' drop target to the editor
+			int ops = DND.DROP_DEFAULT | DND.DROP_COPY;
+			Transfer[] transfers = { TextTransfer.getInstance() };
+			DropTargetListener editorListener = new DropTargetListener() {
+	
+				public void dragEnter(DropTargetEvent event) {
+					System.out.println("dra!");
+				}
+	
+				public void dragLeave(DropTargetEvent event) {
+					System.out.println("dra!");
+				}
+	
+				public void dragOperationChanged(DropTargetEvent event) {
+					System.out.println("dra!");
+				}
+	
+				public void dragOver(DropTargetEvent event) {
+					System.out.println("dra!");
+				}
+	
+				public void drop(DropTargetEvent event) {
+					System.out.println("dra!");
+				}
+	
+				public void dropAccept(DropTargetEvent event) {
+					System.out.println("dra!");
+				}
+				
+			};
+			
+			IDragAndDropService dtSvc = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
+			dtSvc.addMergedDropTarget(tw, ops, transfers, editorListener);
+		
+		
+		
+		//createDragAndDrop(projectionViewer);
 
 		try {
 			if (isEditorInputReadOnly()) {				
@@ -565,9 +616,13 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			//nothing, we are already null;
 		}
 
-		if (c == null) // ie we are on 3.3 or higher
+		if (c == null) // ie we are on 3.3 or higher	
 		{
-			return;
+			
+		
+			
+				return;
+			
 		}
 		
 		SelectionCursorListener cursorListener = new SelectionCursorListener(this,
@@ -936,6 +991,16 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 			e.printStackTrace(System.err);
 		}
 		
+		/*
+		 * TODO: Implement Templates
+		 * IAction action= new TextOperationAction(
+				org.cfeclipse.cfml.editors.templates.TemplateMessages.getResourceBundle(),
+				"Editor." + TEMPLATE_PROPOSALS + ".", //$NON-NLS-1$ //$NON-NLS-2$
+				this,
+				ISourceViewer.CONTENTASSIST_PROPOSALS);
+		action.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
+		setAction(TEMPLATE_PROPOSALS, action);
+		markAsStateDependentAction(TEMPLATE_PROPOSALS, true);*/
 	}
 
 	/**
