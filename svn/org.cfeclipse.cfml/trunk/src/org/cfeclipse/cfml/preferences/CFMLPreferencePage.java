@@ -322,10 +322,10 @@ public class CFMLPreferencePage
         //Since from a combo we can only get the selection index, lets get the item from the array (plus one for the blank filled one)
         IProject[] projects = getProjects();
         String templateProject = "";
-        if(templateProjectsPathField.getSelectionIndex() > 0){
-        	templateProject = projects[templateProjectsPathField.getSelectionIndex()-1].getFullPath().toString();
-        }
-        store.setValue(CFMLPreferenceConstants.P_TEMPLATE_PROJECT_PATH, templateProject);
+       // if(templateProjectsPathField.getSelectionIndex() > 0){
+       // 	templateProject = projects[templateProjectsPathField.getSelectionIndex()-1].getFullPath().toString();
+        //}
+       // store.setValue(CFMLPreferenceConstants.P_TEMPLATE_PROJECT_PATH, templateProject);
         
         return true;
     }
