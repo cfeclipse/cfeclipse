@@ -27,6 +27,7 @@ package org.cfeclipse.cfml.editors.actions;
 //import org.eclipse.core.resources.IResource;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
+import org.cfeclipse.cfml.util.ResourceUtils;
 import org.cfeclipse.cfml.views.browser.BrowserView;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -77,10 +78,18 @@ public class BrowseToProjectRootAction implements IWorkbenchWindowActionDelegate
 	        FileEditorInput input = (FileEditorInput)editor.getEditorInput();
 	        //IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			//ISelection sel = editor.getSelectionProvider().getSelection();
-			String projectURL = propertyManager.projectURL(input.getFile().getProject());
+			
+	        //TODO: Change this to the actual property
+	        
+	        String url = ResourceUtils.getURL(input.getFile().getProject());
+	        
+	        
+	        //String projectURL = propertyManager.projectURL(input.getFile().getProject());
+			
+			
 			// System.out.println("currentpath: " + currentpath + "; currentfile: " + currentfile + "; URLpath: " + URLpath);
 	        BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-	        browser.setUrl(projectURL);
+	        browser.setUrl(url);
 	        browser.setFocus();
 	        // browser.refresh();
 	        
