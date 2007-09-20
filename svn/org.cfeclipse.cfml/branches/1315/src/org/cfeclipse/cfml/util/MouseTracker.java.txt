@@ -1,0 +1,267 @@
+/*
+ * Created on Oct 5, 2006
+ *
+ * TODO To change the template for this generated file go to
+ * Window - Preferences - Java - Code Style - Code Templates
+ */
+package com.yellowbadger.flexer.editors;
+
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
+
+import com.yellowbadger.flexer.editors.actions.FindDeclarationAction;
+
+
+/**
+ * @author Stephen Milligan
+ *
+ * TODO To change the template for this generated returnType comment go to
+ * Window - Preferences - Java - Code Style - Code Templates
+ */
+public class MouseTracker implements MouseTrackListener, DisposeListener, MouseListener, MouseMoveListener, KeyListener, PaintListener {
+
+	
+	private class StyleRangeSnapshot {
+		private StyledText widget;
+		private StyleRange[] ranges;
+		private int start;
+		private int length;
+		Color bgColor;
+		
+		StyleRangeSnapshot(StyledText widget, int start, int length) {
+			this.widget = widget;
+			this.ranges = widget.getStyleRanges(start,length);
+			this.start = start;
+			this.length = length;
+			bgColor = ranges[0].background;
+		}
+		
+		public void apply() {
+			widget.redrawRange(start,length,false);
+			widget.setStyleRange(new StyleRange(start,length,null,null));
+			//widget.setStyleRanges(ranges);
+			for (int i=0;i<ranges.length;i++) {
+				widget.setStyleRange(ranges[i]);
+			}
+		}
+	}	private ISourceViewer viewer;
+	private FlexerEditor editor;
+	private Cursor fCursor;
+	private Color fColor;
+	private StyleRangeSnapshot fOldStyle;
+	private int offset;
+	private int length;
+	
+	private Point startPoint;
+	private Point endPoint;
+	
+	public MouseTracker(FlexerEditor editor, ISourceViewer viewer) {
+		this.viewer = viewer;
+		this.editor = editor;
+		viewer.getTextWidget().addDisposeListener(this);
+	}
+
+	public void mouseDoubleClick(MouseEvent e) {
+		// ignore
+	}
+	public void mouseDown(MouseEvent e) {
+		// Ignore
+	}
+	public void mouseUp(MouseEvent e) {
+		if (fCursor != null) {
+			ISelection selection = editor.getSelectionProvider().getSelection();
+			editor.getSelectionProvider().setSelection(new TextSelection(offset,length));
+			FindDeclarationAction action = new FindDeclarationAction();
+			action.setActiveEditor(null,editor);
+			action.run(null);
+			//editor.getSelectionProvider().setSelection(selection);
+			resetCursor();
+			resetStyle();
+		}
+	}
+	/* (non-Javadoc)
+	 * @see org.eclipse.swt.events.MouseTrackListener#mouseEnter(org.eclipse.swt.events.MouseEvent)
+	 */
+	public void mouseEnter(MouseEvent e) {
+		
+	}
+	
+	public void mouseMove(MouseEvent e) {
+		if (fCursor == null) {
+			//return;
+			mouseHover(e);
+			return;
+		}
+		if (e.x < startPoint.x
+				|| e.x > endPoint.x
+				|| e.y < startPoint.y
+				|| e.y > endPoint.y) {
+			resetCursor();
+			resetStyle();
+		}
+
+	}
+	public void mouseExit(MouseEvent e) {
+		resetCursor();
+		resetStyle();
+	}
+	public void paintControl(PaintEvent e) {
+		if (fCursor == null) {
+			return;
+		}
+		//drawLine(e.gc);
+	}
+	public void keyPressed(KeyEvent e) {
+		//System.out.println("key pressed");
+	}
+	
+	public void keyReleased(KeyEvent e) {
+		if (fCursor == null) {
+			return;
+		}
+		//sSystem.out.println("Key " + e.keyCode+ " released");
+	}
+	public void mouseHover(MouseEvent e) {
+		if ((e.stateMask & SWT.CTRL) == 0) {
+			return;
+		}
+		//resetCursor();
+		resetStyle();
+		int widgetOffset = 0;
+		try {
+			widgetOffset= viewer.getTextWidget().getOffsetAtLocation(new Point(e.x, e.y));
+		} catch (IllegalArgumentException ex) {
+			return;	
+		}
+		String docText = viewer.getTextWidget().getText();
+		int startOffset = 0;
+		int endOffset = 0;
+		for (int i=widgetOffset;i>=0;i--) {
+			char c = docText.charAt(i);
+			if (!Character.isJavaIdentifierPart(c)) {
+				startOffset = i+1;
+				break;
+			}
+		}
+		for (int i=widgetOffset;i<docText.length();i++) {
+			char c = docText.charAt(i);
+			if (!Character.isJavaIdentifierPart(c)) {
+				endOffset = i;
+				break;
+			}
+		}
+		if (startOffset < endOffset) {
+			startPoint = viewer.getTextWidget().getLocationAtOffset(startOffset);
+			endPoint = viewer.getTextWidget().getLocationAtOffset(endOffset);
+			endPoint.y = endPoint.y + viewer.getTextWidget().getLineHeight();
+			offset = startOffset;
+			length = endOffset-startOffset;
+			String word = docText.substring(startOffset,endOffset);
+			if ((e.stateMask & SWT.CTRL) != 0) {
+				//viewer.getTextWidget().addPaintListener(this);
+				activateCursor();
+				activateStyle();
+				GC gc = new GC(e.display);
+				//drawLine(gc);
+				gc.dispose();
+				viewer.getTextWidget().addMouseListener(this);
+				//viewer.getTextWidget().addMouseMoveListener(this);
+				//viewer.getTextWidget().addKeyListener(this);
+			}
+		}
+	}
+	
+	private void drawLine (GC gc) {
+		StyledText textWidget = viewer.getTextWidget();
+		Point left= textWidget.toDisplay(textWidget.getLocationAtOffset(offset));
+		Point right= textWidget.toDisplay(textWidget.getLocationAtOffset(offset + length));
+		int y= left.y + textWidget.getLineHeight() +10;
+		gc.setForeground(getColor());
+		gc.drawLine(left.x, y, right.x, y);
+		
+	}
+	
+	private Color getColor() {
+		if (fColor == null) {
+			fColor = new Color(viewer.getTextWidget().getDisplay(),0,0,255);
+		}
+		return fColor;
+	}
+	
+	private void activateCursor() {
+		StyledText text= viewer.getTextWidget();
+		if (text == null || text.isDisposed())
+			return;
+		Display display= text.getDisplay();
+		if (fCursor == null)
+			fCursor= new Cursor(display, SWT.CURSOR_HAND);
+		text.setCursor(fCursor);
+	}
+	
+	private void activateStyle() {
+		fOldStyle = new StyleRangeSnapshot(viewer.getTextWidget(),offset,length);
+		StyleRange range = new StyleRange(offset,length,getColor(),null);
+		StyleRange[] styles = {range}; 
+		viewer.getTextWidget().replaceStyleRanges(offset,length,styles);
+		
+	}
+	
+
+
+	private void resetCursor() {
+		StyledText text= viewer.getTextWidget();
+		if (text != null && !text.isDisposed())
+			text.setCursor(null);
+
+		if (fCursor != null) {
+			fCursor.dispose();
+			fCursor= null;
+		}
+		viewer.getTextWidget().removeMouseListener(this);
+		//viewer.getTextWidget().removeMouseMoveListener(this);
+		//viewer.getTextWidget().removeKeyListener(this);
+		//viewer.getTextWidget().removePaintListener(this);
+		
+	}
+	
+	private void resetStyle() {
+		if (fOldStyle == null) {
+			return;
+		}
+		fOldStyle.apply();
+		fOldStyle = null;
+	}
+
+	
+	public void widgetDisposed(DisposeEvent e) {
+		if (fColor != null) {
+			fColor.dispose();
+			fColor = null;
+		}
+		if (fCursor != null) {
+			fCursor.dispose();
+			fCursor = null;
+		}
+
+	}
+
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>new_id</name>
+<help>Creates a new ID type for css</help>
+<starttext><![CDATA[#$${idname}
+{
+	]]></starttext>
+<endtext><![CDATA[
+}]]></endtext>
+</snippet>
