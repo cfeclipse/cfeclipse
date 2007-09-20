@@ -1472,6 +1472,7 @@
             id="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
             name="Browser"/>
        <!--
+
       <page
             category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
             class="org.cfeclipse.cfml.preferences.CFMLTemplatesPreferencePage"
