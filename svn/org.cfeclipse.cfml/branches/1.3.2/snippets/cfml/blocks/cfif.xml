@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>cfif</name>
+<help>Simple if statement</help>
+<starttext><![CDATA[<cfif ]]></starttext>
+<endtext><![CDATA[>	</cfif>]]></endtext>
+</snippet>

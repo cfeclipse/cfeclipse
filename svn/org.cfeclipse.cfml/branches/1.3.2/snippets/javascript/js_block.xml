@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>js_block</name>
+<help>Simple javascript block</help>
+<starttext><![CDATA[<script language="javascript" type="text/javascript">
+]]></starttext>
+<endtext><![CDATA[
+</script>]]></endtext>
+</snippet>
