@@ -199,7 +199,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 				if(connectionType.getText().equalsIgnoreCase("file")){
 					host.setEnabled(false);
 					port.setEnabled(false);
-					//passive.setEnabled(false);
+					passive.setEnabled(false);
 					username.setEnabled(false);
 					password.setEnabled(false);
 					openDirButton.setEnabled(true);
@@ -284,7 +284,6 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		
 		// Passive mode
 		passive = createCheckboxControl(editArea,"Passive mode:",true);
-		passive.setEnabled(false);
 		// Username
 		username = createTextControl(editArea,"Username:",connectionProperties.getUsername(),20);
 		
@@ -422,7 +421,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 			connectionProperties.setConnectionid(connectionid.getText());
 			connectionProperties.setPort(Integer.parseInt(port.getText()));
 			connectionProperties.setType(connectionType.getText());
-			//connectionProperties.setPassive(passive.getSelection());
+			connectionProperties.setPassive(passive.getSelection());
 			//connectionProperties.setSecure(sftp.getSelection());
 			connectionProperties.save();
 			}

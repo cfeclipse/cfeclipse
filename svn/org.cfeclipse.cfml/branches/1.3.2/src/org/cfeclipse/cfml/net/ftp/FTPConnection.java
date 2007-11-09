@@ -23,6 +23,7 @@ import org.apache.commons.vfs.FileType;
 import org.apache.commons.vfs.VFS;
 import org.apache.commons.vfs.impl.DefaultFileSystemManager;
 import org.apache.commons.vfs.operations.FileOperationProvider;
+import org.apache.commons.vfs.provider.ftp.FtpFileSystemConfigBuilder;
 import org.apache.commons.vfs.provider.sftp.SftpFileSystemConfigBuilder;
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
 import org.cfeclipse.cfml.net.RemoteFile;
@@ -225,7 +226,16 @@ public class FTPConnection implements IFileProvider {
             
         	FileSystemOptions opts = new FileSystemOptions();
         	this.fileSystemOptions = opts;
-			SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");
+        	
+        	//Fixes the non usage of passive FTP
+        	if(connectionProperties.getType().equalsIgnoreCase("ftp")){
+        		FtpFileSystemConfigBuilder.getInstance().setPassiveMode(this.fileSystemOptions, connectionProperties.getPassive());
+            }
+        	else if(connectionProperties.getType().equalsIgnoreCase("sftp")){
+        		SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");
+        	}
+        	
+			
 
             
 //          TODO: Make this a job... 
