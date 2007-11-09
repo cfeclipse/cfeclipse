@@ -663,6 +663,14 @@ public class SnipTreeView extends ViewPart
 
 	
 	protected void reloadSnippets() {
+		/*
+		 * TODO: Hook this up so it deletes stored snipex items
+		 * 
+		 * 
+		 */
+		
+		
+		
 		treeViewer.setInput(getRootInput());		
 	}
 	
