@@ -11,7 +11,7 @@ Bundle-ClassPath: lib/saxpath.jar,
  lib/commons-logging-1.1.jar,
  library.jar
 Bundle-Activator: org.cfeclipse.cfml.frameworks.Activator
-Bundle-Vendor: CFEclipse Crew
+Bundle-Vendor: CFEclipse Project
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
