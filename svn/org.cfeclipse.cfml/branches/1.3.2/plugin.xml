@@ -134,6 +134,15 @@
       </perspective>
    </extension>
    
+	<extension point="org.eclipse.core.runtime.contentTypes">
+		<content-type
+			id="cfsource"
+			base-type="org.eclipse.core.runtime.text"
+			name="ColdFusion Source File"
+			file-extensions="cfc,cfm,cfml">
+		</content-type>
+	</extension>
+   
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Editor -->
    <extension
@@ -145,6 +154,9 @@
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="org.cfeclipse.cfml.editors.CFMLEditor"
             id="org.cfeclipse.cfml.editors.CFMLEditor">
+            
+			<contentTypeBinding contentTypeId="org.cfeclipse.cfml.cfsource">
+			</contentTypeBinding>
       </editor>
 
 	<!-- CFC Editor
