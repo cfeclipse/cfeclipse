@@ -794,12 +794,12 @@
 	        adaptable="true"
 	        id="org.cfeclipse.cfml.mappings"
 	        objectClass="org.eclipse.core.resources.IFolder">
-	     <menu
+<!--	     <menu
 	           id="org.cfeclipse.cfml.cfeclipse.menu"
 	           label="CFEclipse"
 	           path="cfeclipse_additions">
 	        <separator name="separator1"/>
-	     </menu>
+	     </menu> -->
 	     <action
 	           class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
 	           id="org.cfeclipse.cfml.setMapping"
@@ -807,20 +807,21 @@
 	           />
 	  </objectContribution>
 	      
-		<objectContribution
-			objectClass="org.eclipse.core.resources.IProject"
-			nameFilter="*"
+	<objectContribution
+			adaptable="true"
 			id="org.cfeclipse.cfml.applyNature"
-		>
-			<action
-				enablesFor="1"
-				label="%action.label.57"
-				class="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
-				tooltip="%action.tooltip.40"
-				menubarPath="org.cfeclipse.cfml.cfeclipse.menu/separator1"
-				id="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
-			/>
-		</objectContribution>
+			nameFilter="*"
+			objectClass="org.eclipse.core.resources.IProject">
+		<action
+			class="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
+			enablesFor="+"
+			icon="icons/icons/16x16.gif"
+			id="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
+			label="%action.label.57"
+			menubarPath="additions"
+			tooltip="%action.tooltip.40"/>
+	</objectContribution>
+	
   <objectContribution
         adaptable="false"
         id="org.cfeclipse.cfml.editFileURL"
@@ -1627,7 +1628,6 @@
       <runtime>
          <run class="org.cfeclipse.cfml.natures.CFENature"/>
       </runtime>
-      <one-of-nature id="CFEclipse-2.one-of-nature1"/>
    </extension>
    
    <extension
