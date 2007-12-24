@@ -57,12 +57,11 @@ import org.eclipse.ui.internal.PartService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
 /**
  * 
- * The CFEclipse plugin itself. 
+ * The CFEclipse plugin itself.
  * 
- * Also see 'Simple plug-in example' in the Platform Plug-in Developer Guide 
+ * Also see 'Simple plug-in example' in the Platform Plug-in Developer Guide
  * that comes with the SDK version of Eclipse.
  * 
  * @see org.eclipse.ui.plugin.AbstractUIPlugin
@@ -70,31 +69,28 @@ import org.osgi.framework.BundleContext;
  */
 public class CFMLPlugin extends AbstractUIPlugin {
 
-	
+	public static final String PLUGIN_ID = "org.cfeclipse.cfml";
 
 	/** Singleton instance so that everything can access the plugin */
 	private static CFMLPlugin plugin;
-	
+
 	/** The bundle of resources for the plugin */
 	private ResourceBundle resourceBundle;
-	
+
 	/** The preferences for the plugin. */
-	private PreferenceStore propertyStore; 
-	  
+	private PreferenceStore propertyStore;
+
 	/** Content Assist Manager */
 	private CFEContentAssistManager camInstance;
-	
+
 	/** Last Encloser Manager */
 	private LastActionManager lastEncMgrInstance;
-	
-	/** Unique ID of the CFENature */
-	public static final String NATURE_ID = "org.cfeclipse.cfml.CFENature";
-	
+
 	/** Storage for the Templates */
-	private static final String CUSTOM_TEMPLATES_KEY= "org.cfeclipse.cfml.customtemplates"; //$NON-NLS-1$
+	private static final String CUSTOM_TEMPLATES_KEY = "org.cfeclipse.cfml.customtemplates"; //$NON-NLS-1$
 	private TemplateStore fStore;
 	private ContributionContextTypeRegistry fRegistry;
-	
+
 	/**
 	 * Returns the global Content Assist Manager.
 	 * 
@@ -102,16 +98,15 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 * @return The CAM instance
 	 * 
 	 */
-	public CFEContentAssistManager getGlobalCAM()
-	{
-		
-		if(this.camInstance == null)
-		{
-			throw new IllegalArgumentException("CFMLPlugin::getGlobalCAM() camInstance is null");
+	public CFEContentAssistManager getGlobalCAM() {
+
+		if (this.camInstance == null) {
+			throw new IllegalArgumentException(
+					"CFMLPlugin::getGlobalCAM() camInstance is null");
 		}
-	    return this.camInstance;
+		return this.camInstance;
 	}
-	
+
 	/**
 	 * Returns the Last Encloser Manager.
 	 * 
@@ -119,179 +114,167 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 * @return The LastActionManager instance
 	 * 
 	 */
-	public LastActionManager getLastActionManager()
-	{
-		if(this.camInstance == null)
-		{
-			throw new IllegalArgumentException("CFMLPlugin::getGlobalCAM() camInstance is null");
+	public LastActionManager getLastActionManager() {
+		if (this.camInstance == null) {
+			throw new IllegalArgumentException(
+					"CFMLPlugin::getGlobalCAM() camInstance is null");
 		}
-	    return this.lastEncMgrInstance;
+		return this.lastEncMgrInstance;
 	}
-	
+
 	/**
 	 * create a new cfml plugin
 	 */
-	public CFMLPlugin()
-	{
+	public CFMLPlugin() {
 		super();
 		plugin = this;
-		try 
-		{
-			this.resourceBundle = ResourceBundle.getBundle("plugin");	
-		} 
-		catch (MissingResourceException x) 
-		{
+		try {
+			this.resourceBundle = ResourceBundle.getBundle("plugin");
+		} catch (MissingResourceException x) {
 			x.printStackTrace(System.err);
 			this.resourceBundle = null;
 		}
 	}
-	
+
 	/**
-	 * This method is called upon plug-in activation. Seems like most startup 
+	 * This method is called upon plug-in activation. Seems like most startup
 	 * stuff should now go here.
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		
-		/*//System.out.println(
-			"Property store file set to " + 
-			CFMLPlugin.getDefault().getStateLocation().toString()
-			+ "/properties.ini"
-		); */
-		
-		PropertyConfigurator.configure(CFMLPlugin.getDefault().getBundle().getEntry("/lib/log4j.properties"));
-		this.propertyStore = new PreferenceStore(
-			CFMLPlugin.getDefault().getStateLocation().toString()
-			+ "/properties.ini"
-		);
-		
-		String defaultSnippetPath = CFMLPlugin.getDefault().getStateLocation().toString()+"/snippets";
-		
+
+		/*
+		 * //System.out.println( "Property store file set to " +
+		 * CFMLPlugin.getDefault().getStateLocation().toString() +
+		 * "/properties.ini" );
+		 */
+
+		PropertyConfigurator.configure(CFMLPlugin.getDefault().getBundle()
+				.getEntry("/lib/log4j.properties"));
+		this.propertyStore = new PreferenceStore(CFMLPlugin.getDefault()
+				.getStateLocation().toString()
+				+ "/properties.ini");
+
+		String defaultSnippetPath = CFMLPlugin.getDefault().getStateLocation()
+				.toString()
+				+ "/snippets";
+
 		File f = new File(defaultSnippetPath);
 		if (!f.exists()) {
-		    f.mkdir();
+			f.mkdir();
 		}
-		
-		try
-		{
-			//load all the syntax dictionaries
+
+		try {
+			// load all the syntax dictionaries
 			DictionaryManager.initDictionaries();
-			
-			//startup the image registry
+
+			// startup the image registry
 			CFPluginImages.initCFPluginImages();
-			
+
 			setupCAM();
 			setupLastEncMgr();
-		}
-		catch(Exception e)
-		{
-			//lots of bad things can happen...
+		} catch (Exception e) {
+			// lots of bad things can happen...
 			e.printStackTrace(System.err);
 		}
-		
-		
+
 		EditorPartListener editorListener = new EditorPartListener();
-		this.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(editorListener);
-		
-	
+		this.getWorkbench().getActiveWorkbenchWindow().getPartService()
+				.addPartListener(editorListener);
+
 	}
 
 	/**
-     * Setups up the Content Assist Manager
-     * 
-     */
-    public void setupCAM() {
-        this.camInstance = new CFEContentAssistManager();
-        CFMLTagAssist cfmlAssistor = new CFMLTagAssist(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
-        HTMLTagAssistContributor htmlAssistor = new HTMLTagAssistContributor(DictionaryManager.getDictionary(DictionaryManager.HTDIC));
+	 * Setups up the Content Assist Manager
+	 * 
+	 */
+	public void setupCAM() {
+		this.camInstance = new CFEContentAssistManager();
+		CFMLTagAssist cfmlAssistor = new CFMLTagAssist(DictionaryManager
+				.getDictionary(DictionaryManager.CFDIC));
+		HTMLTagAssistContributor htmlAssistor = new HTMLTagAssistContributor(
+				DictionaryManager.getDictionary(DictionaryManager.HTDIC));
 
-        CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
+		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
 		cfscp.changeDictionary(DictionaryManager.JSDIC);
-        
+
 		this.camInstance.registerRootAssist(cfscp);
-        this.camInstance.registerRootAssist(new CFContentAssist());
-        this.camInstance.registerRootAssist(new CFMLScopeAssist());
-        this.camInstance.registerRootAssist(new CFMLFunctionAssist());
-      //  this.camInstance.registerRootAssist(new CFMLComponentAssist()); //finds the components in a project, removed as we might use a new CFML Varscope parser
-        this.camInstance.registerRootAssist(new CFMLVariableAssist()); //finds the arguments in a cfc that you are talking about
+		this.camInstance.registerRootAssist(new CFContentAssist());
+		this.camInstance.registerRootAssist(new CFMLScopeAssist());
+		this.camInstance.registerRootAssist(new CFMLFunctionAssist());
+		// this.camInstance.registerRootAssist(new CFMLComponentAssist());
+		// //finds the components in a project, removed as we might use a new
+		// CFML Varscope parser
+		// finds the arguments in a cfc that you are talking about
+		this.camInstance.registerRootAssist(new CFMLVariableAssist());
 
-        this.camInstance.registerTagAssist(cfmlAssistor);
-        this.camInstance.registerAttributeAssist(cfmlAssistor);
-        this.camInstance.registerValueAssist(cfmlAssistor);
+		this.camInstance.registerTagAssist(cfmlAssistor);
+		this.camInstance.registerAttributeAssist(cfmlAssistor);
+		this.camInstance.registerValueAssist(cfmlAssistor);
 
-        this.camInstance.registerTagAssist(htmlAssistor);
-        this.camInstance.registerAttributeAssist(htmlAssistor);
-        this.camInstance.registerValueAssist(htmlAssistor);
-        
-        
-        
-        this.camInstance.registerTagAssist(new CFMLScopeAssist());
-    }
+		this.camInstance.registerTagAssist(htmlAssistor);
+		this.camInstance.registerAttributeAssist(htmlAssistor);
+		this.camInstance.registerValueAssist(htmlAssistor);
 
-	/**
-     * Sets up the Last Encloser Manager
-     * 
-     */
-    private void setupLastEncMgr() {
-        this.lastEncMgrInstance = new LastActionManager();
+		this.camInstance.registerTagAssist(new CFMLScopeAssist());
 	}
 
-    /**
+	/**
+	 * Sets up the Last Encloser Manager
+	 * 
+	 */
+	private void setupLastEncMgr() {
+		this.lastEncMgrInstance = new LastActionManager();
+	}
+
+	/**
 	 * This method is called when the plug-in is stopped
 	 */
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
 	}
-	
-	protected void initializeDefaultPluginPreferences() 
-	{
-	    
-        //super.initializeDefaultPluginPreferences();
-        CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
+
+	protected void initializeDefaultPluginPreferences() {
+
+		// super.initializeDefaultPluginPreferences();
+		CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 		preferenceManager.initializeDefaultValues();
-		TextEditorPreferenceConstants.initializeDefaultValues(getPreferenceStore());
+		TextEditorPreferenceConstants
+				.initializeDefaultValues(getPreferenceStore());
 		try {
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// do nothing
 		}
-    }
-	
+	}
+
 	/**
 	 * Returns the shared instance.
 	 */
-	public static CFMLPlugin getDefault() 
-	{
+	public static CFMLPlugin getDefault() {
 		return plugin;
 	}
-	
+
 	public PreferenceStore getPropertyStore() {
 		return this.propertyStore;
 	}
-	
 
 	/**
 	 * Returns the workspace instance.
 	 */
-	public static IWorkspace getWorkspace() 
-	{
+	public static IWorkspace getWorkspace() {
 		return ResourcesPlugin.getWorkspace();
 	}
 
 	/**
-	 * Returns the string from the plugin's resource bundle,
-	 * or 'key' if not found.
+	 * Returns the string from the plugin's resource bundle, or 'key' if not
+	 * found.
 	 */
-	public static String getResourceString(String key) 
-	{
+	public static String getResourceString(String key) {
 		ResourceBundle bundle = CFMLPlugin.getDefault().getResourceBundle();
-		try 
-		{
-			return (bundle!=null ? bundle.getString(key) : key);
-		} 
-		catch (MissingResourceException e) 
-		{
+		try {
+			return (bundle != null ? bundle.getString(key) : key);
+		} catch (MissingResourceException e) {
 			return key;
 		}
 	}
@@ -299,14 +282,14 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	/**
 	 * Returns the plugin's resource bundle,
 	 */
-	public ResourceBundle getResourceBundle() 
-	{
+	public ResourceBundle getResourceBundle() {
 		return this.resourceBundle;
 	}
 
 	public TemplateStore getTemplateStore() {
 		if (fStore == null) {
-			fStore= new ContributionTemplateStore(null, CFMLPlugin.getDefault().getPreferenceStore(), CUSTOM_TEMPLATES_KEY);
+			fStore = new ContributionTemplateStore(null, CFMLPlugin
+					.getDefault().getPreferenceStore(), CUSTOM_TEMPLATES_KEY);
 			try {
 				fStore.load();
 			} catch (IOException e) {
@@ -319,7 +302,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	public ContextTypeRegistry getContextTypeRegistry() {
 		if (fRegistry == null) {
 			// create an configure the contexts available in the template editor
-			fRegistry= new ContributionContextTypeRegistry();
+			fRegistry = new ContributionContextTypeRegistry();
 			fRegistry.addContextType(CFMContextType.CFM_CONTEXT_TYPE);
 		}
 		return fRegistry;
