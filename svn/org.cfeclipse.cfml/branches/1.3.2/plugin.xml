@@ -1535,16 +1535,15 @@
             name="%category.name.2"
             id="org.cfeclipse.cfml.category1">
       </category>
-      <wizard name="%wizard.name.0"
-			icon="icons/icons/cfeclipse_16x16.png"
-
-			class="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
-		
-			category="org.cfeclipse.cfml.category1"
-			preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-			project="true" 
-			finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-			id="org.cfeclipse.cfml.wizards.NewProject">
+      <wizard
+            category="org.cfeclipse.cfml.category1"
+            class="org.cfeclipse.cfml.wizards.NewCFEclipseProject"
+            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+            icon="icons/icons/cfeclipse_16x16.png"
+            id="org.cfeclipse.cfml.wizards.NewProject"
+            name="%wizard.name.0"
+            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+            project="true">
 			<description>%wizard.description.0</description>
 	 </wizard>
       <wizard
