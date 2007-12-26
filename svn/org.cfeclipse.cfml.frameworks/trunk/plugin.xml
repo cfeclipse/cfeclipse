@@ -34,8 +34,17 @@
             class="org.cfeclipse.cfml.frameworks.properties.ModelGluePropertyPage"
             id="org.cfeclipse.cfml.frameworks.properties.samplePropertyPage"
             name="CFFrameworks"
-            nameFilter="*"
-            objectClass="org.eclipse.core.resources.IProject"/>
+            nameFilter="*">
+         <filter 
+         	name="projectNature"
+            value="org.cfeclipse.cfml.CFENature">
+         </filter>
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.core.resources.IProject">
+            </instanceof>
+         </enabledWhen>
+	  </page>
    </extension>
    <extension
          point="org.eclipse.ui.popupMenus">
