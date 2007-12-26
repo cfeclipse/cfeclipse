@@ -1504,20 +1504,35 @@
          point="org.eclipse.ui.propertyPages">
       <page
             class="org.cfeclipse.cfml.properties.ProjectPropertyPage"
-            icon="icons/icons/cfeclipse_16x16.png"
             id="org.cfeclipse.cfml.properties.samplePropertyPage"
             name="%page.name.10"
-            nameFilter="*"
-            objectClass="org.eclipse.core.resources.IProject">
+            nameFilter="*">
+         <filter 
+         	name="projectNature"
+            value="org.cfeclipse.cfml.CFENature">
+         </filter>
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.core.resources.IProject">
+            </instanceof>
+         </enabledWhen>
       </page>
       <page
             class="org.cfeclipse.cfml.properties.MappingsPropertyPage"
-            icon="icons/icons/cfeclipse_16x16.png"
             id="org.cfeclipse.cfml.properties.MappingsPropertyPage"
             name="CFEMappings"
-            nameFilter="*"
-            objectClass="org.eclipse.core.resources.IProject"/>
-            <!--
+            nameFilter="*">
+         <filter 
+         	name="projectNature"
+            value="org.cfeclipse.cfml.CFENature">
+         </filter>
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.core.resources.IProject">
+            </instanceof>
+         </enabledWhen>
+      </page>
+<!--
       <page
             class="org.cfeclipse.cfml.properties.ResourceURL"
             icon="icons/icons/cfeclipse_16x16.png"
