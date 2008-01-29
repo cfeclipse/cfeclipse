@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CFEclipse
+Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.cfeclipse.cfml; singleton:=true
-Bundle-Version: 1.3.1.6
+Bundle-Version: 1.3.2
 Bundle-ClassPath: cfml.jar,
  lib/log4j-1.2.9.jar,
  lib/jdom.jar,
@@ -17,7 +17,7 @@ Bundle-ClassPath: cfml.jar,
  lib/commons-collections-3.2.jar,
  lib/commons-vfs-20070505.jar
 Bundle-Activator: org.cfeclipse.cfml.CFMLPlugin
-Bundle-Vendor: CFEclipse Project
+Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin
 Export-Package: .,
  com.jcraft.jsch,
