@@ -11280,6 +11280,17 @@ cflayoutarea tag style attributes.
 		]]></help>
 				<values/>
 			</parameter>
+			<parameter name="richtext" type="Boolean" required="false">
+						<help><![CDATA[
+				A Boolean value specifying whether this control is a rich text editor with tool bars to control the text formatting.
+				]]></help>
+						<values default="false">
+							<value option="true"/>
+							<value option="false"/>
+						</values>				
+				
+			</parameter>
+			
 			<parameter name="maxlength" type="Numeric" required="false">
 				<help><![CDATA[
 			The maximum length of text that can be entered.
