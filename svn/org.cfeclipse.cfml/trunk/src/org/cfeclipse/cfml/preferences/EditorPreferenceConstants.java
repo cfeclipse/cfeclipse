@@ -147,7 +147,6 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_INSIGHT_DELAY,500);
 		store.setDefault(P_INSERT_SPACES_FOR_TABS,false);
 		store.setDefault(P_TAB_WIDTH,4);
-		store.setDefault(P_MAX_UNDO_STEPS,100);
 		store.setDefault(P_BRACKET_MATCHING_COLOR,"255,0,0");
 		store.setDefault(P_BRACKET_MATCHING_ENABLED,true);
 		store.setDefault(P_TAB_INDENTS_CURRENT_LINE,true);

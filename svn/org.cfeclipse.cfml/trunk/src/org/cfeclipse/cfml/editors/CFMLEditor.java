@@ -197,8 +197,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	final JumpToDocPos jumpAction = new JumpToDocPos();
 
 	private CodeFoldingSetter foldingSetter;
-
-	protected LineNumberRulerColumn fLineNumberRulerColumn;
+//protected LineNumberRulerColumn fLineNumberRulerColumn;
 
 	/**
 	 * The change ruler column.
@@ -220,17 +219,12 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 		// Trim trailing spaces if the option is turned on
 		if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_RTRIM_ON_SAVE)) {
-			// Turn off undo manager for text changes
-			((CFEUndoManager) this.configuration.getUndoManager(this.getSourceViewer())).listenToTextChanges(false);
 
 			// Perform Trim Trailing Spaces
 			RTrimAction trimAction = new RTrimAction();
 			trimAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
 			trimAction.run(null);
 
-			// Turn the undo manager back on
-			((CFEUndoManager) this.configuration.getUndoManager(this.getSourceViewer()))
-					.listenToTextChanges(true);
 		}
 
 		try {
@@ -618,11 +612,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 		if (c == null) // ie we are on 3.3 or higher	
 		{
-			
-		
-			
 				return;
-			
 		}
 		
 		SelectionCursorListener cursorListener = new SelectionCursorListener(this,

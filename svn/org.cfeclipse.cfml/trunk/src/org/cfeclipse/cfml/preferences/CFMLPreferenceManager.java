@@ -69,6 +69,7 @@ public class CFMLPreferenceManager {
 		BrowserPreferenceConstants.setDefaults(store);
 		ApplicationTemplatesPreferenceConstants.setDefaults(store);
 		SnipExPreferenceConstants.setDefaults(store);
+		MarkOccurrencesPreferenceConstants.setDefaults(store);
 	}
 	
 	/**

@@ -38,9 +38,9 @@ public class EditorPreferencePage extends PreferencePage
 	private final String fAppearanceColorListModel[][] = {
 		{
 			"Editor Background", EditorPreferenceConstants.P_COLOR_BACKGROUND, null
-		}, {
+		}, /*{
 			"Line numbers",  EditorPreferenceConstants.P_LINE_NUMBER_COLOR, null
-		},{
+		},*/{
 			"Editor toolbars",  EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR, null
 		}, {
 			"Current line highlight",  EditorPreferenceConstants.P_CURRENT_LINE_COLOR, null
@@ -133,7 +133,6 @@ public class EditorPreferencePage extends PreferencePage
 		ArrayList overlayKeys = new ArrayList();
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_COLOR_BACKGROUND));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_CURRENT_LINE_COLOR));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_MAX_UNDO_STEPS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_CURRENT_LINE_COLOR));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_BRACKET_MATCHING_STYLE));
@@ -148,7 +147,7 @@ public class EditorPreferencePage extends PreferencePage
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_LINE_NUMBER_COLOR));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS));
+		//overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_USE_WIDE_CARET));
@@ -215,8 +214,6 @@ public class EditorPreferencePage extends PreferencePage
 		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_TAB_WIDTH, 3, 0, true);
 		label = "Insight Delay:";
 		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_INSIGHT_DELAY, 4, 0, true);
-		label = "Undo steps:";
-		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_MAX_UNDO_STEPS, 4, 0, true);
 		label = "Use spaces for tabs";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS, 0);
 		label = "Trim trailing spaces before saving";
@@ -225,8 +222,9 @@ public class EditorPreferencePage extends PreferencePage
 		
 		label = "Show overview &ruler";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER, 0);
-		label = "Show lin&e numbers";
+	/*	label = "Show lin&e numbers";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS, 0);
+	*/	
 		label = "Show Editor Toolbar";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR, 0);
 		label = "Hi&ghlight current line";

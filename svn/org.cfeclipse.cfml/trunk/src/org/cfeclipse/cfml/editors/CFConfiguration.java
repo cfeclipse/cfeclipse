@@ -92,7 +92,6 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	protected CFMLPreferenceManager preferenceManager;
 	private int tabWidth;
 	//private CFMLEditor editor;
-	private CFEUndoManager undoManager;
 	
 	/**
 	 * Configure the indent strategy
@@ -120,7 +119,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		this.colorManager = colorManager;
 		//this.editor = editor;
 		preferenceManager = new CFMLPreferenceManager();
-		this.undoManager = new CFEUndoManager(preferenceManager.maxUndoSteps());
+		//this.undoManager = new CFEUndoManager(preferenceManager.maxUndoSteps());
 		indentCFScriptStrategy = new CFScriptIndentStrategy(editor);
 		this.indentTagStrategy = new TagIndentStrategy(editor);
 		
@@ -149,10 +148,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		return new String[] { "\t", " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 	
+	/*
 	public IUndoManager getUndoManager(ISourceViewer sourceViewer) {
 		return this.undoManager;
 	}
-	
+	*/
 	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
 	    return new CFAnnotationHover();
 	}
@@ -169,7 +169,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	/**
 	 * get the double click strat-m-gee for the view & content type = (section, 
 	 * partition)
-	 */
+	 
 	public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer,
 		String contentType) 
 	{
@@ -178,11 +178,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		
 		//return doubleClickStrategy;
 		// Spike::
-		// Moved this to org.cfeclipse.cfml.editors.dnd.SelectionCursorListener 
+		// Moved this to org.cfeclipse.cfml.editors.dnd.SelectionCursorListener
 		// so that we can handle ctrl and ctrl+shift modifiers
 		return null;
 	}
-
+*/
 	///////////////////////// SCANNERS /////////////////////////////////////////////
 	/**
 	 * get the scanner for the document and set the default return color
