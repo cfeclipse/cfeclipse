@@ -3,7 +3,7 @@
 <plugin
    id="org.cfeclipse.cfml"
    name="CFML Plug-in"
-   version="1.3.1.5"
+   version="1.3.2"
    provider-name="The CFEclipse Crew"
    class="org.cfeclipse.cfml.CFMLPlugin">
 
@@ -58,18 +58,18 @@
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.ui.editors"/>
       <import plugin="org.eclipse.ui.workbench.texteditor"/>
-      
+
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
       <!-- <import plugin="org.apache.ant"/> -->
-      <import plugin="org.eclipse.core.filesystem" optional="true"/> 
+      <import plugin="org.eclipse.core.filesystem" optional="true"/>
 	  <import plugin="org.eclipse.ui.browser"/>
       <!--<import plugin="org.junit"/>-->
    </requires>
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
 
-   <extension 
+   <extension
 	    point="org.eclipse.ui.decorators">
 		<decorator
 			adaptable="false"
@@ -79,7 +79,7 @@
 			icon="icons/icons/cfc_editor.gif"
 			id="org.cfeclipse.cfml.ui.decorators.cfcdecorator"
 			location="TOP_LEFT">
-			<description>Shows distinct icon for CFC files</description>	
+			<description>Shows distinct icon for CFC files</description>
 			<enablement>
 				<and>
 	      			<objectClass name="org.eclipse.core.resources.IResource" />
@@ -95,7 +95,7 @@
 			icon="icons/obj16/reddot.gif"
 			id="org.cfeclipse.cfml.ui.decorators.cfereadonlydecorator"
 			location="BOTTOM_LEFT">
-			<description>Shows readonly indicator</description>	
+			<description>Shows readonly indicator</description>
 			<enablement>
 				<and>
 	      			<objectClass name="org.eclipse.core.resources.IResource" />
@@ -123,7 +123,7 @@
    </decorator>
 	-->
 	</extension>
-	
+
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
@@ -133,7 +133,7 @@
             id="org.cfeclipse.cfml.perspective.CFML">
       </perspective>
    </extension>
-   
+
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Editor -->
    <extension
@@ -158,18 +158,18 @@
       </editor>
    -->
    </extension>
- 
+
 	<!-- ////////////////////////////////////////////////////////////// -->
-	
-	
+
+
 	<!-- Actions -->
    <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
             targetID="org.cfeclipse.cfml.editors.CFMLEditor"
             id="org.cfeclipse.cfml.editors.CFMLEditorActions">
-        
-         
+
+
          <menu
                id="org.cfeclipse.cfml.menus.source"
                label="&amp;Source"
@@ -189,8 +189,8 @@
              <groupMarker
                    name="format">
              </groupMarker>
-         </menu> 
-         
+         </menu>
+
          <menu
                id="org.cfeclipse.cfml.menus.browse"
                label="&amp;Browse"
@@ -199,8 +199,8 @@
                   name="browse">
             </groupMarker>
          </menu>
-      
-                 
+
+
           <!-- Word Wrap -->
         <action
               class="org.cfeclipse.cfml.editors.actions.WordWrapAction"
@@ -516,8 +516,8 @@
                menubarPath="org.cfeclipse.cfml.menus.browse/browse"
                tooltip="%action.tooltip.Refresh">
          </action>
-       
-        
+
+
          <!-- insert snippet action -->
          <action
                class="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
@@ -566,8 +566,8 @@
                menubarPath="navigate/additions"
                tooltip="%action.tooltip.LocateInExplorer">
          </action>
-         
-         
+
+
 		<!-- external browser -->
  		<action
                menubarPath="org.cfeclipse.cfml.menus.browse/browse"
@@ -635,6 +635,19 @@
                label="%action.label.GotoFileAction"
                menubarPath="navigate/additions">
          </action>
+
+		<!-- Surround with clipboard link -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.ClipboardLink"
+               label="%action.label.ClipboardLink"
+               icon="icons/obj16/world_link.png"
+               tooltip="%action.tooltip.ClipboardLink"
+               class="org.cfeclipse.cfml.editors.actions.ClipboardLinkAction"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
+               id="org.cfeclipse.cfml.editors.actions.ClipboardLinkAction">
+         </action>
+
+
          <!--
          <menu
                id="org.cfeclipse.cfml.cfcmenu"
@@ -660,10 +673,10 @@
                label="Create Test Case"
                menubarPath="org.cfeclipse.cfml.cfcmenu/maingroup"
                toolbarPath="CFEditorResourceCommand"/>
-               
-         -->      
-               
-          <!-- Highlight bracket pair 
+
+         -->
+
+          <!-- Highlight bracket pair
          <action
          	   toolbarPath="BasicCFEditorCommand"
                definitionId="org.cfeclipse.cfml.editors.actions.FindBracket"
@@ -676,7 +689,7 @@
          -->
       </editorContribution>
    </extension>
-   
+
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- popup menu -->
    <extension
@@ -740,6 +753,12 @@
                class="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
                id="org.cfeclipse.cfml.editors.actions.CFDoubleQuote">
+         </action>
+         <action
+               label="%action.label.ClipboardLink"
+               class="org.cfeclipse.cfml.editors.actions.ClipboardLinkAction"
+               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
+               id="org.cfeclipse.cfml.editors.actions.ClipboardLinkAction">
          </action>
          <action
                label="%action.label.48"
@@ -809,7 +828,7 @@
 	           label="Set CF Mapping"
 	           />
 	  </objectContribution>
-	      
+
 		<objectContribution
 			objectClass="org.eclipse.core.resources.IProject"
 			nameFilter="*"
@@ -854,11 +873,11 @@
            id="org.cfeclipse.cfml.editURLAction"
            label="Edit URL"/>
   </objectContribution>
-  
-  
-  
+
+
+
 	</extension>
-   
+
  <!-- Commands -->
    <extension
          point="org.eclipse.ui.commands">
@@ -1015,7 +1034,7 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
             keySequence="M1+M2+Z">
       </keyBinding>
-      
+
 	<!-- insert date -->
       <command
             name="%command.name.11"
@@ -1257,8 +1276,8 @@
             contextId="org.cfeclipse.cfml.cfmleditorcontext"
             commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID"
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </keyBinding> 
-      
+      </keyBinding>
+
       <!-- Open in secondary external browser -->
        <command
             name="Browse in secondary browser"
@@ -1266,7 +1285,7 @@
             categoryId="org.cfeclipse.cfml.commandCategory"
             id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
       </command>
-      
+
 	  <keyBinding
             keySequence="M2+F12"
             contextId="org.cfeclipse.cfml.cfmleditorcontext"
@@ -1274,7 +1293,7 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
 
-	 
+
       <command
             name="%command.name.30"
             description="%command.description.30"
@@ -1288,12 +1307,12 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </keyBinding>
       <!-- edit tag command -->
-      <command 
+      <command
       		name="%command.name.EditTag"
       		description="%command.description.EditTag"
       		categoryId="org.cfeclipse.cfml.commandCategory"
       		id="org.cfeclipse.cfml.editors.actions.EditTagAction">
-      		
+
       </command>
       <keyBinding
             commandId="org.cfeclipse.cfml.editors.actions.EditTagAction"
@@ -1301,13 +1320,13 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
             keySequence="M1+T">
       	</keyBinding>
-      
-    <command 
+
+    <command
       		name="%command.name.GotoFile"
       		description="%command.description.GotoFile"
       		categoryId="org.cfeclipse.cfml.commandCategory"
       		id="org.cfeclipse.cfml.editors.actions.GotoFileAction">
-      		
+
       </command>
       <keyBinding
             commandId="org.cfeclipse.cfml.editors.actions.GotoFileAction"
@@ -1326,6 +1345,13 @@
             keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
             keySequence="M1+M2+A"/>
 
+	<!-- enclose in link from clipboard -->
+      <command
+            name="%action.label.ClipboardLink"
+            description="%command.description.ClipboardLink"
+            categoryId="org.cfeclipse.cfml.commandCategory"
+            id="org.cfeclipse.cfml.editors.actions.ClipboardLink" />
+
       <!-- Find a matching bracket pair
       <command
             name="Highlight matching bracket pair"
@@ -1341,8 +1367,14 @@
       </keyBinding>
        -->
    </extension>
-   
-   
+
+	<extension point="org.eclipse.ui.bindings">
+		<key sequence="Ctrl+Alt+V"
+			commandId="org.cfeclipse.cfml.editors.actions.ClipboardLink"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="rg.cfeclipse.cfml.cfmleditorcontext"/>
+	</extension>
+
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Views -->
    <extension
@@ -1390,31 +1422,31 @@
             category="org.cfeclipse.cfml"
             name="%view.name.5"
             id="org.cfeclipse.cfml.views.explorer.FileExplorerView"/>
-         
-      <!-- 
+
+      <!--
       <view
             icon="icons/obj16/document.gif"
             class="org.cfeclipse.cfml.views.explorer.ftp.FtpLogView"
             category="org.cfeclipse.cfml"
             name="%view.name.6"
             id="org.cfeclipse.cfml.views.explorer.ftp.FtpLogView"/>
-      
+
       <view
             category="org.cfeclipse.cfml"
             class="org.cfeclipse.cfml.views.Toolbar"
             icon="icons/obj16/tools.gif"
             id="org.cfeclipse.cfml.views.Toolbar"
             name="Toolbar"/>
-      
-     
+
+
       <view
             category="org.cfeclipse.cfml"
             class="org.cfeclipse.cfml.views.snipex.SnipEx"
             icon="icons/obj16/snip.gif"
             id="org.cfeclipse.cfml.views.snipex.SnipEx"
             name="SnipEx"/>
-           
-            
+
+
         <view
             category="org.cfeclipse.cfml"
             class="org.cfeclipse.cfml.views.variables.VariablesView"
@@ -1426,7 +1458,7 @@
    </extension>
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- help -->
-   
+
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
@@ -1487,7 +1519,7 @@
             class="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
             id="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
             name="Browser"/>
-       
+
       <page
             category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
             class="org.cfeclipse.cfml.preferences.CFMLTemplatesPreferencePage"
@@ -1498,9 +1530,9 @@
             class="org.cfeclipse.cfml.preferences.SnipExPreferencePage"
             id="org.cfeclipse.cfml.preferences.SnipExPreferencePage"
             name="%page.name.11"/>
-       
+
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
@@ -1528,7 +1560,7 @@
             objectClass="org.eclipse.core.resources.IResource"/>
             -->
    </extension>
-   
+
 	<!-- Chris Queeners area -->
    <extension
          point="org.eclipse.ui.newWizards">
@@ -1540,10 +1572,10 @@
 			icon="icons/icons/cfeclipse_16x16.png"
 
 			class="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
-		
+
 			category="org.cfeclipse.cfml.category1"
 			preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-			project="true" 
+			project="true"
 			finalPerspective="org.cfeclipse.cfml.perspective.CFML"
 			id="org.cfeclipse.cfml.wizards.NewProject">
 			<description>%wizard.description.0</description>
@@ -1581,9 +1613,9 @@
             id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateFileWizard">
             <description>%wizard.description.3</description>
       </wizard>
-      
-      
-      
+
+
+
       <!--
      <wizard
             name="New Project From Template"
@@ -1631,7 +1663,7 @@
       </runtime>
       <one-of-nature id="CFEclipse-2.one-of-nature1"/>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.ide.resourceFilters">
       <filter pattern="*.bak">
@@ -1730,8 +1762,8 @@
             id="org.cfeclipse.cfml.CFENature_Image"/>
    </extension>
 
-   <extension point="org.eclipse.core.resources.markers" 
-   			  id="todomarker" 
+   <extension point="org.eclipse.core.resources.markers"
+   			  id="todomarker"
    			  name="CFEclipse TODO Task">
    	<super type="org.eclipse.core.resources.taskmarker"/>
    	<persistent value="true"/>
@@ -1740,18 +1772,18 @@
    	<attribute name="done"/>
 
    </extension>
-   
-   
-   
+
+
+
    <extension point="org.eclipse.core.resources.markers"
 		id="parserProblemMarker"
 		name="CFEclipse Parser problem">
 		<super type="org.eclipse.core.resources.problemmarker"/>
 		<persistent value="true"/>
 	</extension>
-   
-   
-   
+
+
+
    <extension point="org.eclipse.core.resources.markers"
 		id="parserWarningMarker"
 		name="CFEclipse parser warning">
@@ -1804,11 +1836,11 @@
 			overviewRulerPreferenceValue="true"
 			symbolicIcon="warning"/>
 	</extension>
-   
-   
-   
-   
-   
+
+
+
+
+
    <extension point="org.eclipse.ui.perspectiveExtensions">
         <perspectiveExtension
             targetID="org.eclipse.ui.resourcePerspective">
@@ -1835,7 +1867,7 @@
             name="%context.name.0"
             parentId="org.eclipse.ui.textEditorScope"/>
    </extension>
-   
+
    <extension
          id="product"
          point="org.eclipse.core.runtime.products">
@@ -1912,18 +1944,18 @@
             searchResultClass="org.cfeclipse.cfml.search.SearchResult">
       </viewPage>
    </extension>
-   
-   
+
+
    <!-- detachable toolbar -->
-   
+
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
             id="org.cfeclipse.cfml.actionsets"
             label="CFEclipse"
             visible="true">
-            
-                    
+
+
           <!-- Word Wrap -->
         <action
               class="org.cfeclipse.cfml.editors.actions.WordWrapAction"
@@ -2062,7 +2094,7 @@
                toolbarPath="BasicCFEditorCommand"
                tooltip="%action.tooltip.InsertColor">
          </action>
-         
+
           <!-- repeat last tag (for Brian Sadler) -->
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.LastAction"
@@ -2085,8 +2117,8 @@
                toolbarPath="BasicCFEditorCommand"
                tooltip="%action.tooltip.Refresh">
          </action>
-       
-        
+
+
          <!-- insert snippet action -->
          <action
                class="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
@@ -2117,7 +2149,7 @@
                toolbarPath="BasicCFEditorCommand"
                tooltip="%action.tooltip.LoadScribble">
          </action>
-         
+
 		<!-- external browser -->
  		<action
                toolbarPath="BasicCFEditorCommand"
@@ -2177,9 +2209,7 @@
                toolbarPath="CFEditorResourceCommand"
                tooltip="%action.tooltip.EditTagAction">
          </action>
-            
-    
-         
+
       </actionSet>
-   </extension>   
+   </extension>
 </plugin>
