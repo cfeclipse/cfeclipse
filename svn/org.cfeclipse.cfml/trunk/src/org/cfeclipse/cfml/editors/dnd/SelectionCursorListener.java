@@ -288,7 +288,13 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
         
     }
     
-
+    public void mouseDoubleClick(MouseEvent e) {    	
+    	//see comment below
+    }
+/*
+ * 
+ * Commented for now because denny is using doubleClick in MarkOccurrencesListener
+ * 
     /**
      * Sent when a mouse button is pressed twice within the 
      * (operating system specified) double click period.
@@ -296,7 +302,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      * @param e an event containing information about the mouse double click
      *
      * @see org.eclipse.swt.widgets.Display#getDoubleClickTime()
-     */
+     *//*
     public void mouseDoubleClick(MouseEvent e) {
         
 
@@ -351,28 +357,37 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
         else {
 
             startpos = this.fViewer.getSelectedRange().x;
-            selectWord(startpos);
+            selectWord(startpos, e);
         }
         
 
     }
 
     
-    protected boolean selectWord(int caretPos) 
-	{
+	protected boolean selectWord(int caretPos, MouseEvent e) {
 
 		IDocument doc = this.fViewer.getDocument();
 		int startPos, endPos;
-		
-		try 
-		{
+		String normalWordChars = "-";
+		String breakWordChars = "_";
+		String wordChars = normalWordChars;
+		String altWordChars = "-.";
+		String shiftWordChars = "-_";
+		try {
+			if ((e.stateMask == SWT.ALT || e.stateMask == SWT.SHIFT + SWT.ALT)) {
+				wordChars = wordChars + altWordChars;
+			}
+			if ((e.stateMask == SWT.SHIFT || e.stateMask == SWT.SHIFT + SWT.ALT)) {
+				wordChars = wordChars + shiftWordChars;
+				breakWordChars = "";
+			}
+
 			int pos = caretPos;
 			char c;
 
-			while (pos >= 0)
-			{
+			while (pos >= 0) {
 				c = doc.getChar(pos);
-				if(!Character.isJavaIdentifierPart(c) && c != '-')
+				if (breakWordChars.indexOf(c) >= 0 || !Character.isJavaIdentifierPart(c) && wordChars.indexOf(c) < 0)
 					break;
 				--pos;
 			}
@@ -382,10 +397,9 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 			pos = caretPos;
 			int length = doc.getLength();
 
-			while (pos < length) 
-			{
+			while (pos < length) {
 				c = doc.getChar(pos);
-				if(!Character.isJavaIdentifierPart(c) && c != '-')
+				if (breakWordChars.indexOf(c) >= 0 || !Character.isJavaIdentifierPart(c) && wordChars.indexOf(c) < 0)
 					break;
 				++pos;
 			}
@@ -394,14 +408,13 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 			selectRange(startPos, endPos);
 			return true;
 
-		} 
-		catch (BadLocationException x) 
-		{
-			//?
+		} catch (BadLocationException x) {
+			// ?
 		}
 
 		return false;
 	}
+
 
 	private void selectRange(int startPos, int stopPos) 
 	{
@@ -411,7 +424,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	}
 
     
-    
+*/    
     
     
     
