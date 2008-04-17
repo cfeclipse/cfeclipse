@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.aptana.ide.editor.cfml.CFMLEditor"
+            contributorClass="com.aptana.ide.editors.unified.actions.UnifiedActionContributor"
+            default="true"
+            extensions="cfm,cfc,cfml"
+            icon="icons/page_white_coldfusion.png"
+            id="com.aptana.ide.editor.cfml.CFMLEditor"
+            name="Aptana CFML Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="com.aptana.ide.core.ui.projects"
+            name="Project Files">
+      </category>
+      <wizard
+            category="com.aptana.ide.core.ui.projects"
+            class="com.aptana.ide.editor.cfml.wizards.CFMLNewWizard"
+            finalPerspective="com.aptana.ide.js.ui.WebPerspective"
+            icon="icons/page_white_coldfusion.png"
+            id="com.aptana.ide.editors.wizards.CFMLNewWizard"
+            name="CFML File"
+            preferredPerspectives="com.aptana.ide.js.ui.WebPerspective">
+      </wizard>
+      <category
+            id="com.aptana.ide.core.ui"
+            name="Untitled Files">
+      </category>
+      <wizard
+            canFinishEarly="true"
+            category="com.aptana.ide.core.ui"
+            class="com.aptana.ide.editor.cfml.wizards.CFMLUnitledTextFileWizard"
+            finalPerspective="com.aptana.ide.js.ui.WebPerspective"
+            hasPages="false"
+            icon="icons/page_white_coldfusion.png"
+            id="com.aptana.ide.editors.wizards.CFMLUntitledWizard"
+            name="Untitled CFML File"
+            preferredPerspectives="com.aptana.ide.js.ui.WebPerspective">
+      </wizard>
+   </extension>
+   <extension
+         point="com.aptana.ide.editors.parser">
+      <parser
+            class="com.aptana.ide.editor.cfml.parsing.CFMLParser"
+            language="text/cfml">
+      </parser>
+   </extension>
+
+</plugin>
