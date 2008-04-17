@@ -5,3 +5,6 @@ The required DLTK version to build this can be obtained from:
 http://download.eclipse.org/technology/dltk/downloads
 
 Use the Stable or Integration (R1.0)
+
+
+Status: I have followed the tutorial up to the "Python interpreter" secion. Nothing so far seems to be happening but more needs to be added.
