@@ -123,7 +123,7 @@ public class CFDoubleClickStrategy implements ITextDoubleClickStrategy {
 			while (pos >= 0)
 			{
 				c = doc.getChar(pos);
-				if(!Character.isJavaIdentifierPart(c) && c != '-')
+				if(!Character.isJavaIdentifierPart(c) && c != '-' && c != '_')
 					break;
 				--pos;
 			}
@@ -133,10 +133,14 @@ public class CFDoubleClickStrategy implements ITextDoubleClickStrategy {
 			pos = caretPos;
 			int length = doc.getLength();
 
+				/*
+				 * We should ignore "_"'s since they are used as variable names, very annoying!
+				 * 
+				 */
 			while (pos < length) 
 			{
 				c = doc.getChar(pos);
-				if(!Character.isJavaIdentifierPart(c) && c != '-')
+				if(!Character.isJavaIdentifierPart(c) && c != '-' && c != '_')
 					break;
 				++pos;
 			}

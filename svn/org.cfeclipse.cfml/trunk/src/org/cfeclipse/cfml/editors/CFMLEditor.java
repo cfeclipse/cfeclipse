@@ -83,19 +83,16 @@ import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
-import org.eclipse.jface.text.source.LineNumberRulerColumn;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ST;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DropTarget;
-import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.FileTransfer;
@@ -108,10 +105,10 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
-import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.dnd.IDragAndDropService;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
+import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.ShowInContext;
@@ -124,6 +121,9 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
+import org.eclipse.ui.texteditor.rulers.IColumnSupport;
+import org.eclipse.ui.texteditor.rulers.RulerColumnDescriptor;
+import org.eclipse.ui.texteditor.rulers.RulerColumnRegistry;
 
 
 /**
@@ -132,7 +132,7 @@ import org.eclipse.ui.texteditor.TextOperationAction;
  * This is the start of the Editor. It loads up the configuration and starts up
  * the image manager and syntax dictionaries.
  */
-public class CFMLEditor extends AbstractDecoratedTextEditor implements
+public class CFMLEditor extends TextEditor implements
 		IPropertyChangeListener, IShowInSource {
 	
 	/*
@@ -197,7 +197,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	final JumpToDocPos jumpAction = new JumpToDocPos();
 
 	private CodeFoldingSetter foldingSetter;
-//protected LineNumberRulerColumn fLineNumberRulerColumn;
+
 
 	/**
 	 * The change ruler column.
@@ -208,6 +208,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	private ProjectionSupport fProjectionSupport;
 
 	private DragSource dragsource;
+	private Object columnSupport;
 
 	
 
@@ -298,7 +299,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 	 */
 	protected void initializeEditor() {
 		setEditorContextMenuId("#CFMLEditorContext"); //$NON-NLS-1$
-		setRulerContextMenuId("#TextRulerContext"); //$NON-NLS-1$
+		setRulerContextMenuId("#RulerContext"); //$NON-NLS-1$
 		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		configureInsertMode(SMART_INSERT, false);
@@ -314,7 +315,8 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 
 	public void createPartControl(Composite parent) {
 	    
-	    
+		
+		
 		/* TODO: hook this up to a button
 		 * Check the preferences, and add a toolbar */
 		if(getPreferenceStore().getBoolean(EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR)){
@@ -592,10 +594,7 @@ public class CFMLEditor extends AbstractDecoratedTextEditor implements
 		
 	}
 
-	public IVerticalRuler verticalRuler() {
-
-		return this.getVerticalRuler();
-	}
+	
 
 	private void createDragAndDrop(ProjectionViewer projectionViewer) {
 

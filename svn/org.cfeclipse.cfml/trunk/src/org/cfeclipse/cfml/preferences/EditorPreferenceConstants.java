@@ -50,8 +50,6 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for whether or not tab indents single line if part of the line is selected */ 
 	public static final String P_TAB_INDENTS_CURRENT_LINE 	= "cfeclipse.editor.tabIndentsCurrentLine";
 
-	/** Preference key identifier for showing the line number ruler */
-	public static final String P_SHOW_LINE_NUMBERS = AbstractDecoratedTextEditorPreferenceConstants.EDITOR_LINE_NUMBER_RULER;
 
 	/** Preference key identifier for trimming trailing spaces when you save */
 	public static final String P_RTRIM_ON_SAVE = "cfeclipse.editor.rTrimOnSave";
@@ -150,7 +148,6 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_BRACKET_MATCHING_COLOR,"255,0,0");
 		store.setDefault(P_BRACKET_MATCHING_ENABLED,true);
 		store.setDefault(P_TAB_INDENTS_CURRENT_LINE,true);
-		store.setDefault(P_SHOW_LINE_NUMBERS,true);
 		store.setDefault(P_RTRIM_ON_SAVE,false);
 		store.setDefault(P_LINE_NUMBER_COLOR,"0,0,0");
 		store.setDefault(P_CURRENT_LINE_COLOR,"232,242,254");

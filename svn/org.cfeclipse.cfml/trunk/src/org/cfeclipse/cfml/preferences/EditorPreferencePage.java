@@ -147,7 +147,6 @@ public class EditorPreferencePage extends PreferencePage
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_LINE_NUMBER_COLOR));
-		//overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_USE_WIDE_CARET));
@@ -222,9 +221,6 @@ public class EditorPreferencePage extends PreferencePage
 		
 		label = "Show overview &ruler";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER, 0);
-	/*	label = "Show lin&e numbers";
-		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_LINE_NUMBERS, 0);
-	*/	
 		label = "Show Editor Toolbar";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR, 0);
 		label = "Hi&ghlight current line";
