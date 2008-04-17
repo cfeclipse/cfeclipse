@@ -203,8 +203,13 @@ public class OpenAtMethodAction implements IWorkbenchWindowActionDelegate,IEdito
 		}
 	}
 
-	public void selectionChanged(IAction action, ISelection selection){;}
-    /**
+	public void selectionChanged(IAction action, ISelection selection){
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
+	}
+
+	/**
      * @return Returns the success.
      */
     public boolean isSuccess() {

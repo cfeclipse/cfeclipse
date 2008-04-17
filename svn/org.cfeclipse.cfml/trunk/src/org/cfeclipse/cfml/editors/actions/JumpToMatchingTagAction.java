@@ -100,8 +100,11 @@ public class JumpToMatchingTagAction implements IWorkbenchWindowActionDelegate,I
     /* (non-Javadoc)
      * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction, org.eclipse.jface.viewers.ISelection)
      */
-    public void selectionChanged(IAction action, ISelection selection) {
-    }
+	public void selectionChanged(IAction action, ISelection selection){
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
+	}
 
     /**
      * Returns the position in the partitioner's position category which matches

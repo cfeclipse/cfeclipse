@@ -93,9 +93,10 @@ public class EditCustomTagAction  implements IWorkbenchWindowActionDelegate,IEdi
 		
 	}
 
-	public void selectionChanged(IAction action, ISelection selection) {
-		// TODO Auto-generated method stub
-		
+	public void selectionChanged(IAction action, ISelection selection){
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
 	}
 
 	public void run(IAction action) {

@@ -36,6 +36,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.jdom.Parent;
 
 
 /**
@@ -97,7 +98,12 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 			e.printStackTrace(System.err);
 		}
 	}
-	public void selectionChanged(IAction action, ISelection selection){;}
+
+	public void selectionChanged(IAction action, ISelection selection){
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
+	}
 
 	public void dispose() {
 		// TODO Auto-generated method stub

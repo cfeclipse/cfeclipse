@@ -109,9 +109,10 @@ public class LocateInTreeAction implements IWorkbenchWindowActionDelegate,IEdito
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction, org.eclipse.jface.viewers.ISelection)
 	 */
-	public void selectionChanged(IAction action, ISelection selection) {
-		// TODO Auto-generated method stub
-
+	public void selectionChanged(IAction action, ISelection selection){
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
 	}
 
 	public void dispose() {

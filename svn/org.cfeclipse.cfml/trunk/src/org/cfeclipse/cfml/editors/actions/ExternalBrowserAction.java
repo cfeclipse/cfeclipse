@@ -241,10 +241,11 @@ public class ExternalBrowserAction implements IWorkbenchWindowActionDelegate,IEd
     /* (non-Javadoc)
      * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction, org.eclipse.jface.viewers.ISelection)
      */
-    public void selectionChanged(IAction action, ISelection selection) {
-        // TODO Auto-generated method stub
-
-    }
+	public void selectionChanged(IAction action, ISelection selection){
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
+	}
     
     private String getDefaultProperties(IProject project) {
     	StringBuffer properties = new StringBuffer();

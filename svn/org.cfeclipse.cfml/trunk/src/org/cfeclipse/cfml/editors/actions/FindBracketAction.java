@@ -140,9 +140,10 @@ public class FindBracketAction implements IWorkbenchWindowActionDelegate,IEditor
 	 * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction,
 	 *      org.eclipse.jface.viewers.ISelection)
 	 */
-	public void selectionChanged(IAction action, ISelection selection)
-	{
-		// not sure anything needs to be done here
+	public void selectionChanged(IAction action, ISelection selection){
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
 	}
 
 	public void dispose() {

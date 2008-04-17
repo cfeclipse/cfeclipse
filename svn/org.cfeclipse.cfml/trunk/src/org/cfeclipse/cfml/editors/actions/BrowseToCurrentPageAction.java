@@ -103,7 +103,11 @@ public class BrowseToCurrentPageAction implements IWorkbenchWindowActionDelegate
 
 	}
 
-	public void selectionChanged(IAction action, ISelection selection){;}
+	public void selectionChanged(IAction action, ISelection selection){
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
+	}
 
 	public void dispose() {
 		// TODO Auto-generated method stub

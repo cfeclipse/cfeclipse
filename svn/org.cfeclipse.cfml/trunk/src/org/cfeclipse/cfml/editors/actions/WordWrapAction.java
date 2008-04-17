@@ -35,7 +35,10 @@ public class WordWrapAction implements IWorkbenchWindowActionDelegate,IEditorAct
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {
-		if (editor == null && editor == null) {
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
+		if (editor == null) {
 			action.setEnabled(false);
 		} else {
 			action.setEnabled(true);
