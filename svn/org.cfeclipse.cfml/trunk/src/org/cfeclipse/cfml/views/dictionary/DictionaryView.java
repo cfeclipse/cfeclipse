@@ -268,6 +268,28 @@ public class DictionaryView extends ViewPart {
 			
 			searchField.setLayoutData(noSpanData);
 			
+			searchField.addKeyListener(new KeyListener(){
+
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+					if(e.character == SWT.CR){
+						String searchpattern = searchField.getText();
+						
+						if(searchpattern.trim().length() > 0){
+							viewfilter.setMatch(searchpattern);
+							viewer.addFilter(viewfilter);
+							viewer.expandToLevel(5);
+						}
+					}
+				}
+
+				public void keyReleased(KeyEvent e) {
+					return;
+					
+				}
+				
+			});
+			
 			
 			//add search and clear buttons
 			Button btnSearch = new Button(topHalf, SWT.NONE);
@@ -275,7 +297,6 @@ public class DictionaryView extends ViewPart {
 			btnSearch.addMouseListener(new MouseListener(){
 
 				public void mouseDoubleClick(MouseEvent e) {
-					System.out.println("button pressed");
 					String searchpattern = searchField.getText();
 					
 					if(searchpattern.trim().length() > 0){
@@ -300,6 +321,23 @@ public class DictionaryView extends ViewPart {
 
 				public void mouseUp(MouseEvent e) {}
 			});
+			btnSearch.addKeyListener(new KeyListener(){
+
+				public void keyPressed(KeyEvent e) {
+					String searchpattern = searchField.getText();
+					if(e.character == ' ' && searchpattern.trim().length() > 0){
+							viewfilter.setMatch(searchpattern);
+							viewer.addFilter(viewfilter);
+							viewer.expandToLevel(5);
+					}
+					
+				}
+
+				public void keyReleased(KeyEvent e) {
+					return;
+					
+				}});
+			
 			
 			Button btnClear = new Button(topHalf, SWT.NONE);
 			btnClear.setText("Clear");
@@ -322,13 +360,27 @@ public class DictionaryView extends ViewPart {
 				}
 
 				public void mouseUp(MouseEvent e) {
-					// TODO Auto-generated method stub
+					return;
 					
 				}
 				
 			});
+			btnClear.addKeyListener(new KeyListener(){
+
+				public void keyPressed(KeyEvent e) {
+					searchField.setText("");
+					viewer.removeFilter(viewfilter);
+					viewer.refresh();
+					viewer.expandToLevel(1);
+					
+				}
+
+				public void keyReleased(KeyEvent e) {
+					return;
+				}
+				
+			});
 			
-		
 
 			// The dictionary tree viewer
 			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER);
