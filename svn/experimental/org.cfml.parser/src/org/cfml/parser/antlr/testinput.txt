@@ -1,0 +1,26 @@
+<html>
+	<cffunction name="test">
+		<cfargument name="fred" test="test"/>
+		<cfscript>
+			WriteOutput("FREDFREDFRED");
+		</cfscript>
+		<cfif thisisatest is 1>
+			<cfoutput>asdfasdf</cfoutput>
+		</cfif>
+	</cffunction>
+
+	<cfset fred = 2/>
+	<cfset test(fred)/>
+	<cffunction name="test" >
+		<cfargument name="test" default="#WriteOutput("">"")#"/> <!--- I think this is valid! --->
+	</cffunction>
+	<cfoutput>
+		This is a <b>test</b>
+	</cfoutput>
+	<table>
+		<tr>
+			<td style="<cfoutput>#somethinghere#</cfoutput>">asdfasdf</td>
+			<td style="fred"></td>
+		</td>
+	</table>
+</html>>
