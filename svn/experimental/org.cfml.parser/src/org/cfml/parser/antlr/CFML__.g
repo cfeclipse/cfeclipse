@@ -49,7 +49,7 @@ THE SOFTWARE.
 */
 }
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 414
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 414
 END_TAG_OPEN
 	:
 	{
@@ -61,7 +61,7 @@ END_TAG_OPEN
 	'</'TAG_NAME
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 425
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 425
 END_TAG_CLOSE
 	:
 	{getMode() == ENDTAG_MODE}?=>
@@ -69,7 +69,7 @@ END_TAG_CLOSE
 	{setMode(NONE_MODE);}
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 432
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 432
 START_TAG_OPEN
 	:
 	{
@@ -82,7 +82,7 @@ START_TAG_OPEN
 	;
 
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 444
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 444
 START_TAG_CLOSE
 	:
 	{getMode() == STARTTAG_MODE}?=>
@@ -90,21 +90,21 @@ START_TAG_CLOSE
 	{setMode(NONE_MODE);}
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 451
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 451
 TAG_ATTRIBUTE
 	:
 	{getMode() == STARTTAG_MODE}?=>
 	(LETTER | DIGIT | UNDERSCORE)+
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 457
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 457
 EQUALS
 	:
 	{getMode() == STARTTAG_MODE}?=>
 	'='
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 463
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 463
 SINGLE_QUOTE
 	:
 	{getMode() == STARTTAG_MODE  || getMode() == SINGLE_QUOTE_STRING_MODE}?=>
@@ -121,21 +121,21 @@ SINGLE_QUOTE
 	}
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 479
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 479
 ESCAPE_SINGLE_QUOTE
 	:
 	{ getMode() == SINGLE_QUOTE_STRING_MODE }?=>
 	'\'\''
 	;	
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 485
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 485
 SINGLE_QUOTE_STRING
 	:
 	{ getMode() == SINGLE_QUOTE_STRING_MODE }?=>
 	~('\'')
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 491
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 491
 DOUBLE_QUOTE
 	:
 	{getMode() == STARTTAG_MODE  || getMode() == DOUBLE_QUOTE_STRING_MODE}?=>
@@ -152,21 +152,21 @@ DOUBLE_QUOTE
 	}
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 507
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 507
 ESCAPE_DOUBLE_QUOTE
 	:
 	{ getMode() == DOUBLE_QUOTE_STRING_MODE }?=>
 	'""'
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 513
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 513
 DOUBLE_QUOTE_STRING
 	:
 	{ getMode() == DOUBLE_QUOTE_STRING_MODE }?=>
 	~('"')
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 519
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 519
 HASH
 	:
 	{getMode() == NONE_MODE  || getMode() == HASH_CFML_MODE}?=>
@@ -183,21 +183,21 @@ HASH
 	}
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 535
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 535
 ESCAPE_HASH
 	:
 	{ getMode() == HASH_CFML_MODE }?=>
 	'##'
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 541
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 541
 HASH_CFML
 	:
 	{ getMode() == HASH_CFML_MODE }?=>
 	~('#')
 	;	
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 547
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 547
 CFML
 	:	
 	{getMode() == STARTTAG_MODE}?=>
@@ -206,37 +206,37 @@ CFML
 
 /* fragments */
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 555
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 555
 fragment TAG_NAME
 	:
 	(LETTER)(TAG_IDENT)((COLON)(TAG_IDENT))?
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 560
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 560
 fragment TAG_IDENT
 	:
 	(LETTER | DIGIT | UNDERSCORE)*
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 565
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 565
 fragment DIGIT
 	:
 	'0'..'9'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 570
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 570
 fragment LETTER
 	:
 	'a'..'z' | 'A'..'Z'
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 575
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 575
 fragment UNDERSCORE
 	:
 	'_'
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 580
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 580
 fragment COLON
 	:
 	':'
@@ -244,7 +244,7 @@ fragment COLON
 
 /* hidden tokens */
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 587
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 587
 WS  
 	:  
 	(' '|'\r'|'\t'|'\u000C'|'\n') 
@@ -253,7 +253,7 @@ WS
 	}
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 595
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 595
 COMMENT
 	:   
 	'<!---' ( options {greedy=false;} : . )* '--->'
@@ -262,7 +262,7 @@ COMMENT
 	}
 	;	
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g" 603
+// $ANTLR src "./src/org/cfml/parser/antlr/CFML.g" 603
 OTHER
 	:
 	{getMode() == NONE_MODE}?=>

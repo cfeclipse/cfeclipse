@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g 2008-04-23 06:45:14
+// $ANTLR 3.0.1 ./src/org/cfml/parser/antlr/CFScript.g 2008-04-23 06:45:14
 
 package org.cfml.parser.antlr;
 
@@ -105,7 +105,7 @@ public class CFScriptParser extends Parser {
     }
 
     public String[] getTokenNames() { return tokenNames; }
-    public String getGrammarFileName() { return "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g"; }
+    public String getGrammarFileName() { return "./src/org/cfml/parser/antlr/CFScript.g"; }
 
 
     public static class script_return extends ParserRuleReturnScope {
@@ -114,7 +114,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start script
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:117:1: script : ( ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration ) )* ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:117:1: script : ( ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration ) )* ;
     public final script_return script() throws RecognitionException {
         script_return retval = new script_return();
         retval.start = input.LT(1);
@@ -140,12 +140,12 @@ public class CFScriptParser extends Parser {
 
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:118:2: ( ( ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration ) )* )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:119:2: ( ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration ) )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:118:2: ( ( ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration ) )* )
+            // ./src/org/cfml/parser/antlr/CFScript.g:119:2: ( ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration ) )*
             {
             root_0 = (Object)adaptor.nil();
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:119:2: ( ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration ) )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:119:2: ( ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration ) )*
             loop2:
             do {
                 int alt2=2;
@@ -158,9 +158,9 @@ public class CFScriptParser extends Parser {
 
                 switch (alt2) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:120:3: ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration )
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:120:3: ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration )
             	    {
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:120:3: ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration )
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:120:3: ( nonBlockStatement | ifStatement | tryStatement | forStatement | whileStatement | doWhileStatement | switchStatement | functionDeclaration )
             	    int alt1=8;
             	    switch ( input.LA(1) ) {
             	    case VAR:
@@ -221,7 +221,7 @@ public class CFScriptParser extends Parser {
 
             	    switch (alt1) {
             	        case 1 :
-            	            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:121:4: nonBlockStatement
+            	            // ./src/org/cfml/parser/antlr/CFScript.g:121:4: nonBlockStatement
             	            {
             	            pushFollow(FOLLOW_nonBlockStatement_in_script96);
             	            nonBlockStatement1=nonBlockStatement();
@@ -232,7 +232,7 @@ public class CFScriptParser extends Parser {
             	            }
             	            break;
             	        case 2 :
-            	            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:123:4: ifStatement
+            	            // ./src/org/cfml/parser/antlr/CFScript.g:123:4: ifStatement
             	            {
             	            pushFollow(FOLLOW_ifStatement_in_script107);
             	            ifStatement2=ifStatement();
@@ -243,7 +243,7 @@ public class CFScriptParser extends Parser {
             	            }
             	            break;
             	        case 3 :
-            	            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:125:4: tryStatement
+            	            // ./src/org/cfml/parser/antlr/CFScript.g:125:4: tryStatement
             	            {
             	            pushFollow(FOLLOW_tryStatement_in_script117);
             	            tryStatement3=tryStatement();
@@ -254,7 +254,7 @@ public class CFScriptParser extends Parser {
             	            }
             	            break;
             	        case 4 :
-            	            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:127:4: forStatement
+            	            // ./src/org/cfml/parser/antlr/CFScript.g:127:4: forStatement
             	            {
             	            pushFollow(FOLLOW_forStatement_in_script127);
             	            forStatement4=forStatement();
@@ -265,7 +265,7 @@ public class CFScriptParser extends Parser {
             	            }
             	            break;
             	        case 5 :
-            	            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:129:4: whileStatement
+            	            // ./src/org/cfml/parser/antlr/CFScript.g:129:4: whileStatement
             	            {
             	            pushFollow(FOLLOW_whileStatement_in_script137);
             	            whileStatement5=whileStatement();
@@ -276,7 +276,7 @@ public class CFScriptParser extends Parser {
             	            }
             	            break;
             	        case 6 :
-            	            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:131:4: doWhileStatement
+            	            // ./src/org/cfml/parser/antlr/CFScript.g:131:4: doWhileStatement
             	            {
             	            pushFollow(FOLLOW_doWhileStatement_in_script147);
             	            doWhileStatement6=doWhileStatement();
@@ -287,7 +287,7 @@ public class CFScriptParser extends Parser {
             	            }
             	            break;
             	        case 7 :
-            	            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:133:4: switchStatement
+            	            // ./src/org/cfml/parser/antlr/CFScript.g:133:4: switchStatement
             	            {
             	            pushFollow(FOLLOW_switchStatement_in_script157);
             	            switchStatement7=switchStatement();
@@ -298,7 +298,7 @@ public class CFScriptParser extends Parser {
             	            }
             	            break;
             	        case 8 :
-            	            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:135:4: functionDeclaration
+            	            // ./src/org/cfml/parser/antlr/CFScript.g:135:4: functionDeclaration
             	            {
             	            pushFollow(FOLLOW_functionDeclaration_in_script167);
             	            functionDeclaration8=functionDeclaration();
@@ -345,7 +345,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start nonBlockStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:140:1: nonBlockStatement : ( setStatement | returnStatement | breakStatement ) SEMI_COLON ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:140:1: nonBlockStatement : ( setStatement | returnStatement | breakStatement ) SEMI_COLON ;
     public final nonBlockStatement_return nonBlockStatement() throws RecognitionException {
         nonBlockStatement_return retval = new nonBlockStatement_return();
         retval.start = input.LT(1);
@@ -363,12 +363,12 @@ public class CFScriptParser extends Parser {
         Object SEMI_COLON12_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:141:2: ( ( setStatement | returnStatement | breakStatement ) SEMI_COLON )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:142:2: ( setStatement | returnStatement | breakStatement ) SEMI_COLON
+            // ./src/org/cfml/parser/antlr/CFScript.g:141:2: ( ( setStatement | returnStatement | breakStatement ) SEMI_COLON )
+            // ./src/org/cfml/parser/antlr/CFScript.g:142:2: ( setStatement | returnStatement | breakStatement ) SEMI_COLON
             {
             root_0 = (Object)adaptor.nil();
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:142:2: ( setStatement | returnStatement | breakStatement )
+            // ./src/org/cfml/parser/antlr/CFScript.g:142:2: ( setStatement | returnStatement | breakStatement )
             int alt3=3;
             switch ( input.LA(1) ) {
             case VAR:
@@ -402,7 +402,7 @@ public class CFScriptParser extends Parser {
 
             switch (alt3) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:143:3: setStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:143:3: setStatement
                     {
                     pushFollow(FOLLOW_setStatement_in_nonBlockStatement192);
                     setStatement9=setStatement();
@@ -413,7 +413,7 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:145:3: returnStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:145:3: returnStatement
                     {
                     pushFollow(FOLLOW_returnStatement_in_nonBlockStatement200);
                     returnStatement10=returnStatement();
@@ -424,7 +424,7 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:147:3: breakStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:147:3: breakStatement
                     {
                     pushFollow(FOLLOW_breakStatement_in_nonBlockStatement208);
                     breakStatement11=breakStatement();
@@ -467,7 +467,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start setStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:152:1: setStatement : ( VAR )? codeStatement ( EQUALS codeStatement )? ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:152:1: setStatement : ( VAR )? codeStatement ( EQUALS codeStatement )? ;
     public final setStatement_return setStatement() throws RecognitionException {
         setStatement_return retval = new setStatement_return();
         retval.start = input.LT(1);
@@ -485,12 +485,12 @@ public class CFScriptParser extends Parser {
         Object EQUALS15_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:153:2: ( ( VAR )? codeStatement ( EQUALS codeStatement )? )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:162:2: ( VAR )? codeStatement ( EQUALS codeStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:153:2: ( ( VAR )? codeStatement ( EQUALS codeStatement )? )
+            // ./src/org/cfml/parser/antlr/CFScript.g:162:2: ( VAR )? codeStatement ( EQUALS codeStatement )?
             {
             root_0 = (Object)adaptor.nil();
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:162:2: ( VAR )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:162:2: ( VAR )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -499,7 +499,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt4) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:162:3: VAR
+                    // ./src/org/cfml/parser/antlr/CFScript.g:162:3: VAR
                     {
                     VAR13=(Token)input.LT(1);
                     match(input,VAR,FOLLOW_VAR_in_setStatement232); 
@@ -517,7 +517,7 @@ public class CFScriptParser extends Parser {
             _fsp--;
 
             adaptor.addChild(root_0, codeStatement14.getTree());
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:162:23: ( EQUALS codeStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:162:23: ( EQUALS codeStatement )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -526,7 +526,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt5) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:162:24: EQUALS codeStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:162:24: EQUALS codeStatement
                     {
                     EQUALS15=(Token)input.LT(1);
                     match(input,EQUALS,FOLLOW_EQUALS_in_setStatement239); 
@@ -569,7 +569,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start codeStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:165:1: codeStatement : ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement ) ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:165:1: codeStatement : ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement ) ;
     public final codeStatement_return codeStatement() throws RecognitionException {
         codeStatement_return retval = new codeStatement_return();
         retval.start = input.LT(1);
@@ -587,12 +587,12 @@ public class CFScriptParser extends Parser {
         Object CLOSE_PAREN19_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:166:2: ( ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:167:2: ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement )
+            // ./src/org/cfml/parser/antlr/CFScript.g:166:2: ( ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:167:2: ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement )
             {
             root_0 = (Object)adaptor.nil();
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:167:2: ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement )
+            // ./src/org/cfml/parser/antlr/CFScript.g:167:2: ( OPEN_PAREN codeStatement CLOSE_PAREN | cfmlBasicStatement )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -610,7 +610,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt6) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:168:3: OPEN_PAREN codeStatement CLOSE_PAREN
+                    // ./src/org/cfml/parser/antlr/CFScript.g:168:3: OPEN_PAREN codeStatement CLOSE_PAREN
                     {
                     OPEN_PAREN17=(Token)input.LT(1);
                     match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_codeStatement259); 
@@ -631,7 +631,7 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:170:3: cfmlBasicStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:170:3: cfmlBasicStatement
                     {
                     pushFollow(FOLLOW_cfmlBasicStatement_in_codeStatement271);
                     cfmlBasicStatement20=cfmlBasicStatement();
@@ -669,7 +669,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start returnStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:174:1: returnStatement : RETURN ( codeStatement )? ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:174:1: returnStatement : RETURN ( codeStatement )? ;
     public final returnStatement_return returnStatement() throws RecognitionException {
         returnStatement_return retval = new returnStatement_return();
         retval.start = input.LT(1);
@@ -683,8 +683,8 @@ public class CFScriptParser extends Parser {
         Object RETURN21_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:175:2: ( RETURN ( codeStatement )? )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:176:2: RETURN ( codeStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:175:2: ( RETURN ( codeStatement )? )
+            // ./src/org/cfml/parser/antlr/CFScript.g:176:2: RETURN ( codeStatement )?
             {
             root_0 = (Object)adaptor.nil();
 
@@ -693,7 +693,7 @@ public class CFScriptParser extends Parser {
             RETURN21_tree = (Object)adaptor.create(RETURN21);
             root_0 = (Object)adaptor.becomeRoot(RETURN21_tree, root_0);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:176:10: ( codeStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:176:10: ( codeStatement )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -702,7 +702,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt7) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:176:11: codeStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:176:11: codeStatement
                     {
                     pushFollow(FOLLOW_codeStatement_in_returnStatement291);
                     codeStatement22=codeStatement();
@@ -740,7 +740,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlBasicStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:179:1: cfmlBasicStatement : cfmlValueStatement ( OPERATOR codeStatement )? ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:179:1: cfmlBasicStatement : cfmlValueStatement ( OPERATOR codeStatement )? ;
     public final cfmlBasicStatement_return cfmlBasicStatement() throws RecognitionException {
         cfmlBasicStatement_return retval = new cfmlBasicStatement_return();
         retval.start = input.LT(1);
@@ -756,8 +756,8 @@ public class CFScriptParser extends Parser {
         Object OPERATOR24_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:180:2: ( cfmlValueStatement ( OPERATOR codeStatement )? )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:181:2: cfmlValueStatement ( OPERATOR codeStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:180:2: ( cfmlValueStatement ( OPERATOR codeStatement )? )
+            // ./src/org/cfml/parser/antlr/CFScript.g:181:2: cfmlValueStatement ( OPERATOR codeStatement )?
             {
             root_0 = (Object)adaptor.nil();
 
@@ -766,7 +766,7 @@ public class CFScriptParser extends Parser {
             _fsp--;
 
             adaptor.addChild(root_0, cfmlValueStatement23.getTree());
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:181:21: ( OPERATOR codeStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:181:21: ( OPERATOR codeStatement )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -775,7 +775,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt8) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:181:22: OPERATOR codeStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:181:22: OPERATOR codeStatement
                     {
                     OPERATOR24=(Token)input.LT(1);
                     match(input,OPERATOR,FOLLOW_OPERATOR_in_cfmlBasicStatement308); 
@@ -818,7 +818,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlValueStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:185:1: cfmlValueStatement : ( NOT )? cfmlValue ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:185:1: cfmlValueStatement : ( NOT )? cfmlValue ;
     public final cfmlValueStatement_return cfmlValueStatement() throws RecognitionException {
         cfmlValueStatement_return retval = new cfmlValueStatement_return();
         retval.start = input.LT(1);
@@ -832,12 +832,12 @@ public class CFScriptParser extends Parser {
         Object NOT26_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:186:2: ( ( NOT )? cfmlValue )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:187:2: ( NOT )? cfmlValue
+            // ./src/org/cfml/parser/antlr/CFScript.g:186:2: ( ( NOT )? cfmlValue )
+            // ./src/org/cfml/parser/antlr/CFScript.g:187:2: ( NOT )? cfmlValue
             {
             root_0 = (Object)adaptor.nil();
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:187:2: ( NOT )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:187:2: ( NOT )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -846,7 +846,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt9) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:187:3: NOT
+                    // ./src/org/cfml/parser/antlr/CFScript.g:187:3: NOT
                     {
                     NOT26=(Token)input.LT(1);
                     match(input,NOT,FOLLOW_NOT_in_cfmlValueStatement327); 
@@ -889,7 +889,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlValue
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:190:1: cfmlValue : ( NUMBER | stringLiteral | cfmlLinking ) ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:190:1: cfmlValue : ( NUMBER | stringLiteral | cfmlLinking ) ;
     public final cfmlValue_return cfmlValue() throws RecognitionException {
         cfmlValue_return retval = new cfmlValue_return();
         retval.start = input.LT(1);
@@ -905,12 +905,12 @@ public class CFScriptParser extends Parser {
         Object NUMBER28_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:191:2: ( ( NUMBER | stringLiteral | cfmlLinking ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:192:2: ( NUMBER | stringLiteral | cfmlLinking )
+            // ./src/org/cfml/parser/antlr/CFScript.g:191:2: ( ( NUMBER | stringLiteral | cfmlLinking ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:192:2: ( NUMBER | stringLiteral | cfmlLinking )
             {
             root_0 = (Object)adaptor.nil();
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:192:2: ( NUMBER | stringLiteral | cfmlLinking )
+            // ./src/org/cfml/parser/antlr/CFScript.g:192:2: ( NUMBER | stringLiteral | cfmlLinking )
             int alt10=3;
             switch ( input.LA(1) ) {
             case NUMBER:
@@ -939,7 +939,7 @@ public class CFScriptParser extends Parser {
 
             switch (alt10) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:192:3: NUMBER
+                    // ./src/org/cfml/parser/antlr/CFScript.g:192:3: NUMBER
                     {
                     NUMBER28=(Token)input.LT(1);
                     match(input,NUMBER,FOLLOW_NUMBER_in_cfmlValue344); 
@@ -950,7 +950,7 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:192:12: stringLiteral
+                    // ./src/org/cfml/parser/antlr/CFScript.g:192:12: stringLiteral
                     {
                     pushFollow(FOLLOW_stringLiteral_in_cfmlValue348);
                     stringLiteral29=stringLiteral();
@@ -961,7 +961,7 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:192:28: cfmlLinking
+                    // ./src/org/cfml/parser/antlr/CFScript.g:192:28: cfmlLinking
                     {
                     pushFollow(FOLLOW_cfmlLinking_in_cfmlValue352);
                     cfmlLinking30=cfmlLinking();
@@ -999,7 +999,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlLinking
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:195:1: cfmlLinking : ( hashCfmlLinking | cfmlBasicLinking );
+    // ./src/org/cfml/parser/antlr/CFScript.g:195:1: cfmlLinking : ( hashCfmlLinking | cfmlBasicLinking );
     public final cfmlLinking_return cfmlLinking() throws RecognitionException {
         cfmlLinking_return retval = new cfmlLinking_return();
         retval.start = input.LT(1);
@@ -1013,7 +1013,7 @@ public class CFScriptParser extends Parser {
 
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:196:2: ( hashCfmlLinking | cfmlBasicLinking )
+            // ./src/org/cfml/parser/antlr/CFScript.g:196:2: ( hashCfmlLinking | cfmlBasicLinking )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1031,7 +1031,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt11) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:197:2: hashCfmlLinking
+                    // ./src/org/cfml/parser/antlr/CFScript.g:197:2: hashCfmlLinking
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1044,7 +1044,7 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:199:2: cfmlBasicLinking
+                    // ./src/org/cfml/parser/antlr/CFScript.g:199:2: cfmlBasicLinking
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1080,7 +1080,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start hashCfmlLinking
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:202:1: hashCfmlLinking : HASH cfmlBasicLinking HASH ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:202:1: hashCfmlLinking : HASH cfmlBasicLinking HASH ;
     public final hashCfmlLinking_return hashCfmlLinking() throws RecognitionException {
         hashCfmlLinking_return retval = new hashCfmlLinking_return();
         retval.start = input.LT(1);
@@ -1096,8 +1096,8 @@ public class CFScriptParser extends Parser {
         Object HASH35_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:203:2: ( HASH cfmlBasicLinking HASH )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:204:2: HASH cfmlBasicLinking HASH
+            // ./src/org/cfml/parser/antlr/CFScript.g:203:2: ( HASH cfmlBasicLinking HASH )
+            // ./src/org/cfml/parser/antlr/CFScript.g:204:2: HASH cfmlBasicLinking HASH
             {
             root_0 = (Object)adaptor.nil();
 
@@ -1141,7 +1141,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlBasicLinking
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:207:1: cfmlBasicLinking : cfmlBasic ( DOT cfmlBasic )* ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:207:1: cfmlBasicLinking : cfmlBasic ( DOT cfmlBasic )* ;
     public final cfmlBasicLinking_return cfmlBasicLinking() throws RecognitionException {
         cfmlBasicLinking_return retval = new cfmlBasicLinking_return();
         retval.start = input.LT(1);
@@ -1157,8 +1157,8 @@ public class CFScriptParser extends Parser {
         Object DOT37_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:208:2: ( cfmlBasic ( DOT cfmlBasic )* )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:209:2: cfmlBasic ( DOT cfmlBasic )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:208:2: ( cfmlBasic ( DOT cfmlBasic )* )
+            // ./src/org/cfml/parser/antlr/CFScript.g:209:2: cfmlBasic ( DOT cfmlBasic )*
             {
             root_0 = (Object)adaptor.nil();
 
@@ -1167,7 +1167,7 @@ public class CFScriptParser extends Parser {
             _fsp--;
 
             adaptor.addChild(root_0, cfmlBasic36.getTree());
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:209:12: ( DOT cfmlBasic )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:209:12: ( DOT cfmlBasic )*
             loop12:
             do {
                 int alt12=2;
@@ -1180,7 +1180,7 @@ public class CFScriptParser extends Parser {
 
                 switch (alt12) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:209:13: DOT cfmlBasic
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:209:13: DOT cfmlBasic
             	    {
             	    DOT37=(Token)input.LT(1);
             	    match(input,DOT,FOLLOW_DOT_in_cfmlBasicLinking403); 
@@ -1226,7 +1226,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start cfmlBasic
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:212:1: cfmlBasic : ( identifier | function );
+    // ./src/org/cfml/parser/antlr/CFScript.g:212:1: cfmlBasic : ( identifier | function );
     public final cfmlBasic_return cfmlBasic() throws RecognitionException {
         cfmlBasic_return retval = new cfmlBasic_return();
         retval.start = input.LT(1);
@@ -1240,7 +1240,7 @@ public class CFScriptParser extends Parser {
 
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:213:2: ( identifier | function )
+            // ./src/org/cfml/parser/antlr/CFScript.g:213:2: ( identifier | function )
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -1268,7 +1268,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt13) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:214:2: identifier
+                    // ./src/org/cfml/parser/antlr/CFScript.g:214:2: identifier
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1281,7 +1281,7 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:214:15: function
+                    // ./src/org/cfml/parser/antlr/CFScript.g:214:15: function
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1317,7 +1317,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start innerStringCFML
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:217:1: innerStringCFML : hashCfmlLinking ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:217:1: innerStringCFML : hashCfmlLinking ;
     public final innerStringCFML_return innerStringCFML() throws RecognitionException {
         innerStringCFML_return retval = new innerStringCFML_return();
         retval.start = input.LT(1);
@@ -1329,8 +1329,8 @@ public class CFScriptParser extends Parser {
 
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:218:2: ( hashCfmlLinking )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:219:2: hashCfmlLinking
+            // ./src/org/cfml/parser/antlr/CFScript.g:218:2: ( hashCfmlLinking )
+            // ./src/org/cfml/parser/antlr/CFScript.g:219:2: hashCfmlLinking
             {
             root_0 = (Object)adaptor.nil();
 
@@ -1364,7 +1364,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start stringLiteral
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:222:1: stringLiteral : ( ( DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE ) | ( SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE ) );
+    // ./src/org/cfml/parser/antlr/CFScript.g:222:1: stringLiteral : ( ( DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE ) | ( SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE ) );
     public final stringLiteral_return stringLiteral() throws RecognitionException {
         stringLiteral_return retval = new stringLiteral_return();
         retval.start = input.LT(1);
@@ -1394,7 +1394,7 @@ public class CFScriptParser extends Parser {
         Object SINGLE_QUOTE51_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:223:2: ( ( DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE ) | ( SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:223:2: ( ( DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE ) | ( SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE ) )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -1412,19 +1412,19 @@ public class CFScriptParser extends Parser {
             }
             switch (alt16) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:224:2: ( DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE )
+                    // ./src/org/cfml/parser/antlr/CFScript.g:224:2: ( DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE )
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:224:2: ( DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE )
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:225:3: DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE
+                    // ./src/org/cfml/parser/antlr/CFScript.g:224:2: ( DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE )
+                    // ./src/org/cfml/parser/antlr/CFScript.g:225:3: DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )* DOUBLE_QUOTE
                     {
                     DOUBLE_QUOTE42=(Token)input.LT(1);
                     match(input,DOUBLE_QUOTE,FOLLOW_DOUBLE_QUOTE_in_stringLiteral451); 
                     DOUBLE_QUOTE42_tree = (Object)adaptor.create(DOUBLE_QUOTE42);
                     root_0 = (Object)adaptor.becomeRoot(DOUBLE_QUOTE42_tree, root_0);
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:225:17: ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )*
+                    // ./src/org/cfml/parser/antlr/CFScript.g:225:17: ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH ) )*
                     loop14:
                     do {
                         int alt14=4;
@@ -1497,7 +1497,7 @@ public class CFScriptParser extends Parser {
 
                         switch (alt14) {
                     	case 1 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:225:19: ESCAPE_DOUBLE_QUOTE
+                    	    // ./src/org/cfml/parser/antlr/CFScript.g:225:19: ESCAPE_DOUBLE_QUOTE
                     	    {
                     	    ESCAPE_DOUBLE_QUOTE43=(Token)input.LT(1);
                     	    match(input,ESCAPE_DOUBLE_QUOTE,FOLLOW_ESCAPE_DOUBLE_QUOTE_in_stringLiteral456); 
@@ -1508,7 +1508,7 @@ public class CFScriptParser extends Parser {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:225:41: innerStringCFML
+                    	    // ./src/org/cfml/parser/antlr/CFScript.g:225:41: innerStringCFML
                     	    {
                     	    pushFollow(FOLLOW_innerStringCFML_in_stringLiteral460);
                     	    innerStringCFML44=innerStringCFML();
@@ -1519,7 +1519,7 @@ public class CFScriptParser extends Parser {
                     	    }
                     	    break;
                     	case 3 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:225:59: ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH )
+                    	    // ./src/org/cfml/parser/antlr/CFScript.g:225:59: ~ ( DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH )
                     	    {
                     	    set45=(Token)input.LT(1);
                     	    if ( (input.LA(1)>=FUNCTION_CALL && input.LA(1)<=NUMBER)||input.LA(1)==DOT||(input.LA(1)>=SINGLE_QUOTE && input.LA(1)<=OTHER) ) {
@@ -1554,19 +1554,19 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:228:2: ( SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE )
+                    // ./src/org/cfml/parser/antlr/CFScript.g:228:2: ( SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE )
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:228:2: ( SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE )
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:229:3: SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE
+                    // ./src/org/cfml/parser/antlr/CFScript.g:228:2: ( SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE )
+                    // ./src/org/cfml/parser/antlr/CFScript.g:229:3: SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )* SINGLE_QUOTE
                     {
                     SINGLE_QUOTE47=(Token)input.LT(1);
                     match(input,SINGLE_QUOTE,FOLLOW_SINGLE_QUOTE_in_stringLiteral493); 
                     SINGLE_QUOTE47_tree = (Object)adaptor.create(SINGLE_QUOTE47);
                     root_0 = (Object)adaptor.becomeRoot(SINGLE_QUOTE47_tree, root_0);
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:229:17: ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )*
+                    // ./src/org/cfml/parser/antlr/CFScript.g:229:17: ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH ) )*
                     loop15:
                     do {
                         int alt15=4;
@@ -1639,7 +1639,7 @@ public class CFScriptParser extends Parser {
 
                         switch (alt15) {
                     	case 1 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:229:19: ESCAPE_SINGLE_QUOTE
+                    	    // ./src/org/cfml/parser/antlr/CFScript.g:229:19: ESCAPE_SINGLE_QUOTE
                     	    {
                     	    ESCAPE_SINGLE_QUOTE48=(Token)input.LT(1);
                     	    match(input,ESCAPE_SINGLE_QUOTE,FOLLOW_ESCAPE_SINGLE_QUOTE_in_stringLiteral498); 
@@ -1650,7 +1650,7 @@ public class CFScriptParser extends Parser {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:229:41: innerStringCFML
+                    	    // ./src/org/cfml/parser/antlr/CFScript.g:229:41: innerStringCFML
                     	    {
                     	    pushFollow(FOLLOW_innerStringCFML_in_stringLiteral502);
                     	    innerStringCFML49=innerStringCFML();
@@ -1661,7 +1661,7 @@ public class CFScriptParser extends Parser {
                     	    }
                     	    break;
                     	case 3 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:229:59: ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH )
+                    	    // ./src/org/cfml/parser/antlr/CFScript.g:229:59: ~ ( SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH )
                     	    {
                     	    set50=(Token)input.LT(1);
                     	    if ( (input.LA(1)>=FUNCTION_CALL && input.LA(1)<=NUMBER)||(input.LA(1)>=DOT && input.LA(1)<=ESCAPE_DOUBLE_QUOTE)||(input.LA(1)>=IDENTIFIER && input.LA(1)<=OTHER) ) {
@@ -1719,7 +1719,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start identifier
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:233:1: identifier : IDENTIFIER ( struct )? ( EOF )? ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:233:1: identifier : IDENTIFIER ( struct )? ( EOF )? ;
     public final identifier_return identifier() throws RecognitionException {
         identifier_return retval = new identifier_return();
         retval.start = input.LT(1);
@@ -1735,8 +1735,8 @@ public class CFScriptParser extends Parser {
         Object EOF54_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:234:2: ( IDENTIFIER ( struct )? ( EOF )? )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:235:2: IDENTIFIER ( struct )? ( EOF )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:234:2: ( IDENTIFIER ( struct )? ( EOF )? )
+            // ./src/org/cfml/parser/antlr/CFScript.g:235:2: IDENTIFIER ( struct )? ( EOF )?
             {
             root_0 = (Object)adaptor.nil();
 
@@ -1745,7 +1745,7 @@ public class CFScriptParser extends Parser {
             IDENTIFIER52_tree = (Object)adaptor.create(IDENTIFIER52);
             adaptor.addChild(root_0, IDENTIFIER52_tree);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:235:13: ( struct )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:235:13: ( struct )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -1754,7 +1754,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt17) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:235:14: struct
+                    // ./src/org/cfml/parser/antlr/CFScript.g:235:14: struct
                     {
                     pushFollow(FOLLOW_struct_in_identifier540);
                     struct53=struct();
@@ -1767,7 +1767,7 @@ public class CFScriptParser extends Parser {
 
             }
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:235:23: ( EOF )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:235:23: ( EOF )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -1776,7 +1776,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt18) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:235:24: EOF
+                    // ./src/org/cfml/parser/antlr/CFScript.g:235:24: EOF
                     {
                     EOF54=(Token)input.LT(1);
                     match(input,EOF,FOLLOW_EOF_in_identifier545); 
@@ -1811,7 +1811,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start struct
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:238:1: struct : OPEN_SQUARE codeStatement CLOSE_SQUARE ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:238:1: struct : OPEN_SQUARE codeStatement CLOSE_SQUARE ;
     public final struct_return struct() throws RecognitionException {
         struct_return retval = new struct_return();
         retval.start = input.LT(1);
@@ -1827,8 +1827,8 @@ public class CFScriptParser extends Parser {
         Object CLOSE_SQUARE57_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:239:2: ( OPEN_SQUARE codeStatement CLOSE_SQUARE )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:240:2: OPEN_SQUARE codeStatement CLOSE_SQUARE
+            // ./src/org/cfml/parser/antlr/CFScript.g:239:2: ( OPEN_SQUARE codeStatement CLOSE_SQUARE )
+            // ./src/org/cfml/parser/antlr/CFScript.g:240:2: OPEN_SQUARE codeStatement CLOSE_SQUARE
             {
             root_0 = (Object)adaptor.nil();
 
@@ -1872,7 +1872,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start function
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:243:1: function : id= IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN -> ^( FUNCTION_CALL[$id] OPEN_PAREN ( argumentStatement )? CLOSE_PAREN ) ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:243:1: function : id= IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN -> ^( FUNCTION_CALL[$id] OPEN_PAREN ( argumentStatement )? CLOSE_PAREN ) ;
     public final function_return function() throws RecognitionException {
         function_return retval = new function_return();
         retval.start = input.LT(1);
@@ -1893,8 +1893,8 @@ public class CFScriptParser extends Parser {
         RewriteRuleTokenStream stream_IDENTIFIER=new RewriteRuleTokenStream(adaptor,"token IDENTIFIER");
         RewriteRuleSubtreeStream stream_argumentStatement=new RewriteRuleSubtreeStream(adaptor,"rule argumentStatement");
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:244:2: (id= IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN -> ^( FUNCTION_CALL[$id] OPEN_PAREN ( argumentStatement )? CLOSE_PAREN ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:245:2: id= IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN
+            // ./src/org/cfml/parser/antlr/CFScript.g:244:2: (id= IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN -> ^( FUNCTION_CALL[$id] OPEN_PAREN ( argumentStatement )? CLOSE_PAREN ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:245:2: id= IDENTIFIER OPEN_PAREN ( argumentStatement )? CLOSE_PAREN
             {
             id=(Token)input.LT(1);
             match(input,IDENTIFIER,FOLLOW_IDENTIFIER_in_function580); 
@@ -1904,7 +1904,7 @@ public class CFScriptParser extends Parser {
             match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_function582); 
             stream_OPEN_PAREN.add(OPEN_PAREN58);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:245:27: ( argumentStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:245:27: ( argumentStatement )?
             int alt19=2;
             int LA19_0 = input.LA(1);
 
@@ -1913,7 +1913,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt19) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:245:28: argumentStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:245:28: argumentStatement
                     {
                     pushFollow(FOLLOW_argumentStatement_in_function585);
                     argumentStatement59=argumentStatement();
@@ -1943,13 +1943,13 @@ public class CFScriptParser extends Parser {
             root_0 = (Object)adaptor.nil();
             // 246:2: -> ^( FUNCTION_CALL[$id] OPEN_PAREN ( argumentStatement )? CLOSE_PAREN )
             {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:246:5: ^( FUNCTION_CALL[$id] OPEN_PAREN ( argumentStatement )? CLOSE_PAREN )
+                // ./src/org/cfml/parser/antlr/CFScript.g:246:5: ^( FUNCTION_CALL[$id] OPEN_PAREN ( argumentStatement )? CLOSE_PAREN )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(FUNCTION_CALL, id), root_1);
 
                 adaptor.addChild(root_1, stream_OPEN_PAREN.next());
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:246:37: ( argumentStatement )?
+                // ./src/org/cfml/parser/antlr/CFScript.g:246:37: ( argumentStatement )?
                 if ( stream_argumentStatement.hasNext() ) {
                     adaptor.addChild(root_1, stream_argumentStatement.next());
 
@@ -1988,7 +1988,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start argumentStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:249:1: argumentStatement : codeStatement ( COMMA codeStatement )* ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:249:1: argumentStatement : codeStatement ( COMMA codeStatement )* ;
     public final argumentStatement_return argumentStatement() throws RecognitionException {
         argumentStatement_return retval = new argumentStatement_return();
         retval.start = input.LT(1);
@@ -2004,8 +2004,8 @@ public class CFScriptParser extends Parser {
         Object COMMA62_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:250:2: ( codeStatement ( COMMA codeStatement )* )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:251:2: codeStatement ( COMMA codeStatement )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:250:2: ( codeStatement ( COMMA codeStatement )* )
+            // ./src/org/cfml/parser/antlr/CFScript.g:251:2: codeStatement ( COMMA codeStatement )*
             {
             root_0 = (Object)adaptor.nil();
 
@@ -2014,7 +2014,7 @@ public class CFScriptParser extends Parser {
             _fsp--;
 
             adaptor.addChild(root_0, codeStatement61.getTree());
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:251:16: ( COMMA codeStatement )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:251:16: ( COMMA codeStatement )*
             loop20:
             do {
                 int alt20=2;
@@ -2027,7 +2027,7 @@ public class CFScriptParser extends Parser {
 
                 switch (alt20) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:251:17: COMMA codeStatement
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:251:17: COMMA codeStatement
             	    {
             	    COMMA62=(Token)input.LT(1);
             	    match(input,COMMA,FOLLOW_COMMA_in_argumentStatement622); 
@@ -2073,7 +2073,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start functionDeclaration
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:254:1: functionDeclaration : FUNCTION id= IDENTIFIER OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block -> ^( FUNCTION FUNCTION_DECLARATION[$id] OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block ) ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:254:1: functionDeclaration : FUNCTION id= IDENTIFIER OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block -> ^( FUNCTION FUNCTION_DECLARATION[$id] OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block ) ;
     public final functionDeclaration_return functionDeclaration() throws RecognitionException {
         functionDeclaration_return retval = new functionDeclaration_return();
         retval.start = input.LT(1);
@@ -2100,8 +2100,8 @@ public class CFScriptParser extends Parser {
         RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
         RewriteRuleSubtreeStream stream_argumentDeclaration=new RewriteRuleSubtreeStream(adaptor,"rule argumentDeclaration");
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:255:2: ( FUNCTION id= IDENTIFIER OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block -> ^( FUNCTION FUNCTION_DECLARATION[$id] OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:256:2: FUNCTION id= IDENTIFIER OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block
+            // ./src/org/cfml/parser/antlr/CFScript.g:255:2: ( FUNCTION id= IDENTIFIER OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block -> ^( FUNCTION FUNCTION_DECLARATION[$id] OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:256:2: FUNCTION id= IDENTIFIER OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block
             {
             FUNCTION64=(Token)input.LT(1);
             match(input,FUNCTION,FOLLOW_FUNCTION_in_functionDeclaration638); 
@@ -2115,7 +2115,7 @@ public class CFScriptParser extends Parser {
             match(input,OPEN_PAREN,FOLLOW_OPEN_PAREN_in_functionDeclaration644); 
             stream_OPEN_PAREN.add(OPEN_PAREN65);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:256:36: ( argumentDeclaration )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:256:36: ( argumentDeclaration )?
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -2124,7 +2124,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt21) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:256:37: argumentDeclaration
+                    // ./src/org/cfml/parser/antlr/CFScript.g:256:37: argumentDeclaration
                     {
                     pushFollow(FOLLOW_argumentDeclaration_in_functionDeclaration647);
                     argumentDeclaration66=argumentDeclaration();
@@ -2159,14 +2159,14 @@ public class CFScriptParser extends Parser {
             root_0 = (Object)adaptor.nil();
             // 258:2: -> ^( FUNCTION FUNCTION_DECLARATION[$id] OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block )
             {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:258:5: ^( FUNCTION FUNCTION_DECLARATION[$id] OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block )
+                // ./src/org/cfml/parser/antlr/CFScript.g:258:5: ^( FUNCTION FUNCTION_DECLARATION[$id] OPEN_PAREN ( argumentDeclaration )? CLOSE_PAREN block )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(stream_FUNCTION.next(), root_1);
 
                 adaptor.addChild(root_1, adaptor.create(FUNCTION_DECLARATION, id));
                 adaptor.addChild(root_1, stream_OPEN_PAREN.next());
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:258:53: ( argumentDeclaration )?
+                // ./src/org/cfml/parser/antlr/CFScript.g:258:53: ( argumentDeclaration )?
                 if ( stream_argumentDeclaration.hasNext() ) {
                     adaptor.addChild(root_1, stream_argumentDeclaration.next());
 
@@ -2206,7 +2206,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start argumentDeclaration
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:261:1: argumentDeclaration : IDENTIFIER ( COMMA IDENTIFIER )* ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:261:1: argumentDeclaration : IDENTIFIER ( COMMA IDENTIFIER )* ;
     public final argumentDeclaration_return argumentDeclaration() throws RecognitionException {
         argumentDeclaration_return retval = new argumentDeclaration_return();
         retval.start = input.LT(1);
@@ -2222,8 +2222,8 @@ public class CFScriptParser extends Parser {
         Object IDENTIFIER71_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:262:2: ( IDENTIFIER ( COMMA IDENTIFIER )* )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:263:2: IDENTIFIER ( COMMA IDENTIFIER )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:262:2: ( IDENTIFIER ( COMMA IDENTIFIER )* )
+            // ./src/org/cfml/parser/antlr/CFScript.g:263:2: IDENTIFIER ( COMMA IDENTIFIER )*
             {
             root_0 = (Object)adaptor.nil();
 
@@ -2232,7 +2232,7 @@ public class CFScriptParser extends Parser {
             IDENTIFIER69_tree = (Object)adaptor.create(IDENTIFIER69);
             adaptor.addChild(root_0, IDENTIFIER69_tree);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:263:13: ( COMMA IDENTIFIER )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:263:13: ( COMMA IDENTIFIER )*
             loop22:
             do {
                 int alt22=2;
@@ -2245,7 +2245,7 @@ public class CFScriptParser extends Parser {
 
                 switch (alt22) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:263:14: COMMA IDENTIFIER
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:263:14: COMMA IDENTIFIER
             	    {
             	    COMMA70=(Token)input.LT(1);
             	    match(input,COMMA,FOLLOW_COMMA_in_argumentDeclaration691); 
@@ -2291,7 +2291,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start ifStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:266:1: ifStatement : IF OPEN_PAREN codeStatement CLOSE_PAREN block ( elseifStatement )* ( elseStatement )? ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:266:1: ifStatement : IF OPEN_PAREN codeStatement CLOSE_PAREN block ( elseifStatement )* ( elseStatement )? ;
     public final ifStatement_return ifStatement() throws RecognitionException {
         ifStatement_return retval = new ifStatement_return();
         retval.start = input.LT(1);
@@ -2315,8 +2315,8 @@ public class CFScriptParser extends Parser {
         Object CLOSE_PAREN75_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:267:2: ( IF OPEN_PAREN codeStatement CLOSE_PAREN block ( elseifStatement )* ( elseStatement )? )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:268:2: IF OPEN_PAREN codeStatement CLOSE_PAREN block ( elseifStatement )* ( elseStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:267:2: ( IF OPEN_PAREN codeStatement CLOSE_PAREN block ( elseifStatement )* ( elseStatement )? )
+            // ./src/org/cfml/parser/antlr/CFScript.g:268:2: IF OPEN_PAREN codeStatement CLOSE_PAREN block ( elseifStatement )* ( elseStatement )?
             {
             root_0 = (Object)adaptor.nil();
 
@@ -2345,7 +2345,7 @@ public class CFScriptParser extends Parser {
             _fsp--;
 
             adaptor.addChild(root_0, block76.getTree());
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:270:2: ( elseifStatement )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:270:2: ( elseifStatement )*
             loop23:
             do {
                 int alt23=2;
@@ -2364,7 +2364,7 @@ public class CFScriptParser extends Parser {
 
                 switch (alt23) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:270:3: elseifStatement
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:270:3: elseifStatement
             	    {
             	    pushFollow(FOLLOW_elseifStatement_in_ifStatement721);
             	    elseifStatement77=elseifStatement();
@@ -2380,7 +2380,7 @@ public class CFScriptParser extends Parser {
                 }
             } while (true);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:271:2: ( elseStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:271:2: ( elseStatement )?
             int alt24=2;
             int LA24_0 = input.LA(1);
 
@@ -2389,7 +2389,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt24) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:271:3: elseStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:271:3: elseStatement
                     {
                     pushFollow(FOLLOW_elseStatement_in_ifStatement727);
                     elseStatement78=elseStatement();
@@ -2427,7 +2427,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start elseifStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:274:1: elseifStatement : ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block -> ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block ) ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:274:1: elseifStatement : ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block -> ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block ) ;
     public final elseifStatement_return elseifStatement() throws RecognitionException {
         elseifStatement_return retval = new elseifStatement_return();
         retval.start = input.LT(1);
@@ -2454,8 +2454,8 @@ public class CFScriptParser extends Parser {
         RewriteRuleSubtreeStream stream_codeStatement=new RewriteRuleSubtreeStream(adaptor,"rule codeStatement");
         RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:275:2: ( ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block -> ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:276:2: ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block
+            // ./src/org/cfml/parser/antlr/CFScript.g:275:2: ( ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block -> ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:276:2: ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block
             {
             ELSE79=(Token)input.LT(1);
             match(input,ELSE,FOLLOW_ELSE_in_elseifStatement742); 
@@ -2496,7 +2496,7 @@ public class CFScriptParser extends Parser {
             root_0 = (Object)adaptor.nil();
             // 278:2: -> ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block )
             {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:278:5: ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block )
+                // ./src/org/cfml/parser/antlr/CFScript.g:278:5: ^( ELSEIF ELSE IF OPEN_PAREN codeStatement CLOSE_PAREN block )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(ELSEIF, "ELSEIF"), root_1);
@@ -2539,7 +2539,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start elseStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:284:1: elseStatement : ELSE block ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:284:1: elseStatement : ELSE block ;
     public final elseStatement_return elseStatement() throws RecognitionException {
         elseStatement_return retval = new elseStatement_return();
         retval.start = input.LT(1);
@@ -2553,8 +2553,8 @@ public class CFScriptParser extends Parser {
         Object ELSE85_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:285:2: ( ELSE block )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:286:2: ELSE block
+            // ./src/org/cfml/parser/antlr/CFScript.g:285:2: ( ELSE block )
+            // ./src/org/cfml/parser/antlr/CFScript.g:286:2: ELSE block
             {
             root_0 = (Object)adaptor.nil();
 
@@ -2593,7 +2593,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start tryStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:290:1: tryStatement : TRY block catchStatement ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:290:1: tryStatement : TRY block catchStatement ;
     public final tryStatement_return tryStatement() throws RecognitionException {
         tryStatement_return retval = new tryStatement_return();
         retval.start = input.LT(1);
@@ -2609,8 +2609,8 @@ public class CFScriptParser extends Parser {
         Object TRY87_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:291:2: ( TRY block catchStatement )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:292:2: TRY block catchStatement
+            // ./src/org/cfml/parser/antlr/CFScript.g:291:2: ( TRY block catchStatement )
+            // ./src/org/cfml/parser/antlr/CFScript.g:292:2: TRY block catchStatement
             {
             root_0 = (Object)adaptor.nil();
 
@@ -2654,7 +2654,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start catchClass
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:298:1: catchClass : IDENTIFIER ( DOT IDENTIFIER )* ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:298:1: catchClass : IDENTIFIER ( DOT IDENTIFIER )* ;
     public final catchClass_return catchClass() throws RecognitionException {
         catchClass_return retval = new catchClass_return();
         retval.start = input.LT(1);
@@ -2670,8 +2670,8 @@ public class CFScriptParser extends Parser {
         Object IDENTIFIER92_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:299:2: ( IDENTIFIER ( DOT IDENTIFIER )* )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:300:2: IDENTIFIER ( DOT IDENTIFIER )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:299:2: ( IDENTIFIER ( DOT IDENTIFIER )* )
+            // ./src/org/cfml/parser/antlr/CFScript.g:300:2: IDENTIFIER ( DOT IDENTIFIER )*
             {
             root_0 = (Object)adaptor.nil();
 
@@ -2680,7 +2680,7 @@ public class CFScriptParser extends Parser {
             IDENTIFIER90_tree = (Object)adaptor.create(IDENTIFIER90);
             adaptor.addChild(root_0, IDENTIFIER90_tree);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:300:12: ( DOT IDENTIFIER )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:300:12: ( DOT IDENTIFIER )*
             loop25:
             do {
                 int alt25=2;
@@ -2693,7 +2693,7 @@ public class CFScriptParser extends Parser {
 
                 switch (alt25) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:300:13: DOT IDENTIFIER
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:300:13: DOT IDENTIFIER
             	    {
             	    DOT91=(Token)input.LT(1);
             	    match(input,DOT,FOLLOW_DOT_in_catchClass837); 
@@ -2739,7 +2739,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start catchStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:303:1: catchStatement : CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block -> ^( CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block ) ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:303:1: catchStatement : CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block -> ^( CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block ) ;
     public final catchStatement_return catchStatement() throws RecognitionException {
         catchStatement_return retval = new catchStatement_return();
         retval.start = input.LT(1);
@@ -2766,8 +2766,8 @@ public class CFScriptParser extends Parser {
         RewriteRuleSubtreeStream stream_catchClass=new RewriteRuleSubtreeStream(adaptor,"rule catchClass");
         RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:304:2: ( CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block -> ^( CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:305:2: CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block
+            // ./src/org/cfml/parser/antlr/CFScript.g:304:2: ( CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block -> ^( CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:305:2: CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block
             {
             CATCH93=(Token)input.LT(1);
             match(input,CATCH,FOLLOW_CATCH_in_catchStatement854); 
@@ -2808,7 +2808,7 @@ public class CFScriptParser extends Parser {
             root_0 = (Object)adaptor.nil();
             // 307:2: -> ^( CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block )
             {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:307:5: ^( CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block )
+                // ./src/org/cfml/parser/antlr/CFScript.g:307:5: ^( CATCH OPEN_PAREN catchClass IDENTIFIER CLOSE_PAREN block )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(stream_CATCH.next(), root_1);
@@ -2850,7 +2850,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start forStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:311:1: forStatement : FOR OPEN_PAREN ( forConditions | forIn ) CLOSE_PAREN block ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:311:1: forStatement : FOR OPEN_PAREN ( forConditions | forIn ) CLOSE_PAREN block ;
     public final forStatement_return forStatement() throws RecognitionException {
         forStatement_return retval = new forStatement_return();
         retval.start = input.LT(1);
@@ -2872,8 +2872,8 @@ public class CFScriptParser extends Parser {
         Object CLOSE_PAREN103_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:312:2: ( FOR OPEN_PAREN ( forConditions | forIn ) CLOSE_PAREN block )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:313:2: FOR OPEN_PAREN ( forConditions | forIn ) CLOSE_PAREN block
+            // ./src/org/cfml/parser/antlr/CFScript.g:312:2: ( FOR OPEN_PAREN ( forConditions | forIn ) CLOSE_PAREN block )
+            // ./src/org/cfml/parser/antlr/CFScript.g:313:2: FOR OPEN_PAREN ( forConditions | forIn ) CLOSE_PAREN block
             {
             root_0 = (Object)adaptor.nil();
 
@@ -2887,7 +2887,7 @@ public class CFScriptParser extends Parser {
             OPEN_PAREN100_tree = (Object)adaptor.create(OPEN_PAREN100);
             adaptor.addChild(root_0, OPEN_PAREN100_tree);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:313:18: ( forConditions | forIn )
+            // ./src/org/cfml/parser/antlr/CFScript.g:313:18: ( forConditions | forIn )
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -2918,7 +2918,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt26) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:313:19: forConditions
+                    // ./src/org/cfml/parser/antlr/CFScript.g:313:19: forConditions
                     {
                     pushFollow(FOLLOW_forConditions_in_forStatement903);
                     forConditions101=forConditions();
@@ -2929,7 +2929,7 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:313:35: forIn
+                    // ./src/org/cfml/parser/antlr/CFScript.g:313:35: forIn
                     {
                     pushFollow(FOLLOW_forIn_in_forStatement907);
                     forIn102=forIn();
@@ -2977,7 +2977,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start forIn
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:316:1: forIn : IDENTIFIER IN cfmlLinking ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:316:1: forIn : IDENTIFIER IN cfmlLinking ;
     public final forIn_return forIn() throws RecognitionException {
         forIn_return retval = new forIn_return();
         retval.start = input.LT(1);
@@ -2993,8 +2993,8 @@ public class CFScriptParser extends Parser {
         Object IN106_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:317:2: ( IDENTIFIER IN cfmlLinking )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:318:2: IDENTIFIER IN cfmlLinking
+            // ./src/org/cfml/parser/antlr/CFScript.g:317:2: ( IDENTIFIER IN cfmlLinking )
+            // ./src/org/cfml/parser/antlr/CFScript.g:318:2: IDENTIFIER IN cfmlLinking
             {
             root_0 = (Object)adaptor.nil();
 
@@ -3038,7 +3038,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start forConditions
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:321:1: forConditions : setStatement SEMI_COLON setStatement SEMI_COLON setStatement ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:321:1: forConditions : setStatement SEMI_COLON setStatement SEMI_COLON setStatement ;
     public final forConditions_return forConditions() throws RecognitionException {
         forConditions_return retval = new forConditions_return();
         retval.start = input.LT(1);
@@ -3058,8 +3058,8 @@ public class CFScriptParser extends Parser {
         Object SEMI_COLON111_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:322:2: ( setStatement SEMI_COLON setStatement SEMI_COLON setStatement )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:323:2: setStatement SEMI_COLON setStatement SEMI_COLON setStatement
+            // ./src/org/cfml/parser/antlr/CFScript.g:322:2: ( setStatement SEMI_COLON setStatement SEMI_COLON setStatement )
+            // ./src/org/cfml/parser/antlr/CFScript.g:323:2: setStatement SEMI_COLON setStatement SEMI_COLON setStatement
             {
             root_0 = (Object)adaptor.nil();
 
@@ -3113,7 +3113,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start whileStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:330:1: whileStatement : WHILE OPEN_PAREN codeStatement CLOSE_PAREN block ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:330:1: whileStatement : WHILE OPEN_PAREN codeStatement CLOSE_PAREN block ;
     public final whileStatement_return whileStatement() throws RecognitionException {
         whileStatement_return retval = new whileStatement_return();
         retval.start = input.LT(1);
@@ -3133,8 +3133,8 @@ public class CFScriptParser extends Parser {
         Object CLOSE_PAREN116_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:331:2: ( WHILE OPEN_PAREN codeStatement CLOSE_PAREN block )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:332:2: WHILE OPEN_PAREN codeStatement CLOSE_PAREN block
+            // ./src/org/cfml/parser/antlr/CFScript.g:331:2: ( WHILE OPEN_PAREN codeStatement CLOSE_PAREN block )
+            // ./src/org/cfml/parser/antlr/CFScript.g:332:2: WHILE OPEN_PAREN codeStatement CLOSE_PAREN block
             {
             root_0 = (Object)adaptor.nil();
 
@@ -3188,7 +3188,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start doWhileStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:336:1: doWhileStatement : DO block WHILE OPEN_PAREN codeStatement CLOSE_PAREN ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:336:1: doWhileStatement : DO block WHILE OPEN_PAREN codeStatement CLOSE_PAREN ;
     public final doWhileStatement_return doWhileStatement() throws RecognitionException {
         doWhileStatement_return retval = new doWhileStatement_return();
         retval.start = input.LT(1);
@@ -3210,8 +3210,8 @@ public class CFScriptParser extends Parser {
         Object CLOSE_PAREN123_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:337:2: ( DO block WHILE OPEN_PAREN codeStatement CLOSE_PAREN )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:338:2: DO block WHILE OPEN_PAREN codeStatement CLOSE_PAREN
+            // ./src/org/cfml/parser/antlr/CFScript.g:337:2: ( DO block WHILE OPEN_PAREN codeStatement CLOSE_PAREN )
+            // ./src/org/cfml/parser/antlr/CFScript.g:338:2: DO block WHILE OPEN_PAREN codeStatement CLOSE_PAREN
             {
             root_0 = (Object)adaptor.nil();
 
@@ -3270,7 +3270,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start block
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:343:1: block : ( ( OPEN_CURLY script CLOSE_CURLY ) ( SEMI_COLON )? | ( nonBlockStatement ) );
+    // ./src/org/cfml/parser/antlr/CFScript.g:343:1: block : ( ( OPEN_CURLY script CLOSE_CURLY ) ( SEMI_COLON )? | ( nonBlockStatement ) );
     public final block_return block() throws RecognitionException {
         block_return retval = new block_return();
         retval.start = input.LT(1);
@@ -3290,7 +3290,7 @@ public class CFScriptParser extends Parser {
         Object SEMI_COLON127_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:344:2: ( ( OPEN_CURLY script CLOSE_CURLY ) ( SEMI_COLON )? | ( nonBlockStatement ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:344:2: ( ( OPEN_CURLY script CLOSE_CURLY ) ( SEMI_COLON )? | ( nonBlockStatement ) )
             int alt28=2;
             int LA28_0 = input.LA(1);
 
@@ -3308,12 +3308,12 @@ public class CFScriptParser extends Parser {
             }
             switch (alt28) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:345:2: ( OPEN_CURLY script CLOSE_CURLY ) ( SEMI_COLON )?
+                    // ./src/org/cfml/parser/antlr/CFScript.g:345:2: ( OPEN_CURLY script CLOSE_CURLY ) ( SEMI_COLON )?
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:345:2: ( OPEN_CURLY script CLOSE_CURLY )
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:345:3: OPEN_CURLY script CLOSE_CURLY
+                    // ./src/org/cfml/parser/antlr/CFScript.g:345:2: ( OPEN_CURLY script CLOSE_CURLY )
+                    // ./src/org/cfml/parser/antlr/CFScript.g:345:3: OPEN_CURLY script CLOSE_CURLY
                     {
                     OPEN_CURLY124=(Token)input.LT(1);
                     match(input,OPEN_CURLY,FOLLOW_OPEN_CURLY_in_block1012); 
@@ -3333,7 +3333,7 @@ public class CFScriptParser extends Parser {
 
                     }
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:345:34: ( SEMI_COLON )?
+                    // ./src/org/cfml/parser/antlr/CFScript.g:345:34: ( SEMI_COLON )?
                     int alt27=2;
                     int LA27_0 = input.LA(1);
 
@@ -3342,7 +3342,7 @@ public class CFScriptParser extends Parser {
                     }
                     switch (alt27) {
                         case 1 :
-                            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:345:34: SEMI_COLON
+                            // ./src/org/cfml/parser/antlr/CFScript.g:345:34: SEMI_COLON
                             {
                             SEMI_COLON127=(Token)input.LT(1);
                             match(input,SEMI_COLON,FOLLOW_SEMI_COLON_in_block1019); 
@@ -3359,12 +3359,12 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:347:2: ( nonBlockStatement )
+                    // ./src/org/cfml/parser/antlr/CFScript.g:347:2: ( nonBlockStatement )
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:347:2: ( nonBlockStatement )
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:347:3: nonBlockStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:347:2: ( nonBlockStatement )
+                    // ./src/org/cfml/parser/antlr/CFScript.g:347:3: nonBlockStatement
                     {
                     pushFollow(FOLLOW_nonBlockStatement_in_block1027);
                     nonBlockStatement128=nonBlockStatement();
@@ -3401,7 +3401,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start switchStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:351:1: switchStatement : SWITCH OPEN_PAREN codeStatement CLOSE_PAREN OPEN_CURLY ( caseStatement )* ( defaultStatement )? CLOSE_CURLY ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:351:1: switchStatement : SWITCH OPEN_PAREN codeStatement CLOSE_PAREN OPEN_CURLY ( caseStatement )* ( defaultStatement )? CLOSE_CURLY ;
     public final switchStatement_return switchStatement() throws RecognitionException {
         switchStatement_return retval = new switchStatement_return();
         retval.start = input.LT(1);
@@ -3427,8 +3427,8 @@ public class CFScriptParser extends Parser {
         Object CLOSE_CURLY136_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:352:2: ( SWITCH OPEN_PAREN codeStatement CLOSE_PAREN OPEN_CURLY ( caseStatement )* ( defaultStatement )? CLOSE_CURLY )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:353:2: SWITCH OPEN_PAREN codeStatement CLOSE_PAREN OPEN_CURLY ( caseStatement )* ( defaultStatement )? CLOSE_CURLY
+            // ./src/org/cfml/parser/antlr/CFScript.g:352:2: ( SWITCH OPEN_PAREN codeStatement CLOSE_PAREN OPEN_CURLY ( caseStatement )* ( defaultStatement )? CLOSE_CURLY )
+            // ./src/org/cfml/parser/antlr/CFScript.g:353:2: SWITCH OPEN_PAREN codeStatement CLOSE_PAREN OPEN_CURLY ( caseStatement )* ( defaultStatement )? CLOSE_CURLY
             {
             root_0 = (Object)adaptor.nil();
 
@@ -3457,7 +3457,7 @@ public class CFScriptParser extends Parser {
             OPEN_CURLY133_tree = (Object)adaptor.create(OPEN_CURLY133);
             adaptor.addChild(root_0, OPEN_CURLY133_tree);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:355:2: ( caseStatement )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:355:2: ( caseStatement )*
             loop29:
             do {
                 int alt29=2;
@@ -3470,7 +3470,7 @@ public class CFScriptParser extends Parser {
 
                 switch (alt29) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:355:3: caseStatement
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:355:3: caseStatement
             	    {
             	    pushFollow(FOLLOW_caseStatement_in_switchStatement1055);
             	    caseStatement134=caseStatement();
@@ -3486,7 +3486,7 @@ public class CFScriptParser extends Parser {
                 }
             } while (true);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:356:2: ( defaultStatement )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:356:2: ( defaultStatement )?
             int alt30=2;
             int LA30_0 = input.LA(1);
 
@@ -3495,7 +3495,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt30) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:356:3: defaultStatement
+                    // ./src/org/cfml/parser/antlr/CFScript.g:356:3: defaultStatement
                     {
                     pushFollow(FOLLOW_defaultStatement_in_switchStatement1061);
                     defaultStatement135=defaultStatement();
@@ -3538,7 +3538,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start caseStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:360:1: caseStatement : CASE ( stringLiteral | NUMBER ) COLON script ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:360:1: caseStatement : CASE ( stringLiteral | NUMBER ) COLON script ;
     public final caseStatement_return caseStatement() throws RecognitionException {
         caseStatement_return retval = new caseStatement_return();
         retval.start = input.LT(1);
@@ -3558,8 +3558,8 @@ public class CFScriptParser extends Parser {
         Object COLON140_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:361:2: ( CASE ( stringLiteral | NUMBER ) COLON script )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:362:2: CASE ( stringLiteral | NUMBER ) COLON script
+            // ./src/org/cfml/parser/antlr/CFScript.g:361:2: ( CASE ( stringLiteral | NUMBER ) COLON script )
+            // ./src/org/cfml/parser/antlr/CFScript.g:362:2: CASE ( stringLiteral | NUMBER ) COLON script
             {
             root_0 = (Object)adaptor.nil();
 
@@ -3568,7 +3568,7 @@ public class CFScriptParser extends Parser {
             CASE137_tree = (Object)adaptor.create(CASE137);
             root_0 = (Object)adaptor.becomeRoot(CASE137_tree, root_0);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:362:8: ( stringLiteral | NUMBER )
+            // ./src/org/cfml/parser/antlr/CFScript.g:362:8: ( stringLiteral | NUMBER )
             int alt31=2;
             int LA31_0 = input.LA(1);
 
@@ -3586,7 +3586,7 @@ public class CFScriptParser extends Parser {
             }
             switch (alt31) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:362:9: stringLiteral
+                    // ./src/org/cfml/parser/antlr/CFScript.g:362:9: stringLiteral
                     {
                     pushFollow(FOLLOW_stringLiteral_in_caseStatement1083);
                     stringLiteral138=stringLiteral();
@@ -3597,7 +3597,7 @@ public class CFScriptParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:362:25: NUMBER
+                    // ./src/org/cfml/parser/antlr/CFScript.g:362:25: NUMBER
                     {
                     NUMBER139=(Token)input.LT(1);
                     match(input,NUMBER,FOLLOW_NUMBER_in_caseStatement1087); 
@@ -3645,7 +3645,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start defaultStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:366:1: defaultStatement : DEFAULT COLON script ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:366:1: defaultStatement : DEFAULT COLON script ;
     public final defaultStatement_return defaultStatement() throws RecognitionException {
         defaultStatement_return retval = new defaultStatement_return();
         retval.start = input.LT(1);
@@ -3661,8 +3661,8 @@ public class CFScriptParser extends Parser {
         Object COLON143_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:367:2: ( DEFAULT COLON script )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:368:2: DEFAULT COLON script
+            // ./src/org/cfml/parser/antlr/CFScript.g:367:2: ( DEFAULT COLON script )
+            // ./src/org/cfml/parser/antlr/CFScript.g:368:2: DEFAULT COLON script
             {
             root_0 = (Object)adaptor.nil();
 
@@ -3706,7 +3706,7 @@ public class CFScriptParser extends Parser {
     };
 
     // $ANTLR start breakStatement
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:373:1: breakStatement : BREAK ;
+    // ./src/org/cfml/parser/antlr/CFScript.g:373:1: breakStatement : BREAK ;
     public final breakStatement_return breakStatement() throws RecognitionException {
         breakStatement_return retval = new breakStatement_return();
         retval.start = input.LT(1);
@@ -3718,8 +3718,8 @@ public class CFScriptParser extends Parser {
         Object BREAK145_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:374:2: ( BREAK )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:375:2: BREAK
+            // ./src/org/cfml/parser/antlr/CFScript.g:374:2: ( BREAK )
+            // ./src/org/cfml/parser/antlr/CFScript.g:375:2: BREAK
             {
             root_0 = (Object)adaptor.nil();
 

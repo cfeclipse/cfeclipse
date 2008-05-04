@@ -9,7 +9,7 @@ import org.cfml.parser.antlr.*;
 public class testinput {
 
     public static void main(String args[]) throws Exception {
-        CFMLLexer lex = new CFMLLexer(new ANTLRFileStream("/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/testinput.txt"));
+        CFMLLexer lex = new CFMLLexer(new ANTLRFileStream("./src/org/cfml/parser/antlr/testinput.txt"));
         CommonTokenStream tokens = new CommonTokenStream(lex);
 
         CFMLParser g = new CFMLParser(tokens);

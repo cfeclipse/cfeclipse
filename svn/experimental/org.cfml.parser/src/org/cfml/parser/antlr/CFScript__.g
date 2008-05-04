@@ -43,31 +43,31 @@ THE SOFTWARE.
 */
 }
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 380
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 380
 FUNCTION
 	:
 	'function'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 385
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 385
 IF
 	:
 	'if'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 390
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 390
 ELSE
 	:
 	'else'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 395
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 395
 TRY
 	:
 	'try'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 400
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 400
 CATCH
 	:
 	'catch'
@@ -75,176 +75,176 @@ CATCH
 		setMode(CATCH_MODE);
 	}
 	;
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 407
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 407
 RETURN
 	:
 	'return'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 412
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 412
 FOR
 	:
 	'for'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 417
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 417
 IN
 	:
 	'in'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 422
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 422
 WHILE
 	:
 	'while'
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 427
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 427
 DO
 	:
 	'do'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 432
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 432
 NOT	:
 	'not'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 436
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 436
 EQUALS
 	:
 	'='
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 441
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 441
 SWITCH
 	:
 	'switch'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 446
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 446
 CASE
 	:
 	'case'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 451
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 451
 DEFAULT
 	:
 	'default'
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 456
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 456
 BREAK
 	:
 	'break'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 461
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 461
 COLON	:
 	':'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 465
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 465
 OPERATOR
 	:
 	( MATH_OPERATOR | STRING_OPERATOR | CONDITION_OPERATOR | BOOLEAN_OPERATOR )
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 470
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 470
 COMMA	:
 	','
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 474
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 474
 SEMI_COLON
 	:
 	';'
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 479
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 479
 HASH	:
 	'#'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 483
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 483
 OPEN_PAREN
 	:
 	'('
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 488
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 488
 CLOSE_PAREN
 	:
 	')'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 493
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 493
 OPEN_SQUARE
 	:
 	'['
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 498
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 498
 CLOSE_SQUARE
 	:
 	']'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 503
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 503
 OPEN_CURLY
 	:
 	'{'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 508
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 508
 CLOSE_CURLY
 	:
 	'}'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 513
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 513
 DOT
 	:
 	'.'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 518
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 518
 VAR
 	:
 	'var'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 523
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 523
 NUMBER
 	:
 	DIGIT+(DOT DIGIT+)?
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 528
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 528
 ESCAPE_DOUBLE_QUOTE
 	:
 	'""'
 	;
 	
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 533
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 533
 ESCAPE_SINGLE_QUOTE
 	:
 	'\'\''
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 538
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 538
 DOUBLE_QUOTE
 	:
 	'"'
 	;
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 542
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 542
 SINGLE_QUOTE
 	:
 	'\''
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 547
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 547
 IDENTIFIER
 	:
 	(LETTER | UNDERSCORE )(LETTER | DIGIT | UNDERSCORE )*	
@@ -262,41 +262,41 @@ EXCEPTIONNAME
 */
 /* fragments */
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 564
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 564
 fragment MATH_OPERATOR
 	:
 	('+' | '*' | '\/' | '\\' | '^' | 'mod' | '-')
 	;
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 568
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 568
 fragment STRING_OPERATOR
 	:
 	'&'
 	;
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 572
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 572
 fragment CONDITION_OPERATOR
 	:
 	('eq'|'neq'|'is'|'gt'|'lt'|'lte'|'gte')
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 577
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 577
 fragment BOOLEAN_OPERATOR
 	:
 	('or'|'and'|'xor'|'eqv'|'imp')
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 582
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 582
 fragment UNDERSCORE
 	:
 	'_'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 587
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 587
 fragment DIGIT
 	:
 	'0'..'9'
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 592
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 592
 fragment LETTER
 	:
 	'a'..'z' | 'A'..'Z'
@@ -304,7 +304,7 @@ fragment LETTER
 
 /* hidden tokens */
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 599
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 599
 WS  
 	:  
 	(' '|'\r'|'\t'|'\u000C'|'\n') 
@@ -313,7 +313,7 @@ WS
 	}
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 607
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 607
 COMMENT
 	:   
 	'/*' ( options {greedy=false;} : . )* '*/' 
@@ -322,7 +322,7 @@ COMMENT
 	}
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 615
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 615
 LINE_COMMENT
 	: 
 	'//' ~('\n'|'\r')* '\r'? '\n' 
@@ -331,7 +331,7 @@ LINE_COMMENT
 	}
 	;
 
-// $ANTLR src "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g" 623
+// $ANTLR src "./src/org/cfml/parser/antlr/CFScript.g" 623
 OTHER
 	:
 	(options {greedy=false;} : . )

@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g 2008-04-23 07:14:07
+// $ANTLR 3.0.1 ./src/org/cfml/parser/antlr/CFML.g 2008-04-23 07:14:07
 
 package org.cfml.parser.antlr;
 
@@ -92,7 +92,7 @@ public class CFMLParser extends Parser {
     }
 
     public String[] getTokenNames() { return tokenNames; }
-    public String getGrammarFileName() { return "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g"; }
+    public String getGrammarFileName() { return "./src/org/cfml/parser/antlr/CFML.g"; }
 
 
     	/**
@@ -195,7 +195,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start cfml
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:227:1: cfml : ( tag )* ;
+    // ./src/org/cfml/parser/antlr/CFML.g:227:1: cfml : ( tag )* ;
     public final cfml_return cfml() throws RecognitionException {
         cfml_return retval = new cfml_return();
         retval.start = input.LT(1);
@@ -207,12 +207,12 @@ public class CFMLParser extends Parser {
 
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:228:2: ( ( tag )* )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:229:2: ( tag )*
+            // ./src/org/cfml/parser/antlr/CFML.g:228:2: ( ( tag )* )
+            // ./src/org/cfml/parser/antlr/CFML.g:229:2: ( tag )*
             {
             root_0 = (Object)adaptor.nil();
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:229:2: ( tag )*
+            // ./src/org/cfml/parser/antlr/CFML.g:229:2: ( tag )*
             loop1:
             do {
                 int alt1=2;
@@ -225,7 +225,7 @@ public class CFMLParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:229:2: tag
+            	    // ./src/org/cfml/parser/antlr/CFML.g:229:2: tag
             	    {
             	    pushFollow(FOLLOW_tag_in_cfml100);
             	    tag1=tag();
@@ -266,7 +266,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tag
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:232:1: tag : startTag ;
+    // ./src/org/cfml/parser/antlr/CFML.g:232:1: tag : startTag ;
     public final tag_return tag() throws RecognitionException {
         tag_return retval = new tag_return();
         retval.start = input.LT(1);
@@ -278,8 +278,8 @@ public class CFMLParser extends Parser {
 
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:233:2: ( startTag )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:234:3: startTag
+            // ./src/org/cfml/parser/antlr/CFML.g:233:2: ( startTag )
+            // ./src/org/cfml/parser/antlr/CFML.g:234:3: startTag
             {
             root_0 = (Object)adaptor.nil();
 
@@ -313,7 +313,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start startTag
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:237:1: startTag : (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) ) ;
+    // ./src/org/cfml/parser/antlr/CFML.g:237:1: startTag : (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) ) ;
     public final startTag_return startTag() throws RecognitionException {
         tagScope_stack.push(new tagScope_scope());
 
@@ -336,11 +336,11 @@ public class CFMLParser extends Parser {
         RewriteRuleSubtreeStream stream_tagInnerValues=new RewriteRuleSubtreeStream(adaptor,"rule tagInnerValues");
         RewriteRuleSubtreeStream stream_tagContent=new RewriteRuleSubtreeStream(adaptor,"rule tagContent");
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:239:2: ( (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:240:2: (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:239:2: ( (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:240:2: (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) )
             {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:240:2: (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:241:2: sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:240:2: (sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:241:2: sto= START_TAG_OPEN tagInnerValues stc= START_TAG_CLOSE tc= tagContent ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) )
             {
             sto=(Token)input.LT(1);
             match(input,START_TAG_OPEN,FOLLOW_START_TAG_OPEN_in_startTag136); 
@@ -377,8 +377,8 @@ public class CFMLParser extends Parser {
             _fsp--;
 
             stream_tagContent.add(tc.getTree());
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:264:3: ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:265:3: 
+            // ./src/org/cfml/parser/antlr/CFML.g:264:3: ( -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent ) -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:265:3: 
             {
 
             // AST REWRITE
@@ -393,7 +393,7 @@ public class CFMLParser extends Parser {
             root_0 = (Object)adaptor.nil();
             // 265:3: -> {isImportTag(name)}? ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
             if (isImportTag(name)) {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:265:27: ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
+                // ./src/org/cfml/parser/antlr/CFML.g:265:27: ^( IMPORTTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(IMPORTTAG, sto), root_1);
@@ -408,7 +408,7 @@ public class CFMLParser extends Parser {
             }
             else // 266:3: -> {isCustomTag(name)}? ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
             if (isCustomTag(name)) {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:266:27: ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
+                // ./src/org/cfml/parser/antlr/CFML.g:266:27: ^( CUSTOMTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CUSTOMTAG, sto), root_1);
@@ -423,7 +423,7 @@ public class CFMLParser extends Parser {
             }
             else // 267:3: -> {isColdFusionTag(name)}? ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
             if (isColdFusionTag(name)) {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:267:31: ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
+                // ./src/org/cfml/parser/antlr/CFML.g:267:31: ^( CFTAG[$sto] tagInnerValues START_TAG_CLOSE tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CFTAG, sto), root_1);
@@ -441,7 +441,7 @@ public class CFMLParser extends Parser {
             }
             else // 274:3: -> ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent )
             {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:274:6: ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent )
+                // ./src/org/cfml/parser/antlr/CFML.g:274:6: ^( START_TAG_OPEN START_TAG_CLOSE tagInnerValues tagContent )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(stream_START_TAG_OPEN.next(), root_1);
@@ -489,7 +489,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tagContent
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:279:1: tagContent : ( hashCFML )* cfml ({...}? => ( endTag ) ) ;
+    // ./src/org/cfml/parser/antlr/CFML.g:279:1: tagContent : ( hashCFML )* cfml ({...}? => ( endTag ) ) ;
     public final tagContent_return tagContent() throws RecognitionException {
         tagContent_return retval = new tagContent_return();
         retval.start = input.LT(1);
@@ -505,12 +505,12 @@ public class CFMLParser extends Parser {
 
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:280:2: ( ( hashCFML )* cfml ({...}? => ( endTag ) ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:281:2: ( hashCFML )* cfml ({...}? => ( endTag ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:280:2: ( ( hashCFML )* cfml ({...}? => ( endTag ) ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:281:2: ( hashCFML )* cfml ({...}? => ( endTag ) )
             {
             root_0 = (Object)adaptor.nil();
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:281:2: ( hashCFML )*
+            // ./src/org/cfml/parser/antlr/CFML.g:281:2: ( hashCFML )*
             loop2:
             do {
                 int alt2=2;
@@ -523,7 +523,7 @@ public class CFMLParser extends Parser {
 
                 switch (alt2) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:281:2: hashCFML
+            	    // ./src/org/cfml/parser/antlr/CFML.g:281:2: hashCFML
             	    {
             	    pushFollow(FOLLOW_hashCFML_in_tagContent275);
             	    hashCFML4=hashCFML();
@@ -544,8 +544,8 @@ public class CFMLParser extends Parser {
             _fsp--;
 
             adaptor.addChild(root_0, cfml5.getTree());
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:283:3: ({...}? => ( endTag ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:284:3: {...}? => ( endTag )
+            // ./src/org/cfml/parser/antlr/CFML.g:283:3: ({...}? => ( endTag ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:284:3: {...}? => ( endTag )
             {
 
             			Token t = input.LT(1);
@@ -563,8 +563,8 @@ public class CFMLParser extends Parser {
             if ( !( ((tagScope_scope)tagScope_stack.peek()).endTagName.equals(name)) ) {
                 throw new FailedPredicateException(input, "tagContent", " $tagScope::endTagName.equals(name)");
             }
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:298:3: ( endTag )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:298:4: endTag
+            // ./src/org/cfml/parser/antlr/CFML.g:298:3: ( endTag )
+            // ./src/org/cfml/parser/antlr/CFML.g:298:4: endTag
             {
             pushFollow(FOLLOW_endTag_in_tagContent298);
             endTag6=endTag();
@@ -618,7 +618,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start endTag
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:321:1: endTag : END_TAG_OPEN END_TAG_CLOSE ;
+    // ./src/org/cfml/parser/antlr/CFML.g:321:1: endTag : END_TAG_OPEN END_TAG_CLOSE ;
     public final endTag_return endTag() throws RecognitionException {
         endTag_return retval = new endTag_return();
         retval.start = input.LT(1);
@@ -632,8 +632,8 @@ public class CFMLParser extends Parser {
         Object END_TAG_CLOSE8_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:322:2: ( END_TAG_OPEN END_TAG_CLOSE )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:323:2: END_TAG_OPEN END_TAG_CLOSE
+            // ./src/org/cfml/parser/antlr/CFML.g:322:2: ( END_TAG_OPEN END_TAG_CLOSE )
+            // ./src/org/cfml/parser/antlr/CFML.g:323:2: END_TAG_OPEN END_TAG_CLOSE
             {
             root_0 = (Object)adaptor.nil();
 
@@ -687,7 +687,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tagInnerValues
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:341:1: tagInnerValues : ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | ({...}? => ( tagAttribute )* ) );
+    // ./src/org/cfml/parser/antlr/CFML.g:341:1: tagInnerValues : ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | ({...}? => ( tagAttribute )* ) );
     public final tagInnerValues_return tagInnerValues() throws RecognitionException {
         tagInnerValues_return retval = new tagInnerValues_return();
         retval.start = input.LT(1);
@@ -703,17 +703,17 @@ public class CFMLParser extends Parser {
 
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:342:2: ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | ({...}? => ( tagAttribute )* ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:342:2: ( ({...}? => ( tagAttribute )* ) | ({...}? => script ) | ({...}? => ( tagAttribute )* ) )
             int alt5=3;
             alt5 = dfa5.predict(input);
             switch (alt5) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:343:2: ({...}? => ( tagAttribute )* )
+                    // ./src/org/cfml/parser/antlr/CFML.g:343:2: ({...}? => ( tagAttribute )* )
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:343:2: ({...}? => ( tagAttribute )* )
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:344:2: {...}? => ( tagAttribute )*
+                    // ./src/org/cfml/parser/antlr/CFML.g:343:2: ({...}? => ( tagAttribute )* )
+                    // ./src/org/cfml/parser/antlr/CFML.g:344:2: {...}? => ( tagAttribute )*
                     {
                     if ( !(
                     		(isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name) && usesAttributes(((tagScope_scope)tagScope_stack.peek()).name))
@@ -724,7 +724,7 @@ public class CFMLParser extends Parser {
                     	) ) {
                         throw new FailedPredicateException(input, "tagInnerValues", "\n\t\t(isColdFusionTag($tagScope::name) && usesAttributes($tagScope::name))\n\t\t||\n\t\t(isCustomTag($tagScope::name))\n\t\t||\n\t\t(isImportTag($tagScope::name))\n\t");
                     }
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:350:7: ( tagAttribute )*
+                    // ./src/org/cfml/parser/antlr/CFML.g:350:7: ( tagAttribute )*
                     loop3:
                     do {
                         int alt3=2;
@@ -737,7 +737,7 @@ public class CFMLParser extends Parser {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:350:7: tagAttribute
+                    	    // ./src/org/cfml/parser/antlr/CFML.g:350:7: tagAttribute
                     	    {
                     	    pushFollow(FOLLOW_tagAttribute_in_tagInnerValues346);
                     	    tagAttribute9=tagAttribute();
@@ -760,12 +760,12 @@ public class CFMLParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:353:2: ({...}? => script )
+                    // ./src/org/cfml/parser/antlr/CFML.g:353:2: ({...}? => script )
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:353:2: ({...}? => script )
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:354:2: {...}? => script
+                    // ./src/org/cfml/parser/antlr/CFML.g:353:2: ({...}? => script )
+                    // ./src/org/cfml/parser/antlr/CFML.g:354:2: {...}? => script
                     {
                     if ( !(
                     	(	
@@ -793,19 +793,19 @@ public class CFMLParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:368:2: ({...}? => ( tagAttribute )* )
+                    // ./src/org/cfml/parser/antlr/CFML.g:368:2: ({...}? => ( tagAttribute )* )
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:368:2: ({...}? => ( tagAttribute )* )
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:369:2: {...}? => ( tagAttribute )*
+                    // ./src/org/cfml/parser/antlr/CFML.g:368:2: ({...}? => ( tagAttribute )* )
+                    // ./src/org/cfml/parser/antlr/CFML.g:369:2: {...}? => ( tagAttribute )*
                     {
                     if ( !(
                     			!isColdFusionTag(((tagScope_scope)tagScope_stack.peek()).name)
                     	) ) {
                         throw new FailedPredicateException(input, "tagInnerValues", "\n\t\t\t!isColdFusionTag($tagScope::name)\n\t");
                     }
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:371:7: ( tagAttribute )*
+                    // ./src/org/cfml/parser/antlr/CFML.g:371:7: ( tagAttribute )*
                     loop4:
                     do {
                         int alt4=2;
@@ -818,7 +818,7 @@ public class CFMLParser extends Parser {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:371:7: tagAttribute
+                    	    // ./src/org/cfml/parser/antlr/CFML.g:371:7: tagAttribute
                     	    {
                     	    pushFollow(FOLLOW_tagAttribute_in_tagInnerValues377);
                     	    tagAttribute11=tagAttribute();
@@ -864,7 +864,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start tagAttribute
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:375:1: tagAttribute : TAG_ATTRIBUTE EQUALS stringLiteral ;
+    // ./src/org/cfml/parser/antlr/CFML.g:375:1: tagAttribute : TAG_ATTRIBUTE EQUALS stringLiteral ;
     public final tagAttribute_return tagAttribute() throws RecognitionException {
         tagAttribute_return retval = new tagAttribute_return();
         retval.start = input.LT(1);
@@ -880,8 +880,8 @@ public class CFMLParser extends Parser {
         Object EQUALS13_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:376:2: ( TAG_ATTRIBUTE EQUALS stringLiteral )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:377:2: TAG_ATTRIBUTE EQUALS stringLiteral
+            // ./src/org/cfml/parser/antlr/CFML.g:376:2: ( TAG_ATTRIBUTE EQUALS stringLiteral )
+            // ./src/org/cfml/parser/antlr/CFML.g:377:2: TAG_ATTRIBUTE EQUALS stringLiteral
             {
             root_0 = (Object)adaptor.nil();
 
@@ -925,7 +925,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start stringLiteral
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:380:1: stringLiteral : ( (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) ) | (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) ) );
+    // ./src/org/cfml/parser/antlr/CFML.g:380:1: stringLiteral : ( (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) ) | (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) ) );
     public final stringLiteral_return stringLiteral() throws RecognitionException {
         stringLiteral_return retval = new stringLiteral_return();
         retval.start = input.LT(1);
@@ -953,7 +953,7 @@ public class CFMLParser extends Parser {
         RewriteRuleTokenStream stream_ESCAPE_SINGLE_QUOTE=new RewriteRuleTokenStream(adaptor,"token ESCAPE_SINGLE_QUOTE");
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:381:2: ( (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) ) | (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:381:2: ( (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) ) | (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) ) )
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -971,16 +971,16 @@ public class CFMLParser extends Parser {
             }
             switch (alt8) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:382:2: (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) )
+                    // ./src/org/cfml/parser/antlr/CFML.g:382:2: (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) )
                     {
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:382:2: (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) )
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:383:3: start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE
+                    // ./src/org/cfml/parser/antlr/CFML.g:382:2: (start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE -> ^( STRING_LITERAL ) )
+                    // ./src/org/cfml/parser/antlr/CFML.g:383:3: start= DOUBLE_QUOTE ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )* end= DOUBLE_QUOTE
                     {
                     start=(Token)input.LT(1);
                     match(input,DOUBLE_QUOTE,FOLLOW_DOUBLE_QUOTE_in_stringLiteral416); 
                     stream_DOUBLE_QUOTE.add(start);
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:383:22: ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )*
+                    // ./src/org/cfml/parser/antlr/CFML.g:383:22: ( ESCAPE_DOUBLE_QUOTE | DOUBLE_QUOTE_STRING )*
                     loop6:
                     do {
                         int alt6=3;
@@ -996,7 +996,7 @@ public class CFMLParser extends Parser {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:383:23: ESCAPE_DOUBLE_QUOTE
+                    	    // ./src/org/cfml/parser/antlr/CFML.g:383:23: ESCAPE_DOUBLE_QUOTE
                     	    {
                     	    ESCAPE_DOUBLE_QUOTE15=(Token)input.LT(1);
                     	    match(input,ESCAPE_DOUBLE_QUOTE,FOLLOW_ESCAPE_DOUBLE_QUOTE_in_stringLiteral419); 
@@ -1006,7 +1006,7 @@ public class CFMLParser extends Parser {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:383:45: DOUBLE_QUOTE_STRING
+                    	    // ./src/org/cfml/parser/antlr/CFML.g:383:45: DOUBLE_QUOTE_STRING
                     	    {
                     	    DOUBLE_QUOTE_STRING16=(Token)input.LT(1);
                     	    match(input,DOUBLE_QUOTE_STRING,FOLLOW_DOUBLE_QUOTE_STRING_in_stringLiteral423); 
@@ -1038,7 +1038,7 @@ public class CFMLParser extends Parser {
                     root_0 = (Object)adaptor.nil();
                     // 384:3: -> ^( STRING_LITERAL )
                     {
-                        // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:384:6: ^( STRING_LITERAL )
+                        // ./src/org/cfml/parser/antlr/CFML.g:384:6: ^( STRING_LITERAL )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot(adaptor.create(STRING_LITERAL, "STRING_LITERAL"), root_1);
@@ -1058,16 +1058,16 @@ public class CFMLParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:387:2: (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) )
+                    // ./src/org/cfml/parser/antlr/CFML.g:387:2: (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) )
                     {
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:387:2: (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) )
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:388:3: start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE
+                    // ./src/org/cfml/parser/antlr/CFML.g:387:2: (start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE -> ^( STRING_LITERAL ) )
+                    // ./src/org/cfml/parser/antlr/CFML.g:388:3: start= SINGLE_QUOTE ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )* end= SINGLE_QUOTE
                     {
                     start=(Token)input.LT(1);
                     match(input,SINGLE_QUOTE,FOLLOW_SINGLE_QUOTE_in_stringLiteral454); 
                     stream_SINGLE_QUOTE.add(start);
 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:388:22: ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )*
+                    // ./src/org/cfml/parser/antlr/CFML.g:388:22: ( ESCAPE_SINGLE_QUOTE | SINGLE_QUOTE_STRING )*
                     loop7:
                     do {
                         int alt7=3;
@@ -1083,7 +1083,7 @@ public class CFMLParser extends Parser {
 
                         switch (alt7) {
                     	case 1 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:388:23: ESCAPE_SINGLE_QUOTE
+                    	    // ./src/org/cfml/parser/antlr/CFML.g:388:23: ESCAPE_SINGLE_QUOTE
                     	    {
                     	    ESCAPE_SINGLE_QUOTE17=(Token)input.LT(1);
                     	    match(input,ESCAPE_SINGLE_QUOTE,FOLLOW_ESCAPE_SINGLE_QUOTE_in_stringLiteral457); 
@@ -1093,7 +1093,7 @@ public class CFMLParser extends Parser {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:388:45: SINGLE_QUOTE_STRING
+                    	    // ./src/org/cfml/parser/antlr/CFML.g:388:45: SINGLE_QUOTE_STRING
                     	    {
                     	    SINGLE_QUOTE_STRING18=(Token)input.LT(1);
                     	    match(input,SINGLE_QUOTE_STRING,FOLLOW_SINGLE_QUOTE_STRING_in_stringLiteral461); 
@@ -1125,7 +1125,7 @@ public class CFMLParser extends Parser {
                     root_0 = (Object)adaptor.nil();
                     // 389:3: -> ^( STRING_LITERAL )
                     {
-                        // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:389:6: ^( STRING_LITERAL )
+                        // ./src/org/cfml/parser/antlr/CFML.g:389:6: ^( STRING_LITERAL )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot(adaptor.create(STRING_LITERAL, "STRING_LITERAL"), root_1);
@@ -1168,7 +1168,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start script
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:393:1: script : ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )* -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT ) -> ^( CFML_STATEMENT ) ;
+    // ./src/org/cfml/parser/antlr/CFML.g:393:1: script : ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )* -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT ) -> ^( CFML_STATEMENT ) ;
     public final script_return script() throws RecognitionException {
         script_return retval = new script_return();
         retval.start = input.LT(1);
@@ -1189,13 +1189,13 @@ public class CFMLParser extends Parser {
         RewriteRuleTokenStream stream_CFML=new RewriteRuleTokenStream(adaptor,"token CFML");
         RewriteRuleSubtreeStream stream_stringLiteral=new RewriteRuleSubtreeStream(adaptor,"rule stringLiteral");
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:394:2: ( ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )* -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT ) -> ^( CFML_STATEMENT ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:395:2: ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )*
+            // ./src/org/cfml/parser/antlr/CFML.g:394:2: ( ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )* -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT ) -> ^( CFML_STATEMENT ) )
+            // ./src/org/cfml/parser/antlr/CFML.g:395:2: ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )*
             {
 
             	Token start = input.LT(1);
             	
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:398:2: ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )*
+            // ./src/org/cfml/parser/antlr/CFML.g:398:2: ( TAG_ATTRIBUTE | stringLiteral | EQUALS | CFML )*
             loop9:
             do {
                 int alt9=5;
@@ -1226,7 +1226,7 @@ public class CFMLParser extends Parser {
 
                 switch (alt9) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:398:3: TAG_ATTRIBUTE
+            	    // ./src/org/cfml/parser/antlr/CFML.g:398:3: TAG_ATTRIBUTE
             	    {
             	    TAG_ATTRIBUTE19=(Token)input.LT(1);
             	    match(input,TAG_ATTRIBUTE,FOLLOW_TAG_ATTRIBUTE_in_script496); 
@@ -1236,7 +1236,7 @@ public class CFMLParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:398:19: stringLiteral
+            	    // ./src/org/cfml/parser/antlr/CFML.g:398:19: stringLiteral
             	    {
             	    pushFollow(FOLLOW_stringLiteral_in_script500);
             	    stringLiteral20=stringLiteral();
@@ -1247,7 +1247,7 @@ public class CFMLParser extends Parser {
             	    }
             	    break;
             	case 3 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:398:35: EQUALS
+            	    // ./src/org/cfml/parser/antlr/CFML.g:398:35: EQUALS
             	    {
             	    EQUALS21=(Token)input.LT(1);
             	    match(input,EQUALS,FOLLOW_EQUALS_in_script504); 
@@ -1257,7 +1257,7 @@ public class CFMLParser extends Parser {
             	    }
             	    break;
             	case 4 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:398:44: CFML
+            	    // ./src/org/cfml/parser/antlr/CFML.g:398:44: CFML
             	    {
             	    CFML22=(Token)input.LT(1);
             	    match(input,CFML,FOLLOW_CFML_in_script508); 
@@ -1289,7 +1289,7 @@ public class CFMLParser extends Parser {
             root_0 = (Object)adaptor.nil();
             // 403:2: -> { allowsCFMLCondition($tagScope::name) }? ^( CFML_STATEMENT )
             if ( allowsCFMLCondition(((tagScope_scope)tagScope_stack.peek()).name) ) {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:403:47: ^( CFML_STATEMENT )
+                // ./src/org/cfml/parser/antlr/CFML.g:403:47: ^( CFML_STATEMENT )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CFML_STATEMENT, "CFML_STATEMENT"), root_1);
@@ -1302,7 +1302,7 @@ public class CFMLParser extends Parser {
             }
             else // 404:2: -> ^( CFML_STATEMENT )
             {
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:404:5: ^( CFML_STATEMENT )
+                // ./src/org/cfml/parser/antlr/CFML.g:404:5: ^( CFML_STATEMENT )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(CFML_STATEMENT, "CFML_STATEMENT"), root_1);
@@ -1340,7 +1340,7 @@ public class CFMLParser extends Parser {
     };
 
     // $ANTLR start hashCFML
-    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:407:1: hashCFML : HASH ( ESCAPE_HASH | HASH_CFML )* HASH ;
+    // ./src/org/cfml/parser/antlr/CFML.g:407:1: hashCFML : HASH ( ESCAPE_HASH | HASH_CFML )* HASH ;
     public final hashCFML_return hashCFML() throws RecognitionException {
         hashCFML_return retval = new hashCFML_return();
         retval.start = input.LT(1);
@@ -1356,8 +1356,8 @@ public class CFMLParser extends Parser {
         Object HASH25_tree=null;
 
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:408:2: ( HASH ( ESCAPE_HASH | HASH_CFML )* HASH )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:409:2: HASH ( ESCAPE_HASH | HASH_CFML )* HASH
+            // ./src/org/cfml/parser/antlr/CFML.g:408:2: ( HASH ( ESCAPE_HASH | HASH_CFML )* HASH )
+            // ./src/org/cfml/parser/antlr/CFML.g:409:2: HASH ( ESCAPE_HASH | HASH_CFML )* HASH
             {
             root_0 = (Object)adaptor.nil();
 
@@ -1366,7 +1366,7 @@ public class CFMLParser extends Parser {
             HASH23_tree = (Object)adaptor.create(HASH23);
             adaptor.addChild(root_0, HASH23_tree);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:409:7: ( ESCAPE_HASH | HASH_CFML )*
+            // ./src/org/cfml/parser/antlr/CFML.g:409:7: ( ESCAPE_HASH | HASH_CFML )*
             loop10:
             do {
                 int alt10=2;
@@ -1379,7 +1379,7 @@ public class CFMLParser extends Parser {
 
                 switch (alt10) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFML.g:
+            	    // ./src/org/cfml/parser/antlr/CFML.g:
             	    {
             	    set24=(Token)input.LT(1);
             	    if ( (input.LA(1)>=ESCAPE_HASH && input.LA(1)<=HASH_CFML) ) {

@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g 2008-04-23 06:45:14
+// $ANTLR 3.0.1 ./src/org/cfml/parser/antlr/CFScript.g 2008-04-23 06:45:14
 
 package org.cfml.parser.antlr;
 
@@ -107,14 +107,14 @@ public class CFScriptLexer extends Lexer {
     public CFScriptLexer(CharStream input) {
         super(input);
     }
-    public String getGrammarFileName() { return "/Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g"; }
+    public String getGrammarFileName() { return "./src/org/cfml/parser/antlr/CFScript.g"; }
 
     // $ANTLR start FUNCTION
     public final void mFUNCTION() throws RecognitionException {
         try {
             int _type = FUNCTION;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:381:2: ( 'function' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:382:2: 'function'
+            // ./src/org/cfml/parser/antlr/CFScript.g:381:2: ( 'function' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:382:2: 'function'
             {
             match("function"); 
 
@@ -132,8 +132,8 @@ public class CFScriptLexer extends Lexer {
     public final void mIF() throws RecognitionException {
         try {
             int _type = IF;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:386:2: ( 'if' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:387:2: 'if'
+            // ./src/org/cfml/parser/antlr/CFScript.g:386:2: ( 'if' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:387:2: 'if'
             {
             match("if"); 
 
@@ -151,8 +151,8 @@ public class CFScriptLexer extends Lexer {
     public final void mELSE() throws RecognitionException {
         try {
             int _type = ELSE;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:391:2: ( 'else' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:392:2: 'else'
+            // ./src/org/cfml/parser/antlr/CFScript.g:391:2: ( 'else' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:392:2: 'else'
             {
             match("else"); 
 
@@ -170,8 +170,8 @@ public class CFScriptLexer extends Lexer {
     public final void mTRY() throws RecognitionException {
         try {
             int _type = TRY;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:396:2: ( 'try' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:397:2: 'try'
+            // ./src/org/cfml/parser/antlr/CFScript.g:396:2: ( 'try' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:397:2: 'try'
             {
             match("try"); 
 
@@ -189,8 +189,8 @@ public class CFScriptLexer extends Lexer {
     public final void mCATCH() throws RecognitionException {
         try {
             int _type = CATCH;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:401:2: ( 'catch' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:402:2: 'catch'
+            // ./src/org/cfml/parser/antlr/CFScript.g:401:2: ( 'catch' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:402:2: 'catch'
             {
             match("catch"); 
 
@@ -211,8 +211,8 @@ public class CFScriptLexer extends Lexer {
     public final void mRETURN() throws RecognitionException {
         try {
             int _type = RETURN;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:408:2: ( 'return' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:409:2: 'return'
+            // ./src/org/cfml/parser/antlr/CFScript.g:408:2: ( 'return' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:409:2: 'return'
             {
             match("return"); 
 
@@ -230,8 +230,8 @@ public class CFScriptLexer extends Lexer {
     public final void mFOR() throws RecognitionException {
         try {
             int _type = FOR;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:413:2: ( 'for' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:414:2: 'for'
+            // ./src/org/cfml/parser/antlr/CFScript.g:413:2: ( 'for' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:414:2: 'for'
             {
             match("for"); 
 
@@ -249,8 +249,8 @@ public class CFScriptLexer extends Lexer {
     public final void mIN() throws RecognitionException {
         try {
             int _type = IN;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:418:2: ( 'in' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:419:2: 'in'
+            // ./src/org/cfml/parser/antlr/CFScript.g:418:2: ( 'in' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:419:2: 'in'
             {
             match("in"); 
 
@@ -268,8 +268,8 @@ public class CFScriptLexer extends Lexer {
     public final void mWHILE() throws RecognitionException {
         try {
             int _type = WHILE;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:423:2: ( 'while' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:424:2: 'while'
+            // ./src/org/cfml/parser/antlr/CFScript.g:423:2: ( 'while' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:424:2: 'while'
             {
             match("while"); 
 
@@ -287,8 +287,8 @@ public class CFScriptLexer extends Lexer {
     public final void mDO() throws RecognitionException {
         try {
             int _type = DO;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:428:2: ( 'do' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:429:2: 'do'
+            // ./src/org/cfml/parser/antlr/CFScript.g:428:2: ( 'do' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:429:2: 'do'
             {
             match("do"); 
 
@@ -306,8 +306,8 @@ public class CFScriptLexer extends Lexer {
     public final void mNOT() throws RecognitionException {
         try {
             int _type = NOT;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:432:5: ( 'not' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:433:2: 'not'
+            // ./src/org/cfml/parser/antlr/CFScript.g:432:5: ( 'not' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:433:2: 'not'
             {
             match("not"); 
 
@@ -325,8 +325,8 @@ public class CFScriptLexer extends Lexer {
     public final void mEQUALS() throws RecognitionException {
         try {
             int _type = EQUALS;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:437:2: ( '=' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:438:2: '='
+            // ./src/org/cfml/parser/antlr/CFScript.g:437:2: ( '=' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:438:2: '='
             {
             match('='); 
 
@@ -343,8 +343,8 @@ public class CFScriptLexer extends Lexer {
     public final void mSWITCH() throws RecognitionException {
         try {
             int _type = SWITCH;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:442:2: ( 'switch' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:443:2: 'switch'
+            // ./src/org/cfml/parser/antlr/CFScript.g:442:2: ( 'switch' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:443:2: 'switch'
             {
             match("switch"); 
 
@@ -362,8 +362,8 @@ public class CFScriptLexer extends Lexer {
     public final void mCASE() throws RecognitionException {
         try {
             int _type = CASE;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:447:2: ( 'case' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:448:2: 'case'
+            // ./src/org/cfml/parser/antlr/CFScript.g:447:2: ( 'case' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:448:2: 'case'
             {
             match("case"); 
 
@@ -381,8 +381,8 @@ public class CFScriptLexer extends Lexer {
     public final void mDEFAULT() throws RecognitionException {
         try {
             int _type = DEFAULT;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:452:2: ( 'default' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:453:2: 'default'
+            // ./src/org/cfml/parser/antlr/CFScript.g:452:2: ( 'default' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:453:2: 'default'
             {
             match("default"); 
 
@@ -400,8 +400,8 @@ public class CFScriptLexer extends Lexer {
     public final void mBREAK() throws RecognitionException {
         try {
             int _type = BREAK;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:457:2: ( 'break' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:458:2: 'break'
+            // ./src/org/cfml/parser/antlr/CFScript.g:457:2: ( 'break' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:458:2: 'break'
             {
             match("break"); 
 
@@ -419,8 +419,8 @@ public class CFScriptLexer extends Lexer {
     public final void mCOLON() throws RecognitionException {
         try {
             int _type = COLON;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:461:7: ( ':' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:462:2: ':'
+            // ./src/org/cfml/parser/antlr/CFScript.g:461:7: ( ':' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:462:2: ':'
             {
             match(':'); 
 
@@ -437,10 +437,10 @@ public class CFScriptLexer extends Lexer {
     public final void mOPERATOR() throws RecognitionException {
         try {
             int _type = OPERATOR;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:466:2: ( ( MATH_OPERATOR | STRING_OPERATOR | CONDITION_OPERATOR | BOOLEAN_OPERATOR ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:467:2: ( MATH_OPERATOR | STRING_OPERATOR | CONDITION_OPERATOR | BOOLEAN_OPERATOR )
+            // ./src/org/cfml/parser/antlr/CFScript.g:466:2: ( ( MATH_OPERATOR | STRING_OPERATOR | CONDITION_OPERATOR | BOOLEAN_OPERATOR ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:467:2: ( MATH_OPERATOR | STRING_OPERATOR | CONDITION_OPERATOR | BOOLEAN_OPERATOR )
             {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:467:2: ( MATH_OPERATOR | STRING_OPERATOR | CONDITION_OPERATOR | BOOLEAN_OPERATOR )
+            // ./src/org/cfml/parser/antlr/CFScript.g:467:2: ( MATH_OPERATOR | STRING_OPERATOR | CONDITION_OPERATOR | BOOLEAN_OPERATOR )
             int alt1=4;
             switch ( input.LA(1) ) {
             case '*':
@@ -521,28 +521,28 @@ public class CFScriptLexer extends Lexer {
 
             switch (alt1) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:467:4: MATH_OPERATOR
+                    // ./src/org/cfml/parser/antlr/CFScript.g:467:4: MATH_OPERATOR
                     {
                     mMATH_OPERATOR(); 
 
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:467:20: STRING_OPERATOR
+                    // ./src/org/cfml/parser/antlr/CFScript.g:467:20: STRING_OPERATOR
                     {
                     mSTRING_OPERATOR(); 
 
                     }
                     break;
                 case 3 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:467:38: CONDITION_OPERATOR
+                    // ./src/org/cfml/parser/antlr/CFScript.g:467:38: CONDITION_OPERATOR
                     {
                     mCONDITION_OPERATOR(); 
 
                     }
                     break;
                 case 4 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:467:59: BOOLEAN_OPERATOR
+                    // ./src/org/cfml/parser/antlr/CFScript.g:467:59: BOOLEAN_OPERATOR
                     {
                     mBOOLEAN_OPERATOR(); 
 
@@ -565,8 +565,8 @@ public class CFScriptLexer extends Lexer {
     public final void mCOMMA() throws RecognitionException {
         try {
             int _type = COMMA;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:470:7: ( ',' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:471:2: ','
+            // ./src/org/cfml/parser/antlr/CFScript.g:470:7: ( ',' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:471:2: ','
             {
             match(','); 
 
@@ -583,8 +583,8 @@ public class CFScriptLexer extends Lexer {
     public final void mSEMI_COLON() throws RecognitionException {
         try {
             int _type = SEMI_COLON;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:475:2: ( ';' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:476:2: ';'
+            // ./src/org/cfml/parser/antlr/CFScript.g:475:2: ( ';' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:476:2: ';'
             {
             match(';'); 
 
@@ -601,8 +601,8 @@ public class CFScriptLexer extends Lexer {
     public final void mHASH() throws RecognitionException {
         try {
             int _type = HASH;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:479:6: ( '#' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:480:2: '#'
+            // ./src/org/cfml/parser/antlr/CFScript.g:479:6: ( '#' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:480:2: '#'
             {
             match('#'); 
 
@@ -619,8 +619,8 @@ public class CFScriptLexer extends Lexer {
     public final void mOPEN_PAREN() throws RecognitionException {
         try {
             int _type = OPEN_PAREN;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:484:2: ( '(' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:485:2: '('
+            // ./src/org/cfml/parser/antlr/CFScript.g:484:2: ( '(' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:485:2: '('
             {
             match('('); 
 
@@ -637,8 +637,8 @@ public class CFScriptLexer extends Lexer {
     public final void mCLOSE_PAREN() throws RecognitionException {
         try {
             int _type = CLOSE_PAREN;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:489:2: ( ')' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:490:2: ')'
+            // ./src/org/cfml/parser/antlr/CFScript.g:489:2: ( ')' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:490:2: ')'
             {
             match(')'); 
 
@@ -655,8 +655,8 @@ public class CFScriptLexer extends Lexer {
     public final void mOPEN_SQUARE() throws RecognitionException {
         try {
             int _type = OPEN_SQUARE;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:494:2: ( '[' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:495:2: '['
+            // ./src/org/cfml/parser/antlr/CFScript.g:494:2: ( '[' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:495:2: '['
             {
             match('['); 
 
@@ -673,8 +673,8 @@ public class CFScriptLexer extends Lexer {
     public final void mCLOSE_SQUARE() throws RecognitionException {
         try {
             int _type = CLOSE_SQUARE;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:499:2: ( ']' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:500:2: ']'
+            // ./src/org/cfml/parser/antlr/CFScript.g:499:2: ( ']' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:500:2: ']'
             {
             match(']'); 
 
@@ -691,8 +691,8 @@ public class CFScriptLexer extends Lexer {
     public final void mOPEN_CURLY() throws RecognitionException {
         try {
             int _type = OPEN_CURLY;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:504:2: ( '{' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:505:2: '{'
+            // ./src/org/cfml/parser/antlr/CFScript.g:504:2: ( '{' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:505:2: '{'
             {
             match('{'); 
 
@@ -709,8 +709,8 @@ public class CFScriptLexer extends Lexer {
     public final void mCLOSE_CURLY() throws RecognitionException {
         try {
             int _type = CLOSE_CURLY;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:509:2: ( '}' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:510:2: '}'
+            // ./src/org/cfml/parser/antlr/CFScript.g:509:2: ( '}' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:510:2: '}'
             {
             match('}'); 
 
@@ -727,8 +727,8 @@ public class CFScriptLexer extends Lexer {
     public final void mDOT() throws RecognitionException {
         try {
             int _type = DOT;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:514:2: ( '.' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:515:2: '.'
+            // ./src/org/cfml/parser/antlr/CFScript.g:514:2: ( '.' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:515:2: '.'
             {
             match('.'); 
 
@@ -745,8 +745,8 @@ public class CFScriptLexer extends Lexer {
     public final void mVAR() throws RecognitionException {
         try {
             int _type = VAR;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:519:2: ( 'var' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:520:2: 'var'
+            // ./src/org/cfml/parser/antlr/CFScript.g:519:2: ( 'var' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:520:2: 'var'
             {
             match("var"); 
 
@@ -764,10 +764,10 @@ public class CFScriptLexer extends Lexer {
     public final void mNUMBER() throws RecognitionException {
         try {
             int _type = NUMBER;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:524:2: ( ( DIGIT )+ ( DOT ( DIGIT )+ )? )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:525:2: ( DIGIT )+ ( DOT ( DIGIT )+ )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:524:2: ( ( DIGIT )+ ( DOT ( DIGIT )+ )? )
+            // ./src/org/cfml/parser/antlr/CFScript.g:525:2: ( DIGIT )+ ( DOT ( DIGIT )+ )?
             {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:525:2: ( DIGIT )+
+            // ./src/org/cfml/parser/antlr/CFScript.g:525:2: ( DIGIT )+
             int cnt2=0;
             loop2:
             do {
@@ -781,7 +781,7 @@ public class CFScriptLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:525:2: DIGIT
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:525:2: DIGIT
             	    {
             	    mDIGIT(); 
 
@@ -797,7 +797,7 @@ public class CFScriptLexer extends Lexer {
                 cnt2++;
             } while (true);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:525:8: ( DOT ( DIGIT )+ )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:525:8: ( DOT ( DIGIT )+ )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -806,10 +806,10 @@ public class CFScriptLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:525:9: DOT ( DIGIT )+
+                    // ./src/org/cfml/parser/antlr/CFScript.g:525:9: DOT ( DIGIT )+
                     {
                     mDOT(); 
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:525:13: ( DIGIT )+
+                    // ./src/org/cfml/parser/antlr/CFScript.g:525:13: ( DIGIT )+
                     int cnt3=0;
                     loop3:
                     do {
@@ -823,7 +823,7 @@ public class CFScriptLexer extends Lexer {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:525:13: DIGIT
+                    	    // ./src/org/cfml/parser/antlr/CFScript.g:525:13: DIGIT
                     	    {
                     	    mDIGIT(); 
 
@@ -859,8 +859,8 @@ public class CFScriptLexer extends Lexer {
     public final void mESCAPE_DOUBLE_QUOTE() throws RecognitionException {
         try {
             int _type = ESCAPE_DOUBLE_QUOTE;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:529:2: ( '\"\"' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:530:2: '\"\"'
+            // ./src/org/cfml/parser/antlr/CFScript.g:529:2: ( '\"\"' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:530:2: '\"\"'
             {
             match("\"\""); 
 
@@ -878,8 +878,8 @@ public class CFScriptLexer extends Lexer {
     public final void mESCAPE_SINGLE_QUOTE() throws RecognitionException {
         try {
             int _type = ESCAPE_SINGLE_QUOTE;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:534:2: ( '\\'\\'' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:535:2: '\\'\\''
+            // ./src/org/cfml/parser/antlr/CFScript.g:534:2: ( '\\'\\'' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:535:2: '\\'\\''
             {
             match("\'\'"); 
 
@@ -897,8 +897,8 @@ public class CFScriptLexer extends Lexer {
     public final void mDOUBLE_QUOTE() throws RecognitionException {
         try {
             int _type = DOUBLE_QUOTE;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:539:2: ( '\"' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:540:2: '\"'
+            // ./src/org/cfml/parser/antlr/CFScript.g:539:2: ( '\"' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:540:2: '\"'
             {
             match('\"'); 
 
@@ -915,8 +915,8 @@ public class CFScriptLexer extends Lexer {
     public final void mSINGLE_QUOTE() throws RecognitionException {
         try {
             int _type = SINGLE_QUOTE;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:543:2: ( '\\'' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:544:2: '\\''
+            // ./src/org/cfml/parser/antlr/CFScript.g:543:2: ( '\\'' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:544:2: '\\''
             {
             match('\''); 
 
@@ -933,8 +933,8 @@ public class CFScriptLexer extends Lexer {
     public final void mIDENTIFIER() throws RecognitionException {
         try {
             int _type = IDENTIFIER;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:548:2: ( ( LETTER | UNDERSCORE ) ( LETTER | DIGIT | UNDERSCORE )* )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:549:2: ( LETTER | UNDERSCORE ) ( LETTER | DIGIT | UNDERSCORE )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:548:2: ( ( LETTER | UNDERSCORE ) ( LETTER | DIGIT | UNDERSCORE )* )
+            // ./src/org/cfml/parser/antlr/CFScript.g:549:2: ( LETTER | UNDERSCORE ) ( LETTER | DIGIT | UNDERSCORE )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -946,7 +946,7 @@ public class CFScriptLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:549:24: ( LETTER | DIGIT | UNDERSCORE )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:549:24: ( LETTER | DIGIT | UNDERSCORE )*
             loop5:
             do {
                 int alt5=2;
@@ -959,7 +959,7 @@ public class CFScriptLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -993,10 +993,10 @@ public class CFScriptLexer extends Lexer {
     // $ANTLR start MATH_OPERATOR
     public final void mMATH_OPERATOR() throws RecognitionException {
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:565:2: ( ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:566:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:565:2: ( ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:566:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
             {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:566:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:566:2: ( '+' | '*' | '\\/' | '\\\\' | '^' | 'mod' | '-' )
             int alt6=7;
             switch ( input.LA(1) ) {
             case '+':
@@ -1043,42 +1043,42 @@ public class CFScriptLexer extends Lexer {
 
             switch (alt6) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:566:3: '+'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:566:3: '+'
                     {
                     match('+'); 
 
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:566:9: '*'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:566:9: '*'
                     {
                     match('*'); 
 
                     }
                     break;
                 case 3 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:566:15: '\\/'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:566:15: '\\/'
                     {
                     match('/'); 
 
                     }
                     break;
                 case 4 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:566:22: '\\\\'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:566:22: '\\\\'
                     {
                     match('\\'); 
 
                     }
                     break;
                 case 5 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:566:29: '^'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:566:29: '^'
                     {
                     match('^'); 
 
                     }
                     break;
                 case 6 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:566:35: 'mod'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:566:35: 'mod'
                     {
                     match("mod"); 
 
@@ -1086,7 +1086,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:566:43: '-'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:566:43: '-'
                     {
                     match('-'); 
 
@@ -1107,8 +1107,8 @@ public class CFScriptLexer extends Lexer {
     // $ANTLR start STRING_OPERATOR
     public final void mSTRING_OPERATOR() throws RecognitionException {
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:569:2: ( '&' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:570:2: '&'
+            // ./src/org/cfml/parser/antlr/CFScript.g:569:2: ( '&' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:570:2: '&'
             {
             match('&'); 
 
@@ -1123,10 +1123,10 @@ public class CFScriptLexer extends Lexer {
     // $ANTLR start CONDITION_OPERATOR
     public final void mCONDITION_OPERATOR() throws RecognitionException {
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:573:2: ( ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:574:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:573:2: ( ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:574:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
             {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:574:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:574:2: ( 'eq' | 'neq' | 'is' | 'gt' | 'lt' | 'lte' | 'gte' )
             int alt7=7;
             switch ( input.LA(1) ) {
             case 'e':
@@ -1195,7 +1195,7 @@ public class CFScriptLexer extends Lexer {
 
             switch (alt7) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:574:3: 'eq'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:574:3: 'eq'
                     {
                     match("eq"); 
 
@@ -1203,7 +1203,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:574:8: 'neq'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:574:8: 'neq'
                     {
                     match("neq"); 
 
@@ -1211,7 +1211,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:574:14: 'is'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:574:14: 'is'
                     {
                     match("is"); 
 
@@ -1219,7 +1219,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:574:19: 'gt'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:574:19: 'gt'
                     {
                     match("gt"); 
 
@@ -1227,7 +1227,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:574:24: 'lt'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:574:24: 'lt'
                     {
                     match("lt"); 
 
@@ -1235,7 +1235,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:574:29: 'lte'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:574:29: 'lte'
                     {
                     match("lte"); 
 
@@ -1243,7 +1243,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:574:35: 'gte'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:574:35: 'gte'
                     {
                     match("gte"); 
 
@@ -1265,10 +1265,10 @@ public class CFScriptLexer extends Lexer {
     // $ANTLR start BOOLEAN_OPERATOR
     public final void mBOOLEAN_OPERATOR() throws RecognitionException {
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:578:2: ( ( 'or' | 'and' | 'xor' | 'eqv' | 'imp' ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:579:2: ( 'or' | 'and' | 'xor' | 'eqv' | 'imp' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:578:2: ( ( 'or' | 'and' | 'xor' | 'eqv' | 'imp' ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:579:2: ( 'or' | 'and' | 'xor' | 'eqv' | 'imp' )
             {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:579:2: ( 'or' | 'and' | 'xor' | 'eqv' | 'imp' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:579:2: ( 'or' | 'and' | 'xor' | 'eqv' | 'imp' )
             int alt8=5;
             switch ( input.LA(1) ) {
             case 'o':
@@ -1305,7 +1305,7 @@ public class CFScriptLexer extends Lexer {
 
             switch (alt8) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:579:3: 'or'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:579:3: 'or'
                     {
                     match("or"); 
 
@@ -1313,7 +1313,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:579:8: 'and'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:579:8: 'and'
                     {
                     match("and"); 
 
@@ -1321,7 +1321,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:579:14: 'xor'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:579:14: 'xor'
                     {
                     match("xor"); 
 
@@ -1329,7 +1329,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:579:20: 'eqv'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:579:20: 'eqv'
                     {
                     match("eqv"); 
 
@@ -1337,7 +1337,7 @@ public class CFScriptLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:579:26: 'imp'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:579:26: 'imp'
                     {
                     match("imp"); 
 
@@ -1359,8 +1359,8 @@ public class CFScriptLexer extends Lexer {
     // $ANTLR start UNDERSCORE
     public final void mUNDERSCORE() throws RecognitionException {
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:583:2: ( '_' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:584:2: '_'
+            // ./src/org/cfml/parser/antlr/CFScript.g:583:2: ( '_' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:584:2: '_'
             {
             match('_'); 
 
@@ -1375,8 +1375,8 @@ public class CFScriptLexer extends Lexer {
     // $ANTLR start DIGIT
     public final void mDIGIT() throws RecognitionException {
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:588:2: ( '0' .. '9' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:589:2: '0' .. '9'
+            // ./src/org/cfml/parser/antlr/CFScript.g:588:2: ( '0' .. '9' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:589:2: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1391,8 +1391,8 @@ public class CFScriptLexer extends Lexer {
     // $ANTLR start LETTER
     public final void mLETTER() throws RecognitionException {
         try {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:593:2: ( 'a' .. 'z' | 'A' .. 'Z' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:
+            // ./src/org/cfml/parser/antlr/CFScript.g:593:2: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1417,8 +1417,8 @@ public class CFScriptLexer extends Lexer {
     public final void mWS() throws RecognitionException {
         try {
             int _type = WS;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:600:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:601:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:600:2: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:601:2: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||(input.LA(1)>='\f' && input.LA(1)<='\r')||input.LA(1)==' ' ) {
                 input.consume();
@@ -1447,12 +1447,12 @@ public class CFScriptLexer extends Lexer {
     public final void mCOMMENT() throws RecognitionException {
         try {
             int _type = COMMENT;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:608:2: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:609:2: '/*' ( options {greedy=false; } : . )* '*/'
+            // ./src/org/cfml/parser/antlr/CFScript.g:608:2: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:609:2: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:609:7: ( options {greedy=false; } : . )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:609:7: ( options {greedy=false; } : . )*
             loop9:
             do {
                 int alt9=2;
@@ -1477,7 +1477,7 @@ public class CFScriptLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:609:35: .
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:609:35: .
             	    {
             	    matchAny(); 
 
@@ -1508,12 +1508,12 @@ public class CFScriptLexer extends Lexer {
     public final void mLINE_COMMENT() throws RecognitionException {
         try {
             int _type = LINE_COMMENT;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:616:2: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:617:2: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
+            // ./src/org/cfml/parser/antlr/CFScript.g:616:2: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
+            // ./src/org/cfml/parser/antlr/CFScript.g:617:2: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
             {
             match("//"); 
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:617:7: (~ ( '\\n' | '\\r' ) )*
+            // ./src/org/cfml/parser/antlr/CFScript.g:617:7: (~ ( '\\n' | '\\r' ) )*
             loop10:
             do {
                 int alt10=2;
@@ -1526,7 +1526,7 @@ public class CFScriptLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:617:7: ~ ( '\\n' | '\\r' )
+            	    // ./src/org/cfml/parser/antlr/CFScript.g:617:7: ~ ( '\\n' | '\\r' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -1547,7 +1547,7 @@ public class CFScriptLexer extends Lexer {
                 }
             } while (true);
 
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:617:21: ( '\\r' )?
+            // ./src/org/cfml/parser/antlr/CFScript.g:617:21: ( '\\r' )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1556,7 +1556,7 @@ public class CFScriptLexer extends Lexer {
             }
             switch (alt11) {
                 case 1 :
-                    // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:617:21: '\\r'
+                    // ./src/org/cfml/parser/antlr/CFScript.g:617:21: '\\r'
                     {
                     match('\r'); 
 
@@ -1583,11 +1583,11 @@ public class CFScriptLexer extends Lexer {
     public final void mOTHER() throws RecognitionException {
         try {
             int _type = OTHER;
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:624:2: ( ( options {greedy=false; } : . ) )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:625:2: ( options {greedy=false; } : . )
+            // ./src/org/cfml/parser/antlr/CFScript.g:624:2: ( ( options {greedy=false; } : . ) )
+            // ./src/org/cfml/parser/antlr/CFScript.g:625:2: ( options {greedy=false; } : . )
             {
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:625:2: ( options {greedy=false; } : . )
-            // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:625:29: .
+            // ./src/org/cfml/parser/antlr/CFScript.g:625:2: ( options {greedy=false; } : . )
+            // ./src/org/cfml/parser/antlr/CFScript.g:625:29: .
             {
             matchAny(); 
 
@@ -1604,7 +1604,7 @@ public class CFScriptLexer extends Lexer {
     // $ANTLR end OTHER
 
     public void mTokens() throws RecognitionException {
-        // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:8: ( FUNCTION | IF | ELSE | TRY | CATCH | RETURN | FOR | IN | WHILE | DO | NOT | EQUALS | SWITCH | CASE | DEFAULT | BREAK | COLON | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | NUMBER | ESCAPE_DOUBLE_QUOTE | ESCAPE_SINGLE_QUOTE | DOUBLE_QUOTE | SINGLE_QUOTE | IDENTIFIER | WS | COMMENT | LINE_COMMENT | OTHER )
+        // ./src/org/cfml/parser/antlr/CFScript.g:1:8: ( FUNCTION | IF | ELSE | TRY | CATCH | RETURN | FOR | IN | WHILE | DO | NOT | EQUALS | SWITCH | CASE | DEFAULT | BREAK | COLON | OPERATOR | COMMA | SEMI_COLON | HASH | OPEN_PAREN | CLOSE_PAREN | OPEN_SQUARE | CLOSE_SQUARE | OPEN_CURLY | CLOSE_CURLY | DOT | VAR | NUMBER | ESCAPE_DOUBLE_QUOTE | ESCAPE_SINGLE_QUOTE | DOUBLE_QUOTE | SINGLE_QUOTE | IDENTIFIER | WS | COMMENT | LINE_COMMENT | OTHER )
         int alt12=39;
         int LA12_0 = input.LA(1);
 
@@ -2548,273 +2548,273 @@ public class CFScriptLexer extends Lexer {
         }
         switch (alt12) {
             case 1 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:10: FUNCTION
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:10: FUNCTION
                 {
                 mFUNCTION(); 
 
                 }
                 break;
             case 2 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:19: IF
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:19: IF
                 {
                 mIF(); 
 
                 }
                 break;
             case 3 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:22: ELSE
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:22: ELSE
                 {
                 mELSE(); 
 
                 }
                 break;
             case 4 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:27: TRY
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:27: TRY
                 {
                 mTRY(); 
 
                 }
                 break;
             case 5 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:31: CATCH
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:31: CATCH
                 {
                 mCATCH(); 
 
                 }
                 break;
             case 6 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:37: RETURN
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:37: RETURN
                 {
                 mRETURN(); 
 
                 }
                 break;
             case 7 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:44: FOR
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:44: FOR
                 {
                 mFOR(); 
 
                 }
                 break;
             case 8 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:48: IN
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:48: IN
                 {
                 mIN(); 
 
                 }
                 break;
             case 9 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:51: WHILE
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:51: WHILE
                 {
                 mWHILE(); 
 
                 }
                 break;
             case 10 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:57: DO
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:57: DO
                 {
                 mDO(); 
 
                 }
                 break;
             case 11 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:60: NOT
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:60: NOT
                 {
                 mNOT(); 
 
                 }
                 break;
             case 12 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:64: EQUALS
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:64: EQUALS
                 {
                 mEQUALS(); 
 
                 }
                 break;
             case 13 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:71: SWITCH
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:71: SWITCH
                 {
                 mSWITCH(); 
 
                 }
                 break;
             case 14 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:78: CASE
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:78: CASE
                 {
                 mCASE(); 
 
                 }
                 break;
             case 15 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:83: DEFAULT
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:83: DEFAULT
                 {
                 mDEFAULT(); 
 
                 }
                 break;
             case 16 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:91: BREAK
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:91: BREAK
                 {
                 mBREAK(); 
 
                 }
                 break;
             case 17 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:97: COLON
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:97: COLON
                 {
                 mCOLON(); 
 
                 }
                 break;
             case 18 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:103: OPERATOR
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:103: OPERATOR
                 {
                 mOPERATOR(); 
 
                 }
                 break;
             case 19 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:112: COMMA
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:112: COMMA
                 {
                 mCOMMA(); 
 
                 }
                 break;
             case 20 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:118: SEMI_COLON
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:118: SEMI_COLON
                 {
                 mSEMI_COLON(); 
 
                 }
                 break;
             case 21 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:129: HASH
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:129: HASH
                 {
                 mHASH(); 
 
                 }
                 break;
             case 22 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:134: OPEN_PAREN
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:134: OPEN_PAREN
                 {
                 mOPEN_PAREN(); 
 
                 }
                 break;
             case 23 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:145: CLOSE_PAREN
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:145: CLOSE_PAREN
                 {
                 mCLOSE_PAREN(); 
 
                 }
                 break;
             case 24 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:157: OPEN_SQUARE
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:157: OPEN_SQUARE
                 {
                 mOPEN_SQUARE(); 
 
                 }
                 break;
             case 25 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:169: CLOSE_SQUARE
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:169: CLOSE_SQUARE
                 {
                 mCLOSE_SQUARE(); 
 
                 }
                 break;
             case 26 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:182: OPEN_CURLY
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:182: OPEN_CURLY
                 {
                 mOPEN_CURLY(); 
 
                 }
                 break;
             case 27 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:193: CLOSE_CURLY
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:193: CLOSE_CURLY
                 {
                 mCLOSE_CURLY(); 
 
                 }
                 break;
             case 28 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:205: DOT
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:205: DOT
                 {
                 mDOT(); 
 
                 }
                 break;
             case 29 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:209: VAR
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:209: VAR
                 {
                 mVAR(); 
 
                 }
                 break;
             case 30 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:213: NUMBER
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:213: NUMBER
                 {
                 mNUMBER(); 
 
                 }
                 break;
             case 31 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:220: ESCAPE_DOUBLE_QUOTE
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:220: ESCAPE_DOUBLE_QUOTE
                 {
                 mESCAPE_DOUBLE_QUOTE(); 
 
                 }
                 break;
             case 32 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:240: ESCAPE_SINGLE_QUOTE
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:240: ESCAPE_SINGLE_QUOTE
                 {
                 mESCAPE_SINGLE_QUOTE(); 
 
                 }
                 break;
             case 33 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:260: DOUBLE_QUOTE
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:260: DOUBLE_QUOTE
                 {
                 mDOUBLE_QUOTE(); 
 
                 }
                 break;
             case 34 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:273: SINGLE_QUOTE
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:273: SINGLE_QUOTE
                 {
                 mSINGLE_QUOTE(); 
 
                 }
                 break;
             case 35 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:286: IDENTIFIER
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:286: IDENTIFIER
                 {
                 mIDENTIFIER(); 
 
                 }
                 break;
             case 36 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:297: WS
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:297: WS
                 {
                 mWS(); 
 
                 }
                 break;
             case 37 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:300: COMMENT
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:300: COMMENT
                 {
                 mCOMMENT(); 
 
                 }
                 break;
             case 38 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:308: LINE_COMMENT
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:308: LINE_COMMENT
                 {
                 mLINE_COMMENT(); 
 
                 }
                 break;
             case 39 :
-                // /Users/denny/Documents/workspace-cfe/org.cfml.parser/src/org/cfml/parser/antlr/CFScript.g:1:321: OTHER
+                // ./src/org/cfml/parser/antlr/CFScript.g:1:321: OTHER
                 {
                 mOTHER(); 
 
