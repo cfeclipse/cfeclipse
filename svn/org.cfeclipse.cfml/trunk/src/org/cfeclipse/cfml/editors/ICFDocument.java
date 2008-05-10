@@ -35,6 +35,7 @@ import org.cfeclipse.cfml.editors.contentassist.IAssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.IAssistTagContributor;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.external.ExternalFile;
+import org.cfeclipse.cfml.natures.CFENature;
 import org.cfeclipse.cfml.natures.IContentAssistContributorNature;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
@@ -327,10 +328,10 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		CFEContentAssistManager returnManager = null;
 		//CFENature nature;		    
 		try {
-		    if(!ResourceUtils.hasNature(this.lastRes.getProject(), CFMLPlugin.NATURE_ID))
+		    if(!ResourceUtils.hasNature(this.lastRes.getProject(), CFENature.NATURE_ID))
 		        return CFMLPlugin.getDefault().getGlobalCAM();
 		    
-		    //nature = (CFENature)lastRes.getProject().getNature(CFMLPlugin.NATURE_ID);
+		    //nature = (CFENature)lastRes.getProject().getNature(CFENature.NATURE_ID);
 		    
 		    //returnManager = nature.getNatureCAM();
 		    returnManager = getCAM();

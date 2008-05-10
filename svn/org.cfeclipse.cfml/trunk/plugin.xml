@@ -134,7 +134,16 @@
       </perspective>
    </extension>
    
-	<!-- ////////////////////////////////////////////////////////////// -->
+	<extension point="org.eclipse.core.runtime.contentTypes">
+		<content-type
+			id="cfsource"
+			base-type="org.eclipse.core.runtime.text"
+			name="ColdFusion Source File"
+			file-extensions="cfc,cfm,cfml">
+		</content-type>
+	</extension>
+
+   	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Editor -->
    <extension
          point="org.eclipse.ui.editors">
@@ -145,6 +154,9 @@
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             class="org.cfeclipse.cfml.editors.CFMLEditor"
             id="org.cfeclipse.cfml.editors.CFMLEditor">
+            
+			<contentTypeBinding contentTypeId="org.cfeclipse.cfml.cfsource">
+			</contentTypeBinding>            
       </editor>
 
 	<!-- CFC Editor
@@ -818,12 +830,12 @@
 	        adaptable="true"
 	        id="org.cfeclipse.cfml.mappings"
 	        objectClass="org.eclipse.core.resources.IFolder">
-	     <menu
+<!--	     <menu
 	           id="org.cfeclipse.cfml.cfeclipse.menu"
 	           label="CFEclipse"
 	           path="cfeclipse_additions">
 	        <separator name="separator1"/>
-	     </menu>
+	     </menu> -->
 	     <action
 	           class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
 	           id="org.cfeclipse.cfml.setMapping.IFolder"
@@ -831,20 +843,21 @@
 	           />
 	  </objectContribution>
 	      
-		<objectContribution
-			objectClass="org.eclipse.core.resources.IProject"
-			nameFilter="*"
+	<objectContribution
+			adaptable="true"
 			id="org.cfeclipse.cfml.applyNature"
-		>
-			<action
-				enablesFor="1"
-				label="%action.label.57"
-				class="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
-				tooltip="%action.tooltip.40"
-				menubarPath="org.cfeclipse.cfml.cfeclipse.menu/separator1"
-				id="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
-			/>
-		</objectContribution>
+			nameFilter="*"
+			objectClass="org.eclipse.core.resources.IProject">
+		<action
+			class="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
+			enablesFor="+"
+			icon="icons/icons/16x16.gif"
+			id="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
+			label="%action.label.57"
+			menubarPath="additions"
+			tooltip="%action.tooltip.40"/>
+	</objectContribution>
+	
   <objectContribution
         adaptable="false"
         id="org.cfeclipse.cfml.editFileURL"
@@ -1552,19 +1565,36 @@
          point="org.eclipse.ui.propertyPages">
       <page
             class="org.cfeclipse.cfml.properties.ProjectPropertyPage"
-            icon="icons/icons/cfeclipse_16x16.png"
             id="org.cfeclipse.cfml.properties.samplePropertyPage"
             name="%page.name.10"
             nameFilter="*"
             objectClass="org.eclipse.core.resources.IProject">
+         <filter 
+         	name="projectNature"
+            value="org.cfeclipse.cfml.CFENature">
+         </filter>
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.core.resources.IProject">
+            </instanceof>
+         </enabledWhen>
       </page>
       <page
             class="org.cfeclipse.cfml.properties.MappingsPropertyPage"
-            icon="icons/icons/cfeclipse_16x16.png"
             id="org.cfeclipse.cfml.properties.MappingsPropertyPage"
             name="CFEMappings"
             nameFilter="*"
-            objectClass="org.eclipse.core.resources.IProject"/>
+            objectClass="org.eclipse.core.resources.IProject">
+         <filter 
+         	name="projectNature"
+            value="org.cfeclipse.cfml.CFENature">
+         </filter>
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.core.resources.IProject">
+            </instanceof>
+         </enabledWhen>
+      </page>
             <!--
       <page
             class="org.cfeclipse.cfml.properties.ResourceURL"
@@ -1583,16 +1613,15 @@
             name="%category.name.2"
             id="org.cfeclipse.cfml.category1">
       </category>
-      <wizard name="%wizard.name.0"
-			icon="icons/icons/cfeclipse_16x16.png"
-
-			class="org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard"
-		
-			category="org.cfeclipse.cfml.category1"
-			preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-			project="true" 
-			finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-			id="org.cfeclipse.cfml.wizards.NewProject">
+      <wizard
+            category="org.cfeclipse.cfml.category1"
+            class="org.cfeclipse.cfml.wizards.NewCFEclipseProject"
+            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
+            icon="icons/icons/cfeclipse_16x16.png"
+            id="org.cfeclipse.cfml.wizards.NewProject"
+            name="%wizard.name.0"
+            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
+            project="true">
 			<description>%wizard.description.0</description>
 	 </wizard>
       <wizard
@@ -1676,7 +1705,6 @@
       <runtime>
          <run class="org.cfeclipse.cfml.natures.CFENature"/>
       </runtime>
-      <one-of-nature id="CFEclipse-2.one-of-nature1"/>
    </extension>
    
    <extension
