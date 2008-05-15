@@ -751,80 +751,88 @@
                id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
          </action>
       </viewerContribution>
-      <objectContribution
-            adaptable="false"
-            id="org.cfeclipse.cfml.mappings"
-            objectClass="org.eclipse.core.resources.IProject">
-         <action
-               class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
-               id="org.cfeclipse.cfml.setMapping.IProject"
-               label="Set CF Mapping"/>
-      </objectContribution>
-	  <objectContribution
-	        adaptable="true"
-	        id="org.cfeclipse.cfml.mappings"
-	        objectClass="org.eclipse.core.resources.IFolder">
-<!--	     <menu
-	           id="org.cfeclipse.cfml.cfeclipse.menu"
-	           label="CFEclipse"
-	           path="cfeclipse_additions">
-	        <separator name="separator1"/>
-	     </menu> -->
-	     <action
-	           class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
-	           id="org.cfeclipse.cfml.setMapping.IFolder"
-	           label="Set CF Mapping"
-	           />
-	  </objectContribution>
-	      
-	<objectContribution
-			adaptable="true"
-			id="org.cfeclipse.cfml.applyNature"
-			nameFilter="*"
-			objectClass="org.eclipse.core.resources.IProject">
-		<action
-			class="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
-			enablesFor="+"
-			icon="icons/icons/16x16.gif"
-			id="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
-			label="%action.label.57"
-			menubarPath="additions"
-			tooltip="%action.tooltip.40"/>
-	</objectContribution>
-	
-  <objectContribution
-        adaptable="false"
-        id="org.cfeclipse.cfml.editFileURL"
-        objectClass="org.eclipse.core.resources.IFile">
-     <action
-           class="org.cfeclipse.cfml.editors.actions.EditURLAction"
-           icon="icons/obj16/world_link.png"
-           id="org.cfeclipse.cfml.editURLAction"
-           label="Edit URL"/>
-  </objectContribution>
-  <objectContribution
-        adaptable="false"
-        id="org.cfeclipse.cfml.editFolderURL"
-        objectClass="org.eclipse.core.resources.IFolder">
-     <action
-           class="org.cfeclipse.cfml.editors.actions.EditURLAction"
-           icon="icons/obj16/world_link.png"
-           id="org.cfeclipse.cfml.editURLAction"
-           label="Edit URL"/>
-  </objectContribution>
-  <objectContribution
-        adaptable="false"
-        id="org.cfeclipse.cfml.editProjectURL"
-        objectClass="org.eclipse.core.resources.IProject">
-     <action
-           class="org.cfeclipse.cfml.editors.actions.EditURLAction"
-           icon="icons/obj16/world_link.png"
-           id="org.cfeclipse.cfml.editURLAction"
-           label="Edit URL"/>
-  </objectContribution>
-  
-  
-  
+
+		<objectContribution
+				adaptable="true"
+				id="org.cfeclipse.cfml.applyNature"
+				nameFilter="*"
+				objectClass="org.eclipse.core.resources.IProject">
+			<action
+					class="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
+					enablesFor="+"
+					icon="icons/icons/16x16.gif"
+					id="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
+					label="%action.label.57"
+					menubarPath="additions"
+					tooltip="%action.tooltip.40"/>
+		</objectContribution>      
+		
+		<objectContribution
+		        adaptable="true"
+		        id="org.cfeclipse.cfml.mappings.project"
+		        objectClass="org.eclipse.core.resources.IProject">
+			<menu
+					id="org.cfeclipse.cfml.projectMenu"
+					label="CFEclipse"
+					path="additions">
+				<separator name="group1"/>
+			</menu>
+			<filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
+			<action
+					class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
+					id="org.cfeclipse.cfml.setMapping.IProject"
+					label="Set CF Mapping"
+					menubarPath="org.cfeclipse.cfml.projectMenu/group1"/>
+			<action
+					class="org.cfeclipse.cfml.editors.actions.EditURLAction"
+					icon="icons/obj16/world_link.png"
+					id="org.cfeclipse.cfml.editURLAction"
+					label="Edit URL"
+					menubarPath="org.cfeclipse.cfml.projectMenu/group1"/>	           
+		</objectContribution>
+	  	      
+		<objectContribution
+				adaptable="true"
+				id="org.cfeclipse.cfml.mappings.folder"
+				objectClass="org.eclipse.core.resources.IFolder">
+			<menu
+					id="org.cfeclipse.cfml.folderMenu"
+					label="CFEclipse"
+					path="additions">
+				<separator name="group1"/>
+			</menu>
+			<filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
+			<action
+					class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
+					id="org.cfeclipse.cfml.setMapping.IFolder"
+					label="Set CF Mapping" 
+					menubarPath="org.cfeclipse.cfml.folderMenu/group1"/>
+			<action
+				class="org.cfeclipse.cfml.editors.actions.EditURLAction"
+				icon="icons/obj16/world_link.png"
+				id="org.cfeclipse.cfml.editURLAction"
+				label="Edit URL"
+				menubarPath="org.cfeclipse.cfml.folderMenu/group1"/>				
+		</objectContribution>
+			
+		<objectContribution
+				adaptable="false"
+				id="org.cfeclipse.cfml.editFileURL"
+				objectClass="org.eclipse.core.resources.IFile">
+			<menu
+					id="org.cfeclipse.cfml.fileMenu"
+					label="CFEclipse"
+					path="additions">
+				<separator name="group1"/>
+			</menu>
+			<filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
+			<action
+					class="org.cfeclipse.cfml.editors.actions.EditURLAction"
+					icon="icons/obj16/world_link.png"
+					id="org.cfeclipse.cfml.editURLAction"
+					label="Edit URL"
+					menubarPath="org.cfeclipse.cfml.fileMenu/group1"/>
+		</objectContribution>
 	</extension>
    
  <!-- Commands -->
@@ -1484,7 +1492,7 @@
        
       <page
             category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            class="org.cfeclipse.cfml.preferences.CFMLTemplatesPreferencePage"
+            class="org.cfeclipse.cfml.preferences.CFMLTemplatePreferencePage"
             id="org.cfeclipse.cfml.preferences.Templates"
             name="Templates"/>
       <page
@@ -1501,12 +1509,8 @@
             class="org.cfeclipse.cfml.properties.ProjectPropertyPage"
             id="org.cfeclipse.cfml.properties.samplePropertyPage"
             name="%page.name.10"
-            nameFilter="*"
-            objectClass="org.eclipse.core.resources.IProject">
-         <filter 
-         	name="projectNature"
-            value="org.cfeclipse.cfml.CFENature">
-         </filter>
+            nameFilter="*">
+         <filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
          <enabledWhen>
             <instanceof
                   value="org.eclipse.core.resources.IProject">
@@ -1517,12 +1521,8 @@
             class="org.cfeclipse.cfml.properties.MappingsPropertyPage"
             id="org.cfeclipse.cfml.properties.MappingsPropertyPage"
             name="CFEMappings"
-            nameFilter="*"
-            objectClass="org.eclipse.core.resources.IProject">
-         <filter 
-         	name="projectNature"
-            value="org.cfeclipse.cfml.CFENature">
-         </filter>
+            nameFilter="*">
+         <filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
          <enabledWhen>
             <instanceof
                   value="org.eclipse.core.resources.IProject">
@@ -1951,7 +1951,6 @@
       </viewPage>
    </extension>
    
-   
    <!-- detachable toolbar -->
    
    <extension
@@ -1961,7 +1960,6 @@
             label="CFEclipse"
             visible="true">
             
-                    
           <!-- Word Wrap -->
         <action
               class="org.cfeclipse.cfml.editors.actions.WordWrapAction"
@@ -2100,7 +2098,6 @@
                toolbarPath="BasicCFEditorCommand"
                tooltip="%action.tooltip.InsertColor">
          </action>
-         
           <!-- repeat last tag (for Brian Sadler) -->
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.LastAction"
@@ -2111,8 +2108,6 @@
                toolbarPath="BasicCFEditorCommand"
                id="org.cfeclipse.cfml.editors.actions.LastActionAction">
          </action>
-
-
          <!-- refresh the browser view action -->
          <action
                class="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction"
@@ -2123,8 +2118,6 @@
                toolbarPath="BasicCFEditorCommand"
                tooltip="%action.tooltip.Refresh">
          </action>
-       
-        
          <!-- insert snippet action -->
          <action
                class="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
@@ -2155,7 +2148,6 @@
                toolbarPath="BasicCFEditorCommand"
                tooltip="%action.tooltip.LoadScribble">
          </action>
-         
 		<!-- external browser -->
  		<action
                toolbarPath="BasicCFEditorCommand"
@@ -2215,9 +2207,6 @@
                toolbarPath="CFEditorResourceCommand"
                tooltip="%action.tooltip.EditTagAction">
          </action>
-            
-    
-         
       </actionSet>
    </extension>   
 </plugin>
