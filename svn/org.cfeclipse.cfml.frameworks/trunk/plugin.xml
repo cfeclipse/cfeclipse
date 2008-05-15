@@ -16,6 +16,7 @@
             id="org.cfeclipse.cfml.frameworks.views.FrameworksView">
       </view>
    </extension>
+
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
@@ -28,6 +29,7 @@
          </view>
       </perspectiveExtension>
    </extension>
+
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
@@ -35,10 +37,7 @@
             id="org.cfeclipse.cfml.frameworks.properties.samplePropertyPage"
             name="CFFrameworks"
             nameFilter="*">
-         <filter 
-         	name="projectNature"
-            value="org.cfeclipse.cfml.CFENature">
-         </filter>
+         <filter name="projectNature" value="org.cfeclipse.cfml.CFENature"/>
          <enabledWhen>
             <instanceof
                   value="org.eclipse.core.resources.IProject">
@@ -46,16 +45,15 @@
          </enabledWhen>
 	  </page>
    </extension>
+   
    <extension
          point="org.eclipse.ui.popupMenus">
-         
-         
       <objectContribution
             id="org.cfeclipse.cfml.frameworks.contribution1"
             nameFilter="*"
             objectClass="org.eclipse.core.resources.IFolder">
          <menu
-               id="org.cfeclipse.cfml.frameworks.menu1"
+               id="org.cfeclipse.cfml.frameworks.folderMenu"
                label="CF Frameworks"
                path="additions">
             <separator name="group1"/>
@@ -66,68 +64,60 @@
                icon="icons/view/cog.png"
                id="org.cfeclipse.cfml.frameworks.newAction"
                label="Set/Unset as Configuration Folder"
-               menubarPath="org.cfeclipse.cfml.frameworks.menu1/group1"
-               />
-               
-           <visibility>
-           <not>
-            <objectState
-                    name="persistentProperty"
-                    value="isFrameworkFile=&quot;true&quot;"/>
-           </not>
-      
-             
-              
-           
-           
-           </visibility>
+               menubarPath="org.cfeclipse.cfml.frameworks.folderMenu/group1"/>      
+ 		 <filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
+         <!-- <visibility>
+           <and>
+			   <objectState name="projectNature" 
+			   			value="org.cfeclipse.cfml.CFENature"/>
+	           <not>
+	            <objectState
+	                    name="persistentProperty"
+	                    value="isFrameworkFile=&quot;true&quot;"/>
+	           </not>
+           </and>
+         </visibility> -->
       </objectContribution>
-      
-      
-      
-      
-      
       <objectContribution
             id="org.cfeclipse.cfml.frameworks.contribution1"
             nameFilter="*"
             objectClass="org.eclipse.core.resources.IProject">
          <menu
-               id="org.cfeclipse.cfml.frameworks.menu1"
+               id="org.cfeclipse.cfml.frameworks.projectMenu"
                label="CF Frameworks"
                path="additions">
             <separator name="group1"/>
          </menu>
+		 <filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
          <action
                class="org.cfeclipse.cfml.frameworks.popup.actions.SetAsConfigFolder"
                enablesFor="1"
                icon="icons/view/cog.png"
                id="org.cfeclipse.cfml.frameworks.newAction"
                label="Set/Unset as Configuration Folder"
-               menubarPath="org.cfeclipse.cfml.frameworks.menu1/group1"
-               >
-           
-         </action>
+               menubarPath="org.cfeclipse.cfml.frameworks.projectMenu/group1"/>
       </objectContribution>
       <objectContribution
             id="org.cfeclipse.cfml.frameworks.contribution1"
             nameFilter="*.*"
             objectClass="org.eclipse.core.resources.IFile">
          <menu
-               id="org.cfeclipse.cfml.frameworks.menu1"
+               id="org.cfeclipse.cfml.frameworks.fileMenu"
                label="CF Frameworks"
                path="additions">
             <separator name="group1"/>
          </menu>
+		 <filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
          <action
                class="org.cfeclipse.cfml.frameworks.popup.actions.SetFrameworkFile"
                enablesFor="1"
                icon="icons/general/bricks.png"
                id="org.cfeclipse.cfml.frameworks.newAction"
                label="Set/Unset as Configuration File"
-               menubarPath="org.cfeclipse.cfml.frameworks.menu1/group1"
-               />
+               menubarPath="org.cfeclipse.cfml.frameworks.fileMenu/group1"/>
       </objectContribution>
    </extension>
+   
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
@@ -145,10 +135,12 @@
             id="org.cfeclipse.cfml.frameworks.preferences.Labels"
             name="Labels"/>
    </extension>
+   
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer class="org.cfeclipse.cfml.frameworks.preferences.PreferenceInitializer"/>
    </extension>
+   
    <extension
          id="org.cfeclipse.cfml.framworks.export"
          name="Export Frameworks Settings"
