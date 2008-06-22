@@ -39,6 +39,24 @@ import org.eclipse.jface.text.ITextSelection;
  */
 public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 
+	/** Auto-close double quotes */
+	private boolean autoClose_DoubleQuotes = true;
+
+	/** Auto-close single quotes */
+	private boolean autoClose_SingleQuotes = true;
+
+	/** Auto-close hashes (#) */
+	private boolean autoClose_Hashes = true;
+
+	/** Auto-insert a closing bracket */
+	private boolean autoClose_Brackets = true;
+	
+	/** Auto-insert closing parenthesis */
+	private boolean autoClose_Parens = true;
+
+	/** Use smart indent */ 
+	private boolean useSmartIndent = true;
+
 	private boolean tabIndentSingleLine = false;
 	protected String indentString = "\t";
 	protected int indentSize = 4;
@@ -144,5 +162,93 @@ public class CFEIndentStrategy extends DefaultAutoIndentStrategy {
 			
 				
 	}	
-	
+
+	/**
+	 * @return Returns the autoClose_DoubleQuotes.
+	 */
+	public boolean isAutoClose_DoubleQuotes() {
+		return autoClose_DoubleQuotes;
+	}
+
+	/**
+	 * @param autoClose_DoubleQuotes
+	 *            The autoClose_DoubleQuotes to set.
+	 */
+	public void setAutoClose_DoubleQuotes(boolean autoClose_DoubleQuotes) {
+		this.autoClose_DoubleQuotes = autoClose_DoubleQuotes;
+	}
+
+	/**
+	 * @return Returns the autoClose_Hashes.
+	 */
+	public boolean isAutoClose_Hashes() {
+		return autoClose_Hashes;
+	}
+
+	/**
+	 * @param autoClose_Hashes
+	 *            The autoClose_Hashes to set.
+	 */
+	public void setAutoClose_Hashes(boolean autoClose_Hashes) {
+		this.autoClose_Hashes = autoClose_Hashes;
+	}
+
+	/**
+	 * @return Returns the autoClose_SingleQuotes.
+	 */
+	public boolean isAutoClose_SingleQuotes() {
+		return autoClose_SingleQuotes;
+	}
+
+	/**
+	 * @param autoClose_SingleQuotes
+	 *            The autoClose_SingleQuotes to set.
+	 */
+	public void setAutoClose_SingleQuotes(boolean autoClose_SingleQuotes) {
+		this.autoClose_SingleQuotes = autoClose_SingleQuotes;
+	}
+
+	/**
+	 * @return the autoClose_Brackets
+	 */
+	public boolean isAutoClose_Brackets() {
+		return autoClose_Brackets;
+	}
+
+	/**
+	 * @param autoClose_Brackets the autoClose_Brackets to set
+	 */
+	public void setAutoClose_Brackets(boolean autoClose_Brackets) {
+		this.autoClose_Brackets = autoClose_Brackets;
+	}
+
+	/**
+	 * @return the autoClose_Parens
+	 */
+	public boolean isAutoClose_Parens() {
+		return autoClose_Parens;
+	}
+
+	/**
+	 * @param autoClose_Parens the autoClose_Parens to set
+	 */
+	public void setAutoClose_Parens(boolean autoClose_Parens) {
+		this.autoClose_Parens = autoClose_Parens;
+	}
+
+	/**
+	 * @return the useSmartIndent
+	 */
+	public boolean isUseSmartIndent() {
+		return useSmartIndent;
+	}
+
+	/**
+	 * @param useSmartIndent
+	 *            The useSmartIndent value.
+	 */
+	public void setUseSmartIndent(boolean useSmartIndent) {
+		this.useSmartIndent = useSmartIndent;
+	}
+
 }

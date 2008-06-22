@@ -59,30 +59,11 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	/** Don't indent */
 	public static final int INDENT_DONTDOIT = 2;
 
-	/** Auto-close double quotes */
-	private boolean autoClose_DoubleQuotes = true;
-
-	/** Auto-close single quotes */
-	private boolean autoClose_SingleQuotes = true;
-
 	/** Auto-close tags */
 	private boolean autoClose_Tags = true;
 
-	/** Auto-close hashes (#) */
-	private boolean autoClose_Hashes = true;
-
-	/** Auto-insert a closing bracket */
-	private boolean autoClose_Brackets = true;
-	
-	/** Auto-insert closing parenthesis */
-	private boolean autoClose_Parens = true;
-
 	/** Auto-insert a closing tag */
 	private boolean autoInsert_CloseTags = true;
-
-
-	/** Use smart indent */ 
-	private boolean useSmartIndent = true;
 
 	/** When to trigger the auto-indent strategy when the user is in a tag */
 	private int autoIndent_OnTagClose = INDENT_ONCLOSEDTAGENTER;
@@ -343,7 +324,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			DocumentCommand docCommand) {
 
 		if (doc instanceof ICFDocument 
-				&& useSmartIndent) {
+				&& this.isUseSmartIndent()) {
 			ICFDocument cfd = (ICFDocument) doc;
 			CFEPartitioner partitioner = (CFEPartitioner) cfd
 					.getDocumentPartitioner();
@@ -592,7 +573,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				return;
 
 			case '\"':
-				if (!this.autoClose_DoubleQuotes) {
+				if (!this.isAutoClose_DoubleQuotes()) {
 					// User doesn't want us to do this
 					return;
 				}
@@ -601,14 +582,14 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 
 			// Handle opening/closing quotes
 			case '\'':
-				if (!this.autoClose_SingleQuotes)
+				if (!this.isAutoClose_SingleQuotes())
 					return;
 				handleQuotes(doc, docCommand, firstCommandChar);
 				return;
 
 			// Handle opening/closing quotes
 			case '#':
-				if (!this.autoClose_Hashes)
+				if (!this.isAutoClose_Hashes())
 					return;
 				handleHashes(doc, docCommand);
 				return;
@@ -1186,79 +1167,6 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	}
 
 	/**
-	 * @return Returns the autoClose_DoubleQuotes.
-	 */
-	public boolean isAutoClose_DoubleQuotes() {
-		return autoClose_DoubleQuotes;
-	}
-
-	/**
-	 * @param autoClose_DoubleQuotes
-	 *            The autoClose_DoubleQuotes to set.
-	 */
-	public void setAutoClose_DoubleQuotes(boolean autoClose_DoubleQuotes) {
-		this.autoClose_DoubleQuotes = autoClose_DoubleQuotes;
-	}
-
-	/**
-	 * @return Returns the autoClose_Hashes.
-	 */
-	public boolean isAutoClose_Hashes() {
-		return autoClose_Hashes;
-	}
-
-	/**
-	 * @param autoClose_Hashes
-	 *            The autoClose_Hashes to set.
-	 */
-	public void setAutoClose_Hashes(boolean autoClose_Hashes) {
-		this.autoClose_Hashes = autoClose_Hashes;
-	}
-
-	/**
-	 * @return Returns the autoClose_SingleQuotes.
-	 */
-	public boolean isAutoClose_SingleQuotes() {
-		return autoClose_SingleQuotes;
-	}
-
-	/**
-	 * @param autoClose_SingleQuotes
-	 *            The autoClose_SingleQuotes to set.
-	 */
-	public void setAutoClose_SingleQuotes(boolean autoClose_SingleQuotes) {
-		this.autoClose_SingleQuotes = autoClose_SingleQuotes;
-	}
-
-	/**
-	 * @return the autoClose_Brackets
-	 */
-	public boolean isAutoClose_Brackets() {
-		return autoClose_Brackets;
-	}
-
-	/**
-	 * @param autoClose_Brackets the autoClose_Brackets to set
-	 */
-	public void setAutoClose_Brackets(boolean autoClose_Brackets) {
-		this.autoClose_Brackets = autoClose_Brackets;
-	}
-
-	/**
-	 * @return the autoClose_Parens
-	 */
-	public boolean isAutoClose_Parens() {
-		return autoClose_Parens;
-	}
-
-	/**
-	 * @param autoClose_Parens the autoClose_Parens to set
-	 */
-	public void setAutoClose_Parens(boolean autoClose_Parens) {
-		this.autoClose_Parens = autoClose_Parens;
-	}
-
-	/**
 	 * @return Returns the autoClose_Tags.
 	 */
 	public boolean isAutoClose_Tags() {
@@ -1301,13 +1209,5 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	public void setAutoInsert_CloseTags(boolean autoInsert_CloseTags) {
 		this.autoInsert_CloseTags = autoInsert_CloseTags;
-	}
-
-	/**
-	 * @param useSmartIndent
-	 *            The useSmartIndent value.
-	 */
-	public void setUseSmartIndent(boolean useSmartIndent) {
-		this.useSmartIndent = useSmartIndent;
 	}
 }

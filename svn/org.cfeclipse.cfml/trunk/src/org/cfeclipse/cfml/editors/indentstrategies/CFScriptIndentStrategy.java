@@ -19,6 +19,8 @@ import org.eclipse.jface.text.IDocument;
 
 public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	
+	/** Auto-insert a closing brace */
+	private boolean autoClose_Braces = true;
 	
 	/**
 	 * @param editor
@@ -141,28 +143,41 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	// The following are for closed chars that have the same
 	// opening and closing character.
 			case '\'':
-				handlePotentialClosingChar(doc, docCommand, '\'');
+				if (this.isAutoClose_SingleQuotes())
+					handlePotentialClosingChar(doc, docCommand, '\'');
 				break;
 			case '\"':
-				handlePotentialClosingChar(doc, docCommand, '\"');
+				if (this.isAutoClose_DoubleQuotes())
+					handlePotentialClosingChar(doc, docCommand, '\"');
 				break;
 			case '#':
-				handlePotentialClosingChar(doc, docCommand, '#');
+				if (this.isAutoClose_Hashes())
+					handlePotentialClosingChar(doc, docCommand, '#');
 				break;
 	// The following is for braces...
 			case '[':
-				insertSingleChar(docCommand, ']');
+				if (this.isAutoClose_Brackets())
+					insertSingleChar(docCommand, ']');
 				break;
 			case '{':
-				insertSingleChar(docCommand, '}');
+				if (this.isAutoClose_Braces())
+					insertSingleChar(docCommand, '}');
 				break;
 			case '(':
-				insertSingleChar(docCommand, ')');
+				if (this.isAutoClose_Parens())
+					insertSingleChar(docCommand, ')');
 				break;
 			case ')':
+				if (this.isAutoClose_Parens())
+					handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
+				break;
 			case '}':
+				if (this.isAutoClose_Braces())
+					handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
+				break;
 			case ']':
-				handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
+				if (this.isAutoClose_Brackets())
+					handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
 				break;
 			}
 		} catch(BadLocationException ex) {
@@ -179,9 +194,11 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	    
 		codeInsertion(d, c);
 		if (c.length == 0 && c.text != null && endsWithDelimiter(d, c.text))
-			smartIndentAfterNewLine(d, c);
+			if (this.isUseSmartIndent())
+				smartIndentAfterNewLine(d, c);
 		else if ("}".equals(c.text)) {  
-			smartInsertAfterBracket(d, c);
+			if (this.isUseSmartIndent())
+				smartInsertAfterBracket(d, c);
 		}
 		else if (c.text.equals("\t")) {
 			singleLineIndent(d,c);
@@ -395,6 +412,8 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	 protected void smartInsertAfterBracket(IDocument document, DocumentCommand command) {
 		if (command.offset == -1 || document.getLength() == 0)
 			return;
+		if (this.isUseSmartIndent() == false)
+			return;
 
 		try {
 			int p= (command.offset == document.getLength() ? command.offset - 1 : command.offset);
@@ -424,4 +443,17 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 		}
 	}
 
+	/**
+	 * @return the autoClose_Braces
+	 */
+	public boolean isAutoClose_Braces() {
+		return autoClose_Braces;
+	}
+
+	/**
+	 * @param autoClose_Braces the autoClose_Braces to set
+	 */
+	public void setAutoClose_Braces(boolean autoClose_Braces) {
+		this.autoClose_Braces = autoClose_Braces;
+	}
 } 

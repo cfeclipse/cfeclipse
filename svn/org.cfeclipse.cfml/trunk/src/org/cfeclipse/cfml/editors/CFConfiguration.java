@@ -758,9 +758,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
     {
 // System.out.println("CFConfiguration property change listener notified." + event.getProperty());
 		String prop = event.getProperty(); 
-		System.out.println("The Property we are setting is: " + event.getNewValue());
-    	boolean setting = false;
-    	if(event.getNewValue().equals("true")) setting = true;
+    	boolean setting = ((Boolean)event.getNewValue()).booleanValue();
+		System.out.println("The Property we are setting is: " + prop + " [" + setting + "]");
     	
 		if(prop.equals(EditorPreferenceConstants.P_INSIGHT_DELAY)) {
 			int delay = preferenceManager.insightDelay();
@@ -775,18 +774,26 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
         	indentTagStrategy.setIndentString(tabWidth, tabsAsSpaces);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES)) {
+        	indentCFScriptStrategy.setAutoClose_DoubleQuotes(setting);
         	indentTagStrategy.setAutoClose_DoubleQuotes(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES)) {
+        	indentCFScriptStrategy.setAutoClose_SingleQuotes(setting);
         	indentTagStrategy.setAutoClose_SingleQuotes(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_HASHES)) {
+        	indentCFScriptStrategy.setAutoClose_Hashes(setting);
         	indentTagStrategy.setAutoClose_Hashes(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_BRACKETS)) {
+        	indentCFScriptStrategy.setAutoClose_Brackets(setting);
     		indentTagStrategy.setAutoClose_Brackets(setting);
         }
+        else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_BRACES)) {
+        	indentCFScriptStrategy.setAutoClose_Braces(setting);
+        }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_PARENS)) {
+        	indentCFScriptStrategy.setAutoClose_Parens(setting);
     		indentTagStrategy.setAutoClose_Parens(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOCLOSE_TAGS)) {
@@ -796,6 +803,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
     		indentTagStrategy.setAutoInsert_CloseTags(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_USE_SMART_INDENT)) {
+        	indentCFScriptStrategy.setUseSmartIndent(setting);
     		indentTagStrategy.setUseSmartIndent(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE)) {
@@ -803,9 +811,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
         	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
         }
         else if(prop.equals(EditorPreferenceConstants.P_TAB_INDENTS_CURRENT_LINE)) {
-        	boolean state = ((Boolean)event.getNewValue()).booleanValue();
-        	indentTagStrategy.setTabIndentSingleLine(state);
-        	indentCFScriptStrategy.setTabIndentSingleLine(state);
+        	indentTagStrategy.setTabIndentSingleLine(setting);
+        	indentCFScriptStrategy.setTabIndentSingleLine(setting);
         }
         else if(prop.equals(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS)) {
         	//boolean reportErrors = ((Boolean)event.getNewValue()).booleanValue();
