@@ -94,7 +94,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	//private CFMLEditor editor;
 	
 	/**
-	 * Configure the indent strategy
+	 * Configure the tag indent strategy
 	 */
 	private void configTagIndentStrat() {
 		indentTagStrategy.setIndentString(tabWidth, preferenceManager.insertSpacesForTabs());
@@ -110,6 +110,21 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		//indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
 	}
 	
+	/**
+	 * Configure the script indent strategy
+	 */
+	private void configCFScriptIndentStrat() {
+		indentCFScriptStrategy.setIndentString(tabWidth, preferenceManager.insertSpacesForTabs());
+		indentCFScriptStrategy.setTabIndentSingleLine(preferenceManager.tabIndentSingleLine());
+		indentCFScriptStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
+		indentCFScriptStrategy.setAutoClose_SingleQuotes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_SINGLE_QUOTES));
+		indentCFScriptStrategy.setAutoClose_Hashes(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_HASHES));
+		indentCFScriptStrategy.setAutoClose_Brackets(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_BRACKETS));
+		indentCFScriptStrategy.setAutoClose_Braces(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_BRACES));
+		indentCFScriptStrategy.setAutoClose_Parens(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_PARENS));
+		indentCFScriptStrategy.setUseSmartIndent(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_USE_SMART_INDENT));
+	}
+
 	/**
 	 * Need a color manager to get partition colors
 	 * @param colorManager that would be the color manager
@@ -128,6 +143,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		indentCFScriptStrategy.setIndentString(tabWidth,insertSpacesForTabs);
 		indentCFScriptStrategy.setTabIndentSingleLine(preferenceManager.tabIndentSingleLine());
 		configTagIndentStrat();
+		configCFScriptIndentStrat();
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 	}
