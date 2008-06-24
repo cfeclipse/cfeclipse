@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>meta_refresh</name>
+<help>Meta refresh tag</help>
+<starttext><![CDATA[<meta http-equiv="refresh" content="$${Seconds};url=$${ToURL}">]]></starttext>
+<endtext><![CDATA[]]></endtext>
+</snippet>
