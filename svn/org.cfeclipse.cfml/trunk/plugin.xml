@@ -70,10 +70,11 @@
    
 	<extension point="org.eclipse.core.runtime.contentTypes">
 		<content-type
-			id="cfsource"
+			id="org.cfeclipse.cfml.cfsource"
 			base-type="org.eclipse.core.runtime.text"
 			name="ColdFusion Source File"
-			file-extensions="cfc,cfm,cfml">
+			file-extensions="cfc,cfm,cfml"
+			priority="high">
 		</content-type>
 	</extension>
 
@@ -1473,7 +1474,7 @@
             id="org.cfeclipse.cfml.preferences.MarkOccurrencesPreferencePage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
-		          <test property="org.eclipse.core.resources.projectNature" value="org.eclipse.cfml.javanature"/>
+		          <test property="org.eclipse.core.resources.projectNature" value="org.cfeclipse.cfml.natures.CFENature"/>
 		     </adapt>         
          </enabledWhen>
          <keywordReference id="org.cfeclipse.cfml.ui.MarkOccurrences"/>
