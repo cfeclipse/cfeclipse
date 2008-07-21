@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="/Applications/eclipse/eclipse_3.2.2/plugins/org.eclipse.jface.text_3.2.2.r322_v20070104.jar"/>
+	<classpathentry kind="lib" path="/Applications/eclipse/eclipse_3.2.2/plugins/org.eclipse.jface_3.2.2.M20061214-1200.jar"/>
+	<classpathentry kind="lib" path="/Applications/eclipse/eclipse_3.2.2/plugins/org.eclipse.swt.carbon.macosx_3.2.2.v3236.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
