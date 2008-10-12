@@ -566,7 +566,12 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 					preferenceManager.getColor(
 							CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT
 					)
-				)
+				),
+				colorManager.getColor(
+					preferenceManager.getColor(
+							CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_CFCOMMENT
+					)
+				), tabWidth
 			)
 		);
 		reconciler.setDamager(ndr, CFPartitionScanner.CF_COMMENT);
@@ -774,8 +779,19 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
     {
 // System.out.println("CFConfiguration property change listener notified." + event.getProperty());
 		String prop = event.getProperty(); 
-    	boolean setting = ((Boolean)event.getNewValue()).booleanValue();
-		System.out.println("The Property we are setting is: " + prop + " [" + setting + "]");
+		Object newValue = event.getNewValue();
+		
+		boolean setting = false;
+		Object settingObj = null;
+		
+		if(newValue instanceof Boolean){
+			setting = ((Boolean)newValue).booleanValue();
+		}
+		else {
+			settingObj = newValue;
+		}
+    //	boolean setting = ((Boolean)event.getNewValue()).booleanValue();
+	//	System.out.println("The Property we are setting is: " + prop + " [" + setting + "]");
     	
 		if(prop.equals(EditorPreferenceConstants.P_INSIGHT_DELAY)) {
 			int delay = preferenceManager.insightDelay();

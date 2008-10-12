@@ -55,6 +55,7 @@ public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT,"Default &Text:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT,"CFML &Comment:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_CFCOMMENT,"CFML Comment &BackGround:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFTAG,"CFML &Tag:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_TAGLIB_TAG,"Taglib &Tag:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSTRING,"CFML St&ring:",getFieldEditorParent()));
