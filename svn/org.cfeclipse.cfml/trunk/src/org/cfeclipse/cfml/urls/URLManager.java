@@ -74,19 +74,21 @@ public class URLManager {
 				String urlPath = "";
 				
 				if(!resourceList.isEmpty()){
-						for (Iterator iter = resourceList.iterator(); iter.hasNext();) {
-							String element = (String) iter.next();
-							if(iter.hasNext()){
-								urlPath = "/" + element + urlPath;
-							}
-							else{
-								urlPath = element + urlPath;
-							}
-							
-							
+					for (Iterator iter = resourceList.iterator(); iter.hasNext();) {
+						String element = (String) iter.next();
+						if(iter.hasNext()){
+							urlPath = "/" + element + urlPath;
 						}
+						else{
+							urlPath = element + urlPath;
+						}
+						
+					}
 				}
 				
+				if(!url.endsWith("/")){
+					url += "/";
+				}
 				return url + urlPath;
 			}
 			

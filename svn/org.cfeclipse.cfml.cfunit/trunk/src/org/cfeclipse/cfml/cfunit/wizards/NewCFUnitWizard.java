@@ -214,7 +214,7 @@ public class NewCFUnitWizard extends Wizard implements INewWizard {
 		StringBuffer sb = new StringBuffer();
 		
 		String cfcName = preferencesPage.getFileName().trim();
-		String cfUntiLocation = preferencesPage.getCFUnitLocation().trim();
+		String frameworkPath = preferencesPage.getFrameworkExtendsPath().trim();
 		
 		CFCMethodViewItem[] methods = null;
 		if(methodsPage != null) {
@@ -231,7 +231,7 @@ public class NewCFUnitWizard extends Wizard implements INewWizard {
 			cfcName = cfcName.substring(0, dotLoc);
 		}
 				
-		sb.append( "<cfcomponent name=\"" + cfcName + "\" extends=\"" + cfUntiLocation + ".TestCase\">\n\n" );
+		sb.append( "<cfcomponent name=\"" + cfcName + "\" extends=\"" + frameworkPath + ".TestCase\">\n\n" );
 
 		if( preferencesPage.isCreateSetupStub() ){
 			sb.append("	<cffunction name=\"setUp\" returntype=\"void\" access=\"public\"></cffunction>\n\n" );
@@ -280,7 +280,7 @@ public class NewCFUnitWizard extends Wizard implements INewWizard {
 	 */
 	private InputStream getRunnerContents() {
 		String contents = "";
-		String path = preferencesPage.getCFUnitLocation().trim();
+		String path = preferencesPage.getFrameworkExtendsPath().trim();
 		
 		contents += "<cfsilent>\n";
 		contents += "	<cfset webroot = ExpandPath(\"/\") />\n";

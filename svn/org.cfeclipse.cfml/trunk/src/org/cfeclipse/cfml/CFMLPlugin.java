@@ -239,12 +239,12 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		// super.initializeDefaultPluginPreferences();
 		CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 		preferenceManager.initializeDefaultValues();
-		TextEditorPreferenceConstants
-				.initializeDefaultValues(getPreferenceStore());
+		
 		try {
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
 		} catch (Exception e) {
-			// do nothing
+			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 

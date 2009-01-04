@@ -132,11 +132,15 @@ public class ExternalBrowserAction implements IWorkbenchWindowActionDelegate,IEd
                 if(url != null){
             		URLpath = url;
             	}
+                
+                
+                
             	else{
             		CFMLPropertyManager manager = new CFMLPropertyManager();
             		URLpath = manager.projectURL(fileInput.getFile().getProject());	
             	}
                 
+               
                 
                 //Check that the url exists, have set the default to nothing so that if it is blank we can show em an error
                 System.out.println("The Path is |" + URLpath.length() + "|");
@@ -234,7 +238,8 @@ public class ExternalBrowserAction implements IWorkbenchWindowActionDelegate,IEd
         	  Runtime.getRuntime().exec(cmd);
          */  
        } catch (Exception e) {
-            e.printStackTrace();
+    	   System.out.println(e);
+           e.printStackTrace();
         }
     }
 

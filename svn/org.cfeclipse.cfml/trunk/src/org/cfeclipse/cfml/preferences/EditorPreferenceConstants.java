@@ -120,7 +120,6 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	 * <li>P_MAX_UNDO_STEPS - 25</li>
 	 * <li>P_BRACKET_MATCHING_COLOR - "255,0,0"</li>
 	 * <li>P_TAB_INDENTS_CURRENT_LINE - true</li>
-	 * <li>P_SHOW_LINE_NUMBERS - true</li>
 	 * <li>P_RTRIM_ON_SAVE - false</li>
 	 * <li>P_LINE_NUMBER_COLOR - "0,0,0"</li>
 	 * <li>P_CURRENT_LINE_COLOR - "232,242,254"</li>

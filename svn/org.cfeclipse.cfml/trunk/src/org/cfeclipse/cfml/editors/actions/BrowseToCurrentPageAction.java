@@ -84,7 +84,6 @@ public class BrowseToCurrentPageAction implements IWorkbenchWindowActionDelegate
 	//		String URLpath = propertyManager.projectURL(input.getFile().getProject());
 			// System.out.println("currentpath: " + currentpath + "; currentfile: " + currentfile + "; URLpath: " + URLpath);
 			
-			
 			String url = ResourceUtils.getURL(input.getFile());
 			
 //			String calculatedURL = URLpath + "/" + currentpath;

@@ -76,6 +76,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
@@ -107,14 +108,15 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.dnd.IDragAndDropService;
+import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.ShowInContext;
-import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.AnnotationPreference;
+import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.IDocumentProviderExtension;
 import org.eclipse.ui.texteditor.ITextEditor;
@@ -134,7 +136,6 @@ import org.eclipse.ui.texteditor.rulers.RulerColumnRegistry;
  */
 public class CFMLEditor extends TextEditor implements
 		IPropertyChangeListener, IShowInSource {
-	
 	/*
 	 * 
 	 *Need to add mouse listeners
@@ -276,13 +277,18 @@ public class CFMLEditor extends TextEditor implements
 		// getting the document filename when a new document is opened.
 		IResourceChangeListener listener = new MyResourceChangeReporter();
 		CFMLPlugin.getWorkspace().addResourceChangeListener(listener);
+				
 		
+		IPreferenceStore generalTextStore= EditorsUI.getPreferenceStore();
+		IPreferenceStore cfmlStore = CFMLPlugin.getDefault().getPreferenceStore();
+				
+		IPreferenceStore combinedPreferenceStore= new ChainedPreferenceStore(new 
+		IPreferenceStore[] { cfmlStore,generalTextStore  });		
+		setPreferenceStore(combinedPreferenceStore);
 		
-		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(this);
-
 	}
 
 	public StyledText getTextWidget() {
@@ -299,15 +305,10 @@ public class CFMLEditor extends TextEditor implements
 	 */
 	protected void initializeEditor() {
 		setEditorContextMenuId("#CFMLEditorContext"); //$NON-NLS-1$
-		setRulerContextMenuId("#RulerContext"); //$NON-NLS-1$
+		setRulerContextMenuId("#TextRulerContext"); //$NON-NLS-1$
 		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
-		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		configureInsertMode(SMART_INSERT, false);
 		setInsertMode(INSERT);	
-		
-
-	
-	
 	}
 	
 	

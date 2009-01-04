@@ -71,7 +71,7 @@ public class CFENature implements IContentAssistContributorNature {
 
 	public CFENature() {
 		// System.out.println("CFENature::CFENature() - Nature created");
-		//setupCAM();
+		setupCAM();
 	}
 
 	public CFEContentAssistManager getNatureCAM() {

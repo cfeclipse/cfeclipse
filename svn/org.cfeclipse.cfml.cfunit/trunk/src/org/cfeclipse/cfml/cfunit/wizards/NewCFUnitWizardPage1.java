@@ -1,5 +1,6 @@
 package org.cfeclipse.cfml.cfunit.wizards;
 
+import org.cfeclipse.cfml.cfunit.TestFrameworkType;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -39,7 +40,7 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 	
 	private Text containerText;
 	private Text fileText;
-	private Text cfunitLocation;
+	private Text frameworkExtendsPath;
 	private Text runnerText;
 	private Button propertyCreateRunner;
 	private Button propertySetupStub;
@@ -51,6 +52,7 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 	private IResource futResource;
 	private Button fwCFUnit; // Radio button used to indicate CFUnit framework
 	private Button fwCfcUnit; // Radio button used to indicate cfcUnit framework
+	private Button fwMxUnit; // Radio button used to indicate MXUnit framework
 	
 	private IWizardPage nextPage;
 	
@@ -164,14 +166,14 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 		Label label = new Label(parent, SWT.NULL);
 		label.setText("Framework Location:");
 		
-		cfunitLocation = new Text(parent, SWT.BORDER | SWT.SINGLE);
-		cfunitLocation.setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
-		cfunitLocation.addModifyListener(new ModifyListener() {
+		frameworkExtendsPath = new Text(parent, SWT.BORDER | SWT.SINGLE);
+		frameworkExtendsPath.setLayoutData( new GridData(GridData.FILL_HORIZONTAL) );
+		frameworkExtendsPath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
 		});
-		cfunitLocation.setText("net.sourceforge.cfunit.framework");
+		frameworkExtendsPath.setText("net.sourceforge.cfunit.framework");
 
 		Button button2 = new Button(parent, SWT.PUSH);
 		button2.setText("  Browse...  ");
@@ -194,7 +196,7 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 		gd = new GridData ( GridData.FILL_HORIZONTAL );
 		gd.horizontalSpan = GRID_WIDTH;
 		panel.setLayoutData(gd);
-		panel.setLayout(new GridLayout(2, true));
+		panel.setLayout(new GridLayout(3, true));
 		
 		// Add all our radio controls
 		gd = new GridData();
@@ -207,7 +209,7 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 		fwCFUnit.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				dialogChanged();
-				frameworkChanged("cfunit");
+				frameworkChanged(TestFrameworkType.CFUNIT);
 			}
 			public void widgetDefaultSelected(SelectionEvent e) {}
 		});
@@ -217,11 +219,24 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 		fwCfcUnit.setLayoutData(gd);
 		fwCfcUnit.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				frameworkChanged("cfcunit");
+				frameworkChanged(TestFrameworkType.CFCUNIT);
 				dialogChanged();
 			}
 			public void widgetDefaultSelected(SelectionEvent e) {}
 		});
+		
+		fwMxUnit = new Button(panel, SWT.RADIO);
+		fwMxUnit.setText("New MXUnit Test");
+		fwMxUnit.setLayoutData(gd);
+		fwMxUnit.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				frameworkChanged(TestFrameworkType.MXUNIT);
+				dialogChanged();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {}
+		});
+		
+		
 	}
 	
 	/**
@@ -250,7 +265,7 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 		gd.horizontalIndent = 5;
 		
 		propertySetupStub = new Button(panel, SWT.CHECK);
-		propertySetupStub.setText("startUp()");
+		propertySetupStub.setText("setUp()");
 		propertySetupStub.setLayoutData(gd);
 		
 		propertyTeardownStub = new Button(panel, SWT.CHECK);
@@ -427,7 +442,7 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 					path = path.substring(1);					
 				}
 				
-				cfunitLocation.setText( path );
+				frameworkExtendsPath.setText( path );
 			}
 		}
 	}
@@ -484,17 +499,13 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 			return;
 		}
 		
-		int dotLoc = fileName.lastIndexOf('.');
-		if (dotLoc != -1) {
-			String ext = fileName.substring(dotLoc + 1);
-			if (ext.equalsIgnoreCase("cfc") == false) {
-				updateStatus("The file extension for CFUnit test case must be \"cfc\"");
-				return;
-			}
-		}		
+		if (  !fileName.toLowerCase().endsWith(".cfc")    ) {
+			updateStatus("The file extension for test case must be \"cfc\"");
+			return;
+		}
 		
-		if(fileName.indexOf("Test") == -1) {
-			setMessage("It is recommended that a test case name begin with the phrase \"Test\" – this will insure it is found by automated test scripts", 2);
+		if(  !isSafeTestMethodName(fileName)  ) {
+			setMessage("It is recommended that a test case name begin or end with the phrase \"Test\" – this will ensure it is found by automated test scripts", 2);
 			return;
 		}
 		
@@ -516,43 +527,24 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 		setMessage(null);
 		updateStatus(null);
 	}
+
+	private boolean isSafeTestMethodName(String fileName) {		
+		return fileName.matches( "(?i)Test.*.cfc|(?i).*Test.cfc" );
+	}
 	
 	/**
 	 * Handles a change in the framework
 	 * 
 	 * @param f The new framework name
 	 */
-	private void frameworkChanged(String f) {
-		// net.sourceforge.cfunit.framework.
-		
-		// org.cfcunit.framework.
-		String oldLocation = cfunitLocation.getText();
-		String newPathPart = '.'+f+'.';
-		
-		String defaultCFUnitPath = "net.sourceforge.cfunit.framework";
-		String defaultCfcUnitPath = "org.cfcunit.framework";
-		
-		// If we are switching to CFUnit and the location is currently the 
-		// standard cfcUnit location, switch it to the standard CFUnit location
-		if(f.equals("cfunit") && oldLocation.equals(defaultCfcUnitPath)) {
-			cfunitLocation.setText( oldLocation.replaceAll(defaultCfcUnitPath, defaultCFUnitPath) );			
-		
-		// If we are switching to cfcUnit and the location is currently the 
-		// standard CFUnit location, switch it to the standard cfcUnit location
-		} else if(f.equals("cfcunit") && oldLocation.equals(defaultCFUnitPath)) {
-			cfunitLocation.setText( oldLocation.replaceAll(defaultCFUnitPath, defaultCfcUnitPath) );
-			
-		// If the location contains cfcunit switch it to whatever name 
-		// is now selected (which may be the same)
-		} else if(oldLocation.matches(".*\\.cfcunit\\..*")) {
-			cfunitLocation.setText( oldLocation.replaceAll(".cfcunit.", newPathPart) );			
-		
-		// If the location contains cfunit switch it to whatever name 
-		// is now selected (which may be the same)
-		} else if(oldLocation.matches(".*\\.cfcunit\\..*")) {
-			cfunitLocation.setText( oldLocation.replaceAll(".cfunit.", newPathPart) );
+	private void frameworkChanged(TestFrameworkType type) {
+		if(type==TestFrameworkType.CFCUNIT){
+			frameworkExtendsPath.setText("org.cfcunit.framework");
+		}else if(type==TestFrameworkType.MXUNIT){
+			frameworkExtendsPath.setText("mxunit.framework");
+		}else{
+			frameworkExtendsPath.setText("net.sourceforge.cfunit.framework");
 		}
-		
 	}
 	
 	private void updateStatus(String message) {
@@ -568,8 +560,8 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 		return fileText.getText();
 	}
 
-	public String getCFUnitLocation() {
-		return cfunitLocation.getText();
+	public String getFrameworkExtendsPath() {
+		return frameworkExtendsPath.getText();
 	}
 
 	public String getRunner() {
@@ -609,7 +601,6 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 	public boolean isCFUnitFamework() {
 		return fwCFUnit.getSelection();
 	}
-	
 	/**
 	 * Returns <code>true</code> if the cfcUnit framework radio is selected,
 	 * and false otherwise.
@@ -618,5 +609,15 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 	 */
 	public boolean isCfcUnitFamework() {
 		return fwCfcUnit.getSelection();
+	}
+	
+	/**
+	 * Returns <code>true</code> if the MXUnit framework radio is selected,
+	 * and false otherwise.
+	 *
+	 * @return the selection state
+	 */
+	public boolean isMXUnitFamework() {
+		return fwMxUnit.getSelection();
 	}
 }
