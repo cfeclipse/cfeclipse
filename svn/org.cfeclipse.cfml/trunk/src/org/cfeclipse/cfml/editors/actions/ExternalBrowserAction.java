@@ -80,9 +80,7 @@ public class ExternalBrowserAction implements IWorkbenchWindowActionDelegate,IEd
      * @see org.eclipse.ui.IActionDelegate#run(org.eclipse.jface.action.IAction)
      */
     public void run(IAction action) {
-        try {
-        	System.out.println("inside run, editor is: ");
-        	System.out.println(editor);
+        try {        	
             IEditorInput input = this.editor.getEditorInput();
             String filePath = "";
             if (input instanceof FileEditorInput) {
@@ -273,9 +271,7 @@ public class ExternalBrowserAction implements IWorkbenchWindowActionDelegate,IEd
 	}
 
 	public void init(IWorkbenchWindow window) {
-		System.out.println("inside init");
 		this.editor = window.getActivePage().getActiveEditor();
-		System.out.println(editor);
 	}
 
 }
