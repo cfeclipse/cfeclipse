@@ -66,7 +66,6 @@ public class ExternalBrowserAction implements IWorkbenchWindowActionDelegate,IEd
      * 
      */
     public ExternalBrowserAction() {
-       System.out.println("inside constructor");
     }
 
     /* (non-Javadoc)
