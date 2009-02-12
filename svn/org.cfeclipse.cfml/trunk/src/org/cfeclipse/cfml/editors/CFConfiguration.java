@@ -48,6 +48,7 @@ import org.cfeclipse.cfml.preferences.HTMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
@@ -57,6 +58,7 @@ import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.IUndoManager;
 import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.jface.text.TextViewerUndoManager;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
@@ -70,6 +72,8 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 /**
  * <p>
  * This sets up the whole editor. Assigin partition damagers and repairers, and
@@ -135,6 +139,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		//this.editor = editor;
 		preferenceManager = new CFMLPreferenceManager();
 		//this.undoManager = new CFEUndoManager(preferenceManager.maxUndoSteps());
+		
 		indentCFScriptStrategy = new CFScriptIndentStrategy(editor);
 		this.indentTagStrategy = new TagIndentStrategy(editor);
 		
@@ -751,6 +756,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		}
 		
 		return null;
+	}
+	
+	public IUndoManager getUndoManager(ISourceViewer sourceViewer) {
+		IPreferenceStore generalTextStore= EditorsUI.getPreferenceStore();
+		return new TextViewerUndoManager( generalTextStore.getInt(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_UNDO_HISTORY_SIZE) );
 	}
 	
 	/**
