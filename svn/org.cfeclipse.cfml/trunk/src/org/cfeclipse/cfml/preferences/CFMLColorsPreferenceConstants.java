@@ -80,7 +80,7 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 	 * 	<li>P_COLOR_CFKEYWORD - "0,0,255"</li>
 	 * 	<li>P_COLOR_CFNUMBER - "255,10,10"</li>
 	 * 	<li>P_COLOR_CFCOMMENT - "128,128,128"</li>
-	 * 	<li>P_COLOR_BACKGROUND_CFCOMMENT - "16,74,10"</li>
+	 * 	<li>P_COLOR_BACKGROUND_CFCOMMENT - "255,255,255"</li>
 	 * 	<li>P_COLOR_CFSCRIPT_TEXT - "0,0,0"</li>
 	 * 	<li>P_COLOR_CFSCRIPT_KEYWORD - "0,0,255"</li>
 	 * 	<li>P_COLOR_CFSCRIPT_STRING - "0,102,0"</li>
@@ -100,7 +100,7 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_COLOR_CFKEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_CFNUMBER,"255,10,10");
 		store.setDefault(P_COLOR_CFCOMMENT,"128,128,128");
-		store.setDefault(P_COLOR_BACKGROUND_CFCOMMENT,"16,74,10");
+		store.setDefault(P_COLOR_BACKGROUND_CFCOMMENT,"255,255,255");
 		store.setDefault(P_COLOR_CFSCRIPT_TEXT,"0,0,0");
 		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_CFSCRIPT_STRING,"0,102,0");
