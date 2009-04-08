@@ -126,7 +126,6 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 			this.editor = (ITextEditor)targetEditor;
 	
 			if(targetEditor != null){
-		
 			IDocument doc = editor.getDocumentProvider().getDocument(
 					editor.getEditorInput());
 
@@ -439,7 +438,7 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 	//}
 
 	public void selectionChanged(IAction action, ISelection selection){
-		if(editor != null){
+		if(editor != null && editor.getSite().getPage().getActiveEditor().getClass().getName() == "org.cfeclipse.cfml.editors.CFMLEditor"){
 			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
 		}
 	}
