@@ -72,7 +72,9 @@ public class ExternalBrowserAction implements IWorkbenchWindowActionDelegate,IEd
      * @see org.eclipse.ui.IEditorActionDelegate#setActiveEditor(org.eclipse.jface.action.IAction, org.eclipse.ui.IEditorPart)
      */
     public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-        this.editor = targetEditor;
+    	if(targetEditor != null){
+    		this.editor = targetEditor;
+    	}
     }
 
     /* (non-Javadoc)
