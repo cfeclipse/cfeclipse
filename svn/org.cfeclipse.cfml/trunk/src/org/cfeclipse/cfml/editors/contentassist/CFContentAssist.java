@@ -124,8 +124,7 @@ public class CFContentAssist extends CFEContentAssist{
 	    
 	    DefaultAssistAttributeState attrState = prepareForValueAssist(assistState);
 	    if(attrState == null) {
-	    	ICompletionProposal[] valueProps = null;
-	    	return valueProps;
+	    	return null;
 	    }
 	    ArrayList valueContributors = ((ICFEFileDocument)assistState.getIDocument()).getContentAssistManager().getValueAssistors();
 	    Iterator CACorIter = valueContributors.iterator();
