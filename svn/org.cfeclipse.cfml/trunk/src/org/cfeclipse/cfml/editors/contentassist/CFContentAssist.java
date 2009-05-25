@@ -200,7 +200,9 @@ public class CFContentAssist extends CFEContentAssist{
 		}
 		String attribute = getAttributeName(inputText);
 		//System.out.println("Attribute: " + attribute);
-		
+		if(attribute == null) {
+			return null;
+		}
 		DefaultAssistAttributeState attrState = new DefaultAssistAttributeState(assistState, attribute, valueSoFar);
         return attrState;
     }
@@ -417,7 +419,7 @@ public class CFContentAssist extends CFEContentAssist{
 	
 		//
 		//	Test to see whether we're invoked within an attribute value def
-		if(prefixHasOddQuotes) 
+		if(prefixHasOddQuotes && attrText.length() > 0)
 		{	
 		UserMsg("getTagProposals","Prefix has odd number of quotes.");
 			DefaultAssistTagState attrTagState = prepareForAttributeAssist(assistState, attrText, prefix, partItems);
