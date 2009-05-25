@@ -123,6 +123,10 @@ public class CFContentAssist extends CFEContentAssist{
 	    		throw new IllegalArgumentException("CFContentAssist::getAttributeValueProposals()");
 	    
 	    DefaultAssistAttributeState attrState = prepareForValueAssist(assistState);
+	    if(attrState == null) {
+	    	ICompletionProposal[] valueProps = null;
+	    	return valueProps;
+	    }
 	    ArrayList valueContributors = ((ICFEFileDocument)assistState.getIDocument()).getContentAssistManager().getValueAssistors();
 	    Iterator CACorIter = valueContributors.iterator();
 	    Set proposals = new TreeSet();
@@ -419,7 +423,7 @@ public class CFContentAssist extends CFEContentAssist{
 	
 		//
 		//	Test to see whether we're invoked within an attribute value def
-		if(prefixHasOddQuotes && attrText.length() > 0)
+		if(prefixHasOddQuotes)
 		{	
 		UserMsg("getTagProposals","Prefix has odd number of quotes.");
 			DefaultAssistTagState attrTagState = prepareForAttributeAssist(assistState, attrText, prefix, partItems);
