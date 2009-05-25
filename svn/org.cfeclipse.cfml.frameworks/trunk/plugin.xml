@@ -62,7 +62,7 @@
                class="org.cfeclipse.cfml.frameworks.popup.actions.SetAsConfigFolder"
                enablesFor="1"
                icon="icons/view/cog.png"
-               id="org.cfeclipse.cfml.frameworks.newAction"
+               id="org.cfeclipse.cfml.frameworks.SetAsConfigFolder"
                label="Set/Unset as Configuration Folder"
                menubarPath="org.cfeclipse.cfml.frameworks.folderMenu/group1"/>      
  		 <filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
@@ -93,7 +93,7 @@
                class="org.cfeclipse.cfml.frameworks.popup.actions.SetAsConfigFolder"
                enablesFor="1"
                icon="icons/view/cog.png"
-               id="org.cfeclipse.cfml.frameworks.newAction"
+               id="org.cfeclipse.cfml.frameworks.SetAsConfigFolderProject"
                label="Set/Unset as Configuration Folder"
                menubarPath="org.cfeclipse.cfml.frameworks.projectMenu/group1"/>
       </objectContribution>
@@ -112,7 +112,7 @@
                class="org.cfeclipse.cfml.frameworks.popup.actions.SetFrameworkFile"
                enablesFor="1"
                icon="icons/general/bricks.png"
-               id="org.cfeclipse.cfml.frameworks.newAction"
+               id="org.cfeclipse.cfml.frameworks.SetFrameworkFile"
                label="Set/Unset as Configuration File"
                menubarPath="org.cfeclipse.cfml.frameworks.fileMenu/group1"/>
       </objectContribution>
