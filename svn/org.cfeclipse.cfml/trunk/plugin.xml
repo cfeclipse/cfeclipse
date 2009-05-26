@@ -37,7 +37,6 @@
     	  		</and>
 		    </enablement>
 		</decorator>
-	<!--
   <decorator
         adaptable="true"
         class="org.cfeclipse.cfml.editors.decoration.URLDecorator"
@@ -55,6 +54,7 @@
            </and>
         </enablement>
    </decorator>
+	<!--
 	-->
 	</extension>
 	

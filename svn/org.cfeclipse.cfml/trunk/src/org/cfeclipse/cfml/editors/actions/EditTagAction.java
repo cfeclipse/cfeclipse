@@ -439,8 +439,7 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 
 	public void selectionChanged(IAction action, ISelection selection){
 		// ugly hack that verifies we only try to work with a CF file.  Something is wrong upstream, we should not need this
-		if(editor != null && editor.getEditorInput() != null  
-				&& editor.getDocumentProvider().getDocument(editor.getEditorInput()) instanceof ICFDocument){
+		if(editor != null && editor.getEditorInput() != null && editor.getSite().getPage().getActiveEditor().getClass().getName() == "org.cfeclipse.cfml.editors.CFMLEditor"){
 			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
 		}
 	}

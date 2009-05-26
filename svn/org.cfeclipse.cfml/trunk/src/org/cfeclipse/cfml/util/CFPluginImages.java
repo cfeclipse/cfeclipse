@@ -48,7 +48,8 @@ public class CFPluginImages {
 	/** the path to the icons. i.e. file://C/blah/plugin/icons/ */
 	protected static URL iconBaseURL;
 	
-	protected static final ImageRegistry IMAGE_REGISTRY = new ImageRegistry();
+//	protected static final ImageRegistry IMAGE_REGISTRY = new ImageRegistry();
+	protected static final ImageRegistry IMAGE_REGISTRY = CFMLPlugin.getDefault().getImageRegistry();
 	/** the default icon (the cf or bluedragon shield */
 	public static final String ICON_DEFAULT = "default.gif";
 	/** icon for CFC files */
