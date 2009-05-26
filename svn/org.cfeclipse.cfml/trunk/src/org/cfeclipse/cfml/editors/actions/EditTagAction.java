@@ -35,6 +35,7 @@ import org.cfeclipse.cfml.dialogs.TagEditDialog;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
+import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.EditableTags;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
@@ -439,8 +440,11 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 
 	public void selectionChanged(IAction action, ISelection selection){
 		// ugly hack that verifies we only try to work with a CF file.  Something is wrong upstream, we should not need this
-		if(editor != null && editor.getEditorInput() != null && editor.getSite().getPage().getActiveEditor().getClass().getName() == "org.cfeclipse.cfml.editors.CFMLEditor"){
-			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		if( editor != null) {
+			IEditorPart activeEditor = editor.getSite().getPage().getActiveEditor();
+			if(activeEditor != null && activeEditor instanceof CFMLEditor){
+				setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+			}
 		}
 	}
 
@@ -451,7 +455,7 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 
 	public void init(IWorkbenchWindow window) {
 		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
-		if(activeEditor instanceof ITextEditor){
+		if(activeEditor instanceof CFMLEditor){
 			editor = (ITextEditor)activeEditor;
 		}
 		
