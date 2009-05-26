@@ -155,7 +155,6 @@
             id="org.cfeclipse.cfml.frameworks.export.category"
             name="CFFrameworks"/>
    </extension>
-   <!--
    <extension
          point="org.eclipse.ui.decorators">
       <decorator
@@ -176,5 +175,4 @@
         </enablement>
       </decorator>
    </extension>
-   -->
 </plugin>
