@@ -4,6 +4,9 @@
 package org.cfeclipse.cfml.frameworks.parsers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,6 +23,7 @@ import org.cfeclipse.cfml.util.WorkspaceUtils;
 import org.eclipse.core.internal.resources.Resource;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IPathVariableManager;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
@@ -27,8 +31,13 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.ide.ResourceUtil;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -52,7 +61,8 @@ public class GenericFrameworkParser  {
 	private TreeParentNode parentnode;
 	
 	//Mappings assigned to this project (to figure out paths)
-	private CFMappings projectMappings; 
+	private CFMappings projectMappings;
+	private HashMap problemMarkerMap = new HashMap();
 	
 	private Log logger = LogFactory.getLog(GenericFrameworkParser.class);
 	
@@ -88,22 +98,71 @@ public class GenericFrameworkParser  {
 	}
 	
 	
-	/**
+	
+     class FamilyMember extends Job {
+        private String lastName;
+           public FamilyMember(IResource fwresource) throws CoreException {
+              super("updating file");
+           }
+           protected IStatus run(IProgressMonitor monitor) {
+              // Take care of family business
+              return Status.OK_STATUS;
+           }
+        }	
+
+    /**
 	 * Public method to start the parsing 
+     * @throws JDOMException 
 	 */
-	public void parse() {
+
+ 	private void addProblemMarker(final FrameworkFile ffile, final String message) {
+		Job job = new Job("Make Files") {
+			public IStatus run(IProgressMonitor monitor) {
+				try {
+					IMarker marker;
+					String fileLoc = fwfile.getFile().getLocation().toOSString();
+					Long markerId = (Long) problemMarkerMap.get(fileLoc);
+					if(markerId == null) {
+						marker = fwfile.getFile().createMarker(IMarker.PROBLEM);
+						marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+						marker.setAttribute(IMarker.LINE_NUMBER, new Integer(0));
+						marker.setAttribute(IMarker.LOCATION, fwfile.getFile().getLocation().toOSString());
+						marker.setAttribute(IMarker.MESSAGE, message);
+						marker.setAttribute(IMarker.TEXT, message);
+						marker.setAttribute(IDE.EDITOR_ID_ATTR, IDE.getDefaultEditor(fwfile.getFile()).getId());
+						problemMarkerMap.put(fileLoc,marker.getId());
+					}
+				} catch (CoreException e) {
+					return e.getStatus();
+				} finally {
+					monitor.done();
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
+		job.schedule();
+
+	}
+     
+     
+     public void parse() {
+		
+		IMarker marker;
+		LineNumberSAXBuilder lbuilder = new LineNumberSAXBuilder();
+		String fileLoc = fwfile.getFile().getLocation().toOSString();
+		lbuilder.setValidation(false);
+
 		
 		try {
-			LineNumberSAXBuilder lbuilder = new LineNumberSAXBuilder();
-			lbuilder.setValidation(false);
-			Document frameworkDocument = lbuilder.build("file:///" + fwfile.getFile().getLocation().toOSString());
-			parse2(frameworkDocument.getRootElement(), this.parentnode, this.fwfile, true, true);
-			
-			
-			
+			Document frameworkDocument = lbuilder.build("file:///" + fileLoc);
+			parse2(frameworkDocument.getRootElement(), this.parentnode, this.fwfile, true, true);			
 		} catch (JDOMException e) {
+			addProblemMarker(fwfile,e.getMessage());
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+					// TODO Auto-generated catch block
+			//e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

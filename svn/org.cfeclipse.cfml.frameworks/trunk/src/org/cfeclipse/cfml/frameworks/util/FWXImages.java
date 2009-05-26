@@ -39,7 +39,7 @@ import sun.java2d.pipe.DrawImage;
 
 public class FWXImages {
 	protected static URL iconBaseURL;
-	protected static final ImageRegistry IMAGE_REGISTRY = new ImageRegistry();
+	protected static final ImageRegistry IMAGE_REGISTRY = Activator.getDefault().getImageRegistry();
 	
 	public static final String ICON_BEAN = "bean_obj.gif";
 	public static final String ICON_ERR_BEAN = "bean_err.gif";
@@ -142,6 +142,8 @@ public class FWXImages {
 	public static final String VIEW_OBJECTS = "view";
 	public static final String GENERAL_OBJECTS = "general";
 	public static final String OBJECTS = "objects";
+	/** the two arrows icon */
+	public static final String ICON_REFRESH	= "refresh.gif";
 	
 	
 //private FWXImages(){;}
@@ -151,6 +153,7 @@ public class FWXImages {
 		initBaseURL();
 		addImageToRegistry(OBJECTS, ICON_PROJECT);
 		addImageToRegistry(GENERAL_OBJECTS, DEC_CONFIG);
+		addImageToRegistry(OBJECTS,ICON_REFRESH);
 	}
 
 	/**

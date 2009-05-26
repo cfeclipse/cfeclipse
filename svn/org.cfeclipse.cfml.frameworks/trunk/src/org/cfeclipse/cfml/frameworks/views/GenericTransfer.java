@@ -28,27 +28,33 @@ import org.eclipse.swt.dnd.ByteArrayTransfer;
 import org.eclipse.swt.dnd.TransferData;
 
 public class GenericTransfer extends ByteArrayTransfer {
-	
 
 	private static GenericTransfer instance = new GenericTransfer();
+	private static final String TYPE_NAME = "gadget-transfer-format";
+	private static final int TYPEID = registerType(TYPE_NAME);
 
 	public static GenericTransfer getInstance() {
 		return instance;
 	}
 
 	public boolean isSupportedType(TransferData transferData) {
-	
+
 		System.out.println("Is it supported" + transferData);
 		return super.isSupportedType(transferData);
 	}
-	
+
+	/*
+	 * Method declared on Transfer.
+	 */
 	protected int[] getTypeIds() {
-		return null;
+		return new int[] { TYPEID };
 	}
 
+	/*
+	 * Method declared on Transfer.
+	 */
 	protected String[] getTypeNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return new String[] { TYPE_NAME };
 	}
 
 }

@@ -177,10 +177,10 @@ IWorkbenchPreferencePage {
 
 		for (Iterator iter = actionNodes.iterator(); iter.hasNext();) {
 			Element actionElement = (Element) iter.next();
-			if(filterElement != null 
-					&& actionElement.getAttributeValue("node").equalsIgnoreCase(filterElement.getElement().getName()) 
-					&& actionElement.getAttributeValue("framework").equalsIgnoreCase(filterElement.getFrameworkType())
-					){
+			if(filterElement != null && filterElement.getElement() != null && 
+				actionElement.getAttributeValue("node").equalsIgnoreCase(filterElement.getElement().getName())
+				&& actionElement.getAttributeValue("framework").equalsIgnoreCase(filterElement.getFrameworkType()))
+			{					
 				final TableItem tableItem = new TableItem(tableActions,	SWT.NULL);
 				tableItem.setData(actionElement);
 				tableItem.setText(ACTION_FRAMEWORK_COLUMN_INDEX, actionElement.getAttributeValue("framework"));
@@ -188,7 +188,7 @@ IWorkbenchPreferencePage {
 				tableItem.setText(ACTION_LABEL_COLUMN_INDEX, actionElement.getAttributeValue("label"));
 				tableItem.setText(ACTION_NODE_COLUMN_INDEX, actionElement.getAttributeValue("node"));
 			}
-			else if( filterElement == null){
+			else if( filterElement == null || filterElement.getElement() == null ){
 				final TableItem tableItem = new TableItem(tableActions,	SWT.NULL);
 				tableItem.setData(actionElement);
 				tableItem.setText(ACTION_FRAMEWORK_COLUMN_INDEX, actionElement.getAttributeValue("framework"));

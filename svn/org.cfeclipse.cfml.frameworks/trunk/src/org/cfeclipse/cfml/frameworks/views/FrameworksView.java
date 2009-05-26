@@ -39,7 +39,6 @@ import org.cfeclipse.cfml.frameworks.dialogs.CSAddBeanDialog;
 import org.cfeclipse.cfml.frameworks.dialogs.ViewXMLDialog;
 import org.cfeclipse.cfml.frameworks.preferences.ActionsPreferencePage;
 import org.cfeclipse.cfml.frameworks.util.FWXImages;
-import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -452,7 +451,7 @@ public class FrameworksView extends ViewPart {
 			 
 			}
 		};
-		refreshAction.setImageDescriptor(CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REFRESH));
+		refreshAction.setImageDescriptor(FWXImages.getImageRegistry().getDescriptor(FWXImages.ICON_REFRESH));
 		
 		
 		viewXMLAction = new Action(){
