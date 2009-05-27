@@ -989,21 +989,22 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private void handleQuotes(IDocument doc, DocumentCommand docCommand,char quoteChar)
 		throws BadLocationException {
+		char nextChar = (char) 0;
+		char prevChar = (char) 0;
+		boolean shouldSkipNextChar = false;
+		boolean shouldAddTwo = true;
+		
 		//@Jared: added this to allow quote characters at the end
 		// of a document. Without it, entering quote characters at the
 		// very end of a document would fail due to the attempt to close
 		// the quotes.
-		//System.err.println(docCommand.offset);
-		//System.err.println(doc.getLength());
-		//System.err.println(doc.getPartition(docCommand.offset).getType());
 		if (doc.getLength() == docCommand.offset) {
-			String qChar = quoteChar + "";
-			doc.set(doc.get() + qChar);
+			doc.set(doc.get() + quoteChar + "");
 			docCommand.offset = doc.getLength()-1;
+			
 			return;
 		}
-		char nextChar = (char) 0;
-		char prevChar = (char) 0;
+		
 		try {
 			nextChar = doc.getChar(docCommand.offset);
 			prevChar = doc.getChar(docCommand.offset - 1);
@@ -1011,37 +1012,43 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			// do nothing
 		}
 		
+		// if we are in the middle of two characters that are the same
 		if (nextChar == prevChar) {
-			stepThrough(docCommand);
-			return;
-		}
-		
-		if (prevChar == quoteChar || nextChar == '#' || prevChar == '#') {
-			return;
-		}
-
-		if (quoteChar == '\'') {
-			if (prevChar == '"' || nextChar == '"') {
-				return;
-			}
-		}
-
-		if (quoteChar == '"') {
-			if (prevChar == '\'' || nextChar == '\'') {
-				return;
+			// Should not skip
+			if( nextChar == ' ' ){
+				shouldSkipNextChar = false;
+			} else if( nextChar != quoteChar ) {
+				shouldSkipNextChar = false;
+			} else {
+				shouldSkipNextChar = true;
 			}
 		}
 		
-		
+		// Do NOT insert additional quote if the next char is the same type of quote
 		if (nextChar == quoteChar) {
-			//stepThrough(docCommand);
-			return;
+			shouldAddTwo = false;
+		} else if( nextChar == '"' || nextChar == '\'' ) {
+			// If the next character is a quote, but not the quote we are trying to enter then don't add two
+			shouldAddTwo = false;
 		}
 		
-		docCommand.text += quoteChar;
-		docCommand.caretOffset = docCommand.offset + 1;
-		docCommand.shiftsCaret = false;
-		return;
+		// Do NOT add an additional quote if we are next to a hash
+		if (nextChar == '#' || prevChar == '#') {
+			shouldAddTwo = false;
+		}
+		
+		// Check for special action or inaction
+		if(shouldSkipNextChar) {
+			// Skip adding the quote
+			stepThrough(docCommand);
+			
+			return;
+		} else if(shouldAddTwo) {
+			// Add an additional quote and move the offset
+			docCommand.text += quoteChar;
+			docCommand.caretOffset = docCommand.offset + 1;
+			docCommand.shiftsCaret = false;
+		}
 	}
 
 	/**
