@@ -117,8 +117,7 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					finder.replace("", false);
 				} else {
 					ITextSelection selectioner = (ITextSelection)sel;
-					if(selectioner.getStartLine() != selectioner.getEndLine() && 
-							selectioner.getText().endsWith("\n") && !selectioner.getText().startsWith("\n")){						
+					if(selectioner.getText().endsWith("\n") && !selectioner.getText().startsWith("\n")){						
 						// add newlines if this looks like a newline-to-newline comment, to be pretty
 						openComment = openComment.concat("\n");
 						closeComment = closeComment.concat("\n");
