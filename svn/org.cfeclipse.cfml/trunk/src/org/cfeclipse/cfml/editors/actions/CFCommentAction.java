@@ -86,18 +86,24 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					Pattern pattern = Pattern.compile("^(<!---[ ]?[\n]?)");
 					Matcher matcher = pattern.matcher(selection);
 					
-					if (matcher.find()) {
+					if(matcher.find()) {
 						openComment = matcher.group();
 						openCommentStart += matcher.start();
 					}
 					
 					// Find the closing comment information with optional space at the beginning
-					pattern = Pattern.compile("([\n]?[ ]?--->?)$");
+					pattern = Pattern.compile("([\n]?[ ]?--->)$");
 					matcher = pattern.matcher(selection);
 					
-					if (matcher.find()) {
+					if(matcher.find()) {
 						closeComment = matcher.group();
 						closeCommentStart += matcher.start();
+					}
+					
+					// Only get rid of the newline characters if the open and close both have them
+					// Check to see if the open has a newline but the close doesn't
+					if(openComment.charAt(openComment.length() - 1) == '\n' && closeComment.charAt(0) != '\n') {
+						openComment = openComment.substring(0, openComment.length() - 1);
 					}
 					
 					FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
