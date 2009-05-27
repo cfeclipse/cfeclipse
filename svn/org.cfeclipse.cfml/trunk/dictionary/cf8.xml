@@ -2316,101 +2316,101 @@
 -->
 		<tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfdump" single="true" xmlstyle="false">
 			<help><![CDATA[
-		Outputs the elements, variables and values of most kinds of
-		CFML objects. Useful for debugging. You can display the
-		contents of simple and complex variables, objects, components,
-		user-defined functions, and other elements.
-	]]></help>
+				Outputs the elements, variables and values of most kinds of
+				CFML objects. Useful for debugging. You can display the
+				contents of simple and complex variables, objects, components,
+				user-defined functions, and other elements.
+			]]></help>
 			<parameter name="var" type="Object" required="true">
 				<help><![CDATA[
-			Variable to display. Enclose a variable name in pound
-			signs.
-		]]></help>
+					Variable to display. Enclose a variable name in pound
+					signs.
+				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="expand" type="boolean" required="false">
 				<help><![CDATA[
-			Yes: In Internet Explorer and Mozilla, expands views
-		]]></help>
+					Yes: In Internet Explorer and Mozilla, expands views
+				]]></help>
 				<values default="true">
 					<value option="true"/>
 					<value option="false"/>
 				</values>
 			</parameter>
-            <parameter name="format" type="String" required="false">
-                <help><![CDATA[
-			Use with the output attribute to specify whether to save the results of a cfdump to a file in text or HTML format.
-        ]]></help>
-                <values default="text">
-                    <value option="text"/>
-                    <value option="html"/>
-                </values>
-            </parameter>
-            <parameter name="hide" type="String" required="false">
-                <help><![CDATA[
-			For a query, this is a column name or a comma-delimited
-			list of column names. For a structure, this is a key or 
-			a comma-delimited list of keys.	If you specify a 
-			structure element that doesn't exist, ColdFusion ignores
-			it and does not generate an error.
-        ]]></help>
-        		<values/>
-            </parameter>
+			<parameter name="format" type="String" required="false">
+				<help><![CDATA[
+					Use with the output attribute to specify whether to save the results of a cfdump to a file in text or HTML format.
+				]]></help>
+				<values default="html">
+					<value option="text"/>
+					<value option="html"/>
+				</values>
+			</parameter>
+			<parameter name="hide" type="String" required="false">
+				<help><![CDATA[
+					For a query, this is a column name or a comma-delimited
+					list of column names. For a structure, this is a key or 
+					a comma-delimited list of keys.	If you specify a 
+					structure element that doesn't exist, ColdFusion ignores
+					it and does not generate an error.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="keys" type="Numeric" required="false">
 				<help><![CDATA[
-			For a structure, the number of keys to display.
-		]]></help>
+					For a structure, the number of keys to display.
+				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="label" type="String" required="false">
 				<help><![CDATA[
-			A string; header for the dump output.
-		]]></help>
+					A string; header for the dump output.
+				]]></help>
 				<values/>
 			</parameter>
 			<parameter name="metainfo" type="boolean" required="false">
 				<help><![CDATA[
-			For use with queries only. Includes information about the
-			query in the cfdump results, including whether the query 
-			was cached, the execution time, and the SQL. You must 
-			specify metainfo="no" to exclude this information from 
-			the query result.
-		]]></help>
+					For use with queries only. Includes information about the
+					query in the cfdump results, including whether the query 
+					was cached, the execution time, and the SQL. You must 
+					specify metainfo="no" to exclude this information from 
+					the query result.
+				]]></help>
 				<values default="true">
 					<value option="true"/>
 					<value option="false"/>
 				</values>
 			</parameter>
-			<parameter name="output" type="String" required="true">
+			<parameter name="output" type="String" required="false">
 				<help><![CDATA[
-			Where to send the results of cfdump. The filename should 
-			include the full pathname of the file. You can specify an 
-			absolute path, or a path that is relative to the ColdFusion
-			temporary directory. You can use the GetTempDirectory() 
-			function to determine the ColdFusion temporary directory.
-		]]></help>
+					Where to send the results of cfdump. The filename should 
+					include the full pathname of the file. You can specify an 
+					absolute path, or a path that is relative to the ColdFusion
+					temporary directory. You can use the GetTempDirectory() 
+					function to determine the ColdFusion temporary directory.
+				]]></help>
 				<values default="browser">
 					<value option="browser"/>
 					<value option="console"/>
 					<value option="filename"/>
 				</values>
 			</parameter>
-            <parameter name="show" type="String" required="false">
-                <help><![CDATA[
-			For a query, this is a column name or a comma-delimited
-			list of column names. For a structure, this is a key or 
-			a comma-delimited list of keys.
-        ]]></help>
-        		<values/>
-            </parameter>
+			<parameter name="show" type="String" required="false">
+				<help><![CDATA[
+					For a query, this is a column name or a comma-delimited
+					list of column names. For a structure, this is a key or 
+					a comma-delimited list of keys.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="showUDFs" type="boolean" required="false">
 				<help><![CDATA[
-			For use with queries only. Includes information about the
-			query in the cfdump results, including whether the query 
-			was cached, the execution time, and the SQL. You must 
-			specify metainfo="no" to exclude this information from 
-			the query result.
-		]]></help>
+					For use with queries only. Includes information about the
+					query in the cfdump results, including whether the query 
+					was cached, the execution time, and the SQL. You must 
+					specify metainfo="no" to exclude this information from 
+					the query result.
+				]]></help>
 				<values default="true">
 					<value option="true"/>
 					<value option="false"/>
@@ -2418,8 +2418,8 @@
 			</parameter>
 			<parameter name="top" type="Numeric" required="false">
 				<help><![CDATA[
-			Number of rows or levels.
-		]]></help>
+					Number of rows or levels.
+				]]></help>
 				<values/>
 			</parameter>
 		</tag>
@@ -6192,17 +6192,18 @@
 					user can select a suggestion to complete the text 
 					entry. 
 					The valid value can be either of the following: 
-					• A string consisting of the suggestion values 
+					* A string consisting of the suggestion values 
 					separated by the delimiter specified by the 
 					delimiter attribute. 
-					• A bind expression that gets the suggestion 
+					* A bind expression that gets the suggestion 
 					values based on the current input text. 
 					Valid only for cfinput type="text". 
-			
-					]]></help>
+				]]></help>
 				<values/>
+				<triggers>
+					<selectedValue attributeName="type" value="text" required="false"/>
+				</triggers>
 			</parameter>
-			
 			<parameter name="autosuggestbinddelay" type="Numeric" required="false">
 				<help><![CDATA[
 					The minimum time between autosuggest bind 
