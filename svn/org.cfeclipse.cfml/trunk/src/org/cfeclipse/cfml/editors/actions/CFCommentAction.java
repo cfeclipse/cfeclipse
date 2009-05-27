@@ -24,23 +24,26 @@
  */
 package org.cfeclipse.cfml.editors.actions;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.jdom.Parent;
-
 
 /**
  * @author Rob
+ *
  *
  * The adds cold fusion style comments around the selected text (or just sticks
  * in the comments if no text is selected) 
@@ -58,40 +61,67 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 		//checks to see if you can edit the document
 		try {
 			if(editor != null && editor.isEditable()){
-				//Get the document
+				String openComment = "<!--- ";
+				String closeComment = " --->";
+				
+				// Get the document
 				IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
+				
+				// Get the selection 
 				ISelection sel = editor.getSelectionProvider().getSelection();
-				String parttype = doc.getPartition(((ITextSelection)sel).getOffset()).getType();
-			    
 				
-				//if we already are in a comment parition, remove it, else add it
-				if(parttype.equals(CFPartitionScanner.CF_COMMENT)){
-					//Now find and replace the comment strings
-					
-					//This doesnt actually work right if you have nested comments.
-					//Maybe use the partitioner here to find the ending part
-					FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
+				// Get the partition
+				ITypedRegion partition = doc.getPartition(((ITextSelection)sel).getOffset());
 				
-					finder.find(((ITextSelection)sel).getOffset(), "<!---", false, false, false, false);
-					finder.replace("", false);
+				// if we already are in a comment partition, remove it, else add it
+				if(partition.getType().equals(CFPartitionScanner.CF_COMMENT)){
+					// Track the position in the document that the actual comments blocks are
+					int openCommentStart = partition.getOffset();
+					int closeCommentStart = partition.getOffset();
 					
-					finder.find(((ITextSelection)sel).getOffset(), "--->", true, false, false, false);
-					finder.replace("", false);
+					// Find the full partition selection string
+					String selection = doc.get().substring(partition.getOffset(), partition.getOffset() + partition.getLength());
 					
+					// Find the opening comment information with optional space at the end
+					Pattern pattern = Pattern.compile("^(<!---[ ]?)");
+					Matcher matcher = pattern.matcher(selection);
 					
-					
-				}
-				else{
-					ITextSelection selectioner = (ITextSelection)sel;
-					System.out.println("selection " + selectioner.getLength());
-					
-					this.enclose(doc,(ITextSelection)sel,"<!--- "," --->");
-					
-					//move the caret somewhere.
-					if(selectioner.getLength() == 0){
-						editor.setHighlightRange(selectioner.getOffset() + "<!--- ".length(), 1, true);
+					if (matcher.find()) {
+						openComment = matcher.group();
+						openCommentStart += matcher.start();
 					}
 					
+					// Find the closing comment information with optional space at the beginning
+					pattern = Pattern.compile("([ ]?--->)$");
+					matcher = pattern.matcher(selection);
+					
+					if (matcher.find()) {
+						closeComment = matcher.group();
+						closeCommentStart += matcher.start();
+					}
+					
+					FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
+					
+					// Find and replace the closing comment first so that it doesn't get messed up with positions
+					finder.find(closeCommentStart, closeComment, true, false, false, false);
+					finder.replace("", false);
+					
+					// Find and replace the opening comment so that it doesn't affect the closing comment replace
+					finder.find(openCommentStart, openComment, true, false, false, false);
+					finder.replace("", false);
+				} else {
+					ITextSelection selectioner = (ITextSelection)sel;
+					if(selectioner.getStartLine() != selectioner.getEndLine() && 
+							selectioner.getText().endsWith("\n") && !selectioner.getText().startsWith("\n")){						
+						// add a newline if this looks like a newline-to-newline comment, to be pretty
+						openComment = openComment.concat("\n");
+					}
+					this.enclose(doc,(ITextSelection)sel, openComment, closeComment);
+					
+					// move the caret somewhere
+					if(selectioner.getLength() == 0){
+						editor.setHighlightRange(selectioner.getOffset() + openComment.length(), 1, true);
+					}
 				}
 			}
 		} catch (BadLocationException e) {
