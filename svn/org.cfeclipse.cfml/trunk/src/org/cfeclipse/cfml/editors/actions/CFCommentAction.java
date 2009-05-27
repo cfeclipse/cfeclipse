@@ -83,7 +83,7 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					String selection = doc.get().substring(partition.getOffset(), partition.getOffset() + partition.getLength());
 					
 					// Find the opening comment information with optional space at the end
-					Pattern pattern = Pattern.compile("^(<!---[ ]?)");
+					Pattern pattern = Pattern.compile("^(<!---[ ]?[\n]?)");
 					Matcher matcher = pattern.matcher(selection);
 					
 					if (matcher.find()) {
@@ -92,7 +92,7 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					}
 					
 					// Find the closing comment information with optional space at the beginning
-					pattern = Pattern.compile("([ ]?--->)$");
+					pattern = Pattern.compile("([\n]?[ ]?--->?)$");
 					matcher = pattern.matcher(selection);
 					
 					if (matcher.find()) {
@@ -113,8 +113,9 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					ITextSelection selectioner = (ITextSelection)sel;
 					if(selectioner.getStartLine() != selectioner.getEndLine() && 
 							selectioner.getText().endsWith("\n") && !selectioner.getText().startsWith("\n")){						
-						// add a newline if this looks like a newline-to-newline comment, to be pretty
+						// add newlines if this looks like a newline-to-newline comment, to be pretty
 						openComment = openComment.concat("\n");
+						closeComment = closeComment.concat("\n");
 					}
 					this.enclose(doc,(ITextSelection)sel, openComment, closeComment);
 					
