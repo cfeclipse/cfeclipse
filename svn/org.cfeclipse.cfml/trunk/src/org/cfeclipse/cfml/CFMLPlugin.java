@@ -179,8 +179,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		}
 
 		EditorPartListener editorListener = new EditorPartListener();
-		this.getWorkbench().getActiveWorkbenchWindow().getPartService()
-				.addPartListener(editorListener);
+		//doesn't seem to be needed and is causing errors.  Leaving in case 3.4 needs it-- if so, rethink
+		//this.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(editorListener);
 
 	}
 
