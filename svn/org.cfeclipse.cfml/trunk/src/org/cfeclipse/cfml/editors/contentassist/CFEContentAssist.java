@@ -137,8 +137,7 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 	 */
 	public static ICompletionProposal[] makeSetToProposal(Set st, int offset, short type, int currentlen)
 	{
-		if(st != null)
-		{
+		if(st != null) {
 			Object obj[] = new Object[st.size()];
 			TreeSet ts = new TreeSet();
 			ts.addAll(st);
@@ -166,28 +165,27 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 					boolean isSingle = ptr_tg.isSingle();
 					boolean takesCFScriptExp = false;
 					
-					//
-					// Bodge job for cfif, cfelse & cfelseif
+					// Bodge job for cfif, cfelse, cfelseif, cfset, and cfreturn
 					if(name.compareToIgnoreCase("cfif") == 0 
-					   || name.compareToIgnoreCase("cfelse") == 0
-					   || name.compareToIgnoreCase("cfelseif") == 0) {
+						|| name.compareToIgnoreCase("cfelse") == 0
+						|| name.compareToIgnoreCase("cfelseif") == 0
+						|| name.compareToIgnoreCase("cfset") == 0
+						|| name.compareToIgnoreCase("cfreturn") == 0) {
 						takesCFScriptExp = true;
 					}
-					if(!(takesCFScriptExp || hasParams)) {
+					
+					// If it does not have parameters self close the tag
+					if (!takesCFScriptExp && !hasParams) {
 						name += (isXmlStyle) ? "/" : "";
-						name += (isSingle) ? "> " : ">";
-					} else if (hasParams) {
+						name += (isSingle) ? " " : ">";
+					} else {
 						name+= " ";
 					}
-
-					
-				}
-				else if(obj[i] instanceof Parameter) {					
+				} else if(obj[i] instanceof Parameter) {
 					name = ((Parameter)obj[i]).getName();
 					display = ((Parameter)obj[i]).toString();
 					help = ((Parameter)obj[i]).getHelp();
-				}
-				else if(obj[i] instanceof Value) {
+				} else if(obj[i] instanceof Value) {
 					/* spike@spike.org.uk :: Added code
                      * Append qoute to end of value so the cursor jumps past the 
                      * closing quote when the user selects the insight value. 
@@ -195,24 +193,19 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 					name = ((Value)obj[i]).getValue() + "\"";
 					display = ((Value)obj[i]).toString();
 					help = "";
-				}
-				else if(obj[i] instanceof ScopeVar) 
-				{
+				} else if(obj[i] instanceof ScopeVar) {
 					name = ((ScopeVar)obj[i]).getValue();
 					display = ((ScopeVar)obj[i]).toString();
 					help = ((ScopeVar)obj[i]).getHelp();
 // System.out.println("Scope var found with name " + name);
-				}
-				else if(obj[i] instanceof Function) 
-				{
+				} else if(obj[i] instanceof Function) {
 					name = ((Function)obj[i]).getInsertion();
 					display = ((Function)obj[i]).getInsertion();
 					help = ((Function)obj[i]).getHelp();
 // System.out.println("Function found with name " + name);
 					// Dirty hack
 					currentlen=0;
-				}
-				else if(obj[i] instanceof String) {
+				} else if(obj[i] instanceof String) {
 					name = obj[i].toString();
 					display = new String(name);
 					help = "";
