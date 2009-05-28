@@ -1224,29 +1224,32 @@ public class CFParser {
 	{
 		int finalOffset = currDocOffset;
 		int currPos = currDocOffset;
-		//
-		// for recognising double quote escape sequences.
+		
+		// for recognizing quote escape sequences.
 		// If it's even we're out of quotes, odd we're in 'em. Try it out manually and see!
+		char currQuote = 0;
 		int quoteCount = 0;
 		
-		for(; currPos < inData.length(); currPos++)
-		{
+		for(; currPos < inData.length(); currPos++) {
 			char currChar = inData.charAt(currPos);
 			boolean inQuotes = (1 == quoteCount % 2);
-			if(!inQuotes && currChar == '>')
-			{
+			if(!inQuotes && currChar == '>') {
 				finalOffset = currPos;
 				//System.out.println("Parser found a cfml tag: " + inData.substring(currDocOffset, currPos+1));
 				parseState.addMatch(new ParseItemMatch(inData.substring(currDocOffset, currPos+1), currDocOffset, currPos, 
 												getLineNumber(currDocOffset), MATCHER_CFMLTAG));
 				break;
-			}
-			else if(currChar == '\"')
+			} else if( inQuotes && currQuote == currChar ) {
+				// We are in quotes and we found the character that started the quotes
 				quoteCount++;
-
+			} else if( !inQuotes && (currChar == '\"' || currChar == '\'') ) {
+				// Store what started the quote so we know what to look for to end the current quote
+				currQuote = currChar;
+				quoteCount++;
+			}
 		}
-		if(finalOffset != currPos)
-		{
+		
+		if(finalOffset != currPos) {
 			//System.err.println("FATAL ERROR: Failed to find the end of a CFML tag!: " + inData.substring(currDocOffset, currPos));
 			
 			parseState.addMessage(new ParseError(getLineNumber(currDocOffset), currDocOffset, currPos,
