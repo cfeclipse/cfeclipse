@@ -99,15 +99,9 @@ class DirectoryContentProvider implements IStructuredContentProvider, ITreeConte
 	            results = fileProvider.getChildren(name,directoryFilter);
 	            
 	        } else if (parentElement instanceof FileSystemRoot) {
-	            FileSystemRoot file = (FileSystemRoot)parentElement;
-	            
-	          //TODO: Fix this, its gettting the full URL, rather than the path
-	            if(file.getType().equalsIgnoreCase("file")){
-	            	  results =  fileProvider.getChildren("",directoryFilter);
-	            }
-	            else{
+
+	        	FileSystemRoot file = (FileSystemRoot)parentElement;
 	            results =  fileProvider.getChildren(file.getPath(),directoryFilter);
-	            }
 	        } 
 	        
 	        else {

@@ -13,9 +13,9 @@ import java.io.OutputStream;
 import java.net.NoRouteToHostException;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.apache.commons.vfs.CacheStrategy;
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
@@ -169,7 +169,7 @@ public class FTPConnection implements IFileProvider {
         try {
         	// Close and nullify the manager object
         	if (manager != null) {
-	        	this.manager.close();
+	        	FTPConnection.manager.close();
         	}
         } catch (Exception e) {
             AlertUtils.alertUser(e);
@@ -225,12 +225,12 @@ public class FTPConnection implements IFileProvider {
 	            if(connectionProperties.getUsername().length() > 0 || connectionProperties.getPassword().length() > 0) {
 	            	// Add username
 	            	if(connectionProperties.getUsername().length() > 0) {
-	            		connectionString += connectionProperties.getUsername();
+	            		connectionString += URLEncoder.encode(connectionProperties.getUsername());
 	            	}
 	
 	            	// Add password
 	            	if(connectionProperties.getPassword().length() > 0) {
-	            		connectionString += ":" + connectionProperties.getPassword();
+	            		connectionString += ":" + URLEncoder.encode(connectionProperties.getPassword());
 	            	}
 
 	            	connectionString += "@";
@@ -257,8 +257,9 @@ public class FTPConnection implements IFileProvider {
 	            // Build a new file system options object
 	            this.fileSystemOptions = new FileSystemOptions();
 				SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");
-	
+				SftpFileSystemConfigBuilder.getInstance().setTimeout(fileSystemOptions, new Integer(fConnectionTimeout));
 				System.out.println("Connecting...Resolving Base File " + connectionString);
+				//manager.init();
 	
 				FileObject baseFile = manager.resolveFile(connectionString, fileSystemOptions);
 				manager.setBaseFile(baseFile);
@@ -325,6 +326,7 @@ public class FTPConnection implements IFileProvider {
     	System.out.println("FTPConnection.getRoots()");
 
         if (isConnected()) {
+        	System.out.println("connected");
         	FileSystemRoot root = new FileSystemRoot(connectionProperties.getPath());
         	root.setPath(connectionProperties.getPath());
         	root.setType(connectionProperties.getType());
@@ -337,9 +339,11 @@ public class FTPConnection implements IFileProvider {
             return new FileSystemRoot[] { root };
         }
         else if (connectFailed) {
+        	System.out.println("failoed");
             return new String[] { CONNECT_FAILED };
         }
         else {
+        	System.out.println("not connected");
             return new String[] { "Not connected" };
         }
 
@@ -353,17 +357,21 @@ public class FTPConnection implements IFileProvider {
      */
     public Object[] getChildren(String parent, FileNameFilter filter) {
     	System.out.println("FTPConnection.getChildren()");
+    	connect();
 
         try {
-            FileObject initialItem = this.manager.getBaseFile();
+            FileObject initialItem = FTPConnection.manager.getBaseFile();
 
             // If a parent path was passed resolve that path
             if (parent.length() > 0 && ! parent.equalsIgnoreCase("<empty selection>")) {
-            	initialItem = this.manager.getBaseFile().resolveFile(parent);
+            	initialItem = FTPConnection.manager.getBaseFile().resolveFile(parent);
             }
 
             // Get the children
+            System.out.println("get chiln");
+            
             FileObject[] files = initialItem.getChildren();
+            System.out.println("got chiln");
 
             // If no children were returned, return an empty array
             if (files == null) {
@@ -375,7 +383,7 @@ public class FTPConnection implements IFileProvider {
             	 * Filter files according to the passed filter and return the
             	 * resulting array.
             	 */
-	            ArrayList filteredFileList = new ArrayList();
+	            ArrayList<RemoteFile> filteredFileList = new ArrayList<RemoteFile>();
 	            for (int i = 0; i < files.length; i++) {
 	               if (filter.accept(files[i])) {
 	            	   RemoteFile file = new RemoteFile(files[i], files[i].getURL().toString());
@@ -391,7 +399,7 @@ public class FTPConnection implements IFileProvider {
         	 * If a file system exception was thrown, it is likely there was 
         	 * a connection issue so alert the user accordingly.
         	 */
-        	AlertUtils.alertUser("Could not connect to server.");
+        	AlertUtils.alertUser("Could not connect to server. :" + e.getMessage());
         }
         catch (Exception e) {
         	AlertUtils.alertUser(e);
@@ -420,7 +428,7 @@ public class FTPConnection implements IFileProvider {
                 return null;
             }
 
-            FileObject selFile = this.manager.getBaseFile().resolveFile(filename);
+            FileObject selFile = FTPConnection.manager.getBaseFile().resolveFile(filename);
            // FTPFile[] files = ftpClient.dirDetails(filename);
             RemoteFile remoteFile = new RemoteFile(selFile, filename);
                RemoteFileEditorInput input = new RemoteFileEditorInput(remoteFile);

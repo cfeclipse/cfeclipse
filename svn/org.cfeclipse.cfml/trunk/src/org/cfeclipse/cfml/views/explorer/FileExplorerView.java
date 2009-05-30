@@ -18,6 +18,7 @@ import org.cfeclipse.cfml.net.FTPConnectionProperties;
 import org.cfeclipse.cfml.net.RemoteFile;
 import org.cfeclipse.cfml.net.RemoteFileEditorInput;
 import org.cfeclipse.cfml.net.ftp.FTPConnection;
+import org.cfeclipse.cfml.util.AlertUtils;
 import org.cfeclipse.cfml.views.explorer.ftp.FtpConnectionDialog;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
@@ -399,7 +400,7 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 							remoteFileItem.delete();
 						} catch (FileSystemException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+			               AlertUtils.alertUser(e);
 						}
 						fileViewer.refresh();
 						/*StructuredSelection selection2 = (StructuredSelection)comboViewer.getSelection();
