@@ -63,6 +63,12 @@ public class AlertUtils {
         if (e.getMessage() == null) {
             message = e.toString();
         }
+        if (e.getCause() != null) {
+        	message += " Cause: " + e.getCause().getMessage();
+            if (e.getCause().getCause() != null) {            	
+            	message += " Cause: " + e.getCause().getCause().getMessage();
+            }
+        }
         e.printStackTrace();
         msg.setText("Error!");
         msg.setMessage(message);
