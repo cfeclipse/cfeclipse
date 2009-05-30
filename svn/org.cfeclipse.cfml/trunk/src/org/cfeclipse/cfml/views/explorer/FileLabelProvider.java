@@ -70,8 +70,8 @@ class FileLabelProvider extends LabelProvider implements ITableLabelProvider {
     }
     
     private Image addPermissionIcon(Object element, Image image) {
-        int redPixel = image.getImageData().palette.getPixel(new RGB(255,0,0));
-        int greenPixel = image.getImageData().palette.getPixel(new RGB(0,255,0));
+        //int redPixel = image.getImageData().palette.getPixel(new RGB(255,0,0));
+        //int greenPixel = image.getImageData().palette.getPixel(new RGB(0,255,0));
         boolean canRead = true;
         boolean canWrite = true;
         if (element instanceof RemoteFile) {
