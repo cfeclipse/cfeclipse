@@ -89,10 +89,10 @@ class FileLabelProvider extends LabelProvider implements ITableLabelProvider {
         }
         
         if (!canRead) {
-            return CFPluginImages.addOverlay(image,new RGB(255,0,0));
+            return CFPluginImages.addOverlay(image,new RGB(254,0,0));
         }
         else if (!canWrite) {
-            return CFPluginImages.addOverlay(image,new RGB(0,255,0));
+            return CFPluginImages.addOverlay(image,new RGB(0,254,0));
         }
         else {
             return image;
