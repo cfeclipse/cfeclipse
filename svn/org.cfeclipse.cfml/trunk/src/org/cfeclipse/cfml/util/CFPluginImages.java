@@ -33,6 +33,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
@@ -499,7 +500,9 @@ public class CFPluginImages {
 	 * @return
 	 */
 	public static Image addOverlay(Image image, RGB color) {
-	    int overlayColor = image.getImageData().palette.getPixel(color);
+		// on windows, using the image PaletteData is unreliable.  FIXME: colors are whacked out on windows
+        PaletteData palette = new PaletteData(0xFF , 0xFF00 , 0xFF0000);
+	    int overlayColor = palette.getPixel(color);
         ImageData fullImageData = image.getImageData();
         ImageData transparency = fullImageData.getTransparencyMask();
         
