@@ -39,21 +39,18 @@ import org.cfeclipse.cfml.editors.contentassist.CFMLScopeAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLTagAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLVariableAssist;
 import org.cfeclipse.cfml.editors.contentassist.HTMLTagAssistContributor;
+import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.PreferenceStore;
 import org.eclipse.jface.text.templates.ContextTypeRegistry;
 import org.eclipse.jface.text.templates.persistence.TemplateStore;
-import org.eclipse.ui.editors.text.TextEditorPreferenceConstants;
 import org.eclipse.ui.editors.text.templates.ContributionContextTypeRegistry;
 import org.eclipse.ui.editors.text.templates.ContributionTemplateStore;
-import org.eclipse.ui.internal.PartService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -202,6 +199,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		this.camInstance.registerRootAssist(new CFContentAssist());
 		this.camInstance.registerRootAssist(new CFMLScopeAssist());
 		this.camInstance.registerRootAssist(new CFMLFunctionAssist());
+		this.camInstance.registerRootAssist(new TemplateAssist());
+
 		// this.camInstance.registerRootAssist(new CFMLComponentAssist());
 		// //finds the components in a project, removed as we might use a new
 		// CFML Varscope parser

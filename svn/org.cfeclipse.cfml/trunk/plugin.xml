@@ -16,8 +16,8 @@
 			<description>Shows distinct icon for CFC files</description>	
 			<enablement>
 				<and>
-	      			<objectClass name="org.eclipse.core.resources.IResource" />
-    	  			<objectState name="extension" value="cfc" />
+	      			<objectClass name="org.eclipse.core.resources.IFile" />
+    	  			<objectState name="extension" value="cfc" />    	  			
     	  		</and>
 		    </enablement>
 		</decorator>
@@ -1493,7 +1493,7 @@
        
       <page
             category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            class="org.cfeclipse.cfml.preferences.CFMLTemplatePreferencePage"
+            class="org.cfeclipse.cfml.templates.preferences.TemplatesPreferencePage"
             id="org.cfeclipse.cfml.preferences.Templates"
             name="Templates"/>
       <page
@@ -2217,7 +2217,49 @@
              id="org.cfeclipse.cfml.cfmleditorcontext.DocShare1">
     </dynamic>
   </menuContribution>
+
 </extension>
+
+   <extension
+         point="org.eclipse.ui.editors.templates">
+      <contextType
+            name="%template.contextType.name"
+            class="org.cfeclipse.cfml.templates.template.CFTemplateContextType"
+            id="org.cfeclipse.cfml.templateeditor.xml">
+      </contextType>
+<!--
+      <template
+            name="%ant.tasks.copy.name"
+            icon="icons/obj16/snip.gif"
+            description="%ant.tasks.copy.description"
+            contextTypeId="org.cfeclipse.cfml.templateeditor.xml"
+            id="org.cfeclipse.cfml.templateeditor.ant.copy">
+         <pattern>&lt;copy todir=&quot;${dst}&quot;&gt;
+	&lt;fileset dir=&quot;${src}&quot;/&gt;
+&lt;/copy&gt;</pattern>
+      </template>
+      <resolver
+            name="%ant.resolvers.src"
+            type="src"
+            icon="icons/obj16/resolver.gif"
+            description="%ant.resolvers.src.description"
+            contextTypeId="org.cfeclipse.cfml.templateeditor.xml"
+            class="org.cfeclipse.cfml.templates.template.CFTemplateVariableResolver">
+      </resolver>
+  -->
+      <resolver
+            name="%template.resolver.dst"
+            type="dst"
+            icon="icons/obj16/resolver.gif"
+            description="%template.resolver.dst.description"
+            contextTypeId="org.cfeclipse.cfml.templateeditor.xml"
+            class="org.cfeclipse.cfml.templates.template.CFTemplateVariableResolver">
+      </resolver>
+      <include
+      		file="templates/cfml.xml"
+      		translations="$nl$/templates/cfml.properties">
+      </include>
+   </extension>
    
    
 </plugin>
