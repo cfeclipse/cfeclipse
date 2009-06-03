@@ -54,7 +54,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 
 	public FTPConnectionProperties connectionProperties;
 	private Text host,path,username,password,connectionid,port;
-	private Button passive,sftp;
+	private Button passive,sftp,userDirIsRoot;
 	private int DELETE_ID = 3242;
 	private Button deleteButton = null;
 	private Button okButton = null;
@@ -196,31 +196,43 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 
 			public void modifyText(ModifyEvent e) {
 				// TODO Auto-generated method stub
+				System.out.println(connectionType.getText());
 				if(connectionType.getText().equalsIgnoreCase("file")){
 					host.setEnabled(false);
 					port.setEnabled(false);
-					//passive.setEnabled(false);
+					passive.setEnabled(false);
+					passive.setSelection(false);
+					userDirIsRoot.setEnabled(false);
+					userDirIsRoot.setSelection(false);
 					username.setEnabled(false);
 					password.setEnabled(false);
 					openDirButton.setEnabled(true);
-					validateInput();
 				}
-				else{
-					validateInput();
+				else if(connectionType.getText().equalsIgnoreCase("ftp")){
+					host.setEnabled(true);
+					port.setEnabled(true);
+					passive.setEnabled(true);
+					passive.setSelection(connectionProperties.getPassive());
+					userDirIsRoot.setEnabled(true);
+					userDirIsRoot.setSelection(connectionProperties.getUserDirIsRoot());
+					username.setEnabled(true);
+					password.setEnabled(true);
+					openDirButton.setEnabled(false);
+					port.setText("21");
+				}
+				else{ //sftp
 					host.setEnabled(true);
 					port.setEnabled(true);
 					openDirButton.setEnabled(false);
-					if(connectionType.getText().equalsIgnoreCase("sftp")){
-						port.setText("22");
-					}
-					else if(connectionType.getText().equalsIgnoreCase("ftp")){
-						port.setText("21");
-					}
-					
-					//passive.setEnabled(true);
+					port.setText("22");					
+					passive.setEnabled(false);
+					passive.setSelection(false);
+					userDirIsRoot.setEnabled(false);
+					userDirIsRoot.setSelection(false);
 					username.setEnabled(true);
 					password.setEnabled(true);
 				}
+				validateInput();
 			}
 			
 			
@@ -283,8 +295,9 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	
 		
 		// Passive mode
-		passive = createCheckboxControl(editArea,"Passive mode:",true);
-		passive.setEnabled(false);
+		passive = createCheckboxControl(editArea,"Passive mode:",connectionProperties.getPassive());
+		// userDirIsRoot
+		userDirIsRoot = createCheckboxControl(editArea,"User Dir is Root Folder:",connectionProperties.getUserDirIsRoot());
 		// Username
 		username = createTextControl(editArea,"Username:",connectionProperties.getUsername(),20);
 		
@@ -422,7 +435,8 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 			connectionProperties.setConnectionid(connectionid.getText());
 			connectionProperties.setPort(Integer.parseInt(port.getText()));
 			connectionProperties.setType(connectionType.getText());
-			//connectionProperties.setPassive(passive.getSelection());
+			connectionProperties.setPassive(passive.getSelection());
+			connectionProperties.setUserDirIsRoot(userDirIsRoot.getSelection());
 			//connectionProperties.setSecure(sftp.getSelection());
 			connectionProperties.save();
 			}

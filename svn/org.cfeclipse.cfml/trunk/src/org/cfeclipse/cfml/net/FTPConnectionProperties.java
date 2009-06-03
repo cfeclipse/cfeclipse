@@ -32,6 +32,7 @@ public class FTPConnectionProperties {
 	private static String fConnectionid = "connectionid";
 	private static String fPort = "port";
 	private static String fPassive = "passive";
+	private static String fUserDirIsRoot = "userdirisroot";
 	private static String fSecure = "secure";
 	
 	
@@ -157,6 +158,14 @@ public class FTPConnectionProperties {
 
     public void setPassive(boolean passive) {
     	connectionProperties.setProperty(fPassive,String.valueOf(passive));
+    }
+
+    public boolean getUserDirIsRoot() {
+    	return new Boolean(connectionProperties.getProperty(fUserDirIsRoot,"true")).booleanValue() ;
+    }
+
+    public void setUserDirIsRoot(boolean userDirIsRoot) {
+    	connectionProperties.setProperty(fUserDirIsRoot,String.valueOf(userDirIsRoot));
     }
 
 

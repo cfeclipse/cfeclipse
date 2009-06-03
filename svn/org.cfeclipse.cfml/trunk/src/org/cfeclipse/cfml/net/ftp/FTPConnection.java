@@ -19,6 +19,7 @@ import java.util.Collection;
 import org.apache.commons.vfs.CacheStrategy;
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystem;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemOptions;
 import org.apache.commons.vfs.FileType;
@@ -26,6 +27,7 @@ import org.apache.commons.vfs.VFS;
 import org.apache.commons.vfs.impl.DefaultFileSystemManager;
 import org.apache.commons.vfs.operations.FileOperationProvider;
 import org.apache.commons.vfs.provider.ftp.FtpFileProvider;
+import org.apache.commons.vfs.provider.ftp.FtpFileSystemConfigBuilder;
 import org.apache.commons.vfs.provider.sftp.SftpFileProvider;
 import org.apache.commons.vfs.provider.sftp.SftpFileSystemConfigBuilder;
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
@@ -256,6 +258,9 @@ public class FTPConnection implements IFileProvider {
 
 	            // Build a new file system options object
 	            this.fileSystemOptions = new FileSystemOptions();
+				FtpFileSystemConfigBuilder.getInstance().setPassiveMode(fileSystemOptions, connectionProperties.getPassive());
+				FtpFileSystemConfigBuilder.getInstance().setDataTimeout(fileSystemOptions, new Integer(fConnectionTimeout));
+				FtpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fileSystemOptions, true);
 				SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");
 				SftpFileSystemConfigBuilder.getInstance().setTimeout(fileSystemOptions, new Integer(fConnectionTimeout));
 				System.out.println("Connecting...Resolving Base File " + connectionString);
@@ -323,7 +328,7 @@ public class FTPConnection implements IFileProvider {
      * @see org.cfeclipse.cfml.views.explorer.IFileProvider#getRoots()
      */
     public Object[] getRoots() {
-    	System.out.println("FTPConnection.getRoots()");
+    	System.out.println("FTPConnection.getRoots():"+connectionProperties.getHost());
 
         if (isConnected()) {
         	System.out.println("connected");
@@ -356,7 +361,7 @@ public class FTPConnection implements IFileProvider {
      *      java.io.FileFilter)
      */
     public Object[] getChildren(String parent, FileNameFilter filter) {
-    	System.out.println("FTPConnection.getChildren()");
+    	System.out.println("FTPConnection.getChildren() : " + connectionString);
     	connect();
 
         try {
