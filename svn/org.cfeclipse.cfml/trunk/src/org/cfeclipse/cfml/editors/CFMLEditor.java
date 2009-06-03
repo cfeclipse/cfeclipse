@@ -113,6 +113,7 @@ import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
+import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.AnnotationPreference;
@@ -387,48 +388,8 @@ public class CFMLEditor extends TextEditor implements
 		// wrapped
 		// line tracking.
 		//projectionViewer.getTextWidget().setWordWrap(true);
-
 		
-		
-		StyledText tw = getSourceViewer().getTextWidget();
-		
-		// Add a 'TextTransfer' drop target to the editor
-			int ops = DND.DROP_DEFAULT | DND.DROP_COPY;
-			Transfer[] transfers = { TextTransfer.getInstance() };
-			DropTargetListener editorListener = new DropTargetListener() {
-	
-				public void dragEnter(DropTargetEvent event) {
-					System.out.println("dra!");
-				}
-	
-				public void dragLeave(DropTargetEvent event) {
-					System.out.println("dra!");
-				}
-	
-				public void dragOperationChanged(DropTargetEvent event) {
-					System.out.println("dra!");
-				}
-	
-				public void dragOver(DropTargetEvent event) {
-					System.out.println("dra!");
-				}
-	
-				public void drop(DropTargetEvent event) {
-					System.out.println("dra!");
-				}
-	
-				public void dropAccept(DropTargetEvent event) {
-					System.out.println("dra!");
-				}
-				
-			};
-			
-			IDragAndDropService dtSvc = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
-			dtSvc.addMergedDropTarget(tw, ops, transfers, editorListener);
-		
-		
-		
-		//createDragAndDrop(projectionViewer);
+		createDragAndDrop(projectionViewer);
 
 		try {
 			if (isEditorInputReadOnly()) {				
@@ -610,9 +571,50 @@ public class CFMLEditor extends TextEditor implements
 			//nothing, we are already null;
 		}
 
-		if (c == null) // ie we are on 3.3 or higher	
+		if (c == null) // ie we are on 3.3 or higher
 		{
-				return;
+			// Add a 'TextTransfer' drop target to the editor
+			/*
+			 * this isn't quite working for 3.4 >
+			 *
+			 *
+			StyledText tw = getSourceViewer().getTextWidget();
+			int ops = DND.DROP_DEFAULT | DND.DROP_COPY | DND.DROP_MOVE;
+			Transfer[] transfers = new Transfer[] { TextTransfer.getInstance(), PluginTransfer.getInstance() };
+			DropTargetListener editorListener = new DropTargetListener() {
+
+				public void dragEnter(DropTargetEvent event) {
+					System.out.println("dra1!");
+				}
+
+				public void dragLeave(DropTargetEvent event) {
+					System.out.println("dra2!");
+				}
+
+				public void dragOperationChanged(DropTargetEvent event) {
+					System.out.println("dra3!");
+				}
+
+				public void dragOver(DropTargetEvent event) {
+					System.out.println("dra4!");
+				}
+
+				public void drop(DropTargetEvent event) {
+					System.out.println("dra5!");
+					//event.widget.setData(event.data);
+					//event.getSource().notify();
+				}
+
+				public void dropAccept(DropTargetEvent event) {
+					System.out.println("dra6!");
+				}
+
+			};
+
+			IDragAndDropService dtSvc = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
+			dtSvc.addMergedDropTarget(tw, ops, transfers, editorListener);
+			*/
+			return;
 		}
 		
 		SelectionCursorListener cursorListener = new SelectionCursorListener(this,
