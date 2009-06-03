@@ -19151,6 +19151,26 @@ cflayoutarea tag style attributes.
 		]]></help>
 			</parameter>
 		</function>
+		<!--
+			boolean IsInstanceOf(object, typeName)
+		-->
+		<function xmlns="http://www.cfeclipse.org/version1/dictionary" name="isinstanceof" returns="boolean">
+			<help><![CDATA[
+				Determines whether an object is an instance of a Coldfusion
+				interface or component, or of a Java class.
+			]]></help>
+			<parameter name="object" type="Object" required="true">
+				<help><![CDATA[
+					The CFC instance or Java object that you are testing
+				]]></help>
+			</parameter>
+			<parameter name="typeName" type="String" required="true">
+				<help><![CDATA[
+					The name of the interface, component, or Java class of which
+					the object might be an instance
+				]]></help>
+			</parameter>
+		</function>
 <!--
 	boolean IsK2ServerABroker()
 -->
