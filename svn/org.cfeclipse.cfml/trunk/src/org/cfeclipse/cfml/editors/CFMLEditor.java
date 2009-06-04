@@ -833,7 +833,7 @@ public class CFMLEditor extends TextEditor implements
 			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 			CFEPartition part = partitioner.findClosestPartition(startpos);
 			
-			if(	EditableTags.isEditable(part.getType())){
+			if(part != null && EditableTags.isEditable(part.getType())){
 				menu.add(act);
 			}
 			
@@ -855,7 +855,7 @@ public class CFMLEditor extends TextEditor implements
 			 *		3) or if we are in a cfset tag who's parent tag is a cfcomponent tag  
 			 */	
 			
-			if(part.getTagName().equalsIgnoreCase("cfproperty")){
+			if(part != null && part.getTagName().equalsIgnoreCase("cfproperty")){
 				menu.add(act);
 			}
 			
