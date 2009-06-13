@@ -29,6 +29,7 @@ package org.cfeclipse.cfml.natures;
 
 import java.util.Date;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.contentassist.CFContentAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFEContentAssistManager;
@@ -83,31 +84,7 @@ public class CFENature implements IContentAssistContributorNature {
 	 * 
 	 */
 	private void setupCAM() {
-		this.camInstance = new CFEContentAssistManager();
-
-		CFMLTagAssist cfmlAssistor = new CFMLTagAssist(DictionaryManager
-				.getDictionary(DictionaryManager.CFDIC));
-		HTMLTagAssistContributor htmlAssistor = new HTMLTagAssistContributor(
-				DictionaryManager.getDictionary(DictionaryManager.HTDIC));
-
-		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
-		cfscp.changeDictionary(DictionaryManager.JSDIC);
-
-		this.camInstance.registerRootAssist(cfscp);
-		this.camInstance.registerRootAssist(new CFContentAssist());
-		this.camInstance.registerRootAssist(new CFMLScopeAssist());
-		this.camInstance.registerRootAssist(new CFMLFunctionAssist());
-
-		this.camInstance.registerTagAssist(cfmlAssistor);
-		this.camInstance.registerAttributeAssist(cfmlAssistor);
-		this.camInstance.registerValueAssist(cfmlAssistor);
-
-		this.camInstance.registerTagAssist(htmlAssistor);
-		this.camInstance.registerAttributeAssist(htmlAssistor);
-		this.camInstance.registerValueAssist(htmlAssistor);
-
-		this.camInstance.registerTagAssist(new CFMLScopeAssist());
-
+		this.camInstance = CFMLPlugin.getDefault().newCAM();
 		this.lastUpdate = new Date();
 	}
 

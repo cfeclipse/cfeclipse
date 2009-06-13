@@ -186,7 +186,15 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 * 
 	 */
 	public void setupCAM() {
-		this.camInstance = new CFEContentAssistManager();
+		this.camInstance = newCAM();
+	}
+
+	/**
+	 * Returns a new Content Assist Manager
+	 * 
+	 */
+	public CFEContentAssistManager newCAM() {
+		CFEContentAssistManager camInstance = new CFEContentAssistManager();
 		CFMLTagAssist cfmlAssistor = new CFMLTagAssist(DictionaryManager
 				.getDictionary(DictionaryManager.CFDIC));
 		HTMLTagAssistContributor htmlAssistor = new HTMLTagAssistContributor(
@@ -195,27 +203,28 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
 		cfscp.changeDictionary(DictionaryManager.JSDIC);
 
-		this.camInstance.registerRootAssist(cfscp);
-		this.camInstance.registerRootAssist(new CFContentAssist());
-		this.camInstance.registerRootAssist(new CFMLScopeAssist());
-		this.camInstance.registerRootAssist(new CFMLFunctionAssist());
-		this.camInstance.registerRootAssist(new TemplateAssist());
+		camInstance.registerRootAssist(cfscp);
+		camInstance.registerRootAssist(new CFContentAssist());
+		camInstance.registerRootAssist(new CFMLScopeAssist());
+		camInstance.registerRootAssist(new CFMLFunctionAssist());
+		camInstance.registerRootAssist(new TemplateAssist());
 
-		// this.camInstance.registerRootAssist(new CFMLComponentAssist());
+		// camInstance.registerRootAssist(new CFMLComponentAssist());
 		// //finds the components in a project, removed as we might use a new
 		// CFML Varscope parser
 		// finds the arguments in a cfc that you are talking about
-		this.camInstance.registerRootAssist(new CFMLVariableAssist());
+		camInstance.registerRootAssist(new CFMLVariableAssist());
 
-		this.camInstance.registerTagAssist(cfmlAssistor);
-		this.camInstance.registerAttributeAssist(cfmlAssistor);
-		this.camInstance.registerValueAssist(cfmlAssistor);
+		camInstance.registerTagAssist(cfmlAssistor);
+		camInstance.registerAttributeAssist(cfmlAssistor);
+		camInstance.registerValueAssist(cfmlAssistor);
 
-		this.camInstance.registerTagAssist(htmlAssistor);
-		this.camInstance.registerAttributeAssist(htmlAssistor);
-		this.camInstance.registerValueAssist(htmlAssistor);
+		camInstance.registerTagAssist(htmlAssistor);
+		camInstance.registerAttributeAssist(htmlAssistor);
+		camInstance.registerValueAssist(htmlAssistor);
 
-		this.camInstance.registerTagAssist(new CFMLScopeAssist());
+		camInstance.registerTagAssist(new CFMLScopeAssist());
+		return camInstance;
 	}
 
 	/**

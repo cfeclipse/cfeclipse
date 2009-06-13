@@ -297,7 +297,7 @@ public class CFParser {
 				userMessage(indent, method, "WARNING: " + message);
 				break;
 			case USRMSG_ERROR:
-				if(this.reportErrors) {
+				if(this.reportErrors && this.res != null) {
 					IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
 					
 					
@@ -879,9 +879,9 @@ public class CFParser {
 				
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
-					if(matchStr.charAt(1) == '/') {
-						if(!handleClosingTag(match, matchStack)) {
-						    
+					if(matchStr.charAt(1) == '/'|| (matchStr.charAt(1) == '/') && handleClosingTag(match, matchStack)) {
+						// added handleClosingTag check to above for cases where a tag is "open" ex: <cfmail >
+						if(!handleClosingTag(match, matchStack)) {						    
 							return null;
 						}
 					}

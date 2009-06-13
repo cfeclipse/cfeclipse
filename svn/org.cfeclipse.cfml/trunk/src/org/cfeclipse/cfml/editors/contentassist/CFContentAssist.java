@@ -311,6 +311,37 @@ public class CFContentAssist extends CFEContentAssist{
         
         return retStr;
     } */
+
+	/**
+	 * We watch for angular brackets 
+	 * 
+	 * @param viewer
+	 *            the viewer
+	 * @param offset
+	 *            the offset left of which the prefix is detected
+	 * @return the detected prefix
+	 */
+	protected String extractPrefix(ITextViewer viewer, int offset) {
+		IDocument document = viewer.getDocument();
+		int i = offset;
+		if (i > document.getLength())
+			return ""; //$NON-NLS-1$
+
+		try {
+			while (i > 0) {
+				char ch = document.getChar(i - 1);
+				if (ch == '<') {
+					i--;					
+					break;
+				}
+				i--;
+			}
+			return document.get(i, offset - i);
+		} catch (BadLocationException e) {
+			return ""; //$NON-NLS-1$
+		}
+	}
+    
     
     /* (non-Javadoc)
 	 * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeCompletionProposals(org.eclipse.jface.text.ITextViewer, int)
@@ -320,7 +351,8 @@ public class CFContentAssist extends CFEContentAssist{
 	    //System.out.println("computing proposals");
         DefaultAssistState assistState = AssistUtils.initialiseDefaultAssistState(viewer, offset);
         assistState.setPrevDelim(0);	// TODO: Bodge job, need to assign correct previous delim position
-        assistState.setDataSoFar(assistState.getDataSoFar().trim());
+        //assistState.setDataSoFar(assistState.getDataSoFar().trim()); // FIXME: see trac ticket #472
+        assistState.setDataSoFar(extractPrefix(viewer,offset));
         return getTagProposals(assistState);
 	}
 	
