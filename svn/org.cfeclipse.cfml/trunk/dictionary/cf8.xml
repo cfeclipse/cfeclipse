@@ -3561,237 +3561,346 @@
 		</tag>
 <!--
 	cfftp
-		action = "action"
-		username = "name"
-		password = "password"
-		server = "server"
-		timeout = "timeout in seconds"
-		port = "port"
+		action = "open|close|quote|site|allo|acct"
+		actionparam = "command or account information"
+		buffersize = "number"
 		connection = "name"
+		passive = "yes|no"
+		password = "password"
+		port = "port"
 		proxyServer = "proxy server"
 		retryCount = "number"
-		stopOnError = "boolean"
-		passive = "boolean"
+		server = "server"
+		stopOnError = "yes|no"
+		timeout = "time-sout in seconds"
+		username = "name"
 	
 	OR
 	
 	cfftp
-		action = "action"
-		username = "name"
+		action = "open|close"
+		connection = "name"
+		fingerprint = "ssh-dss.ssh-rsa"
+		key = "private key"
+		passive = "yes|no">
+		passphrase = "passphrase"
 		password = "password"
-		name = "query_name"
-		server = "server"
-		ASCIIExtensionList = "extensions"
-		transferMode = "mode"
-		failIfExists = "boolean"
-		directory = "directory name"
-		localFile = "filename"
-		remoteFile = "filename"
-		item = "directory or file"
-		existing = "file or directory name"
-		new = "file or directory name"
+		port = "port"
 		proxyServer = "proxy server"
-		passive = "boolean"
+		retryCount = "number"
+		secure = "yes|no"
+		server = "server"
+		stopOnError = "yes|no"
+		timeout = "time-out in seconds"
+		username = "name"
+	
+	OR
+	
+	cfftp
+		action = "changedir|createDir|listDir|removeDir|getFile|putFile|rename|remove|getCurrentDir|getCurrentURL|existsDir|existsFile|exists"
+		ASCIIExtensionList = "extensions"
+		connection = "connection name"
+		directory = "directory name"
+		existing = "file or directory name"
+		failIfExists = "yes|no"
+		item = "directory or file"
+		localFile = "filename"
+		name = "query name"
+		new = "file or directory name"
+		passive = "yes|no"
+		password = "password"
+		proxyServer = "proxy server"
+		remoteFile = "filename"
 		result = "result name"
-	
-	OR
-	
-	cfftp
-		action = "action"
-		username = "name"
-		password = "password"
-		name = "query_name"
 		server = "server"
-		ASCIIExtensionList = "extensions"
-		transferMode = "mode"
-		failIfExists = "boolean"
-		directory = "directory name"
-		localFile = "filename"
-		remoteFile = "filename"
-		item = "directory or file"
-		existing = "file or directory name"
-		new = "file or directory name"
-		proxyServer = "proxy server"
-		passive = "boolean"
-		timeout = "timeout in seconds"
-		port = "port"
-		connection = "name"
-		retryCount = "number"
-		stopOnError = "boolean"
+		timeout = "time-out in seconds"
+		transferMode = "ASCII FTP|Binary FTP|Auto FTP"
+		username = "name"
 -->
 		<tag xmlns="http://www.cfeclipse.org/version1/dictionary" name="cfftp" single="true" xmlstyle="false">
 			<help><![CDATA[
-		Lets users implement File Transfer Protocol (FTP) operations.
-	]]></help>
+				Lets users implement File Transfer Protocol (FTP) operations.
+			]]></help>
 			<return type="cfftp" name="cfftp" parameter="result"/>
 			<return type="cfftplist" parameter="name"/>
 			<return type="String" parameter="connection"/>
 			<parameter name="action" type="String" required="true">
 				<help><![CDATA[
-			FTP operation to perform.
-			open: create an FTP connection
-			close: terminate an FTP connection
-		]]></help>
+					FTP operation to perform.
+					* acct: sends account information on systems that require it.
+					* allo: allocates memory for operations, such as putting 
+						large files, on the server.
+					* changedir
+					* close: terminates an FTP connection.
+					* createDir
+					* exists
+					* existsDir
+					* existsFile
+					* getCurrentDir
+					* getCurrentURL
+					* getFile
+					* listDir
+					* open: creates an FTP connection.
+					* putFile
+					* quote: sends a command verbatim to the FTP server.
+					* remove
+					* removeDir
+					* rename
+					* site: executes a site-specific command.
+				]]></help>
 				<values>
-					<value option="open"/>
-					<value option="close"/>
+					<value option="acct"/>
+					<value option="allo"/>
 					<value option="changedir"/>
+					<value option="close"/>
 					<value option="createdir"/>
-					<value option="listdir"/>
-					<value option="removedir"/>
-					<value option="getfile"/>
-					<value option="putfile"/>
-					<value option="rename"/>
-					<value option="remove"/>
-					<value option="getcurrentdir"/>
-					<value option="getcurrenturl"/>
+					<value option="exists"/>
 					<value option="existsdir"/>
 					<value option="existsfile"/>
-					<value option="exists"/>
+					<value option="getcurrentdir"/>
+					<value option="getcurrenturl"/>
+					<value option="getfile"/>
+					<value option="listdir"/>
+					<value option="open"/>
+					<value option="putfile"/>
+					<value option="quote"/>
+					<value option="remove"/>
+					<value option="removedir"/>
+					<value option="rename"/>
+					<value option="site"/>
 				</values>
 			</parameter>
-			<parameter name="username" type="String" required="false">
+			<parameter name="actionparam" type="String" required="false">
 				<help><![CDATA[
-			Overrides username specified in ODBC setup.
-		]]></help>
+					Used only when action is quote, site, or acct.
+					Specifies the command when action is quote or site;
+					specifies account information when action is acct.
+				]]></help>
 				<values/>
 				<triggers>
-					<selectedValue attributeName="connection" required="true" value=""/>
-					<selectedValue attributeName="action" required="true" value="open"/>
+					<selectedValue attributeName="action" required="false" value="acct"/>
+					<selectedValue attributeName="action" required="false" value="quote"/>
+					<selectedValue attributeName="action" required="false" value="site"/>
 				</triggers>
-			</parameter>
-			<parameter name="password" type="String" required="false">
-				<help><![CDATA[
-			Overrides password specified in ODBC setup.
-		]]></help>
-				<values/>
-				<triggers>
-					<selectedValue attributeName="connection" required="true" value=""/>
-					<selectedValue attributeName="action" required="true" value="open"/>
-				</triggers>
-			</parameter>
-			<parameter name="server" type="String" required="false">
-				<help><![CDATA[
-			FTP server to which to connect; for example,
-			ftp.myserver.com
-		]]></help>
-				<values/>
-				<triggers>
-					<selectedValue attributeName="connection" required="true" value=""/>
-					<selectedValue attributeName="action" required="true" value="open"/>
-				</triggers>
-			</parameter>
-			<parameter name="timeout" type="Numeric" required="false">
-				<help><![CDATA[
-			Value in seconds for the timeout of all operations,
-			including individual data request operations.
-		]]></help>
-				<values default="30"/>
-			</parameter>
-			<parameter name="port" type="Numeric" required="false">
-				<help><![CDATA[
-			Remote port to which to connect
-		]]></help>
-				<values default="21"/>
-			</parameter>
-			<parameter name="connection" type="variableName" required="false">
-				<help><![CDATA[
-			Name of the FTP connection. If you specify the username,
-			password, and server attributes, and if no connection
-			exists for them, CFML creates one. Calls to cfftp
-			with the same connection name reuse the connection.
-		]]></help>
-				<values/>
-				<triggers>
-					<selectedValue attributeName="action" required="true" value="open"/>
-					<selectedValue attributeName="action" required="true" value="close"/>
-				</triggers>
-			</parameter>
-			<parameter name="proxyserver" type="String" required="false">
-				<help><![CDATA[
-			The proxy server required to access the URL.
-		]]></help>
-				<values/>
-			</parameter>
-			<parameter name="retrycount" type="Numeric" required="false">
-				<help><![CDATA[
-			Number of retries until failure is reported.
-		]]></help>
-				<values default="1"/>
-			</parameter>
-			<parameter name="stoponerror" type="boolean" required="false">
-				<help><![CDATA[
-			Yes: halts processing, displays an appropriate error.
-			No: populates the error	variables
-		]]></help>
-				<values default="false">
-					<value option="true"/>
-					<value option="false"/>
-				</values>
-			</parameter>
-			<parameter name="passive" type="boolean" required="false">
-				<help><![CDATA[
-			Yes: enable passive mode
-		]]></help>
-				<values default="false">
-					<value option="true"/>
-					<value option="false"/>
-				</values>
 			</parameter>
 			<parameter name="asciiextensionist" type="String" required="false">
 				<help><![CDATA[
-			Delimited list of file extensions that force ASCII
-			transfer mode, if transferMode = "auto".
-		]]></help>
+					Delimited list of file extensions that force ASCII
+					transfer mode, if transferMode = "auto".
+				]]></help>
+				<values default="txt;htm;html;cfm;cfml;shtm;shtml;css;asp;asa">
+					<value option="txt;htm;html;cfm;cfml;shtm;shtml;css;asp;asa"/>
+				</values>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="changedir"/>
+					<selectedValue attributeName="action" required="false" value="createDir"/>
+					<selectedValue attributeName="action" required="false" value="exists"/>
+					<selectedValue attributeName="action" required="false" value="existsDir"/>
+					<selectedValue attributeName="action" required="false" value="existsFile"/>
+					<selectedValue attributeName="action" required="false" value="getCurrentDir"/>
+					<selectedValue attributeName="action" required="false" value="getCurrentURL"/>
+					<selectedValue attributeName="action" required="false" value="getFile"/>
+					<selectedValue attributeName="action" required="false" value="putFile"/>
+					<selectedValue attributeName="action" required="false" value="listDir"/>
+					<selectedValue attributeName="action" required="false" value="removeDir"/>
+					<selectedValue attributeName="action" required="false" value="rename"/>
+					<selectedValue attributeName="action" required="false" value="remove"/>
+				</triggers>
+			</parameter>
+			<parameter name="buffersize" type="Number" required="false">
+				<help><![CDATA[
+					Buffer size in bytes.
+				]]></help>
 				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="acct"/>
+					<selectedValue attributeName="action" required="false" value="allo"/>
+					<selectedValue attributeName="action" required="false" value="close"/>
+					<selectedValue attributeName="action" required="false" value="open"/>
+					<selectedValue attributeName="action" required="false" value="quote"/>
+					<selectedValue attributeName="action" required="false" value="site"/>
+				</triggers>
 			</parameter>
-			<parameter name="transfermode" type="String" required="false">
+			<parameter name="connection" type="variableName" required="false">
 				<help><![CDATA[
-			ASCII FTP transfer mode
-			Binary FTP transfer mode
-			Auto FTP transfer mode
-		]]></help>
-				<values default="auto">
-					<value option="auto"/>
-					<value option="ascii"/>
-					<value option="binary"/>
-				</values>
-			</parameter>
-			<parameter name="failifexists" type="boolean" required="false">
-				<help><![CDATA[
-			Yes: if a local file with same name exists, getFile fails
-		]]></help>
-				<values default="true">
-					<value option="true"/>
-					<value option="false"/>
-				</values>
+					Name of the FTP connection. If you specify the username,
+					password, and server attributes, and if no connection
+					exists for them, CFML creates one. Calls to cfftp
+					with the same connection name reuse the connection.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="acct"/>
+					<selectedValue attributeName="action" required="false" value="allo"/>
+					<selectedValue attributeName="action" required="false" value="changedir"/>
+					<selectedValue attributeName="action" required="true" value="close"/>
+					<selectedValue attributeName="action" required="false" value="createDir"/>
+					<selectedValue attributeName="action" required="false" value="exists"/>
+					<selectedValue attributeName="action" required="false" value="existsDir"/>
+					<selectedValue attributeName="action" required="false" value="existsFile"/>
+					<selectedValue attributeName="action" required="false" value="getCurrentDir"/>
+					<selectedValue attributeName="action" required="false" value="getCurrentURL"/>
+					<selectedValue attributeName="action" required="false" value="getFile"/>
+					<selectedValue attributeName="action" required="false" value="listDir"/>
+					<selectedValue attributeName="action" required="true" value="open"/>
+					<selectedValue attributeName="action" required="false" value="putFile"/>
+					<selectedValue attributeName="action" required="false" value="quote"/>
+					<selectedValue attributeName="action" required="false" value="remove"/>
+					<selectedValue attributeName="action" required="false" value="removeDir"/>
+					<selectedValue attributeName="action" required="false" value="rename"/>
+					<selectedValue attributeName="action" required="false" value="site"/>
+				</triggers>
 			</parameter>
 			<parameter name="directory" type="String" required="false">
 				<help><![CDATA[
-			Directory on which to perform an operation
-		]]></help>
+					Directory on which to perform an operation
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" required="true" value="changedir"/>
 					<selectedValue attributeName="action" required="true" value="createdir"/>
-					<selectedValue attributeName="action" required="true" value="listdir"/>
 					<selectedValue attributeName="action" required="true" value="existsdir"/>
+					<selectedValue attributeName="action" required="true" value="listdir"/>
+				</triggers>
+			</parameter>
+			<parameter name="existing" type="String" required="false">
+				<help><![CDATA[
+					Current name of the file or directory on the remote server.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="rename"/>
+				</triggers>
+			</parameter>
+			<parameter name="failifexists" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: if a local file with same name exists, getFile fails
+				]]></help>
+				<values default="true">
+					<value option="true"/>
+					<value option="false"/>
+				</values>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="getfile"/>
+					<selectedValue attributeName="action" required="false" value="putfile"/>
+				</triggers>
+			</parameter>
+			<parameter name="fingerprint" type="String" required="false">
+				<help><![CDATA[
+					Fingerprint of the host key in the form ssh-dss.ssh-rsa,
+					which is a 16-byte unique identifier for the server
+					attribute that you specify, The fingerprint consists of
+					eight pairs of hexadecimal values in the form
+					hh:hh:hh:hh::hh:hh:hh:hh. ColdFusion checks the fingerprint
+					of the remote server only if the fingerprint value is specified.
+					
+					Used only when server, username, and password are supplied.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="open"/>
+					<selectedValue attributeName="action" required="false" value="close"/>
+				</triggers>
+			</parameter>
+			<parameter name="item" type="String" required="false">
+				<help><![CDATA[
+					File or directory.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="remove"/>
+					<selectedValue attributeName="action" required="true" value="exists"/>
+				</triggers>
+			</parameter>
+			<parameter name="key" type="String" required="false">
+				<help><![CDATA[
+					Public-key-based authentication. Refers to the absolute
+					path to the private key of the user. Possession of a
+					private key provides authentication by sending a signature
+					created with a private key. The server must ensure that the
+					key is a valid authentication for the user and that the
+					signature is valid. Both must be valid to accept the
+					authentication.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="open"/>
 				</triggers>
 			</parameter>
 			<parameter name="localfile" type="String" required="false">
 				<help><![CDATA[
-			Name of the file on the local file system
-		]]></help>
+					Name of the file on the local file system
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" required="true" value="getfile"/>
 					<selectedValue attributeName="action" required="true" value="putfile"/>
 				</triggers>
 			</parameter>
+			<parameter name="name" type="variableName" required="false">
+				<help><![CDATA[
+					Query name of directory listing.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="listdir"/>
+				</triggers>
+			</parameter>
+			<parameter name="new" type="String" required="false">
+				<help><![CDATA[
+					New name of file or directory on the remote server
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="true" value="rename"/>
+				</triggers>
+			</parameter>
+			<parameter name="passive" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: enable passive mode
+				]]></help>
+				<values default="false">
+					<value option="true"/>
+					<value option="false"/>
+				</values>
+			</parameter>
+			<parameter name="passphrase" type="String" required="false">
+				<help><![CDATA[
+					Because private keys are stored in an encrypted form
+					on the client host, the user must supply a passphrase
+					to enable generating the signature.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="key" required="false" value="*"/>
+				</triggers>
+			</parameter>
+			<parameter name="password" type="String" required="false">
+				<help><![CDATA[
+					Overrides password specified in ODBC setup.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="connection" required="true" value=""/>
+					<selectedValue attributeName="action" required="true" value="open"/>
+				</triggers>
+			</parameter>
+			<parameter name="port" type="Numeric" required="false">
+				<help><![CDATA[
+					Remote port to which to connect
+				]]></help>
+				<values default="21"/>
+			</parameter>
+			<parameter name="proxyserver" type="String" required="false">
+				<help><![CDATA[
+					The proxy server required to access the URL.
+				]]></help>
+				<values/>
+			</parameter>
 			<parameter name="remotefile" type="String" required="false">
 				<help><![CDATA[
-			Name of the file on the FTP server file system.
-		]]></help>
+					Name of the file on the FTP server file system.
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" required="true" value="getfile"/>
@@ -3799,51 +3908,110 @@
 					<selectedValue attributeName="action" required="true" value="existsfile"/>
 				</triggers>
 			</parameter>
-			<parameter name="item" type="String" required="false">
-				<help><![CDATA[
-			Object of these actions: file or directory.
-		]]></help>
-				<values/>
-				<triggers>
-					<selectedValue attributeName="action" required="true" value="remove"/>
-					<selectedValue attributeName="action" required="true" value="exists"/>
-				</triggers>
-			</parameter>
-			<parameter name="existing" type="String" required="false">
-				<help><![CDATA[
-			Current name of the file or directory on the remote server.
-		]]></help>
-				<values/>
-				<triggers>
-					<selectedValue attributeName="action" required="true" value="rename"/>
-				</triggers>
-			</parameter>
-			<parameter name="new" type="String" required="false">
-				<help><![CDATA[
-			New name of file or directory on the remote server
-		]]></help>
-				<values/>
-				<triggers>
-					<selectedValue attributeName="action" required="true" value="rename"/>
-				</triggers>
-			</parameter>
-			<parameter name="name" type="variableName" required="false">
-				<help><![CDATA[
-			Query name of directory listing.
-		]]></help>
-				<values/>
-				<triggers>
-					<selectedValue attributeName="action" required="true" value="listdir"/>
-				</triggers>
-			</parameter>
 			<parameter name="result" type="variableName" required="false">
 				<help><![CDATA[
-			Specifies a name for the structure in which cfftp
-			stores the returnValue variable. If set, this value
-			replaces cfftp as the prefix to use when accessing
-			returnVariable.
-		]]></help>
+					Specifies a name for the structure in which cfftp
+					stores the returnValue variable. If set, this value
+					replaces cfftp as the prefix to use when accessing
+					returnVariable.
+				]]></help>
 				<values/>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="changedir"/>
+					<selectedValue attributeName="action" required="false" value="createDir"/>
+					<selectedValue attributeName="action" required="false" value="exists"/>
+					<selectedValue attributeName="action" required="false" value="existsDir"/>
+					<selectedValue attributeName="action" required="false" value="existsFile"/>
+					<selectedValue attributeName="action" required="false" value="getCurrentDir"/>
+					<selectedValue attributeName="action" required="false" value="getCurrentURL"/>
+					<selectedValue attributeName="action" required="false" value="getFile"/>
+					<selectedValue attributeName="action" required="false" value="putFile"/>
+					<selectedValue attributeName="action" required="false" value="listDir"/>
+					<selectedValue attributeName="action" required="false" value="removeDir"/>
+					<selectedValue attributeName="action" required="false" value="rename"/>
+					<selectedValue attributeName="action" required="false" value="remove"/>
+				</triggers>
+			</parameter>
+			<parameter name="retrycount" type="Numeric" required="false">
+				<help><![CDATA[
+					Number of retries until failure is reported.
+				]]></help>
+				<values default="1"/>
+			</parameter>
+			<parameter name="secure" type="boolean" required="false">
+				<help><![CDATA[
+					* true: enables secure FTP
+					* false
+				]]></help>
+				<values default="false">
+					<value option="true"/>
+					<value option="false"/>
+				</values>
+			</parameter>
+			<parameter name="server" type="String" required="false">
+				<help><![CDATA[
+					FTP server to which to connect; for example,
+					ftp.myserver.com
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="connection" required="true" value=""/>
+					<selectedValue attributeName="action" required="true" value="open"/>
+				</triggers>
+			</parameter>
+			<parameter name="stoponerror" type="boolean" required="false">
+				<help><![CDATA[
+					Yes: halts processing, displays an appropriate error.
+					No: populates the error	variables
+				]]></help>
+				<values default="false">
+					<value option="true"/>
+					<value option="false"/>
+				</values>
+			</parameter>
+			<parameter name="timeout" type="Numeric" required="false">
+				<help><![CDATA[
+					Value in seconds for the timeout of all operations,
+					including individual data request operations.
+				]]></help>
+				<values default="30"/>
+			</parameter>
+			<parameter name="transfermode" type="String" required="false">
+				<help><![CDATA[
+					ASCII FTP transfer mode
+					Binary FTP transfer mode
+					Auto FTP transfer mode
+				]]></help>
+				<values default="auto">
+					<value option="auto"/>
+					<value option="ascii"/>
+					<value option="binary"/>
+				</values>
+				<triggers>
+					<selectedValue attributeName="action" required="false" value="changedir"/>
+					<selectedValue attributeName="action" required="false" value="createDir"/>
+					<selectedValue attributeName="action" required="false" value="exists"/>
+					<selectedValue attributeName="action" required="false" value="existsDir"/>
+					<selectedValue attributeName="action" required="false" value="existsFile"/>
+					<selectedValue attributeName="action" required="false" value="getCurrentDir"/>
+					<selectedValue attributeName="action" required="false" value="getCurrentURL"/>
+					<selectedValue attributeName="action" required="false" value="getFile"/>
+					<selectedValue attributeName="action" required="false" value="putFile"/>
+					<selectedValue attributeName="action" required="false" value="listDir"/>
+					<selectedValue attributeName="action" required="false" value="removeDir"/>
+					<selectedValue attributeName="action" required="false" value="rename"/>
+					<selectedValue attributeName="action" required="false" value="remove"/>
+				</triggers>
+			</parameter>
+			<parameter name="username" type="String" required="false">
+				<help><![CDATA[
+					Overrides username specified in ODBC setup.
+				]]></help>
+				<values/>
+				<triggers>
+					<selectedValue attributeName="connection" required="true" value=""/>
+					<selectedValue attributeName="action" required="true" value="open"/>
+				</triggers>
 			</parameter>
 		</tag>
 <!--
