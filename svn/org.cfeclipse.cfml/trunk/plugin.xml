@@ -2211,15 +2211,6 @@
       </actionSet>
    </extension>   
    
-  <extension point="org.eclipse.ui.menus">
-  <menuContribution locationURI="popup:#CFMLEditorContext">
-    <dynamic class="org.eclipse.ecf.internal.provisional.docshare.menu.DocShareRosterMenuContributionItem"
-             id="org.cfeclipse.cfml.cfmleditorcontext.DocShare1">
-    </dynamic>
-  </menuContribution>
-
-</extension>
-
    <extension
          point="org.eclipse.ui.editors.templates">
       <contextType
