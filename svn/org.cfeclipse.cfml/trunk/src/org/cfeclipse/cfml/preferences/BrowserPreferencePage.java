@@ -8,6 +8,7 @@ import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -31,8 +32,9 @@ public class BrowserPreferencePage extends FieldEditorPreferencePage implements
 			addField(new DirectoryFieldEditor(BrowserPreferenceConstants.P_SECONDARY_BROWSER_PATH, "Secondary Browser", getFieldEditorParent()));
 		}
 		else {
-		addField(new FileFieldEditor(BrowserPreferenceConstants.P_PRIMARY_BROWSER_PATH, "Primary Browser",getFieldEditorParent()));
-		addField(new FileFieldEditor(BrowserPreferenceConstants.P_SECONDARY_BROWSER_PATH, "Secondary Browser",getFieldEditorParent()));
+			addField(new FileFieldEditor(BrowserPreferenceConstants.P_PRIMARY_BROWSER_PATH, "Primary Browser",getFieldEditorParent()));
+			addField(new FileFieldEditor(BrowserPreferenceConstants.P_SECONDARY_BROWSER_PATH, "Secondary Browser",getFieldEditorParent()));
+			addField(new StringFieldEditor(BrowserPreferenceConstants.P_TESTCASE_QUERYSTRING, "Querystring for TestCases",getFieldEditorParent()));
 		}
 	}
 

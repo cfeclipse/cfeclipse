@@ -32,6 +32,8 @@ import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.preferences.BrowserPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -317,6 +319,9 @@ public class ResourceUtils {
     public static String getURL(IResource resource){
     	
     	String string = findRootURL(resource, "");
+    	if(string.matches("(?i).*/Test.*.cfc|(?i).*Test.cfc")){
+    		string += CFMLPlugin.getDefault().getPluginPreferences().getString(BrowserPreferenceConstants.P_TESTCASE_QUERYSTRING);
+    	}
     	return string;
     	
     }

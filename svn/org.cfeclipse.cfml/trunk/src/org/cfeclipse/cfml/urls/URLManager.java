@@ -9,6 +9,8 @@ import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.preferences.BrowserPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -76,13 +78,16 @@ public class URLManager {
 				if(!resourceList.isEmpty()){
 					for (Iterator iter = resourceList.iterator(); iter.hasNext();) {
 						String element = (String) iter.next();
+						
+						if(element.matches("(?i)Test.*.cfc|(?i).*Test.cfc")){
+							element += CFMLPlugin.getDefault().getPluginPreferences().getString(BrowserPreferenceConstants.P_TESTCASE_QUERYSTRING);
+						}
 						if(iter.hasNext()){
 							urlPath = "/" + element + urlPath;
 						}
 						else{
 							urlPath = element + urlPath;
 						}
-						
 					}
 				}
 				
