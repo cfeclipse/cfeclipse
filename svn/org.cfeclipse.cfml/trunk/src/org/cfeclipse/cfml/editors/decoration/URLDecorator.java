@@ -41,22 +41,24 @@ public class URLDecorator extends LabelProvider implements
 		if (element instanceof IResource) {
 			IResource selResource = (IResource) element;
 			String urlProperty = null;
-			try {
-				urlProperty = selResource
-						.getPersistentProperty(new QualifiedName("",
-								CFMLPreferenceConstants.P_PROJECT_URL));
-
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-			
-			//TODO: move this out from the CFPluginImages
-			ImageDescriptor linkImage = LinkImageDescriptor.createDescriptor("obj16","decorator_link.gif");
-			
-			
-			if (urlProperty != null && urlProperty.length() > 0) {
-				if (linkImage != null) {
-					decoration.addOverlay(linkImage);
+			if(selResource.exists()){				
+				try {
+					urlProperty = selResource
+					.getPersistentProperty(new QualifiedName("",
+							CFMLPreferenceConstants.P_PROJECT_URL));
+					
+				} catch (CoreException e) {
+					e.printStackTrace();
+				}
+				
+				//TODO: move this out from the CFPluginImages
+				ImageDescriptor linkImage = LinkImageDescriptor.createDescriptor("obj16","decorator_link.gif");
+				
+				
+				if (urlProperty != null && urlProperty.length() > 0) {
+					if (linkImage != null) {
+						decoration.addOverlay(linkImage);
+					}
 				}
 			}
 
