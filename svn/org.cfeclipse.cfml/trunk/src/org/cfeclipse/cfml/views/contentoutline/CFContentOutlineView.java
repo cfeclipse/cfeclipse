@@ -45,16 +45,22 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
@@ -63,11 +69,11 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
  *
  * This is the default content outline view
  */
-public class CFContentOutlineView extends ContentOutlinePage implements IPartListener, IPropertyListener {
+public class CFContentOutlineView extends ContentOutlinePage implements IPartListener, IPropertyListener, ISelectionListener {
 	public static final String ID_CONTENTOUTLINE = "org.cfeclipse.cfml.views.contentoutline.cfcontentoutlineview";
 	
 	protected LabelProvider labelProvider;
-	protected Action jumpAction, expandAction, filterOnAction, openAction;
+	protected Action jumpAction, selectAction, linkWithEditorAction, expandAction, filterOnAction, openAction;
 	
 	protected static GenericOpenFileAction openFileAction;
 	protected static GotoFileAction gfa = new GotoFileAction(); 
@@ -77,6 +83,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	
 	private boolean menusmade = false;
 	private boolean treemade = false;
+	private boolean linkWithEditor = true;
 	
 	private static String filter = "";
 	
@@ -94,6 +101,9 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			saveExpandedElements();
 			createTree();
 			treemade = true;
+			// add this view as a selection listener to the workbench page
+			//getSite().getPage().addSelectionListener((ISelectionListener) this);
+			getSite().getPage().addPostSelectionListener((ISelectionListener) this);
 		}
 		
 		if(!menusmade)
@@ -151,11 +161,12 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		{
 			try 
 			{
-				scratch.addChild((CfmlTagItem)i.next());
+				scratch.addChild((DocItem)i.next());
 			}
 			catch (Exception e) 
 			{
-				System.err.println(e.getMessage());
+				System.err.println("Tree item set error ");
+				e.printStackTrace();
 			}
 		}
 		
@@ -221,13 +232,32 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	}
 	
 	/**
+	 * from editor selects corresponding tree item
+	 * if there is one
+	 * @return
+	 */
+	public DocItem getItemFromPosition(int startPos) {
+		DocItem rootItem = getRootInput();
+		CFNodeList nodes = rootItem.selectNodes("");
+		Iterator i = nodes.iterator();
+		while(i.hasNext())
+		{
+			DocItem item = (DocItem)i.next();			
+			if(item.getStartPosition() == startPos){
+				return item;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * gets the currently selected item in docitem form or <code>null</code>
 	 * if there is none
 	 * @return
 	 */
-	private DocItem getSelectedDocItem()
+	private Iterator getSelectedDocItems()
 	{
-		DocItem selecteditem = null;
+		Iterator selecteditem = null;
 		
 		//can't do much if nothing is selected
 		if(getTreeViewer().getSelection().isEmpty()) 
@@ -237,12 +267,66 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		else 
 		{
 			IStructuredSelection selection = (IStructuredSelection)getTreeViewer().getSelection();
-			selecteditem = (DocItem)selection.getFirstElement();
+			selecteditem = selection.iterator();
 		}
 		
 		return selecteditem;
 	}
+
 	
+	/**
+	 * gets the currently selected item in docitem form or <code>null</code>
+	 * if there is none
+	 * @return
+	 */
+	private DocItem getSelectedDocItem()
+	{
+		Iterator selecteditems = getSelectedDocItems();
+		
+		//can't do much if nothing is selected
+		if(selecteditems == null || !selecteditems.hasNext()) 
+		{
+			return null;
+		}		
+		return (DocItem)selecteditems.next();
+	}
+	
+	/**
+	 * sets the currently selected item in docitem form or <code>null</code>
+	 * if there is none
+	 * @return
+	 */
+	private void setSelectedDocItem(DocItem item)
+	{		
+		//can't do much if nothing is selected
+		if(item != null) 
+		{
+			getTreeViewer().setSelection(new StructuredSelection(item), true);
+		}		
+	}
+
+	
+	/**
+	 * Selects the item(s) within the source code view
+	 */
+	protected void selectItem() 
+	{
+		//get a handle to the current editor and assign it to our temp action
+		IEditorPart iep = getSite().getPage().getActiveEditor();
+		Iterator selecteditems = getSelectedDocItems();
+		
+		if(!selecteditems.hasNext()) return;
+		
+		ITextEditor editor = (ITextEditor)iep;
+		DocItem firstItem = ((DocItem)selecteditems.next());
+		int startPos = firstItem.getStartPosition();
+		int endPos = firstItem.getEndPosition();
+		while(selecteditems.hasNext()){
+			endPos = ((DocItem)selecteditems.next()).getEndPosition();
+		}
+		editor.selectAndReveal(startPos,endPos-startPos+1);
+	}
+
 	
 	/**
 	 * Gets the selected item parses it, and adds the defined stuff to the
@@ -257,7 +341,8 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		if(selecteditem == null) return;
 		
 		ITextEditor editor = (ITextEditor)iep;
-		editor.setHighlightRange(selecteditem.getStartPosition(),0,true);
+		// changed movecursor (last arg) to false, so caret doesn't jump around
+		editor.setHighlightRange(selecteditem.getStartPosition(),0,false);
 	}
 	
 	/**
@@ -328,6 +413,29 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		};
 		jumpAction.setToolTipText("Jump to selected tag in the editor");
 		
+		selectAction = new Action(
+				"Select",
+				CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW)
+			){
+				public void run() { 
+					selectItem();
+				}
+			};
+			selectAction.setToolTipText("Select tag in the editor");
+
+		linkWithEditorAction = new Action("Link with Editor", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW_AND_SELECT)) {
+			public void run() {
+				if(linkWithEditor) {
+					linkWithEditor = false;
+				} else {
+					linkWithEditor = true;					
+				}
+				this.setChecked(linkWithEditor);
+				menuMgr.update();
+			}
+		};
+		selectAction.setToolTipText("Link outline view with the editor");
+
 		filterOnAction = new Action(
 			"Filter On This",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
@@ -469,7 +577,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	private void hookDoubleClickAction() {
 		getTreeViewer().addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
-				jumpAction.run();
+				selectAction.run();
 			}
 		});
 	}
@@ -522,7 +630,33 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			cop.inputChanged(getTreeViewer(),old,getTreeViewer().getInput());
 		}
 	}
-	
+
+	public void selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent event) {
+		if(linkWithEditor) {
+			//if(event.getSelection() instanceof ITextSelection){							}
+			jumpAction.run();
+		}
+		saveExpandedElements();		
+	}
+
+	public void selectionChanged(IWorkbenchPart workbench, ISelection selection) {
+		// TODO Auto-generated method stub
+		if(selection != null && selection instanceof ITextSelection){
+			CFMLEditor curDoc = (CFMLEditor) workbench.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+			//if(curDoc instanceof CFMLEditor){
+				ITextSelection tselection = (ITextSelection)selection;
+				int startPos = tselection.getOffset();
+				ICFDocument cfd = (ICFDocument) curDoc.getDocumentProvider().getDocument(curDoc.getEditorInput());
+				CfmlTagItem cti = cfd.getTagAt(startPos, startPos, true);				
+				if (cti != null) {
+					if(linkWithEditor) {
+						setSelectedDocItem(getItemFromPosition(cti.getStartPosition()));
+					}							
+				}			
+			//}
+		}
+	}
+		
 	////////////////////////////////////////////////////////////////////////////
 	
 	protected void createMenus()
@@ -533,6 +667,9 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		{
 			rootMenuManager.add(filters[i]);
 		}
+		rootMenuManager.add(new Separator());
+		linkWithEditorAction.setChecked(true);
+		rootMenuManager.add(linkWithEditorAction);
 	}
 	
 	private void createContextMenu()
@@ -573,7 +710,9 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	protected void createToolbar()
 	{
 		IToolBarManager toolbarManager = super.getSite().getActionBars().getToolBarManager();
+		toolbarManager.add(linkWithEditorAction);
 		toolbarManager.add(jumpAction);
 		toolbarManager.add(filterOnAction);
 	}
+
 }
