@@ -4,7 +4,7 @@
 		<!-- publish.properties must live in this directory, and it must contain
 		ftp.username, ftp.password, and ftp.site properties -->
 		<property file="publish.properties" />
-		
+
 	</target>
 
 	<target name="SendToBeta" depends="init">
@@ -19,22 +19,22 @@
 		<attribute name="remotedir" />
 		<sequential>
 			<tstamp>
-				<format pattern="MM/dd/yyyy hh:mm aa" offset="-5" unit="day" property="filefilter" />
+				<format pattern="MM/dd/yyyy hh:mm aa" offset="-1" unit="day" property="filefilter" />
 			</tstamp>
 			<echo>${filefilter}</echo>
 			<!-- I have no idea why i needed to do this. when i had all of them 
 			in a single scp call, it kept hanging.-->
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}" trust="true" verbose="true">
-				<fileset dir="." includes="site.xml">
-					<date datetime="${filefilter}" when="after" />
-				</fileset>
+				<fileset dir="." includes="site.xml,index.html" />
 			</scp>
+			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/web" trust="true" verbose="true">
+				<fileset dir="web" />
+			</scp>			
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/plugins/" trust="true" verbose="true">
 				<fileset dir="plugins" includes="*.jar">
 					<date datetime="${filefilter}" when="after" />
 				</fileset>
 			</scp>
-
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/features" trust="true" verbose="true">
 				<fileset dir="features" includes="*.jar">
 					<date datetime="${filefilter}" when="after" />
