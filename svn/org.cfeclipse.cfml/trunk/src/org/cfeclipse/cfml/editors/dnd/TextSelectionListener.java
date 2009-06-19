@@ -185,7 +185,7 @@ public class TextSelectionListener implements MouseListener,
 			this.selectionTextStart = sel.getOffset();
 			this.selectionText = sel.getText().trim();
 			// this prevents it from firing while selecting text using the keyboard
-			if (event.getSelectionProvider() instanceof IPostSelectionProvider && this.selectionText.length() > 0) {
+			if (event.getSelectionProvider() instanceof IPostSelectionProvider && this.selectionText.length() > 1) {
 				try {
 					markOccurrences(this.selectionText);
 				} catch (BadLocationException e) {
@@ -355,7 +355,7 @@ public class TextSelectionListener implements MouseListener,
 		int index = 0;
 		int occurrenceCount = 0;
 
-		if (this.fViewer != null && findString.length() > 0) {
+		if (this.fViewer != null && findString.length() > 1) {
 
 			ISelection initialSelection = this.fViewer.getSelection();
 
