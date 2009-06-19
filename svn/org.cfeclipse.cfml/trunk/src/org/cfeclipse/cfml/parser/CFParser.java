@@ -124,30 +124,18 @@ public class CFParser {
 	static protected final String REG_TAG = "<(\\w*)(.*)/{0,1}>";
 	/**
 	 * <code>REG_ATTRIBUTES</code> - regular expression for getting the attributes out of a tag match.
-	 * \s*(\w*)="(\w*)"
+	 * \s*(\w*)\s*=\s*(\w*\s?&?\s?"[^"]+[Az \w"&.=\)]+)
 	 */
-	//static protected final String REG_ATTRIBUTES = "\\s*(\\w*)\\s*=\\s*('[^']*'|\"[^\"]*\")"; 
-	//Reg Ex provided by : David Hammond and Rob Wilkerson kills issue #15  \s*(\w+)\s*=\s*('[^']*'|"[^"]*")
 
 	/*
+	 * Various "almost" regexes, might have to use something dynamical-er :-/
 	 *  \s*(\w*)\s*=\s*(\w*\s?&\s?"[^"]+)?
 	 *  \s*(\w*)\s*=\s*(\w+?\s?[\&\+\s*]\s)?
 	 *  \s*(\w*)\s*=\s*(\w*\s?&\s?"[^"]+["\s?&?\s?\w?]+) 
-	 *  
 	 *  \s*(\w*)\s*=\s*(\w*\s?&\s?"[^"]+[Az \w"&.=\)]+)
-
 	 *  \s*(\w*)\s*=\s*(\w*\s?&?\s?"[^"]+[Az \w"&.=\)]+)
 	 *  winner?
-	 *  
-	 *   
-  <cfset whereClause = whereClause & " AND region.dbid IS NULL">
-  <cfset whereClause = whereClause & " AND (region.dbid = " & regionDBID & " OR country.dbid = " & countryDBID & ")">
-
-	 *  
-	 *  
-	 *  
 	 */
-	//static protected final String REG_ATTRIBUTES = "\\s*(\\w+)\\s*=\\s*('[^']*'|\"[^\"]*\")";
 	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)\\s*=\\s*(\\w*\\s?&?\\s?\"[^\"]+[Az \\w\"&.=\\)]+)";
 	
 	static protected final int USRMSG_INFO 		= 0x00;
