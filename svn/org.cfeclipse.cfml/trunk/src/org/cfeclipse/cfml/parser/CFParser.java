@@ -48,13 +48,16 @@ import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagInvokeArgument;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagProperty;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagQueryParam;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagSet;
+import org.cfeclipse.cfml.parser.cfscript.Node;
 import org.cfeclipse.cfml.parser.cfscript.ParseException;
 import org.cfeclipse.cfml.parser.cfscript.SPLParser;
 import org.cfeclipse.cfml.parser.cfscript.SimpleNode;
+import org.cfeclipse.cfml.parser.cfscript.Token;
 import org.cfeclipse.cfml.parser.docitems.AttributeItem;
 import org.cfeclipse.cfml.parser.docitems.CfmlCustomTag;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.cfeclipse.cfml.parser.docitems.ScriptItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.eclipse.core.resources.IMarker;
@@ -124,8 +127,28 @@ public class CFParser {
 	 * \s*(\w*)="(\w*)"
 	 */
 	//static protected final String REG_ATTRIBUTES = "\\s*(\\w*)\\s*=\\s*('[^']*'|\"[^\"]*\")"; 
-	//Reg Ex provided by : David Hammond and Rob Wilkerson kills issue #15
-	static protected final String REG_ATTRIBUTES = "\\s*(\\w+)\\s*=\\s*('[^']*'|\"[^\"]*\")";
+	//Reg Ex provided by : David Hammond and Rob Wilkerson kills issue #15  \s*(\w+)\s*=\s*('[^']*'|"[^"]*")
+
+	/*
+	 *  \s*(\w*)\s*=\s*(\w*\s?&\s?"[^"]+)?
+	 *  \s*(\w*)\s*=\s*(\w+?\s?[\&\+\s*]\s)?
+	 *  \s*(\w*)\s*=\s*(\w*\s?&\s?"[^"]+["\s?&?\s?\w?]+) 
+	 *  
+	 *  \s*(\w*)\s*=\s*(\w*\s?&\s?"[^"]+[Az \w"&.=\)]+)
+
+	 *  \s*(\w*)\s*=\s*(\w*\s?&?\s?"[^"]+[Az \w"&.=\)]+)
+	 *  winner?
+	 *  
+	 *   
+  <cfset whereClause = whereClause & " AND region.dbid IS NULL">
+  <cfset whereClause = whereClause & " AND (region.dbid = " & regionDBID & " OR country.dbid = " & countryDBID & ")">
+
+	 *  
+	 *  
+	 *  
+	 */
+	//static protected final String REG_ATTRIBUTES = "\\s*(\\w+)\\s*=\\s*('[^']*'|\"[^\"]*\")";
+	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)\\s*=\\s*(\\w*\\s?&?\\s?\"[^\"]+[Az \\w\"&.=\\)]+)";
 	
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
@@ -300,7 +323,11 @@ public class CFParser {
 				if(this.reportErrors && this.res != null) {
 					IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
 					
-					
+/*						parserState.addMessage(new ParseError(
+								getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
+								message
+							));
+*/					
 					try {					
 						//
 						// Not sure what the start & end positions are good for!
@@ -540,13 +567,71 @@ public class CFParser {
 	static {
 		parser = new SPLParser(new StringReader(""));
 	}
-	
+
+	/**
+	 * <code>addScriptItems</code> - handles a cfscript document items (at the moment it does nothing)
+	 */
+
+	private void addScriptItems(CFNodeList childs, DocItem parent, ParseItemMatch match, Stack matchStack) {
+		for(int childIndex = 0; childIndex < childs.size(); childIndex++){
+			SimpleNode child = (SimpleNode) childs.get(childIndex);
+			addDocItemToTree(match, matchStack, child);
+//			if(child.aNodeToken!=null) {
+//				DocItem newComment = new ScriptItem(
+//						child.aNodeToken.beginLine,
+//						child.aNodeToken.beginColumn,
+//						child.aNodeToken.endColumn,
+//						child.aNodeToken.image
+//				);
+//				newComment.setItemData(child.aNodeToken.image);
+//				newComment.setParent(parent);
+//				addDocItemToTree(match, matchStack, newComment);
+				
+//			}
+			if(child.children != null) {				
+				//addScriptItems(child.getChildNodes(), child, match, matchStack);		
+			}		
+		}
+	}
+
+	/**
+	 * <code>pruneEmptyNodes</code> - deletes cfscript AST nodes without visual representation
+	 */
+
+	private void pruneEmptyNodes(DocItem parent, ParseItemMatch match, Stack matchStack) {
+		Node[] childs = ((SimpleNode)parent).children;
+		int curNode = 0;
+		boolean somethingChanged = false;
+		if(childs !=null) {			
+			for(Node node:childs) {
+				if(node.jjtGetNumChildren() != 0) {
+					pruneEmptyNodes((SimpleNode)node, match, matchStack);		
+				}		
+				String curNodeType = node.getClass().getSimpleName(); 
+				if(curNodeType.endsWith("ASTBlock") || curNodeType.endsWith("ASTParameterList") || curNodeType.endsWith("ASTStrEQNode")
+						|| curNodeType.endsWith("ASTId") || curNodeType.endsWith("ASTAssignment") || curNodeType.endsWith("Literal")){
+					if(((SimpleNode)node).children != null){						
+						for(Node child:((SimpleNode)node).children) {
+							((SimpleNode)child).setParent(((SimpleNode)node).getParent());
+							node.jjtGetParent().jjtAddChild(child, node.jjtGetParent().jjtGetNumChildren());
+							System.out.println("");
+						}
+					}
+					((SimpleNode)node.jjtGetParent()).jjtRemoveChild(curNode);
+					pruneEmptyNodes(parent, match, matchStack);
+				}
+				curNode++;
+			}
+
+		}
+	}	
 //	private SPLParser parser = new SPLParser(new StringReader(""));
 	/**
 	 * <code>handleCFScriptBlock</code> - handles a CFScript'd block (at the moment it does nothing)
 	 * @param match - the match
 	 * @param matchStack - the stack of tag items. This will have all of the new Script items added to it.
 	 */
+	
 	protected void handleCFScriptBlock(ParseItemMatch match, Stack matchStack)
 	{
 		//
@@ -578,12 +663,25 @@ public class CFParser {
 		try {
 			SPLParser.CompilationUnit();
 		    //this.parser.CompilationUnit();
-			rootElement = (SimpleNode)parser.getDocumentRoot();
-			
+			rootElement = ((SimpleNode)parser.getDocumentRoot());
+			pruneEmptyNodes(rootElement, match, matchStack);
+			//
 			if(rootElement != null) {
-				addDocItemToTree(match, matchStack, rootElement);
+				CFNodeList childs = rootElement.getChildNodes();
+				for(int childIndex = 0; childIndex < childs.size(); childIndex++){
+					SimpleNode child = (SimpleNode) childs.get(childIndex);
+					if(child.scriptItem != null && 1 != 1) {
+						addDocItemToTree(match, matchStack, child.scriptItem);				
+					} else {
+						addDocItemToTree(match, matchStack, child);	
+					}
+				}
+
+				//addScriptItems(rootElement.getChildNodes(), rootElement, match, matchStack);
+				//rootElement.setParent(rootElement.getParent().getParent());				
+				//addDocItemToTree(match, matchStack, rootElement);
 			}
-			
+						
 		}  catch(ParseException ex) {
 			//
 			// A ParseException has a nice error message for us... unfortunately the message returned
@@ -1461,17 +1559,19 @@ public class CFParser {
 		
 		startNode.IsSane();
 		
-		messages.addAll(startNode.getParseState().getMessages());
+		if(startNode.getParseState() != null) {			
+			messages.addAll(startNode.getParseState().getMessages());
+		}
 		
 		if(startNode.hasChildren())
 		{
 			CFNodeList children = startNode.getChildNodes();
 			Iterator nodeIter = children.iterator();
-			//System.out.println("Node " + startNode.toString() + " has " + children.size() + " children");
+			//System.out.println("Node ("+startNode.getClass().getSimpleName()+ ") " + startNode.toString() + " has " + children.size() + " children");
 			while(nodeIter.hasNext())
 			{
 				DocItem item = (DocItem)nodeIter.next();
-				
+				//item.setParent(startNode);
 				messages.addAll(finalDocTreeTraversal(item));
 			}
 		}
@@ -1518,6 +1618,7 @@ public class CFParser {
 		} catch(Exception excep) 
 		{
 			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
+			excep.printStackTrace();
 		}
 		
 		

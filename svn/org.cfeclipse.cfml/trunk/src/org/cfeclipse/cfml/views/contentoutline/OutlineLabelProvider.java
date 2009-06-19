@@ -42,12 +42,16 @@ import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.parser.CFNodeList;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlComment;
+import org.cfeclipse.cfml.parser.cfscript.ASTFunctionCallNode;
 import org.cfeclipse.cfml.parser.cfscript.ASTFunctionDeclaration;
 import org.cfeclipse.cfml.parser.cfscript.ASTId;
+import org.cfeclipse.cfml.parser.cfscript.ASTIfStatement;
 import org.cfeclipse.cfml.parser.cfscript.ASTParameterList;
+import org.cfeclipse.cfml.parser.cfscript.ASTStatementExpression;
 import org.cfeclipse.cfml.parser.cfscript.SimpleNode;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.cfeclipse.cfml.parser.docitems.ScriptItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -154,6 +158,15 @@ public class OutlineLabelProvider extends LabelProvider {
 		    {
 		        return CFPluginImages.get(CFPluginImages.ICON_FUNC);
 		    }
+			return CFPluginImages.get(CFPluginImages.ICON_TOOLS);
+		}
+		else if(element instanceof ScriptItem)
+		{
+		    if(((ScriptItem) element).getName().endsWith("ASTFunctionDeclaration"))
+		    {
+		        return CFPluginImages.get(CFPluginImages.ICON_FUNC);
+		    }
+	        return CFPluginImages.get(CFPluginImages.ICON_TOOLS);
 		}
 		
 		return CFPluginImages.get(CFPluginImages.ICON_ALERT);
@@ -230,15 +243,37 @@ public class OutlineLabelProvider extends LabelProvider {
 			
 			return commentData;
 		}
+		else if(element instanceof ScriptItem)
+		{
+			String commentData = ((ScriptItem)element).getItemData();
+			if(((ScriptItem) element).getName().endsWith("ASTFunctionDeclaration")){
+		        //return getCFScriptFunctionName(element);				
+			}
+			
+			return commentData;
+		}
 		else if(element instanceof SimpleNode)
 		{
 		    if(element instanceof ASTFunctionDeclaration)
 		    {
-		        return getCFScriptFunctionName(element);
+		        return ((SimpleNode)element).getItemData();
 		    }
+		    else if(element instanceof ASTFunctionCallNode)
+		    {
+		        return ((SimpleNode)element).getItemData();
+		    }
+		    else if(element instanceof ASTIfStatement)
+		    {
+		        return ((SimpleNode)element).getItemData();
+		    }
+		    else if(element instanceof ASTStatementExpression)
+		    {
+		        return ((SimpleNode)element).getItemData();
+		    }		    
+			return element.getClass().getSimpleName() + ":" + ((SimpleNode)element).getItemData();
 		}
 		
-		return "unknown (add to user.xml if custom)";
+		return element.getClass().getSimpleName() + ": unknown (add to user.xml if custom)";
 	}
 	
 	/**
@@ -270,12 +305,13 @@ public class OutlineLabelProvider extends LabelProvider {
                     {
                         nameBuffer.append(", ");
                     }
-                    nameBuffer.append(((ASTId)currentParam).getName());
+                    nameBuffer.append(((ASTId)currentParam).toString());
                     
                 }
             }
         }
         nameBuffer.insert(0, function.getItemData() + "(");
+        nameBuffer.append(")");
 
         return nameBuffer.toString();
     }

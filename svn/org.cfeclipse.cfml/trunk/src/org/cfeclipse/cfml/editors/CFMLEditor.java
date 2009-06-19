@@ -48,6 +48,7 @@ import org.cfeclipse.cfml.editors.actions.TextEditorWordNavigationAction;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.cfeclipse.cfml.editors.decoration.DecorationSupport;
 import org.cfeclipse.cfml.editors.dnd.CFEDragDropListener;
+import org.cfeclipse.cfml.editors.dnd.MarkOccurrencesListener;
 import org.cfeclipse.cfml.editors.dnd.SelectionCursorListener;
 import org.cfeclipse.cfml.editors.pairs.CFMLPairMatcher;
 import org.cfeclipse.cfml.editors.pairs.Pair;
@@ -59,6 +60,7 @@ import org.cfeclipse.cfml.editors.ui.CFMLEditorToolbar;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
+import org.cfeclipse.cfml.preferences.MarkOccurrencesPreferenceConstants;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.core.resources.IFile;
@@ -211,6 +213,8 @@ public class CFMLEditor extends TextEditor implements
 
 	private DragSource dragsource;
 	private Object columnSupport;
+	private MarkOccurrencesListener markOccurrencesListener;
+	private CFContentOutlineView cfcontentOutlineView;
 
 	
 
@@ -346,6 +350,9 @@ public class CFMLEditor extends TextEditor implements
 				.addSummarizableAnnotationType("org.cfeclipse.cfml.parserWarningAnnotation");
 		this.fProjectionSupport
 				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning");
+		this.fProjectionSupport
+				.addSummarizableAnnotationType("org.cfeclipse.cfml.occurrenceAnnotation");
+		
 		this.fProjectionSupport.setHoverControlCreator(new IInformationControlCreator() {
 			public IInformationControl createInformationControl(Shell shell) {
 
@@ -389,7 +396,6 @@ public class CFMLEditor extends TextEditor implements
 		// line tracking.
 		//projectionViewer.getTextWidget().setWordWrap(true);
 		
-		createDragAndDrop(projectionViewer);
 
 		try {
 			if (isEditorInputReadOnly()) {				
@@ -443,6 +449,7 @@ public class CFMLEditor extends TextEditor implements
 		}
 		
 		setStatusLine();
+		setupSelectionListeners(projectionViewer);
 		
 		
 	}
@@ -557,8 +564,12 @@ public class CFMLEditor extends TextEditor implements
 	}
 
 	
+	/**
+	 * sets up seleciton listeners, like the markOccurrence listener, and DND (eventually)
+	 *
+	 */
 
-	private void createDragAndDrop(ProjectionViewer projectionViewer) {
+	private void setupSelectionListeners(ProjectionViewer projectionViewer) {
 
 		// this is implemented by default in Eclipse 3.3, so we just exit out
 		// we do this by checking for JavaFileEditorInput, which 3.3 removed
@@ -614,6 +625,18 @@ public class CFMLEditor extends TextEditor implements
 			IDragAndDropService dtSvc = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
 			dtSvc.addMergedDropTarget(tw, ops, transfers, editorListener);
 			*/
+
+/*
+			SelectionCursorListener cursorListener = new SelectionCursorListener(this,
+					projectionViewer);
+			projectionViewer.getTextWidget().addMouseMoveListener(cursorListener);
+			//projectionViewer.getTextWidget().addMouseTrackListener(cursorListener);
+			projectionViewer.addSelectionChangedListener(cursorListener);
+			projectionViewer.getTextWidget().addMouseListener(cursorListener);
+			projectionViewer.getTextWidget().addKeyListener(cursorListener);
+*/
+			setMarkOccurrencesListener();
+			
 			return;
 		}
 		
@@ -654,6 +677,35 @@ public class CFMLEditor extends TextEditor implements
 
 	}
 
+		protected void setMarkOccurrencesListener() {
+				if (getPreferenceStore().getBoolean(MarkOccurrencesPreferenceConstants.P_MARK_OCCURRENCES)) {
+					String[] wordChars = {
+							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_PART_OF_WORD_CHARS),
+							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_BREAK_WORD_CHARS),
+							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_PART_OF_WORD_CHARS_ALT),
+							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_BREAK_WORD_CHARS_ALT),
+							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_PART_OF_WORD_CHARS_SHIFT),
+							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_BREAK_WORD_CHARS_SHIFT)
+					};
+					if (markOccurrencesListener != null) {
+						markOccurrencesListener.setWordSelectionChars(wordChars);
+					} else {
+						ProjectionViewer projectionViewer = (ProjectionViewer)getSourceViewer();
+						markOccurrencesListener = new MarkOccurrencesListener(this, projectionViewer,wordChars);
+						//projectionViewer.addSelectionChangedListener(markOccurrencesListener);
+						projectionViewer.addPostSelectionChangedListener(markOccurrencesListener);
+						projectionViewer.getTextWidget().addMouseListener(markOccurrencesListener);				
+					}
+					/* //This will maybe someday come in handy for switching occurrence marking on and on in active editors?
+					 * IHandlerService handlerServ =
+					 * (IHandlerService)getSite().getWorkbenchWindow().getService(IHandlerService.class);
+					 * toggleOccurrencesHandler = new ToggleMarkOccurrencesHandler();
+					 * handlerServ.activateHandler("org.eclipse.jdt.ui.edit.text.java.toggleMarkOccurrences",
+					 * toggleOccurrencesHandler, expr);
+					 */
+				}
+			}	
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -944,7 +996,10 @@ public class CFMLEditor extends TextEditor implements
 		if (required.getName().trim().equals(
 				"org.eclipse.ui.views.contentoutline.IContentOutlinePage")) {
 			try {
-				return new CFContentOutlineView();
+				if(cfcontentOutlineView == null) {	
+					cfcontentOutlineView = new CFContentOutlineView();
+				}
+				return cfcontentOutlineView;
 			} catch (Exception e) {
 				e.printStackTrace(System.err);
 			}
@@ -1102,6 +1157,7 @@ public class CFMLEditor extends TextEditor implements
 		handlePreferenceStoreChanged(event);
 		System.out.println(event);
 		setStatusLine();
+		setMarkOccurrencesListener();
 	}
 
 	protected void handlePreferenceStoreChanged(PropertyChangeEvent event) {
@@ -1154,14 +1210,15 @@ public class CFMLEditor extends TextEditor implements
 				EditorPreferenceConstants.P_BRACKET_MATCHING_COLOR);
 
 		super.configureSourceViewerDecorationSupport(support);
-		Iterator e = getAnnotationPreferences().getAnnotationPreferences()
-				.iterator();
-		while (e.hasNext()) {
-			AnnotationPreference pref = (AnnotationPreference) e.next();
-			support.setAnnotationPainterPreferenceKeys(pref.getAnnotationType(), pref
-					.getColorPreferenceKey(), pref.getTextPreferenceKey(), pref
-					.getOverviewRulerPreferenceKey(), 4);
-		}
+// switched to using the preference lookup within DecorationSupport		
+//		Iterator e = getAnnotationPreferences().getAnnotationPreferenceFragments()
+//				.iterator();
+//		while (e.hasNext()) {
+//			AnnotationPreference pref = (AnnotationPreference) e.next();
+//			support.setAnnotationPainterPreferenceKeys(pref.getAnnotationType(), pref
+//					.getColorPreferenceKey(), pref.getTextPreferenceKey(), pref
+//					.getOverviewRulerPreferenceKey(), 4);
+//		}
 		support.install(this.getPreferenceStore());
 		
 	}

@@ -1225,6 +1225,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
       jjtn000.name = t.image;
+      jjtn000.aNodeToken = t;
     } finally {
       if (jjtc000) {
         jjtree.closeNodeScope(jjtn000, true);
@@ -1239,6 +1240,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
   jjtree.openNodeScope(jjtn000);Token t;
     try {
       t = jj_consume_token(STRING_LITERAL);
+      jjtn000.aNodeToken = t;
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
         jjtn000.val = t.image;
@@ -1257,6 +1259,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
   jjtree.openNodeScope(jjtn000);Token t;
     try {
       t = jj_consume_token(INTEGER_LITERAL);
+      jjtn000.aNodeToken = t;
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
         jjtn000.val = t.image;
@@ -1275,6 +1278,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
   jjtree.openNodeScope(jjtn000);Token t;
     try {
       t = jj_consume_token(FLOATING_POINT_LITERAL);
+      jjtn000.aNodeToken = t;
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
         jjtn000.val = t.image;
@@ -1562,6 +1566,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
     try {
       t = jj_consume_token(IDENTIFIER);
       jj_consume_token(34);
+      jjtn000.aNodeToken = t;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case INTEGER_LITERAL:
       case STRING_LITERAL:
@@ -1582,7 +1587,6 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
         jjtn000.name = t.image;
-        jjtn000.aNodeToken = t;
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -1611,6 +1615,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
   jjtree.openNodeScope(jjtn000);
     try {
       Expression();
+      jjtn000.aNodeToken = getToken(0);
       label_14:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1649,9 +1654,10 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
  /*@bgen(jjtree) Block */
   ASTBlock jjtn000 = new ASTBlock(JJTBLOCK);
   boolean jjtc000 = true;
+  jjtn000.aNodeToken = getToken(0);
   jjtree.openNodeScope(jjtn000);
     try {
-      jj_consume_token(53);
+    	jj_consume_token(53);
       label_15:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1708,6 +1714,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
   ASTStatementExpression jjtn000 = new ASTStatementExpression(JJTSTATEMENTEXPRESSION);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
+  jjtn000.aNodeToken = getToken(0);
     try {
       Assignment();
       jj_consume_token(SEMICOLON);
@@ -1738,7 +1745,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
-      jj_consume_token(55);
+    	jjtn000.aNodeToken = jj_consume_token(55);
       jj_consume_token(34);
       Expression();
       jj_consume_token(35);

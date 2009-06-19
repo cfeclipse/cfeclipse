@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.cfeclipse.cfml.parser.CFNodeList;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.cfeclipse.cfml.parser.docitems.ScriptItem;
 
 
 /*
@@ -31,14 +32,20 @@ import org.cfeclipse.cfml.parser.docitems.DocItem;
 
 public class SimpleNode extends DocItem implements Node {
 
-	protected Token aNodeToken = null;
+	public Token aNodeToken = null;
 	
   protected Node parent;
   public Node[] children;
   protected int id;
 
+public ScriptItem scriptItem;
+
   public SimpleNode(int i) {
     id = i;
+  }
+  
+  public int getId() {
+	  return id;
   }
 
   public void jjtOpen() {
@@ -46,11 +53,69 @@ public class SimpleNode extends DocItem implements Node {
   }
 
   public void jjtClose() {
+	this.itemName = this.getClass().getSimpleName();
+	if(this.itemName.endsWith("ASTFunctionDeclaration")) {
+		
+	}
   	if(this.aNodeToken != null) {
   		this.itemData = this.aNodeToken.image;
+  		this.setItemData(this.aNodeToken.image);
   		this.startPosition = this.aNodeToken.beginColumn;
   		this.endPosition = this.aNodeToken.endColumn;
   		this.lineNumber = this.aNodeToken.beginLine;
+  		scriptItem = new ScriptItem(this.lineNumber,this.startPosition,this.endPosition,this.itemName);
+  		scriptItem.setItemData(this.aNodeToken.image);
+  		if(this.itemName.endsWith("ASTIfStatement")) {
+  	  		String ifStatement = this.aNodeToken.image;
+			Token nextPartOfStatement = this.aNodeToken.next;
+			while(nextPartOfStatement.next != null && !nextPartOfStatement.image.equalsIgnoreCase(")")) {
+				ifStatement = ifStatement.concat(nextPartOfStatement.image + " ");
+				nextPartOfStatement = nextPartOfStatement.next;
+			}
+    		this.setItemData(ifStatement + ")");  			
+  		}
+  		if(this.itemName.endsWith("ASTFunctionCallNode")) {
+  	  		String ifStatement = this.aNodeToken.image;
+			Token nextPartOfStatement = this.aNodeToken.next;
+			while(nextPartOfStatement.next != null && !nextPartOfStatement.image.equalsIgnoreCase(")")) {
+				ifStatement = ifStatement.concat(nextPartOfStatement.image + " ");
+				nextPartOfStatement = nextPartOfStatement.next;
+			}
+    		this.setItemData(ifStatement + ")");  			
+  		}
+  		else if(this.itemName.endsWith("ASTStatementExpression")) {
+  	  		String statementExp = "";
+			Token nextPartOfStatement = this.aNodeToken.next;
+			for(int x =0; x <= 2; x++) {
+				statementExp = statementExp.concat(nextPartOfStatement.image + " ");
+				nextPartOfStatement = nextPartOfStatement.next;
+			}
+    		this.setItemData(statementExp);  			
+  		}
+  		else if(this.itemName.endsWith("ASTFunctionDeclaration")) {
+  	  		String functionString = this.aNodeToken.image;
+  	  		if(this.getFirstChild().getClass().getSimpleName().endsWith("ASTParameterList")) {
+				Token nextPartOfStatement = this.aNodeToken.next;
+				while(nextPartOfStatement.next != null && !nextPartOfStatement.image.equalsIgnoreCase(")")) {
+					functionString = functionString.concat(nextPartOfStatement.image + " ");
+					nextPartOfStatement = nextPartOfStatement.next;
+				}
+	    		functionString = functionString.concat(")");
+	    		this.setItemData(functionString);
+  	  		}
+  	  		if(this.getLastChild().getClass().getSimpleName().endsWith("ASTBlock")) {
+  	  			Node[] paramArray = ((SimpleNode)this.getLastChild()).children;
+  	  			ScriptItem funcParamsItem = new ScriptItem(this.lineNumber,this.startPosition,this.endPosition,"param");
+  	  			scriptItem.addChild(funcParamsItem);
+  	    		for(Node node:paramArray) {
+  	    			functionString = functionString.concat(((SimpleNode)node).aNodeToken.image + ", ");
+  	    		}
+  	  		}
+  		}
+  		else if(this.itemName.endsWith("ASTBlock")) {
+  			
+  		}
+
   	}
   }
   
@@ -67,6 +132,27 @@ public class SimpleNode extends DocItem implements Node {
     }
     children[i] = n;
   }
+
+	public void jjtRemoveChild(int elementToDelete) {
+		int i = 0;
+		int j = 0;
+		int newLen = children.length - 1;
+		if (newLen < 0) {
+			children = null;
+		} else {
+			Node b[] = new Node[newLen];
+			while (i < children.length && j < b.length) {
+				if (i == elementToDelete) {
+					i++;
+				} else {
+					b[j] = children[i];
+					i++;
+					j++;
+				}
+			}
+			children = b;
+		}
+	}
 
   public Node jjtGetChild(int i) {
     return children[i];
@@ -146,9 +232,11 @@ public class SimpleNode extends DocItem implements Node {
   }
     public CFNodeList getChildNodes() {
         CFNodeList list = new CFNodeList();
-        for(int childIndex = 0; childIndex < this.children.length; childIndex++)
-        {
-            list.add(this.children[childIndex]);
+        if(children != null){        	
+	    	for(int childIndex = 0; childIndex < this.children.length; childIndex++)
+	    	{
+	    		list.add(this.children[childIndex]);
+	    	}
         }
         
         return list;
@@ -164,5 +252,10 @@ public class SimpleNode extends DocItem implements Node {
     {
         return "CFScript: " + this.getName();
     }
+	public boolean validChildAddition(DocItem parentItem)
+	{
+		return true;
+	}
+
 }
 
