@@ -48,7 +48,7 @@ import org.cfeclipse.cfml.editors.actions.TextEditorWordNavigationAction;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.cfeclipse.cfml.editors.decoration.DecorationSupport;
 import org.cfeclipse.cfml.editors.dnd.CFEDragDropListener;
-import org.cfeclipse.cfml.editors.dnd.MarkOccurrencesListener;
+import org.cfeclipse.cfml.editors.dnd.TextSelectionListener;
 import org.cfeclipse.cfml.editors.dnd.SelectionCursorListener;
 import org.cfeclipse.cfml.editors.pairs.CFMLPairMatcher;
 import org.cfeclipse.cfml.editors.pairs.Pair;
@@ -60,7 +60,7 @@ import org.cfeclipse.cfml.editors.ui.CFMLEditorToolbar;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
-import org.cfeclipse.cfml.preferences.MarkOccurrencesPreferenceConstants;
+import org.cfeclipse.cfml.preferences.TextSelectionPreferenceConstants;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.views.contentoutline.CFContentOutlineView;
 import org.eclipse.core.resources.IFile;
@@ -213,7 +213,7 @@ public class CFMLEditor extends TextEditor implements
 
 	private DragSource dragsource;
 	private Object columnSupport;
-	private MarkOccurrencesListener markOccurrencesListener;
+	private TextSelectionListener TextSelectionListener;
 	private CFContentOutlineView cfcontentOutlineView;
 
 	
@@ -565,7 +565,7 @@ public class CFMLEditor extends TextEditor implements
 
 	
 	/**
-	 * sets up seleciton listeners, like the markOccurrence listener, and DND (eventually)
+	 * sets up seleciton listeners, like the TextSelection listener, and DND (eventually)
 	 *
 	 */
 
@@ -635,7 +635,7 @@ public class CFMLEditor extends TextEditor implements
 			projectionViewer.getTextWidget().addMouseListener(cursorListener);
 			projectionViewer.getTextWidget().addKeyListener(cursorListener);
 */
-			setMarkOccurrencesListener();
+			setTextSelectionListener();
 			
 			return;
 		}
@@ -677,30 +677,30 @@ public class CFMLEditor extends TextEditor implements
 
 	}
 
-		protected void setMarkOccurrencesListener() {
-				if (getPreferenceStore().getBoolean(MarkOccurrencesPreferenceConstants.P_MARK_OCCURRENCES)) {
+		protected void setTextSelectionListener() {
+				if (getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES)) {
 					String[] wordChars = {
-							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_PART_OF_WORD_CHARS),
-							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_BREAK_WORD_CHARS),
-							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_PART_OF_WORD_CHARS_ALT),
-							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_BREAK_WORD_CHARS_ALT),
-							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_PART_OF_WORD_CHARS_SHIFT),
-							getPreferenceStore().getString(MarkOccurrencesPreferenceConstants.P_BREAK_WORD_CHARS_SHIFT)
+							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS),
+							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS),
+							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_ALT),
+							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_ALT),
+							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_SHIFT),
+							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_SHIFT)
 					};
-					if (markOccurrencesListener != null) {
-						markOccurrencesListener.setWordSelectionChars(wordChars);
+					if (TextSelectionListener != null) {
+						TextSelectionListener.setWordSelectionChars(wordChars);
 					} else {
 						ProjectionViewer projectionViewer = (ProjectionViewer)getSourceViewer();
-						markOccurrencesListener = new MarkOccurrencesListener(this, projectionViewer,wordChars);
-						//projectionViewer.addSelectionChangedListener(markOccurrencesListener);
-						projectionViewer.addPostSelectionChangedListener(markOccurrencesListener);
-						projectionViewer.getTextWidget().addMouseListener(markOccurrencesListener);				
+						TextSelectionListener = new TextSelectionListener(this, projectionViewer,wordChars);
+						//projectionViewer.addSelectionChangedListener(TextSelectionListener);
+						projectionViewer.addPostSelectionChangedListener(TextSelectionListener);
+						projectionViewer.getTextWidget().addMouseListener(TextSelectionListener);				
 					}
 					/* //This will maybe someday come in handy for switching occurrence marking on and on in active editors?
 					 * IHandlerService handlerServ =
 					 * (IHandlerService)getSite().getWorkbenchWindow().getService(IHandlerService.class);
-					 * toggleOccurrencesHandler = new ToggleMarkOccurrencesHandler();
-					 * handlerServ.activateHandler("org.eclipse.jdt.ui.edit.text.java.toggleMarkOccurrences",
+					 * toggleOccurrencesHandler = new ToggleTextSelectionsHandler();
+					 * handlerServ.activateHandler("org.eclipse.jdt.ui.edit.text.java.toggleTextSelections",
 					 * toggleOccurrencesHandler, expr);
 					 */
 				}
@@ -1157,7 +1157,7 @@ public class CFMLEditor extends TextEditor implements
 		handlePreferenceStoreChanged(event);
 		System.out.println(event);
 		setStatusLine();
-		setMarkOccurrencesListener();
+		setTextSelectionListener();
 	}
 
 	protected void handlePreferenceStoreChanged(PropertyChangeEvent event) {

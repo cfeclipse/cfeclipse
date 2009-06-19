@@ -10,9 +10,9 @@ import org.eclipse.jface.preference.IPreferenceStore;
 /**
  * @author Stephen Milligan
  *
- * Preference constants for {@link org.cfeclipse.cfml.preferences.MarkOccurrencesPreferencePage}
+ * Preference constants for {@link org.cfeclipse.cfml.preferences.TextSelectionPreferencePage}
  */
-public class MarkOccurrencesPreferenceConstants extends AbstractPreferenceConstants {
+public class TextSelectionPreferenceConstants extends AbstractPreferenceConstants {
 
 	/**
 	 * Preference key identifier for occurrence marking 
@@ -27,7 +27,7 @@ public class MarkOccurrencesPreferenceConstants extends AbstractPreferenceConsta
 	public static final String P_BREAK_WORD_CHARS_SHIFT = "__breakWordCharsShift";
 
 	/**
-	 * Sets the default values for the preferences managed by {@link MarkOccurrencesPreferencePage}:
+	 * Sets the default values for the preferences managed by {@link TextSelectionPreferencePage}:
 	 * <ul>
 	 * <li>P_MARK_OCCURRENCES - false</li>
 	 * </ul>

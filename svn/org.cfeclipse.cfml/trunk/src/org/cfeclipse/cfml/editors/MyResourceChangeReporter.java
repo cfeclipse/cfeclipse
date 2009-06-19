@@ -43,7 +43,7 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 					//System.out.println(" is about to be deleted.");
 					break;
 				case IResourceChangeEvent.POST_CHANGE:
-					System.out.println("Resources have changed." + event.getSource());
+					//System.out.println("Resources have changed." + event.getSource());
 					event.getDelta().accept(new DeltaPrinter());
 					break;
 				/* these two seem to be deprecated... 

@@ -1468,16 +1468,16 @@
             id="org.cfeclipse.cfml.preferences.AnnotationPreferencePage"/>
 
       <page
-            name="%page.name.markOccurrences"
-            class="org.cfeclipse.cfml.preferences.MarkOccurrencesPreferencePage"
+            name="%page.name.textselection"
+            class="org.cfeclipse.cfml.preferences.TextSelectionPreferencePage"
             category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            id="org.cfeclipse.cfml.preferences.MarkOccurrencesPreferencePage">
+            id="org.cfeclipse.cfml.preferences.TextSelectionPreferencePage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
 		          <test property="org.eclipse.core.resources.projectNature" value="org.cfeclipse.cfml.natures.CFENature"/>
 		     </adapt>         
          </enabledWhen>
-         <keywordReference id="org.cfeclipse.cfml.ui.MarkOccurrences"/>
+         <keywordReference id="org.cfeclipse.cfml.ui.TextSelection"/>
       </page>
 
       <page
@@ -1771,7 +1771,7 @@
 
 	<extension point="org.eclipse.core.resources.markers"
 		id="org.cfeclipse.cfml.occurrenceMarker"
-		name="Work Occurrence Marker">
+		name="%OccurrenceAnnotation.label">
 		<super type="org.eclipse.core.resources.problemmarker" />
 		<super type="org.eclipse.core.resources.textmarker"/>
 		<persistent value="true"/>
@@ -1832,22 +1832,24 @@
             icon="icons/ctool16/showandselect.gif"            
             textPreferenceKey="occurrenceAnnotation.text"
             textPreferenceValue="true"
-			highlightPreferenceValue="false"
             highlightPreferenceKey="occurrenceAnnotation.background"
+			highlightPreferenceValue="false"
 			textStylePreferenceKey="occurrenceAnnotation.style"
 			textStylePreferenceValue="SQUIGGLES"
             overviewRulerPreferenceKey="occurrenceAnnotation.IndicationInOverviewRuler"
+			overviewRulerPreferenceValue="true"
             verticalRulerPreferenceKey="occurrenceAnnotation.IndicationInVerticalRuler"
+			verticalRulerPreferenceValue="true"
             symbolicIcon="occurrence"
             colorPreferenceKey="occurrenceAnnotation.color"
             colorPreferenceValue="212,212,212"
-            presentationLayer="4"
+            presentationLayer="5"
             showInNextPrevDropdownToolbarActionKey="showOccurrenceInNextPrevDropdownToolbarAction"
             showInNextPrevDropdownToolbarAction="true"
             isGoToNextNavigationTargetKey="isOccurrenceGoToNextNavigationTarget"
-	        isGoToNextNavigationTarget="false"
+	        isGoToNextNavigationTarget="true"
             isGoToPreviousNavigationTargetKey="isOccurrenceGoToPreviousNavigationTarget"
-	        isGoToPreviousNavigationTarget="false">
+	        isGoToPreviousNavigationTarget="true">
 	  </specification>	
 	
    </extension>

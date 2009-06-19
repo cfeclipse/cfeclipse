@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
 
-<template 
-	context="org.cfeclipse.cfml.templateeditor.xml" 
-	description="%cfml.templates.cfcomponent.desc" 
-	id="org.cfeclipse.cfml.templateeditor.cfcomponent" 
-	name="%cfml.templates.cfcomponent.name">&lt;cfcomponent displayname=&quot;${displayname}&quot; hint=&quot;${hint}&quot;&gt;
-	this should give insight ${dst}
-	${cursor}
-&lt;/cfcomponent&gt;</template>
+	<template context="org.cfeclipse.cfml.templateeditor.xml"
+		description="%cfml.templates.cfcomponent.desc" id="org.cfeclipse.cfml.templateeditor.cfcomponent"
+		name="%cfml.templates.cfcomponent.name">&lt;cfcomponent displayname=&quot;${displayname}&quot;
+		hint=&quot;${hint}&quot;&gt;
+		this should give insight ${dst}
+		${cursor}
+		&lt;/cfcomponent&gt;</template>
+	<template context="org.cfeclipse.cfml.templateeditor.xml"
+		description="%cfml.templates.cfcomponent.desc" id="org.cfeclipse.cfml.templateeditor.todayis"
+		name="%cfml.templates.todayis.name">
+		${cursor} ${date}
+	</template>
+
 
 </templates>
