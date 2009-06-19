@@ -30,6 +30,7 @@ import org.eclipse.jface.text.source.ICharacterPairMatcher;
 import org.eclipse.jface.text.source.IOverviewRuler;
 import org.eclipse.jface.text.source.ISharedTextColors;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.AnnotationPainter.HighlightingStrategy;
 import org.eclipse.jface.text.source.AnnotationPainter.IDrawingStrategy;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -39,6 +40,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.texteditor.AnnotationPreference;
+import org.eclipse.ui.texteditor.AnnotationPreferenceLookup;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 
 /**
@@ -173,6 +175,12 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 	 * @since 3.0
 	 */
 	private static IDrawingStrategy fgBoxStrategy= new BoxDrawingStrategy();
+	
+	/**
+	 * The box drawing strategy.
+	 * @since 3.0
+	 */
+	private static HighlightingStrategy fgHLStrategy = new AnnotationPainter.HighlightingStrategy();
 	
 	/**
 	 * The null drawing strategy.
@@ -310,10 +318,10 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 		else
 			hideMatchingCharacters();
 			
-		if (isCursorLineShown())
+		if (isCursorLineShown())			
 			showCursorLine();
 		else
-			hideCursorLine();
+			showCursorLine();
 		
 		if (isMarginShown())
 			showMargin();
@@ -326,12 +334,10 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 			Object style= getAnnotationDecorationType(type);
 			if (style != AnnotationPreference.STYLE_NONE)
 				showAnnotations(type, false, false);
-			else
-				hideAnnotations(type, false, false);
 			if (areAnnotationsHighlighted(type))
 				showAnnotations(type, true, false);
-			else
-				hideAnnotations(type, true, false);
+//			else
+//				hideAnnotations(type, true, false);
 			
 		}
 		updateAnnotationPainter();
@@ -350,12 +356,11 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 			AnnotationPreference info= (AnnotationPreference) fAnnotationTypeKeyMap.get(annotationType);
 			if (info != null) {
 				String key= info.getTextStylePreferenceKey();
-				
 				if (key != null)
 					return fPreferenceStore.getString(key);
 				else
 					// legacy
-					return AnnotationPreference.STYLE_SQUIGGLES;
+					return AnnotationPreference.STYLE_BOX;
 			}
 		}
 		return AnnotationPreference.STYLE_NONE;
@@ -426,8 +431,19 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 	 * @param layer the layer
 	 */
 	public void setAnnotationPainterPreferenceKeys(Object type, String colorKey, String editorKey, String overviewRulerKey, int layer) {
-		AnnotationPreference info= new AnnotationPreference(type, colorKey, editorKey, overviewRulerKey, layer);
-		
+		AnnotationPreference info = null;
+		AnnotationPreferenceLookup prefLookup = new AnnotationPreferenceLookup();
+		if(prefLookup != null) {
+			// different versions may pas a string or an annotation
+			if(type instanceof Annotation) {
+				info = prefLookup.getAnnotationPreference((Annotation) type);
+			} else {
+				info = prefLookup.getAnnotationPreference((String)type);
+			}			
+		}
+		if(info == null) {
+			info= new AnnotationPreference(type, colorKey, editorKey, overviewRulerKey, layer);			
+		}
 		fAnnotationTypeKeyMap.put(type, info);
 	}
 	
@@ -532,7 +548,6 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 		
 		if (fCursorLinePainterColorKey != null && fCursorLinePainterColorKey.equals(p)) {
 			if (fCursorLinePainter != null) {
-				hideCursorLine();
 				showCursorLine();
 			}					
 			return;
@@ -596,7 +611,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 			if (style != AnnotationPreference.STYLE_NONE)
 				showAnnotations(info.getAnnotationType(), false, false);
 			else
-				hideAnnotations(info.getAnnotationType(), false, false);
+//				hideAnnotations(info.getAnnotationType(), false, false);
 
 			if (info.getOverviewRulerPreferenceKey().equals(p)) {
 				if (isAnnotationOverviewShown(info.getAnnotationType()))
@@ -706,6 +721,8 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 	 * Shows the cursor line.
 	 */	
 	private void showCursorLine() {
+		//configures defaults?
+		hideCursorLine();
 		try {
 		if (fCursorLinePainter == null) {
 			if (fSourceViewer instanceof ITextViewerExtension2) {
@@ -835,6 +852,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 		
 		// TODO add extension point for drawing strategies?
 		painter.addDrawingStrategy(AnnotationPreference.STYLE_BOX, fgBoxStrategy);
+		painter.addDrawingStrategy(AnnotationPreference.STYLE_DASHED_BOX, fgBoxStrategy);
 		painter.addDrawingStrategy(AnnotationPreference.STYLE_NONE, fgNullStrategy);
 		painter.addDrawingStrategy(AnnotationPreference.STYLE_SQUIGGLES, fgSquigglesStrategy);
 		painter.addDrawingStrategy(AnnotationPreference.STYLE_UNDERLINE, fgUnderlineStrategy);

@@ -32,4 +32,10 @@ public class ScriptItem extends DocItem
 	{
 		super(line, startDocPos, endDocPos, name);
 	}
+
+	public boolean validChildAddition(DocItem parentItem)
+	{
+		return true;
+	}
+
 }

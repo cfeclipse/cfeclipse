@@ -42,6 +42,7 @@ import org.cfeclipse.cfml.parser.CFNodeList;
 import org.cfeclipse.cfml.parser.CFParser;
 import org.cfeclipse.cfml.parser.CommentParser;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
+import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.cfeclipse.cfml.util.ResourceUtils;
 import org.eclipse.core.resources.IMarker;
@@ -192,7 +193,15 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 			//more then one tag I suppose
 			if(matchingNodes.size() > 0)
 			{
-				return (CfmlTagItem)matchingNodes.get(0);
+				DocItem node = (DocItem)matchingNodes.get(0);
+				if (node instanceof CfmlTagItem) {					
+					return (CfmlTagItem)node;
+				} else {
+					// probably a comment, but we could use this for udder stuff too?
+					CfmlTagItem adaptedTag = new CfmlTagItem(node.getLineNumber(), node.getStartPosition(), node.getEndPosition(), node.getClass().getSimpleName());
+					return adaptedTag;
+					
+				}
 			}
 		}
 		catch (Exception e) {

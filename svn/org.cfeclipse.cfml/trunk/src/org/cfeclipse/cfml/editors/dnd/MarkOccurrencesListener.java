@@ -24,7 +24,8 @@
  */
 package org.cfeclipse.cfml.editors.dnd;
 
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
@@ -33,34 +34,21 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentAdapter;
 import org.eclipse.jface.text.IFindReplaceTarget;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.Position;
-import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
-import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.IPostSelectionProvider;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.text.source.Annotation;
-import org.eclipse.jface.text.source.AnnotationModel;
-import java.util.regex.PatternSyntaxException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.ui.texteditor.MarkerAnnotation;
+import org.eclipse.ui.texteditor.MarkerUtilities;
 
 /**
  * @author Stephen Milligan
@@ -125,7 +113,7 @@ public class MarkOccurrencesListener implements MouseListener,
 	private IFindReplaceTarget fTarget;
 
 	/*
-	 * These will be used for word deleniation
+	 * These will be used for word delineation
 	 */
 	private String partOfWordChars;
 	private String breakWordChars;
@@ -148,6 +136,9 @@ public class MarkOccurrencesListener implements MouseListener,
 	 */
 	private boolean downUp = false;
 
+    private static String TYPE = "org.cfeclipse.cfml.occurrenceMarker";
+	//private static String TYPE = "org.eclipse.core.resources.textmarker";
+	//private static String TYPE = "org.cfeclipse.cfml.parserWarningMarker";
 
 	/**
 	 * This class listens to the mouse position relative to any selected text
@@ -188,15 +179,23 @@ public class MarkOccurrencesListener implements MouseListener,
 	 */
 
 	public void selectionChanged(SelectionChangedEvent event) {
+		clearMarkedOccurrences();
 		if (!this.hovering) {
 			ITextSelection sel = (ITextSelection) this.fViewer.getSelection();
 			this.selectionTextStart = sel.getOffset();
-			this.selectionText = sel.getText();
-		}
-		clearMarkedOccurrences();
-		// this prevents it from firing while selecting text using the keyboard
-		if (event.getSelectionProvider() instanceof IPostSelectionProvider && this.selectionText.length() > 0) {
-			markOccurrences(this.selectionText);			
+			this.selectionText = sel.getText().trim();
+			// this prevents it from firing while selecting text using the keyboard
+			if (event.getSelectionProvider() instanceof IPostSelectionProvider && this.selectionText.length() > 0) {
+				try {
+					markOccurrences(this.selectionText);
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}			
+			}
+			else {
+				//System.out.println("MarkOccurrences got non POST selection changed");
+			}
 		}
 	}	
 	
@@ -263,7 +262,8 @@ public class MarkOccurrencesListener implements MouseListener,
 	protected boolean selectWord(int caretPos, MouseEvent e) {
 
 		IDocument doc = this.fViewer.getDocument();
-		int startPos, endPos;
+		int startPos, endPos, pos;
+		char c;
 		String normalWordChars = this.partOfWordChars;
 		String breakWordChars = this.breakWordChars;
 		String wordChars = normalWordChars;
@@ -281,8 +281,17 @@ public class MarkOccurrencesListener implements MouseListener,
 				breakWordChars = shiftBreakWordChars;
 			}
 
-			int pos = caretPos;
-			char c;
+			pos = caretPos;
+			int length = doc.getLength();
+			while (pos < length) {
+				c = doc.getChar(pos);
+				if (breakWordChars.indexOf(c) >= 0 || !Character.isJavaIdentifierPart(c) && wordChars.indexOf(c) < 0)
+					break;
+				++pos;
+			}
+			endPos = pos;
+
+			pos = caretPos;
 
 			while (pos >= 0) {
 				c = doc.getChar(pos);
@@ -293,20 +302,10 @@ public class MarkOccurrencesListener implements MouseListener,
 
 			startPos = pos;
 
-			pos = caretPos;
-			int length = doc.getLength();
-
-			while (pos < length) {
-				c = doc.getChar(pos);
-				if (breakWordChars.indexOf(c) >= 0 || !Character.isJavaIdentifierPart(c) && wordChars.indexOf(c) < 0)
-					break;
-				++pos;
-			}
-
-			endPos = pos;
+			
 			if(startPos != endPos) {	
 				selectRange(startPos, endPos);
-				markOccurrences(this.selectionText);
+//				markOccurrences(this.selectionText);
 			}
 			return true;
 
@@ -349,112 +348,63 @@ public class MarkOccurrencesListener implements MouseListener,
 	 * Mark occurrences of selected string
 	 * 
 	 * @param findString
+	 * @throws BadLocationException 
 	 * 
 	 */
-	protected void markOccurrences(String findString) {
-		clearMarkedOccurrences();
+	protected void markOccurrences(String findString) throws BadLocationException {
+		int index = 0;
+		int occurrenceCount = 0;
 
-		boolean somethingFound = false;
+		if (this.fViewer != null && findString.length() > 0) {
 
-		if (findString != null && findString.length() > 0) {
+			ISelection initialSelection = this.fViewer.getSelection();
 
-			try {
-				// somethingFound= highlightOccurrences(findString,isCaseSensitiveSearch(), isWholeWordSearch(),
-				// isRegExSearchAvailableAndChecked());
-				somethingFound = highlightOccurrences(findString, false, false, false);
-				if (somethingFound) {
-					// statusMessage(""); //$NON-NLS-1$
-				} else {
-					// statusMessage(EditorMessages.FindReplace_Status_noMatch_label);
-				}
-				// the below stuff is for regular expressions- might be used
-				// someday?
-			} catch (PatternSyntaxException ex) {
-				// statusError(ex.getLocalizedMessage());
-			} catch (IllegalStateException ex) {
-				// we don't keep state in this dialog
-			}
-		}
+			if (initialSelection instanceof ITextSelection) {
+				ITextSelection textSelection = (ITextSelection) initialSelection;
+				if (!textSelection.isEmpty()) {
+					String text = this.fViewer.getDocument().get();
+					IDocument iDoc = (ICFDocument) this.fViewer.getDocument();
+					IResource resource = ((ICFDocument) this.fViewer.getDocument()).getResource();
+					index = text.indexOf(findString);
+					while (index != -1) {
 
-	}
+						occurrenceCount++;
 
-	/**
-	 * Find and highlight occurrences of selected string
-	 * 
-	 * @param findString
-	 * @param caseSensitive
-	 * @param wholeWord
-	 * @param regExSearch
-	 * @return
-	 */
+						// AnnotationModel model = (AnnotationModel)
+						// this.fViewer.getAnnotationModel();
+						// Annotation occurrenceAnnotation = new Annotation(
+						//									"org.eclipse.jdt.ui.occurrences", true, findString); //$NON-NLS-1$
+						// occurrenceAnnotation.setText("Found:"+findString);
+						// Position position = new Position(index,
+						// findString.length());
+						// if (position != null) {
+						// model.addAnnotation(occurrenceAnnotation, position);
+						// } else {
+						// System.out.println("Null Position! Not good!");
+						// }
 
-	public boolean highlightOccurrences(String findString, boolean caseSensitive, boolean wholeWord, boolean regExSearch) {
-		int index = 1;
-		int startIndex = -1;
-		int initialOffset = 0;
-		boolean somethingFound = false;
+						Map attrs = new HashMap();
+						int lineNum = iDoc.getLineOfOffset(index)+1;
+						MarkerUtilities.setMessage(attrs, "Occurrence " + occurrenceCount + " of " + findString);
+						MarkerUtilities.setLineNumber(attrs, lineNum);
+						attrs.put(IMarker.LOCATION, "line " + lineNum + ", Chars " + index + "-" + index
+								+ findString.length());
+						attrs.put(IMarker.CHAR_START, index);
+						attrs.put(IMarker.CHAR_END, new Integer(index + findString.length()));
 
-		if (this.fViewer == null) {
-			return false;
-		}
-
-
-		ISelection initialSelection = this.fViewer.getSelection();
-
-		if (initialSelection instanceof ITextSelection) {
-			ITextSelection textSelection = (ITextSelection) initialSelection;
-			if (!textSelection.isEmpty()) {
-				String text = this.fViewer.getDocument().get();
-				while (index != -1) {
-					// System.out.println("find "+findString);
-					//index = text.findAndSelect(index + findString.length(), findString, true, caseSensitive, wholeWord);
-					index = text.indexOf(findString, index + findString.length());
-
-					if (startIndex != -1 && startIndex == index)
-						break;
-
-					if (index != -1) {
-						if (!somethingFound)
-							startIndex = index;
-
-						somethingFound = true;
-
-						AnnotationModel model = (AnnotationModel) this.fViewer.getAnnotationModel();
-						Annotation occurrenceAnnotation = new Annotation(
-								"org.cfeclipse.cfml.markOccurrencesAnnotation", true, findString); //$NON-NLS-1$
-						occurrenceAnnotation.setText("Found:"+findString);
-						Position position = new Position(index, findString.length());
-						if (position != null) {
-							model.addAnnotation(occurrenceAnnotation, position);
-						} else {
-							System.out.println("Null Position! Not good!");
+						try {
+							MarkerUtilities.createMarker(resource, attrs, this.TYPE);
+						} catch (CoreException excep) {
+							excep.printStackTrace();
+						} catch (Exception anyExcep) {
+							anyExcep.printStackTrace();
 						}
-						
-						IDocument doc = this.fViewer.getDocument();
-						IResource docResource = null;
-						if(doc instanceof ICFDocument) {
-							docResource = ((ICFDocument)doc).getResource();							
-							IMarker marker;
-							try {
-								marker = docResource.createMarker("org.eclipse.core.resources.textmarker");
-								marker.setAttribute(IMarker.MESSAGE, "byte me.");
-								marker.setAttribute(IMarker.LOCATION, index);
-							} catch (CoreException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-
-
+						index = text.indexOf(findString, index + findString.length());
 					}
 				}
 			}
 		}
 
-		
-
-
-		return somethingFound;
 	}
 	
 	/**
@@ -464,42 +414,17 @@ public class MarkOccurrencesListener implements MouseListener,
 		if (this.fViewer == null)
 			return;
 
-		AnnotationModel model = (AnnotationModel) this.fViewer.getAnnotationModel();
-		Iterator iter = model.getAnnotationIterator();
-
-		while (iter.hasNext()) {
-			Annotation findAnnotation = (Annotation) iter.next();
-			if (findAnnotation.getType().equals("org.cfeclipse.cfml.markOccurrencesAnnotation")) { //$NON-NLS-1$
-				model.removeAnnotation(findAnnotation);
+	      try {
+			IMarker[] markers = ((ICFDocument)this.fViewer.getDocument()).getResource().findMarkers(this.TYPE, true, IResource.DEPTH_INFINITE);
+			for(IMarker mark : markers) {
+				mark.delete();
 			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	}
-
-	/*
-	 * TEMPORARY debugging stuff
-	 * 
-	 */
-
-	/**
-	 * Sent when a key is pressed on the system keyboard.
-	 * 
-	 * @param e
-	 *            an event containing information about the key press
-	 */
-	public void keyPressed(KeyEvent e) {
-		// System.out.println("Key Pressed " + e.keyCode);
-	}
-
-	/**
-	 * Sent when a key is released on the system keyboard.
-	 * 
-	 * @param e
-	 *            an event containing information about the key release
-	 */
-	public void keyReleased(KeyEvent e) {
-
-		// System.out.println("Key Released " + e.keyCode);
 
 	}
+
 
 }

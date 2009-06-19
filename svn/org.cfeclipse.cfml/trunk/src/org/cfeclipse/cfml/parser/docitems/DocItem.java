@@ -130,7 +130,9 @@ public abstract class DocItem implements Comparable {
 	 *
 	 */
 	public DocItem() {
-		
+		docNodes = new CFNodeList();
+		docVariables = new ArrayList();
+		parseMessages = new State("");		
 	}
 	
 	public State getParseState()
@@ -297,7 +299,10 @@ public abstract class DocItem implements Comparable {
 	private CFNodeList selectNodes(XPathSearch search) {
 		CFNodeList result = new CFNodeList();		
 		
-		
+		if(docNodes == null) {
+			docNodes = new CFNodeList();
+		}
+
 		for(int i = 0; i < docNodes.size(); i++)
 		{
 			DocItem currItem = (DocItem)docNodes.get(i);

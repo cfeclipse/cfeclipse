@@ -1770,10 +1770,11 @@
 	</extension>
 
 	<extension point="org.eclipse.core.resources.markers"
-		id="markOccurrencesMarker"
-		name="markOccurrencesMarker">
+		id="org.cfeclipse.cfml.occurrenceMarker"
+		name="Work Occurrence Marker">
+		<super type="org.eclipse.core.resources.problemmarker" />
 		<super type="org.eclipse.core.resources.textmarker"/>
-		<persistent value="false"/>
+		<persistent value="true"/>
 	</extension>
 
     <extension point="org.eclipse.ui.editors.annotationTypes">
@@ -1783,7 +1784,8 @@
     	<type name="org.cfeclipse.cfml.parserWarningAnnotation"
     		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
 
-    	<type name="org.cfeclipse.cfml.markOccurrencesAnnotation" />
+    	<type name="org.cfeclipse.cfml.occurrenceAnnotation"
+    		markerType="org.cfeclipse.cfml.occurrenceMarker" />
 
     </extension>
 
@@ -1795,6 +1797,8 @@
 			colorPreferenceKey="parserproblem.color"
 			highlightPreferenceKey="parserproblem.background"
 			textPreferenceValue="true"
+			textStylePreferenceKey="parserproblem.style"
+			textStylePreferenceValue="SQUIGGLES"
 			overviewRulerPreferenceKey="parserproblem.rulers.overview"
 			presentationLayer="4"
 			highlightPreferenceValue="false"
@@ -1809,11 +1813,13 @@
 			verticalRulerPreferenceKey="parserwarning.rulers.vertical"
 			textPreferenceKey="parserwarning.text"
 			colorPreferenceKey="parserwarning.color"
+			textStylePreferenceKey="parsewarning.style"
+			textStylePreferenceValue="SQUIGGLES"
 			highlightPreferenceKey="parserwarning.background"
+			highlightPreferenceValue="false"
 			textPreferenceValue="true"
 			overviewRulerPreferenceKey="parserwarning.rulers.overview"
 			presentationLayer="4"
-			highlightPreferenceValue="false"
 			label="%specification.label.1"
 			colorPreferenceValue="244,200,45"
 			verticalRulerPreferenceValue="true"
@@ -1821,19 +1827,19 @@
 			symbolicIcon="warning"/>
 
 	  <specification
-            annotationType="org.cfeclipse.cfml.markOccurrencesAnnotation"
+            annotationType="org.cfeclipse.cfml.occurrenceAnnotation"
             label="%OccurrenceAnnotation.label"
             icon="icons/ctool16/showandselect.gif"            
-            textPreferenceKey="cfml.markOccurrencesAnnotation"
-            textPreferenceValue="false"
-            highlightPreferenceKey="cfml.markOccurrencesAnnotation.Highlighting"
-            highlightPreferenceValue="true"
-            contributesToHeader="false"
-            overviewRulerPreferenceKey="cfml.markOccurrencesAnnotation.IndicationInOverviewRuler"
-            overviewRulerPreferenceValue="true"
-            verticalRulerPreferenceKey="cfml.markOccurrencesAnnotation.IndicationInVerticalRuler"
-            verticalRulerPreferenceValue="false"
-            colorPreferenceKey="cfml.markOccurrencesAnnotation.IndicationColor"
+            textPreferenceKey="occurrenceAnnotation.text"
+            textPreferenceValue="true"
+			highlightPreferenceValue="false"
+            highlightPreferenceKey="occurrenceAnnotation.background"
+			textStylePreferenceKey="occurrenceAnnotation.style"
+			textStylePreferenceValue="SQUIGGLES"
+            overviewRulerPreferenceKey="occurrenceAnnotation.IndicationInOverviewRuler"
+            verticalRulerPreferenceKey="occurrenceAnnotation.IndicationInVerticalRuler"
+            symbolicIcon="occurrence"
+            colorPreferenceKey="occurrenceAnnotation.color"
             colorPreferenceValue="212,212,212"
             presentationLayer="4"
             showInNextPrevDropdownToolbarActionKey="showOccurrenceInNextPrevDropdownToolbarAction"
@@ -2251,6 +2257,16 @@
       		translations="$nl$/templates/cfml.properties">
       </include>
    </extension>
-   
+<!--
+   <extension
+         id="cfeDrop"
+         name="CFE Resource Drop"
+         point="org.eclipse.ui.dropActions">
+      <action
+            class="org.cfeclipse.cfml.dnd.CFMLPluginDropAdapter"
+            id="org.cfeclipse.ui.cfmlDrop">
+      </action>
+   </extension>   
+-->   
    
 </plugin>

@@ -34,7 +34,6 @@ import org.cfeclipse.cfml.editors.actions.GenericOpenFileAction;
 import org.cfeclipse.cfml.editors.actions.GotoFileAction;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
-import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
@@ -52,7 +51,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IEditorPart;
@@ -60,7 +58,6 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
@@ -90,6 +87,8 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	private ArrayList lastExpandedElements = null;
 	
 	private OutlineContentProvider cop;
+
+	protected boolean changeCameFromEditor;
 	
 	public Control getControl()
 	{
@@ -341,8 +340,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		if(selecteditem == null) return;
 		
 		ITextEditor editor = (ITextEditor)iep;
-		// changed movecursor (last arg) to false, so caret doesn't jump around
-		editor.setHighlightRange(selecteditem.getStartPosition(),0,false);
+		editor.setHighlightRange(selecteditem.getStartPosition(),0,true);
 	}
 	
 	/**
@@ -407,8 +405,14 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			"Jump To",
 			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW)
 		){
-			public void run() { 
-				jumpToItem();
+			public void run() {
+				// we only want to jump if the change came from tree viewer selection
+				if(!changeCameFromEditor) {
+					changeCameFromEditor = false;					
+					jumpToItem();
+				} else {
+					changeCameFromEditor = false;					
+				}
 			}
 		};
 		jumpAction.setToolTipText("Jump to selected tag in the editor");
@@ -423,7 +427,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			};
 			selectAction.setToolTipText("Select tag in the editor");
 
-		linkWithEditorAction = new Action("Link with Editor", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW_AND_SELECT)) {
+		linkWithEditorAction = new Action("Link with Editor", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_LINK_TO_EDITOR)) {
 			public void run() {
 				if(linkWithEditor) {
 					linkWithEditor = false;
@@ -642,12 +646,14 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	public void selectionChanged(IWorkbenchPart workbench, ISelection selection) {
 		// TODO Auto-generated method stub
 		if(selection != null && selection instanceof ITextSelection){
+			// this change will file the selection changed event.  This bool prevents a line jump
+			changeCameFromEditor = true;
 			CFMLEditor curDoc = (CFMLEditor) workbench.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 			//if(curDoc instanceof CFMLEditor){
 				ITextSelection tselection = (ITextSelection)selection;
 				int startPos = tselection.getOffset();
 				ICFDocument cfd = (ICFDocument) curDoc.getDocumentProvider().getDocument(curDoc.getEditorInput());
-				CfmlTagItem cti = cfd.getTagAt(startPos, startPos, true);				
+				DocItem cti = (DocItem)cfd.getTagAt(startPos, startPos, true);				
 				if (cti != null) {
 					if(linkWithEditor) {
 						setSelectedDocItem(getItemFromPosition(cti.getStartPosition()));

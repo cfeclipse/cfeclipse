@@ -245,6 +245,9 @@ public class CFPluginImages {
 	public static final String ICON_SNIPEX = "snipex.png";
 	
 	
+	// outline view
+	public static final String ICON_LINK_TO_EDITOR = "link_to_editor.gif";
+	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";
 	public static final String TOOLBAR 		 = "ctool16";
@@ -401,8 +404,10 @@ public class CFPluginImages {
 			addImageToRegistry(EDITORTOOLBAR, T_LOCATION);
 			addImageToRegistry(EDITORTOOLBAR, T_PARAM);
 			addImageToRegistry(EDITORTOOLBAR, T_SERVER);
-			
-			
+		
+			/* outline view */
+			addImageToRegistry(TOOLBAR, ICON_LINK_TO_EDITOR);
+
 		}
 	}
 	
