@@ -60,7 +60,7 @@ import org.eclipse.ui.texteditor.MarkerUtilities;
  * @author valliant
  * 
  */
-public class MarkOccurrencesListener implements MouseListener,
+public class TextSelectionListener implements MouseListener,
 		ISelectionChangedListener {
 	/**
 	 * The text editor that the selection listener is installed on
@@ -145,7 +145,7 @@ public class MarkOccurrencesListener implements MouseListener,
 	 * and keeps track of whether or not the mouse is currently over a
 	 * selection.
 	 */
-	public MarkOccurrencesListener(ITextEditor editor, ProjectionViewer viewer,String[] wordChars) {
+	public TextSelectionListener(ITextEditor editor, ProjectionViewer viewer,String[] wordChars) {
 		// this.editor = editor;
 		this.textWidget = viewer.getTextWidget();
 		this.fViewer = viewer;

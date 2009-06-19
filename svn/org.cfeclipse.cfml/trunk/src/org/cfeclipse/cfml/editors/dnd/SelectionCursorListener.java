@@ -293,7 +293,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     }
 /*
  * 
- * Commented for now because denny is using doubleClick in MarkOccurrencesListener
+ * Commented for now because denny is using doubleClick in TextSelectionListener
  * 
     /**
      * Sent when a mouse button is pressed twice within the 
