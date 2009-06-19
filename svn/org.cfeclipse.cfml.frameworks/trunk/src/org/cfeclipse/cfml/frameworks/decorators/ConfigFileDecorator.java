@@ -47,22 +47,23 @@ ILightweightLabelDecorator {
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof IResource) {
 			IResource selResource = (IResource) element;
-			String isConfig = "false";
-			try {
-				isConfig = selResource.getPersistentProperty(new QualifiedName("", "isFrameworkConfig"));
+			if (selResource.exists()) {
+				String isConfig = "false";
+				try {
+					isConfig = selResource.getPersistentProperty(new QualifiedName("", "isFrameworkConfig"));
 
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-			ImageDescriptor linkImage = FWXImages.getImageDescriptor(FWXImages.GENERAL_OBJECTS, FWXImages.DEC_CONFIG);
-			
-			
-			if (isConfig != null && isConfig.equals("true")) {
-				if (linkImage != null) {
-					decoration.addOverlay(linkImage);
+				} catch (CoreException e) {
+					e.printStackTrace();
+				}
+				ImageDescriptor linkImage = FWXImages.getImageDescriptor(FWXImages.GENERAL_OBJECTS,
+						FWXImages.DEC_CONFIG);
+
+				if (isConfig != null && isConfig.equals("true")) {
+					if (linkImage != null) {
+						decoration.addOverlay(linkImage);
+					}
 				}
 			}
-
 		}
 		
 	}
