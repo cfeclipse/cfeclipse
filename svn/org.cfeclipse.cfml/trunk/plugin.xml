@@ -1774,7 +1774,8 @@
 		name="%OccurrenceAnnotation.label">
 		<super type="org.eclipse.core.resources.problemmarker" />
 		<super type="org.eclipse.core.resources.textmarker"/>
-		<persistent value="true"/>
+		<persistent value="false"/>
+		<attribute name="location"/>
 	</extension>
 
     <extension point="org.eclipse.ui.editors.annotationTypes">
@@ -1785,7 +1786,9 @@
     		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
 
     	<type name="org.cfeclipse.cfml.occurrenceAnnotation"
-    		markerType="org.cfeclipse.cfml.occurrenceMarker" />
+    		markerType="org.cfeclipse.cfml.occurrenceMarker"
+    		super="org.eclipse.ui.workbench.texteditor.info"
+    		 markerSeverity="0" />
 
     </extension>
 
