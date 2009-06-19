@@ -798,7 +798,7 @@ public class NewCFCWizardProperties extends WizardPage {
 			    sb.append("\"");
 			    sb.append(">");
 			    sb.append("\n\t\t");
-			    sb.append("<cfreturn ");
+			    sb.append("<cfreturn this.");
 			    sb.append(bean.getName());
 			    sb.append(" />");
 			    sb.append("\n\t");
@@ -824,7 +824,7 @@ public class NewCFCWizardProperties extends WizardPage {
 			    sb.append(bean.getType());
 			    sb.append("\" required=\"true\" />");
 			    sb.append("\n\t\t");
-			    sb.append("<cfset ");
+			    sb.append("<cfset this.");
 			    sb.append(bean.getName());
 			    sb.append(" = arguments.");
 			    sb.append(bean.getName());
