@@ -79,7 +79,8 @@ public class AddCurcuitDialog extends Dialog{
         FontData labelFontData = new FontData();
         labelFontData.setStyle(SWT.BOLD);
         FontData[] containerFontData = container.getFont().getFontData();
-        labelFontData.setHeight(containerFontData[0].height);
+        //
+        labelFontData.height = (containerFontData[0].height);
         Font labelFont = new Font(parent.getDisplay(), labelFontData);
         
         

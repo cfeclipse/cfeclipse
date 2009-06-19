@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>fusebox3cfe</name>
+	<name>org.cfeclipse.cfml.frameworks.fusebox</name>
 	<comment></comment>
 	<projects>
+		<project>org.cfeclipse.cfml</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

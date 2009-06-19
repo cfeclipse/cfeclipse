@@ -94,7 +94,7 @@
                class="org.cfeclipse.frameworks.fusebox.actions.CreateCoreFilesAction"
                tooltip="Creates the files required for the root of a fusebox application"
                menubarPath="org.cfeclipse.frameworks.fusebox.actions/fuseboxgrp1"
-               id="org.cfeclipse.frameworks.fusebox.actions.CreateCoreFiles"/>
+               id="org.cfeclipse.frameworks.fusebox.actions.CreateCoreFilesAction"/>
             
          <action
                enablesFor="*"
@@ -136,7 +136,7 @@
                class="org.cfeclipse.frameworks.fusebox.actions.SetFBXRootAction"
                tooltip="Set this folder as the root of a fusebox application"
                menubarPath="org.cfeclipse.frameworks.fusebox.actions/fuseboxgrp1"
-               id="org.cfeclipse.frameworks.fusebox.actions.SetFBXRoot"/>
+               id="org.cfeclipse.frameworks.fusebox.actions.SetFBXRootAction"/>
          <action
                enablesFor="*"
                label="Create Circuit Files"
