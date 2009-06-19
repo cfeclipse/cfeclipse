@@ -835,503 +835,506 @@
 					menubarPath="org.cfeclipse.cfml.fileMenu/group1"/>
 		</objectContribution>
 	</extension>
-   
- <!-- Commands -->
-   <extension
-         point="org.eclipse.ui.commands">
-      <!--
-      <activeKeyConfiguration
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </activeKeyConfiguration>
-      -->
-      <category
-            name="%category.name.0"
-            description="%category.description.0"
-            id="org.cfeclipse.cfml.commandCategory">
-      </category>
-	<!-- this will always make a cf type comment -->
-      <command
-            name="%command.name.0"
-            description="%command.description.0"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.CFComment">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.CFComment"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+M">
-      </keyBinding>
-	<!-- comment based on section (i.e. js comments in js blocks, etc) -->
-      <command
-            name="%command.name.1"
-            description="%command.description.1"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.AutoComment">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.AutoComment"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+C">
-      </keyBinding>
-	<!-- enclose in pound ... er ... hash signs -->
-      <command
-            name="%command.name.2"
-            description="%command.description.2"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.CFVariable">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.CFVariable"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+3">
-      </keyBinding>
-	<!-- enclose in single quotes -->
-      <command
-            name="%command.name.3"
-            description="%command.description.3"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.CFSingleQuote">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.CFSingleQuote"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+&apos;">
-      </keyBinding>
-	<!-- enclose in double quotes -->
-      <command
-            name="%command.name.4"
-            description="%command.description.4"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.CFDoubleQuote">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+&apos;">
-      </keyBinding>
-	<!-- enclose in cfoutputs -->
-      <command
-            name="%command.name.5"
-            description="%command.description.5"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.CFOutput">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.CFOutput"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+O">
-      </keyBinding>
-	<!-- enclose in cfdump -->
-      <command
-            name="%command.name.6"
-            description="%command.description.6"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.CFDump">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.CFDump"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+D">
-      </keyBinding>
-	<!-- enclose in cfscript -->
-      <command
-            name="%command.name.7"
-            description="%command.description.7"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.CFScript">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.CFScript"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M3+R">
-      </keyBinding>
-	<!-- to lower case -->
-      <command
-            name="%command.name.8"
-            description="%command.description.8"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.ToLowerCase">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+L">
-      </keyBinding>
-	<!-- to upper case -->
-      <command
-            name="%command.name.9"
-            description="%command.description.9"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.ToUpperCase">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+U">
-      </keyBinding>
-      <!-- Insert Color -->
-      <command
-            name="%command.name.10"
-            description="%command.description.10"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.InsertColor">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.InsertColor"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+Z">
-      </keyBinding>
-      
-	<!-- insert date -->
-      <command
-            name="%command.name.11"
-            description="%command.description.11"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.InsertDate">
-      </command>
-      <!-- insert an html br action (for Brian Sadler) -->
-      <command
-            name="%command.name.12"
-            description="%command.description.12"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.InsertBR">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.InsertBR"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+Enter">
-      </keyBinding>
-      <!-- insert an html nbsp action (for Michael Wolfe) -->
-      <command
-            name="%command.name.13"
-            description="%command.description.13"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.InsertNBSP">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.InsertNBSP"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+Space">
-      </keyBinding>
-      <!-- insert an html p action (for Michael Wolfe) -->
-      <command
-            name="%command.name.14"
-            description="%command.description.14"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.PTag">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.PTag"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+P">
-      </keyBinding>
-      <!-- insert an html strong action (for Brian Sadler) -->
-      <command
-            name="%command.name.15"
-            description="%command.description.15"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.StrongTag">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.StrongTag"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+B">
-      </keyBinding>
-      <!-- insert an html em action (for Brian Sadler) -->
-      <command
-            name="%command.name.16"
-            description="%command.description.16"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.EmTag">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.EmTag"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+I">
-      </keyBinding>
-      <!-- Reload the syntax dictionaries -->
-      <command
-            name="%command.name.17"
-            description="%command.description.17"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.ReloadDictionaries">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.ReloadDictionaries"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+F5">
-      </keyBinding>
-      <!-- refresh the browser -->
-      <command
-            name="%command.name.18"
-            description="%command.description.18"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.RefreshBrowser">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.RefreshBrowser"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="F5">
-      </keyBinding>
-      <!-- browse to project root URL -->
-      <command
-            name="%command.name.19"
-            description="%command.description.19"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+F5">
-      </keyBinding>
-      <!-- browse to current page -->
-      <command
-            name="%command.name.20"
-            description="%command.description.20"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M2+F5">
-      </keyBinding>
-      <!-- insert a snippet -->
-      <command
-            name="%command.name.21"
-            description="%command.description.21"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.InsertSnippet">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.InsertSnippet"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+J">
-      </keyBinding>
-      <!-- repeat last tag -->
-      <command
-            name="%command.name.22"
-            description="%command.description.22"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.LastAction">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.LastAction"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+Q">
-      </keyBinding>
-      <!-- jump to matching tag -->
-      <command
-            name="%command.name.23"
-            description="%command.description.23"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+N">
-      </keyBinding>
-      <!-- Go and Get Help -->
-      <command
-            name="%command.name.24"
-            description="%command.description.24"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.GetHelp">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.GetHelp"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="F1">
-      </keyBinding>
-      <!-- Fire up the scribble pad -->
-      <command
-            name="%command.name.25"
-            description="%command.description.25"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.LoadScribblePad">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.LoadScribblePad"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="F8">
-      </keyBinding>
-	<!-- this will toggle the expand/collapse state of  the selected block -->
-      <command
-            name="%command.name.26"
-            description="%command.description.26"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection">
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+\">
-      </keyBinding>
-	<!-- This will expand selected block -->
-      <command
-            name="%command.name.27"
-            description="%command.description.27"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection">
-      </command>
-      <keyBinding
-            keySequence="M1++"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            commandId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </keyBinding>
-	<!-- This will collapse selected block -->
-      <command
-            name="%command.name.28"
-            description="%command.description.28"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection">
-      </command>
-      <keyBinding
-            keySequence="M1+-"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            commandId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </keyBinding>
-
-      <!-- Open in external browser -->
-      <command
-            name="%command.name.29"
-            description="%command.description.29"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID">
-      </command>
-      <keyBinding
-            keySequence="F12"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </keyBinding> 
-      
-      <!-- Open in secondary external browser -->
-       <command
-            name="Browse in secondary browser"
-            description="%command.description.29"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
-      </command>
-      
-	  <keyBinding
-            keySequence="M2+F12"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </keyBinding>
-
-	 
-      <command
-            name="%command.name.30"
-            description="%command.description.30"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.NewFileActionID">
-      </command>
-      <keyBinding
-            keySequence="M1+N"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            commandId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </keyBinding>
-      <!-- edit tag command -->
-      <command 
-      		name="%command.name.EditTag"
-      		description="%command.description.EditTag"
-          categoryId="org.cfeclipse.cfml.commandCategory"
-      		id="org.cfeclipse.cfml.editors.actions.EditTagAction">
-      		
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.EditTagAction"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+T">
-      	</keyBinding>
-      
-    <command 
-      		name="%command.name.GotoFile"
-      		description="%command.description.GotoFile"
-      		categoryId="org.cfeclipse.cfml.commandCategory"
-      		id="org.cfeclipse.cfml.editors.actions.GotoFileAction">
-      		
-      </command>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.GotoFileAction"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+G">
-      	</keyBinding>
-      <command
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            description="%command.description.31"
-            id="org.cfeclipse.cfml.editors.actions.CFAbort"
-            name="%command.name.31"/>
-      <keyBinding
-            commandId="org.cfeclipse.cfml.editors.actions.CFAbort"
-            contextId="org.cfeclipse.cfml.cfmleditorcontext"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            keySequence="M1+M2+A"/>
-
-	<!-- enclose in link from clipboard -->
-      <command
-            name="%action.label.ClipboardLink"
-            description="%command.description.ClipboardLink"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.ClipboardLink" />
-
-      <!-- Find a matching bracket pair
-      <command
-            name="Highlight matching bracket pair"
-            description="Highlights the pair of characters for the character beside the cursor."
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            id="org.cfeclipse.cfml.editors.actions.FindBracket">
-      </command>
-      <keyBinding
-            string="F6"
-            contextId="org.eclipse.ui.textEditorScope"
-            commandId="org.cfeclipse.cfml.editors.actions.FindBracket"
-            keyConfigurationId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </keyBinding>
-       -->
-   </extension>
-   	<extension point="org.eclipse.ui.bindings">
-		<key sequence="Ctrl+Alt+V"
-			commandId="org.cfeclipse.cfml.editors.actions.ClipboardLink"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-			contextId="rg.cfeclipse.cfml.cfmleditorcontext"/>
+	
+	<!-- Commands -->
+	<extension
+		point="org.eclipse.ui.commands">
+		
+		<category
+			name="%category.name.0"
+			description="%category.description.0"
+			id="org.cfeclipse.cfml.commandCategory"/>
+		
+		<!-- cfcomment -->
+		<command
+			name="%command.name.0"
+			description="%command.description.0"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFComment" />
+		
+		<!-- comment based on section (i.e. js comments in js blocks, etc) -->
+		<command
+			name="%command.name.1"
+			description="%command.description.1"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.AutoComment"/>
+			
+		<!-- enclose in pound ... er ... hash signs -->
+		<command
+			name="%command.name.2"
+			description="%command.description.2"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFVariable"/>
+		
+		<!-- enclose in single quotes -->
+		<command
+			name="%command.name.3"
+			description="%command.description.3"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFSingleQuote"/>
+		
+		<!-- enclose in double quotes -->
+		<command
+			name="%command.name.4"
+			description="%command.description.4"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"/>
+		
+		<!-- enclose in cfoutputs -->
+		<command
+			name="%command.name.5"
+			description="%command.description.5"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFOutput"/>
+		
+		<!-- enclose in cfdump -->
+		<command
+			name="%command.name.6"
+			description="%command.description.6"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFDump"/>
+		
+		<!-- enclose in cfscript -->
+		<command
+			name="%command.name.7"
+			description="%command.description.7"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFScript"/>
+		
+		<!-- to lower case -->
+		<command
+			name="%command.name.8"
+			description="%command.description.8"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ToLowerCase"/>
+		
+		<!-- to upper case -->
+		<command
+			name="%command.name.9"
+			description="%command.description.9"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ToUpperCase"/>
+		
+		<!-- Insert Color -->
+		<command
+			name="%command.name.10"
+			description="%command.description.10"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertColor"/>
+		
+		<!-- insert date -->
+		<command
+			name="%command.name.11"
+			description="%command.description.11"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertDate"/>
+		
+		<!-- insert an html br action (for Brian Sadler) -->
+		<command
+			name="%command.name.12"
+			description="%command.description.12"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertBR"/>
+		
+		<!-- insert an html nbsp action (for Michael Wolfe) -->
+		<command
+			name="%command.name.13"
+			description="%command.description.13"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertNBSP"/>
+		
+		<!-- insert an html p action (for Michael Wolfe) -->
+		<command
+			name="%command.name.14"
+			description="%command.description.14"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.PTag"/>
+		
+		<!-- insert an html strong action (for Brian Sadler) -->
+		<command
+			name="%command.name.15"
+			description="%command.description.15"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.StrongTag"/>
+		
+		<!-- insert an html em action (for Brian Sadler) -->
+		<command
+			name="%command.name.16"
+			description="%command.description.16"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.EmTag"/>
+		
+		<!-- Reload the syntax dictionaries -->
+		<command
+			name="%command.name.17"
+			description="%command.description.17"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ReloadDictionaries"/>
+		
+		<!-- refresh the browser -->
+		<command
+			name="%command.name.18"
+			description="%command.description.18"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.RefreshBrowser"/>
+		
+		<!-- browse to project root URL -->
+		<command
+			name="%command.name.19"
+			description="%command.description.19"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"/>
+		
+		<!-- browse to current page -->
+		<command
+			name="%command.name.20"
+			description="%command.description.20"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"/>
+		
+		<!-- insert a snippet -->
+		<command
+			name="%command.name.21"
+			description="%command.description.21"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertSnippet"/>
+		
+		<!-- repeat last tag -->
+		<command
+			name="%command.name.22"
+			description="%command.description.22"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.LastAction"/>
+		
+		<!-- jump to matching tag -->
+		<command
+			name="%command.name.23"
+			description="%command.description.23"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction"/>
+		
+		<!-- Go and Get Help -->
+		<command
+			name="%command.name.24"
+			description="%command.description.24"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.GetHelp"/>
+		
+		<!-- Fire up the scribble pad -->
+		<command
+			name="%command.name.25"
+			description="%command.description.25"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.LoadScribblePad"/>
+		
+		<!-- this will toggle the expand/collapse state ofthe selected block -->
+		<command
+			name="%command.name.26"
+			description="%command.description.26"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"/>
+		
+		<!-- This will expand selected block -->
+		<command
+			name="%command.name.27"
+			description="%command.description.27"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"/>
+		
+		<!-- This will collapse selected block -->
+		<command
+			name="%command.name.28"
+			description="%command.description.28"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"/>
+		
+		<!-- Open in external browser -->
+		<command
+			name="%command.name.29"
+			description="%command.description.29"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID"/>
+		
+		<!-- Open in secondary external browser -->
+		<command
+			name="Browse in secondary browser"
+			description="%command.description.29"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2"/>
+		
+		<command
+			name="%command.name.30"
+			description="%command.description.30"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.NewFileActionID"/>
+		
+		<!-- edit tag command -->
+		<command 
+			name="%command.name.EditTag"
+			description="%command.description.EditTag"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.EditTagAction"/>
+		
+		<command 
+			name="%command.name.GotoFile"
+			description="%command.description.GotoFile"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.GotoFileAction"/>
+		
+		<command
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			description="%command.description.31"
+			id="org.cfeclipse.cfml.editors.actions.CFAbort"
+			name="%command.name.31"/>
+		
+		<!-- enclose in link from clipboard -->
+		<command
+			name="%action.label.ClipboardLink"
+			description="%command.description.ClipboardLink"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ClipboardLink" />
+		
+		<!-- Find a matching bracket pair -->
+		<!--
+		<command
+			name="Highlight matching bracket pair"
+			description="Highlights the pair of characters for the character beside the cursor."
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.FindBracket"/>
+		-->
 	</extension>
-   
+	<extension point="org.eclipse.ui.bindings">
+		<!--
+			The "M" modifier keys are a platform-independent way of representing keys,
+			and these are generally preferred.
+			M1 is the COMMAND key on MacOS X, and the CTRL key on most other platforms.
+			M2 is the SHIFT key.
+			M3 is the Option key on MacOS X, and the ALT key on most other platforms.
+			M4 is the CTRL key on MacOS X, and is undefined on other platforms.
+			
+			See: http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_bindings.html
+		-->
+		
+		<!-- auto comment -->
+		<key sequence="M1+M2+C"
+			commandId="org.cfeclipse.cfml.editors.actions.AutoComment"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Browse to Current Page -->
+		<key sequence="M2+F5"
+			commandId="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Browse to Project Root -->
+		<key sequence="M1+M2+F5"
+			commandId="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- clipboard link -->
+		<key sequence="M1+M3+V"
+			commandId="org.cfeclipse.cfml.editors.actions.ClipboardLink"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- cfabort -->
+		<key sequence="M1+M2+A"
+			commandId="org.cfeclipse.cfml.editors.actions.CFAbort"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- cfdump -->
+		<key sequence="M1+M2+D"
+			commandId="org.cfeclipse.cfml.editors.actions.CFDump"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- cfoutput -->
+		<key sequence="M1+M2+O"
+			commandId="org.cfeclipse.cfml.editors.actions.CFOutput"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- cfscript -->
+		<key sequence="M1+M3+R"
+			commandId="org.cfeclipse.cfml.editors.actions.CFScript"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- CF comment -->
+		<key sequence="M1+M2+M"
+			commandId="org.cfeclipse.cfml.editors.actions.CFComment"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Collapse Cold Folding on Selection -->
+		<key sequence="M1+-"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			commandId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Double Quote -->
+		<key sequence="M1+M2+&apos;"
+			commandId="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Edit Tag -->
+		<key sequence="M1+T"
+			commandId="org.cfeclipse.cfml.editors.actions.EditTagAction"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Emphasis Tag -->
+		<key sequence="M1+I"
+			commandId="org.cfeclipse.cfml.editors.actions.EmTag"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Expand Code Folding on Selection -->
+		<key sequence="M1++"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			commandId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- External Browser -->
+		<key sequence="F12"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- External Browser 2 -->
+		<key 
+			sequence="M2+F12"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- GoTo File -->
+		<key sequence="M1+G"
+			commandId="org.cfeclipse.cfml.editors.actions.GotoFileAction"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Hash Variable -->
+		<key sequence="M1+3"
+			commandId="org.cfeclipse.cfml.editors.actions.CFVariable"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Help -->
+		<key sequence="F1"
+			commandId="org.cfeclipse.cfml.editors.actions.GetHelp"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Insert Break -->
+		<key sequence="M1+Enter"
+			commandId="org.cfeclipse.cfml.editors.actions.InsertBR"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Insert Color -->
+		<key sequence="M1+M2+Z"
+			commandId="org.cfeclipse.cfml.editors.actions.InsertColor"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Insert Non-Breaking Space -->
+		<key sequence="M1+M2+Space"
+			commandId="org.cfeclipse.cfml.editors.actions.InsertNBSP"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Insert Snippet -->
+		<key sequence="M1+J"
+			commandId="org.cfeclipse.cfml.editors.actions.InsertSnippet"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Jump to Matching Tag -->
+		<key sequence="M1+M2+N"
+			commandId="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Last Action -->
+		<key sequence="M1+Q"
+			commandId="org.cfeclipse.cfml.editors.actions.LastAction"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Load Scribble Pad -->
+		<key sequence="F8"
+			commandId="org.cfeclipse.cfml.editors.actions.LoadScribblePad"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Lower Case -->
+		<key sequence="M1+M2+L"
+			commandId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Matching bracket pair -->
+		<!-- 
+		<key sequence="F6"
+			contextId="org.eclipse.ui.textEditorScope"
+			commandId="org.cfeclipse.cfml.editors.actions.FindBracket"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		-->
+		
+		<!-- New File -->
+		<key sequence="M1+N"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			commandId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- P Tag -->
+		<key sequence="M1+M2+P"
+			commandId="org.cfeclipse.cfml.editors.actions.PTag"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Refresh Browser -->
+		<key sequence="F5"
+			commandId="org.cfeclipse.cfml.editors.actions.RefreshBrowser"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Reload Dictionaries -->
+		<key sequence="M1+F5"
+			commandId="org.cfeclipse.cfml.editors.actions.ReloadDictionaries"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Single Quote -->
+		<key sequence="M1+&apos;"
+			commandId="org.cfeclipse.cfml.editors.actions.CFSingleQuote"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Strong Tag -->
+		<key sequence="M1+B"
+			commandId="org.cfeclipse.cfml.editors.actions.StrongTag"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Toggle Code Folding on Selection -->
+		<key sequence="M1+\"
+			commandId="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Upper Case -->
+		<key sequence="M1+M2+U"
+			commandId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	</extension>
+	
 	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Views -->
    <extension
