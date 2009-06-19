@@ -13,7 +13,7 @@
 			<button name="CFParam" type="cftag" value="cfparam"  image="param.gif" />
 			<button name="CFDump" type="cftag" value="cfdump" image="dump.gif" />
 			<button name="CFComment" type="custom" value="org.cfeclipse.cfml.editors.actions.CFCommentAction" image="comment.gif"/>
-			<button name="Surround with Hash/Pound signs" type="custom" value="org.cfeclipse.cfml.editors.actions.CFVariableAction" image="hash.gif" />
+			<button name="Surround with hash/pound signs" type="custom" value="org.cfeclipse.cfml.editors.actions.CFVariableAction" image="hash.gif" />
 	</tab>
 	<tab name="CF Flow">
 			<button name="CFTry" type="cftag" value="cftry" image="try.gif" />
