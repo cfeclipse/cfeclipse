@@ -124,19 +124,29 @@ public class CFParser {
 	static protected final String REG_TAG = "<(\\w*)(.*)/{0,1}>";
 	/**
 	 * <code>REG_ATTRIBUTES</code> - regular expression for getting the attributes out of a tag match.
-	 * \s*(\w*)\s*=\s*(\w*\s?&?\s?"[^"]+[Az \w"&.=\)]+)
+	 * (\w+\s?=\s?)?((((\w+ & )?\x22|\x27)((?!\4).|\4{2})*\4?(.*&.*)?))
 	 */
 
 	/*
 	 * Various "almost" regexes, might have to use something dynamical-er :-/
-	 *  \s*(\w*)\s*=\s*(\w*\s?&\s?"[^"]+)?
-	 *  \s*(\w*)\s*=\s*(\w+?\s?[\&\+\s*]\s)?
-	 *  \s*(\w*)\s*=\s*(\w*\s?&\s?"[^"]+["\s?&?\s?\w?]+) 
-	 *  \s*(\w*)\s*=\s*(\w*\s?&\s?"[^"]+[Az \w"&.=\)]+)
-	 *  \s*(\w*)\s*=\s*(\w*\s?&?\s?"[^"]+[Az \w"&.=\)]+)
-	 *  winner?
+
+	 * this gets any double-quote/apos escaped strings ("woo ""hoo"" man!"  or ' ''blah''! ')
+	 *  (\x22|\x27)((?!\1).).*((\1{2})+.*)\1
+	 * 
+	 * this one is super close -- gets any string var, just can't get the attrib name first :(
+	 *  (\x22|\x27)((?!\1).|\1{2})*\1
+	 *  
+	 *  Wholy crap, right?  Maybe better to split it?  gets: [blah] = "wee ""hoo"" you!", etc. but no &s  
+	 *  (\w+\s?=)?((\w+\s?\&\s?)?([\&?\w?\s?&\s?\&?]?\x22|\x27)((?!\4).|\4{2})*\4(\s?&?\s?\w+\s?&?\s)?)
+	 *  same, but better
+	 *  (\w+\s?=\s?)?((\x22|\x27)((?!\3).|\3{2})*\3?(.*&.*)?)
+	 *  bester (gets: [blah=] [fun & "wee ""hoo"" you!" & whatever])  we'll roll with this!
+	 *  (\w+\s?=\s?)?((((\w+ & )?\x22|\x27)((?!\4).|\4{2})*\4?(.*&.*)?))
+	 * 
+
 	 */
-	static protected final String REG_ATTRIBUTES = "\\s*(\\w*)\\s*=\\s*(\\w*\\s?&?\\s?\"[^\"]+[Az \\w\"&.=\\)]+)";
+	static protected final String REG_ATTRIBUTES = "(\\w+\\s?=\\s?)?((((\\w+ & )?\\x22|\\x27)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
+	
 	
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
@@ -368,6 +378,8 @@ public class CFParser {
 		    	AttributeItem newAttr;
 		    	
 			    attributeName = matcher.group(1).trim();
+			    // denny added because param ends with "=" due to his regex
+			    attributeName = attributeName.substring(0,attributeName.length()-1);
 			    attributeValue = matcher.group(2).trim();
 			    attributeValue = attributeValue.substring(1,attributeValue.length()-1);
 			    newAttr = new AttributeItem(lineNum, offset + matcher.start(1), offset + matcher.end(1),

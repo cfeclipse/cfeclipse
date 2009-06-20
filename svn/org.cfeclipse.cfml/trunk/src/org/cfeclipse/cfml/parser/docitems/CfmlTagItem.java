@@ -55,6 +55,8 @@ public class CfmlTagItem extends TagItem {
 		
 		Set suggAttribSet = itemAttributes.keySet();
 		
+		String attributesFound = "";
+		
 		for (Iterator iter = suggAttribSet.iterator(); iter.hasNext();) {
 			String attributeName = (String) iter.next();
 			AttributeItem attributeValue = (AttributeItem)itemAttributes.get(attributeName);
@@ -72,7 +74,11 @@ public class CfmlTagItem extends TagItem {
 		}
 		
 		Object[] params = attributes.toArray();
-		
+
+		if(itemAttributes.size() > 0) {
+			attributesFound = " (Found: "+ itemAttributes.keySet().toString() + ")";
+		}
+
 		
 		for(int i = 0; i < params.length; i++)
 		{
@@ -81,17 +87,17 @@ public class CfmlTagItem extends TagItem {
 			if(currParam.isRequired() && !(itemAttributes.containsKey(currParam.getName().toLowerCase()) || itemAttributes.containsKey(currParam.getName().toUpperCase())))
 			{
 					this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <" + this.itemName + "> tag."));
+						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <" + this.itemName + "> tag." + attributesFound));
 			}
 			
 			if(!currParam.getTriggers().isEmpty()  && currParam.isRequired(suggestedAttributes) == 3 && !itemAttributes.containsKey(currParam.getName())){
 				
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-						"The attribute \'" + currParam.getName() + "\' is required for the <" + this.itemName + "> tag."));
+						"The attribute \'" + currParam.getName() + "\' is required for the <" + this.itemName + "> tag." + attributesFound));
 			}
 			else if (!currParam.getTriggers().isEmpty()  && currParam.isTriggered(suggestedAttributes) == 0 && itemAttributes.containsKey(currParam.getName())) {
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-						"The attribute \'" + currParam.getName() + "\' is not valid for the <" + this.itemName + "> tag."));
+						"The attribute \'" + currParam.getName() + "\' is not valid for the <" + this.itemName + "> tag." + attributesFound));
 			}
 			//now check for items that shouldnt be there, i.e. are NOT triggered
 			
