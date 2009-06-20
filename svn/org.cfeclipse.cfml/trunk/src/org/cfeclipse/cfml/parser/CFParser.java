@@ -357,9 +357,10 @@ public class CFParser {
 	/**
 	 * <code>stripAttributes</code> - Strips the attributes from some data and puts them into a hash map
 	 * @param inData - the string data to get the attributes out of
+	 * @param match 
 	 * @return array list of the attributes found. May contain duplicates
 	 */
-	protected ArrayList stripAttributes(String inData, int lineNum, int offset)
+	protected ArrayList stripAttributes(String inData, int lineNum, int offset, ParseItemMatch match)
 	{
 		ArrayList attributes = new ArrayList();
 		Matcher matcher;
@@ -371,6 +372,12 @@ public class CFParser {
 		//SPIKE: Added the toLowerCase() bit.
 		//matcher = pattern.matcher(inData.toLowerCase());
 		matcher = pattern.matcher(inData);
+		if(inData.trim().endsWith("&")){
+			userMessage(0, 
+					"stripAttributes", "Last attribute cannot be an ampersand", 
+					USRMSG_ERROR, match);			
+		}
+
 		while(matcher.find())
 		{
 			
@@ -1039,7 +1046,7 @@ public class CFParser {
 							case MATCHER_CFMLTAG:
 								
 								handleCFTag(tagName, match, matchStack,
-											stripAttributes(attributes, match.lineNumber, tagEnd), isACloser);
+											stripAttributes(attributes, match.lineNumber, tagEnd,match), isACloser);
 								break;
 							case MATCHER_CFMLCOMMENT:
 								//System.out.println("CFParser::createDocTree() - Got a CFML comment!");
