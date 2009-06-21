@@ -51,6 +51,7 @@ import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Control;
@@ -642,10 +643,15 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 
 	public void selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent event) {
 		if(linkWithEditor) {
-			//if(event.getSelection() instanceof ITextSelection){							}
-			jumpAction.run();
+			if(event.getSelection() instanceof ITreeSelection){				
+				jumpAction.run();
+			} else {
+				changeCameFromEditor = true;
+				getTreeViewer().expandToLevel(((DocItem)(event.getSelection())), 1);
+			}
 		}
-		saveExpandedElements();		
+		saveExpandedElements();	
+		//getTreeViewer().refresh(new StructuredSelection(event.getSelection()));
 	}
 
 	public void selectionChanged(IWorkbenchPart workbench, ISelection selection) {
@@ -664,6 +670,17 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 					if (cti != null) {
 						if(linkWithEditor) {
 							setSelectedDocItem(cti);
+							DocItem curItem = cti;
+							getTreeViewer().setExpandedState(curItem.getParent(), true);
+							getTreeViewer().refresh(curItem.getParent(),false);
+							getTreeViewer().setExpandedState(curItem, true);
+							getTreeViewer().refresh(curItem,false);
+//							while(curItem.getName().compareToIgnoreCase("Doc Root") !=1) {
+//								getTreeViewer().setExpandedState(curItem.getParent(), true);
+//								getTreeViewer().refresh(curItem,false);
+//								curItem = curItem.getParent();
+//							}
+							
 						}							
 					}			
 			//}
