@@ -461,7 +461,6 @@ public class CFParser {
 			        	}
 			        }
 			    }
-			    
 			    // If we found a closer, we want to remove any unclosed hybrids.
 			    if (foundCloser) {
 			
@@ -984,36 +983,16 @@ public class CFParser {
 				
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
-					if(matchStr.charAt(1) == '/'|| (matchStr.charAt(1) == '/') && handleClosingTag(match, matchStack)) {
+					if(matchStr.charAt(1) == '/') {
 						// added handleClosingTag check to above for cases where a tag is "open" ex: <cfmail >
 						if(!handleClosingTag(match, matchStack)) {						    
 							return null;
 						}
-					}
-					else {
-					    int tagEnd = -1;
-					    Pattern p = Pattern.compile("[ \\t\\r\\n]");
-					    Matcher m = p.matcher(matchStr);
-					    if (m.find()) {
-					        tagEnd  = m.end()-1;
-					    }
-					    
-					    /*
-						tagEnd = matchStr.indexOf(" ");	// Look for the first space
-						int tabIndex = matchStr.indexOf("\t"); // Check if there's a tab before the space
-						
-						if (tabIndex > 0 
-						        && (tabIndex < tagEnd || tagEnd < 0)) {
-						    
-						    tagEnd = tabIndex;
-						}
-						*/
-						if(tagEnd == -1) {
-							// No spaces, therefore it has no attributes (i.e. <cfscript>)
-							tagEnd = matchStr.indexOf(">");
-						}
-						String tagName = match.match.substring(0, tagEnd);
-						
+					} else {
+						// get just tag name, e.g. : <cffunction name="blah" becomes cffunction
+						String tagName = matchStr.split("[ |>]")[0].replace("/", "");
+						tagName = "<"+tagName.substring(1, tagName.length());
+						int tagEnd = matchStr.indexOf(tagName)+tagName.length();
 						boolean isACloser = false;
 						//
 						// Find the end of the tag
@@ -1032,8 +1011,6 @@ public class CFParser {
 						// Handle a self-closer (i.e. <cfproperty ... />
 						String attributes = "";						
 						if(match.match.charAt(currPos-1) == '/') {
-							if(tagName.indexOf("/") != -1)
-								tagName = tagName.substring(0, tagName.length()-1); // Is a self-closer (i.e. <br/>)
 							isACloser = true;
 							if(match.match.length() - tagEnd >= 2)
 								attributes = match.match.substring(tagEnd, match.match.length()-2); // minus one to strip the closing '/>'
@@ -1044,9 +1021,16 @@ public class CFParser {
 						switch(match.getMatchType())
 						{
 							case MATCHER_CFMLTAG:
-								
-								handleCFTag(tagName, match, matchStack,
-											stripAttributes(attributes, match.lineNumber, tagEnd,match), isACloser);
+								handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd, match), isACloser);
+								if((tagName.startsWith("<cfif") || tagName.startsWith("<cfelseif")) && attributes.trim().length() == 0){
+										userMessage(0, 
+												"stripAttributes", "if statements require conditions", 
+												USRMSG_ERROR, match);			
+								}
+								// trim all tag attributes <cffunction name="blah" becomes cffunction
+								//closerName = closerName.substring(1, closerName.length());
+								//matchStack.push((DocItem)matchStack.get(matchStack.size()-1));
+
 								break;
 							case MATCHER_CFMLCOMMENT:
 								//System.out.println("CFParser::createDocTree() - Got a CFML comment!");
@@ -1076,7 +1060,6 @@ public class CFParser {
 					}
 				}
 			}
-			
 			//newDoc.docTree = matchStack;
 			
 		}
@@ -1099,14 +1082,14 @@ public class CFParser {
 			anyException.printStackTrace();
 			////System.out..println(anyException.hashCode());
 		}
-		handleUnclosedCustomTags(matchStack,rootItem);
+		handleUnclosedTags(matchStack,rootItem);
 		
 		newDoc.setDocumentRoot(rootItem);
 		return newDoc;
 	}
 	
 	
-	private void handleUnclosedCustomTags(Stack matchStack, DocItem defaultParent) {
+	private void handleUnclosedTags(Stack matchStack, DocItem defaultParent) {
 		try {
 			// If we've got more than one item left on the stack check if any of the remaining items are unclosed custom tags
 			if (matchStack.size() > 1) {
@@ -1114,11 +1097,12 @@ public class CFParser {
 					TagItem t = (TagItem)matchStack.peek();
 					String tagName = t.getName();
 					//System.out.println("Looking at " + tagName);
-					// Look for either cfml or cfx custom tags that got left over.
-					if (tagName.toLowerCase().startsWith("cf_") 
-							|| tagName.toLowerCase().startsWith("cfx_")) {
+					// Look for tags that got left over.
+					if (tagName.toLowerCase().startsWith("cf") ) {
 						// Mark them as being self closers.
-						((CfmlCustomTag)t).hasCloser= false;
+						if (tagName.toLowerCase().startsWith("cf_") || tagName.toLowerCase().startsWith("cfx_")) {
+							((CfmlCustomTag)t).hasCloser= false;
+						}  
 						// Get the current parent of the tag.
 						DocItem parent = t.getParent();
 						if (parent == null) {
@@ -1149,6 +1133,15 @@ public class CFParser {
 					}
 				}
 				
+			}
+			// any tags left will be unclosed tags that should be closed
+			while(matchStack.size() > 1) //leave the doc root
+			{				
+				TagItem orphanTag = (TagItem)matchStack.pop();
+				parserState.addMessage(new ParseError(
+						orphanTag.getLineNumber(), orphanTag.getStartPosition(), orphanTag.getEndPosition(), orphanTag.getName(), 
+						orphanTag.getName() + " is missing a closing tag"
+					));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
