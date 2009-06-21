@@ -724,7 +724,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 		//configures defaults?
 		hideCursorLine();
 		try {
-		if (fCursorLinePainter == null) {
+		if (fCursorLinePainter == null || fSourceViewer != null) {
 			if (fSourceViewer instanceof ITextViewerExtension2) {
 				fCursorLinePainter= new CursorLinePainter(fSourceViewer);
 				fCursorLinePainter.setHighlightColor(getColor(fCursorLinePainterColorKey));

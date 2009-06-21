@@ -1773,12 +1773,10 @@
 	</extension>
 
 	<extension point="org.eclipse.core.resources.markers"
-		id="org.cfeclipse.cfml.occurrenceMarker"
-		name="%OccurrenceAnnotation.label">
-		<super type="org.eclipse.core.resources.problemmarker" />
+		id="org.cfeclipse.cfml.occurrencemarker"
+		name="%occurrencemarker.label">
 		<super type="org.eclipse.core.resources.textmarker"/>
-		<persistent value="false"/>
-		<attribute name="location"/>
+		<persistent value="true"/>
 	</extension>
 
     <extension point="org.eclipse.ui.editors.annotationTypes">
@@ -1789,7 +1787,7 @@
     		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
 
     	<type name="org.cfeclipse.cfml.occurrenceAnnotation"
-    		markerType="org.cfeclipse.cfml.occurrenceMarker"
+    		markerType="org.cfeclipse.cfml.occurrencemarker"
     		super="org.eclipse.ui.workbench.texteditor.info"
     		 markerSeverity="0" />
 
@@ -1834,7 +1832,7 @@
 
 	  <specification
             annotationType="org.cfeclipse.cfml.occurrenceAnnotation"
-            label="%OccurrenceAnnotation.label"
+            label="%occurrencemarker.label"
             icon="icons/ctool16/showandselect.gif"            
             textPreferenceKey="occurrenceAnnotation.text"
             textPreferenceValue="true"
@@ -1846,10 +1844,10 @@
 			overviewRulerPreferenceValue="true"
             verticalRulerPreferenceKey="occurrenceAnnotation.IndicationInVerticalRuler"
 			verticalRulerPreferenceValue="true"
-            symbolicIcon="occurrence"
+            symbolicIcon="info"
             colorPreferenceKey="occurrenceAnnotation.color"
             colorPreferenceValue="212,212,212"
-            presentationLayer="5"
+            presentationLayer="4"
             showInNextPrevDropdownToolbarActionKey="showOccurrenceInNextPrevDropdownToolbarAction"
             showInNextPrevDropdownToolbarAction="true"
             isGoToNextNavigationTargetKey="isOccurrenceGoToNextNavigationTarget"

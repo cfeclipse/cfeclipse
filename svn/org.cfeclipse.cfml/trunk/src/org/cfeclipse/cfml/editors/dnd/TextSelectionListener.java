@@ -136,7 +136,7 @@ public class TextSelectionListener implements MouseListener,
 	 */
 	private boolean downUp = false;
 
-    private static String TYPE = "org.cfeclipse.cfml.occurrenceMarker";
+    private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
 	//private static String TYPE = "org.eclipse.core.resources.textmarker";
 	//private static String TYPE = "org.cfeclipse.cfml.parserWarningMarker";
 

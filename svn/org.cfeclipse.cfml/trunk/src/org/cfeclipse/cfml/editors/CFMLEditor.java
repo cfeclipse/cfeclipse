@@ -998,6 +998,8 @@ public class CFMLEditor extends TextEditor implements
 			try {
 				if(cfcontentOutlineView == null) {	
 					cfcontentOutlineView = new CFContentOutlineView();
+				} else {
+					cfcontentOutlineView.reload();
 				}
 				return cfcontentOutlineView;
 			} catch (Exception e) {
