@@ -44,6 +44,8 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -237,7 +239,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	 */
 	public DocItem getItemFromPosition(int startPos) {
 		DocItem rootItem = getRootInput();
-		CFNodeList nodes = rootItem.selectNodes("");
+		CFNodeList nodes = rootItem.selectNodes("//*");
 		Iterator i = nodes.iterator();
 		while(i.hasNext())
 		{
@@ -300,6 +302,8 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		//can't do much if nothing is selected
 		if(item != null) 
 		{
+			//getTreeViewer().expandToLevel(new StructuredSelection(item), 1);
+			//getTreeViewer().reveal(new StructuredSelection(item));
 			getTreeViewer().setSelection(new StructuredSelection(item), true);
 		}		
 	}
@@ -340,6 +344,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		if(selecteditem == null) return;
 		
 		ITextEditor editor = (ITextEditor)iep;
+		//editor.setHighlightRange(selecteditem.getStartPosition(),selecteditem.getMatchingItem().getEndPosition(),true);
 		editor.setHighlightRange(selecteditem.getStartPosition(),0,true);
 	}
 	
@@ -649,16 +654,18 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			// this change will file the selection changed event.  This bool prevents a line jump
 			changeCameFromEditor = true;
 			CFMLEditor curDoc = (CFMLEditor) workbench.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+			ICFDocument cfd = (ICFDocument) curDoc.getDocumentProvider().getDocument(curDoc.getEditorInput());
 			//if(curDoc instanceof CFMLEditor){
 				ITextSelection tselection = (ITextSelection)selection;
-				int startPos = tselection.getOffset();
-				ICFDocument cfd = (ICFDocument) curDoc.getDocumentProvider().getDocument(curDoc.getEditorInput());
-				DocItem cti = (DocItem)cfd.getTagAt(startPos, startPos, true);				
-				if (cti != null) {
-					if(linkWithEditor) {
-						setSelectedDocItem(getItemFromPosition(cti.getStartPosition()));
-					}							
-				}			
+				int startPos;
+//					startPos = cfd.getLineOffset(tselection.getStartLine())+1;
+					startPos = tselection.getOffset()+1;
+					DocItem cti = (DocItem)cfd.getTagAt(startPos, startPos, true);				
+					if (cti != null) {
+						if(linkWithEditor) {
+							setSelectedDocItem(cti);
+						}							
+					}			
 			//}
 		}
 	}
