@@ -1,4 +1,14 @@
-<project name="Publish  CFEclipse Plugin" default="update-nightly" basedir=".">
+<project name="Publish  CFEclipse Plugin" default="update-nightly" basedir="." >
+
+	<taskdef resource="net/jtools/classloadertask/antlib.xml"
+	                classpath="lib/ant-classloadertask.jar"/>
+
+	<classloader loader="project">
+		<classpath>
+			<fileset dir="lib/" includes="js*.jar"/>
+		</classpath>
+	</classloader>
+
 
 	<target name="init">
 		<!-- publish.properties must live in this directory, and it must contain
@@ -25,7 +35,7 @@
 			</scp>
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/web" trust="true" verbose="true">
 				<fileset dir="web" />
-			</scp>			
+			</scp>
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/plugins/" trust="true" verbose="true">
 				<fileset dir="plugins" includes="*.jar">
 					<date datetime="${filefilter}" when="after" />
