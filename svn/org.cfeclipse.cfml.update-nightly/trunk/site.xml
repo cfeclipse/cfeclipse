@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.qualifier.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.qualifier">
+      <category name="CFEclipse Nightly Build"/>
+   </feature>
+   <feature url="features/org.cfeclipse.cfml.docsharesupport35.feature_1.0.0.qualifier.jar" id="org.cfeclipse.cfml.docsharesupport35.feature" version="1.0.0.qualifier">
+      <category name="CFEclipse Nightly Build"/>
+   </feature>
+   <feature url="features/org.cfeclipse.cfml.feature_1.3.4.qualifier.jar" id="org.cfeclipse.cfml.feature" version="1.3.4.qualifier">
+      <category name="CFEclipse Nightly Build"/>
+   </feature>
+   <category-def name="CFEclipse Nightly Build" label="CFEclipse Nightly Build">
+      <description>
+         CFEclipse Nightly Build
+      </description>
+   </category-def>
+</site>
