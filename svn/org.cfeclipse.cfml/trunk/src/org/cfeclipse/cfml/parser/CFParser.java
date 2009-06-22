@@ -142,10 +142,11 @@ public class CFParser {
 	 *  (\w+\s?=\s?)?((\x22|\x27)((?!\3).|\3{2})*\3?(.*&.*)?)
 	 *  bester (gets: [blah=] [fun & "wee ""hoo"" you!" & whatever])  we'll roll with this!
 	 *  (\w+\s?=\s?)?((((\w+ & )?\x22|\x27)((?!\4).|\4{2})*\4?(.*&.*)?))
-	 * 
-
+	 *  bestest (captures woo= #hoo# stuff too!)
+	 *  (\w+)[\s?=\s?]+?((((\w+ & )?\x22|\x27|#)((?!\4).|\4{2})*\4?(.*&.*)?))
 	 */
-	static protected final String REG_ATTRIBUTES = "(\\w+\\s?=\\s?)?((((\\w+ & )?\\x22|\\x27)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
+
+	static protected final String REG_ATTRIBUTES = "(\\w+)[\\s?=\\s?]+?((((\\w+ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
 	
 	
 	static protected final int USRMSG_INFO 		= 0x00;
@@ -386,7 +387,7 @@ public class CFParser {
 		    	
 			    attributeName = matcher.group(1).trim();
 			    // denny added because param ends with "=" due to his regex
-			    attributeName = attributeName.substring(0,attributeName.length()-1).trim();
+			    attributeName = attributeName.substring(0,attributeName.length());
 			    attributeValue = matcher.group(2).trim();
 			    attributeValue = attributeValue.substring(1,attributeValue.length()-1);
 			    newAttr = new AttributeItem(lineNum, offset + matcher.start(1), offset + matcher.end(1),
