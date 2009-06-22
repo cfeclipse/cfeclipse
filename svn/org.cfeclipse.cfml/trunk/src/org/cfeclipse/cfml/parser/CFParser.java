@@ -386,7 +386,7 @@ public class CFParser {
 		    	
 			    attributeName = matcher.group(1).trim();
 			    // denny added because param ends with "=" due to his regex
-			    attributeName = attributeName.substring(0,attributeName.length()-1);
+			    attributeName = attributeName.substring(0,attributeName.length()-1).trim();
 			    attributeValue = matcher.group(2).trim();
 			    attributeValue = attributeValue.substring(1,attributeValue.length()-1);
 			    newAttr = new AttributeItem(lineNum, offset + matcher.start(1), offset + matcher.end(1),
