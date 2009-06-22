@@ -34,8 +34,8 @@ public class BrowserPreferencePage extends FieldEditorPreferencePage implements
 		else {
 			addField(new FileFieldEditor(BrowserPreferenceConstants.P_PRIMARY_BROWSER_PATH, "Primary Browser",getFieldEditorParent()));
 			addField(new FileFieldEditor(BrowserPreferenceConstants.P_SECONDARY_BROWSER_PATH, "Secondary Browser",getFieldEditorParent()));
-			addField(new StringFieldEditor(BrowserPreferenceConstants.P_TESTCASE_QUERYSTRING, "Querystring for TestCases",getFieldEditorParent()));
 		}
+		addField(new StringFieldEditor(BrowserPreferenceConstants.P_TESTCASE_QUERYSTRING, "Querystring for TestCases",getFieldEditorParent()));
 	}
 
 	public void init(IWorkbench workbench) {
