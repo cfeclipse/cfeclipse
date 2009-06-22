@@ -1219,7 +1219,7 @@
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		
 		<!-- Hash Variable -->
-		<key sequence="M1+3"
+		<key sequence="M1+M2+H"
 			commandId="org.cfeclipse.cfml.editors.actions.CFVariable"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
