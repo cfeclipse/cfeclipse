@@ -116,8 +116,6 @@ public class CfmlTagItem extends TagItem {
 		
 		Tag tag = syntax.getTag(itemName);
 		
-		System.out.println("Attribute Name: |" + newAttr.getName() + "|");
-		
 		if (tag == null || !tag.allowsAnyAttribute()) {
 			Set attributes = syntax.getFilteredAttributes(this.itemName.toLowerCase(), newAttr.getName());
 			
