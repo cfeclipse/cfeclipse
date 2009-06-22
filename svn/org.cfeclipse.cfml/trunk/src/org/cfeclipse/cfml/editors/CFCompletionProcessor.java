@@ -658,7 +658,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 					name = ((ScopeVar)obj[i]).getValue();
 					display = ((ScopeVar)obj[i]).toString();
 					help = ((ScopeVar)obj[i]).getHelp();
-//					//System.out.println("Scope var found with name " + name);
+					//System.out.println("Scope var found with name " + name);
 				}
 				else if(obj[i] instanceof Function) 
 				{

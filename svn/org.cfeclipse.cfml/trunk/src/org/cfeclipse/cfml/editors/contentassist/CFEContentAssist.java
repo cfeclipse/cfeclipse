@@ -197,12 +197,12 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 					name = ((ScopeVar)obj[i]).getValue();
 					display = ((ScopeVar)obj[i]).toString();
 					help = ((ScopeVar)obj[i]).getHelp();
-// System.out.println("Scope var found with name " + name);
+					// System.out.println("Scope var found with name " + name);
 				} else if(obj[i] instanceof Function) {
 					name = ((Function)obj[i]).getInsertion();
 					display = ((Function)obj[i]).getInsertion();
 					help = ((Function)obj[i]).getHelp();
-// System.out.println("Function found with name " + name);
+					//System.out.println("Function found with name " + name);
 					// Dirty hack
 					currentlen=0;
 				} else if(obj[i] instanceof String) {

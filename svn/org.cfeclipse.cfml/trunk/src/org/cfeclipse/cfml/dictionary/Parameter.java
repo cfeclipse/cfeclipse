@@ -136,7 +136,7 @@ public class Parameter implements Comparable {
 	 * @author Mark Drew
 	 * 
 	 * @param availParams
-	 * @return wheter its required
+	 * @return whether its required
 	 */
 	public int isRequired(HashMap availParams){
 		
@@ -146,7 +146,6 @@ public class Parameter implements Comparable {
 			//System.out.println(" no params, triggered & required");
 			return PARAM_REQUIRED | PARAM_TRIGGERED;
 		}
-		
 		
 		Iterator trigIter = triggers.iterator();
 		
@@ -185,7 +184,7 @@ public class Parameter implements Comparable {
 	public Parameter(String name, String type)
 	{
 		this(name);
-		this.type = type;
+		this.type = type.toLowerCase();
 	}
 	
 	public Parameter(String name, String type, boolean required)
@@ -235,7 +234,7 @@ public class Parameter implements Comparable {
 	public void setNameAndType(String name, String type)
 	{
 		this.name = name;
-		this.type = type;
+		this.type = type.toLowerCase();
 	}
 	
 	/**
@@ -254,7 +253,6 @@ public class Parameter implements Comparable {
 	{
 		if(this.values == null)
 			return new HashSet();
-
 		
 		//System.err.println("Parameter::getValues() - I have " + values.size() + " elements");
 		return values;

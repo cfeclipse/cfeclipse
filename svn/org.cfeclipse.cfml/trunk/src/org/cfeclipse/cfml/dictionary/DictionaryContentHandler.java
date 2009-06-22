@@ -283,7 +283,7 @@ public class DictionaryContentHandler implements ContentHandler {
 		}
 		
 		//System.out.println("Param: " + name + " " + type + " " + required);
-		//
+		
 		// Create a new parameter and store it as the current parameter
 		this.paramItem = new Parameter(name,type,required,defaultValue, category);
 	}
@@ -320,9 +320,18 @@ public class DictionaryContentHandler implements ContentHandler {
 		//
 	    // Create a new value and assign it to the current parameter
 		String option = attributes.getValue(0);
-
-		if(option != null && paramItem != null)
+		
+		if(option != null && paramItem != null) {
+			// If this is an option for a function and it is supposed to be a string add the quotes
+			// But, don't want to add the quotes if it is is a function call
+			if(currentitem instanceof Function
+				&& paramItem.getType().equals("string") 
+				&& !option.matches("[a-zA-Z0-9]*\\(.*\\)")) {
+				option = "'" + option + "'";
+			}
+			
 			paramItem.addValue(new Value(option));
+		}
 	}
 	
 	private void handleValueEnd() {

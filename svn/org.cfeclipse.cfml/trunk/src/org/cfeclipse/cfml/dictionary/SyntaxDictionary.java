@@ -235,12 +235,11 @@ public abstract class SyntaxDictionary {
 		        Object o = i.next();
 		        if (functions.get(o) instanceof Function) {
 		            Function f = (Function)functions.get(o);
-		            //System.out.println("Found function " + f.getName());
+		            // System.out.println("Found function " + f.getName());
 		            if(f.getName().equalsIgnoreCase(functionName)) {
 		                return f.getParameters();
 		            }
 		        }
-		        //System.out.println("Entry: " + functions.get(o).getClass().getName());
 		    }
 	    }
 	    catch (Exception e) {
