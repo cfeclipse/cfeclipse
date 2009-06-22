@@ -1,4 +1,4 @@
-<project name="Publish  CFEclipse Plugin" default="SendToBeta" basedir=".">
+<project name="Publish  CFEclipse Plugin" default="update-nightly" basedir=".">
 
 	<target name="init">
 		<!-- publish.properties must live in this directory, and it must contain
@@ -7,11 +7,7 @@
 
 	</target>
 
-	<target name="SendToBeta" depends="init">
-		<push remotedir="beta" />
-	</target>
-
-	<target name="SendToProduction" depends="init">
+	<target name="update-nightly" depends="init">
 		<push remotedir="update-nightly" />
 	</target>
 
