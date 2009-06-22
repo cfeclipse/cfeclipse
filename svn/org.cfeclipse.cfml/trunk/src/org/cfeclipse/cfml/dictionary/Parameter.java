@@ -178,31 +178,30 @@ public class Parameter implements Comparable {
 		
 	public Parameter(String name)
 	{
-		this.name = name;
+		this.name = name.trim();
 	}
 	
 	public Parameter(String name, String type)
 	{
-		this(name);
-		this.type = type.toLowerCase();
+		this.setNameAndType(name, type);
 	}
 	
 	public Parameter(String name, String type, boolean required)
 	{
-		this(name,type);
+		this.setNameAndType(name, type);
 		this.required = required;
 	}
 	
 	public Parameter(String name, String type, boolean required, String defaultValue)
 	{
-		this(name,type);
+		this.setNameAndType(name, type);
 		this.required = required;
 		this.defaultValue = defaultValue;
 	}
 	
 	public Parameter(String name, String type, boolean required, String defaultValue, String category)
 	{
-		this(name,type);
+		this.setNameAndType(name, type);
 		this.required = required;
 		this.defaultValue = defaultValue;
 		this.category = category;
@@ -233,7 +232,7 @@ public class Parameter implements Comparable {
 	 */
 	public void setNameAndType(String name, String type)
 	{
-		this.name = name;
+		this.name = name.trim();
 		this.type = type.toLowerCase();
 	}
 	

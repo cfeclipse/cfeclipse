@@ -49,7 +49,6 @@ public class CfmlTagItem extends TagItem {
 	 */
 	public boolean IsSane() {
 		//staticLookups
-
 		
 		HashMap suggestedAttributes = new HashMap();
 		
@@ -61,50 +60,38 @@ public class CfmlTagItem extends TagItem {
 			String attributeName = (String) iter.next();
 			AttributeItem attributeValue = (AttributeItem)itemAttributes.get(attributeName);
 			suggestedAttributes.put(attributeName, attributeValue.getValue());
-			
 		}
-
 		
 		Set attributes = syntax.getElementAttributes(this.itemName);
 		
-		
-		
-		if(attributes == null){
+		if(attributes == null) {
 			return super.IsSane();
 		}
 		
 		Object[] params = attributes.toArray();
-
+		
 		if(itemAttributes.size() > 0) {
 			attributesFound = " (Found: "+ itemAttributes.keySet().toString() + ")";
 		}
-
 		
-		for(int i = 0; i < params.length; i++)
-		{
+		for(int i = 0; i < params.length; i++) {
 			Parameter currParam = (Parameter)params[i];
 			
-			if(currParam.isRequired() && !(itemAttributes.containsKey(currParam.getName().toLowerCase()) || itemAttributes.containsKey(currParam.getName().toUpperCase())))
-			{
-					this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-						 "The attribute \'" + currParam.getName() + "\' is compulsory for the <" + this.itemName + "> tag." + attributesFound));
+			if(currParam.isRequired() && !(itemAttributes.containsKey(currParam.getName().toLowerCase()) || itemAttributes.containsKey(currParam.getName().toUpperCase()))) {
+				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+					"The attribute \'" + currParam.getName() + "\' is compulsory for the <" + this.itemName + "> tag." + attributesFound));
 			}
 			
 			if(!currParam.getTriggers().isEmpty()  && currParam.isRequired(suggestedAttributes) == 3 && !itemAttributes.containsKey(currParam.getName())){
-				
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-						"The attribute \'" + currParam.getName() + "\' is required for the <" + this.itemName + "> tag." + attributesFound));
-			}
-			else if (!currParam.getTriggers().isEmpty()  && currParam.isTriggered(suggestedAttributes) == 0 && itemAttributes.containsKey(currParam.getName())) {
+					"The attribute \'" + currParam.getName() + "\' is required for the <" + this.itemName + "> tag." + attributesFound));
+			} else if (!currParam.getTriggers().isEmpty()  && currParam.isTriggered(suggestedAttributes) == 0 && itemAttributes.containsKey(currParam.getName())) {
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-						"The attribute \'" + currParam.getName() + "\' is not valid for the <" + this.itemName + "> tag." + attributesFound));
+					"The attribute \'" + currParam.getName() + "\' is not valid for the <" + this.itemName + "> tag." + attributesFound));
 			}
-			//now check for items that shouldnt be there, i.e. are NOT triggered
-			
-			
 		}
+		
 		return super.IsSane();
-	
 	}
 	/**
 	 * Determines whether the child is valid or not.
@@ -128,16 +115,19 @@ public class CfmlTagItem extends TagItem {
 		boolean addOkay = true;
 		
 		Tag tag = syntax.getTag(itemName);
-		if (tag == null 
-		        || !tag.allowsAnyAttribute()) {
+		
+		System.out.println("Attribute Name: |" + newAttr.getName() + "|");
+		
+		if (tag == null || !tag.allowsAnyAttribute()) {
 			Set attributes = syntax.getFilteredAttributes(this.itemName.toLowerCase(), newAttr.getName());
-			if(attributes.size() == 0)
-			{
+			
+			if(attributes.size() == 0) {
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-											 "Attribute \'" + newAttr.getName() + "\' is not valid."));
+					"Attribute \'" + newAttr.getName() + "\' is not valid."));
 				addOkay = false;	// While it's incorrect we still wish to add it to the item
 			}
 		}
+		
 		addOkay = super.addAttribute(newAttr) && addOkay;
 		
 		return addOkay;

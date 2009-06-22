@@ -58,7 +58,7 @@ public class AttributeItem extends DocItem {
 	 */
 	public AttributeItem(int line, int startDocPos, int endDocPos, String name, String value) {
 		super(line, startDocPos, endDocPos, name);
-		this.attrValue = value;
+		this.attrValue = value.trim();
 	}
 	
 	/**
