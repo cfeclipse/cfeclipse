@@ -30,7 +30,7 @@ import org.eclipse.jface.text.source.ICharacterPairMatcher;
 import org.eclipse.jface.text.source.IOverviewRuler;
 import org.eclipse.jface.text.source.ISharedTextColors;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.jface.text.source.AnnotationPainter.HighlightingStrategy;
+//import org.eclipse.jface.text.source.AnnotationPainter.HighlightingStrategy;
 import org.eclipse.jface.text.source.AnnotationPainter.IDrawingStrategy;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -179,8 +179,10 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 	/**
 	 * The box drawing strategy.
 	 * @since 3.0
+	 * 
+	 * this fails in 3.3 for some reason
 	 */
-	private static HighlightingStrategy fgHLStrategy = new AnnotationPainter.HighlightingStrategy();
+	//private static HighlightingStrategy fgHLStrategy = new AnnotationPainter.HighlightingStrategy();
 	
 	/**
 	 * The null drawing strategy.
