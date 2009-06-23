@@ -129,14 +129,13 @@ public class CFParser {
 
 	/*
 	 * Various "almost" regexes, might have to use something dynamical-er :-/
-
 	 * this gets any double-quote/apos escaped strings ("woo ""hoo"" man!"  or ' ''blah''! ')
 	 *  (\x22|\x27)((?!\1).).*((\1{2})+.*)\1
 	 * 
 	 * this one is super close -- gets any string var, just can't get the attrib name first :(
 	 *  (\x22|\x27)((?!\1).|\1{2})*\1
 	 *  
-	 *  Wholy crap, right?  Maybe better to split it?  gets: [blah] = "wee ""hoo"" you!", etc. but no &s  
+	 *  Holy crap, right?  Maybe better to split it?  gets: [blah] = "wee ""hoo"" you!", etc. but no &s  
 	 *  (\w+\s?=)?((\w+\s?\&\s?)?([\&?\w?\s?&\s?\&?]?\x22|\x27)((?!\4).|\4{2})*\4(\s?&?\s?\w+\s?&?\s)?)
 	 *  same, but better
 	 *  (\w+\s?=\s?)?((\x22|\x27)((?!\3).|\3{2})*\3?(.*&.*)?)
@@ -145,9 +144,7 @@ public class CFParser {
 	 *  bestest (captures woo= #hoo# stuff too!)
 	 *  (\w+)[\s?=\s?]+?((((\w+ & )?\x22|\x27|#)((?!\4).|\4{2})*\4?(.*&.*)?))
 	 */
-
-	static protected final String REG_ATTRIBUTES = "(\\w+)[\\s?=\\s?]+?((((\\w+ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
-	
+	static protected final String REG_ATTRIBUTES = "(\\w+\\s?\\w+)?=\\s?((((\\w+ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
 	
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
