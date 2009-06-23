@@ -65,7 +65,7 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
  * @author Rob
  *
  * This is a simple completion processor (also called code insight) it shows the
- * little window with possible completion suggestions. - handles Tags, attribtues,
+ * little window with possible completion suggestions. - handles Tags, attributes,
  * and functions for the coldfusion language only (at present).
  */
 public class CFCompletionProcessor implements IContentAssistProcessor {
@@ -78,14 +78,8 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	/** scope type */
 	private static final short SCOPETYPE = 3;
 	
-	//private Pattern pattern = Pattern.compile("[^a-z.]$",Pattern.CASE_INSENSITIVE);
-	
-	
-	
-	//private ContentAssistant assistant;
-	
 	protected IContextInformationValidator validator = new Validator();
-		
+	
 	/**
 	 * Startup the completer
 	 */
@@ -106,40 +100,38 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 */
 	protected ICompletionProposal[] getAttributeValueProposals(
 		SyntaxDictionary syntax, String inputText, int indexOfFirstSpace, 
-		int docOffset, IDocument doc)
-	{
+		int docOffset, IDocument doc) {
+		
 		int lastSpace = inputText.lastIndexOf(" ");
 		int quotes = inputText.lastIndexOf("\"");
 		String valueSoFar = "";
-		if(quotes != -1)
-		{
+		
+		if(quotes != -1) {
 			// Attribute entered, user is typing.
 			valueSoFar = inputText.substring(quotes+1, inputText.length());
-		}
-		else
+		} else {
 			quotes = inputText.length() - 2;
+		}
 		
 		String attribute = inputText.substring(lastSpace+1, quotes-1);
 		String tag = inputText.substring(0, indexOfFirstSpace);
 		
-		//System.err.println("I think I need to be looking up: " + attribute);
-		//System.err.println("Tag I think I have is \'" + tag + "\'");
+		System.err.println("I think I need to be looking up: " + attribute);
+		System.err.println("Tag I think I have is \'" + tag + "\'");
 
 		Set attrProps = ((ISyntaxDictionary)syntax).getFilteredAttributeValues(tag, attribute, valueSoFar);
+		
 		if(attribute.compareToIgnoreCase("template") == 0) {
 			TreeSet suggestions = new TreeSet();
+			
 			if(doc instanceof ICFDocument) {
 				IResource res = ((ICFDocument)doc).getResource();
 				IPath folder = res.getFullPath().removeLastSegments(1);
 				folder = folder.append(valueSoFar);
 				valueSoFar = "";
-// System.out.println("OS Path: \'" + folder.toOSString() + "\'");
 				IFolder folderRes = res.getWorkspace().getRoot().getFolder(folder);
 				
-				if(folderRes == null) {
-// System.out.println("Folder is null!");
-				} else {
-// System.out.println("Got folder: \'" + folderRes.getName() + "\'");
+				if(folderRes != null) {
 					try {
 						IResource children[] = folderRes.members();
 						for(int i = 0; i < children.length; i++) {
@@ -153,12 +145,12 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 						ex.printStackTrace();
 					}
 				}
+				
 				attrProps.addAll(suggestions);
 			}
 		}
-		if(attrProps != null/* && attrProps.size() > 0*/)
-		{
-
+		
+		if(attrProps != null) {
 			if(attrProps.size() > 0 && ((Value)attrProps.toArray()[0]).getValue().compareTo(valueSoFar) == 0)
 				return null;
 			
@@ -169,10 +161,11 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				VALUETYPE,
 				valueSoFar.length()
 			);
-			
-		}	
+		}
+		
 		return null;
 	}
+	
 	/**
 	 * for tag, attribute, value, insight and auto close ... um this might be 
 	 * getting out of control
@@ -184,61 +177,40 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
 		int documentOffset) {
 		
-		try
-		{
+		try {
 			String limiting = "";			// attributes typed text (if it exists)
-			//String tagnamespace = ""; 		// often 'cf' for cf tags
 			boolean cftag = false;			// assume its not a cftag
 			boolean httag = false;			// assume it's not an HTML tag
 			String invoker = "";
 			IDocument document = viewer.getDocument();
 			String currPartitionType = document.getPartition(documentOffset).getType();
-			//String prevPartitionType = document.getPartition(documentOffset -1).getType();
 			String tagname = "";
 			int start = 0;
 			
-			if(documentOffset > 0)	// Get the text that invoked content assist
+			// Get the text that invoked content assist
+			if(documentOffset > 0) {
 				invoker = document.get(documentOffset-1,1);
-			
-// System.out.println("CFCOMPLETIONPROCESSOR - CALLED! BAD BAD BAD BAD!");
+			}
 			
 			//this is because when they hit > it often moves them into
 			//another partiton type - so get the last partition
-			if(invoker.equals(">"))
+			if(invoker.equals(">")) {
 				start = document.getPartition(documentOffset - 1).getOffset();
-			else if (invoker.equals(".")) {
-			    /*
-			    String text = document.get(0,documentOffset);
-			    Matcher matcher = pattern.matcher(text);
-			    
-// System.out.println("Searching for start of scope vars from " + documentOffset);
-			    
-			    if (matcher.find()) {
-// System.out.println("Matcher found " + matcher.group());
-			    }
-			    */
-
-			    FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(document);
+			} else if (invoker.equals(".")) {
+				FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(document);
 				IRegion region = finder.find(documentOffset-2,"[^a-z.]",false,false,false,true);
-				if (region != null) {
-				    start = region.getOffset()+1;
-				    
-				    //System.out.println("Start set to " + start);
-				}
 				
-			    
-				//System.out.println("Start is " + start);
-			}
-			else {
+				if (region != null) {
+					start = region.getOffset()+1;
+				}
+			} else {
 				start = document.getPartition(documentOffset).getOffset();
 				if(currPartitionType.compareToIgnoreCase(CFPartitionScanner.J_SCRIPT) == 0) {
 					start+= 8;
 				}
 			}
-						
-			String prefix =	eliminateUnwantedChars(document.get(start, documentOffset - start));
 			
-
+			String prefix =	eliminateUnwantedChars(document.get(start, documentOffset - start));
 			
 			///////////////////////////////////////////////////////////////////
 			
@@ -246,47 +218,39 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			StringTokenizer st = new StringTokenizer(prefix," ");
 			StringTokenizer st2 = new StringTokenizer(prefix," ");
 			
-			
 			//if st has nothing then we got called by mistake or something just
 			//bail out
-		//// System.out.println("Prefix: \'" + prefix + "\'");
 			tagname = (!st.hasMoreTokens()) ? prefix : st.nextToken();
-		//// System.out.println("tagname: \'" + tagname + "\'");
 			
 			//looks like this is just here to skip, but it causes a 
-			//java.util.NoSuchElementException sometimes so I am just throwning the
+			//java.util.NoSuchElementException sometimes so I am just throwing the
 			//hasMore as a quick pactch
-			if(st2.hasMoreTokens())
+			if(st2.hasMoreTokens()) {
 				st2.nextToken();
-
-			Set attribs = new HashSet();
-
-			String[] fullAttrib;
-			String attribName = "";
-			while(st2.hasMoreTokens()) {
-			    fullAttrib = st2.nextToken().split("=");
-			    if (fullAttrib.length > 1 && fullAttrib[1].length() > 1) {
-				    attribName = fullAttrib[0];
-				    attribs.add(attribName.trim());
-			    }
 			}
 			
-
-			//if the tagname has the possibility of being a cf tag
-			if(tagname.trim().length() >= 3)
-			{
-				//clean it up for our lookup
-				if(prefix.trim().substring(0,3).equalsIgnoreCase("<cf"))
-				{
-					cftag = true;
-					//tagnamespace = "cf";
-					//should now have just the lookup key : "abort" for example
-					tagname = tagname.trim().substring(3);
+			Set attribs = new HashSet();
+			String[] fullAttrib;
+			String attribName = "";
+			
+			while(st2.hasMoreTokens()) {
+				fullAttrib = st2.nextToken().split("=");
+				
+				if (fullAttrib.length > 1 && fullAttrib[1].length() > 1) {
+					attribName = fullAttrib[0];
+					attribs.add(attribName.trim());
 				}
 			}
 			
-			if(tagname.trim().startsWith("<"))
-			{	// Gets the HTML syntax dictionary (CF tags will have been handled above,
+			//if the tagname has the possibility of being a cf tag
+			if(tagname.trim().length() >= 3 && prefix.trim().substring(0,3).equalsIgnoreCase("<cf")) {
+				// found a CF tag
+				cftag = true;
+				
+				// Trim to just the lookup key : "cfabort" => "abort"
+				tagname = tagname.trim().substring(3);
+			} else if(tagname.trim().startsWith("<")){
+				// Gets the HTML syntax dictionary (CF tags will have been handled above,
 				// therefore they won't have an open chevron)).
 				httag = true;
 				tagname = tagname.trim().substring(1);
@@ -294,25 +258,24 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			
 			//if this was a <booga> type tag remove the last >
 			//so we can look up the tag and see if it needs a closer
-			if(tagname.endsWith(">")) 
+			if(tagname.endsWith(">")) {
 				tagname = tagname.substring(0,tagname.length()-1);
+			}
 			
-			//if this is an attribtue, limiting should have the last
-			//entered text (the part we shall filter attribtues on)
-			while(st.hasMoreTokens())
-			{
-				//in the end should have the thing to limit with
+			//if this is an attribute, limiting should have the last
+			//entered text (the part we shall filter attributes on)
+			while(st.hasMoreTokens()) {
+				// in the end should have the thing to limit with
 				limiting = st.nextToken();
 			}
-
+			
 			//if it looks like they have started typing the contents of an
-			//attribtue (or they are done) set limiting to nothing
-			if(limiting.indexOf("\"") > 0 || limiting.indexOf("'") > 0)
-			{
+			//attribute (or they are done) set limiting to nothing
+			if(limiting.indexOf("\"") > 0 || limiting.indexOf("'") > 0){
 				limiting = "";
 			}
 			
-			//if we are in a cftag, and there are no attribtues (and we did not
+			//if we are in a cftag, and there are no attributes (and we did not
 			//start this mess by getting called with a space or tab) then we
 			//should lookup cf tag names to suggest
 			boolean invokerIsSpace = invoker.equals(" ");
@@ -323,32 +286,23 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			SyntaxDictionary syntax = null;
 			
 			if (cftag || invokerIsPeriod) {
-			    syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC); 
-			}
-			else {
-			    syntax = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
+				syntax = DictionaryManager.getDictionary(DictionaryManager.CFDIC); 
+			} else {
+				syntax = DictionaryManager.getDictionary(DictionaryManager.HTDIC);
 			}
 			
-
-			
-			if(limiting.length() <= 0 && !invokerIsSpace && !invokerIsTab && !invokerIsCloseChevron)
-			{
+			if(limiting.length() <= 0 && !invokerIsSpace && !invokerIsTab && !invokerIsCloseChevron) {
 				if(cftag) {
 					return lookUpCFTagNames(documentOffset, syntax, invoker, document, prefix);
 				} else if(httag) {
 					return lookUpTagNames(documentOffset, syntax, invoker, document, prefix);
+				} else if (invokerIsPeriod) {
+					return lookUpScopeVars(documentOffset, syntax, invoker, document, prefix);
 				}
-				else if (invokerIsPeriod) {
-				    return lookUpScopeVars(documentOffset, syntax, invoker, document, prefix);
-				}
-			}
-			else
-			{	
+			} else {
 				return getAttributeProposals(documentOffset, limiting, syntax, prefix, tagname, attribs);
-			}	
-		}
-		catch(Exception e)
-		{
+			}
+		} catch(Exception e) {
 			//die all quite like.
 			e.printStackTrace(System.err);
 		}
@@ -365,12 +319,13 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * @return
 	 */
 	private ICompletionProposal[] getAttributeProposals(int documentOffset, String limiting, SyntaxDictionary syntax, String prefix, String tagname, Set attribs) {
-		//we are probably in need of attribtue in sight
+		//we are probably in need of attribute in sight
 		//clean up the text typed so far
 		
-	    String searchText = limiting.trim();
+		String searchText = limiting.trim();
+		
 		if (limiting.endsWith("=")) {
-		    searchText = limiting.substring(0,limiting.length()-1);
+			searchText = limiting.substring(0,limiting.length()-1);
 		}
 		
 		// hacks hacks everywhere :) this looks to see if there are an

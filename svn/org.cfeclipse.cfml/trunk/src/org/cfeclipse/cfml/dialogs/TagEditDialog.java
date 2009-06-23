@@ -148,7 +148,7 @@ public class TagEditDialog extends Dialog {
 		private static void stepThrough (Node start) {
 			//String name = start.getAttributes().getNamedItem("name").toString();
 			NamedNodeMap attribs = start.getAttributes();
-			System.out.println(start.getNodeName() + " " + attribs.getNamedItem("name") + " default:" +  attribs.getNamedItem("value"));
+			// System.out.println(start.getNodeName() + " " + attribs.getNamedItem("name") + " default:" +  attribs.getNamedItem("value"));
 			
 			for (Node child = start.getFirstChild(); child != null; child = child.getNextSibling()){
 				if(child.getNodeType() == 1){
@@ -349,7 +349,6 @@ public class TagEditDialog extends Dialog {
 	private CategoryList getParameterCategories(){
 		CategoryList cl = new CategoryList();
 		
-		
 		if (this.attributes != null) {
 		
 			Iterator i = this.attributes.iterator();
@@ -371,7 +370,7 @@ public class TagEditDialog extends Dialog {
 				
 			}
 		}
-		System.out.println(cl);
+		
 		return cl;
 	}
 	

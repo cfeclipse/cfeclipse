@@ -80,14 +80,12 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 	 */
 	public static ArrayList getTokenisedString(String inStr)
 	{
-		Assert.isNotNull(inStr, "Parameter inStr, the string to parse, is null");
-		
 		if(inStr.trim().length() == 0)
 			return new ArrayList();
 		
 		StringTokenizer st = new StringTokenizer(inStr, " ");
-		ArrayList retArray = new ArrayList(st.countTokens() + 1);
-		//retArray.add(inStr);
+		
+		ArrayList retArray = new ArrayList(st.countTokens());
 		
 		while(st.hasMoreTokens()) {
 			retArray.add(st.nextToken());
@@ -126,7 +124,6 @@ public abstract class CFEContentAssist implements IContentAssistProcessor {
 
 		return retArray;
 	}
-	
 	
 	/** 
 	 * helper function

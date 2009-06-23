@@ -87,7 +87,7 @@ public class EditURLDialog extends Dialog {
 			
 			
 		}
-		System.out.println(urlText.charAt(urlText.length()));
+		
 		//if (fileNameField.getText().trim().length() == 0) {
 		//	button.setEnabled(false);
 		//}else{

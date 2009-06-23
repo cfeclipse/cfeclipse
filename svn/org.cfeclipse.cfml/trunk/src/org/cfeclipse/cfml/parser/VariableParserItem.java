@@ -12,9 +12,6 @@ public class VariableParserItem {
 	private int lineNumber;
 	private TagItem tagItem;
 	
-	
-	
-	
 	/**
 	 * @param variable
 	 * @param lineNumber

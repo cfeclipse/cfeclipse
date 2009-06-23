@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -180,36 +181,41 @@ public class CFContentAssist extends CFEContentAssist{
 	 * It works out the attribute that the user has typed in and the value
 	 * text that user has typed in for the attribute (if any).
 	 * 
-     * @param assistState The current state of context
-     * @return The completed DefaultAssistAttributeState object, ready for proposal gather
-     */
-    private DefaultAssistAttributeState prepareForValueAssist(IAssistTagState assistState) {
-        String inputText = assistState.getDataSoFar();
-        //System.out.println("Input text: " + inputText);
-	    int quotes = inputText.lastIndexOf("\"");
-	    //int lastSpace = inputText.substring(0, quotes).lastIndexOf(" ");
+	 * @param assistState The current state of context
+	 * @return The completed DefaultAssistAttributeState object, ready for proposal gather
+	 */
+	private DefaultAssistAttributeState prepareForValueAssist(IAssistTagState assistState) {
+		String inputText = assistState.getDataSoFar();
+		
+		//System.out.println("Input text: " + inputText);
+		
+		int quotes = inputText.lastIndexOf("\"");
 		String valueSoFar = "";
 		
-		if(quotes != -1)
-		{
+		if(quotes != -1) {
 			// Attribute entered, user is typing.
 			valueSoFar = inputText.substring(quotes+1, inputText.length());
-		}
-		else
+		} else {
 			quotes = inputText.length() - 2;
+		}
 		
 		if(inputText.charAt(0) != '<') {
 			//System.err.println("input text did not begin with an open chevron!!");
 		}
+		
 		String attribute = getAttributeName(inputText);
+		
 		//System.out.println("Attribute: " + attribute);
+		
 		if(attribute == null) {
 			return null;
 		}
+		
 		DefaultAssistAttributeState attrState = new DefaultAssistAttributeState(assistState, attribute, valueSoFar);
-        return attrState;
-    }
-
+		
+		return attrState;
+	}
+	
     /**
      * Checks to make sure that the string passed represents a tag in
      * a backwards scan fashion. Basically it's to determine whether
@@ -400,106 +406,92 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeCompletionProposals(org.eclipse.jface.text.ITextViewer, int)
 	 */
 	public ICompletionProposal[] getTagProposals(IAssistState assistState) {
-        String mName = "computeCompletionProposal";
-	    //IDocument document = assistState.getIDocument();
-	    String attrText = "";
+		String mName = "getTagProposals";
+		String attrText = "";
 		String prefix = "";
-		//DefaultAssistState defaultAssistState = (DefaultAssistState)assistState;
-		if(!inValidPartitionType(assistState))
-		{
-		    
-		    UserMsg(mName, "Not in a valid partition type of \'" + assistState.getOffsetPartition().getType() + "\'");
-		    return null;
+		
+		if(!inValidPartitionType(assistState)) {
+			UserMsg(mName, "Not in a valid partition type of \'" + assistState.getOffsetPartition().getType() + "\'");
+			
+			return null;
 		}
 		
-	    char invokerChar;
-		prefix = assistState.getDataSoFar();
+		char invokerChar;
 		invokerChar = assistState.getTriggerData();
-		/*
-		if(!checkActuallyInTag(prefix))
-		{
-		    UserMsg(mName, "Not in a tag");
-		    return null;
-		}
-		*/
 		
-		//prefix = prefix.substring(this.lastOpenChevronPos).trim();
-		prefix = prefix.trim();
-		UserMsg("getTagProposals","Prefix set to " + prefix);
-		ArrayList partItems = CFEContentAssist.getTokenisedString(/*assistState.getDataSoFar()*/prefix);
-		//
+		// Get the trimmed data so far
+		prefix = assistState.getDataSoFar().trim();
+		
+		// Replace any whitespace before or after the =.
+		prefix = prefix.replaceAll("\\s*=\\s*", "=");
+		
+		// Get the tokens of the tag and attributes
+		ArrayList partItems = CFEContentAssist.getTokenisedString(prefix);
+		
 		// The assumption here is that what will be entered goes along the lines of
 		// <tagNameHere [attribute]*>
 		// Therefore if the tokenised string has more than 1 element it will contain
 		// the tagname then the attribute. So the last element will be the most
 		// recent attribute.
-		if(partItems.size() > 1)
-		{
+		if(partItems.size() > 1) {
 			attrText = (String)partItems.get(partItems.size()-1);
-			UserMsg("getTagProposals","attrText set to " + attrText);
-		}		
+		}
+		
 		boolean isDefinatelyAnAttribute = invokerChar == ' ';
 		boolean invokerIsSpace = invokerChar == ' ';
 		boolean invokerIsTab = invokerChar == '\t';
 		boolean invokerIsCloseChevron = invokerChar == '>';
 		boolean prefixHasOddQuotes = countQuotes(prefix) % 2 == 1;
-		//int prefixLength = prefix.length();
-		//
+		
 		// if it looks like they have started typing the contents of an
 		// attribtue (or they are done) set limiting to nothing
-		if(attrText.indexOf("\"") > 0 || attrText.indexOf("'") > 0)
-		{
+		if(attrText.indexOf("\"") > 0 || attrText.indexOf("'") > 0) {
 			attrText = "";
 		}
-	
-		//
+		
 		//	Test to see whether we're invoked within an attribute value def
-		if(prefixHasOddQuotes)
-		{	
-		UserMsg("getTagProposals","Prefix has odd number of quotes.");
+		if(prefixHasOddQuotes) {
+			UserMsg(mName,"Prefix has odd number of quotes.");
+			
 			DefaultAssistTagState attrTagState = prepareForAttributeAssist(assistState, attrText, prefix, partItems);
+			
 			return getAttributeValueProposals(attrTagState);
-		}	// TODO: Need to figure out why the next line works...
+		} // TODO: Need to figure out why the next line works...
 		else if(attrText.length() <= 0 
-		        && !invokerIsSpace 
-		        && !invokerIsTab 
-		        && !invokerIsCloseChevron 
-		        && !isDefinatelyAnAttribute) 
+				&& !invokerIsSpace 
+				&& !invokerIsTab 
+				&& !invokerIsCloseChevron 
+				&& !isDefinatelyAnAttribute) 
 		{
-		    
-		    UserMsg("getTagProposals","No standard invokers found.");
-			try 
-			{
+			UserMsg(mName,"No standard invokers found.");
+			try {
 				return getTagProposalsFromCACors(assistState);
-			}
-			catch(BadLocationException ex) 
-			{
+			} catch(BadLocationException ex) {
 				System.err.println("HTMLContentAssistant::computeCompletionProposals() - Caught exception in tag lookup :(");
 				ex.printStackTrace();
 				return null;
 			}
-		}
-		else if(prefix.trim().length() > 0 || isDefinatelyAnAttribute)	
-		{
-		    UserMsg("getTagProposals","Prefix has length, or we're definitely dealing with an attribute.");
-			if(partItems.size() == 0)	// Catch this potential error situation. Don't think it should happen.
-			{
+		} else if(prefix.trim().length() > 0 || isDefinatelyAnAttribute) {
+			UserMsg(mName,"Prefix has length, or we're definitely dealing with an attribute.");
+			
+			// Catch this potential error situation. Don't think it should happen.
+			if(partItems.size() == 0) {
 				UserMsg(mName, "partItems is 0 length for attribute insight. This is soooo wrong!");
 				return null;
 			}
-
+			
 			DefaultAssistTagState attrTagState = prepareForAttributeAssist(assistState, attrText, prefix, partItems);
+			
 			return getAttributeProposals(attrTagState, CFDocUtils.parseForAttributes(prefix));
-		}
-		else {
-//			UserMsg(mName, "Hmm, decided to not even do anything!");
+		} else {
+			UserMsg(mName, "Hmm, decided to not even do anything!");
 		}
 		
 		return null;
 	}
 
 
-    /**
+	/**
 	 * This method prepares a DefaultAssistTagState object ready for gathering attribute
 	 * content assist. It creates the tagstate based upon the current standard assist
 	 * state and adds on the required extras. 
