@@ -671,8 +671,10 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 						if(linkWithEditor) {
 							setSelectedDocItem(cti);
 							DocItem curItem = cti;
-							getTreeViewer().setExpandedState(curItem.getParent(), true);
-							getTreeViewer().refresh(curItem.getParent(),false);
+							if(curItem.getParent() != null) {								
+								getTreeViewer().setExpandedState(curItem.getParent(), true);
+								getTreeViewer().refresh(curItem.getParent(),false);
+							}
 							getTreeViewer().setExpandedState(curItem, true);
 							getTreeViewer().refresh(curItem,false);
 //							while(curItem.getName().compareToIgnoreCase("Doc Root") !=1) {

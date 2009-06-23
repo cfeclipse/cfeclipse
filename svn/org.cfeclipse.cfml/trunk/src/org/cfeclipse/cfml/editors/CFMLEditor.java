@@ -48,7 +48,6 @@ import org.cfeclipse.cfml.editors.actions.TextEditorWordNavigationAction;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.cfeclipse.cfml.editors.decoration.DecorationSupport;
 import org.cfeclipse.cfml.editors.dnd.CFEDragDropListener;
-import org.cfeclipse.cfml.editors.dnd.TextSelectionListener;
 import org.cfeclipse.cfml.editors.dnd.SelectionCursorListener;
 import org.cfeclipse.cfml.editors.pairs.CFMLPairMatcher;
 import org.cfeclipse.cfml.editors.pairs.Pair;
@@ -213,8 +212,8 @@ public class CFMLEditor extends TextEditor implements
 
 	private DragSource dragsource;
 	private Object columnSupport;
-	private TextSelectionListener TextSelectionListener;
 	private CFContentOutlineView cfcontentOutlineView;
+	private SelectionCursorListener SelectionCursorListener;
 
 	
 
@@ -626,27 +625,11 @@ public class CFMLEditor extends TextEditor implements
 			dtSvc.addMergedDropTarget(tw, ops, transfers, editorListener);
 			*/
 
-/*
-			SelectionCursorListener cursorListener = new SelectionCursorListener(this,
-					projectionViewer);
-			projectionViewer.getTextWidget().addMouseMoveListener(cursorListener);
-			//projectionViewer.getTextWidget().addMouseTrackListener(cursorListener);
-			projectionViewer.addSelectionChangedListener(cursorListener);
-			projectionViewer.getTextWidget().addMouseListener(cursorListener);
-			projectionViewer.getTextWidget().addKeyListener(cursorListener);
-*/
-			setTextSelectionListener();
-			
+			setSelectionCursorListener();
 			return;
 		}
 		
-		SelectionCursorListener cursorListener = new SelectionCursorListener(this,
-				projectionViewer);
-		projectionViewer.getTextWidget().addMouseMoveListener(cursorListener);
-		//projectionViewer.getTextWidget().addMouseTrackListener(cursorListener);
-		projectionViewer.addSelectionChangedListener(cursorListener);
-		projectionViewer.getTextWidget().addMouseListener(cursorListener);
-		projectionViewer.getTextWidget().addKeyListener(cursorListener);
+		setSelectionCursorListener();
 
 		//Allow data to be copied or moved from the drag source
 		int operations = DND.DROP_MOVE | DND.DROP_COPY;
@@ -669,7 +652,7 @@ public class CFMLEditor extends TextEditor implements
 		target.setTransfer(types);
 
 		CFEDragDropListener ddListener = new CFEDragDropListener(this,
-				(ProjectionViewer) this.getSourceViewer(), cursorListener);
+				(ProjectionViewer) this.getSourceViewer(), SelectionCursorListener);
 
 		this.dragsource.addDragListener(ddListener);
 
@@ -677,35 +660,36 @@ public class CFMLEditor extends TextEditor implements
 
 	}
 
-		protected void setTextSelectionListener() {
-				if (getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES)) {
-					String[] wordChars = {
-							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS),
-							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS),
-							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_ALT),
-							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_ALT),
-							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_SHIFT),
-							getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_SHIFT)
-					};
-					if (TextSelectionListener != null) {
-						TextSelectionListener.setWordSelectionChars(wordChars);
-					} else {
-						ProjectionViewer projectionViewer = (ProjectionViewer)getSourceViewer();
-						TextSelectionListener = new TextSelectionListener(this, projectionViewer,wordChars);
-						//projectionViewer.addSelectionChangedListener(TextSelectionListener);
-						projectionViewer.addPostSelectionChangedListener(TextSelectionListener);
-						projectionViewer.getTextWidget().addMouseListener(TextSelectionListener);				
-					}
-					/* //This will maybe someday come in handy for switching occurrence marking on and on in active editors?
-					 * IHandlerService handlerServ =
-					 * (IHandlerService)getSite().getWorkbenchWindow().getService(IHandlerService.class);
-					 * toggleOccurrencesHandler = new ToggleTextSelectionsHandler();
-					 * handlerServ.activateHandler("org.eclipse.jdt.ui.edit.text.java.toggleTextSelections",
-					 * toggleOccurrencesHandler, expr);
-					 */
+		protected void setSelectionCursorListener() {
+			if (getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES)) {
+				String[] wordChars = {
+						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS),
+						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS),
+						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_ALT),
+						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_ALT),
+						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_SHIFT),
+						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_SHIFT)
+				};
+				if (SelectionCursorListener != null) {
+					SelectionCursorListener.setWordSelectionChars(wordChars);
+				} else {
+					ProjectionViewer projectionViewer = (ProjectionViewer)getSourceViewer();
+					SelectionCursorListener = new SelectionCursorListener(this, projectionViewer,wordChars);
+					//projectionViewer.addSelectionChangedListener(TextSelectionListener);
+					projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
+					projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);				
+
 				}
-			}	
-	
+				/* //This will maybe someday come in handy for switching occurrence marking on and on in active editors?
+				 * IHandlerService handlerServ =
+				 * (IHandlerService)getSite().getWorkbenchWindow().getService(IHandlerService.class);
+				 * toggleOccurrencesHandler = new ToggleTextSelectionsHandler();
+				 * handlerServ.activateHandler("org.eclipse.jdt.ui.edit.text.java.toggleTextSelections",
+				 * toggleOccurrencesHandler, expr);
+				 */
+			}
+		}			
+		
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1159,7 +1143,7 @@ public class CFMLEditor extends TextEditor implements
 		handlePreferenceStoreChanged(event);
 		System.out.println(event);
 		setStatusLine();
-		setTextSelectionListener();
+		setSelectionCursorListener();
 	}
 
 	protected void handlePreferenceStoreChanged(PropertyChangeEvent event) {

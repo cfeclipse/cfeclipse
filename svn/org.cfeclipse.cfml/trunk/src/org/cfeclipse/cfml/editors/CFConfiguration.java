@@ -190,10 +190,10 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	/**
 	 * get the double click strat-m-gee for the view & content type = (section, 
 	 * partition)
+	 *
+	 */
 	 
-	public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer,
-		String contentType) 
-	{
+	public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer, String contentType) {
 		if (this.doubleClickStrategy == null)
 			this.doubleClickStrategy = new CFDoubleClickStrategy();
 		
@@ -201,9 +201,11 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		// Spike::
 		// Moved this to org.cfeclipse.cfml.editors.dnd.SelectionCursorListener
 		// so that we can handle ctrl and ctrl+shift modifiers
-		return null;
+		// denny modified, we might want to use it again?
+		return this.doubleClickStrategy;
 	}
-*/
+	
+	
 	///////////////////////// SCANNERS /////////////////////////////////////////////
 	/**
 	 * get the scanner for the document and set the default return color

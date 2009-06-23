@@ -24,10 +24,15 @@
  */
 package org.cfeclipse.cfml.editors.dnd;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -36,6 +41,8 @@ import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
+import org.eclipse.jface.viewers.IPostSelectionProvider;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -49,6 +56,7 @@ import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.texteditor.MarkerUtilities;
 
 
 /**
@@ -116,18 +124,34 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      * Mouse up checks it's value and calls reset() if true.
      */
     private boolean downUp = false;
+
+	/*
+	 * These will be used for word delineation
+	 */
+	private String partOfWordChars;
+	private String breakWordChars;
+	private String partOfWordCharsAlt;
+	private String breakWordCharsAlt;
+	private String partOfWordCharsShift;
+	private String breakWordCharsShift;
+	private String selectionText;
+    private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
+	//private static String TYPE = "org.eclipse.core.resources.textmarker";
+	//private static String TYPE = "org.cfeclipse.cfml.parserWarningMarker";
+    
     
     /**
      * This class listens to the mouse position relative to any selected text 
      * and keeps track of whether or not the mouse is currently over a selection.
      */
-    public SelectionCursorListener(ITextEditor editor, ProjectionViewer viewer) {
+    public SelectionCursorListener(ITextEditor editor, ProjectionViewer viewer, String[] wordChars) {
         //this.editor = editor;
         this.textWidget = viewer.getTextWidget();
         this.fViewer = viewer;
         this.arrowCursor = new Cursor(this.textWidget.getDisplay(),SWT.CURSOR_ARROW);
         this.textCursor = new Cursor(this.textWidget.getDisplay(),SWT.CURSOR_IBEAM);
         this.widgetOffsetTracker = new WidgetPositionTracker(this.textWidget);
+		setWordSelectionChars(wordChars);
     }
     
     /**
@@ -142,6 +166,20 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
         this.mouseDown = false;
         //System.out.println("Listener reset");
     }
+
+    /**
+     * sets the work selection break/continue chars.
+     *
+     */
+	public void setWordSelectionChars(String[] wordChars) {
+		this.partOfWordChars = wordChars[0];
+		this.breakWordChars = wordChars[1];
+		this.partOfWordCharsAlt = wordChars[2];
+		this.breakWordCharsAlt = wordChars[3];
+		this.partOfWordCharsShift = wordChars[4];
+		this.breakWordCharsShift = wordChars[5];		
+	}
+    
     
     /**
      * Allows the drag drop listener to know if it's ok to start a drag.
@@ -224,10 +262,23 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      */
     
     public void selectionChanged(SelectionChangedEvent event) {
+		clearMarkedOccurrences();
         if (!this.hovering) {
 	        ITextSelection sel = (ITextSelection)this.fViewer.getSelection();
 	        this.selectionStart = sel.getOffset();
 	        this.selection = sel.getText();
+			this.selectionText = sel.getText().trim();
+			if (event.getSelectionProvider() instanceof IPostSelectionProvider && this.selectionText.length() > 1) {
+				try {
+					markOccurrences(this.selectionText);
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}			
+			}
+			else {
+				//System.out.println("MarkOccurrences got non POST selection changed");
+			}
         }
     }
 
@@ -288,102 +339,99 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
         
     }
     
-    public void mouseDoubleClick(MouseEvent e) {    	
-    	//see comment below
-    }
-/*
- * 
- * Commented for now because denny is using doubleClick in TextSelectionListener
- * 
-    /**
-     * Sent when a mouse button is pressed twice within the 
-     * (operating system specified) double click period.
-     *
-     * @param e an event containing information about the mouse double click
-     *
-     * @see org.eclipse.swt.widgets.Display#getDoubleClickTime()
-     *//*
-    public void mouseDoubleClick(MouseEvent e) {
-        
+	/**
+	 * Sent when a mouse button is pressed twice within the (operating system
+	 * specified) double click period.
+	 * 
+	 * @param e
+	 *            an event containing information about the mouse double click
+	 * 
+	 * @see org.eclipse.swt.widgets.Display#getDoubleClickTime()
+	 */
+	public void mouseDoubleClick(MouseEvent e) {
 
-        TextSelection sel = (TextSelection)this.fViewer.getSelection();
-        
-        int startpos = sel.getOffset() + sel.getLength();
-        
-        if ((e.stateMask & SWT.MOD1) != 0) { 
-                //|| (e.stateMask & SWT.COMMAND) != 0
-                //|| (e.stateMask & SWT.CONTROL) != 0) {
-                
-        //if ((e.stateMask & SWT.CONTROL) != 0 ) {
-            ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
-    		CfmlTagItem cti = cfd.getTagAt(startpos, startpos, true);
-    		
-    		
-            int start = 0;
-            int length = 0;
-    		if (cti != null) {
+		TextSelection sel = (TextSelection) this.fViewer.getSelection();
 
-	            if ((e.stateMask & SWT.SHIFT) != 0 
-	                    && cti.matchingItem != null) {
-	                
-	                if (cti.matchingItem.getStartPosition() < cti.getStartPosition()) {
-	                    start = cti.matchingItem.getStartPosition();
-	                    length = cti.getEndPosition()-cti.matchingItem.getStartPosition()+1;
-	                }
-	                else {
-	                    start = cti.getStartPosition();
-	                    length = cti.matchingItem.getEndPosition()-cti.getStartPosition()+1;
-	                }
+		int startpos = fViewer.modelOffset2WidgetOffset(sel.getOffset());
 
-	            }
-	            else {
-	               if (cti.matchingItem != null 
-	                       && cti.matchingItem.getStartPosition() <= startpos
-	                       && cti.matchingItem.getEndPosition() >= startpos) {
-	                   start = cti.matchingItem.getStartPosition();
-	                   length = cti.matchingItem.getEndPosition()-cti.matchingItem.getStartPosition()+1;
-	               }
-	               else {
-	                   start = cti.getStartPosition();
-	                   length = cti.getEndPosition()-cti.getStartPosition()+1;
-	               }
-	            }
+		if ((e.stateMask & SWT.MOD1) != 0) {
 
-	            TextSelection newSel = new TextSelection(cfd,start,length);
-	            this.fViewer.setSelection(newSel);
-                
-    		}
-        }
-        else {
+			ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
+			CfmlTagItem cti = cfd.getTagAt(startpos+sel.getLength(), startpos+sel.getLength(), true);
 
-            startpos = this.fViewer.getSelectedRange().x;
-            selectWord(startpos, e);
-        }
-        
+			int start = 0;
+			int length = 0;
+			if (cti != null) {
 
-    }
+				if ((e.stateMask & SWT.SHIFT) != 0 && cti.matchingItem != null) {
 
-    
+					if (cti.matchingItem.getStartPosition() < cti.getStartPosition()) {
+						start = cti.matchingItem.getStartPosition();
+						length = cti.getEndPosition() - cti.matchingItem.getStartPosition() + 1;
+					} else {
+						start = cti.getStartPosition();
+						length = cti.matchingItem.getEndPosition() - cti.getStartPosition() + 1;
+					}
+
+				} else {
+					if (cti.matchingItem != null && cti.matchingItem.getStartPosition() <= startpos
+							&& cti.matchingItem.getEndPosition() >= startpos) {
+						start = cti.matchingItem.getStartPosition();
+						length = cti.matchingItem.getEndPosition() - cti.matchingItem.getStartPosition() + 1;
+					} else {
+						start = cti.getStartPosition();
+						length = cti.getEndPosition() - cti.getStartPosition() + 1;
+					}
+				}
+
+				TextSelection newSel = new TextSelection(cfd, start, length);
+				this.fViewer.setSelection(newSel);
+
+			} else {
+				startpos = this.fViewer.getSelectedRange().x;
+				selectWord(startpos, e);
+			}
+		} else {
+
+			startpos = this.fViewer.getSelectedRange().x;
+			selectWord(startpos, e);
+		}
+
+	}
+	// TODO:  move this to org.cfeclipse.cfml.editors.selection.CFTextSelector
 	protected boolean selectWord(int caretPos, MouseEvent e) {
 
 		IDocument doc = this.fViewer.getDocument();
-		int startPos, endPos;
-		String normalWordChars = "-";
-		String breakWordChars = "_";
+		int startPos, endPos, pos;
+		char c;
+		String normalWordChars = this.partOfWordChars;
+		String breakWordChars = this.breakWordChars;
 		String wordChars = normalWordChars;
-		String altWordChars = "-.";
-		String shiftWordChars = "-_";
+		String altWordChars = this.partOfWordCharsAlt;
+		String altBreakWordChars = this.breakWordCharsAlt;
+		String shiftWordChars = this.partOfWordCharsShift;
+		String shiftBreakWordChars = this.breakWordCharsShift;
 		try {
 			if ((e.stateMask == SWT.ALT || e.stateMask == SWT.SHIFT + SWT.ALT)) {
 				wordChars = wordChars + altWordChars;
+				breakWordChars = altBreakWordChars;
 			}
 			if ((e.stateMask == SWT.SHIFT || e.stateMask == SWT.SHIFT + SWT.ALT)) {
 				wordChars = wordChars + shiftWordChars;
-				breakWordChars = "";
+				breakWordChars = shiftBreakWordChars;
 			}
 
-			int pos = caretPos;
-			char c;
+			pos = caretPos;
+			int length = doc.getLength();
+			while (pos < length) {
+				c = doc.getChar(pos);
+				if (breakWordChars.indexOf(c) >= 0 || !Character.isJavaIdentifierPart(c) && wordChars.indexOf(c) < 0)
+					break;
+				++pos;
+			}
+			endPos = pos;
+
+			pos = caretPos;
 
 			while (pos >= 0) {
 				c = doc.getChar(pos);
@@ -394,18 +442,11 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 
 			startPos = pos;
 
-			pos = caretPos;
-			int length = doc.getLength();
-
-			while (pos < length) {
-				c = doc.getChar(pos);
-				if (breakWordChars.indexOf(c) >= 0 || !Character.isJavaIdentifierPart(c) && wordChars.indexOf(c) < 0)
-					break;
-				++pos;
+			
+			if(startPos != endPos) {	
+				selectRange(startPos, endPos);
+//				markOccurrences(this.selectionText);
 			}
-
-			endPos = pos;
-			selectRange(startPos, endPos);
 			return true;
 
 		} catch (BadLocationException x) {
@@ -414,18 +455,12 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 
 		return false;
 	}
-
-
 	private void selectRange(int startPos, int stopPos) 
 	{
 		int offset = startPos + 1;
 		int length = stopPos - offset;
 		this.fViewer.setSelectedRange(offset, length);
-	}
-
-    
-*/    
-    
+	}    
     
     
     /**
@@ -509,6 +544,88 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 
 	    //System.out.println("Key Released " + e.keyCode);
 	
+	}
+
+	/**
+	 * Mark occurrences of selected string
+	 * 
+	 * @param findString
+	 * @throws BadLocationException 
+	 * 
+	 */
+	protected void markOccurrences(String findString) throws BadLocationException {
+		int index = 0;
+		int occurrenceCount = 0;
+
+		if (this.fViewer != null && findString.length() > 1) {
+
+			ISelection initialSelection = this.fViewer.getSelection();
+
+			if (initialSelection instanceof ITextSelection) {
+				ITextSelection textSelection = (ITextSelection) initialSelection;
+				if (!textSelection.isEmpty()) {
+					String text = this.fViewer.getDocument().get();
+					IDocument iDoc = (ICFDocument) this.fViewer.getDocument();
+					IResource resource = ((ICFDocument) this.fViewer.getDocument()).getResource();
+					index = text.indexOf(findString);
+					while (index != -1) {
+
+						occurrenceCount++;
+
+						// AnnotationModel model = (AnnotationModel)
+						// this.fViewer.getAnnotationModel();
+						// Annotation occurrenceAnnotation = new Annotation(
+						//									"org.eclipse.jdt.ui.occurrences", true, findString); //$NON-NLS-1$
+						// occurrenceAnnotation.setText("Found:"+findString);
+						// Position position = new Position(index,
+						// findString.length());
+						// if (position != null) {
+						// model.addAnnotation(occurrenceAnnotation, position);
+						// } else {
+						// System.out.println("Null Position! Not good!");
+						// }
+
+						Map attrs = new HashMap();
+						int lineNum = iDoc.getLineOfOffset(index)+1;
+						MarkerUtilities.setMessage(attrs, "Occurrence " + occurrenceCount + " of " + findString);
+						MarkerUtilities.setLineNumber(attrs, lineNum);
+						attrs.put(IMarker.LOCATION, "line " + lineNum + ", Chars " + index + "-" + index
+								+ findString.length());
+						attrs.put(IMarker.CHAR_START, index);
+						attrs.put(IMarker.CHAR_END, new Integer(index + findString.length()));
+
+						try {
+							MarkerUtilities.createMarker(resource, attrs, this.TYPE);
+						} catch (CoreException excep) {
+							excep.printStackTrace();
+						} catch (Exception anyExcep) {
+							anyExcep.printStackTrace();
+						}
+						index = text.indexOf(findString, index + findString.length());
+					}
+				}
+			}
+		}
+
+	}	
+	
+	/**
+	 * Clears any marked occurrences
+	 */
+	private void clearMarkedOccurrences() {
+		if (this.fViewer == null)
+			return;
+
+	      try {
+			IMarker[] markers = ((ICFDocument)this.fViewer.getDocument()).getResource().findMarkers(this.TYPE, true, IResource.DEPTH_INFINITE);
+			for(IMarker mark : markers) {
+				mark.delete();
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	
