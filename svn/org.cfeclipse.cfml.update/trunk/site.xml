@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.cfeclipse.cfml.feature_1.3.4.qualifier.jar" id="org.cfeclipse.cfml.feature" version="1.3.4.qualifier">
+      <category name="CFEclipse CFML Editor (Required)"/>
+   </feature>
+   <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.qualifier.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.qualifier">
+      <category name="CFEclipse DocShare Support (Optional)"/>
+   </feature>
+   <feature url="features/org.cfeclipse.cfml.docsharesupport35.feature_1.0.0.qualifier.jar" id="org.cfeclipse.cfml.docsharesupport35.feature" version="1.0.0.qualifier">
+      <category name="CFEclipse DocShare Support (Optional)"/>
+   </feature>
+   <category-def name="CFEclipse CFML Editor (Required)" label="CFEclipse CFML Editor (Required)"/>
+   <category-def name="CFEclipse DocShare Support (Optional)" label="CFEclipse DocShare Support (Optional)"/>
+</site>
