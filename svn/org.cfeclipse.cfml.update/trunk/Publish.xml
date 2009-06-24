@@ -1,4 +1,4 @@
-<project name="Publish  CFEclipse Plugin" default="update-nightly" basedir="." >
+<project name="Publish  CFEclipse Plugin" default="update" basedir="." >
 
 	<taskdef resource="net/jtools/classloadertask/antlib.xml"
 	                classpath="lib/ant-classloadertask.jar"/>
@@ -17,8 +17,8 @@
 
 	</target>
 
-	<target name="update-nightly" depends="init">
-		<push remotedir="update-nightly" />
+	<target name="update" depends="init">
+		<push remotedir="update" />
 	</target>
 
 	<macrodef name="push">
