@@ -6,7 +6,7 @@
    <feature url="features/org.cfeclipse.cfml.feature_1.3.4.qualifier.jar" id="org.cfeclipse.cfml.feature" version="1.3.4.qualifier">
       <category name="[Nightly] CFEclipse CFML Editor (Required)"/>
    </feature>
-   <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.qualifier.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.qualifier">
+   <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.200906232153.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.200906232153">
       <category name="[Nightly] CFEclipse DocShare Support (Optional)"/>
    </feature>
    <feature url="features/org.cfeclipse.cfml.docsharesupport35.feature_1.0.0.qualifier.jar" id="org.cfeclipse.cfml.docsharesupport35.feature" version="1.0.0.qualifier">
