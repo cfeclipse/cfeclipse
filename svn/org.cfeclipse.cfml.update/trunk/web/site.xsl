@@ -5,11 +5,11 @@
 <xsl:for-each select="site">
 	<html>
 	<head>
-	<title>CFEUpdateSite</title>
+	<title>org.cfeclipse.cfml.update-nightly</title>
 	<style>@import url("web/site.css");</style>
 	</head>
 	<body>
-	<h1 class="title">CFEUpdateSite</h1>
+	<h1 class="title">org.cfeclipse.cfml.update-nightly</h1>
 	<p class="bodyText"><xsl:value-of select="description"/></p>
 	<table width="100%" border="0" cellspacing="1" cellpadding="2">
 	<xsl:for-each select="category-def">
@@ -17,11 +17,8 @@
 		<xsl:sort select="@name" order="ascending" case-order="upper-first"/>
 	<xsl:if test="count(key('cat',@name)) != 0">
 			<tr class="header">
-				<td class="sub-header" width="30%">
+				<td class="sub-header" width="100%">
 					<xsl:value-of select="@name"/>
-				</td>
-				<td class="sub-header" width="70%">
-					<xsl:value-of select="@label"/>
 				</td>
 			</tr>
 			<xsl:for-each select="key('cat',@name)">
@@ -50,30 +47,6 @@
 						</xsl:otherwise>
 						</xsl:choose>
 						<br />
-				</td>
-				<td>
-					<table>
-						<xsl:if test="ancestor::feature//@os">
-							<tr><td class="log-text" id="indent">Operating Systems:</td>
-							<td class="log-text" id="indent"><xsl:value-of select="ancestor::feature//@os"/></td>
-							</tr>
-						</xsl:if>
-						<xsl:if test="ancestor::feature//@ws">
-							<tr><td class="log-text" id="indent">Windows Systems:</td>
-							<td class="log-text" id="indent"><xsl:value-of select="ancestor::feature//@ws"/></td>
-							</tr>
-						</xsl:if>
-						<xsl:if test="ancestor::feature//@nl">
-							<tr><td class="log-text" id="indent">Languages:</td>
-							<td class="log-text" id="indent"><xsl:value-of select="ancestor::feature//@nl"/></td>
-							</tr>
-						</xsl:if>
-						<xsl:if test="ancestor::feature//@arch">
-							<tr><td class="log-text" id="indent">Architecture:</td>
-							<td class="log-text" id="indent"><xsl:value-of select="ancestor::feature//@arch"/></td>
-							</tr>
-						</xsl:if>
-					</table>
 				</td>
 			</tr>
 			</xsl:for-each>
@@ -123,30 +96,6 @@
 			</xsl:choose>
 			<br /><br />
 		</td>
-		<td>
-			<table>
-				<xsl:if test="@os">
-					<tr><td class="log-text" id="indent">Operating Systems:</td>
-					<td class="log-text" id="indent"><xsl:value-of select="@os"/></td>
-					</tr>
-				</xsl:if>
-				<xsl:if test="@ws">
-					<tr><td class="log-text" id="indent">Windows Systems:</td>
-					<td class="log-text" id="indent"><xsl:value-of select="@ws"/></td>
-					</tr>
-				</xsl:if>
-				<xsl:if test="@nl">
-					<tr><td class="log-text" id="indent">Languages:</td>
-					<td class="log-text" id="indent"><xsl:value-of select="@nl"/></td>
-					</tr>
-				</xsl:if>
-				<xsl:if test="@arch">
-					<tr><td class="log-text" id="indent">Architecture:</td>
-					<td class="log-text" id="indent"><xsl:value-of select="@arch"/></td>
-					</tr>
-				</xsl:if>
-			</table>
-		</td>
 	</tr>
 	</xsl:for-each>
 	</xsl:when>
@@ -177,30 +126,6 @@
 			</xsl:otherwise>
 			</xsl:choose>
 			<br /><br />
-		</td>
-		<td>
-			<table>
-				<xsl:if test="@os">
-					<tr><td class="log-text" id="indent">Operating Systems:</td>
-					<td class="log-text" id="indent"><xsl:value-of select="@os"/></td>
-					</tr>
-				</xsl:if>
-				<xsl:if test="@ws">
-					<tr><td class="log-text" id="indent">Windows Systems:</td>
-					<td class="log-text" id="indent"><xsl:value-of select="@ws"/></td>
-					</tr>
-				</xsl:if>
-				<xsl:if test="@nl">
-					<tr><td class="log-text" id="indent">Languages:</td>
-					<td class="log-text" id="indent"><xsl:value-of select="@nl"/></td>
-					</tr>
-				</xsl:if>
-				<xsl:if test="@arch">
-					<tr><td class="log-text" id="indent">Architecture:</td>
-					<td class="log-text" id="indent"><xsl:value-of select="@arch"/></td>
-					</tr>
-				</xsl:if>
-			</table>
 		</td>
 	</tr>
 	</xsl:for-each>
