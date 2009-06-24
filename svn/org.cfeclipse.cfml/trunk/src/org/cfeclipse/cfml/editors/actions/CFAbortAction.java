@@ -36,4 +36,9 @@ public class CFAbortAction extends GenericEncloserAction {
 	{
 		super("<cfabort>","");
 	}
+	
+	public void run(){
+		System.out.println("hi");	
+	}
+		
 }

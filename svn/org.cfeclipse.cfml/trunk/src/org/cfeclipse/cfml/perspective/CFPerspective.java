@@ -105,7 +105,9 @@ public class CFPerspective implements IPerspectiveFactory {
 		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.folder");
 		layout.addNewWizardShortcut("org.eclipse.ui.wizards.new.file");
 		
-		layout.addActionSet("org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard");
+		
+		//layout.addActionSet("org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard");
+		//layout.addActionSet("org.cfeclipse.cfml.actionsets");
 		
 	}
 }

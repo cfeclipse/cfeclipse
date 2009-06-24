@@ -675,7 +675,7 @@ public class CFMLEditor extends TextEditor implements
 				} else {
 					ProjectionViewer projectionViewer = (ProjectionViewer)getSourceViewer();
 					SelectionCursorListener = new SelectionCursorListener(this, projectionViewer,wordChars);
-					//projectionViewer.addSelectionChangedListener(TextSelectionListener);
+					//projectionViewer.addSelectionChangedListener(SelectionCursorListener);
 					projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
 					projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);				
 
@@ -689,6 +689,12 @@ public class CFMLEditor extends TextEditor implements
 				 */
 			}
 		}			
+		public SelectionCursorListener getSelectionCursorListener() {
+				if (SelectionCursorListener != null) {
+					setSelectionCursorListener();
+				}
+				return SelectionCursorListener;
+		}	
 		
 	/**
 	 * {@inheritDoc}

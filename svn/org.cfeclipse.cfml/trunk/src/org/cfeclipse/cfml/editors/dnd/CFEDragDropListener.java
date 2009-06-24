@@ -153,7 +153,7 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 	public void dragOver(DropTargetEvent event) {
 	    try {
 			event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
-			
+			System.out.println(textTransfer.isSupportedType(event.currentDataType));
 			if (textTransfer.isSupportedType(event.currentDataType)) {
 				//NOTE: on unsupported platforms this will return null
 			    
@@ -172,7 +172,7 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 				    
 				    // Make sure we don't allow text to be dropped onto itself
 				    if (viewerOffset > cursorListener.selectionStart 
-				            && viewerOffset < cursorListener.selectionStart + cursorListener.selection.length()) {
+				            && viewerOffset < cursorListener.selectionStart + cursorListener.selectionText.length()) {
 				        event.feedback = DND.DROP_NONE;
 				    }
 				    else if (viewerOffset != lastOffset) {
@@ -251,7 +251,7 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 		            && (event.detail & DND.DROP_MOVE) != 0) {
 		        // Offset of the selection start in viewer co-ordinates
 		        int selectionOffset = cursorListener.selectionStart;
-			    int length = cursorListener.selection.length();
+			    int length = cursorListener.selectionText.length();
 			    
 			    annotationTracker.createAnnotationList(selectionOffset,length);
 			    
@@ -412,7 +412,7 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 			// Provide the data of the requested type.
 			if(TextTransfer.getInstance().isSupportedType(event.dataType)) {
 				
-			    String selectedText = cursorListener.selection;
+			    String selectedText = cursorListener.selectionText;
 	
 		        event.data = selectedText;
 	

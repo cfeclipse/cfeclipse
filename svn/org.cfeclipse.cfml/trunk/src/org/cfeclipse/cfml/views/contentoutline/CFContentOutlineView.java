@@ -83,7 +83,9 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	
 	private boolean menusmade = false;
 	private boolean treemade = false;
-	private boolean linkWithEditor = true;
+
+	// TODO: move this to a preference
+	private boolean linkWithEditor = false;
 	
 	private static String filter = "";
 	

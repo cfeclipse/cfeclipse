@@ -1868,16 +1868,8 @@
        <perspectiveExtension targetID = "org.cfeclipse.cfml.perspective.CFML">
      	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
      	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
+     	 <showInPart id= "org.cfeclipse.cfml.views.snips.SnipTreeView" />
       </perspectiveExtension>
-       <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
-          <view
-                id="org.cfeclipse.cfml.views.snipex.SnipEx"
-                ratio="0.5"
-                relationship="right"
-                relative="org.eclipse.ui.views.TaskList"/>
-       </perspectiveExtension>
-       <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
-       </perspectiveExtension>
   </extension>
    <extension
          point="org.eclipse.ui.contexts">

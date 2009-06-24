@@ -28,8 +28,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
+import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -100,7 +102,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     /**
      * The contents of the selection according to the viewer
      */
-    public String selection = "";
+	public String selectionText;
     /**
      * Is the mouse currently hovering over a selected area
      */
@@ -125,6 +127,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      */
     private boolean downUp = false;
 
+
 	/*
 	 * These will be used for word delineation
 	 */
@@ -134,7 +137,10 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	private String breakWordCharsAlt;
 	private String partOfWordCharsShift;
 	private String breakWordCharsShift;
-	private String selectionText;
+	private boolean changeCameFromEditor;
+	private CfmlTagItem lastSelectedTag;
+	private CfmlTagItem selectedTag;
+	private boolean selectedTagWasSelected;
     private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
 	//private static String TYPE = "org.eclipse.core.resources.textmarker";
 	//private static String TYPE = "org.cfeclipse.cfml.parserWarningMarker";
@@ -161,7 +167,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     public void reset() {
         this.hovering = false;
         this.selectionStart = -1;
-        this.selection = "";
+        this.selectionText = "";
         this.textWidget.setCursor(this.textCursor);
         this.mouseDown = false;
         //System.out.println("Listener reset");
@@ -180,7 +186,32 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 		this.breakWordCharsShift = wordChars[5];		
 	}
     
-    
+
+
+	public void setSelectedTag() {
+		// TODO Auto-generated method stub
+		//CFMLEditor curDoc = (CFMLEditor) this.fViewer.getDocument();
+		//ICFDocument cfd = (ICFDocument) curDoc.getDocumentProvider().getDocument(curDoc.getEditorInput());
+		TextSelection sel = (TextSelection) this.fViewer.getSelection();
+		int startPos = sel.getOffset()+1;
+		ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
+		CfmlTagItem cti = cfd.getTagAt(startPos, startPos, false);
+		if(cti != null && this.selectedTag != null) {
+			if(cti.getStartPosition() == this.selectedTag.getStartPosition()){				
+				this.selectedTagWasSelected = true;
+			} else {
+				this.selectedTagWasSelected = false;				
+			}
+		}
+		this.selectedTag = cti;
+	}
+	public CfmlTagItem getSelectedTag() {
+		return this.selectedTag;
+	}
+	public boolean getSelectedTagWasSelected() {
+		return this.selectedTagWasSelected;
+	}
+	
     /**
      * Allows the drag drop listener to know if it's ok to start a drag.
      * 
@@ -263,12 +294,13 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     
     public void selectionChanged(SelectionChangedEvent event) {
 		clearMarkedOccurrences();
+		setSelectedTag();
         if (!this.hovering) {
 	        ITextSelection sel = (ITextSelection)this.fViewer.getSelection();
 	        this.selectionStart = sel.getOffset();
-	        this.selection = sel.getText();
 			this.selectionText = sel.getText().trim();
 			if (event.getSelectionProvider() instanceof IPostSelectionProvider && this.selectionText.length() > 1) {
+				setSelectedTag();
 				try {
 					markOccurrences(this.selectionText);
 				} catch (BadLocationException e) {
@@ -281,7 +313,6 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 			}
         }
     }
-
     /**
      * Determines if the selection needs to be expanded
      * to account for a closed fold.
@@ -292,7 +323,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      */
     private void checkFolding() {
         int widgetOffset = this.fViewer.modelOffset2WidgetOffset(this.selectionStart);
-        String[] lines = this.selection.split(this.textWidget.getLineDelimiter());
+        String[] lines = this.selectionText.split(this.textWidget.getLineDelimiter());
         int widgetLine = this.textWidget.getContent().getLineAtOffset(widgetOffset);
         int lineCount = 0;
         
@@ -352,12 +383,12 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 
 		TextSelection sel = (TextSelection) this.fViewer.getSelection();
 
-		int startpos = fViewer.modelOffset2WidgetOffset(sel.getOffset());
+		int startpos = sel.getOffset()+1;
 
 		if ((e.stateMask & SWT.MOD1) != 0) {
 
 			ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
-			CfmlTagItem cti = cfd.getTagAt(startpos+sel.getLength(), startpos+sel.getLength(), true);
+			CfmlTagItem cti = (CfmlTagItem)cfd.getTagAt(startpos, startpos, true);				
 
 			int start = 0;
 			int length = 0;
@@ -509,7 +540,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	            offset = this.fViewer.widgetOffset2ModelOffset(offset);
 	            
 	            if(this.selectionStart <= offset 
-	                    && this.selectionStart + this.selection.length() > offset) {
+	                    && this.selectionStart + this.selectionText.length() > offset) {
 	                 return true;
 	            }
 	        }

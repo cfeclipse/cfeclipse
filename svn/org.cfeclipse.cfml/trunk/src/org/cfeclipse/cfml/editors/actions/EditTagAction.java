@@ -42,6 +42,7 @@ import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 import org.cfeclipse.cfml.parser.docitems.AttributeItem;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
+import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.util.CFDocUtils;
 import org.cfeclipse.cfml.views.dictionary.TagFormatter;
 import org.eclipse.jface.action.IAction;
@@ -73,7 +74,6 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 		protected Shell shell;
 		protected IEditorPart ieditor;
 		private ITextEditor editor = null;
-		private CFEPartitioner partitioner;
 		private Map selectedattributes;
 		private boolean replace = true;
 		private SyntaxDictionary dictionary;
@@ -124,16 +124,8 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 		
 		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
 			
-			this.editor = (ITextEditor)targetEditor;
+			this.editor = (CFMLEditor)targetEditor;
 	
-			if(targetEditor != null){
-			IDocument doc = editor.getDocumentProvider().getDocument(
-					editor.getEditorInput());
-
-			ICFDocument cfd = (ICFDocument) doc;
-
-			this.partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
-			}
 		}
 		
 		
@@ -152,161 +144,132 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 	}
 
 	//called directly from right click
-	public void run(){
-	
-		//Get the editor, and the various bits we need such as the document, the selection and the shell
+	public void run() {
+
+		// Get the editor, and the various bits we need such as the document,
+		// the selection and the shell
 		IEditorPart activeEditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		ITextEditor thisEdit = (ITextEditor)activeEditor;
-		IDocument doc =  thisEdit.getDocumentProvider().getDocument(thisEdit.getEditorInput());
+		CFMLEditor thisEdit = (CFMLEditor) activeEditor;
+		IDocument doc = thisEdit.getDocumentProvider().getDocument(thisEdit.getEditorInput());
 		ISelection sel = thisEdit.getSelectionProvider().getSelection();
-		final ITextSelection textSelection = (ITextSelection) thisEdit.getSelectionProvider().getSelection();
-		Shell shell = activeEditor.getEditorSite().getShell();
-		ICFDocument cfd = (ICFDocument) doc;
-		CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
-		
-		int selstart = textSelection.getOffset();
-		
-		//Find the closest partition, so that we can then get the start and end of the START tag (where all the attributes are)	
-		CFEPartition currentPartition = partitioner.findClosestPartition(selstart);
-		
-		if (currentPartition == null) {
-			return; //Just quit, we dont know where we are in the document
-        }
-		
-		if (currentPartition.isMidPartition() || currentPartition.isEndPartition()) {
-			  CFEPartition prevPartition = partitioner.getPreviousPartition(currentPartition.getOffset());
-	            while (prevPartition != null && (!prevPartition.isStartPartition())) {
-	                prevPartition = partitioner.getPreviousPartition(prevPartition.getOffset());
-	            }
-		 
-	            currentPartition = prevPartition;
-	  }
-		
-		/*
-		 * Found the start, now find the end
-		 * This is done by looping, getting the next partition until we find the close of the tag
-		 */
-		 String tagName = currentPartition.getTagName();
-	      int stackDepth = 0;
+		CfmlTagItem tagItem = thisEdit.getSelectionCursorListener().getSelectedTag();
+		if (tagItem != null) {
 
-		CFEPartition endPartition = partitioner.getNextPartition(currentPartition.getOffset());
-		
-		/*
-		 * Find the ending of the start tag
-		 */
-		while(endPartition!=null){
-            if (endPartition.isStartPartition() && currentPartition.getTagName().equalsIgnoreCase(endPartition.getTagName())) {
-              //  System.out.println("Encountered nested start tag before end tag");
-                stackDepth++;
-                endPartition = partitioner.getNextPartition(endPartition.getOffset());
-                continue;
-            }
-            if (stackDepth > 0) {
-               // System.out.println("Found match for nested tag; removing from stack");
-                stackDepth--;
-                endPartition = partitioner.getNextPartition(endPartition.getOffset());
-                continue;
-            }
-            if (endPartition.isCloser() && tagName.equalsIgnoreCase(endPartition.getTagName())) {
-                     break;
-            }
-           break;
-		}
-		
-		
-		/*
-		 * Set the selection
-		 */
-		int tagStart = currentPartition.getOffset();
-		int tagEnd = endPartition.getOffset() + endPartition.getLength() - currentPartition.getOffset()+1;
-		
-		TextSelection selection = new TextSelection(tagStart, tagEnd);
-		ISelectionProvider selectionProvider = thisEdit.getSelectionProvider();
-		selectionProvider.setSelection(selection);
-		
-		
-		/*
-		 * Get the actual textual content of the tag
-		 */
-		String tagText = "";
-		try {
-			
-			tagText = doc.get(selection.getOffset(), selection.getLength());
-		} catch (BadLocationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		/*
-		 * Get the attributes as a map
-		 * TODO: I am not sure if map's keep the ordering... need to check this
-		 */
-		Map attributeMap = CFDocUtils.parseStartTag(currentPartition.getTagName(), tagText);
+			int tagStart = tagItem.getStartPosition();
+			int tagEnd = tagItem.getEndPosition();
+			TextSelection selection;
+			int startPos = tagItem.getStartPosition();
+			int endPos = tagItem.getEndPosition();
+			int start = 0;
+			int length = 0;
+			if(tagItem.matchingItem != null) {				
+				if (tagItem.matchingItem.getStartPosition() < tagItem.getStartPosition()) {
+					start = tagItem.matchingItem.getStartPosition();
+					length = tagItem.getEndPosition() - tagItem.matchingItem.getStartPosition() + 1;
+				} else {
+					start = tagItem.getStartPosition();
+					length = tagItem.matchingItem.getEndPosition() - tagItem.getStartPosition() + 1;
+				}
+			} else {
+				if (tagItem.matchingItem != null && tagItem.matchingItem.getStartPosition() <= startPos
+						&& tagItem.matchingItem.getEndPosition() >= startPos) {
+					start = tagItem.matchingItem.getStartPosition();
+					length = tagItem.matchingItem.getEndPosition() - tagItem.matchingItem.getStartPosition() + 1;
+				} else {
+					start = tagItem.getStartPosition();
+					length = tagItem.getEndPosition() - tagItem.getStartPosition() + 1;
+				}				
+			}
+			// thisEdit.selectAndReveal(tagStart,tagEnd-tagStart+1);
+			selection = new TextSelection(start, length);
+			ISelectionProvider selectionProvider = thisEdit.getSelectionProvider();
+			selectionProvider.setSelection(selection);
 
-		
-		/*
-		 * Now open the TagEditDialog, we know the tag name (as a string) and the tag attributes (as a map)
-		 * So, we go and get the tag from the dictionary
-		 */
-		Tag tagToEdit = DictionaryManager.getDictionary("CF_DICTIONARY").getTag(currentPartition.getTagName());
-				
-		
-		/*
-		 * Setup the tageditor dialog
-		 */
-		TagEditDialog tagview = new TagEditDialog(shell, tagToEdit);
-		tagview.setSelectedattributes(attributeMap);
-			
-						
+			/*
+			 * Get the actual textual content of the tag
+			 */
+			String tagText = "";
+			try {
+
+				tagText = doc.get(selection.getOffset(), selection.getLength());
+			} catch (BadLocationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			/*
+			 * Get the attributes as a map TODO: I am not sure if map's keep the
+			 * ordering... need to check this
+			 */
+			Map attributeMap = CFDocUtils.parseStartTag(tagItem.getName(), tagText);
+
+			/*
+			 * Now open the TagEditDialog, we know the tag name (as a string)
+			 * and the tag attributes (as a map) So, we go and get the tag from
+			 * the dictionary
+			 */
+			Tag tagToEdit = DictionaryManager.getDictionary("CF_DICTIONARY").getTag(tagItem.getName());
+
+			/*
+			 * Setup the tageditor dialog
+			 */
+			TagEditDialog tagview = new TagEditDialog(shell, tagToEdit);
+			tagview.setSelectedattributes(attributeMap);
+
 			/*
 			 * Once the editor closes, we do this
 			 */
-			if(tagview.open() == IDialogConstants.OK_ID){
-				Properties fieldStore = tagview.getFieldStore();  	//The new items
-				ArrayList propOrder = new ArrayList();				//The order of the itmes
-				Properties attributesToRender = new Properties();	//The attributes that we are going to be formatting
-				
-				//Put the original attributes in
+			if (tagview.open() == IDialogConstants.OK_ID) {
+				Properties fieldStore = tagview.getFieldStore(); // The new
+																	// items
+				ArrayList propOrder = new ArrayList(); // The order of the itmes
+				Properties attributesToRender = new Properties(); // The
+																	// attributes
+																	// that we
+																	// are going
+																	// to be
+																	// formatting
+
+				// Put the original attributes in
 				Set oldFieldSet = attributeMap.keySet();
 				for (Iterator iter = oldFieldSet.iterator(); iter.hasNext();) {
 					String oldElement = (String) iter.next();
 					propOrder.add(oldElement);
-					
+
 				}
 				attributesToRender.putAll(attributeMap);
 
-				//Loop through the new ones
+				// Loop through the new ones
 				Set newFieldsSet = fieldStore.keySet();
 				for (Iterator iter = newFieldsSet.iterator(); iter.hasNext();) {
 					String element = (String) iter.next();
-					
-					if(attributesToRender.containsKey(element)){
+
+					if (attributesToRender.containsKey(element)) {
 						attributesToRender.setProperty(element, fieldStore.getProperty(element));
-					}
-					else{
+					} else {
 						propOrder.add(element);
 						attributesToRender.put(element, fieldStore.getProperty(element));
 					}
 				}
-				
-			
-				
+
 				/*
 				 * Pass in the attributes into a Tag Formatter
 				 */
 				TagFormatter tf = new TagFormatter(tagToEdit, attributesToRender, propOrder);
-				
-				//Here is where we actually do the insertion
-				
-					if(thisEdit instanceof ITextEditor){
-						try {
-							cfd.replace(selection.getOffset(), selection.getLength(), tf.getTagStart());
-						} catch (BadLocationException e) {
-							e.printStackTrace();
-						}
-						thisEdit.setFocus();
+
+				// Here is where we actually do the insertion
+
+				if (thisEdit instanceof ITextEditor) {
+					try {
+						ICFDocument cfd = (ICFDocument) doc;
+						cfd.replace(selection.getOffset(), selection.getLength(), tf.getTagStart());
+					} catch (BadLocationException e) {
+						e.printStackTrace();
 					}
+					thisEdit.setFocus();
+				}
 			}
+		}
 
 	}
 
@@ -441,9 +404,8 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 	public void selectionChanged(IAction action, ISelection selection){
 		// ugly hack that verifies we only try to work with a CF file.  Something is wrong upstream, we should not need this
 		if( editor != null) {
-			IEditorPart activeEditor = editor.getSite().getPage().getActiveEditor();
-			if(activeEditor != null && activeEditor instanceof CFMLEditor){
-				setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+			if(editor instanceof CFMLEditor){
+				//setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
 			}
 		}
 	}
