@@ -1033,9 +1033,11 @@ public class CFParser {
 						{
 							case MATCHER_CFMLTAG:
 								handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd, match), isACloser);
-								if((tagName.startsWith("<cfif") || tagName.startsWith("<cfelseif")) && attributes.trim().length() == 0){
+								if((tagName.startsWith("<cfif") || tagName.startsWith("<cfelseif") || tagName.startsWith("<cfmodule")) 
+										&& attributes.trim().length() == 0)
+								{
 										userMessage(0, 
-												"stripAttributes", "if statements require conditions", 
+												"stripAttributes", tagName + "> requires at least one attribute", 
 												USRMSG_ERROR, match);			
 								}
 								// trim all tag attributes <cffunction name="blah" becomes cffunction
@@ -1146,13 +1148,16 @@ public class CFParser {
 				
 			}
 			// any tags left will be unclosed tags that should be closed
+			// or maybe a hybrid (cfmodule poped up without the check)
 			while(matchStack.size() > 1) //leave the doc root
 			{				
 				TagItem orphanTag = (TagItem)matchStack.pop();
-				parserState.addMessage(new ParseError(
-						orphanTag.getLineNumber(), orphanTag.getStartPosition(), orphanTag.getEndPosition(), orphanTag.getName(), 
-						orphanTag.getName() + " is missing a closing tag"
+				if (!orphanTag.isHybrid()) {					
+					parserState.addMessage(new ParseError(
+							orphanTag.getLineNumber(), orphanTag.getStartPosition(), orphanTag.getEndPosition(), orphanTag.getName(), 
+							orphanTag.getName() + " is missing a closing tag"
 					));
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
