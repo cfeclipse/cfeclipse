@@ -155,9 +155,9 @@ public class CFParser {
 	 *  At some point, parsing the string by hand will be faster :-)p
 	 *  (\w+)[\s=]+(((\x22|\x27|#)((?!\4).|\4{2})*\4)(\s*&\s*\w+)*(\s*\&\s*((\x22|\x27|#)((?!\4).|\4{2})*\4))*(\s*&\s*\w+)*)
 	 *  This handles everything, apparently, but ouch!
-	 *  (\w+)[\s=]+(((\x22|\x27|#)((?!\4).|\4{2})*\4)((\s*&\s*\w+)*(\s*\&\s*((\x22|\x27|#)((?!\10).|\10{2})*\10))*(\s*&\s*\w+)*)*)
+	 *  (\w+)\s*=\s*(((\x22|\x27|#)((?!\4).|\4{2})*\4)((\s*&\s*\w+)*(\s*\&\s*((\x22|\x27|#)((?!\10).|\10{2})*\10))*(\s*&\s*\w+)*)*)
 	 */ 
-	static protected final String REG_ATTRIBUTES = "(\\w+)[\\s=]+(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4)((\\s*&\\s*\\w+)*(\\s*\\&\\s*((\\x22|\\x27|#)((?!\\10).|\\10{2})*\\10))*(\\s*&\\s*\\w+)*)*)";
+	static protected final String REG_ATTRIBUTES = "(\\w+)\\s*=\\s*(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4)((\\s*&\\s*\\w+)*(\\s*\\&\\s*((\\x22|\\x27|#)((?!\\10).|\\10{2})*\\10))*(\\s*&\\s*\\w+)*)*)";
 	
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
