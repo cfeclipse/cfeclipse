@@ -183,6 +183,12 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		String attrString = "[#startpos<" + startpos + " and #endpos>" + endpos + "]";
 		//System.out.println(this.getClass() + " Finding the tag in the document" + attrString);
 		CFDocument docRoot = getCFDocument();
+
+		// there might be a parse error with the document itself, which nullifies this
+		if(docRoot == null) {
+			return null;
+		}
+
 		try {
 			CFNodeList matchingNodes = docRoot.getDocumentRoot().selectNodes(
 				"//*" + attrString

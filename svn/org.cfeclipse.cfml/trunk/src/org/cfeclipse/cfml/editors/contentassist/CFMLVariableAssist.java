@@ -34,8 +34,6 @@ import org.cfeclipse.cfml.dictionary.ISyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.ScopeVar;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.partitioner.PartitionTypes;
-import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFParser;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
@@ -78,11 +76,13 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
      */
     public ICompletionProposal[] getTagProposals(IAssistState state) {
     	ICFDocument doc = (ICFDocument)state.getIDocument();
+    	// verify we have a parse tree to work with
+    	if(doc.getCFDocument() == null) {
+    		return null;
+    	}
 
     	//Check what partition we are in.
-    	
-    	
-    	
+    	    	
     	
         if (state.getTriggerData() == ' ' || state.getTriggerData() == '#' || state.getTriggerData() == '>') {
             return getPageVariables(state, doc);
