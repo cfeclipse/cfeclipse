@@ -383,7 +383,7 @@ public class DictionaryView extends ViewPart {
 			
 
 			// The dictionary tree viewer
-			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER);
+			viewer = new TreeViewer(topHalf, SWT.RESIZE | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 			drillDownAdapter = new DrillDownAdapter(viewer);
 			
 			viewer.setContentProvider(contentprovider);
@@ -403,7 +403,7 @@ public class DictionaryView extends ViewPart {
 			
 			preview = new Text(bottomHalf, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FLAT);
 			// layout the text field above the treeviewer
-			GridData previewGD = new GridData();
+			GridData previewGD = new GridData(GridData.FILL, GridData.FILL, true, true);
 			previewGD.grabExcessHorizontalSpace = true;
 			previewGD.heightHint = 20;
 			previewGD.horizontalAlignment = GridData.FILL;
