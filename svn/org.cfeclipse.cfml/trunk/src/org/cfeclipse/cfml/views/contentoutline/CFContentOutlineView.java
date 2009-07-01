@@ -658,36 +658,40 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 
 	public void selectionChanged(IWorkbenchPart workbench, ISelection selection) {
 		// TODO Auto-generated method stub
-		if(selection != null && selection instanceof ITextSelection){
-			// this change will file the selection changed event.  This bool prevents a line jump
+		if (selection != null && selection instanceof ITextSelection) {
+			// this change will file the selection changed event. This bool
+			// prevents a line jump
 			changeCameFromEditor = true;
-			CFMLEditor curDoc = (CFMLEditor) workbench.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-			ICFDocument cfd = (ICFDocument) curDoc.getDocumentProvider().getDocument(curDoc.getEditorInput());
-			//if(curDoc instanceof CFMLEditor){
-				ITextSelection tselection = (ITextSelection)selection;
+			IEditorPart curEditor = workbench.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+			if (curEditor instanceof CFMLEditor) {
+				CFMLEditor curDoc = (CFMLEditor) curEditor;
+				ICFDocument cfd = (ICFDocument) curDoc.getDocumentProvider().getDocument(curDoc.getEditorInput());
+				ITextSelection tselection = (ITextSelection) selection;
 				int startPos;
-//					startPos = cfd.getLineOffset(tselection.getStartLine())+1;
-					startPos = tselection.getOffset()+1;
-					DocItem cti = (DocItem)cfd.getTagAt(startPos, startPos, true);				
-					if (cti != null) {
-						if(linkWithEditor) {
-							setSelectedDocItem(cti);
-							DocItem curItem = cti;
-							if(curItem.getParent() != null) {								
-								getTreeViewer().setExpandedState(curItem.getParent(), true);
-								getTreeViewer().refresh(curItem.getParent(),false);
-							}
-							getTreeViewer().setExpandedState(curItem, true);
-							getTreeViewer().refresh(curItem,false);
-//							while(curItem.getName().compareToIgnoreCase("Doc Root") !=1) {
-//								getTreeViewer().setExpandedState(curItem.getParent(), true);
-//								getTreeViewer().refresh(curItem,false);
-//								curItem = curItem.getParent();
-//							}
-							
-						}							
-					}			
-			//}
+				// startPos = cfd.getLineOffset(tselection.getStartLine())+1;
+				startPos = tselection.getOffset() + 1;
+				DocItem cti = (DocItem) cfd.getTagAt(startPos, startPos, true);
+				if (cti != null) {
+					if (linkWithEditor) {
+						setSelectedDocItem(cti);
+						DocItem curItem = cti;
+						if (curItem.getParent() != null) {
+							getTreeViewer().setExpandedState(curItem.getParent(), true);
+							getTreeViewer().refresh(curItem.getParent(), false);
+						}
+						getTreeViewer().setExpandedState(curItem, true);
+						getTreeViewer().refresh(curItem, false);
+						// while(curItem.getName().compareToIgnoreCase("Doc Root")
+						// !=1) {
+						// getTreeViewer().setExpandedState(curItem.getParent(),
+						// true);
+						// getTreeViewer().refresh(curItem,false);
+						// curItem = curItem.getParent();
+						// }
+
+					}
+				}
+			}
 		}
 	}
 		
