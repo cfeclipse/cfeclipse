@@ -17,10 +17,7 @@ public class WordWrapAction implements IWorkbenchWindowActionDelegate,IEditorAct
 	
 	
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		editor = null;
-		if (targetEditor instanceof CFMLEditor) {
-			editor = (CFMLEditor)targetEditor;
-		}
+		editor = (CFMLEditor)targetEditor;
 	}
 
 	public void run(IAction action) {
@@ -35,13 +32,10 @@ public class WordWrapAction implements IWorkbenchWindowActionDelegate,IEditorAct
 	}
 
 	public void selectionChanged(IAction action, ISelection selection) {
-		if(editor != null){
-			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
-		}
-		if (editor == null) {
-			action.setEnabled(false);
-		} else {
+		if (editor != null && editor.getSite().getPage().getActiveEditor() instanceof CFMLEditor) {
 			action.setEnabled(true);
+		} else {
+			action.setEnabled(false);
 		}
 	}
 

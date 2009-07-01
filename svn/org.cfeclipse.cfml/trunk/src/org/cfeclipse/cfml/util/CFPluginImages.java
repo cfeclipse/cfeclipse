@@ -247,6 +247,8 @@ public class CFPluginImages {
 	
 	// outline view
 	public static final String ICON_LINK_TO_EDITOR = "link_to_editor.gif";
+	public static final String ICON_MARK_OCCURRENCE = "mark_occurrence.gif";
+	
 	
 	// directory offsets
 	public static final String MODEL_OBJECTS = "obj16";

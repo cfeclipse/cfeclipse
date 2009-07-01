@@ -640,6 +640,15 @@
    </extension>
    
 	<!-- ////////////////////////////////////////////////////////////// -->
+	
+	<extension point="org.eclipse.ui.menus">
+	    <menuContribution locationURI="popup:#TextRuleContext?after=additions">
+	        <command commandId="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
+	                mnemonic="Newmmmon"
+	                icon="$nl$/icons/full/eobj16/scramble.gif" />
+	    </menuContribution>
+	</extension>
+
 	<!-- popup menu -->
    <extension
          point="org.eclipse.ui.popupMenus">
@@ -750,6 +759,13 @@
                class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkersAction"
                menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
                id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
+         </action>
+         <action
+               label="%toggleMarkOccurrences.label"
+               class="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
+               menubarPath="additions"
+				icon="icons/obj16/mark_occurrence.gif"
+               id="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction">
          </action>
       </viewerContribution>
 
@@ -1093,6 +1109,11 @@
 			description="%command.description.ClipboardLink"
 			categoryId="org.cfeclipse.cfml.commandCategory"
 			id="org.cfeclipse.cfml.editors.actions.ClipboardLink" />
+
+	    <command 
+	    	id="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
+            name="%toggleMarkOccurrences.label"
+            description="%toggleMarkOccurrences.label" />
 		
 		<!-- Find a matching bracket pair -->
 		<!--
@@ -1833,13 +1854,13 @@
 	  <specification
             annotationType="org.cfeclipse.cfml.occurrenceAnnotation"
             label="%occurrencemarker.label"
-            icon="icons/ctool16/showandselect.gif"            
+			icon="icons/obj16/mark_occurrence.gif"
             textPreferenceKey="occurrenceAnnotation.text"
             textPreferenceValue="true"
             highlightPreferenceKey="occurrenceAnnotation.background"
 			highlightPreferenceValue="false"
 			textStylePreferenceKey="occurrenceAnnotation.style"
-			textStylePreferenceValue="SQUIGGLES"
+			textStylePreferenceValue="BOX"
             overviewRulerPreferenceKey="occurrenceAnnotation.IndicationInOverviewRuler"
 			overviewRulerPreferenceValue="true"
             verticalRulerPreferenceKey="occurrenceAnnotation.IndicationInVerticalRuler"
@@ -1965,6 +1986,17 @@
             label="CFEclipse"
             visible="true">
             
+         <action
+               class="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
+				icon="icons/obj16/mark_occurrence.gif"
+               id="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
+               label="%toggleMarkOccurrences.label"
+               state="true"
+               style="toggle"
+               toolbarPath="BasicCFEditorText"
+               tooltip="%%toggleMarkOccurrences.tooltip"/>
+
           <!-- Word Wrap -->
         <action
               class="org.cfeclipse.cfml.editors.actions.WordWrapAction"

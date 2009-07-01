@@ -141,6 +141,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	private CfmlTagItem lastSelectedTag;
 	private CfmlTagItem selectedTag;
 	private boolean selectedTagWasSelected;
+	private boolean isMarkOccurrenceEnabled;
     private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
 	//private static String TYPE = "org.eclipse.core.resources.textmarker";
 	//private static String TYPE = "org.cfeclipse.cfml.parserWarningMarker";
@@ -293,24 +294,25 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
      */
     
     public void selectionChanged(SelectionChangedEvent event) {
-		clearMarkedOccurrences();
 		setSelectedTag();
         if (!this.hovering) {
-	        ITextSelection sel = (ITextSelection)this.fViewer.getSelection();
-	        this.selectionStart = sel.getOffset();
-			this.selectionText = sel.getText().trim();
-			if (event.getSelectionProvider() instanceof IPostSelectionProvider && this.selectionText.length() > 1) {
-				setSelectedTag();
-				try {
-					markOccurrences(this.selectionText);
-				} catch (BadLocationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}			
-			}
-			else {
-				//System.out.println("MarkOccurrences got non POST selection changed");
-			}
+        	if(this.isMarkOccurrenceEnabled) {
+        		clearMarkedOccurrences();
+        		ITextSelection sel = (ITextSelection)this.fViewer.getSelection();
+        		this.selectionStart = sel.getOffset();
+        		this.selectionText = sel.getText().trim();
+        		if (event.getSelectionProvider() instanceof IPostSelectionProvider && this.selectionText.length() > 1) {
+        			try {
+        				markOccurrences(this.selectionText);
+        			} catch (BadLocationException e) {
+        				// TODO Auto-generated catch block
+        				e.printStackTrace();
+        			}			
+        		}
+        		else {
+        			//System.out.println("MarkOccurrences got non POST selection changed");
+        		}
+        	}
         }
     }
     /**
@@ -643,7 +645,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	/**
 	 * Clears any marked occurrences
 	 */
-	private void clearMarkedOccurrences() {
+	public void clearMarkedOccurrences() {
 		if (this.fViewer == null)
 			return;
 
@@ -657,6 +659,11 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 			e.printStackTrace();
 		}
 
+	}
+
+	public void setMarkOccurrenceEnabled(boolean isMarkOccurrenceEnabled) {
+		// TODO Auto-generated method stub
+		this.isMarkOccurrenceEnabled = isMarkOccurrenceEnabled;
 	}
 	
 	

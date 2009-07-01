@@ -89,6 +89,7 @@ import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -214,6 +215,7 @@ public class CFMLEditor extends TextEditor implements
 	private Object columnSupport;
 	private CFContentOutlineView cfcontentOutlineView;
 	private SelectionCursorListener SelectionCursorListener;
+	private boolean isMarkOccurrenceEnabled;
 
 	
 
@@ -293,6 +295,7 @@ public class CFMLEditor extends TextEditor implements
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(this);
+		isMarkOccurrenceEnabled = getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES);
 	}
 
 	public StyledText getTextWidget() {
@@ -661,36 +664,35 @@ public class CFMLEditor extends TextEditor implements
 	}
 
 		protected void setSelectionCursorListener() {
-			if (getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES)) {
-				String[] wordChars = {
-						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS),
-						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS),
-						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_ALT),
-						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_ALT),
-						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_SHIFT),
-						getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_SHIFT)
-				};
-				if (SelectionCursorListener != null) {
-					SelectionCursorListener.setWordSelectionChars(wordChars);
-				} else {
-					ProjectionViewer projectionViewer = (ProjectionViewer)getSourceViewer();
-					SelectionCursorListener = new SelectionCursorListener(this, projectionViewer,wordChars);
-					//projectionViewer.addSelectionChangedListener(SelectionCursorListener);
-					projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
-					projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);				
-
-				}
-				/* //This will maybe someday come in handy for switching occurrence marking on and on in active editors?
-				 * IHandlerService handlerServ =
-				 * (IHandlerService)getSite().getWorkbenchWindow().getService(IHandlerService.class);
-				 * toggleOccurrencesHandler = new ToggleTextSelectionsHandler();
-				 * handlerServ.activateHandler("org.eclipse.jdt.ui.edit.text.java.toggleTextSelections",
-				 * toggleOccurrencesHandler, expr);
-				 */
+			String[] wordChars = {
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_ALT),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_ALT),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_SHIFT),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_SHIFT)
+			};
+			if (SelectionCursorListener != null) {
+				SelectionCursorListener.setWordSelectionChars(wordChars);
+			} else {
+				ProjectionViewer projectionViewer = (ProjectionViewer)getSourceViewer();
+				SelectionCursorListener = new SelectionCursorListener(this, projectionViewer,wordChars);
+				//projectionViewer.addSelectionChangedListener(SelectionCursorListener);
+				projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
+				projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);				
+				SelectionCursorListener.setWordSelectionChars(wordChars);
+				setMarkOccurrenceEnabled(getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES));
 			}
+			/* //This will maybe someday come in handy for switching occurrence marking on and on in active editors?
+			 * IHandlerService handlerServ =
+			 * (IHandlerService)getSite().getWorkbenchWindow().getService(IHandlerService.class);
+			 * toggleOccurrencesHandler = new ToggleTextSelectionsHandler();
+			 * handlerServ.activateHandler("org.eclipse.jdt.ui.edit.text.java.toggleTextSelections",
+			 * toggleOccurrencesHandler, expr);
+			 */
 		}			
 		public SelectionCursorListener getSelectionCursorListener() {
-				if (SelectionCursorListener != null) {
+				if (SelectionCursorListener == null) {
 					setSelectionCursorListener();
 				}
 				return SelectionCursorListener;
@@ -897,7 +899,8 @@ public class CFMLEditor extends TextEditor implements
 			 *		3) or if we are in a cfset tag who's parent tag is a cfcomponent tag  
 			 */	
 			
-			if(part != null && part.getTagName().equalsIgnoreCase("cfproperty")){
+			if(getSelectionCursorListener().getSelectedTag() != null && 
+					getSelectionCursorListener().getSelectedTag().getName().equalsIgnoreCase("cfproperty")){
 				menu.add(act);
 			}
 			
@@ -947,13 +950,15 @@ public class CFMLEditor extends TextEditor implements
 				}
 
 				System.out.println(part);
-				if (part.getTagName().equals("cfinclude") || part.getTagName().equals("cfmodule")) {
-					//this is a bit hokey - there has to be a way to load the
-					//action in the xml file then just call it here...
-				    this.gfa.setActiveEditor(null, getSite().getPage().getActiveEditor());
+				// this is a bit hokey - there has to be a way to load the
+				// action in the xml file then just call it here...
+				if (getSelectionCursorListener().getSelectedTag() != null
+						&& (getSelectionCursorListener().getSelectedTag().getName().equalsIgnoreCase("cfinclude") 
+								|| getSelectionCursorListener().getSelectedTag().getName().equalsIgnoreCase("cfmodule"))) {
+					this.gfa.setActiveEditor(null, getSite().getPage().getActiveEditor());
 
-					Action ack = new Action("Open/Create File", CFPluginImages
-							.getImageRegistry().getDescriptor(CFPluginImages.ICON_IMPORT)) {
+					Action ack = new Action("Open/Create File", CFPluginImages.getImageRegistry().getDescriptor(
+							CFPluginImages.ICON_IMPORT)) {
 						public void run() {
 
 						    CFMLEditor.this.gfa.run(null);
@@ -1164,6 +1169,7 @@ public class CFMLEditor extends TextEditor implements
 			}
 		}
 		setBackgroundColor();
+		setMarkOccurrenceEnabled(getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES));
 
 		super.handlePreferenceStoreChanged(event);
 	}
@@ -1262,6 +1268,24 @@ public class CFMLEditor extends TextEditor implements
 			configureSourceViewerDecorationSupport(this.fSourceViewerDecorationSupport);
 		}
 		return this.fSourceViewerDecorationSupport;
+	}
+
+	/**
+	 * @param isMarkOccurrenceEnabled the isMarkOccurrenceEnabled to set
+	 */
+	public void setMarkOccurrenceEnabled(boolean isMarkOccurrenceEnabled) {
+		this.isMarkOccurrenceEnabled = isMarkOccurrenceEnabled;
+		SelectionCursorListener.setMarkOccurrenceEnabled(isMarkOccurrenceEnabled);
+		if(!isMarkOccurrenceEnabled) {
+			SelectionCursorListener.clearMarkedOccurrences();			
+		} 
+	}
+
+	/**
+	 * @return the isMarkOccurrenceEnabled
+	 */
+	public boolean isMarkOccurrenceEnabled() {
+		return isMarkOccurrenceEnabled;
 	}
 
 	
