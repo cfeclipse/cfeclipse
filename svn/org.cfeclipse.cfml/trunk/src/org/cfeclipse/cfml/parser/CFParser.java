@@ -1033,7 +1033,8 @@ public class CFParser {
 						{
 							case MATCHER_CFMLTAG:
 								handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd, match), isACloser);
-								if((tagName.startsWith("<cfif") || tagName.startsWith("<cfelseif") || tagName.startsWith("<cfmodule")) 
+								if((tagName.startsWith("<cfif") || tagName.startsWith("<cfelseif") || tagName.startsWith("<cfmodule")
+										|| tagName.startsWith("<cfset")) 
 										&& attributes.trim().length() == 0)
 								{
 										userMessage(0, 
