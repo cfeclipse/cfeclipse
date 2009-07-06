@@ -47,7 +47,7 @@ ILightweightLabelDecorator {
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof IResource) {
 			IResource selResource = (IResource) element;
-			if (selResource.exists()) {
+			if(selResource.exists() && selResource.isAccessible()) {				
 				String isConfig = "false";
 				try {
 					isConfig = selResource.getPersistentProperty(new QualifiedName("", "isFrameworkConfig"));

@@ -41,7 +41,7 @@ public class URLDecorator extends LabelProvider implements
 		if (element instanceof IResource) {
 			IResource selResource = (IResource) element;
 			String urlProperty = null;
-			if(selResource.exists()){				
+			if(selResource.exists() && selResource.isAccessible()) {				
 				try {
 					urlProperty = selResource
 					.getPersistentProperty(new QualifiedName("",
