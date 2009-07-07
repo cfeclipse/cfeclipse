@@ -120,8 +120,11 @@ public class CfmlTagItem extends TagItem {
 			Set attributes = syntax.getFilteredAttributes(this.itemName.toLowerCase(), newAttr.getName());
 			
 			if(attributes.size() == 0) {
+				/*
+				 * if we don't know the tag why tell the user about invalid attributes? :denny
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
 					"Attribute \'" + newAttr.getName() + "\' is not valid."));
+					*/
 				addOkay = false;	// While it's incorrect we still wish to add it to the item
 			}
 		}
