@@ -122,6 +122,9 @@ public class CFParser {
 	 * TODO: Either modify the REG_TAG regex to match multiline tags or completely rewrite the tag matcher.
 	 */
 	static protected final String REG_TAG = "<(\\w*)(.*)/{0,1}>";
+	// the below matches multiple lines, but doesn't seem to do anything different
+	//static protected final String REG_TAG = "(?s)<(\\w*)(.*)/{0,1}>";
+
 	/**
 	 * <code>REG_ATTRIBUTES</code> - regular expression for getting the attributes out of a tag match.
 	 * (\w+\s?=\s?)?((((\w+ & )?\x22|\x27)((?!\4).|\4{2})*\4?(.*&.*)?))
@@ -995,9 +998,12 @@ public class CFParser {
 				if(matchStr.charAt(0) == '<')	// Funnily enough this should always be the case!
 				{
 					if(matchStr.charAt(1) == '/') {
-						// added handleClosingTag check to above for cases where a tag is "open" ex: <cfmail >
 						if(!handleClosingTag(match, matchStack)) {						    
-							return null;
+							parserState.addMessage(new ParseError(
+									getLineNumber(matchPos), matchPos, matchPos, "", 
+									"Something in here is (probably) missing a closing tag or a closing \">\" and thus totally borking the parse!"
+								));
+							break;
 						}
 					} else {
 						// get just tag name, e.g. : <cffunction name="blah" becomes cffunction
@@ -1041,9 +1047,6 @@ public class CFParser {
 												"stripAttributes", tagName + "> requires at least one attribute", 
 												USRMSG_ERROR, match);			
 								}
-								// trim all tag attributes <cffunction name="blah" becomes cffunction
-								//closerName = closerName.substring(1, closerName.length());
-								//matchStack.push((DocItem)matchStack.get(matchStack.size()-1));
 
 								break;
 							case MATCHER_CFMLCOMMENT:
@@ -1116,7 +1119,7 @@ public class CFParser {
 						// Mark them as being self closers.
 						if (tagName.toLowerCase().startsWith("cf_") || tagName.toLowerCase().startsWith("cfx_")) {
 							((CfmlCustomTag)t).hasCloser= false;
-						}  
+						}
 						// Get the current parent of the tag.
 						DocItem parent = t.getParent();
 						if (parent == null) {
@@ -1401,6 +1404,7 @@ public class CFParser {
 				char currChar = data.charAt(currPos);
 				String next2Chars = "";
 				String next3Chars = "";
+				String next4Chars = "";
 				String around = "";
 				
 				// Make sure we haven't had any fatal errors during parsing.
@@ -1410,15 +1414,16 @@ public class CFParser {
 				// Get some next data that will make our life easier in the code ahead
 				next2Chars = (data.length() - currPos > 2) ? data.substring(currPos + 1, currPos + 3) : ""; 
 				next3Chars = (data.length() - currPos > 3) ? next2Chars + data.charAt(currPos + 3) : "";
+				next4Chars = (data.length() - currPos > 4) ? next3Chars + data.charAt(currPos + 4) : "";
 				
 				around = getSurroundingData(data, currPos);
 				
-				if(currState == MATCHER_NOTHING && currChar == '<')
+				if((currState == MATCHER_NOTHING || currState == MATCHER_CFMLCOMMENT && next4Chars.compareTo("!---") == 0) && currChar == '<')
 				{	
 					if(next2Chars.compareTo("!-") == 0)
 					{	// Testing for comment: <!--
 						// TODO: Find out whether comments can occur in tags
-						if(next3Chars.compareTo("!--") == 0 && data.charAt(currPos + 4) == '-')
+						if(next4Chars.compareTo("!---") == 0)
 						{
 							stateStack.push(new Integer(currState));
 							statePositionStack.push(new Integer(currPos));
@@ -1610,9 +1615,9 @@ public class CFParser {
 			
 			//parserState.getMatches() was called twice in succession, this should speed it up a bit.
 			ArrayList matches = parserState.getMatches();
-//			System.out.println("=============> Beginning match dump" );			
+			//System.out.println("=============> Beginning match dump" );			
 			//Util.dumpMatches(matches);
-//			System.out.println("=============> Finishing match dump");
+			//System.out.println("=============> Finishing match dump");
 			docTree = createDocTree(matches);
 			
 			DocItem documentRoot = docTree.getDocumentRoot();
