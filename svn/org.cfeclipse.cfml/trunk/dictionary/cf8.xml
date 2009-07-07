@@ -21826,7 +21826,7 @@ cflayoutarea tag style attributes.
 			are not supported.
 		]]></help>
 			</parameter>
-			<parameter name="scop" type="String" required="false">
+			<parameter name="scope" type="String" required="false">
 				<help><![CDATA[
 			one: function returns one matching key (default)
 			all: function returns all matching keys
