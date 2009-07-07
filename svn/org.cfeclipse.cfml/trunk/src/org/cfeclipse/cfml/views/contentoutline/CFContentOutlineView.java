@@ -100,7 +100,9 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		if(!treemade)
 		{
 			//first go round setup some of our default stuff
-			getTreeViewer().setUseHashlookup(true);
+			if(getTreeViewer().getContentProvider() == null) {
+				getTreeViewer().setUseHashlookup(true);
+			}
 			lastExpandedElements = new ArrayList();
 			saveExpandedElements();
 			createTree();
@@ -369,7 +371,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	{
 		//saveExpandedElements();
 		
-		if(cop == null)
+		if(getTreeViewer().getContentProvider() == null)
 		{
 			cop = new OutlineContentProvider(root);
 			getTreeViewer().setContentProvider(cop);
@@ -382,6 +384,12 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		}
 		
 		getTreeViewer().setInput(root);
+		// temporary hack to expand a cfcomponent
+		if(root.hasChildren() && root.getFirstChild().getName().compareToIgnoreCase("cfcomponent") == 0){
+			getTreeViewer().setExpandedState(root.getFirstChild(), true);
+			getTreeViewer().refresh(root, false);			
+		}
+
 		//getTreeViewer().setExpandedElements(lastExpandedElements.toArray());
 		//getTreeViewer().expandAll();
 	}
