@@ -121,10 +121,7 @@ public class RTrimAction implements IWorkbenchWindowActionDelegate,IEditorAction
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){
-		// ugly hack that verifies we only try to work with a CF file.  Something is wrong upstream, we should not need this
-		if(editor != null && editor instanceof org.cfeclipse.cfml.editors.CFMLEditor){
-			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
-		}
+		//not setting active editor anymore
 	}
 
 	public void dispose() {
