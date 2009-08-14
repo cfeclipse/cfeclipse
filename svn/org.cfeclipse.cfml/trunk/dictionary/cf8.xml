@@ -16439,33 +16439,70 @@ cflayoutarea tag style attributes.
 				<values/>
 			</parameter>
 		</tag>
-		<tag creator="8" name="cfthread" single="true" xmlstyle="false">
+		<!--
+			join
+			
+			cfthread
+				required
+				name="thread name[,thread name]..."
+				optional
+				action="join"
+				timeout="milliseconds"
+			
+			run
+			
+			cfthread
+				required
+				name="thread name"
+				optional
+				action="run"
+				priority="NORMAL|HIGH|LOW"
+				zero or more application-specific attributes
+				
+				Thread code
+			/cfthread
+			
+			sleep
+			
+			cfthread
+				required
+				action="sleep"
+				duration="milliseconds"
+			
+			terminate
+			
+			cfthread
+				required
+				action="terminate"
+				name="thread name"
+		-->
+		<tag creator="8" name="cfthread" single="false" xmlstyle="false" allowanyattribute="true">
 			<help><![CDATA[
-		The cfthread tag enables multithreaded programming in ColdFusion.
-		Threads are independent streams of execution, and multiple threads
-		on a page can execute simultaneously and asynchronously, letting you
-		perform asynchronous processing in CFML. CFML code within the cfthread
-		tag body executes on a separate thread while the page request thread
-		continues processing without waiting for the cfthread body to finish.
-		You use this tag to run or end a thread, temporarily stop thread execution,
-		or join together multiple threads.
-	]]></help>
+				The cfthread tag enables multithreaded programming in ColdFusion.
+				Threads are independent streams of execution, and multiple threads
+				on a page can execute simultaneously and asynchronously, letting you
+				perform asynchronous processing in CFML. CFML code within the cfthread
+				tag body executes on a separate thread while the page request thread
+				continues processing without waiting for the cfthread body to finish.
+				You use this tag to run or end a thread, temporarily stop thread execution,
+				or join together multiple threads.
+			]]></help>
 			<parameter name="action" type="String" required="false">
 				<help><![CDATA[
-			The action to take, one of the following values:
-			join Makes the current thread wait until the thread or threads
-			specified in the name attribute complete processing, or until the
-			period specified in the timeout attribute passes, before continuing
-			processing. If you dont specify a timeout and thread you are joining
-			to doesnt finish, the current thread also cannot finish processing.
-			run Creates a thread and starts it processing.
-			sleep Suspends the current threads processing for the time specified
-			by the duration attribute. This action is useful if one thread must wait
-			for another thread to do processing without joining the threads.
-			terminate Stops processing of the thread specified in the name attribute.
-			If you terminate a thread, the thread scope includes an ERROR metadata
-			structure with information about the termination. (optional, default=run)
-		]]></help>
+					The action to take, one of the following values:
+					join Makes the current thread wait until the thread or threads
+					specified in the name attribute complete processing, or until the
+					period specified in the timeout attribute passes, before continuing
+					processing. If you dont specify a timeout and thread you are joining
+					to doesnt finish, the current thread also cannot finish processing.
+					run Creates a thread and starts it processing.
+					sleep Suspends the current threads processing for the time specified
+					by the duration attribute. This action is useful if one thread must wait
+					for another thread to do processing without joining the threads.
+					terminate Stops processing of the thread specified in the name attribute.
+					If you terminate a thread, the thread scope includes an ERROR metadata
+					structure with information about the termination. (optional, default=run)
+				]]></help>
 				<values>
 					<value option="join"/>
 					<value option="run"/>
@@ -16473,10 +16510,10 @@ cflayoutarea tag style attributes.
 					<value option="terminate"/>
 				</values>
 			</parameter>
-			<parameter name="duration" type="String" required="true">
+			<parameter name="duration" type="String" required="false">
 				<help><![CDATA[
-			(sleep) The number of milliseconds for which to suspend thread processing. (required)
-		]]></help>
+					(sleep) The number of milliseconds for which to suspend thread processing. (required)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" value="sleep" required="true"/>
@@ -16484,12 +16521,12 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="name" type="String" required="false">
 				<help><![CDATA[
-			The name of the thread to which the action applies:
-			terminate The name of the thread to stop.
-			join The name of the thread or threads to join to the current thread.
-			To specify multiple threads, use a comma-delimited list.
-			run The name to use to identify the thread being created. (required)
-		]]></help>
+					The name of the thread to which the action applies:
+					terminate The name of the thread to stop.
+					join The name of the thread or threads to join to the current thread.
+					To specify multiple threads, use a comma-delimited list.
+					run The name to use to identify the thread being created. (required)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" value="join" required="true"/>
@@ -16499,13 +16536,13 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="priority" type="String" required="false">
 				<help><![CDATA[
-			The priority level at which to run the thread.
-			The following values are valid:
-			HIGH, LOW, NORMAL
-			Higher priority threads get more processing time than lower priority
-			threads. Page-level code, the code that is outside of cfthread tags,
-			always has NORMAL priority. (optional, default=NORMAL)
-		]]></help>
+					The priority level at which to run the thread.
+					The following values are valid:
+					HIGH, LOW, NORMAL
+					Higher priority threads get more processing time than lower priority
+					threads. Page-level code, the code that is outside of cfthread tags,
+					always has NORMAL priority. (optional, default=NORMAL)
+				]]></help>
 				<values>
 					<value option="HIGH"/>
 					<value option="LOW"/>
@@ -16517,14 +16554,14 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="timeout" type="Numeric" required="false">
 				<help><![CDATA[
-			The number of milliseconds that the current thread waits for
-			the thread or threads being joined to finish. If any thread does not
-			finish by the specified time, the current thread proceeds.
-			If the attribute value is 0, the default, the current thread continues
-			waiting until all joining threads finish. If the current thread is the
-			page thread, the page continues waiting until the threads are joined,
-			even if you specify a page timeout. (optional, default=0)
-		]]></help>
+					The number of milliseconds that the current thread waits for
+					the thread or threads being joined to finish. If any thread does not
+					finish by the specified time, the current thread proceeds.
+					If the attribute value is 0, the default, the current thread continues
+					waiting until all joining threads finish. If the current thread is the
+					page thread, the page continues waiting until the threads are joined,
+					even if you specify a page timeout. (optional, default=0)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" value="join" required="false"/>
@@ -16533,23 +16570,23 @@ cflayoutarea tag style attributes.
 		</tag>
 		<tag creator="8" name="cfzip" single="false" xmlstyle="false">
 			<help><![CDATA[
-		Manipulates ZIP and JavaTM Archive (JAR) files.
-		In addition to the basic zip and unzip functions, use the cfzip tag to delete
-		entries from an archive, filter files, read files in binary format, list the
-		contents of an archive, and specify an entrypath used in an executable JAR file.
-	]]></help>
+				Manipulates ZIP and JavaTM Archive (JAR) files.
+				In addition to the basic zip and unzip functions, use the cfzip tag to delete
+				entries from an archive, filter files, read files in binary format, list the
+				contents of an archive, and specify an entrypath used in an executable JAR file.
+			]]></help>
 			<parameter name="action" type="String" required="false">
 				<help><![CDATA[
-			The action to take. Must be one of the following:
-			delete
-			list
-			read
-			readBinary
-			unzip
-			zip
-			If you do not specify an action, ColdFusion
-			applies the default action, zip. (optional)
-		]]></help>
+					The action to take. Must be one of the following:
+					delete
+					list
+					read
+					readBinary
+					unzip
+					zip
+					If you do not specify an action, ColdFusion
+					applies the default action, zip. (optional)
+				]]></help>
 				<values>
 					<value option="delete"/>
 					<value option="list"/>
@@ -16561,12 +16598,12 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="charset" type="String" required="false">
 				<help><![CDATA[
-			The character set used to translate the ZIP or JAR
-			entry into a text string. Examples of character sets are:
-			JIS
-			RFC1345
-			UTF-16 (optional, default=encoding of the host machine)
-		]]></help>
+					The character set used to translate the ZIP or JAR
+					entry into a text string. Examples of character sets are:
+					JIS
+					RFC1345
+					UTF-16 (optional, default=encoding of the host machine)
+				]]></help>
 				<values>
 					<value option="JIS"/>
 					<value option="RFC1345"/>
@@ -16578,8 +16615,8 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="destination" type="String" required="required">
 				<help><![CDATA[
-			Destination directory where the ZIP or JAR file is extracted. (optional)
-		]]></help>
+					Destination directory where the ZIP or JAR file is extracted. (optional)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="unzip" value="read" required="true"/>
@@ -16587,8 +16624,8 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="entrypath" type="String" required="false">
 				<help><![CDATA[
-			Pathname on which the action is performed. (optional)
-		]]></help>
+					Pathname on which the action is performed. (optional)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" value="delete" required="false"/>
@@ -16599,12 +16636,12 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="file" type="String" required="true">
 				<help><![CDATA[
-			Absolute pathname of the file on which the action is performed.
-			For example, the full pathname of the ZIP file: c:\temp\log.zip.
-			If you do not specify the full pathname (for example, file="log.zip"),
-			ColdFusion creates the file in a temporary directory. You can use the
-			GetTempDirectory function to access the ZIP or JAR file. (required)
-		]]></help>
+					Absolute pathname of the file on which the action is performed.
+					For example, the full pathname of the ZIP file: c:\temp\log.zip.
+					If you do not specify the full pathname (for example, file="log.zip"),
+					ColdFusion creates the file in a temporary directory. You can use the
+					GetTempDirectory function to access the ZIP or JAR file. (required)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" value="delete" required="true"/>
@@ -16617,9 +16654,9 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="filter" type="String" required="false">
 				<help><![CDATA[
-			File filter applied to the action. The action
-			applies to all files in the pathname specified that match the filter. (optional)
-		]]></help>
+					File filter applied to the action. The action
+					applies to all files in the pathname specified that match the filter. (optional)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" value="delete" required="false"/>
@@ -16630,20 +16667,20 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="name" type="String" required="true">
 				<help><![CDATA[
-			Record set name in which the result of the list action is stored.
-			The record set columns are:
-			name: filename of the entry in the JAR file. For example, if the entry is
-			help/docs/index.htm, the name is index.htm.
-			directory: directory containing the entry. For the example above, the
-			directory is help/docs. You can obtain the full entry name by concatenating
-			directory and name. If an entry is at the root level, the directory is empty ('').
-			size: uncompressed size of the entry, in bytes.
-			compressedSize: compressed size of the entry, in bytes.
-			type: type of entry (directory or file).
-			dateLastModified: last modified date of the entry, cfdate object.
-			comment: any comment, if present, for the entry.
-			crc: crc-32 checksum of the uncompressed entry data. (required)
-		]]></help>
+					Record set name in which the result of the list action is stored.
+					The record set columns are:
+					name: filename of the entry in the JAR file. For example, if the entry is
+					help/docs/index.htm, the name is index.htm.
+					directory: directory containing the entry. For the example above, the
+					directory is help/docs. You can obtain the full entry name by concatenating
+					directory and name. If an entry is at the root level, the directory is empty ('').
+					size: uncompressed size of the entry, in bytes.
+					compressedSize: compressed size of the entry, in bytes.
+					type: type of entry (directory or file).
+					dateLastModified: last modified date of the entry, cfdate object.
+					comment: any comment, if present, for the entry.
+					crc: crc-32 checksum of the uncompressed entry data. (required)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" value="list" required="false"/>
@@ -16651,17 +16688,17 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="overwrite" type="Boolean" required="false">
 				<help><![CDATA[
-			unzip: Specifies whether to overwrite the extracted files:
-			yes: if the extracted file already exists at the destination specified,
-			the file is overwritten.
-			no: if the extracted file already exists at the destination specified,
-			the file is not overwritten and that entry is not extracted. The remaining
-			entries are extracted.
-			zip: Specifies whether to overwrite the contents of a ZIP or JAR file:
-			yes: overwrites all of the content in the ZIP or JAR file if it exists.
-			no: updates existing entries and adds new entries to the ZIP or JAR file
-			if it exists. (optional, default=no)
-		]]></help>
+					unzip: Specifies whether to overwrite the extracted files:
+					yes: if the extracted file already exists at the destination specified,
+					the file is overwritten.
+					no: if the extracted file already exists at the destination specified,
+					the file is not overwritten and that entry is not extracted. The remaining
+					entries are extracted.
+					zip: Specifies whether to overwrite the contents of a ZIP or JAR file:
+					yes: overwrites all of the content in the ZIP or JAR file if it exists.
+					no: updates existing entries and adds new entries to the ZIP or JAR file
+					if it exists. (optional, default=no)
+				]]></help>
 				<values>
 					<value option="yes"/>
 					<value option="no"/>
@@ -16673,10 +16710,10 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="prefix" type="String" required="false">
 				<help><![CDATA[
-			String added as a prefix to the ZIP or JAR entry.
-			The string is the name of a subdirectory in which the
-			entries are added. (optional)
-		]]></help>
+					String added as a prefix to the ZIP or JAR entry.
+					The string is the name of a subdirectory in which the
+					entries are added. (optional)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" value="zip" required="false"/>
@@ -16684,11 +16721,11 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="recurse" type="Boolean" required="false">
 				<help><![CDATA[
-			Specifies whether the action
-			applies to subdirectories:
-			yes: includes subdirectories.
-			no: does not include subdirectories. (optional, default=yes)
-		]]></help>
+					Specifies whether the action
+					applies to subdirectories:
+					yes: includes subdirectories.
+					no: does not include subdirectories. (optional, default=yes)
+				]]></help>
 				<values>
 					<value option="yes"/>
 					<value option="no"/>
@@ -16702,9 +16739,9 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="showDirectory" type="Boolean" required="false">
 				<help><![CDATA[
-			yes: lists the directories.
-			no: does not list directories. (optional, default= no)
-		]]></help>
+					yes: lists the directories.
+					no: does not list directories. (optional, default= no)
+				]]></help>
 				<values>
 					<value option="yes"/>
 					<value option="no"/>
@@ -16715,9 +16752,9 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="source" type="String" required="true">
 				<help><![CDATA[
-			Source directory to be zipped. Not required
-			if cfzipparam is specified. (required)
-		]]></help>
+					Source directory to be zipped. Not required
+					if cfzipparam is specified. (required)
+				]]></help>
 				<values/>
 				<triggers>
 					<selectedValue attributeName="action" value="zip" required="true"/>
@@ -16725,16 +16762,16 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="storePath" type="Boolean" required="false">
 				<help><![CDATA[
-			zip: Specifies whether pathnames are stored in the ZIP or JAR file:
-			yes: pathnames of entries are stored in the ZIP or JAR file.
-			no: pathnames of the entries are not stored in the ZIP or JAR file.
-			All the files are placed at the root level. In case of a name conflict,
-			the last file in the iteration is added.
-			unzip: Specifies whether files are stored at the entrypath:
-			yes: the files are extracted to the entrypath.
-			no: the entrypath is ignored and all the files are extracted
-			at the root level. (optional, default= yes)
-		]]></help>
+					zip: Specifies whether pathnames are stored in the ZIP or JAR file:
+					yes: pathnames of entries are stored in the ZIP or JAR file.
+					no: pathnames of the entries are not stored in the ZIP or JAR file.
+					All the files are placed at the root level. In case of a name conflict,
+					the last file in the iteration is added.
+					unzip: Specifies whether files are stored at the entrypath:
+					yes: the files are extracted to the entrypath.
+					no: the entrypath is ignored and all the files are extracted
+					at the root level. (optional, default= yes)
+				]]></help>
 				<values>
 					<value option="yes"/>
 					<value option="no"/>
@@ -16746,8 +16783,8 @@ cflayoutarea tag style attributes.
 			</parameter>
 			<parameter name="variable" type="String" required="true">
 				<help><![CDATA[
-			Variable in which the read content is stored. (required)
-		]]></help>
+					Variable in which the read content is stored. (required)
+				]]></help>
 				<triggers>
 					<selectedValue attributeName="action" value="read" required="true"/>
 				</triggers>
@@ -17579,7 +17616,7 @@ cflayoutarea tag style attributes.
 		<function xmlns="http://www.cfeclipse.org/version1/dictionary" name="comparenocase" returns="Numeric">
 			<help><![CDATA[
 		Performs a case-insensitive comparison of two strings.
-        An indicator of the difference:
+		An indicator of the difference:
 			A negative number, if string1 is less than string2
 			0, if string1 is equal to string2
 			A positive number, if string1 is greater than string2
