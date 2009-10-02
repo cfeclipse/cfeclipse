@@ -1007,7 +1007,7 @@ public class CFParser {
 						}
 					} else {
 						// get just tag name, e.g. : <cffunction name="blah" becomes cffunction
-						String tagName = matchStr.split("[ |>]")[0].replace("/", "");
+						String tagName = matchStr.split("[\\s/>]")[0];
 						tagName = "<"+tagName.substring(1, tagName.length());
 						int tagEnd = matchStr.indexOf(tagName)+tagName.length();
 						boolean isACloser = false;
