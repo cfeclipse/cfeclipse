@@ -32,6 +32,7 @@ import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author Paul V
@@ -39,6 +40,9 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
  *  24/08/2009 markdrew: changed the functionality so that if you are in a script block you get the abort function
  */
 public class CFAbortAction extends GenericEncloserAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
+
+	protected ITextEditor editor = null;
+
 	public void run(IAction action){
 		String startTag = "<cfabort>\n";
 		String endTag = "";
