@@ -31,8 +31,8 @@ import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.HTMLColorsPreferenceConstants;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IRule;
+import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
-import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
 
 /**
@@ -69,10 +69,8 @@ public class HTMTagScanner extends RuleBasedScanner {
 		//I think its more important to show cfvariable then to color code the
 		// attributes.
 		//rules[0] = new SingleLineRule("#", "#", cfvar);
-		// Add rule for double quotes
-		rules[0] = new SingleLineRule("\"", "\"", string);
-		// Add a rule for single quotes
-		rules[1] = new SingleLineRule("'", "'", string);
+		rules[0] = new MultiLineRule("\"", "\"", string);
+		rules[1] = new MultiLineRule("'","'",string);
 		// Add generic whitespace rule.
 		rules[2] = new ShowWhitespaceRule(new CFWhitespaceDetector());
 		

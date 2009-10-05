@@ -40,6 +40,7 @@ import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.NumberRule;
 import org.eclipse.jface.text.rules.RuleBasedScanner;
 import org.eclipse.jface.text.rules.SingleLineRule;
@@ -98,8 +99,8 @@ public class CFTagScanner extends RuleBasedScanner {
 		IRule[] rules = new IRule[5];
 		
 		// Add rule for double quotes
-		rules[0] = new SingleLineRule("\"", "\"", string);
-		rules[1] = new SingleLineRule("'", "'", string);
+		rules[0] = new MultiLineRule("\"", "\"", string);
+		rules[1] = new MultiLineRule("'","'",string);
 		rules[2] = new NumberRule(cfnumber);
 		
 		//TODO: Point this to the correct dictionary now.

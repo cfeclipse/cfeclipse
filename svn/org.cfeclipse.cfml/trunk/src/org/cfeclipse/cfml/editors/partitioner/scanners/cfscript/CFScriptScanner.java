@@ -113,8 +113,8 @@ public class CFScriptScanner extends RuleBasedScanner {
 		rules.add(new MultiLineRule("/*", "*/", cfcomment));
 		rules.add(new EndOfLineRule("//", cfcomment));
 		
-		rules.add(new SingleLineRule("\"", "\"", string));
-		rules.add(new SingleLineRule("'", "'", string));
+		rules.add(new MultiLineRule("\"", "\"", string));
+		rules.add(new MultiLineRule("'", "'", string));
 		
 		rules.add(new NumberRule(cfnumber));
 		
