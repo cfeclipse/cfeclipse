@@ -24,16 +24,13 @@
  */
 package org.cfeclipse.cfml.editors;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import javax.print.DocFlavor.INPUT_STREAM;
 
 import org.apache.commons.vfs.FileSystemException;
 import org.cfeclipse.cfml.CFMLPlugin;
@@ -44,10 +41,7 @@ import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.external.ExternalFile;
 import org.cfeclipse.cfml.external.ExternalMarkerAnnotationModel;
 import org.cfeclipse.cfml.net.RemoteFileEditorInput;
-import org.cfeclipse.cfml.net.ftp.FTPConnection;
-import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
-import org.cfeclipse.cfml.properties.ProjectPropertyStore;
 import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -56,7 +50,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
@@ -65,6 +58,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
+import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
 
@@ -157,6 +151,36 @@ public class CFDocumentProvider extends FileDocumentProvider
 			        document.clearAllMarkers();
 			        document.parseDocument();
 				}
+			    else if(element instanceof FileStoreEditorInput) 
+				{
+			        String filepath = ((FileStoreEditorInput)element).getURI().getPath().toString();
+			        IPath path = new Path(filepath);
+			        Workspace workspace = (Workspace)CFMLPlugin.getWorkspace();
+			        IFile file = new ExternalFile(path,workspace);
+			        model = ((ExternalFile)file).getAnnotationModel();
+				
+					document.setParserResource(file);
+					document.clearAllMarkers();
+					document.parseDocument();
+			    	/*
+			    	 * the would open the resource under a new project
+			        String filepath = ((FileStoreEditorInput)element).getURI().getPath().toString();
+			    	IWorkspace ws = CFMLPlugin.getWorkspace();
+			    	IProject project = ws.getRoot().getProject("External Files");
+			    	if (!project.exists())
+			    	    project.create(null);
+			    	if (!project.isOpen())
+			    	    project.open(null);
+			    	IPath location = new Path(filepath);
+			    	IFile file = project.getFile(location.lastSegment());
+			    	file.createLink(location, IResource.NONE, null);
+			    	org.eclipse.ui.ide.IDE.openEditor(CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage(),file);
+			    	*/
+				}
+			    else {
+			    	//org.eclipse.ui.ide.FileStoreEditorInput
+			    	System.out.println(element.getClass().getName());
+			    }
 			}
 			catch (Exception e)
 			{
@@ -201,6 +225,23 @@ public class CFDocumentProvider extends FileDocumentProvider
 			
 			
 		}
+		if(editorInput instanceof FileStoreEditorInput) 
+		{
+			FileStoreEditorInput input = (FileStoreEditorInput) editorInput;
+			FileInputStream contentStream = null;
+			
+			try 
+			{
+				contentStream = new FileInputStream(input.getURI().getPath());
+			}
+			catch (FileNotFoundException e)
+			{
+				e.printStackTrace();
+			}
+			setDocumentContent(document, contentStream, encoding);			
+			
+		}
+		
 		
 		return super.setDocumentContent(document, editorInput, encoding);
 	}
@@ -226,7 +267,21 @@ public class CFDocumentProvider extends FileDocumentProvider
 				Status status = new Status(IStatus.ERROR,"org.cfeclipse.cfml",IStatus.OK,e.getMessage(),e);
 				throw new CoreException(status);
 			}
-		} else if(!(element instanceof FileEditorInput) && element instanceof IPathEditorInput)
+		} 
+		else if(element instanceof FileStoreEditorInput)  
+		{
+			try 
+			{
+				
+				saveExternalFile((FileStoreEditorInput)element,document);
+			}
+			catch (IOException e) 
+			{
+				Status status = new Status(IStatus.ERROR,"org.cfeclipse.cfml",IStatus.OK,e.getMessage(),e);
+				throw new CoreException(status);
+			}
+		} 
+		else if(!(element instanceof FileEditorInput) && element instanceof IPathEditorInput)
 		{
 			try 
 			{
@@ -255,6 +310,14 @@ public class CFDocumentProvider extends FileDocumentProvider
 		outputStream.write(doc.get().getBytes());
 		outputStream.close();
 	}
+
+	private void saveExternalFile(FileStoreEditorInput input, IDocument doc) throws IOException 
+	{
+		FileWriter writer = new FileWriter(input.getURI().getPath());
+		writer.write(doc.get());
+		writer.close();
+	}
+	
 	
 	public IAnnotationModel getAnnotationModel(Object element) 
 	{
@@ -268,7 +331,14 @@ public class CFDocumentProvider extends FileDocumentProvider
 	
 	public boolean isModifiable(Object element) 
 	{
-		if(!isStateValidated(element)) 
+	    if(element instanceof FileStoreEditorInput) 
+	    {
+	    	FileStoreEditorInput input = (FileStoreEditorInput)element;
+	    	File file = new File(input.getURI().getPath());
+	    		return file.canWrite();
+	    }
+
+	    if(!isStateValidated(element)) 
 		{
 			if (element instanceof IFileEditorInput) 
 			{
@@ -304,6 +374,14 @@ public class CFDocumentProvider extends FileDocumentProvider
 	    		RemoteFileEditorInput input = (RemoteFileEditorInput)element;
 	    		return !input.canWrite();
 	    }
+
+	    if(element instanceof FileStoreEditorInput) 
+	    {
+	    	FileStoreEditorInput input = (FileStoreEditorInput)element;
+	    	File file = new File(input.getURI().getPath());
+	    		return !file.canWrite();
+	    }
+	    
 	    return super.isReadOnly(element);
 	}
 }
