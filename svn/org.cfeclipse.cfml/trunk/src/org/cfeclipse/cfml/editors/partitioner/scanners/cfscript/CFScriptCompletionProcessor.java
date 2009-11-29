@@ -34,6 +34,8 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.editors.contentassist.AssistUtils;
+import org.cfeclipse.cfml.editors.contentassist.DefaultAssistState;
+import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.BadLocationException;
@@ -525,17 +527,29 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		//int length = 40;
 		// TODO: Use the tokeniser!
 
-		//System.err.println("runnin!!!!");
+		// get template proposals 
+        DefaultAssistState state = AssistUtils.initialiseDefaultAssistState(viewer, documentOffset);
+		TemplateAssist tempAss = new TemplateAssist();
+		ICompletionProposal[] tagProps = tempAss.getTagProposals(state);
 		
 		if(!(AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.J_SCRIPT)
-		     || AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.CF_SCRIPT)))
-		    return null;
+		     || AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.CF_SCRIPT))) {			
+			if(tagProps.length > 0) {
+				return tagProps;
+			} else {
+				return null;		    	
+			}
+		}
 	
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
 			if (!",".equals(invoker) 
 			    && !"(".equals(invoker)) {
-			    return null;
+				if(tagProps.length > 0) {
+					return tagProps;
+				} else {
+					return null;		    	
+				}
 			}
 			IDocument document = viewer.getDocument();
 			int start = document.getPartition(documentOffset).getOffset();
@@ -689,6 +703,9 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		{
 			//Debug.println(mName, this, "Caught exception: " + e.getMessage());
 		}
+
+		
+		
 		//Debug.println("");
 		if(proposals.isEmpty())
 			return null;
