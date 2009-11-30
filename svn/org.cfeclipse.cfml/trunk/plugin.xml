@@ -2254,6 +2254,11 @@
             class="org.cfeclipse.cfml.templates.template.CFTemplateContextType"
             id="org.cfeclipse.cfml.templateeditor.xml">
       </contextType>
+      <contextType
+            name="%template.contextType.cfscript.name"
+            class="org.cfeclipse.cfml.templates.template.CFScriptTemplateContextType"
+            id="org.cfeclipse.cfml.templateeditor.cfscript">
+      </contextType>
 <!--
       <template
             name="%ant.tasks.copy.name"
@@ -2285,6 +2290,10 @@
       <include
       		file="templates/cfml.xml"
       		translations="$nl$/templates/cfml.properties">
+      </include>
+      <include
+      		file="templates/cfscript.xml"
+      		translations="$nl$/templates/cfscript.properties">
       </include>
    </extension>
 <!--

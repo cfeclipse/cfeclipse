@@ -13,6 +13,7 @@ package org.cfeclipse.cfml.templates.editors;
 
 import java.io.IOException;
 
+import org.cfeclipse.cfml.templates.template.CFScriptTemplateContextType;
 import org.cfeclipse.cfml.templates.template.CFTemplateContextType;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -26,6 +27,7 @@ import org.eclipse.jface.text.templates.persistence.TemplateStore;
 
 import org.eclipse.ui.editors.text.templates.ContributionTemplateStore;
 import org.eclipse.ui.editors.text.templates.ContributionContextTypeRegistry;
+import org.cfeclipse.cfml.CFMContextType;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
@@ -85,6 +87,7 @@ public class TemplateEditorUI  {
 			// create an configure the contexts available in the template editor
 			fRegistry= new ContributionContextTypeRegistry();
 			fRegistry.addContextType(CFTemplateContextType.XML_CONTEXT_TYPE);
+			fRegistry.addContextType(CFScriptTemplateContextType.CFSCRIPT_CONTEXT_TYPE);
 		}
 		return fRegistry;
 	}

@@ -680,10 +680,11 @@ public class CFMLEditor extends TextEditor implements
 				//projectionViewer.addSelectionChangedListener(SelectionCursorListener);
 				projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
 				projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);				
+				projectionViewer.getTextWidget().addKeyListener(SelectionCursorListener);				
 				SelectionCursorListener.setWordSelectionChars(wordChars);
 				setMarkOccurrenceEnabled(getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES));
 			}
-			/* //This will maybe someday come in handy for switching occurrence marking on and on in active editors?
+			/* //This will maybe someday come in handy for switching occurrence marking on and off in active editors?
 			 * IHandlerService handlerServ =
 			 * (IHandlerService)getSite().getWorkbenchWindow().getService(IHandlerService.class);
 			 * toggleOccurrencesHandler = new ToggleTextSelectionsHandler();

@@ -28,10 +28,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
-import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -137,11 +135,14 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	private String breakWordCharsAlt;
 	private String partOfWordCharsShift;
 	private String breakWordCharsShift;
-	private boolean changeCameFromEditor;
 	private CfmlTagItem lastSelectedTag;
 	private CfmlTagItem selectedTag;
 	private boolean selectedTagWasSelected;
 	private boolean isMarkOccurrenceEnabled;
+	private boolean ctrlDown;
+	private int lastKeyCode;
+	private boolean isCtrlSpaceSpace;
+	private boolean ctrlWasDown;
     private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
 	//private static String TYPE = "org.eclipse.core.resources.textmarker";
 	//private static String TYPE = "org.cfeclipse.cfml.parserWarningMarker";
@@ -212,7 +213,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	public boolean getSelectedTagWasSelected() {
 		return this.selectedTagWasSelected;
 	}
-	
+    
     /**
      * Allows the drag drop listener to know if it's ok to start a drag.
      * 
@@ -554,17 +555,35 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	}
 	
 	
-	/*
-	 * TEMPORARY debugging stuff
-	 * 
-	 */
+    /**
+     * tells other stuff is crtl is down.  Content proposal hack, see TextualCompletionProcessor
+     * 
+     * @return
+     */
+    public boolean isCrtlDown() {
+        return this.ctrlDown;
+    }    
+	
+    /**
+     * total hack for template assist to only fire on ctrl+space+space
+     * 
+     * @return
+     */
+    public boolean isCrtlSpaceSpace() {
+        return this.isCtrlSpaceSpace;
+    }
 
-	/**
+    /**
 	 * Sent when a key is pressed on the system keyboard.
 	 *
 	 * @param e an event containing information about the key press
 	 */
 	public void keyPressed(KeyEvent e) {
+        if ((e.keyCode == SWT.CTRL)) {
+            this.ctrlDown = true;
+            this.isCtrlSpaceSpace = false;
+            this.ctrlWasDown = false;
+        } 
 	    //System.out.println("Key Pressed " + e.keyCode);
 	}
 
@@ -575,7 +594,31 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	 */
 	public void keyReleased(KeyEvent e) {
 
-	    //System.out.println("Key Released " + e.keyCode);
+		//System.out.println("Key Released " + e.keyCode);
+//		System.out.println("state:"+e.stateMask);
+//		System.out.println("ctr:"+SWT.CTRL);
+//		System.out.println("key:"+e.keyCode);
+//		System.out.println("key:["+e.character+"]");
+        if ((e.stateMask == SWT.CTRL)) {
+            this.ctrlDown = true;
+            if(this.lastKeyCode == 32 && e.keyCode == 32 && ctrlWasDown) {
+                this.isCtrlSpaceSpace = true;
+                //bunch of crap to try to replace an already showing content assist - unsuccessful.
+//                Event event = new Event();
+//                event.type = SWT.KeyDown;
+//                event.keyCode = SWT.ARROW_LEFT;
+//                this.fViewer.getTextWidget().getDisplay().getCurrent().post(event);
+//                this.fViewer.getTextWidget().getDisplay().getCurrent().getActiveShell().view.release();
+//                System.out.println("er");
+                //((IContentAssistant)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().;
+//                this.fViewer.doOperation(((ISourceViewer)fViewer).CONTENTASSIST_CONTEXT_INFORMATION);
+            }
+            this.ctrlWasDown = true;
+        } else {
+            this.isCtrlSpaceSpace = false;            	
+            this.ctrlDown = false;
+        }
+        this.lastKeyCode = e.keyCode;            	
 	
 	}
 

@@ -77,7 +77,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     public ICompletionProposal[] getTagProposals(IAssistState state) {
     	ICFDocument doc = (ICFDocument)state.getIDocument();
     	// verify we have a parse tree to work with
-    	if(doc.getCFDocument() == null) {
+    	if(doc.getCFDocument() == null || state.getITextView().getTextWidget().getSelectionText().length() > 0) {
     		return null;
     	}
 

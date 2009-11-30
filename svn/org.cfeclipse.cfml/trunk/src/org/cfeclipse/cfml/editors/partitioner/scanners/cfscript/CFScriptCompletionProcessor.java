@@ -29,11 +29,13 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
+import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.contentassist.AssistUtils;
+import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionAssist;
 import org.cfeclipse.cfml.editors.contentassist.DefaultAssistState;
 import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
@@ -88,7 +90,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	
 	// 1) The standard completion chars. These are some activation characters 
 	//that non-opener/closer characters
-	protected static final String completionChars = ".(;~\"#[\'>,";
+	protected static final String completionChars = ".(;~\"#[\'>,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	// 2) The opener/closer characters. This assists with the opening & closing 
 	//of things such as brackets
@@ -509,7 +511,36 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		
 		return searchPos;
 	}
+
+	/**
+	 * gets the function prefix
+	 * 
+	 * @param viewer
+	 *            the viewer
+	 * @param offset
+	 *            the offset left of which the prefix is detected
+	 * @return the detected prefix
+	 */
+	protected String extractPrefix(ITextViewer viewer, int offset) {
+		IDocument document = viewer.getDocument();
+		int i = offset;
+		if (i > document.getLength())
+			return ""; //$NON-NLS-1$
+
+		try {
+			while (i > 0) {
+				char ch = document.getChar(i - 1);
+				if (ch != ';' && !Character.isJavaIdentifierPart(ch))
+					break;
+				i--;
+			}
+			return document.get(i, offset - i);
+		} catch (BadLocationException e) {
+			return ""; //$NON-NLS-1$
+		}
+	}
 	
+
 	
 	/*
 	 * Welcome to the horror that is the computeCompletionProposals() method.
@@ -534,31 +565,35 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		
 		if(!(AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.J_SCRIPT)
 		     || AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.CF_SCRIPT))) {			
-			if(tagProps.length > 0) {
-				return tagProps;
-			} else {
-				return null;		    	
-			}
+				return null;
 		}
 	
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
-			if (!",".equals(invoker) 
-			    && !"(".equals(invoker)) {
-				if(tagProps.length > 0) {
-					return tagProps;
-				} else {
-					return null;		    	
-				}
-			}
 			IDocument document = viewer.getDocument();
 			int start = document.getPartition(documentOffset).getOffset();
 			String scanData =	document.get(start, documentOffset - start);
-			//String originalData = scanData;	// This should never be changed.
-
 			scanData = scanData.replace('\n',' ');	// Eliminate any non-character characters
 			scanData = scanData.replace('\r',' ');	// as this allows us to treat the buffer as
 			scanData = scanData.replace('\t',' ');	// one long string
+			boolean isCtrlSpaceSpace = ((CFMLEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor()).getSelectionCursorListener().isCrtlSpaceSpace();
+			if(isCtrlSpaceSpace) return tagProps;
+			if (!",".equals(invoker) 
+			    && !"(".equals(invoker)) {
+				String toBeMatched = extractPrefix(viewer,documentOffset).replaceAll("[\r\n\t]", " ").trim();
+				Set poss = SyntaxDictionary.limitSet(
+						DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions(),
+						toBeMatched
+					);
+				ICompletionProposal[] theseProps = makeSetToProposal(poss, documentOffset, TAGTYPE, toBeMatched.length());
+				ICompletionProposal[] ab = new ICompletionProposal[theseProps.length + tagProps.length];
+		        
+		        System.arraycopy(theseProps, 0, ab, 0, theseProps.length);
+		        System.arraycopy(tagProps, 0, ab, theseProps.length, tagProps.length);
+		        return ab;
+			}
+			//String originalData = scanData;	// This should never be changed.
+
 			
 			char lastChar = scanData.charAt(scanData.length()-1);
 			
@@ -654,13 +689,16 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 						//	System.err.println("Cannot found a match for '" + toBeMatched + "'");
 						//	return null;
 						//}
-						
-						Set poss = SyntaxDictionary.limitSet(
-							DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions(),
-							toBeMatched
-						);
-						
-						return makeSetToProposal(poss, documentOffset, TAGTYPE, toBeMatched.length());
+						CFMLFunctionAssist funkAss = new CFMLFunctionAssist();
+						ICompletionProposal[] funkProps = funkAss.getTagProposals(state);
+						return funkProps;
+//						Set poss = SyntaxDictionary.limitSet(
+//							DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions(),
+//							toBeMatched
+//						);
+//						
+//						return makeSetToProposal(poss, documentOffset, TAGTYPE, toBeMatched.length());
+
 						//proposals.add(fun);
 					}
 					break;
@@ -683,13 +721,14 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 					//quick an dirty way to see all functions (hitting ctrl+space
 					//but this doesn't limit the selections and only works when
 					//not in a function :-/
-					Set mst = DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions();
-					return makeSetToProposal(
-						mst,
-						documentOffset, 
-						TAGTYPE, 
-						0
-					);				
+					
+//					Set mst = DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions();
+//					return makeSetToProposal(
+//						mst,
+//						documentOffset, 
+//						TAGTYPE, 
+//						0
+//					);				
 					//break;	
 			}
 			//Debug.println(mName, this, messages);
@@ -697,10 +736,12 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		}
 		catch (BadLocationException e)
 		{
+			e.printStackTrace();
 			//Debug.println(mName, this, "Caught a bad location exception!");
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			//Debug.println(mName, this, "Caught exception: " + e.getMessage());
 		}
 

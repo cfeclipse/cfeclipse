@@ -43,6 +43,8 @@ import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
+import org.cfeclipse.cfml.templates.template.CFScriptTemplateContextType;
+import org.cfeclipse.cfml.templates.template.CFTemplateContextType;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -203,11 +205,11 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
 		cfscp.changeDictionary(DictionaryManager.JSDIC);
 
+		camInstance.registerRootAssist(new TemplateAssist());
 		camInstance.registerRootAssist(cfscp);
 		camInstance.registerRootAssist(new CFContentAssist());
 		camInstance.registerRootAssist(new CFMLScopeAssist());
 		camInstance.registerRootAssist(new CFMLFunctionAssist());
-		camInstance.registerRootAssist(new TemplateAssist());
 
 		// camInstance.registerRootAssist(new CFMLComponentAssist());
 		// //finds the components in a project, removed as we might use a new
@@ -311,7 +313,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		if (fRegistry == null) {
 			// create an configure the contexts available in the template editor
 			fRegistry = new ContributionContextTypeRegistry();
-			fRegistry.addContextType(CFMContextType.CFM_CONTEXT_TYPE);
+			fRegistry.addContextType(CFTemplateContextType.XML_CONTEXT_TYPE);
+			fRegistry.addContextType(CFScriptTemplateContextType.CFSCRIPT_CONTEXT_TYPE);
 		}
 		return fRegistry;
 	}

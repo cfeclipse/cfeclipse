@@ -17,12 +17,12 @@ import java.util.List;
 
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Region;
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.templates.editors.TemplateEditorUI;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.swt.graphics.Image;
-
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ImageRegistry;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -37,7 +37,7 @@ import org.eclipse.jface.text.templates.TemplateException;
 import org.eclipse.jface.text.templates.TemplateProposal;
 
 /**
- * A completion processor for XML templates.
+ * A completion processor for templates.
  */
 public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 
@@ -127,8 +127,22 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 	 * @return the supported XML context type
 	 */
 	protected TemplateContextType getContextType(ITextViewer viewer, IRegion region) {
-		return TemplateEditorUI.getDefault().getContextTypeRegistry().getContextType(
-				CFTemplateContextType.XML_CONTEXT_TYPE);
+		boolean inCfscript = false;
+		try {
+			if (viewer.getDocument().getContentType(region.getOffset()) == CFPartitionScanner.CF_SCRIPT) {
+				inCfscript = true;
+			}
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!inCfscript) {			
+			return TemplateEditorUI.getDefault().getContextTypeRegistry().getContextType(
+					CFTemplateContextType.XML_CONTEXT_TYPE);
+		} else {
+			return TemplateEditorUI.getDefault().getContextTypeRegistry().getContextType(
+					CFScriptTemplateContextType.CFSCRIPT_CONTEXT_TYPE);			
+		}
 	}
 
 	/*
@@ -141,9 +155,9 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		ITextSelection selection = (ITextSelection) viewer.getSelectionProvider().getSelection();
 
 		// adjust offset to end of normalized selection
-		if (selection.getOffset() == offset)
+		if (selection.getOffset() == offset) {
 			offset = selection.getOffset() + selection.getLength();
-
+		}
 		String prefix = extractPrefix(viewer, offset);
 		Region region = new Region(offset - prefix.length(), prefix.length());
 		TemplateContext context = createContext(viewer, region);
@@ -151,8 +165,9 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 			return new ICompletionProposal[0];
 
 		context.setVariable("selection", selection.getText()); // name of the selection variables {line, word}_selection //$NON-NLS-1$
-
 		Template[] templates = getTemplates(context.getContextType().getId());
+		boolean ctrlIsDown = ((CFMLEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor()).getSelectionCursorListener().isCrtlDown();
+		boolean isCtrlSpaceSpace = ((CFMLEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor()).getSelectionCursorListener().isCrtlSpaceSpace();
 
 		List matches = new ArrayList();
 		for (int i = 0; i < templates.length; i++) {
@@ -163,8 +178,11 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 				continue;
 			}
 			relavance = getRelevance(template, prefix);
-			if (template.matches(prefix, context.getContextType().getId()) && relavance > 0)
+			if (template.matches(prefix, context.getContextType().getId()) && relavance > 0) {				
 				matches.add(createProposal(template, context, (IRegion) region, relavance));
+			} else if(template.matches(prefix, context.getContextType().getId()) && isCtrlSpaceSpace) {
+				matches.add(createProposal(template, context, (IRegion) region, relavance));								
+			}
 		}
 
 		Collections.sort(matches, fgProposalComparator);
