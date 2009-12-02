@@ -186,6 +186,7 @@ public abstract class DocItem implements Comparable {
 	
 	public void setParent(DocItem newParent)
 	{
+		if(newParent == this) 
 		parentNode = newParent;
 	}
 	
@@ -234,7 +235,7 @@ public abstract class DocItem implements Comparable {
 		}
 		//
 		// Set the item's parent & sibling
-		newItem.setParent(newItem);
+		newItem.setParent(this);
 		if(docNodes.size() == 0)
 			newItem.setPrevSibling(null);
 		else 

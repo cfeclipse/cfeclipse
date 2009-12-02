@@ -34,6 +34,7 @@ import org.cfeclipse.cfml.editors.actions.GenericOpenFileAction;
 import org.cfeclipse.cfml.editors.actions.GotoFileAction;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
+import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
@@ -54,520 +55,407 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
+import com.sun.j3d.utils.universe.Viewer;
+
 /**
  * @author Rob
- *
- * This is the default content outline view
+ * 
+ *         This is the default content outline view
  */
-public class CFContentOutlineView extends ContentOutlinePage implements IPartListener, IPropertyListener, ISelectionListener {
+public class CFContentOutlineView extends ContentOutlinePage implements IPartListener, IPropertyListener,
+		ISelectionListener {
 	public static final String ID_CONTENTOUTLINE = "org.cfeclipse.cfml.views.contentoutline.cfcontentoutlineview";
-	
-	protected LabelProvider labelProvider;
-	protected Action jumpAction, selectAction, linkWithEditorAction, expandAction, filterOnAction, openAction;
-	
-	protected static GenericOpenFileAction openFileAction;
-	protected static GotoFileAction gfa = new GotoFileAction(); 
-	
+	protected Action jumpAction, selectAction, deleteItem, expandAction, collapseAction, filterOnAction, openAction,
+			removeFilters;
 	protected Action filters[];
-	protected MenuManager menuMgr;
-	
-	private boolean menusmade = false;
-	private boolean treemade = false;
-
-	// TODO: move this to a preference
-	private boolean linkWithEditor = false;
-	
 	private static String filter = "";
-	
-	private ArrayList lastExpandedElements = null;
-	
-	private OutlineContentProvider cop;
+	protected static GotoFileAction gfa = new GotoFileAction();
 
-	protected boolean changeCameFromEditor;
-	
-	public Control getControl()
-	{
-		if(!treemade)
-		{
-			//first go round setup some of our default stuff
-			if(getTreeViewer().getContentProvider() == null) {
-				getTreeViewer().setUseHashlookup(true);
-			}
-			lastExpandedElements = new ArrayList();
-			saveExpandedElements();
-			createTree();
-			treemade = true;
-			// add this view as a selection listener to the workbench page
-			//getSite().getPage().addSelectionListener((ISelectionListener) this);
-			getSite().getPage().addPostSelectionListener((ISelectionListener) this);
-		}
-		
-		if(!menusmade)
-		{
-			createActions();
-			createMenus();
-			createToolbar();
-			createContextMenu();
-			hookDoubleClickAction();
-			menusmade = true;
-		}
-		
-		return getTreeViewer().getControl();
+	public void createControl(Composite parent) {
+		super.createControl(parent);
+		DocItem root = getRootInput();
+		TreeViewer viewer = getTreeViewer();
+		viewer.setContentProvider(new OutlineContentProvider(root));
+		viewer.setLabelProvider(new OutlineLabelProvider());
+		viewer.addSelectionChangedListener(this);
+		// this listener listens to the editor (vs. this outline view)
+		getSite().getPage().addPostSelectionListener(this);
+		createActions();
+		createToolbar();
+		createContextMenu();
+		hookGlobalActions();
+		hookDoubleClickAction();
+		reload(root);
 	}
-	
-	private void saveExpandedElements()
-	{
-		Object ob[] = getTreeViewer().getExpandedElements();
-		int oblen = ob.length;
-		for(int i=0; i<oblen; i++)
-		{
-			lastExpandedElements.clear();
-		//System.out.println(ob[i]);
-			lastExpandedElements.add(ob[i]);
-		}
-	}
-	
-	protected void createTree()
-	{
-		if(filter.length() == 0)
-		{
-			reload();
-		}
-		else
-		{
-			reload(getItems(filter));
-		}
-	}
-	
+
 	/**
 	 * Gets a 1 level tree of items in the document of a type. See the parser
-	 * for the filter syntax 
+	 * for the filter syntax
+	 * 
 	 * @param filter
 	 * @return
 	 */
-	public DocItem getItems(String filter)
-	{
-		DocItem scratch = new TagItem(1,1,1,"root");
-		
+	public DocItem getItems(String filter) {
+		DocItem scratch = new TagItem(1, 1, 1, "root");
+
 		DocItem rootItem = getRootInput();
 		CFNodeList nodes = rootItem.selectNodes(filter);
 
 		Iterator i = nodes.iterator();
-		while(i.hasNext())
-		{
-			try 
-			{
-				scratch.addChild((DocItem)i.next());
-			}
-			catch (Exception e) 
-			{
+		while (i.hasNext()) {
+			try {
+				scratch.addChild((DocItem) i.next());
+			} catch (Exception e) {
 				System.err.println("Tree item set error ");
 				e.printStackTrace();
 			}
 		}
-		
+
 		return scratch;
 	}
-	
-	
+
 	/**
 	 * Gets the root element of the document. Saves information into a local
-	 * cache so if there is an error in the parser it uses the last known
-	 * good outline (which kind of sucks but it looks better)
+	 * cache so if there is an error in the parser it uses the last known good
+	 * outline (which kind of sucks but it looks better)
+	 * 
 	 * @return the root directory
 	 */
-	public DocItem getRootInput()
-	{	
-		try
-		{
+	public DocItem getRootInput() {
+		try {
 			DocItem docRoot = null;
-			
+
 			IEditorPart iep = getSite().getPage().getActiveEditor();
-			
+
 			iep.addPropertyListener(this);
 			getSite().getPage().addPartListener(this);
-			
-			ITextEditor ite = (ITextEditor)iep;
+
+			ITextEditor ite = (ITextEditor) iep;
 			ICFDocument icfd = null;
 			CFDocument cfd = null;
 			if (ite.getDocumentProvider().getDocument(iep.getEditorInput()) instanceof ICFDocument) {
-				icfd = (ICFDocument)ite.getDocumentProvider().getDocument(iep.getEditorInput());
+				icfd = (ICFDocument) ite.getDocumentProvider().getDocument(iep.getEditorInput());
 				cfd = icfd.getCFDocument();
 			}
-			//icfd.clearAllMarkers();
-			//icfd.parseDocument();
-			
-			if(cfd != null)
-			{
+			// icfd.clearAllMarkers();
+			// icfd.parseDocument();
+
+			if (cfd != null) {
 				docRoot = cfd.getDocumentRoot();
-				//lastDocRoot = docRoot;
+				// lastDocRoot = docRoot;
 			}
-			
-			if(docRoot != null)
-			{
+
+			if (docRoot != null) {
 				return docRoot;
-			}
-			else
-			{
+			} else {
 				return createFakeRoot();
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
-		
-		//a fake root
+
+		// a fake root
 		return createFakeRoot();
 	}
-	
-	private TagItem createFakeRoot()
-	{
-		TagItem tg = new TagItem(1,1,1,"Unk");
+
+	private TagItem createFakeRoot() {
+		TagItem tg = new TagItem(1, 1, 1, "Unk");
 		return tg;
 	}
-	
+
 	/**
-	 * from editor selects corresponding tree item
-	 * if there is one
+	 * gets the currently selected item in docitem form or <code>null</code> if
+	 * there is none
+	 * 
 	 * @return
 	 */
-	public DocItem getItemFromPosition(int startPos) {
-		DocItem rootItem = getRootInput();
-		CFNodeList nodes = rootItem.selectNodes("//*");
-		Iterator i = nodes.iterator();
-		while(i.hasNext())
-		{
-			DocItem item = (DocItem)i.next();			
-			if(item.getStartPosition() == startPos){
-				return item;
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * gets the currently selected item in docitem form or <code>null</code>
-	 * if there is none
-	 * @return
-	 */
-	private Iterator getSelectedDocItems()
-	{
+	private Iterator getSelectedDocItems() {
 		Iterator selecteditem = null;
-		
-		//can't do much if nothing is selected
-		if(getTreeViewer().getSelection().isEmpty()) 
-		{
+
+		// can't do much if nothing is selected
+		if (getTreeViewer().getSelection().isEmpty()) {
 			return null;
-		}
-		else 
-		{
-			IStructuredSelection selection = (IStructuredSelection)getTreeViewer().getSelection();
+		} else {
+			IStructuredSelection selection = (IStructuredSelection) getTreeViewer().getSelection();
 			selecteditem = selection.iterator();
 		}
-		
+
 		return selecteditem;
 	}
 
-	
 	/**
-	 * gets the currently selected item in docitem form or <code>null</code>
-	 * if there is none
+	 * gets the currently selected item in docitem form or <code>null</code> if
+	 * there is none
+	 * 
 	 * @return
 	 */
-	private DocItem getSelectedDocItem()
-	{
+	private DocItem getSelectedDocItem() {
 		Iterator selecteditems = getSelectedDocItems();
-		
-		//can't do much if nothing is selected
-		if(selecteditems == null || !selecteditems.hasNext()) 
-		{
+
+		// can't do much if nothing is selected
+		if (selecteditems == null || !selecteditems.hasNext()) {
 			return null;
-		}		
-		return (DocItem)selecteditems.next();
-	}
-	
-	/**
-	 * sets the currently selected item in docitem form or <code>null</code>
-	 * if there is none
-	 * @return
-	 */
-	private void setSelectedDocItem(DocItem item)
-	{		
-		//can't do much if nothing is selected
-		if(item != null) 
-		{
-			//getTreeViewer().expandToLevel(new StructuredSelection(item), 1);
-			//getTreeViewer().reveal(new StructuredSelection(item));
-			getTreeViewer().setSelection(new StructuredSelection(item), true);
-		}		
+		}
+		return (DocItem) selecteditems.next();
 	}
 
-	
+	/**
+	 * for recursive parent expansion in setSelectedDocItem
+	 * 
+	 * @return
+	 */
+	private void expandParentItems(DocItem item) {
+		// can't do much if nothing is selected
+		DocItem parentItem = item.getParent();
+		if (parentItem != null) {
+			TreeViewer tree = getTreeViewer();
+			tree.setExpandedState(parentItem, true);
+			tree.refresh(parentItem, false);
+			expandParentItems(parentItem);
+		}
+	}
+
+	/**
+	 * sets the currently selected item in docitem form or <code>null</code> if
+	 * there is none
+	 * 
+	 * @return
+	 */
+	private void setSelectedDocItem(DocItem item) {
+		// can't do much if nothing is selected
+		if (item != null) {
+			TreeViewer tree = getTreeViewer();
+			tree.setSelection(new StructuredSelection(item), true);
+			expandParentItems(item);
+		}
+	}
+
 	/**
 	 * Selects the item(s) within the source code view
 	 */
-	protected void selectItem() 
-	{
-		//get a handle to the current editor and assign it to our temp action
+	protected void selectItem() {
+		// get a handle to the current editor and assign it to our temp action
 		IEditorPart iep = getSite().getPage().getActiveEditor();
 		Iterator selecteditems = getSelectedDocItems();
-		
-		if(!selecteditems.hasNext()) return;
-		
-		ITextEditor editor = (ITextEditor)iep;
-		DocItem firstItem = ((DocItem)selecteditems.next());
+
+		if (!selecteditems.hasNext())
+			return;
+
+		ITextEditor editor = (ITextEditor) iep;
+		DocItem firstItem = ((DocItem) selecteditems.next());
 		int startPos = firstItem.getStartPosition();
 		int endPos = firstItem.getEndPosition();
-		while(selecteditems.hasNext()){
-			endPos = ((DocItem)selecteditems.next()).getEndPosition();
+		if (!selecteditems.hasNext()) {
+			// select whole tag
+			CfmlTagItem cti = (CfmlTagItem) firstItem;
+			if (cti.matchingItem != null) {
+				if (cti.matchingItem.getStartPosition() < cti.getStartPosition()) {
+					startPos = cti.matchingItem.getStartPosition();
+					endPos = cti.getEndPosition();
+				} else {
+					startPos = cti.getStartPosition();
+					endPos = cti.matchingItem.getEndPosition();
+				}
+			} else {
+				startPos = cti.getStartPosition();
+				endPos = cti.getEndPosition();
+			}
+		} else {
+			// otherwise select selected items
+			while (selecteditems.hasNext()) {
+				endPos = ((DocItem) selecteditems.next()).getEndPosition();
+			}
 		}
-		editor.selectAndReveal(startPos,endPos-startPos+1);
+		editor.selectAndReveal(startPos, endPos - startPos + 1);
 	}
 
-	
 	/**
 	 * Gets the selected item parses it, and adds the defined stuff to the
 	 * editor
 	 */
-	protected void jumpToItem() 
-	{
-		//get a handle to the current editor and assign it to our temp action
+	protected void jumpToItem() {
+		// get a handle to the current editor and assign it to our temp action
 		IEditorPart iep = getSite().getPage().getActiveEditor();
 		DocItem selecteditem = getSelectedDocItem();
-		
-		if(selecteditem == null) return;
-		
-		ITextEditor editor = (ITextEditor)iep;
-		//editor.setHighlightRange(selecteditem.getStartPosition(),selecteditem.getMatchingItem().getEndPosition(),true);
-		editor.setHighlightRange(selecteditem.getStartPosition(),0,true);
+
+		if (selecteditem == null)
+			return;
+
+		ITextEditor editor = (ITextEditor) iep;
+		// editor.setHighlightRange(selecteditem.getStartPosition(),selecteditem.getMatchingItem().getEndPosition(),true);
+		editor.setHighlightRange(selecteditem.getStartPosition(), 0, true);
 	}
-	
+
 	/**
 	 * filters the outline on the currenly selected element
 	 */
-	protected void filterOnSelected()
-	{
+	protected void filterOnSelected() {
 		DocItem selecteditem = getSelectedDocItem();
-		
-		if(selecteditem == null)
+
+		if (selecteditem == null)
 			return;
-		
+
 		filter = "//" + selecteditem.getName();
 		reload();
 	}
-	
-	public void reload(DocItem root)
-	{
-		//saveExpandedElements();
-		
-		if(getTreeViewer().getContentProvider() == null)
-		{
-			cop = new OutlineContentProvider(root);
-			getTreeViewer().setContentProvider(cop);
-		}
-		
-		if(labelProvider == null)
-		{
-			labelProvider = new OutlineLabelProvider();
-			getTreeViewer().setLabelProvider(labelProvider);
-		}
-		
+
+	public void reload(DocItem root) {
+		// saveExpandedElements();
+
 		getTreeViewer().setInput(root);
 		// temporary hack to expand a cfcomponent
-		if(root.hasChildren() && root.getFirstChild().getName().compareToIgnoreCase("cfcomponent") == 0){
+		if (root.hasChildren() && root.getFirstChild().getName().compareToIgnoreCase("cfcomponent") == 0) {
 			getTreeViewer().setExpandedState(root.getFirstChild(), true);
-			getTreeViewer().refresh(root, false);			
+			getTreeViewer().refresh(root, false);
 		}
-
-		//getTreeViewer().setExpandedElements(lastExpandedElements.toArray());
-		//getTreeViewer().expandAll();
+		if (filter.length() == 0) {
+			removeFilters.setEnabled(false);
+		} else {
+			removeFilters.setEnabled(true);
+		}
 	}
-	
-	public void reload()
-	{
-		if(filter.length() == 0)
-		{
+
+	public void reload() {
+		if (filter.length() == 0) {
 			DocItem di = getRootInput();
 			reload(di);
-		}
-		else
-		{
+		} else {
 			reload(getItems(filter));
 		}
 	}
-	
-	public void expand()
-	{
-		getTreeViewer().expandAll();
-	}
-	
+
 	/**
 	 * creates all the default actions
 	 */
-	protected void createActions() 
-	{
-		jumpAction = new Action(
-			"Jump To",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW)
-		){
+	protected void createActions() {
+		jumpAction = new Action("Jump To", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW)) {
 			public void run() {
-				// we only want to jump if the change came from tree viewer selection
-				if(!changeCameFromEditor) {
-					changeCameFromEditor = false;					
-					jumpToItem();
-				} else {
-					changeCameFromEditor = false;					
-				}
+				// we only want to jump if the change came from tree viewer
+				// selection
+				jumpToItem();
 			}
 		};
 		jumpAction.setToolTipText("Jump to selected tag in the editor");
-		
-		selectAction = new Action(
-				"Select",
-				CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW)
-			){
-				public void run() { 
-					selectItem();
-				}
-			};
-			selectAction.setToolTipText("Select tag in the editor");
 
-		linkWithEditorAction = new Action("Link with Editor", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_LINK_TO_EDITOR)) {
+		selectAction = new Action("Select", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_SHOW)) {
 			public void run() {
-				if(linkWithEditor) {
-					linkWithEditor = false;
-				} else {
-					linkWithEditor = true;					
-				}
-				this.setChecked(linkWithEditor);
-				menuMgr.update();
+				selectItem();
 			}
 		};
-		selectAction.setToolTipText("Link outline view with the editor");
+		selectAction.setToolTipText("Select tag in the editor");
 
-		filterOnAction = new Action(
-			"Filter On This",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
-		){
-			public void run() { 
+		filterOnAction = new Action("Filter On This", CFPluginImages.getImageRegistry().getDescriptor(
+				CFPluginImages.ICON_TAG)) {
+			public void run() {
 				filterOnSelected();
 			}
 		};
 		filterOnAction.setToolTipText("Filter on selected tag type");
-		
-		expandAction = new Action(
-			"Expand All",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_ADD)
-		){
-			public void run() 
-			{
+
+		expandAction = new Action("Expand All", AbstractUIPlugin.imageDescriptorFromPlugin("org.eclipse.search",
+				"$nl$/icons/full/elcl16/expandall.gif")) {
+			public void run() {
 				getTreeViewer().expandAll();
 			}
 		};
 		expandAction.setToolTipText("Expand all");
-		
-		openAction = new Action(
-			"Open File",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_IMPORT)
-		){
-			public void run() { 
+
+		collapseAction = new Action("Collapse All", AbstractUIPlugin.imageDescriptorFromPlugin("org.eclipse.search",
+				"$nl$/icons/full/elcl16/collapseall.gif")) {
+			public void run() {
+				getTreeViewer().collapseAll();
+			}
+		};
+		collapseAction.setToolTipText("Collapse all");
+
+		openAction = new Action("Open File", CFPluginImages.getImageRegistry()
+				.getDescriptor(CFPluginImages.ICON_IMPORT)) {
+			public void run() {
 				openFile();
 			}
 		};
-		
-		///filters
-		filters = new Action[7];
-		
-		filters[0] = new Action(
-			"Remove Filter",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_DELETE)
-		){
-			public void run(){
+
+		removeFilters = new Action("Remove Filter", CFPluginImages.getImageRegistry().getDescriptor(
+				CFPluginImages.ICON_DELETE)) {
+			public void run() {
 				filter = "";
 				reload();
 			}
 		};
-		
-		filters[1] = new Action(
-			"Include",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
-		){
-			public void run(){
+		removeFilters.setToolTipText("Remove Filter");
+
+		deleteItem = new Action("Delete Item", CFPluginImages.getImageRegistry().getDescriptor(
+				CFPluginImages.ICON_DELETE)) {
+			public void run() {
+				// this doesn't do nothing
+				System.out.println("this should delete");
+			}
+		};
+
+		// /filters
+		filters = new Action[6];
+
+		filters[0] = new Action("Include", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)) {
+			public void run() {
 				filter = "//cfinclude";
 				reload(getItems(filter));
 			}
 		};
-		
-		filters[2] = new Action(
-			"Module",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
-		){
-			public void run(){
+
+		filters[1] = new Action("Module", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)) {
+			public void run() {
 				filter = "//cfmodule";
 				reload(getItems(filter));
 			}
 		};
-		
-		filters[3] = new Action(
-			"Query",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
-		){
-			public void run(){
+
+		filters[2] = new Action("Query", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)) {
+			public void run() {
 				filter = "//cfquery";
 				reload(getItems(filter));
 			}
 		};
-		
-		filters[4] = new Action(
-			"Set",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
-		){
-			public void run(){
+
+		filters[3] = new Action("Set", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)) {
+			public void run() {
 				filter = "//cfset";
 				reload(getItems(filter));
 			}
 		};
-		
-		filters[5] = new Action(
-			"Case",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
-		){
-			public void run(){
+
+		filters[4] = new Action("Case", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)) {
+			public void run() {
 				filter = "//cfcase";
 				reload(getItems(filter));
 			}
 		};
-		
-		filters[6] = new Action(
-			"Custom",
-			CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)
-		){
-			public void run()
-			{
-				InputDialog pathdialog = new InputDialog(
-					getSite().getShell(),
-					"CFML Path Filter",
-					"Filter outline using path (i.e. \"//cfoutput\" for all the cfoutput tags):",
-					"",
-					null
-				);
-				
-				if(pathdialog.open() == org.eclipse.jface.window.Window.OK) 
-				{
+
+		filters[5] = new Action("Custom", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_TAG)) {
+			public void run() {
+				InputDialog pathdialog = new InputDialog(getSite().getShell(), "CFML Path Filter",
+						"Filter outline using path (i.e. \"//cfoutput\" for all the cfoutput tags):", "", null);
+
+				if (pathdialog.open() == org.eclipse.jface.window.Window.OK) {
 					String xpath = pathdialog.getValue();
-					if(xpath.length() > 0)
-					{
+					if (xpath.length() > 0) {
 						filter = xpath;
 						reload(getItems(filter));
 					}
@@ -575,25 +463,70 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			}
 		};
 	}
-	
+
+	private void createContextMenu() {
+		// Create menu manager.
+		MenuManager menuMgr = new MenuManager();
+		menuMgr.setRemoveAllWhenShown(true);
+		menuMgr.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager mgr) {
+				fillContextMenu(mgr);
+			}
+		});
+
+		// Create menu.
+		Menu menu = menuMgr.createContextMenu(getTreeViewer().getControl());
+		getTreeViewer().getControl().setMenu(menu);
+	}
+
+	private void fillContextMenu(IMenuManager mgr) {
+		mgr.add(selectAction);
+		mgr.add(new Separator());
+		mgr.add(filterOnAction);
+		DocItem di = getSelectedDocItem();
+		if (di != null) {
+			String sname = di.getName();
+			if (filter.length() > 0) {
+				mgr.add(removeFilters);
+			}
+			if (sname.equals("cfinclude") || sname.equals("cfmodule")) {
+				mgr.add(openAction);
+			}
+		}
+		mgr.add(new Separator());
+		int flen = filters.length;
+		for (int i = 0; i < flen; i++) {
+			mgr.add(filters[i]);
+		}
+
+	}
+
+	protected void createToolbar() {
+		IToolBarManager toolbarManager = super.getSite().getActionBars().getToolBarManager();
+		toolbarManager.add(expandAction);
+		toolbarManager.add(collapseAction);
+		toolbarManager.add(selectAction);
+		toolbarManager.add(filterOnAction);
+		toolbarManager.add(removeFilters);
+	}
+
 	/**
-	 * method to open the currently selected docitem if its a include or a 
+	 * method to open the currently selected docitem if its a include or a
 	 * module item
 	 */
-	private void openFile()
-	{
+	private void openFile() {
 		IEditorPart iep = getSite().getPage().getActiveEditor();
 		DocItem selecteditem = getSelectedDocItem();
-		if(selecteditem == null) return;
-		
+		if (selecteditem == null)
+			return;
+
 		String si = selecteditem.getName();
-		if(si.equalsIgnoreCase("cfinclude") || si.equalsIgnoreCase("cfmodule"))
-		{	
-			gfa.setActiveEditor(null,iep);
+		if (si.equalsIgnoreCase("cfinclude") || si.equalsIgnoreCase("cfmodule")) {
+			gfa.setActiveEditor(null, iep);
 			gfa.run(null);
 		}
 	}
-	
+
 	private void hookDoubleClickAction() {
 		getTreeViewer().addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
@@ -601,164 +534,69 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			}
 		});
 	}
-	
-	////////////////////////////////////////////////////////////////////////////
-	
-	public void partActivated(IWorkbenchPart part) {
-		//System.out.println("Part activated: " + part.getClass().getName());
-		if(part instanceof CFMLEditor)
-		{
-			//reload();
-		}
-	}
-	
-	public void partBroughtToTop(IWorkbenchPart part) {
-		//System.out.println("Part brought to top: "+part.getClass().getName());
-		//if(part instanceof CFMLEditor)
-		//{
-		//	reload();
-		//}
-	}
-	
-	public void partClosed(IWorkbenchPart part) 
-	{
-		//System.out.println("Part closed: " + part.getClass().getName());
-	}
-	
-	public void partDeactivated(IWorkbenchPart part) 
-	{
-		//System.out.println("Part deactivated: " + part.getClass().getName());
-	}
-	
-	public void partOpened(IWorkbenchPart part) 
-	{
-	//System.out.println("Part opened: " + part.getClass().getName());
-		if(part instanceof CFMLEditor)
-		{
-			//reload();
-		}
-	}
-	
-	public void propertyChanged(Object source, int propId)
-	{
-		//System.out.println("Property changed: " + source.getClass().getName());
-		if(source instanceof CFMLEditor)
-		{
-			//reload();
-			DocItem old = (DocItem)getTreeViewer().getInput();
-			reload();
-			cop.inputChanged(getTreeViewer(),old,getTreeViewer().getInput());
-		}
+
+	private void hookGlobalActions() {
+		IActionBars bars = getSite().getActionBars();
+		bars.setGlobalActionHandler(IWorkbenchActionConstants.DELETE, deleteItem);
+		getTreeViewer().getControl().addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent event) {
+				if (event.character == SWT.DEL && event.stateMask == 0 && deleteItem.isEnabled()) {
+					deleteItem.run();
+				}
+			}
+		});
 	}
 
 	public void selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent event) {
-		if(linkWithEditor) {
-			if(event.getSelection() instanceof ITreeSelection){				
-				jumpAction.run();
-			} else {
-				changeCameFromEditor = true;
-				getTreeViewer().expandToLevel(((DocItem)(event.getSelection())), 1);
-			}
-		}
-		saveExpandedElements();	
-		//getTreeViewer().refresh(new StructuredSelection(event.getSelection()));
+		// this fires when tree node selection changed
+		jumpAction.run();
+		// getTreeViewer().refresh(new
+		// StructuredSelection(event.getSelection()));
 	}
 
 	public void selectionChanged(IWorkbenchPart workbench, ISelection selection) {
-		// TODO Auto-generated method stub
+		// this fires when editor is changed (thanks to addPostSelection in
+		// createControl)
 		if (selection != null && selection instanceof ITextSelection) {
-			// this change will file the selection changed event. This bool
-			// prevents a line jump
-			changeCameFromEditor = true;
 			IEditorPart curEditor = workbench.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-			if (curEditor instanceof CFMLEditor) {
+			if (curEditor != null && curEditor instanceof CFMLEditor) {
 				CFMLEditor curDoc = (CFMLEditor) curEditor;
-				ICFDocument cfd = (ICFDocument) curDoc.getDocumentProvider().getDocument(curDoc.getEditorInput());
-				ITextSelection tselection = (ITextSelection) selection;
-				int startPos;
-				// startPos = cfd.getLineOffset(tselection.getStartLine())+1;
-				startPos = tselection.getOffset() + 1;
-				DocItem cti = (DocItem) cfd.getTagAt(startPos, startPos, true);
-				if (cti != null) {
-					if (linkWithEditor) {
-						setSelectedDocItem(cti);
-						DocItem curItem = cti;
-						if (curItem.getParent() != null) {
-							getTreeViewer().setExpandedState(curItem.getParent(), true);
-							getTreeViewer().refresh(curItem.getParent(), false);
-						}
-						getTreeViewer().setExpandedState(curItem, true);
-						getTreeViewer().refresh(curItem, false);
-						// while(curItem.getName().compareToIgnoreCase("Doc Root")
-						// !=1) {
-						// getTreeViewer().setExpandedState(curItem.getParent(),
-						// true);
-						// getTreeViewer().refresh(curItem,false);
-						// curItem = curItem.getParent();
-						// }
-
-					}
+				DocItem tagItem = curDoc.getSelectionCursorListener().getSelectedTag();
+				if (tagItem != null) {
+					setSelectedDocItem(tagItem);
 				}
 			}
 		}
 	}
-		
-	////////////////////////////////////////////////////////////////////////////
-	
-	protected void createMenus()
-	{
-		IMenuManager rootMenuManager = super.getSite().getActionBars().getMenuManager();
-		int flen = filters.length;
-		for(int i=0; i<flen; i++)
-		{
-			rootMenuManager.add(filters[i]);
-		}
-		rootMenuManager.add(new Separator());
-		linkWithEditorAction.setChecked(true);
-		rootMenuManager.add(linkWithEditorAction);
+
+	public void partActivated(IWorkbenchPart arg0) {
+		// TODO Auto-generated method stub
+
 	}
-	
-	private void createContextMenu()
-	{
-		//Create menu manager.
-		menuMgr = new MenuManager();
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager mgr) {
-				fillContextMenu(mgr);
-			}
-		});
-		
-		// Create menu.
-		Menu menu = menuMgr.createContextMenu(getTreeViewer().getControl());
-		getTreeViewer().getControl().setMenu(menu);
+
+	public void partBroughtToTop(IWorkbenchPart arg0) {
+		// TODO Auto-generated method stub
+
 	}
-	
-	private void fillContextMenu(IMenuManager mgr) 
-	{
-		mgr.add(jumpAction);
-		mgr.add(new Separator());
-		mgr.add(filterOnAction);
-		
-		if(filter.length() > 0)
-			mgr.add(filters[0]);
-		
-		DocItem di = getSelectedDocItem();
-		if(di != null)
-		{
-			String sname = di.getName();
-			if(sname.equals("cfinclude") || sname.equals("cfmodule"))
-				mgr.add(openAction);
-		}
+
+	public void partClosed(IWorkbenchPart arg0) {
+		// TODO Auto-generated method stub
+
 	}
-	
-	
-	protected void createToolbar()
-	{
-		IToolBarManager toolbarManager = super.getSite().getActionBars().getToolBarManager();
-		toolbarManager.add(linkWithEditorAction);
-		toolbarManager.add(jumpAction);
-		toolbarManager.add(filterOnAction);
+
+	public void partDeactivated(IWorkbenchPart arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void partOpened(IWorkbenchPart arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void propertyChanged(Object arg0, int arg1) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
