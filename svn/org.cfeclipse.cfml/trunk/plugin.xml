@@ -1800,6 +1800,13 @@
 		<persistent value="true"/>
 	</extension>
 
+	<extension point="org.eclipse.core.resources.markers"
+		id="org.cfeclipse.cfml.tagbeginendmarker"
+		name="%occurrencemarker.label">
+		<super type="org.eclipse.core.resources.textmarker"/>
+		<persistent value="true"/>
+	</extension>
+
     <extension point="org.eclipse.ui.editors.annotationTypes">
     	<type name="org.cfeclipse.cfml.parserProblemAnnotation"
     		markerType="org.cfeclipse.cfml.parserProblemMarker"/>
@@ -1809,6 +1816,11 @@
 
     	<type name="org.cfeclipse.cfml.occurrenceAnnotation"
     		markerType="org.cfeclipse.cfml.occurrencemarker"
+    		super="org.eclipse.ui.workbench.texteditor.info"
+    		 markerSeverity="0" />
+
+    	<type name="org.cfeclipse.cfml.tagbeginendAnnotation"
+    		markerType="org.cfeclipse.cfml.tagbeginendmarker"
     		super="org.eclipse.ui.workbench.texteditor.info"
     		 markerSeverity="0" />
 
@@ -1876,7 +1888,33 @@
             isGoToPreviousNavigationTargetKey="isOccurrenceGoToPreviousNavigationTarget"
 	        isGoToPreviousNavigationTarget="true">
 	  </specification>	
-	
+
+
+	  <specification
+            annotationType="org.cfeclipse.cfml.tagbeginendAnnotation"
+            label="Begin End Tag Marker"
+			icon="icons/obj16/mark_occurrence.gif"
+            textPreferenceKey="tagbeginendAnnotation.text"
+            textPreferenceValue="true"
+            highlightPreferenceKey="tagbeginendAnnotation.background"
+			highlightPreferenceValue="false"
+			textStylePreferenceKey="tagbeginendAnnotation.style"
+			textStylePreferenceValue="UNDERLINE"
+            overviewRulerPreferenceKey="tagbeginendAnnotation.IndicationInOverviewRuler"
+			overviewRulerPreferenceValue="true"
+            verticalRulerPreferenceKey="tagbeginendAnnotation.IndicationInVerticalRuler"
+			verticalRulerPreferenceValue="true"
+            symbolicIcon="info"
+            colorPreferenceKey="tagbeginendAnnotation.color"
+            colorPreferenceValue="212,212,212"
+            presentationLayer="4"
+            showInNextPrevDropdownToolbarActionKey="showOccurrenceInNextPrevDropdownToolbarAction"
+            showInNextPrevDropdownToolbarAction="true"
+            isGoToNextNavigationTargetKey="isTagbeginendGoToNextNavigationTarget"
+	        isGoToNextNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="isTagbeginendGoToPreviousNavigationTarget"
+	        isGoToPreviousNavigationTarget="true">
+	  </specification>		
    </extension>
    
    

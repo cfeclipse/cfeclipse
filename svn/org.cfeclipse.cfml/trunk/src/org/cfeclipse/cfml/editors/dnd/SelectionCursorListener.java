@@ -144,6 +144,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	private boolean isCtrlSpaceSpace;
 	private boolean ctrlWasDown;
     private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
+	private static String tagBeginEndAnnotation = "org.cfeclipse.cfml.tagbeginendmarker";
 	//private static String TYPE = "org.eclipse.core.resources.textmarker";
 	//private static String TYPE = "org.cfeclipse.cfml.parserWarningMarker";
     
@@ -202,8 +203,14 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 			if(cti.getStartPosition() == this.selectedTag.getStartPosition()){				
 				this.selectedTagWasSelected = true;
 			} else {
+				clearTagBeginEndMarkers();
 				this.selectedTagWasSelected = false;				
 			}
+		} else {
+			clearTagBeginEndMarkers();			
+		}
+		if(cti != null) {
+			markBeginEndTags(cti);			
 		}
 		this.selectedTag = cti;
 	}
@@ -622,6 +629,33 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	
 	}
 
+	
+	protected void markBeginEndTags(CfmlTagItem tagItem) {
+		if(tagItem.getMatchingItem() != null) {			
+			Map tagOpen = new HashMap();
+			Map tagClose = new HashMap();
+			MarkerUtilities.setMessage(tagOpen, "Open " + tagItem.getName());
+			MarkerUtilities.setLineNumber(tagOpen, tagItem.getLineNumber());
+			tagOpen.put(IMarker.LOCATION, "line " + tagItem.getLineNumber() + ", Chars " + tagItem.getStartPosition() + "-" + tagItem.getEndPosition());
+			tagOpen.put(IMarker.CHAR_START, tagItem.getStartPosition());
+			tagOpen.put(IMarker.CHAR_END, tagItem.getEndPosition());
+
+			MarkerUtilities.setMessage(tagClose, "Close " + tagItem.getName());
+			MarkerUtilities.setLineNumber(tagClose, tagItem.getMatchingItem().getLineNumber());
+			tagClose.put(IMarker.LOCATION, "line " + tagItem.getMatchingItem().getLineNumber() + ", Chars " + tagItem.getMatchingItem().getStartPosition() + "-" + tagItem.getMatchingItem().getEndPosition());
+			tagClose.put(IMarker.CHAR_START, tagItem.getMatchingItem().getStartPosition());
+			tagClose.put(IMarker.CHAR_END, tagItem.getMatchingItem().getEndPosition());
+			
+			try {
+				MarkerUtilities.createMarker(((ICFDocument)this.fViewer.getDocument()).getResource(), tagOpen, this.tagBeginEndAnnotation);
+				MarkerUtilities.createMarker(((ICFDocument)this.fViewer.getDocument()).getResource(), tagClose, this.tagBeginEndAnnotation);
+			} catch (CoreException excep) {
+				excep.printStackTrace();
+			} catch (Exception anyExcep) {
+				anyExcep.printStackTrace();
+			}		
+		}
+	}
 	/**
 	 * Mark occurrences of selected string
 	 * 
@@ -704,6 +738,25 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 
 	}
 
+	/**
+	 * Clears any begin end tag markers
+	 */
+	public void clearTagBeginEndMarkers() {
+		if (this.fViewer == null)
+			return;
+
+	      try {
+			IMarker[] markers = ((ICFDocument)this.fViewer.getDocument()).getResource().findMarkers(this.tagBeginEndAnnotation, true, IResource.DEPTH_INFINITE);
+			for(IMarker mark : markers) {
+				mark.delete();
+			}
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
 	public void setMarkOccurrenceEnabled(boolean isMarkOccurrenceEnabled) {
 		// TODO Auto-generated method stub
 		this.isMarkOccurrenceEnabled = isMarkOccurrenceEnabled;
