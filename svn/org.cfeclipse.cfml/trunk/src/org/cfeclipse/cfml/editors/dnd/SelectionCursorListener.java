@@ -198,7 +198,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 		TextSelection sel = (TextSelection) this.fViewer.getSelection();
 		int startPos = sel.getOffset()+1;
 		ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
-		CfmlTagItem cti = cfd.getTagAt(startPos, startPos, false);
+		CfmlTagItem cti = cfd.getTagAt(startPos, startPos, true);
 		if(cti != null && this.selectedTag != null) {
 			if(cti.getStartPosition() == this.selectedTag.getStartPosition()){				
 				this.selectedTagWasSelected = true;

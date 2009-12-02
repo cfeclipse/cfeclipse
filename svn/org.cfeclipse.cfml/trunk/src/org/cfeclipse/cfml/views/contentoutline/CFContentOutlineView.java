@@ -55,6 +55,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -236,15 +237,18 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	/**
 	 * sets the currently selected item in docitem form or <code>null</code> if
 	 * there is none
-	 * 
 	 * @return
 	 */
 	private void setSelectedDocItem(DocItem item) {
 		// can't do much if nothing is selected
 		if (item != null) {
 			TreeViewer tree = getTreeViewer();
-			tree.setSelection(new StructuredSelection(item), true);
-			expandParentItems(item);
+			tree.setSelection(new StructuredSelection(item), false);
+			//tree.refresh(item, false);
+			tree.setExpandedState(item, true);
+			tree.reveal(item);
+			// reveal takes care of this. Doh!
+			//expandParentItems(item);
 		}
 	}
 
@@ -549,7 +553,10 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 
 	public void selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent event) {
 		// this fires when tree node selection changed
-		jumpAction.run();
+		// we check for a tree node so we don't make the editor jump
+		if(((TreeSelection)event.getSelection()).getPaths().length > 0) {			
+			jumpAction.run();
+		}
 		// getTreeViewer().refresh(new
 		// StructuredSelection(event.getSelection()));
 	}

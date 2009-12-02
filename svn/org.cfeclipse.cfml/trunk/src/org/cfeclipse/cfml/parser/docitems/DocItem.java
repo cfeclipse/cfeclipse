@@ -186,7 +186,7 @@ public abstract class DocItem implements Comparable {
 	
 	public void setParent(DocItem newParent)
 	{
-		if(newParent == this) 
+		if(newParent != this) 
 		parentNode = newParent;
 	}
 	
