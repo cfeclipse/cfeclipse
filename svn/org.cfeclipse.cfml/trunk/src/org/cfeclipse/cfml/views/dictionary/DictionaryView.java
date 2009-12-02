@@ -752,11 +752,12 @@ public class DictionaryView extends ViewPart {
 			}
 
 			public void widgetSelected(SelectionEvent e) {
-				if (e.item.getData() instanceof Parameter) {
-					Parameter param = (Parameter) e.item.getData();
-					preview.setText(param.getHelp());
-				}
-				
+				if(e.item != null) {					
+					if (e.item.getData() instanceof Parameter) {
+						Parameter param = (Parameter) e.item.getData();
+						preview.setText(param.getHelp());
+					}
+				}				
 			}
 			
 			
