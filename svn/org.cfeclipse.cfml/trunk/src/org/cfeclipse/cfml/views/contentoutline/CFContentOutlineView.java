@@ -74,6 +74,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
+import com.sun.corba.se.impl.io.FVDCodeBaseImpl;
 import com.sun.j3d.utils.universe.Viewer;
 
 /**
@@ -87,6 +88,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	protected Action jumpAction, selectAction, deleteItem, expandAction, collapseAction, filterOnAction, openAction,
 			removeFilters;
 	protected Action filters[];
+	private boolean fSelectionFromEditor = false;
 	private static String filter = "";
 	protected static GotoFileAction gfa = new GotoFileAction();
 
@@ -105,6 +107,10 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		hookGlobalActions();
 		hookDoubleClickAction();
 		reload(root);
+	}
+	
+	protected void fireSelectionChanged(ISelection selection) {
+		System.out.println("wee");
 	}
 
 	/**
@@ -243,7 +249,9 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		// can't do much if nothing is selected
 		if (item != null) {
 			TreeViewer tree = getTreeViewer();
+			fSelectionFromEditor = true;
 			tree.setSelection(new StructuredSelection(item), false);
+			fSelectionFromEditor = false;
 			//tree.refresh(item, false);
 			tree.setExpandedState(item, true);
 			tree.reveal(item);
@@ -554,7 +562,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	public void selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent event) {
 		// this fires when tree node selection changed
 		// we check for a tree node so we don't make the editor jump
-		if(((TreeSelection)event.getSelection()).getPaths().length > 0) {			
+		if(!fSelectionFromEditor) {	
 			jumpAction.run();
 		}
 		// getTreeViewer().refresh(new
