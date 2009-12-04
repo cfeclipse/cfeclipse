@@ -205,7 +205,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
 		cfscp.changeDictionary(DictionaryManager.JSDIC);
 
-		camInstance.registerRootAssist(new TemplateAssist());
 		camInstance.registerRootAssist(cfscp);
 		camInstance.registerRootAssist(new CFContentAssist());
 		camInstance.registerRootAssist(new CFMLScopeAssist());
@@ -216,6 +215,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		// CFML Varscope parser
 		// finds the arguments in a cfc that you are talking about
 		camInstance.registerRootAssist(new CFMLVariableAssist());
+		// template assist
+		camInstance.registerRootAssist(new TemplateAssist());
 
 		camInstance.registerTagAssist(cfmlAssistor);
 		camInstance.registerAttributeAssist(cfmlAssistor);
