@@ -98,7 +98,8 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		// prefix + "|");
 		if (prefix.length() == 0) {
 			// System.out.println("getRev=null");
-			return 0;
+			//return 0;
+			return 90;
 		}
 		if (prefix.startsWith("<")) //$NON-NLS-1$
 			prefix = prefix.substring(1);

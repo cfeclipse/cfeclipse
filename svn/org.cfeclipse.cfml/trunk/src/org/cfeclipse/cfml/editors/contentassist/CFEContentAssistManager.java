@@ -177,6 +177,22 @@ public class CFEContentAssistManager {
 			throw new IllegalArgumentException("CFEContentAssist::getRootAssistors()");
         return this.rootAssistors;
     }
+
+	public ArrayList getRootAssistors(String string) {
+		ArrayList filteredAssistors = new ArrayList();
+		for(int x = 0; x < this.rootAssistors.size(); x++) {
+			if (this.rootAssistors.get(x).getClass().getName() == string)
+				filteredAssistors.add(this.rootAssistors.get(x));
+		}
+		return filteredAssistors;
+	}
+    
+	public ArrayList getRootAssistors(int index) {
+		ArrayList filteredAssistor = new ArrayList();
+		filteredAssistor.add(this.rootAssistors.get(index));
+		return filteredAssistor;
+	}
+    
     
     /**
      * <p>
@@ -236,5 +252,6 @@ public class CFEContentAssistManager {
     {
         registerAssistor(this.valueAssistors, newAssistor);
     }
+
 
 }

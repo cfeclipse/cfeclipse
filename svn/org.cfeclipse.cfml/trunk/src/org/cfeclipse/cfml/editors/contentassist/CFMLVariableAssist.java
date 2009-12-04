@@ -36,12 +36,18 @@ import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFParser;
+import org.cfeclipse.cfml.parser.VariableParserItem;
+import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.text.templates.Template;
 
 
 /**
@@ -71,6 +77,61 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     	
     }
 
+	/**
+	 * Cut out angular brackets for relevance sorting, since the template name
+	 * does not contain the brackets.
+	 * 
+	 * @param key
+	 *            the template
+	 * @param state
+	 *            the prefix
+	 * @return the relevance of the <code>template</code> for the given
+	 *         <code>prefix</code>
+	 */
+	protected int getRelevance(String key, IAssistState state) {
+		// System.out.println("getRev for:" + template.getName() + " : |" +
+		// prefix + "|");
+		if (state.getDataSoFar().length() == 0) {
+			// System.out.println("getRev=null");
+			return 0;
+		}
+		if (key.toString().startsWith(state.getDataSoFar())) {
+			// System.out.println("getRev=" + 90);
+			return 90;
+		}
+		// System.out.println("getRev=" + 0);
+		return 0;
+	}
+    
+    
+	/**
+	 * We watch for angular brackets since those are often part of XML
+	 * templates.
+	 * 
+	 * @param viewer
+	 *            the viewer
+	 * @param offset
+	 *            the offset left of which the prefix is detected
+	 * @return the detected prefix
+	 */
+	protected String extractPrefix(IDocument document, int offset) {
+		int i = offset;
+		if (i > document.getLength())
+			return ""; //$NON-NLS-1$
+
+		try {
+			while (i > 0) {
+				char ch = document.getChar(i - 1);
+				if (ch != '.' && !Character.isJavaIdentifierPart(ch))
+					break;
+				i--;
+			}
+			return document.get(i, offset - i);
+		} catch (BadLocationException e) {
+			return ""; //$NON-NLS-1$
+		}
+	}
+	
     /* (non-Javadoc)
      * @see org.cfeclipse.cfml.editors.contentassist.IAssistContributor#getTagProposals(org.cfeclipse.cfml.editors.contentassist.IAssistState)
      */
@@ -82,9 +143,10 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     	}
 
     	//Check what partition we are in.
+    	System.out.println(state.getOffsetPartition().toString());
     	    	
     	
-        if (state.getTriggerData() == ' ' || state.getTriggerData() == '#' || state.getTriggerData() == '>') {
+        if (state.getTriggerData() == '#') {
             return getPageVariables(state, doc);
         }
         else if(state.getTriggerData() != '.'){
@@ -95,9 +157,9 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     			paritionSection = partition.getType();
     		} catch (BadLocationException e) {
     			e.printStackTrace();
-    		}
-        
-    		return null;
+    		}        
+            return getPageVariables(state, doc);
+    		//return null;
         }
         else {
         	
@@ -107,7 +169,6 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
         		allData = allData.substring(0, allData.length()-1);
         	}
         	
-        	System.out.println(allData);
         	String VarName = "";
         	
         	StringBuffer buf = new StringBuffer();
@@ -149,7 +210,8 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
     	
     	CFParser parser = new CFParser();
         CFDocument cfdoc = parser.parseDoc(state.getIDocument().get());
-       
+	    String prefix = extractPrefix(state.getIDocument(), state.getOffset());
+
         //Get the variables:
         HashMap varMap = cfdoc.getVariableMap();
         ICompletionProposal[] proposals = null;
@@ -157,19 +219,20 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
         //Get the scopes we are looking for
 //      Get an initial set of possibilities.
         //These are set in VariablesParser so go check that out if your variable isnt found
-        
+        System.out.println("pref"+prefix);
         //Find arguments in the document variable map
-       Object chosenTag =  varMap.get(varName);
+        VariableParserItem variableParserItem =  (VariableParserItem)varMap.get(varName);
        
        //TODO: for scopes such as FORM, URL and ATTRIBUTES, we need to do something different, since we will go and search for them tags that are CFPARAM
        
-       
        boolean isScope = false;
        //if the variable exists
-       if(chosenTag != null){
+       if(variableParserItem != null){
+    	   TagItem chosenTag = (TagItem)variableParserItem.getTagItem();
     	 //  System.out.println("Found Chosen Tag" + chosenTag);
     	   //Lets check we have a pre-defined scope for this type
-    	   if(chosenTag instanceof TagItem){
+    	   System.out.println(chosenTag.getClass().getName());
+    	   if(chosenTag != null && (chosenTag instanceof TagItem || chosenTag instanceof CfmlTagItem)){
            	TagItem leTag = (TagItem)chosenTag;
            	String tagname  = leTag.getName();
            		
@@ -185,8 +248,7 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
            				
            				//Go and get the proposals for this item, which is one set for the items, and another for the columns
            				//TODO: Add icons to this. so maybe we do a generic scope thing that adds scopeProposals with icons
-           				
-           				
+           				           				
            				scopeProposals =  ((ISyntaxDictionary)this.sourceDict).getFilteredScopeVars("QUERY");
            				//Get the contents of the SQL and parse them
            				//get the end of leTag
@@ -276,17 +338,16 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
 	    	                sVar.getHelp());
     			   
     		   } else {
-    			   //Need to remove the  text that has already been entered (textSoFar)
-    			   String replacementString = scopeItem.toString();
-    			   int repItemsPos = scopeItem.toString().indexOf(".");
-    			   String repItems = scopeItem.toString().substring(repItemsPos+1);
-    			   
-    			//   System.out.println(state.getAttributeText().trim());
-    			//   System.out.println("Not a scope var " + scopeItem.toString() + " " + repItems);
-    			   
-    			   
-    			   
-        		   proposal = new CompletionProposal(repItems, state.getOffset(), 0, repItems.length());
+    			   //Need to remove the  text that has already been entered (textSoFar)    			   
+    			   String replacementString = scopeItem.toString().replace(prefix, "");    			   
+    			   proposal = new CompletionProposal(scopeItem.toString(),
+    					   state.getOffset()-prefix.length(),
+    					   prefix.length(),
+    					   prefix.length()+replacementString.length(),
+	    	                CFPluginImages.get(CFPluginImages.ICON_VALUE),
+	    	                scopeItem.toString(),
+	    	                null,
+	    	                null);
     			   
     		   }
     		   proposals[scopeCounter] = proposal;
@@ -352,20 +413,23 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
         CFDocument cfdoc = parser.parseDoc(state.getIDocument().get());
         //Get the variables:
         HashMap varMap = cfdoc.getVariableMap();
-        ICompletionProposal[] proposals = new ICompletionProposal[varMap.size()];
-       
+        String prefix = extractPrefix(doc, state.getOffset());
+        Set<CompletionProposal> proposals = new HashSet<CompletionProposal>();
+        int relavance;
         Iterator keyIter = varMap.keySet().iterator();
         int propIter = 0;
         while(keyIter.hasNext()){
-        	
         	String key = (String)keyIter.next();
+ 		   if(key.toUpperCase().startsWith(prefix.toUpperCase()) && !key.toUpperCase().equals(prefix.toUpperCase())){
+			   String replacementString = key.toString().replace(prefix, "");    			   
+ 			   CompletionProposal proposal = new CompletionProposal(key.toString(), state.getOffset()-prefix.length(), prefix.length(), prefix.length()+replacementString.length());            	
+ 			   proposals.add(proposal);
+ 			   propIter++;
+ 		   }
+
         	 
         //Loop through the vars and we are ok
-        	CompletionProposal proposal = new CompletionProposal(key, state.getOffset(), 0, key.toString().length());
-        	
-        	proposals[propIter] = proposal;
-        	propIter++;
         }
-        return proposals;
+        return (ICompletionProposal[]) proposals.toArray(new ICompletionProposal[]{});
     }
 }

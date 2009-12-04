@@ -29,11 +29,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
-import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.contentassist.AssistUtils;
 import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionAssist;
 import org.cfeclipse.cfml.editors.contentassist.DefaultAssistState;
@@ -576,8 +574,6 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 			scanData = scanData.replace('\n',' ');	// Eliminate any non-character characters
 			scanData = scanData.replace('\r',' ');	// as this allows us to treat the buffer as
 			scanData = scanData.replace('\t',' ');	// one long string
-			boolean isCtrlSpaceSpace = ((CFMLEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor()).getSelectionCursorListener().isCrtlSpaceSpace();
-			if(isCtrlSpaceSpace) return tagProps;
 			if (!",".equals(invoker) 
 			    && !"(".equals(invoker)) {
 				String toBeMatched = extractPrefix(viewer,documentOffset).replaceAll("[\r\n\t]", " ").trim();

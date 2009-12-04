@@ -27,12 +27,26 @@ package org.cfeclipse.cfml.editors.contentassist;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFEFileDocument;
+import org.eclipse.jface.bindings.TriggerSequence;
+import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.contentassist.ContentAssistEvent;
+import org.eclipse.jface.text.contentassist.ContentAssistant;
+import org.eclipse.jface.text.contentassist.ICompletionListener;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
+import org.eclipse.jface.text.contentassist.IContentAssistant;
+import org.eclipse.jface.text.contentassist.IContentAssistantExtension2;
+import org.eclipse.jface.text.contentassist.IContentAssistantExtension3;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
+import org.eclipse.swt.SWT;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.keys.IBindingService;
+import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 
 //import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 //import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
@@ -40,12 +54,17 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
  *
  * @author Oliver Tupman
  */
-public class CFEPrimaryAssist implements IContentAssistProcessor {
+public class CFEPrimaryAssist implements IContentAssistProcessor, ICompletionListener {
 
     
     
 	/** Characters that will trigger content assist */
 	private char[] autoActivationChars = null;
+	/* cycling stuff */
+	private int fRepetition= -1;
+	private String fIterationGesture= null;
+    protected IContentAssistantExtension2 fContentAssistant;
+	private boolean fTemplatesOnly = false;
 
     /**
      * 
@@ -55,6 +74,14 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
         generateAutoActivationChars();
     }
 
+	private KeySequence getIterationBinding() {
+	    final IBindingService bindingSvc= (IBindingService) PlatformUI.getWorkbench().getAdapter(IBindingService.class);
+		TriggerSequence binding= bindingSvc.getBestActiveBindingFor(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
+		if (binding instanceof KeySequence)
+			return (KeySequence) binding;
+		return null;
+    }
+        
     private ArrayList arrayToCollection(Object [] array)
     {
         ArrayList  retVal = new ArrayList();
@@ -70,6 +97,8 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
      */
     public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
             int offset) {
+		int iteration= fRepetition;
+    	int lastKeyCode = ((CFMLEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor()).getSelectionCursorListener().getLastKeyCode();
         ArrayList proposals = new ArrayList();
         ArrayList proposers = new ArrayList();
         try {
@@ -83,13 +112,33 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
         if(viewer.getDocument() instanceof ICFEFileDocument)
         {
             try {
-            	proposers =((ICFEFileDocument) viewer.getDocument()).getContentAssistManager().getRootAssistors();
+            	ICFEFileDocument curDoc = (ICFEFileDocument)viewer.getDocument();
+            	if(fRepetition >= curDoc.getContentAssistManager().getRootAssistors().size()) {
+            		fRepetition = -1;
+            	}
+//            	if(fRepetition == -1) {            		
+//            		proposers = curDoc.getContentAssistManager().getRootAssistors();
+//            	} else {
+//            		proposers = curDoc.getContentAssistManager().getRootAssistors(fRepetition);            		
+//            	}
+            	if(fTemplatesOnly) {
+            		proposers = curDoc.getContentAssistManager().getRootAssistors("org.cfeclipse.cfml.editors.contentassist.TemplateAssist");
+            	} else {
+            		proposers = curDoc.getContentAssistManager().getRootAssistors();
+            	}
             }
             catch (Exception e) {
                 // NPE is thrown if the doc is read only.
             	e.printStackTrace();
             }
         }
+        // nasty hack for cycling proposal categories if contentAssist is called again
+        System.out.println(fTemplatesOnly);
+//        if (lastKeyCode == 32 || (lastKeyCode & SWT.CTRL) != 0) {
+//        	fRepetition++;
+//        	fTemplatesOnly = !fTemplatesOnly;
+//            System.out.println(fRepetition);
+//        }
         DefaultAssistState state = AssistUtils.initialiseDefaultAssistState(viewer, offset);
         Iterator proposerIter = proposers.iterator();
         while(proposerIter.hasNext())
@@ -193,7 +242,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 	    autoActivationString += "abcdefghijklmnopqrstuvwxyz";
 	    autoActivationString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	    autoActivationString += "0123456789";
-	    autoActivationString += "(,=._< ~\t\n\r\"'#";
+	    autoActivationString += "(,=._<~\t\n\r\"'#";
 	    char[] chars = autoActivationString.toCharArray();
 	    
 	    this.autoActivationChars = chars;
@@ -236,5 +285,32 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
     public IContextInformationValidator getContextInformationValidator() {
         return null;
     }
+
+    /* (non-Javadoc)
+     * @see org.eclipse.jface.text.contentassist.ICompletionListener#assistSessionStarted(org.eclipse.jface.text.contentassist.ContentAssistEvent)
+     */
+    public void assistSessionStarted(ContentAssistEvent event) {
+        IContentAssistant assistant= event.assistant;
+    	fRepetition = -1;
+        if (assistant instanceof IContentAssistantExtension2) {
+            fContentAssistant= (IContentAssistantExtension2) assistant;
+        }
+		System.out.println("STRTED");
+    }
+
+    /* (non-Javadoc)
+     * @see org.eclipse.jface.text.contentassist.ICompletionListener#assistSessionEnded(org.eclipse.jface.text.contentassist.ContentAssistEvent)
+     */
+    public void assistSessionEnded(ContentAssistEvent event) {
+        fContentAssistant= null;
+        fTemplatesOnly= false;
+		System.out.println("ENDED");
+    }
+
+	public void selectionChanged(ICompletionProposal arg0, boolean arg1) {
+		if(arg1)
+		System.out.println("SMART");
+		// TODO Auto-generated method stub
+	}
 
 }

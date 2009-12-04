@@ -50,6 +50,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
  * 
  * @author Oliver Tupman
  */ 
+
 public interface IAssistContributor {
 	/**
      * Determines whether the assist wishes to contribute to the

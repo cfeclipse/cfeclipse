@@ -141,7 +141,6 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	private boolean isMarkOccurrenceEnabled;
 	private boolean ctrlDown;
 	private int lastKeyCode;
-	private boolean isCtrlSpaceSpace;
 	private boolean ctrlWasDown;
     private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
 	private static String tagBeginEndAnnotation = "org.cfeclipse.cfml.tagbeginendmarker";
@@ -563,6 +562,16 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	
 	
     /**
+     * less ugly, but still ugly hack for content assist category cycling
+     * 
+     * @return
+     */
+    public int getLastKeyCode() {
+        return this.lastKeyCode;
+    }    
+	
+	
+    /**
      * tells other stuff is crtl is down.  Content proposal hack, see TextualCompletionProcessor
      * 
      * @return
@@ -572,15 +581,6 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
     }    
 	
     /**
-     * total hack for template assist to only fire on ctrl+space+space
-     * 
-     * @return
-     */
-    public boolean isCrtlSpaceSpace() {
-        return this.isCtrlSpaceSpace;
-    }
-
-    /**
 	 * Sent when a key is pressed on the system keyboard.
 	 *
 	 * @param e an event containing information about the key press
@@ -588,9 +588,9 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	public void keyPressed(KeyEvent e) {
         if ((e.keyCode == SWT.CTRL)) {
             this.ctrlDown = true;
-            this.isCtrlSpaceSpace = false;
             this.ctrlWasDown = false;
         } 
+        this.lastKeyCode = e.keyCode;            	
 	    //System.out.println("Key Pressed " + e.keyCode);
 	}
 
@@ -608,21 +608,8 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 //		System.out.println("key:["+e.character+"]");
         if ((e.stateMask == SWT.CTRL)) {
             this.ctrlDown = true;
-            if(this.lastKeyCode == 32 && e.keyCode == 32 && ctrlWasDown) {
-                this.isCtrlSpaceSpace = true;
-                //bunch of crap to try to replace an already showing content assist - unsuccessful.
-//                Event event = new Event();
-//                event.type = SWT.KeyDown;
-//                event.keyCode = SWT.ARROW_LEFT;
-//                this.fViewer.getTextWidget().getDisplay().getCurrent().post(event);
-//                this.fViewer.getTextWidget().getDisplay().getCurrent().getActiveShell().view.release();
-//                System.out.println("er");
-                //((IContentAssistant)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor().;
-//                this.fViewer.doOperation(((ISourceViewer)fViewer).CONTENTASSIST_CONTEXT_INFORMATION);
-            }
             this.ctrlWasDown = true;
         } else {
-            this.isCtrlSpaceSpace = false;            	
             this.ctrlDown = false;
         }
         this.lastKeyCode = e.keyCode;            	

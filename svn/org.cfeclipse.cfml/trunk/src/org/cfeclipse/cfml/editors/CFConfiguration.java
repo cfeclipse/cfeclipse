@@ -48,6 +48,8 @@ import org.cfeclipse.cfml.preferences.HTMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.bindings.TriggerSequence;
+import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IAutoEditStrategy;
@@ -61,6 +63,8 @@ import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.TextViewerUndoManager;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
+import org.eclipse.jface.text.contentassist.IContentAssistantExtension2;
+import org.eclipse.jface.text.contentassist.IContentAssistantExtension3;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
@@ -72,8 +76,11 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
+import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 /**
  * <p>
  * This sets up the whole editor. Assigin partition damagers and repairers, and
@@ -676,10 +683,40 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		assistant.setContextInformationPopupBackground(
 			colorManager.getColor(new RGB(255,255,255)	)
 		);
+		// automatically insert if only suggestion if suggestion has autoInstert==true;
+		assistant.enableAutoInsert(true);
+		if (assistant instanceof IContentAssistantExtension2) {
+			IContentAssistantExtension2 extension= (IContentAssistantExtension2) assistant;
+
+			if (2 == 1) {
+				// might need this when we figure out real proposal category cycling
+				extension.setRepeatedInvocationMode(false);
+				extension.setShowEmptyList(false);
+			} else {
+				extension.setRepeatedInvocationMode(true);
+				extension.setStatusLineVisible(true);
+//				extension.setStatusMessage(createIterationMessage());
+				extension.setShowEmptyList(true);
+				if (extension instanceof IContentAssistantExtension3) {
+					IContentAssistantExtension3 ext3= (IContentAssistantExtension3) extension;
+					((ContentAssistant) ext3).setRepeatedInvocationTrigger(getIterationBinding());
+				}
+			}
+		
+		}
+		
 		
 		return assistant;
 	}
-	
+
+	private KeySequence getIterationBinding() {
+	    final IBindingService bindingSvc= (IBindingService) PlatformUI.getWorkbench().getAdapter(IBindingService.class);
+		TriggerSequence binding= bindingSvc.getBestActiveBindingFor(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
+		if (binding instanceof KeySequence)
+			return (KeySequence) binding;
+		return null;
+    }
+
 	
 	/**
 	 * Returns the information control creator. The creator is a factory creating information
@@ -709,6 +746,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
         CFEPrimaryAssist mainCFAssistant = new CFEPrimaryAssist();
         for (int i=0;i<PartitionTypes.ALL_PARTITION_TYPES.length;i++) {
             assistant.setContentAssistProcessor(mainCFAssistant,PartitionTypes.ALL_PARTITION_TYPES[i]);
+            assistant.addCompletionListener(mainCFAssistant);
         }
         /*
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_START_TAG_END);
