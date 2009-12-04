@@ -78,6 +78,10 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		}
 	}
 
+	protected ICompletionProposal createProposal(Template template, TemplateContext context, Region region, int relevance) {
+		return new CFTemplateProposal(template, context, region, getImage(template), relevance);
+	}
+
 	/**
 	 * Cut out angular brackets for relevance sorting, since the template name
 	 * does not contain the brackets.
@@ -166,8 +170,6 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 
 		context.setVariable("selection", selection.getText()); // name of the selection variables {line, word}_selection //$NON-NLS-1$
 		Template[] templates = getTemplates(context.getContextType().getId());
-		boolean ctrlIsDown = ((CFMLEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor()).getSelectionCursorListener().isCrtlDown();
-		boolean isCtrlSpaceSpace = ((CFMLEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor()).getSelectionCursorListener().isCrtlSpaceSpace();
 
 		List matches = new ArrayList();
 		for (int i = 0; i < templates.length; i++) {
@@ -180,8 +182,6 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 			relavance = getRelevance(template, prefix);
 			if (template.matches(prefix, context.getContextType().getId()) && relavance > 0) {				
 				matches.add(createProposal(template, context, (IRegion) region, relavance));
-			} else if(template.matches(prefix, context.getContextType().getId()) && isCtrlSpaceSpace) {
-				matches.add(createProposal(template, context, (IRegion) region, relavance));								
 			}
 		}
 
