@@ -45,7 +45,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
  *
  * @author Oliver Tupman
  */
-public class CFMLScopeAssist 
+public class CFMLScopeAssist extends AssistContributor 
 	   		 implements IAssistContributor 
 {
     /**
@@ -188,6 +188,26 @@ public class CFMLScopeAssist
 		
 		return result;
     }
+
+	public String getId() {
+		// TODO Auto-generated method stub
+		return "scope.proposals";
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Scope Proposals";
+	}
+
+	public void sessionEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void sessionStarted() {
+		// TODO Auto-generated method stub
+		
+	}
     
     
     

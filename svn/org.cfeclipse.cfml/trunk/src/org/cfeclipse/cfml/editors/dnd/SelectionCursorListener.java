@@ -47,8 +47,6 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
@@ -65,7 +63,7 @@ import org.eclipse.ui.texteditor.MarkerUtilities;
  * This listener keeps track of where the mouse is relative to the currently selected text
  * and whether or not the mouse is currently down.
  */
-public class SelectionCursorListener implements KeyListener, MouseListener, MouseMoveListener, MouseTrackListener, ISelectionChangedListener {
+public class SelectionCursorListener implements MouseListener, MouseMoveListener, MouseTrackListener, ISelectionChangedListener {
     /**
      * The text editor that the selection listener is installed on
      */
@@ -139,10 +137,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
 	private CfmlTagItem selectedTag;
 	private boolean selectedTagWasSelected;
 	private boolean isMarkOccurrenceEnabled;
-	private boolean ctrlDown;
-	private int lastKeyCode;
-	private boolean ctrlWasDown;
-    private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
+	private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
 	private static String tagBeginEndAnnotation = "org.cfeclipse.cfml.tagbeginendmarker";
 	//private static String TYPE = "org.eclipse.core.resources.textmarker";
 	//private static String TYPE = "org.cfeclipse.cfml.parserWarningMarker";
@@ -559,64 +554,7 @@ public class SelectionCursorListener implements KeyListener, MouseListener, Mous
         }
         return false;
 	}
-	
-	
-    /**
-     * less ugly, but still ugly hack for content assist category cycling
-     * 
-     * @return
-     */
-    public int getLastKeyCode() {
-        return this.lastKeyCode;
-    }    
-	
-	
-    /**
-     * tells other stuff is crtl is down.  Content proposal hack, see TextualCompletionProcessor
-     * 
-     * @return
-     */
-    public boolean isCrtlDown() {
-        return this.ctrlDown;
-    }    
-	
-    /**
-	 * Sent when a key is pressed on the system keyboard.
-	 *
-	 * @param e an event containing information about the key press
-	 */
-	public void keyPressed(KeyEvent e) {
-        if ((e.keyCode == SWT.CTRL)) {
-            this.ctrlDown = true;
-            this.ctrlWasDown = false;
-        } 
-        this.lastKeyCode = e.keyCode;            	
-	    //System.out.println("Key Pressed " + e.keyCode);
-	}
-
-	/**
-	 * Sent when a key is released on the system keyboard.
-	 *
-	 * @param e an event containing information about the key release
-	 */
-	public void keyReleased(KeyEvent e) {
-
-		//System.out.println("Key Released " + e.keyCode);
-//		System.out.println("state:"+e.stateMask);
-//		System.out.println("ctr:"+SWT.CTRL);
-//		System.out.println("key:"+e.keyCode);
-//		System.out.println("key:["+e.character+"]");
-        if ((e.stateMask == SWT.CTRL)) {
-            this.ctrlDown = true;
-            this.ctrlWasDown = true;
-        } else {
-            this.ctrlDown = false;
-        }
-        this.lastKeyCode = e.keyCode;            	
-	
-	}
-
-	
+		
 	protected void markBeginEndTags(CfmlTagItem tagItem) {
 		if(tagItem.getMatchingItem() != null) {			
 			Map tagOpen = new HashMap();

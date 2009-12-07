@@ -39,7 +39,7 @@ import org.eclipse.swt.graphics.Image;
  *
  * @author Oliver Tupman
  */
-public class TemplateAssist 
+public class TemplateAssist extends AssistContributor 
 	   		 implements IAssistContributor 
 {
 	private static final String DEFAULT_IMAGE= "$nl$/icons/template.gif"; //$NON-NLS-1$
@@ -48,10 +48,8 @@ public class TemplateAssist
      * to the global CF dictionary.
      */
     private TextualCompletionProcessor templateProcessor = new TextualCompletionProcessor();
-    
-    private Pattern wordPattern = Pattern.compile("[\\w]");
-    private Pattern scopePattern = Pattern.compile("[0-9a-zA-z_\\.]+$");
-    
+	private int fSortOrder= 0x00000;
+       
     
     /**
      * @param cfmlAssistor 
@@ -77,6 +75,31 @@ public class TemplateAssist
 	 */
 	protected Image getImage(Template template) {
         return CFPluginImages.get(CFPluginImages.ICON_TEMPLATE_SNIP);
+	}
+
+	public String getId() {
+		return "templates.proposals";
+	}
+
+	public String getName() {
+		return "Templates Proposals";
+	}
+
+	/**
+	 * @return sortOrder
+	 */
+	public int getSortOrder() {
+		return fSortOrder;
+	}
+
+	public void sessionEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void sessionStarted() {
+		// TODO Auto-generated method stub
+		
 	}
     
 }

@@ -49,7 +49,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
  *
  * @author Stephen Milligan
  */
-public class CFMLFunctionAssist 
+public class CFMLFunctionAssist extends AssistContributor 
 	   		 implements IAssistContributor 
 {
     /**
@@ -606,6 +606,24 @@ public class CFMLFunctionAssist
             }
             return false;
     }
+
+	public void sessionEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void sessionStarted() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getId() {
+		return "function.assist";
+	}
+
+	public String getName() {
+		return "Function Proposals";
+	}
     
     
     

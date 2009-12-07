@@ -40,6 +40,7 @@ import org.cfeclipse.cfml.dictionary.Value;
 import org.cfeclipse.cfml.editors.ICFEFileDocument;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.util.CFDocUtils;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
@@ -154,6 +155,10 @@ public class CFContentAssist extends CFEContentAssist{
 	 * Pre-compiled pattern for getAttributeName
 	 */
 	private Pattern currAttribPattern = Pattern.compile("([\\w]*)\\s*=\\s*\\\"[#\\.\\w\\s]*\\\"{0,1}$");
+	private ImageDescriptor fImage;
+	private boolean fIsSeparateCommand;
+	private boolean fIsIncluded;
+	private boolean fIsEnabled;
 
 	/**
 	 * Retrieves the attribute name tha the user has requested content assist upon.
@@ -754,4 +759,13 @@ public class CFContentAssist extends CFEContentAssist{
 		return null;
 	}
 
+	public String getId() {
+		return "Tag Proposals";
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Tag Proposals";
+	}
+	
 }

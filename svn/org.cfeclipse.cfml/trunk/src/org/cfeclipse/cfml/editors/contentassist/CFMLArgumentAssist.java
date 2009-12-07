@@ -39,7 +39,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
  * 
  * @author Mark Drew
  */
-public class CFMLArgumentAssist 
+public class CFMLArgumentAssist extends AssistContributor 
 	   		 implements IAssistContributor 
 {
     
@@ -161,14 +161,25 @@ public class CFMLArgumentAssist
         	System.out.println("The last cffunction is + " + lasttag.getAttributeValue("name"));
         }*/
         
-        
-        
-    	
-    	 
-    	
-    	
-    	
     	return proposals;
     }
+
+	public void sessionEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void sessionStarted() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getId() {
+		return "argument.proposals";
+	}
+
+	public String getName() {
+		return "Argument Proposals";
+	}
     
 }

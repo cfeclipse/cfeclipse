@@ -105,7 +105,11 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 				gc.drawLine(left.x, y, right.x, y);
 									
 			} else {
-				textWidget.redrawRange(offset, length, true);
+				try{
+					textWidget.redrawRange(offset, length, true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

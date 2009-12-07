@@ -639,9 +639,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			colorManager.getColor(new RGB(0,0,0))
 		);
 		
-		setupPrimaryCFEContentAssist();
-
-		assistant.setContentAssistProcessor(new CFScriptCompletionProcessor(),CFPartitionScanner.CF_SCRIPT);
+		setupPrimaryCFEContentAssist(sourceViewer);
 		
 		//in javascript tags - try to give js its own type of completion using the
 		//cfscript processor but using the js dictionary...
@@ -683,40 +681,12 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		assistant.setContextInformationPopupBackground(
 			colorManager.getColor(new RGB(255,255,255)	)
 		);
-		// automatically insert if only suggestion if suggestion has autoInstert==true;
+		// automatically insert if only one suggestion
 		assistant.enableAutoInsert(true);
-		if (assistant instanceof IContentAssistantExtension2) {
-			IContentAssistantExtension2 extension= (IContentAssistantExtension2) assistant;
-
-			if (2 == 1) {
-				// might need this when we figure out real proposal category cycling
-				extension.setRepeatedInvocationMode(false);
-				extension.setShowEmptyList(false);
-			} else {
-				extension.setRepeatedInvocationMode(true);
-				extension.setStatusLineVisible(true);
-//				extension.setStatusMessage(createIterationMessage());
-				extension.setShowEmptyList(true);
-				if (extension instanceof IContentAssistantExtension3) {
-					IContentAssistantExtension3 ext3= (IContentAssistantExtension3) extension;
-					((ContentAssistant) ext3).setRepeatedInvocationTrigger(getIterationBinding());
-				}
-			}
-		
-		}
 		
 		
 		return assistant;
 	}
-
-	private KeySequence getIterationBinding() {
-	    final IBindingService bindingSvc= (IBindingService) PlatformUI.getWorkbench().getAdapter(IBindingService.class);
-		TriggerSequence binding= bindingSvc.getBestActiveBindingFor(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
-		if (binding instanceof KeySequence)
-			return (KeySequence) binding;
-		return null;
-    }
-
 	
 	/**
 	 * Returns the information control creator. The creator is a factory creating information
@@ -741,12 +711,12 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
      * content assist code to future proof the content assist process. This should
      * allow developers to extend the CFE code easily and more reliably in the future
      * resulting in fewer hacks and changes to the core code.
+	 * @param sourceViewer 
      */
-    private void setupPrimaryCFEContentAssist() {
-        CFEPrimaryAssist mainCFAssistant = new CFEPrimaryAssist();
+    private void setupPrimaryCFEContentAssist(ISourceViewer sourceViewer) {
+        CFEPrimaryAssist mainCFAssistant = new CFEPrimaryAssist(sourceViewer,assistant);
         for (int i=0;i<PartitionTypes.ALL_PARTITION_TYPES.length;i++) {
             assistant.setContentAssistProcessor(mainCFAssistant,PartitionTypes.ALL_PARTITION_TYPES[i]);
-            assistant.addCompletionListener(mainCFAssistant);
         }
         /*
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_START_TAG_END);

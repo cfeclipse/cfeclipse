@@ -25,11 +25,14 @@
 package org.cfeclipse.cfml.editors.contentassist;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
-import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFEFileDocument;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.bindings.TriggerSequence;
 import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.text.ITextViewer;
@@ -38,12 +41,11 @@ import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.ICompletionListener;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
-import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistantExtension2;
 import org.eclipse.jface.text.contentassist.IContentAssistantExtension3;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
-import org.eclipse.swt.SWT;
+import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
@@ -54,8 +56,9 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
  *
  * @author Oliver Tupman
  */
-public class CFEPrimaryAssist implements IContentAssistProcessor, ICompletionListener {
-
+public class CFEPrimaryAssist implements IContentAssistProcessor {
+	// stats checking
+	private static final boolean DEBUG= false;
     
     
 	/** Characters that will trigger content assist */
@@ -63,17 +66,145 @@ public class CFEPrimaryAssist implements IContentAssistProcessor, ICompletionLis
 	/* cycling stuff */
 	private int fRepetition= -1;
 	private String fIterationGesture= null;
-    protected IContentAssistantExtension2 fContentAssistant;
+    private final IContentAssistantExtension2 fContentAssistant;
 	private boolean fTemplatesOnly = false;
+	private List fCategories;
+	private List fCategoryIteration= null;
+	private String fErrorMessage;
+	private int fNumberOfComputedResults;
+	private ISourceViewer fSourceViewer;
+
+
+	private DefaultAssistState fState;
+
+
+	private int fLastOffset;
+
+	private static final Comparator ORDER_COMPARATOR= new Comparator() {
+
+		public int compare(Object o1, Object o2) {
+			IAssistContributor d1= (IAssistContributor) o1;
+			IAssistContributor d2= (IAssistContributor) o2;
+			
+			return d1.getSortOrder() - d2.getSortOrder();
+		}
+		
+	};
 
     /**
+     * @param sourceViewer 
+     * @param assistant 
      * 
      */
-    public CFEPrimaryAssist() {
+    public CFEPrimaryAssist(ISourceViewer sourceViewer, ContentAssistant assistant) {
         super();
+        fContentAssistant = assistant;
+        fSourceViewer = sourceViewer;
         generateAutoActivationChars();
-    }
+        // content assist category cycling
+		fContentAssistant.addCompletionListener(new ICompletionListener() {			
+			/*
+			 * @see org.eclipse.jface.text.contentassist.ICompletionListener#assistSessionStarted(org.eclipse.jface.text.contentassist.ContentAssistEvent)
+			 */
+			public void assistSessionStarted(ContentAssistEvent event) {
+				if (event.processor != CFEPrimaryAssist.this)
+					return;
+				fIterationGesture= getIterationGesture();
+				KeySequence binding= getIterationBinding();
 
+				// this may show the warning dialog if all categories are disabled
+				fCategoryIteration= getCategoryIteration();
+				for (Iterator it= fCategories.iterator(); it.hasNext();) {
+					IAssistContributor cat= (IAssistContributor) it.next();
+					cat.sessionStarted();
+				}
+				System.out.println("catItSize "+fCategoryIteration.size());
+				fRepetition= 0;
+				if (event.assistant instanceof IContentAssistantExtension2) {
+					IContentAssistantExtension2 extension= (IContentAssistantExtension2) event.assistant;
+
+					if (fCategoryIteration.size() == 1) {
+						extension.setRepeatedInvocationMode(false);
+						extension.setShowEmptyList(false);
+					} else {
+						extension.setRepeatedInvocationMode(true);
+						extension.setStatusLineVisible(true);
+						extension.setStatusMessage(createIterationMessage());
+						extension.setShowEmptyList(true);
+						if (extension instanceof IContentAssistantExtension3) {
+							IContentAssistantExtension3 ext3= (IContentAssistantExtension3) extension;
+							((ContentAssistant) ext3).setRepeatedInvocationTrigger(binding);
+						}
+					}
+				
+				}
+			}
+			
+			/*
+			 * @see org.eclipse.jface.text.contentassist.ICompletionListener#assistSessionEnded(org.eclipse.jface.text.contentassist.ContentAssistEvent)
+			 */
+			public void assistSessionEnded(ContentAssistEvent event) {
+				if (event.processor != CFEPrimaryAssist.this)
+					return;
+				fCategoryIteration= null;
+				fState = null;
+				fRepetition= -1;
+				fIterationGesture= null;
+				if(fCategories == null) {					
+					return;
+				}
+				for (Iterator it= fCategories.iterator(); it.hasNext();) {
+					IAssistContributor cat= (IAssistContributor) it.next();
+					cat.sessionEnded();
+				}
+
+				if (event.assistant instanceof IContentAssistantExtension2) {
+					IContentAssistantExtension2 extension= (IContentAssistantExtension2) event.assistant;
+					extension.setShowEmptyList(false);
+					extension.setRepeatedInvocationMode(false);
+					extension.setStatusLineVisible(false);
+					if (extension instanceof IContentAssistantExtension3) {
+						IContentAssistantExtension3 ext3= (IContentAssistantExtension3) extension;
+						((ContentAssistant) ext3).setRepeatedInvocationTrigger(KeySequence.getInstance());
+					}
+				}
+			}
+
+			/*
+			 * @see org.eclipse.jface.text.contentassist.ICompletionListener#selectionChanged(org.eclipse.jface.text.contentassist.ICompletionProposal, boolean)
+			 */
+			public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {}
+			
+		});
+		setRootAssistorsToCategories();
+	}
+
+	private void clearState() {
+		fErrorMessage=null;
+		fNumberOfComputedResults= 0;
+	}
+
+	/**
+	 * Filters and sorts the proposals. The passed list may be modified
+	 * and returned, or a new list may be created and returned.
+	 * 
+	 * Nothing happening here right now, but eventually maybe
+	 * 
+	 * @param proposals the list of collected proposals (element type:
+	 *        {@link ICompletionProposal})
+	 * @param monitor a progress monitor
+	 * @return the list of filtered and sorted proposals, ready for
+	 *         display (element type: {@link ICompletionProposal})
+	 */
+	protected List filterAndSortProposals(List proposals, IProgressMonitor monitor) {
+		return proposals;
+	}
+    
+	/*
+	 * Currently returns java binding, eventually we need to add our own preferences!
+	 * @return binding for proposal cycling
+	 * 
+	 */
 	private KeySequence getIterationBinding() {
 	    final IBindingService bindingSvc= (IBindingService) PlatformUI.getWorkbench().getAdapter(IBindingService.class);
 		TriggerSequence binding= bindingSvc.getBestActiveBindingFor(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
@@ -81,10 +212,126 @@ public class CFEPrimaryAssist implements IContentAssistProcessor, ICompletionLis
 			return (KeySequence) binding;
 		return null;
     }
-        
+
+    private String getIterationGesture() {
+        TriggerSequence binding = getIterationBinding();
+        return binding != null ? binding.format(): "completion key";
+    }
+
+	private String createEmptyMessage() {
+		return "No " + getCategoryLabel(fRepetition);
+	}
+	
+	private String createIterationMessage() {
+		return getCategoryLabel(fRepetition) + " - Press " + fIterationGesture + " to show " + getCategoryLabel(fRepetition + 1);
+	}
+	
+	/*
+	 * kludge job for getting assistors
+	 */
+
+	private void setRootAssistorsToCategories() {
+		if(fCategories == null) {			
+			ICFEFileDocument curDoc = (ICFEFileDocument)fSourceViewer.getDocument();
+			if(curDoc != null)
+				fCategories = curDoc.getContentAssistManager().getRootAssistors();
+		}
+	}
+	
+	
+	private String getCategoryLabel(int repetition) {
+		int iteration= repetition % fCategoryIteration.size();
+		if (iteration == 0)
+			return "All proposals";
+		return toString((IAssistContributor) ((List) fCategoryIteration.get(iteration)).get(0));
+	}
+	
+	private String toString(IAssistContributor category) {
+		return category.getName();
+	}
+
+	/**
+	 * Creates a progress monitor.
+	 * <p>
+	 * The default implementation creates a
+	 * <code>NullProgressMonitor</code>.
+	 * </p>
+	 * 
+	 * @return a progress monitor
+	 */
+	protected IProgressMonitor createProgressMonitor() {
+		return new NullProgressMonitor();
+	}
+	
+	
+	private List getCategories() {
+		setRootAssistorsToCategories();
+		if (fCategoryIteration == null)
+			return fCategories;
+		
+		int iteration= fRepetition % fCategoryIteration.size();
+		fContentAssistant.setStatusMessage(createIterationMessage());
+		fContentAssistant.setEmptyMessage(createEmptyMessage());
+		// a little hack because it seems like we get the cycle trigger with each keypress?!?! :denny
+		if(fLastOffset == fState.getOffset()) {			
+			fRepetition++;
+		}
+		fLastOffset = fState.getOffset();
+		
+//		fAssistant.setShowMessage(fRepetition % 2 != 0);
+//		
+		return (List) fCategoryIteration.get(iteration);
+	}
+
+	private List getCategoryIteration() {
+		List sequence= new ArrayList();
+		sequence.add(getDefaultCategories());
+		for (Iterator it= getSeparateCategories().iterator(); it.hasNext();) {
+			IAssistContributor cat= (IAssistContributor) it.next();
+			sequence.add(Collections.singletonList(cat));
+		}
+		return sequence;
+	}
+
+	private List getDefaultCategories() {
+		// default mix - enable all included computers
+		List included= getDefaultCategoriesUnchecked();
+		// TODO:  set up preference page for setting default vs. cycled
+		return included;
+	}
+
+	private List getDefaultCategoriesUnchecked() {
+		setRootAssistorsToCategories();
+		List included= new ArrayList();
+		for (Iterator it= fCategories.iterator(); it.hasNext();) {
+			IAssistContributor category= (IAssistContributor) it.next();
+			if (category.isIncluded())
+				included.add(category);
+		}
+		return included;
+	}
+
+	/*
+	 * this and the above two functions would do more if we had preferences
+	 * for enabling default assistors etc.
+	 */
+	private List getSeparateCategories() {
+		ArrayList sorted= new ArrayList();
+		for (Iterator it= fCategories.iterator(); it.hasNext();) {
+			IAssistContributor category= (IAssistContributor) it.next();
+			if (category.isSeparateCommand())
+				sorted.add(category);
+		}
+		Collections.sort(sorted, ORDER_COMPARATOR);
+		return sorted;
+	}
+
+
     private ArrayList arrayToCollection(Object [] array)
     {
         ArrayList  retVal = new ArrayList();
+        if(array == null)
+        	return retVal;
         for(int i = 0; i < array.length; i++)
         {
             retVal.add(array[i]);
@@ -97,142 +344,119 @@ public class CFEPrimaryAssist implements IContentAssistProcessor, ICompletionLis
      */
     public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer,
             int offset) {
-		int iteration= fRepetition;
-    	int lastKeyCode = ((CFMLEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor()).getSelectionCursorListener().getLastKeyCode();
-        ArrayList proposals = new ArrayList();
-        ArrayList proposers = new ArrayList();
-        try {
-            
-        /*
-        CFContentAssist temp = new CFContentAssist();
-        temp.getCompletionProposalAutoActivationCharacters();
-        proposers.add(temp);
-        proposers.add(new CFMLScopeAssist());
-        */
-        if(viewer.getDocument() instanceof ICFEFileDocument)
-        {
-            try {
-            	ICFEFileDocument curDoc = (ICFEFileDocument)viewer.getDocument();
-            	if(fRepetition >= curDoc.getContentAssistManager().getRootAssistors().size()) {
-            		fRepetition = -1;
-            	}
-//            	if(fRepetition == -1) {            		
-//            		proposers = curDoc.getContentAssistManager().getRootAssistors();
-//            	} else {
-//            		proposers = curDoc.getContentAssistManager().getRootAssistors(fRepetition);            		
-//            	}
-            	if(fTemplatesOnly) {
-            		proposers = curDoc.getContentAssistManager().getRootAssistors("org.cfeclipse.cfml.editors.contentassist.TemplateAssist");
-            	} else {
-            		proposers = curDoc.getContentAssistManager().getRootAssistors();
-            	}
-            }
-            catch (Exception e) {
-                // NPE is thrown if the doc is read only.
-            	e.printStackTrace();
-            }
-        }
-        // nasty hack for cycling proposal categories if contentAssist is called again
-        System.out.println(fTemplatesOnly);
-//        if (lastKeyCode == 32 || (lastKeyCode & SWT.CTRL) != 0) {
-//        	fRepetition++;
-//        	fTemplatesOnly = !fTemplatesOnly;
-//            System.out.println(fRepetition);
-//        }
-        DefaultAssistState state = AssistUtils.initialiseDefaultAssistState(viewer, offset);
-        Iterator proposerIter = proposers.iterator();
-        while(proposerIter.hasNext())
-        {
-            Object currProc = proposerIter.next();
-            //Assert.isNotNull(currProc,"CFEPrimaryAssist::computeCompletionProposals()");
-            if(currProc == null)
-            		throw new IllegalArgumentException("CFEPrimaryAssist::computeCompletionProposals()");
-            
-            ICompletionProposal [] tempProps = null;
-            //System.out.println("CFPrimaryAssist::computeCompletionProposals:\n");
-            //System.out.println("\tAsking assist of type \'" + currProc.getClass().getName() + "\'");
-            if(currProc instanceof IContentAssistProcessor)
-            {
-                IContentAssistProcessor currProcessor = (IContentAssistProcessor)currProc;
-                tempProps = currProcessor.computeCompletionProposals(viewer, offset);
-            }
-            else if(currProc instanceof IAssistContributor) 
-            {
-                IAssistContributor currContrib = (IAssistContributor)currProc;
-                tempProps = currContrib.getTagProposals(state);
-            }
-            
-            if(tempProps != null && tempProps.length > 0)
-            {
-// System.out.println("Got \'" + tempProps.length + "\' proposals");             
-                proposals.addAll(arrayToCollection(tempProps));
-            }
-            else
-            {
-// System.out.println("It decided not to give any proposals (null)");
-            }
-        }
-        
-        return (ICompletionProposal[])proposals.toArray(new ICompletionProposal[proposals.size()]);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    	long start= DEBUG ? System.currentTimeMillis() : 0;
+		
+		clearState();
+		
+		IProgressMonitor monitor= createProgressMonitor();
+		monitor.beginTask("Computing proposals", fCategories.size() + 1);
+		long setup= DEBUG ? System.currentTimeMillis() : 0;
+
+		monitor.subTask("Collecting proposals");
+		List proposals= collectProposals(viewer, offset, monitor);
+		long collect= DEBUG ? System.currentTimeMillis() : 0;
+
+		monitor.subTask("Sorting proposals");
+		List filtered= filterAndSortProposals(proposals, monitor);
+		fNumberOfComputedResults= filtered.size();
+		long filter= DEBUG ? System.currentTimeMillis() : 0;
+		
+		ICompletionProposal[] result= (ICompletionProposal[]) filtered.toArray(new ICompletionProposal[filtered.size()]);
+		monitor.done();
+		
+		if (DEBUG) {
+			System.err.println("Code Assist Stats (" + result.length + " proposals)"); //$NON-NLS-1$ //$NON-NLS-2$
+			System.err.println("Code Assist (setup):\t" + (setup - start) ); //$NON-NLS-1$
+			System.err.println("Code Assist (collect):\t" + (collect - setup) ); //$NON-NLS-1$
+			System.err.println("Code Assist (sort):\t" + (filter - collect) ); //$NON-NLS-1$
+		}
+		
+		return result;
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeContextInformation(org.eclipse.jface.text.ITextViewer, int)
-     */
-    public IContextInformation[] computeContextInformation(ITextViewer viewer,
-            int offset) {
-        ArrayList proposals = new ArrayList();
-        ArrayList proposers = new ArrayList();
-        
-        if(viewer.getDocument() instanceof ICFEFileDocument)
-        {
-            proposers = ((ICFEFileDocument)viewer.getDocument()).getContentAssistManager().getRootAssistors();
-        }
-        //DefaultAssistState state = AssistUtils.initialiseDefaultAssistState(viewer, offset);
-        	AssistUtils.initialiseDefaultAssistState(viewer, offset);
-        Iterator proposerIter = proposers.iterator();
-        
-        while(proposerIter.hasNext())
-        {
-            Object currProc = proposerIter.next();
-            //Assert.isNotNull(currProc,"CFEPrimaryAssist::computeContextInformation");
-            if(currProc == null)
-            		throw new IllegalArgumentException("CFEPrimaryAssist::computeContextInformation");
-            
-            IContextInformation [] tempProps = null;
-            if(currProc instanceof IContentAssistProcessor)
-            {
-                IContentAssistProcessor currProcessor = (IContentAssistProcessor)currProc;
-                tempProps = currProcessor.computeContextInformation(viewer, offset);
-            }
-            /*
-             * TODO: Should probably add a custom interface for context info like we have for completion proposals
-            else if(currProc instanceof IAssistContributor) 
-            {
-                IAssistContributor currContrib = (IAssistContributor)currProc;
-                tempProps = currContrib.getTagProposals(state);
-            }
-            */
-            if(tempProps != null && tempProps.length > 0)
-            {
-            		// System.out.println("Got \'" + tempProps.length + "\' proposals");             
-                proposals.addAll(arrayToCollection(tempProps));
-            }
-            else
-            {
-            		// System.out.println("It decided not to give any proposals (null)");
-            }
-            
-        }
-        
-        return (IContextInformation[])proposals.toArray(new IContextInformation[proposals.size()]);
-        
-    }
+	private List collectProposals(ITextViewer viewer, int offset, IProgressMonitor monitor) {
+		fState = AssistUtils.initialiseDefaultAssistState(viewer, offset);
+		List proposals= new ArrayList();
+		List providers= getCategories();
+		IAssistContributor cat = null;
+		for (Iterator it= providers.iterator(); it.hasNext();) {
+			Object assistor = it.next();
+			if(assistor instanceof CFContentAssist) {
+				cat= (IAssistContributor) assistor;
+		        fState.setPrevDelim(0);	// TODO: Bodge job, need to assign correct previous delim position
+		        //assistState.setDataSoFar(assistState.getDataSoFar().trim()); // FIXME: see trac ticket #472
+				ICompletionProposal[] computed= cat.getTagProposals(fState);
+				proposals.addAll(arrayToCollection(computed));
+			}
+			else if(assistor instanceof IAssistContributor) {
+				cat= (IAssistContributor) assistor;
+				ICompletionProposal[] computed= cat.getTagProposals(fState);
+				proposals.addAll(arrayToCollection(computed));
+			} else {
+				System.out.println(assistor.getClass().getName());
+			}
+			if (fErrorMessage == null)
+				fErrorMessage= cat.getErrorMessage();
+		}
+//			if (fErrorMessage == null)
+//				fErrorMessage= cat.getErrorMessage();		
+
+		return proposals;
+	}
+    
+    
+    
+	/*
+	 * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#computeContextInformation(org.eclipse.jface.text.ITextViewer, int)
+	 */
+	public IContextInformation[] computeContextInformation(ITextViewer viewer, int offset) {
+		clearState();
+
+		IProgressMonitor monitor= createProgressMonitor();
+		monitor.beginTask("Computing contexts", fCategories.size() + 1);
+		
+		monitor.subTask("Collecting contexts");
+		List proposals= collectContextInformation(viewer, offset, monitor);
+
+		monitor.subTask("Sorting contexts");
+		List filtered= filterAndSortContextInformation(proposals, monitor);
+		fNumberOfComputedResults= filtered.size();
+		
+		IContextInformation[] result= (IContextInformation[]) filtered.toArray(new IContextInformation[filtered.size()]);
+		monitor.done();
+		return result;
+	}
+
+	private List collectContextInformation(ITextViewer viewer, int offset, IProgressMonitor monitor) {
+		List proposals= new ArrayList();
+		
+		List providers= getCategories();
+		for (Iterator it= providers.iterator(); it.hasNext();) {
+			IContentAssistProcessor cat= (IContentAssistProcessor) it.next();
+			IContextInformation[] computed= cat.computeContextInformation(viewer,offset);
+			proposals.addAll(arrayToCollection(computed));
+			if (fErrorMessage == null)
+				fErrorMessage= cat.getErrorMessage();
+		}
+		
+		return proposals;
+	}
+
+	/**
+	 * Filters and sorts the context information objects. The passed
+	 * list may be modified and returned, or a new list may be created
+	 * and returned.
+	 * 
+	 * @param contexts the list of collected proposals (element type:
+	 *        {@link IContextInformation})
+	 * @param monitor a progress monitor
+	 * @return the list of filtered and sorted proposals, ready for
+	 *         display (element type: {@link IContextInformation})
+	 */
+	protected List filterAndSortContextInformation(List contexts, IProgressMonitor monitor) {
+		return contexts;
+	}
+
 
 	/**
 	 * Creates the array of characters that will trigger content assist
@@ -242,14 +466,15 @@ public class CFEPrimaryAssist implements IContentAssistProcessor, ICompletionLis
 	    autoActivationString += "abcdefghijklmnopqrstuvwxyz";
 	    autoActivationString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	    autoActivationString += "0123456789";
-	    autoActivationString += "(,=._<~\t\n\r\"'#";
+// with short auto-activate times these are annoying now:	    
+//	    autoActivationString += "(,=._<~\t\n\r\"'# ";
+	    autoActivationString += "(,=._<~#";
 	    char[] chars = autoActivationString.toCharArray();
 	    
 	    this.autoActivationChars = chars;
 	    
 	}
-	
-	
+		
 	/**
 	 * What characters cause us to wake up (for tags and attributes)
 	 */
@@ -272,12 +497,17 @@ public class CFEPrimaryAssist implements IContentAssistProcessor, ICompletionLis
         //return new char[] {',', '('};
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#getErrorMessage()
-     */
-    public String getErrorMessage() {
-        return null;
-    }
+	/*
+	 * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#getErrorMessage()
+	 */
+	public String getErrorMessage() {
+		if (fNumberOfComputedResults > 0)
+			return null;
+		if (fErrorMessage != null)
+			return fErrorMessage;
+		return "No proposals";
+	}
+
 
     /* (non-Javadoc)
      * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#getContextInformationValidator()
@@ -285,32 +515,5 @@ public class CFEPrimaryAssist implements IContentAssistProcessor, ICompletionLis
     public IContextInformationValidator getContextInformationValidator() {
         return null;
     }
-
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.text.contentassist.ICompletionListener#assistSessionStarted(org.eclipse.jface.text.contentassist.ContentAssistEvent)
-     */
-    public void assistSessionStarted(ContentAssistEvent event) {
-        IContentAssistant assistant= event.assistant;
-    	fRepetition = -1;
-        if (assistant instanceof IContentAssistantExtension2) {
-            fContentAssistant= (IContentAssistantExtension2) assistant;
-        }
-		System.out.println("STRTED");
-    }
-
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.text.contentassist.ICompletionListener#assistSessionEnded(org.eclipse.jface.text.contentassist.ContentAssistEvent)
-     */
-    public void assistSessionEnded(ContentAssistEvent event) {
-        fContentAssistant= null;
-        fTemplatesOnly= false;
-		System.out.println("ENDED");
-    }
-
-	public void selectionChanged(ICompletionProposal arg0, boolean arg1) {
-		if(arg1)
-		System.out.println("SMART");
-		// TODO Auto-generated method stub
-	}
-
+    
 }

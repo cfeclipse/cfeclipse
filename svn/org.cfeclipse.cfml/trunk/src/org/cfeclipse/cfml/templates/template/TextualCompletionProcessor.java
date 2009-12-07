@@ -68,7 +68,7 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		try {
 			while (i > 0) {
 				char ch = document.getChar(i - 1);
-				if (ch != '<' && !Character.isJavaIdentifierPart(ch))
+				if (ch != '.' && !Character.isJavaIdentifierPart(ch))
 					break;
 				i--;
 			}
@@ -94,20 +94,15 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 	 *         <code>prefix</code>
 	 */
 	protected int getRelevance(Template template, String prefix) {
-		// System.out.println("getRev for:" + template.getName() + " : |" +
-		// prefix + "|");
 		if (prefix.length() == 0) {
-			// System.out.println("getRev=null");
 			//return 0;
 			return 90;
 		}
 		if (prefix.startsWith("<")) //$NON-NLS-1$
 			prefix = prefix.substring(1);
 		if (template.getName().startsWith(prefix)) {
-			// System.out.println("getRev=" + 90);
 			return 90;
 		}
-		// System.out.println("getRev=" + 0);
 		return 0;
 	}
 
@@ -160,28 +155,38 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		ITextSelection selection = (ITextSelection) viewer.getSelectionProvider().getSelection();
 
 		// adjust offset to end of normalized selection
+		/* incorrect for templates that instert what is selected
 		if (selection.getOffset() == offset) {
 			offset = selection.getOffset() + selection.getLength();
 		}
+		*/
 		String prefix = extractPrefix(viewer, offset);
-		Region region = new Region(offset - prefix.length(), prefix.length());
+		String selectionText = selection.getText();
+		Region region = new Region(offset - prefix.length(), selectionText.length() + prefix.length());
+		String templatePattern;
+		Boolean hasSelectionVariable = false;
 		TemplateContext context = createContext(viewer, region);
 		if (context == null)
 			return new ICompletionProposal[0];
 
-		context.setVariable("selection", selection.getText()); // name of the selection variables {line, word}_selection //$NON-NLS-1$
+		context.setVariable("selection", selectionText); // name of the selection variables {line, word}_selection //$NON-NLS-1$
 		Template[] templates = getTemplates(context.getContextType().getId());
 
 		List matches = new ArrayList();
 		for (int i = 0; i < templates.length; i++) {
 			Template template = templates[i];
+			hasSelectionVariable = false;
 			try {
-				context.getContextType().validate(template.getPattern());
+				templatePattern = template.getPattern();
+				context.getContextType().validate(templatePattern);
+				if(templatePattern.matches(".*\\$\\{[line_|_word]+selection\\}.*") && selectionText.length() > 0){
+					hasSelectionVariable = true;
+				}
 			} catch (TemplateException e) {
 				continue;
 			}
 			relavance = getRelevance(template, prefix);
-			if (template.matches(prefix, context.getContextType().getId()) && relavance > 0) {				
+			if (template.matches(prefix, context.getContextType().getId()) && relavance > 0  && selectionText.length() == 0 || hasSelectionVariable) {				
 				matches.add(createProposal(template, context, (IRegion) region, relavance));
 			}
 		}

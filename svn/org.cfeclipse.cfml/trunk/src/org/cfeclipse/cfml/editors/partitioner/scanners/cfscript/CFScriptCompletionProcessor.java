@@ -32,9 +32,12 @@ import java.util.TreeSet;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
+import org.cfeclipse.cfml.editors.contentassist.AssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.AssistUtils;
 import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionAssist;
 import org.cfeclipse.cfml.editors.contentassist.DefaultAssistState;
+import org.cfeclipse.cfml.editors.contentassist.IAssistContributor;
+import org.cfeclipse.cfml.editors.contentassist.IAssistState;
 import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.util.CFPluginImages;
@@ -76,7 +79,7 @@ import org.eclipse.text.edits.UndoEdit;
  *  
  * @r2 - if this gets tasty we may want to use it everywhere a function can be 
  */
-public class CFScriptCompletionProcessor implements IContentAssistProcessor {
+public class CFScriptCompletionProcessor extends AssistContributor implements IAssistContributor {
 	private static final short TAGTYPE = 0;
 	//private static final short ATTRTYPE = 1;
 	//private String className = "CFScriptCompletionProcessor";
@@ -555,16 +558,15 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 		//String messages = "";
 		//int length = 40;
 		// TODO: Use the tokeniser!
-
-		// get template proposals 
-        DefaultAssistState state = AssistUtils.initialiseDefaultAssistState(viewer, documentOffset);
-		TemplateAssist tempAss = new TemplateAssist();
-		ICompletionProposal[] tagProps = tempAss.getTagProposals(state);
 		
-		if(!(AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.J_SCRIPT)
-		     || AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.CF_SCRIPT))) {			
-				return null;
+		if(AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.J_SCRIPT)) {			
+			changeDictionary(DictionaryManager.JSDIC);			
+		} else if (AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.CF_SCRIPT)) {
+			changeDictionary(DictionaryManager.CFDIC);			
+		} else {
+			return null;
 		}
+
 	
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
@@ -582,11 +584,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 						toBeMatched
 					);
 				ICompletionProposal[] theseProps = makeSetToProposal(poss, documentOffset, TAGTYPE, toBeMatched.length());
-				ICompletionProposal[] ab = new ICompletionProposal[theseProps.length + tagProps.length];
-		        
-		        System.arraycopy(theseProps, 0, ab, 0, theseProps.length);
-		        System.arraycopy(tagProps, 0, ab, theseProps.length, tagProps.length);
-		        return ab;
+		        return theseProps;
 			}
 			//String originalData = scanData;	// This should never be changed.
 
@@ -685,9 +683,7 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 						//	System.err.println("Cannot found a match for '" + toBeMatched + "'");
 						//	return null;
 						//}
-						CFMLFunctionAssist funkAss = new CFMLFunctionAssist();
-						ICompletionProposal[] funkProps = funkAss.getTagProposals(state);
-						return funkProps;
+						break;
 //						Set poss = SyntaxDictionary.limitSet(
 //							DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions(),
 //							toBeMatched
@@ -923,5 +919,18 @@ public class CFScriptCompletionProcessor implements IContentAssistProcessor {
 	 */
 	public String getErrorMessage() {
 		return null;
+	}
+
+	public String getId() {
+		return "cfscript.proposals";
+	}
+
+	public String getName() {
+		return "CFScript Proposals";
+	}
+
+	public ICompletionProposal[] getTagProposals(IAssistState state) {
+		// TODO Auto-generated method stub
+		return computeCompletionProposals(state.getITextView(), state.getOffset());
 	}
 }

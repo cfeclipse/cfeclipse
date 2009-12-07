@@ -203,7 +203,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 				DictionaryManager.getDictionary(DictionaryManager.HTDIC));
 
 		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
-		cfscp.changeDictionary(DictionaryManager.JSDIC);
 
 		camInstance.registerRootAssist(cfscp);
 		camInstance.registerRootAssist(new CFContentAssist());

@@ -57,7 +57,7 @@ import org.eclipse.jface.text.templates.Template;
  * 
  * @author Mark Drew
  */
-public class CFMLVariableAssist //extends DefaultTagAssistContributor
+public class CFMLVariableAssist extends AssistContributor //extends DefaultTagAssistContributor
 	   		 implements IAssistContributor 
 {
 	
@@ -432,4 +432,22 @@ public class CFMLVariableAssist //extends DefaultTagAssistContributor
         }
         return (ICompletionProposal[]) proposals.toArray(new ICompletionProposal[]{});
     }
+
+	public String getId() {
+		return "Variable Proposals";
+	}
+
+	public String getName() {
+		return "Variable Proposals";
+	}
+
+	public void sessionEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void sessionStarted() {
+		// TODO Auto-generated method stub
+		
+	}
 }

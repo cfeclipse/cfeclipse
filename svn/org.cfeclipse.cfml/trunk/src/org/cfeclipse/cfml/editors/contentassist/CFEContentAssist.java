@@ -58,7 +58,7 @@ import org.eclipse.jface.util.Assert;
  * they could all probably be refactored into a utility class.
  *
  */
-public abstract class CFEContentAssist implements IContentAssistProcessor {
+public abstract class CFEContentAssist extends AssistContributor implements IAssistContributor {
 
 	/** tag type */
 	public static final short TAGTYPE = 0;

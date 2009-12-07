@@ -58,7 +58,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
  *
  * @author Mark Drew
  */
-public class CFMLComponentAssist 
+public class CFMLComponentAssist extends AssistContributor 
 	   		 implements IAssistContributor 
 {
     
@@ -721,6 +721,26 @@ public class CFMLComponentAssist
             }
             return false;
     }
+
+	public void sessionEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void sessionStarted() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
     
     

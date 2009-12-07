@@ -11,14 +11,42 @@ import org.eclipse.swt.graphics.Image;
 public class CFTemplateProposal extends TemplateProposal implements ICompletionProposalExtension4
 {
 
+	private final Template fTemplate;
+	private final TemplateContext fContext;
+	private final Image fImage;
+	private IRegion fRegion;
+	private int fRelevance;
+
+	private IRegion fSelectedRegion; // initialized by apply()
+
 	public CFTemplateProposal(Template template, TemplateContext context, IRegion region, Image image, int relevance) {
 		super(template, context, region, image, relevance);
-		// TODO Auto-generated constructor stub
+		fTemplate= template;
+		fContext= context;
+		fImage= image;
+		fRegion= region;
+
 	}
 
+	/*
+	 * @see org.eclipse.jface.text.contentassist.ICompletionProposalExtension4#isAutoInsertable()
+	 */
 	public boolean isAutoInsertable() {
-		// TODO Auto-generated method stub
-		return getTemplate().isAutoInsertable();
+		return fTemplate.isAutoInsertable();
 	}
 
+	/**
+	 * Returns <code>true</code> if the proposal has a selection, e.g. will wrap some code.
+	 * 
+	 * @return <code>true</code> if the proposals completion length is non zero
+	 * @since 3.2
+	 */
+	private boolean isSelectionTemplate() {
+		if(fRegion.getLength()>0){
+//			return true;
+		}
+		return false;
+	}
+	
+	
 }

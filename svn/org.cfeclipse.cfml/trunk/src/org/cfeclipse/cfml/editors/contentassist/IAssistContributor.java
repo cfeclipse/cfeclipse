@@ -24,6 +24,7 @@
  */
 package org.cfeclipse.cfml.editors.contentassist;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 /**
@@ -63,4 +64,61 @@ public interface IAssistContributor {
 	 * @return An array of completion proposals
 	 */
 	public ICompletionProposal [] getTagProposals(IAssistState state);
+	
+	public void sessionStarted();
+
+	public void sessionEnded();
+	
+	public String getName();
+	
+	public String getId();
+
+	/**
+	 * Returns the name of the described extension
+	 * without mnemonic hint in order to be displayed
+	 * in a message.
+	 * 
+	 * @return Returns the name
+	 */
+	public String getDisplayName();
+	
+	/**
+	 * Returns the image descriptor of the described category.
+	 * 
+	 * @return the image descriptor of the described category
+	 */
+	public ImageDescriptor getImageDescriptor();
+	
+	/**
+	 * Sets the separate command state of the category.
+	 * 
+	 * @param enabled the new enabled state.
+	 */
+	public void setSeparateCommand(boolean enabled);
+	
+	/**
+	 * Returns the enablement state of the category.
+	 * 
+	 * @return the enablement state of the category
+	 */
+	public boolean isSeparateCommand();
+	/**
+	 * @param included the included
+	 */
+	public void setIncluded(boolean included);
+	
+	/**
+	 * @return included
+	 */
+	public boolean isIncluded();
+
+	public boolean isEnabled();
+
+	public void setEnabled(boolean isEnabled);
+
+	public int getSortOrder();
+
+	public String getErrorMessage();
+	
+	
 }

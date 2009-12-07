@@ -680,7 +680,7 @@ public class CFMLEditor extends TextEditor implements
 				//projectionViewer.addSelectionChangedListener(SelectionCursorListener);
 				projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
 				projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);				
-				projectionViewer.getTextWidget().addKeyListener(SelectionCursorListener);				
+				//projectionViewer.getTextWidget().addKeyListener(SelectionCursorListener);				
 				SelectionCursorListener.setWordSelectionChars(wordChars);
 				setMarkOccurrenceEnabled(getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES));
 			}
