@@ -179,7 +179,8 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 			try {
 				templatePattern = template.getPattern();
 				context.getContextType().validate(templatePattern);
-				if(templatePattern.matches(".*\\$\\{[line_|_word]+selection\\}.*") && selectionText.length() > 0){
+				if((templatePattern.indexOf("${word_selection}") > 0 || templatePattern.indexOf("${line_selection}") > 0 ) 
+					&& selectionText.length() > 0){
 					hasSelectionVariable = true;
 				}
 			} catch (TemplateException e) {
