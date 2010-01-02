@@ -76,18 +76,40 @@ public final class PartitionTypes {
     	CFPartitionScanner.TABLE_TAG_ATTRIBS,
     	CFPartitionScanner.TABLE_START_TAG_END
     };
+
+    // excludes comments
+    public static final String[] ASSIST_PARTITION_TYPES  = new String[] {
+        IDocument.DEFAULT_CONTENT_TYPE,
+    	CFPartitionScanner.DOCTYPE,
+    	CFPartitionScanner.CF_START_TAG,
+    	CFPartitionScanner.CF_START_TAG_BEGIN,
+    	CFPartitionScanner.CF_START_TAG_END,
+    	CFPartitionScanner.CF_TAG_ATTRIBS,
+    	CFPartitionScanner.CF_SET_STATEMENT,
+    	CFPartitionScanner.CF_RETURN_STATEMENT,
+    	CFPartitionScanner.CF_BOOLEAN_STATEMENT,
+    	CFPartitionScanner.CF_END_TAG,
+    	CFPartitionScanner.HTM_START_TAG,
+    	CFPartitionScanner.HTM_END_TAG,
+    	CFPartitionScanner.HTM_START_TAG_BEGIN,
+    	CFPartitionScanner.HTM_START_TAG_END,
+    	CFPartitionScanner.HTM_TAG_ATTRIBS,
+    	CFPartitionScanner.CF_SCRIPT,
+    	CFPartitionScanner.CF_EXPRESSION,
+    	CFPartitionScanner.J_SCRIPT,
+    	CFPartitionScanner.CSS,
+    	CFPartitionScanner.SQL,
+    	CFPartitionScanner.UNK_TAG,
+    	CFPartitionScanner.TAGLIB_TAG,
+    	CFPartitionScanner.FORM_END_TAG,
+    	CFPartitionScanner.FORM_START_TAG,
+    	CFPartitionScanner.FORM_START_TAG_BEGIN,
+    	CFPartitionScanner.FORM_TAG_ATTRIBS,
+    	CFPartitionScanner.FORM_START_TAG_END,
+    	CFPartitionScanner.TABLE_END_TAG,
+    	CFPartitionScanner.TABLE_START_TAG,
+    	CFPartitionScanner.TABLE_START_TAG_BEGIN,
+    	CFPartitionScanner.TABLE_TAG_ATTRIBS,
+    	CFPartitionScanner.TABLE_START_TAG_END
+    };
 }
-
-
-/* 
- * CVS LOG
- * ====================================================================
- *
- * $Log: PartitionTypes.java,v $
- * Revision 1.2  2005/03/29 19:19:49  smilligan
- * Fixed a few boogs with the partitioner and added a rule and syntax highlighting for taglib tags.
- *
- * Revision 1.1  2005/03/01 23:32:47  smilligan
- * Fixed a bunch of issues relating to the new partitioner and a few other bits and pieces.
- *
- */
