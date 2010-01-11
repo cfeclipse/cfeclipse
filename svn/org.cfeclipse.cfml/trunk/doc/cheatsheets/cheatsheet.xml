@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Use Task-Focused UI">
+   <intro>
+      <description>
+         This cheat sheet shows you how to handle a task lifecycle and how to use task-focused ui.<br/>
+      </description>
+   </intro>
+   <item title="Open the Plug-in perspective" dialog="true" skip="false">
+      <description>
+         If you&apos;re not already in Plug-in Development perspective in the main menu select <b>Window</b> &gt; <b>Open Perspective</b> &gt; 	<b>Other...</b> &gt; <b>Plug-in Development</b>	or click on the &quot;Click to Perform&quot; link below.
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.eclipse.pde.ui.PDEPerspective)"/>
+   </item>
+   <item title="Open the Task List view" dialog="true" skip="false">
+      <description>
+         If the Task List view is not opened, select in the main menu  <b>Window</b> &gt; <b>Show View</b> &gt; <b>Other...</b> &gt; <b>cfeclipse</b> &gt; <b>Task List</b> or click on the &quot;Click to Perform&quot; link below.
+      </description>
+      <command serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.cfeclipse.tasks.ui.views.TaskListView)" confirm="true">
+      </command>
+   </item>
+   <item title="Create a sample project" dialog="true" skip="false">
+      <description>
+         Before we start this cheat sheet, we need a project to practice.
+<br/><br/>
+In the main toolbar, click on the <b>New</b> button. Select the <b>Plug-in Project</b>  from the list then click on the <b>Next</b> button. Enter <b>SampleProject</b> for the project&apos;s name then click on the <b>Next</b> button twice.
+Select from the Templates part <b>Hello, World</b> then click on the <b>Finish</b> button.
+      </description>
+   </item>
+   <item title="Create and activate a task" dialog="true" skip="false">
+      <description>
+         In the Task List view, click on the right mouse button, then select <b>New &gt; Category</b>. Enter <b>Tutorials</b> for the category&apos;s name.
+<br/><br/>
+Then right click on the <b>Tutorials</b> category and select <b>New &gt; Task</b>. Enter <b>Learn task-focus</b>  for the task&apos;s title and change the priority to <b>High</b>. You can add some notes,  too.
+<br/><br/>
+Right click on the new task and select <b>Activate</b> to activate the task.
+<br/><br/>
+<b>Important:</b> If it&apos;s not activated, click on the <b>&quot;Focus on the Active Task&quot;</b> toogle button in the <b>Package Explorer</b> and in the <b>Outline</b> view too.
+      </description>
+   </item>
+   <item title="Open SampleAction file" dialog="true" skip="false">
+      <description>
+         Press down the <b>Ctrl+Shift+T</b> buttons or click on the &quot;Click to Perform&quot; link below. <br/> 
+In the <b>Open Type</b> dialog  enter <b>SampleAction</b> for the type&apos;s name then press the <b>Enter</b> button.<br/> 
+After the file is opened you can see the SampleAction class both  in the <b>Package Explorer</b> and in the <b>Outline</b> view.
+      </description>
+      <command serialization="org.eclipse.jdt.ui.navigate.open.type" confirm="true">
+      </command>
+   </item>
+   <item title="Add method to focus" dialog="true" skip="false">
+      <description>
+         Select in the Editor the <b>void run(IAction action)</b> method then you can see the <b>run(IAction)</b> method in the <b>Outline</b> view and in the <b>Package Explorer</b> under the SampleAction class.
+<br/><br/>
+Next press the Alt button and click on the SampleAction class in the <b>Outline</b> view.<br/> 
+Now you can see all methods. Methods which aren&apos;t in the focus are in <b>grey</b> color. Select <b>window</b> field from the list. After that all methods will disappear which aren&apos;t in the focus.
+      </description>
+   </item>
+   <item title="Landmark" dialog="true" skip="false">
+      <description>
+         If an element&apos;s interest ranks high enough, it becomes a landmark, which is an implicitly created bookmark. Landmarks are showed in bold font.
+<br/><br/>
+Select the <b>run(IAction)</b> method in the <b>Outline</b> view or in the <b>Package Explorer</b>. Right click on the method and select <b>Mark as Landmark</b>. After then  this method becomes a landmark.
+<br/><br/>
+Also you can use key bindings. <b>Ctrl+Shift+Alt+UpArrow</b> to mark the element as landmark or <b>Ctrl+Shift+Alt+DownArrow</b> to mark less interesting for the element.
+      </description>
+   </item>
+   <item title="Remove method from focus" dialog="true" skip="true">
+      <description>
+         Right click on the <b>window</b> field and select <b>Remove from Focus</b>. The window field will disappear on the list.
+      </description>
+   </item>
+   <item title="Open Activator.java" dialog="true" skip="false">
+      <description>
+         Press down the <b>Alt</b> button and <b>click</b> on the <b>src</b> directory. Then you can see 3 packages. <br/>
+<b>Alt+click</b> on the  <b>sampleproject</b> package and you can open the Activator.java file with a simple double-click on the file name.
+<br/><br/>
+You can use <b>Alt+RightArrow</b> instead of <b>Alt+click</b>.
+      </description>
+   </item>
+   <item title="Quick Context View" dialog="true" skip="false">
+      <description>
+         Press down <b>Ctrl+Shift+Alt+RightArrow</b> buttons, then you can see all elements which are in the focus.
+      </description>
+   </item>
+   <item title="Complete task" dialog="true" skip="false">
+      <description>
+         In the Task List view, click on the right mouse button on the <b>Learn task-focus</b> task and select deactivate.
+<br/>
+Click again on the task with the right mouse button and select <b>Mark &gt; Complete</b>. <br/>
+After then the task&apos;s name will be struck through.
+      </description>
+   </item>
+</cheatsheet>

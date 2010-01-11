@@ -1,0 +1,15 @@
+a#cfeclipse-query img {
+	background-image: url(../images/tu_query48.gif);
+}
+
+a#cfeclipse-query:hover img {
+	background-image: url(../images/tu_query48_hov.gif);
+}
+
+a#cfeclipse-task img {
+	background-image: url(../images/tu_task48.gif);
+}
+
+a#cfeclipse-task:hover img {
+	background-image: url(../images/tu_task48_hov.gif);
+}
