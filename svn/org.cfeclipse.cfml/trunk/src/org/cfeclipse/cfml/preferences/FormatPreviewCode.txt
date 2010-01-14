@@ -1,0 +1,1 @@
+<cfcomponent name="fun" hint="have it"><cffunction name="whynot"><cfargument name="question" hint="good question"><cfset blah="foo"></cffunction><cfscript>blah = "wee";</cfscript><script language="javascript">wee=2;</script></cfcomponent>

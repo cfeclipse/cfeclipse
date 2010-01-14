@@ -160,7 +160,8 @@ public class CFParser {
 	 *  This handles everything, apparently, but ouch!
 	 *  (\w+)\s*=\s*(((\x22|\x27|#)((?!\4).|\4{2})*\4)((\s*&\s*\w+)*(\s*\&\s*((\x22|\x27|#)((?!\10).|\10{2})*\10))*(\s*&\s*\w+)*)*)
 	 */ 
-	static protected final String REG_ATTRIBUTES = "(\\w+)\\s*=\\s*(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4)((\\s*&\\s*\\w+)*(\\s*\\&\\s*((\\x22|\\x27|#)((?!\\10).|\\10{2})*\\10))*(\\s*&\\s*\\w+)*)*)";
+	//static protected final String REG_ATTRIBUTES = "(\\w+)\\s*=\\s*(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4)((\\s*&\\s*\\w+)*(\\s*\\&\\s*((\\x22|\\x27|#)((?!\\10).|\\10{2})*\\10))*(\\s*&\\s*\\w+)*)*)";
+	static protected final String REG_ATTRIBUTES = "(\\w+)?[\\s=]?((((\\w+ & )?\\x22|\\x27)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
 	
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
@@ -400,18 +401,19 @@ public class CFParser {
 		    	
 			    attributeName = matcher.group(1).trim();
 			    // denny added because param ends with "=" due to his regex
-			    attributeName = attributeName.substring(0,attributeName.length());
+			    //attributeName = attributeName.substring(0,attributeName.length());
 			    attributeValue = matcher.group(2).trim();
 			    attributeValue = attributeValue.substring(1,attributeValue.length()-1);
 			    newAttr = new AttributeItem(lineNum, offset + matcher.start(1), offset + matcher.end(1),
 			    								attributeName, attributeValue);
 			    attributes.add(newAttr);
+			    //System.out.println(attributeName + " = " +attributeValue);
 		    }
 		    else {
-		        ////System.out..println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
-		        //for (int i = 0; i<=matcher.groupCount(); i++) {
-		        //	//System.out..println("Match " + i + " : " + matcher.group(i));
-		        //}
+//		        System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
+//		        for (int i = 0; i<=matcher.groupCount(); i++) {
+//		        	System.out.println("Match " + i + " : " + matcher.group(i));
+//		        }
 		    }
 		}
 		

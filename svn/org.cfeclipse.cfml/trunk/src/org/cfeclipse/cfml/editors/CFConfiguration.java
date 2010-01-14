@@ -28,6 +28,10 @@ package org.cfeclipse.cfml.editors;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.contentassist.CFEPrimaryAssist;
+import org.cfeclipse.cfml.editors.formatters.CFMLFormattingStrategy;
+import org.cfeclipse.cfml.editors.formatters.FormattingPreferences;
+import org.cfeclipse.cfml.editors.formatters.SQLWordStrategy;
+import org.cfeclipse.cfml.editors.indentstrategies.CFEIndentStrategy;
 import org.cfeclipse.cfml.editors.indentstrategies.CFScriptIndentStrategy;
 import org.cfeclipse.cfml.editors.indentstrategies.TagIndentStrategy;
 import org.cfeclipse.cfml.editors.partitioner.PartitionTypes;
@@ -35,11 +39,12 @@ import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFTagScanner;
 import org.cfeclipse.cfml.editors.partitioner.scanners.HTMTagScanner;
 import org.cfeclipse.cfml.editors.partitioner.scanners.TextScanner;
-import org.cfeclipse.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 import org.cfeclipse.cfml.editors.partitioner.scanners.cfscript.CFScriptScanner;
 import org.cfeclipse.cfml.editors.partitioner.scanners.css.CSSScanner;
 import org.cfeclipse.cfml.editors.partitioner.scanners.jscript.JavaScriptScanner;
 import org.cfeclipse.cfml.editors.partitioner.scanners.sql.SQLScanner;
+import org.cfeclipse.cfml.editors.text.CFMLReconcilingStrategy;
+import org.cfeclipse.cfml.editors.text.NotifyingReconciler;
 import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
@@ -65,12 +70,22 @@ import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistantExtension2;
 import org.eclipse.jface.text.contentassist.IContentAssistantExtension3;
+import org.eclipse.jface.text.formatter.ContentFormatter;
+import org.eclipse.jface.text.formatter.FormattingContext;
+import org.eclipse.jface.text.formatter.FormattingContextProperties;
+import org.eclipse.jface.text.formatter.IContentFormatter;
+import org.eclipse.jface.text.formatter.IFormattingContext;
+import org.eclipse.jface.text.formatter.IFormattingStrategy;
+import org.eclipse.jface.text.formatter.MultiPassContentFormatter;
+import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
+import org.eclipse.jface.text.reconciler.IReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -78,6 +93,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
+import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
@@ -93,7 +109,7 @@ import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
  * </p>
  * @author Rob
  */
-public class CFConfiguration extends SourceViewerConfiguration implements IPropertyChangeListener {
+public class CFConfiguration extends TextSourceViewerConfiguration implements IPropertyChangeListener {
 	
 	private CFDoubleClickStrategy doubleClickStrategy;
 	protected ColorManager colorManager;
@@ -101,8 +117,10 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	private TagIndentStrategy indentTagStrategy;
 	private CFScriptIndentStrategy indentCFScriptStrategy;
 	protected CFMLPreferenceManager preferenceManager;
+	private FormattingPreferences formattingPreferences = new FormattingPreferences();
 	private int tabWidth;
 	//private CFMLEditor editor;
+	private CFMLEditor editor;
 	
 	/**
 	 * Configure the tag indent strategy
@@ -143,7 +161,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	public CFConfiguration(ColorManager colorManager, CFMLEditor editor) 
 	{
 		this.colorManager = colorManager;
-		//this.editor = editor;
+		this.editor = editor;
 		preferenceManager = new CFMLPreferenceManager();
 		//this.undoManager = new CFEUndoManager(preferenceManager.maxUndoSteps());
 		
@@ -163,6 +181,43 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	public int getTabWidth(ISourceViewer sourceViewer) {
 		return tabWidth;
 	}
+
+    /* (non-Javadoc)
+     * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getContentFormatter(org.eclipse.jface.text.source.ISourceViewer)
+     */
+	public IContentFormatter getContentFormatter(ISourceViewer sourceViewer) {
+		
+/*
+		ContentFormatter  formatter = new ContentFormatter();
+		CFMLFormattingStrategy cfmlStrategy = new CFMLFormattingStrategy();
+		formatter.setFormattingStrategy(cfmlStrategy, IDocument.DEFAULT_CONTENT_TYPE);
+		// this just gives us the whole document
+		formatter.enablePartitionAwareFormatting(false);
+*/
+//		this is useless until we have a parser basically.  each partition is sent to formatter.
+//        for (int i=0;i<PartitionTypes.ALL_PARTITION_TYPES.length;i++) {
+//    		formatter.setFormattingStrategy(cfmlStrategy, PartitionTypes.ALL_PARTITION_TYPES[i]);    		
+//        }
+
+		SQLWordStrategy sqlStrategy = new SQLWordStrategy();
+//		formatter.setFormattingStrategy(sqlStrategy, CFPartitionScanner.SQL);
+		
+		MultiPassContentFormatter formatter = new MultiPassContentFormatter(
+				getConfiguredDocumentPartitioning(sourceViewer),
+				IDocument.DEFAULT_CONTENT_TYPE);
+		
+		formatter.setMasterStrategy(new CFMLFormattingStrategy());
+		if(formattingPreferences.formatSQL()) {			
+			formatter.setSlaveStrategy(sqlStrategy, CFPartitionScanner.SQL);
+		}
+//		formatter.setSlaveStrategy(new XmlElementFormattingStrategy(), CFPartitionScanner.CF_SCRIPT);
+		/*
+		 */
+		
+		//formatter.setSlaveStrategy(new XmlCommentFormattingStrategy(), AntEditorPartitionScanner.XML_COMMENT);
+		 
+		return formatter;
+	}	
 	
 	/**
 	 * Returns the prefixes to be used by the line-shift operation. This implementation
@@ -192,6 +247,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) 
 	{	
 		return PartitionTypes.ALL_PARTITION_TYPES;
+//		String[] defaultPart = {IDocumentExtension3.DEFAULT_PARTITIONING,editor.EDITOR_CONTEXT};
+//		return defaultPart;
 	}
 	
 	/**
@@ -457,6 +514,12 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	
 	
 	///////////////////////// SCANNERS /////////////////////////////////////////////
+    public IReconciler getReconciler(ISourceViewer sourceViewer) {
+	    NotifyingReconciler reconciler= new NotifyingReconciler(new CFMLReconcilingStrategy(editor));
+	    reconciler.setDelay(CFMLReconcilingStrategy.DELAY);
+	    reconciler.addReconcilingParticipant(editor);
+	    return reconciler;
+    }
 	
 	/**
 	 * get all the damager and repairers for the source type
@@ -508,6 +571,8 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		dr = new DefaultDamagerRepairer(getCFScriptScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SCRIPT);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_SCRIPT);
+//		reconciler.setDamager(dr, CFPartitionScanner.CFC_SCRIPT);
+//		reconciler.setRepairer(dr, CFPartitionScanner.CFC_SCRIPT);
 		
 		// cfset tag contents.
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SET_STATEMENT);
@@ -656,6 +721,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		
 		assistant.enableAutoActivation(true);
 		assistant.setAutoActivationDelay(delay);
+		//assistant.setDocumentPartitioning(CFDocumentSetupParticipant.CFML_PARTITIONING);
 		
 		assistant.setProposalPopupOrientation(
 			IContentAssistant.PROPOSAL_REMOVE
@@ -682,7 +748,7 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 			colorManager.getColor(new RGB(255,255,255)	)
 		);
 		// automatically insert if only one suggestion
-		assistant.enableAutoInsert(true);
+		assistant.enableAutoInsert(false);
 		
 		
 		return assistant;
@@ -705,7 +771,6 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 		};
 	}
 	
-	
 	/**
      * Sets up the primary CFE Content Assistor. CFE now uses it's own series of
      * content assist code to future proof the content assist process. This should
@@ -715,8 +780,9 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
      */
     private void setupPrimaryCFEContentAssist(ISourceViewer sourceViewer) {
         CFEPrimaryAssist mainCFAssistant = new CFEPrimaryAssist(sourceViewer,assistant);
-        for (int i=0;i<PartitionTypes.ALL_PARTITION_TYPES.length;i++) {
-            assistant.setContentAssistProcessor(mainCFAssistant,PartitionTypes.ALL_PARTITION_TYPES[i]);
+        // we only do the assist partition types here (excludes comment partitions)
+        for (int i=0;i<PartitionTypes.ASSIST_PARTITION_TYPES.length;i++) {
+            assistant.setContentAssistProcessor(mainCFAssistant,PartitionTypes.ASSIST_PARTITION_TYPES[i]);
         }
         /*
 		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_START_TAG_END);
@@ -783,15 +849,17 @@ public class CFConfiguration extends SourceViewerConfiguration implements IPrope
 	 */
 	public IAutoEditStrategy[] getAutoEditStrategies(ISourceViewer sourceViewer, String partitionType) 
 	{
+		if(partitionType == null) {
+			return new CFEIndentStrategy[] { indentTagStrategy };
+		}
 		if(partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0) 
 		{
-			return new IAutoEditStrategy[] { indentCFScriptStrategy };
+			return new CFEIndentStrategy[] { indentCFScriptStrategy };
 		} else if(partitionType.compareTo(CFPartitionScanner.J_SCRIPT) == 0) 
 		{
-			return new IAutoEditStrategy[] { indentCFScriptStrategy };
+			return new CFEIndentStrategy[] { indentCFScriptStrategy };
 		}
-		
-		return new IAutoEditStrategy[] { indentTagStrategy };
+		return new CFEIndentStrategy[] { indentTagStrategy };
 	}
 	
 	// This method gets called when the preference page is saved.

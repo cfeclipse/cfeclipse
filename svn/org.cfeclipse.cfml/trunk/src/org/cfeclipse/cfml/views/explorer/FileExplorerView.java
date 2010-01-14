@@ -20,6 +20,9 @@ import org.cfeclipse.cfml.net.RemoteFileEditorInput;
 import org.cfeclipse.cfml.net.ftp.FTPConnection;
 import org.cfeclipse.cfml.util.AlertUtils;
 import org.cfeclipse.cfml.views.explorer.ftp.FtpConnectionDialog;
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -60,6 +63,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInTarget;
 import org.eclipse.ui.part.ShowInContext;
@@ -149,6 +153,8 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
     ComboViewer comboViewer = null;
     TreeViewer directoryTreeViewer = null;
     TableViewer fileViewer = null;
+
+	private Action refreshAction;
     
     
     public void createPartControl(Composite parent) {
@@ -313,6 +319,7 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 		manager.add(createFile);
 		manager.add(createDirectory);
 		manager.add(deleteItem);
+		manager.add(refreshAction);
 		
 	}
     private void fillContextMenu2(IMenuManager manager) {
@@ -418,30 +425,57 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
     	
     	
 		
-    	createFile = new Action() {
+		createFile = new Action() {
 			public void run() {
-			
+
 				ISelection selection = directoryTreeViewer.getSelection();
 				Object obj = ((IStructuredSelection) selection).getFirstElement();
-				
+
 				FileCreateDialog fcd = new FileCreateDialog(null);
-				
-				if(fcd.open() == IDialogConstants.OK_ID){ 
-					
-					
-					if(obj instanceof FileSystemRoot){
-						FileObject rem = ((FileSystemRoot)obj).getFileObject();
-						
+
+				if (fcd.open() == IDialogConstants.OK_ID) {
+
+					if (obj instanceof FileSystemRoot) {
+						FileSystemRoot root = (FileSystemRoot) obj;
+						FileObject rem = root.getFileObject();
+
+						FileObject object;
+						try {
+							if (rem == null) {
+								createLocalFile(new File(root.getPath() + fcd.filename));
+							} else {
+								object = rem.resolveFile(fcd.filename);
+								if (object.getType().equals(FileType.IMAGINARY)) {
+									object.createFile();
+									fileViewer.refresh();
+									// Now open it
+									RemoteFileEditorInput input = new RemoteFileEditorInput(object);
+									IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+											.getActivePage();
+									page.openEditor(input, CFMLEditor.ID);
+								}
+							}
+						} catch (FileSystemException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (PartInitException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					} else if (obj instanceof RemoteFile) {
+						FileObject rem = ((RemoteFile) obj).getFileItem();
+
 						FileObject object;
 						try {
 							object = rem.resolveFile(fcd.filename);
-							if(object.getType().equals(FileType.IMAGINARY)){
+							if (object.getType().equals(FileType.IMAGINARY)) {
 								object.createFile();
 								fileViewer.refresh();
-								
-								//Now open it
+								// Now open it
 								RemoteFileEditorInput input = new RemoteFileEditorInput(object);
-								IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+								IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+										.getActivePage();
 								page.openEditor(input, CFMLEditor.ID);
 							}
 						} catch (FileSystemException e) {
@@ -451,55 +485,14 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					
-						
-				
-					} 
-					else if(obj instanceof RemoteFile){
-						FileObject rem = ((RemoteFile)obj).getFileItem();
-						
-						FileObject object;
-						try {
-							object = rem.resolveFile(fcd.filename);
-							if(object.getType().equals(FileType.IMAGINARY)){
-								object.createFile();
-								fileViewer.refresh();
-//								Now open it
-								RemoteFileEditorInput input = new RemoteFileEditorInput(object);
-								IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-								page.openEditor(input, CFMLEditor.ID);
-							}
-						} catch (FileSystemException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (PartInitException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+
+					} else if (obj instanceof File) {
+						File lfile = (File) obj;
+						if (lfile.isDirectory()) {
+							String filePath = lfile.getAbsoluteFile() + lfile.separator + fcd.filename;
+							createLocalFile(new File(filePath));
 						}
-					
-						
-					
-					} 
-					else if(obj instanceof File){
-						File lfile = (File)obj;
-						if(lfile.isDirectory()){
-								String filePath = lfile.getAbsoluteFile() + lfile.separator +   fcd.filename;
-								File newFile = new File(filePath);
-								if(!newFile.exists()){
-									try {
-										newFile.createNewFile();
-										fileViewer.refresh();
-										
-									} catch (IOException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-								else {
-									MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error!","File already exits!");
-								}
-							}
-						}
+					}
 				}
 			}
 		};
@@ -522,7 +515,6 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 					if(obj instanceof FileSystemRoot){
 						FileSystemRoot root  = (FileSystemRoot)obj;
 						FileObject fileRoot = root.getFileObject();
-						
 						if(fileRoot !=null){
 							try {
 								FileObject object = fileRoot.resolveFile(fcd.filename);
@@ -535,6 +527,16 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+						} else {
+							File lfile = new File(root.getPath());
+							if(lfile.isDirectory()){
+								String filePath = lfile.getAbsoluteFile() + fcd.filename;								
+								File newFolder = new File(filePath);
+								if(canCreate(newFolder)){										
+									newFolder.mkdir();
+									directoryTreeViewer.refresh(obj);
+								}
+							}							
 						}
 					} 
 					else if(obj instanceof RemoteFile){
@@ -576,8 +578,10 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 							String filePath = lfile.getAbsoluteFile() + lfile.separator +   fcd.filename;
 							
 							File newFolder = new File(filePath);
-							newFolder.mkdir();
-							directoryTreeViewer.refresh(obj);
+							if(canCreate(newFolder)){
+								newFolder.mkdir();
+								directoryTreeViewer.refresh(obj);
+							}
 						
 						}
 					}
@@ -586,11 +590,52 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 		};
 		createDirectory.setText("Create Directory");
 		createDirectory.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FOLDER));
-		
-		
-		
-	}
 
+		refreshAction = new Action() {
+			public void run() {
+				fileViewer.refresh();				
+			}
+		};
+		refreshAction.setText("Refresh");
+		refreshAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJ_FILE));
+    }
+
+    private boolean canCreate(File file) {
+    	if(!file.exists() && !file.getParentFile().canWrite()) {
+			MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error!","You ("+ System.getProperty("user.name")+") don't have permission to create " + file.getPath());
+			return false;
+    	} else if(file.exists()) {
+			MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),"Error!",file.getPath()+" already exits!");									    		
+    	}
+    	return true;
+    }
+
+	private void createLocalFile(File newFile) {
+		if (!newFile.isDirectory()) {
+			if (!newFile.exists()) {
+				if (canCreate(newFile)) {
+					try {
+						newFile.createNewFile();
+						fileViewer.refresh();
+						// Now open it
+						IFileStore fileStore = EFS.getLocalFileSystem().getStore(newFile.toURI());
+						IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();						
+						IDE.openEditorOnFileStore( page, fileStore );
+					} catch (PartInitException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+								"File creation Error!", e.getMessage());
+					}
+				}
+			} else {
+				MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error!",
+						"File already exits!");
+			}
+		}
+	}    
+    
 	public boolean show(ShowInContext context) {
     	String filePath;
     
@@ -659,6 +704,19 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 		            fileProvider.connect();
 		            disconnectItem.setEnabled(true);
 		            connectItem.setEnabled(false);
+	            }
+	            catch (Exception ex) {
+	                ex.printStackTrace();
+	            }
+            }
+        });
+
+        MenuItem refreshItem = new MenuItem(menu,SWT.CASCADE);
+        refreshItem.setText("Refresh");
+        refreshItem.addListener(SWT.Selection, new Listener() {
+	        public void handleEvent(Event e) {
+	            try {
+	            	System.out.println("trying to refresh");
 	            }
 	            catch (Exception ex) {
 	                ex.printStackTrace();

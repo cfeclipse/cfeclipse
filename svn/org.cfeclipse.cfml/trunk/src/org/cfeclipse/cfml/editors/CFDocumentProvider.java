@@ -41,6 +41,7 @@ import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.external.ExternalFile;
 import org.cfeclipse.cfml.external.ExternalMarkerAnnotationModel;
 import org.cfeclipse.cfml.net.RemoteFileEditorInput;
+import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IFile;
@@ -52,14 +53,24 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPathEditorInput;
+import org.eclipse.ui.IPersistableEditor;
+import org.eclipse.ui.XMLMemento;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
+import org.eclipse.ui.editors.text.StorageDocumentProvider;
+import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.ide.FileStoreEditorInput;
+import org.eclipse.ui.internal.IWorkbenchConstants;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.FileEditorInputFactory;
+import org.eclipse.ui.texteditor.AbstractMarkerAnnotationModel;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 
 
 /**
@@ -71,7 +82,12 @@ import org.eclipse.ui.part.FileEditorInput;
 public class CFDocumentProvider extends FileDocumentProvider
 {
 	private ExternalMarkerAnnotationModel model = null;
-    
+	private final CFDocumentSetupParticipant fCFDocumentSetupParticipant;
+   
+	public CFDocumentProvider() {
+        fCFDocumentSetupParticipant = new CFDocumentSetupParticipant();
+	}
+	
 	protected IDocument createDocument(Object element) throws CoreException 
 	{
 		ICFDocument document = null;
@@ -84,6 +100,8 @@ public class CFDocumentProvider extends FileDocumentProvider
 		
 		if(document != null) 
 		{
+			if (document.getDocumentPartitioner(CFDocumentSetupParticipant.CFML_PARTITIONING) == null)
+				fCFDocumentSetupParticipant.setup(document);
 			
 			//REMOVED the following lines as we would never know which project it is in.
 			
@@ -111,18 +129,11 @@ public class CFDocumentProvider extends FileDocumentProvider
 				currentDict,
 				DictionaryManager.CFDIC
 			);
-			/////
-			
-			IDocumentPartitioner partitioner = new CFEPartitioner(
-				new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES
-			);
-
-			partitioner.connect(document);
-			
+			/////						
 			//returns an IFile which is a subclass of IResource
 			try 
 			{
-			    if(element instanceof FileEditorInput) 
+				if(element instanceof FileEditorInput) 
 				{
 					document.setParserResource(((FileEditorInput)element).getFile());
 					document.clearAllMarkers();
@@ -179,20 +190,18 @@ public class CFDocumentProvider extends FileDocumentProvider
 				}
 			    else {
 			    	//org.eclipse.ui.ide.FileStoreEditorInput
-			    	System.out.println(element.getClass().getName());
+			    	System.out.println("I don't know how to handle: " + element.getClass().getName());
 			    }
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace(System.err);
 			}
-
-			document.setDocumentPartitioner(partitioner);
 		}
 		
 		return document;
 	}
-
+		
 	protected boolean setDocumentContent(IDocument document, IEditorInput editorInput, String encoding) throws CoreException 
 	{
 		if(editorInput instanceof CFJavaFileEditorInput) 
@@ -248,11 +257,11 @@ public class CFDocumentProvider extends FileDocumentProvider
 
 	protected void doSaveDocument(IProgressMonitor monitor, Object element,
 			IDocument document, boolean overwrite) throws CoreException 
-	{
+	{		
 		if(document instanceof ICFDocument) 
 		{
 			((ICFDocument) document).clearAllMarkers();
-			((ICFDocument) document).parseDocument();	
+			((ICFDocument) document).parseDocument();
 		}
 		
 		if(element instanceof RemoteFileEditorInput)  
@@ -293,6 +302,7 @@ public class CFDocumentProvider extends FileDocumentProvider
 				throw new CoreException(status);
 			}
 		}
+
 				
 		super.doSaveDocument(monitor, element, document, overwrite);
 	}
@@ -383,5 +393,11 @@ public class CFDocumentProvider extends FileDocumentProvider
 	    }
 	    
 	    return super.isReadOnly(element);
+	}
+
+	public CFDocument getCFDocument(IEditorInput editorInput) {
+		CFDocument cfdoc = new CFDocument();
+		// TODO Auto-generated method stub
+		return cfdoc;
 	}
 }

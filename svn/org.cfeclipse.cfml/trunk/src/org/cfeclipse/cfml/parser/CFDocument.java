@@ -30,9 +30,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
 
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.model.CFModelChangeEvent;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ISynchronizable;
 /** 
  * CFDocument basically is the main element for getting information about the 
  * ColdFusion document. It will contain the entire tree for the document, 
@@ -76,6 +79,16 @@ public class CFDocument {
 	 * This will remain null if the tree parse fails.
 	 */
 	protected DocItem treeRoot = null;
+
+	/**
+	 * reconciler stuff
+	 */
+    private static int fgInstanceCount= 0;
+    private IDocument fDocument;
+	private boolean fShouldReconcile = true;
+    private final Object fDirtyLock= new Object();
+    private boolean fIsDirty= true;
+	private CFDocument fCFDocument;
 
 	/**
 	 * Sets the document root to the root item of a CFDOC parse.
@@ -185,4 +198,39 @@ public class CFDocument {
 	public void setVariableMap(HashMap variableMap) {
 		this.variableMap = variableMap;
 	}
+
+	public void setShouldReconcile(boolean shouldReconcile) {
+        fShouldReconcile= shouldReconcile;
+        if (fShouldReconcile) {
+            reconcile();
+        }       		
+	}
+
+    public void reconcile() {
+        synchronized (fDirtyLock) {
+            if (!fShouldReconcile || !fIsDirty) {
+                return;
+            }
+            fIsDirty= false;
+        }
+
+        synchronized (getLockObject()) {
+            if (fDocument != null) {
+            	CFParser parser = new CFParser();
+                fCFDocument = parser.parseDoc(fDocument.get());
+            } 
+            CFMLPlugin.getDefault().notifyCFModelListeners(new CFModelChangeEvent(this));
+        }
+    }
+
+    private Object getLockObject() {
+        if (fDocument instanceof ISynchronizable) {
+            Object lock= ((ISynchronizable)fDocument).getLockObject();
+            if (lock != null) {
+                return lock;
+            }
+        }
+        return this;
+    }
+
 }

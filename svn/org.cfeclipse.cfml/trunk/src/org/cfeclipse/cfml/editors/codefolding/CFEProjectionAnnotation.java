@@ -164,5 +164,9 @@ public class CFEProjectionAnnotation extends ProjectionAnnotation {
     public String getRegionType() {
         return this.regionType;
     }
-	
+
+public boolean isPersistent() {
+	return true;
+}
+    
 }

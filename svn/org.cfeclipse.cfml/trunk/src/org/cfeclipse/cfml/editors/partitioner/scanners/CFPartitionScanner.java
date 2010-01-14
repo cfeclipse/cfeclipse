@@ -70,6 +70,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String HTM_START_TAG_END		= "__htm_start_tag_end";
 	public final static String HTM_TAG_ATTRIBS		= "__htm_tag_attribs";
 	public final static String CF_SCRIPT		= "__cf_script";
+	//public final static String CFC_SCRIPT		= "__cfc_script";
 	public final static String CF_EXPRESSION		= "__cf_expression";
 	public final static String J_SCRIPT		= "__jscript";
 	public final static String CSS		= "__css";
@@ -96,6 +97,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken htmComment 	= new Token(HTM_COMMENT);
 		IToken taglibtag		= new Token(TAGLIB_TAG);
 		IToken unktag		= new Token(UNK_TAG);
+		IToken cfcScript		= new Token(CF_SCRIPT);
 		
 		
 		List rules = new ArrayList();
@@ -109,6 +111,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new NestableMultiLineRule("<!--", "-->", htmComment));
 		//doctype rule
 		rules.add(new MultiLineRule("<!doctype", ">", doctype));
+		rules.add(new MultiLineRule("component", "/}", cfcScript));
 		
 		// Handle the if/elsief/set/return tag partitioning
 		rules.add(new NamedTagRule("<cfset",">", CF_START_TAG, CF_SET_STATEMENT));

@@ -513,8 +513,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		docCommand.offset++;
 	}
 
-	/**
-	 * The method called by the editor.
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.text.IAutoEditStrategy#customizeDocumentCommand(org.eclipse.jface.text.IDocument, org.eclipse.jface.text.DocumentCommand)
 	 */
 	public void customizeDocumentCommand(IDocument doc,
 			DocumentCommand docCommand) {
@@ -525,7 +525,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			// a
 			// carriage return)
 			if (docCommand.text.length() > 1
-					&& docCommand.text.compareTo("\r\n") != 0) {
+					&& !isLineDelimiter(doc, docCommand.text)) {
+				smartPaste(doc, docCommand);
 				return;
 			}
 
@@ -567,7 +568,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				handleClosingChevron(doc, docCommand, beforeLastChar);
 				return;
 			case '<':
-				if (!this.autoClose_Tags)
+				if (!this.isAutoClose_Tags())
 					return;
 				handleOpenChevron(docCommand);
 				return;
@@ -669,7 +670,8 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
 	/**
 	 * When a client hits enter between tags the previous line is looked at to
 	 * get the indent depth - if the file was made with "tabs as spaces" and the

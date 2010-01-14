@@ -19,15 +19,20 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Region;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.formatters.XmlDocumentFormatter;
+import org.cfeclipse.cfml.editors.indentstrategies.CFEIndentStrategy;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.templates.editors.TemplateEditorUI;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateContextType;
@@ -145,6 +150,25 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.jface.text.templates.TemplateCompletionProcessor#createContext(org.eclipse.jface.text.ITextViewer, org.eclipse.jface.text.IRegion)
+	 */
+	protected TemplateContext createContext(ITextViewer contextViewer, IRegion region) {
+		TemplateContextType contextType= getContextType(contextViewer, region);
+		if (contextType != null) {
+            Point selection= contextViewer.getSelectedRange();
+            Position position;
+            if (selection.y > 0) {
+                position= new Position(selection.x, selection.y);    
+            } else {
+                position= new Position(region.getOffset(), region.getLength());
+            }
+            
+			return new CFTemplateContext(contextType, contextViewer, position);
+		}
+		return null;
+	}	
+	
 	/*
 	 * @seeorg.eclipse.jface.text.contentassist.IContentAssistProcessor#
 	 * computeCompletionProposals(org.eclipse.jface.text.ITextViewer, int)
@@ -162,15 +186,33 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		*/
 		String prefix = extractPrefix(viewer, offset);
 		String selectionText = selection.getText();
-		Region region = new Region(offset - prefix.length(), selectionText.length() + prefix.length());
+		//remove anything typed
+		offset = offset - prefix.length();
+		int length = selectionText.length() + prefix.length();
+		Region region = new Region(offset, length);
 		String templatePattern;
 		Boolean hasSelectionVariable = false;
+		IDocument doc = viewer.getDocument();
 		TemplateContext context = createContext(viewer, region);
-		if (context == null)
+		if (context == null || doc.getLength() < 1)
 			return new ICompletionProposal[0];
 
-		context.setVariable("selection", selectionText); // name of the selection variables {line, word}_selection //$NON-NLS-1$
 		Template[] templates = getTemplates(context.getContextType().getId());
+		// TODO: move these variables to the CFTemplateContext class
+		context.setVariable("selection", selectionText); // name of the selection variables {line, word}_selection //$NON-NLS-1$
+		if(((ICFDocument)doc).getCFDocument() != null) {			
+			context.setVariable("filename", ((ICFDocument)doc).getCFDocument().getFilename());
+		}
+		boolean inChevron = false;
+		try {
+			if(doc.getChar(offset-1) == '<' || doc.getChar(offset+1) == '>') {
+				System.out.println(doc.getChar(offset+length));
+				System.out.println(doc.getChar(offset - 1));
+				inChevron = true;
+			}
+		} catch (BadLocationException e1) {
+			e1.printStackTrace();
+		}
 
 		List matches = new ArrayList();
 		for (int i = 0; i < templates.length; i++) {
@@ -187,7 +229,12 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 				continue;
 			}
 			relavance = getRelevance(template, prefix);
-			if (template.matches(prefix, context.getContextType().getId()) && relavance > 0  && selectionText.length() == 0 || hasSelectionVariable) {				
+			if (template.matches(prefix, context.getContextType().getId()) && relavance > 0  && selectionText.length() == 0 || hasSelectionVariable && template.matches("", context.getContextType().getId())) {
+				if(inChevron && templatePattern.startsWith("<") && templatePattern.endsWith(">")){
+					region = getRegionNoChevrons(doc, offset, length);
+					context = createContext(viewer, region);
+					context.setVariable("selection", selectionText);
+				}
 				matches.add(createProposal(template, context, (IRegion) region, relavance));
 			}
 		}
@@ -195,6 +242,31 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		Collections.sort(matches, fgProposalComparator);
 
 		return (ICompletionProposal[]) matches.toArray(new ICompletionProposal[matches.size()]);
+	}
+	
+	private Region getRegionNoChevrons(IDocument doc, int offset, int length) {
+		int retOffset = offset;
+		if(doc.getLength() == 0 || offset == 0) {			
+			return new Region(retOffset, length);
+		}
+		try {
+			if(doc.getChar(offset-1) == '<') {
+				retOffset--;
+			}
+			if(doc.getLength() > offset+length) {				
+				if(doc.getChar(offset+length) == '>') {
+					length++;
+					length++;				
+					//length++;				
+					//length++;				
+				}
+			}
+		} catch (BadLocationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Region region = new Region(retOffset, length);
+		return region;
 	}
 
 	/**

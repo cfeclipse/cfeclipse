@@ -891,6 +891,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 41:
         jj_consume_token(41);
+        System.out.println(jj_ntk);
           ASTAddNode jjtn001 = new ASTAddNode(JJTADDNODE);
           boolean jjtc001 = true;
           jjtree.openNodeScope(jjtn001);
@@ -956,6 +957,8 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
     label_11:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case 41:
+      case 42:
       case 43:
       case 44:
       case 45:
@@ -966,6 +969,14 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
         break label_11;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case 41:
+          jj_consume_token(41);
+          jj_la1[20] = jj_gen;
+          break;
+      case 42:
+          jj_consume_token(42);
+          jj_la1[21] = jj_gen;
+          break;
       case 43:
         jj_consume_token(43);
            ASTMulNode jjtn001 = new ASTMulNode(JJTMULNODE);
@@ -1676,6 +1687,7 @@ public class SPLParser/*@bgen(jjtree)*/implements SPLParserTreeConstants, SPLPar
         case 49:
         case 50:
         case 53:
+        case 54:
         case 55:
         case IDENTIFIER:
         case SEMICOLON:

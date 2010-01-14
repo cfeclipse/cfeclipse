@@ -35,12 +35,14 @@ import org.cfeclipse.cfml.editors.actions.LastActionManager;
 import org.cfeclipse.cfml.editors.contentassist.CFContentAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFEContentAssistManager;
 import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionAssist;
+import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionAssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.CFMLScopeAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLTagAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLVariableAssist;
 import org.cfeclipse.cfml.editors.contentassist.HTMLTagAssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
+import org.cfeclipse.cfml.model.CFModelChangeEvent;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.templates.template.CFScriptTemplateContextType;
@@ -100,8 +102,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	public CFEContentAssistManager getGlobalCAM() {
 
 		if (this.camInstance == null) {
-			throw new IllegalArgumentException(
-					"CFMLPlugin::getGlobalCAM() camInstance is null");
+			throw new IllegalArgumentException("CFMLPlugin::getGlobalCAM() camInstance is null");
 		}
 		return this.camInstance;
 	}
@@ -115,8 +116,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public LastActionManager getLastActionManager() {
 		if (this.camInstance == null) {
-			throw new IllegalArgumentException(
-					"CFMLPlugin::getGlobalCAM() camInstance is null");
+			throw new IllegalArgumentException("CFMLPlugin::getGlobalCAM() camInstance is null");
 		}
 		return this.lastEncMgrInstance;
 	}
@@ -148,15 +148,11 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		 * "/properties.ini" );
 		 */
 
-		PropertyConfigurator.configure(CFMLPlugin.getDefault().getBundle()
-				.getEntry("/lib/log4j.properties"));
-		this.propertyStore = new PreferenceStore(CFMLPlugin.getDefault()
-				.getStateLocation().toString()
+		PropertyConfigurator.configure(CFMLPlugin.getDefault().getBundle().getEntry("/lib/log4j.properties"));
+		this.propertyStore = new PreferenceStore(CFMLPlugin.getDefault().getStateLocation().toString()
 				+ "/properties.ini");
 
-		String defaultSnippetPath = CFMLPlugin.getDefault().getStateLocation()
-				.toString()
-				+ "/snippets";
+		String defaultSnippetPath = CFMLPlugin.getDefault().getStateLocation().toString() + "/snippets";
 
 		File f = new File(defaultSnippetPath);
 		if (!f.exists()) {
@@ -177,9 +173,10 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			e.printStackTrace(System.err);
 		}
 
-		EditorPartListener editorListener = new EditorPartListener();
-		//doesn't seem to be needed and is causing errors.  Leaving in case 3.4 needs it-- if so, rethink
-		//this.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(editorListener);
+		// EditorPartListener editorListener = new EditorPartListener();
+		// doesn't seem to be needed and is causing errors. Leaving in case 3.4
+		// needs it-- if so, rethink
+		// this.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(editorListener);
 
 	}
 
@@ -197,10 +194,9 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public CFEContentAssistManager newCAM() {
 		CFEContentAssistManager camInstance = new CFEContentAssistManager();
-		CFMLTagAssist cfmlAssistor = new CFMLTagAssist(DictionaryManager
-				.getDictionary(DictionaryManager.CFDIC));
-		HTMLTagAssistContributor htmlAssistor = new HTMLTagAssistContributor(
-				DictionaryManager.getDictionary(DictionaryManager.HTDIC));
+		CFMLTagAssist cfmlAssistor = new CFMLTagAssist(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
+		HTMLTagAssistContributor htmlAssistor = new HTMLTagAssistContributor(DictionaryManager
+				.getDictionary(DictionaryManager.HTDIC));
 
 		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
 
@@ -208,6 +204,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		camInstance.registerRootAssist(new CFContentAssist());
 		camInstance.registerRootAssist(new CFMLScopeAssist());
 		camInstance.registerRootAssist(new CFMLFunctionAssist());
+		camInstance.registerRootAssist(new CFMLFunctionAssistContributor());
 
 		// camInstance.registerRootAssist(new CFMLComponentAssist());
 		// //finds the components in a project, removed as we might use a new
@@ -249,7 +246,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		// super.initializeDefaultPluginPreferences();
 		CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 		preferenceManager.initializeDefaultValues();
-		
+
 		try {
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
 		} catch (Exception e) {
@@ -298,8 +295,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 
 	public TemplateStore getTemplateStore() {
 		if (fStore == null) {
-			fStore = new ContributionTemplateStore(null, CFMLPlugin
-					.getDefault().getPreferenceStore(), CUSTOM_TEMPLATES_KEY);
+			fStore = new ContributionTemplateStore(null, CFMLPlugin.getDefault().getPreferenceStore(),
+					CUSTOM_TEMPLATES_KEY);
 			try {
 				fStore.load();
 			} catch (IOException e) {
@@ -317,6 +314,11 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			fRegistry.addContextType(CFScriptTemplateContextType.CFSCRIPT_CONTEXT_TYPE);
 		}
 		return fRegistry;
+	}
+
+	public void notifyCFModelListeners(CFModelChangeEvent cfModelChangeEvent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

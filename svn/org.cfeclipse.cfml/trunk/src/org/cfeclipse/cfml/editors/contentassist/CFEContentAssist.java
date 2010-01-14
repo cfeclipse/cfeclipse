@@ -42,12 +42,14 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.jface.util.Assert;
+import org.eclipse.jface.viewers.ISelection;
 
 
 /**
@@ -183,11 +185,7 @@ public abstract class CFEContentAssist extends AssistContributor implements IAss
 					display = ((Parameter)obj[i]).toString();
 					help = ((Parameter)obj[i]).getHelp();
 				} else if(obj[i] instanceof Value) {
-					/* spike@spike.org.uk :: Added code
-                     * Append qoute to end of value so the cursor jumps past the 
-                     * closing quote when the user selects the insight value. 
-                     */
-					name = ((Value)obj[i]).getValue() + "\"";
+					name = ((Value)obj[i]).getValue();
 					display = ((Value)obj[i]).toString();
 					help = "";
 				} else if(obj[i] instanceof ScopeVar) {
@@ -296,11 +294,15 @@ public abstract class CFEContentAssist extends AssistContributor implements IAss
 				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
 				break;
 		}
-
+		int replaceLength = 0;
+		ISelection selection = CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getSelectionService().getSelection();
+		if(selection instanceof TextSelection) {
+			replaceLength = ((TextSelection)selection).getLength();
+		}
 		CompletionProposal prop = new CompletionProposal(
 				replacementString,
 				offset, 
-				0, 
+				replaceLength, 
 				insertlen,
 				img,
 				display,

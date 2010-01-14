@@ -735,7 +735,7 @@ public class CFContentAssist extends CFEContentAssist{
 	 * @see org.eclipse.jface.text.contentassist.IContentAssistProcessor#getCompletionProposalAutoActivationCharacters()
 	 */
 	public char[] getCompletionProposalAutoActivationCharacters() {
-		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r', '>', '\"' };
+		return new char[] { '<', 'f', ' ', 'F', '~', '\"' };
 	}
 
 	/* (non-Javadoc)

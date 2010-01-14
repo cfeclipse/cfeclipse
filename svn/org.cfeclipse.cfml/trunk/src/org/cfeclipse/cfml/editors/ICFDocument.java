@@ -107,6 +107,13 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 		this.docCAM = null;
 	}
 	
+	public ICFDocument(String content) {
+		super();
+		this.docCAM = null;
+		this.set(content);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Gets the parser for this document.
 	 * 
@@ -180,7 +187,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	public CfmlTagItem getTagAt(int startpos, int endpos, boolean includeClosingTags)
 	{
 		//build the xpath
-		String attrString = "[#startpos<" + startpos + " and #endpos>" + endpos + "]";
+		String attrString = "[#startpos<=" + startpos + " and #endpos>=" + endpos + "]";
 		//System.out.println(this.getClass() + " Finding the tag in the document" + attrString);
 		CFDocument docRoot = getCFDocument();
 

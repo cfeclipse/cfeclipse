@@ -30,6 +30,7 @@ import java.util.Iterator;
 
 import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.parser.ParseError;
+import org.cfeclipse.cfml.parser.ParseWarning;
 
 
 /**
@@ -46,6 +47,12 @@ public class TagItem extends DocItem {
 	 * Name is always lower case.
 	 */
 	protected HashMap itemAttributes;
+
+	/**
+	 * for tags not found in dictionary (mostly CFML tags, I reckon)
+	 */
+	public boolean isUnknownTag = false;
+	
 	/** Optional. 
 	   *  
 	   *  The matching item for this DocItem. For example CFML tags quite often have a matching closing tag, as do HTML tags. One example:
@@ -187,7 +194,8 @@ public class TagItem extends DocItem {
 				//System.err.println("TagItem::hasClosingTag() - The tag I've retrieved is null! Tag name is \'" + itemName + "\' Line number: " + this.lineNumber);
 				//
 				// Should really raise an exception?
-				parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData, 
+		    	this.isUnknownTag = true;
+				parseMessages.addMessage(new ParseWarning(lineNumber, startPosition, endPosition, itemData, 
 											"Unknown cf tag \'<" + itemName + ">\'."));
 		    }
 			return true;	// Let's say it's a single tag.

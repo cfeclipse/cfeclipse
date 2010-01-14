@@ -108,9 +108,44 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for the "smart caret positioning" */
 	public static final String P_NAVIGATION_SMART_HOME_END = AbstractTextEditor.PREFERENCE_NAVIGATION_SMART_HOME_END;
 	
+	/**
+	 * A named preference that specifies if the Ant formatter aligns the final
+	 * &quote&gt&quote in multi-line element tags
+	 * <p>
+	 * Value is of type <code>Boolean</code>. If <code>true</code> the final
+	 * &quote&gt&quote in multi-line element tags are aligned by the formatter.
+	 * </p>
+	 */
+	public static final String FORMATTER_ALIGN= "formatter_align"; //$NON-NLS-1$
 	
+	/**
+	 * A named preference that specifies the maximum line length for the Ant formatter.
+	 * <p>
+	 * Value is of type <code>int</code>.
+	 * </p>
+	 */
+	public static final String FORMATTER_MAX_LINE_LENGTH= "formatter_max_line_length"; //$NON-NLS-1$
+			
+	/**
+	 * A named preference that specifies if the Ant formatter should wrap elements that are longer than
+	 * the maximum line length.
+	 * <p>
+	 * Value is of type <code>Boolean</code>. If <code>true</code> long elements are wrapped
+	 * when formatting in the editor.
+	 * </p>
+	 */
+	public static final String FORMATTER_WRAP_LONG= "formatter_wrap_long"; //$NON-NLS-1$
 	
-	
+	/**
+	 * Boolean preference identifier constant which specifies whether the Ant editor should
+	 * format templates on insert.
+	 */
+	public static final String TEMPLATES_USE_CODEFORMATTER= "templates_use_codeformatter"; //$NON-NLS-1$
+
+	public static final String FORMATTER_CLOSE_TAGS = "formatter_close_tags";
+
+	public static final String FORMATTER_FORMAT_SQL = "formatter_format_sql";
+		
 	/**
 	 * Sets the default values for the preferences managed by {@link EditorPreferencePage}:
 	 * <ul>
@@ -150,7 +185,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_RTRIM_ON_SAVE,false);
 		store.setDefault(P_LINE_NUMBER_COLOR,"0,0,0");
 		store.setDefault(P_CURRENT_LINE_COLOR,"232,242,254");
-		store.setDefault(P_SHOW_PRINT_MARGIN,false);
+		store.setDefault(P_SHOW_PRINT_MARGIN,true);
 		store.setDefault(P_PRINT_MARGIN_SIZE,80);
 		store.setDefault(P_PRINT_MARGIN_COLOR,"176,180,185");
 		store.setDefault(P_SELECTION_FOREGROUND_COLOR,"255,255,255");
@@ -166,6 +201,15 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_BRACKET_MATCHING_STYLE,BRACKET_MATCHING_BOLD);
 		store.setDefault(P_SHOW_EDITOR_TOOLBAR, false);
 		store.setDefault(P_NAVIGATION_SMART_HOME_END, false);
+
+		store.setDefault(FORMATTER_ALIGN, false);
+		store.setDefault(FORMATTER_MAX_LINE_LENGTH, 80);
+		store.setDefault(FORMATTER_WRAP_LONG, false);
+		store.setDefault(FORMATTER_CLOSE_TAGS, true);
+		
+		store.setDefault(TEMPLATES_USE_CODEFORMATTER, true);
+		store.setDefault(FORMATTER_FORMAT_SQL, false);
+
 	}
 	
 	

@@ -30,8 +30,11 @@ package org.cfeclipse.cfml.editors;
 //import java.util.Iterator;
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.cfeclipse.cfml.CFMLPlugin;
@@ -44,18 +47,22 @@ import org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction;
 import org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction;
 import org.cfeclipse.cfml.editors.actions.LocateInTreeAction;
 import org.cfeclipse.cfml.editors.actions.RTrimAction;
+import org.cfeclipse.cfml.editors.actions.RenameInFileAction;
 import org.cfeclipse.cfml.editors.actions.TextEditorWordNavigationAction;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.cfeclipse.cfml.editors.decoration.DecorationSupport;
 import org.cfeclipse.cfml.editors.dnd.CFEDragDropListener;
 import org.cfeclipse.cfml.editors.dnd.SelectionCursorListener;
+import org.cfeclipse.cfml.editors.indentstrategies.CFEIndentStrategy;
 import org.cfeclipse.cfml.editors.pairs.CFMLPairMatcher;
 import org.cfeclipse.cfml.editors.pairs.Pair;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 import org.cfeclipse.cfml.editors.partitioner.PartitionTypes;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import org.cfeclipse.cfml.editors.text.IReconcilingParticipant;
 import org.cfeclipse.cfml.editors.ui.CFMLEditorToolbar;
+import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
@@ -74,21 +81,32 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultInformationControl;
+import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
+import org.eclipse.jface.text.ISynchronizable;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.ITypedRegion;
+import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.text.source.IAnnotationModelExtension;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
+import org.eclipse.jface.text.source.SourceViewerConfiguration;
+import org.eclipse.jface.text.source.projection.IProjectionListener;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -108,11 +126,14 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.IPersistableEditor;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.dnd.IDragAndDropService;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.internal.EditorManager;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.PluginTransfer;
@@ -123,6 +144,7 @@ import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.IDocumentProviderExtension;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
@@ -138,7 +160,7 @@ import org.eclipse.ui.texteditor.rulers.RulerColumnRegistry;
  * the image manager and syntax dictionaries.
  */
 public class CFMLEditor extends TextEditor implements
-		IPropertyChangeListener, IShowInSource {
+IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSource, IPersistableEditor {
 	/*
 	 * 
 	 *Need to add mouse listeners
@@ -163,8 +185,103 @@ public class CFMLEditor extends TextEditor implements
         }
 	 * 
 	 */
+
+	private boolean fInitialReconcile;
+	private CFDocument fCFDocument;
+
+
+
+	/**
+	 * Returns the cf model for the current editor input of this editor.
+	 * @return the cf model for this editor or <code>null</code>
+	 */
+	public CFDocument getCFModel() {
+		if (fCFDocument == null) {
+            IDocumentProvider provider= getDocumentProvider();
+            if (provider instanceof CFDocumentProvider) {
+                CFDocumentProvider documentProvider= (CFDocumentProvider) provider;
+                fCFDocument= documentProvider.getCFDocument(getEditorInput());
+            }
+        }
+		return fCFDocument;
+	}	
 	
- 
+	/* (non-Javadoc)
+	 * @see org.cfeclipse.cfml.editors.text.IReconcilingParticipant#reconciled()
+	 */
+	public void reconciled() {
+		if (fInitialReconcile) {
+			updateForInitialReconcile();
+		}
+		
+		SourceViewerConfiguration config= getSourceViewerConfiguration();
+		if (config == null || getViewer() == null) {
+			return; //editor has been disposed.
+		}
+		IAutoEditStrategy[] strategies= config.getAutoEditStrategies(getViewer(), null);
+		for (int i = 0; i < strategies.length; i++) {
+			IAutoEditStrategy strategy = strategies[i];
+			if (strategy instanceof CFEIndentStrategy) {
+				((CFEIndentStrategy)strategy).reconciled();
+			}
+		}
+		
+		Shell shell= getSite().getShell();
+		if (shell != null && !shell.isDisposed()) {
+			shell.getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					if (getSite().getShell() == null || getSite().getShell().isDisposed()) {
+						//((ICFDocument) getDocumentProvider().getDocument(getEditorInput())).parseDocument();
+						return;
+					}
+				}
+			});
+		}
+	}
+
+	private void updateForInitialReconcile() {
+		IDocumentProvider provider=  getDocumentProvider();
+		if (provider == null) {//disposed
+			return;
+		}
+		if (getCFModel() == null) {
+			return;
+		}
+        IDocument doc= provider.getDocument(getEditorInput());
+        if (doc == null) {
+            return; //disposed
+        }
+        Object lock= getLockObject(doc);
+		//ensure to synchronize so that the AntModel is not nulled out underneath in the AntEditorDocumentProvider
+		//when the editor/doc provider are disposed
+        if (lock == null) {
+            updateModelForInitialReconcile();
+        } else {
+            synchronized (lock) {
+                updateModelForInitialReconcile();
+            }
+        }
+	}
+    
+    private void updateModelForInitialReconcile() {
+        CFDocument model= getCFModel();
+        if (model == null) {
+            return;
+        }
+
+        fInitialReconcile= false;
+        //model.updateForInitialReconcile();
+    }
+    
+    public Object getLockObject(IDocument doc) {
+        Object lock= null;
+        if (doc instanceof ISynchronizable) {
+            lock= ((ISynchronizable) doc).getLockObject();
+        } else {
+            lock= getCFModel();
+        }
+        return lock;
+    }
 
 	public ShowInContext getShowInContext() {
 		// TODO Auto-generated method stub
@@ -284,18 +401,6 @@ public class CFMLEditor extends TextEditor implements
 		IResourceChangeListener listener = new MyResourceChangeReporter();
 		CFMLPlugin.getWorkspace().addResourceChangeListener(listener);
 				
-		
-		IPreferenceStore generalTextStore= EditorsUI.getPreferenceStore();
-		IPreferenceStore cfmlStore = CFMLPlugin.getDefault().getPreferenceStore();
-				
-		IPreferenceStore combinedPreferenceStore= new ChainedPreferenceStore(new 
-		IPreferenceStore[] { cfmlStore,generalTextStore  });		
-		setPreferenceStore(combinedPreferenceStore);
-		
-		// This ensures that we are notified when the preferences are saved
-		CFMLPlugin.getDefault().getPreferenceStore()
-				.addPropertyChangeListener(this);
-		isMarkOccurrenceEnabled = getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES);
 	}
 
 	public StyledText getTextWidget() {
@@ -311,11 +416,22 @@ public class CFMLEditor extends TextEditor implements
 	 * method.
 	 */
 	protected void initializeEditor() {
+		IPreferenceStore generalTextStore= EditorsUI.getPreferenceStore();
+		IPreferenceStore cfmlStore = CFMLPlugin.getDefault().getPreferenceStore();
+				
+		IPreferenceStore combinedPreferenceStore= new ChainedPreferenceStore(new 
+		IPreferenceStore[] { cfmlStore,generalTextStore  });		
+		setPreferenceStore(combinedPreferenceStore);
+		
+		// This ensures that we are notified when the preferences are saved
+		CFMLPlugin.getDefault().getPreferenceStore()
+				.addPropertyChangeListener(this);
 		setEditorContextMenuId("#CFMLEditorContext"); //$NON-NLS-1$
 		setRulerContextMenuId("#TextRulerContext"); //$NON-NLS-1$
 		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
 		configureInsertMode(SMART_INSERT, false);
 		setInsertMode(INSERT);	
+		isMarkOccurrenceEnabled= getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES);
 	}
 	
 	
@@ -438,6 +554,7 @@ public class CFMLEditor extends TextEditor implements
 				}
 			}
 			
+
 			//if (this.DEBUG) {
 			    //IWorkbenchPage p = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			    //System.out.println(p);
@@ -629,6 +746,9 @@ public class CFMLEditor extends TextEditor implements
 			*/
 
 			setSelectionCursorListener();
+			if (isMarkOccurrenceEnabled) {
+				SelectionCursorListener.installOccurrencesFinder();
+			}
 			return;
 		}
 		
@@ -676,21 +796,13 @@ public class CFMLEditor extends TextEditor implements
 				SelectionCursorListener.setWordSelectionChars(wordChars);
 			} else {
 				ProjectionViewer projectionViewer = (ProjectionViewer)getSourceViewer();
-				SelectionCursorListener = new SelectionCursorListener(this, projectionViewer,wordChars);
+				SelectionCursorListener = new SelectionCursorListener(this, projectionViewer, wordChars);
 				//projectionViewer.addSelectionChangedListener(SelectionCursorListener);
-				projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
-				projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);				
 				//projectionViewer.getTextWidget().addKeyListener(SelectionCursorListener);				
 				SelectionCursorListener.setWordSelectionChars(wordChars);
-				setMarkOccurrenceEnabled(getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES));
+				projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
+				projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);									
 			}
-			/* //This will maybe someday come in handy for switching occurrence marking on and off in active editors?
-			 * IHandlerService handlerServ =
-			 * (IHandlerService)getSite().getWorkbenchWindow().getService(IHandlerService.class);
-			 * toggleOccurrencesHandler = new ToggleTextSelectionsHandler();
-			 * handlerServ.activateHandler("org.eclipse.jdt.ui.edit.text.java.toggleTextSelections",
-			 * toggleOccurrencesHandler, expr);
-			 */
 		}			
 		public SelectionCursorListener getSelectionCursorListener() {
 				if (SelectionCursorListener == null) {
@@ -704,11 +816,12 @@ public class CFMLEditor extends TextEditor implements
 	 */
 	protected void editorContextMenuAboutToShow(IMenuManager menu) {
 
+
 		addTagSpecificMenuItems(menu);
+				
+		super.editorContextMenuAboutToShow(menu);		
 
-		super.editorContextMenuAboutToShow(menu);
-
-		//addAction(menu, ITextEditorActionConstants.FIND);
+        //addAction(menu, ITextEditorActionConstants.FIND);
 		//this is the right way to do lower case stuff, but how do you get it
 		//on the menu?
 		//addAction(menu,ITextEditorActionConstants.UPPER_CASE);
@@ -769,21 +882,14 @@ public class CFMLEditor extends TextEditor implements
 
 			Action act = new Action("Refresh syntax highlighting", null) {
 				public void run() {
-				   try {
-				      
-				  
-					CFEPartitioner partitioner = new CFEPartitioner(
-							new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);
-					partitioner.connect(doc);
-					doc.setDocumentPartitioner(partitioner);
+				   try {				      
+					new CFDocumentSetupParticipant().setup(doc);				  
 				   } catch (Exception e) {
 				       e.printStackTrace();
 				   }
 				}
 			};
 			menu.add(act);
-
-
 
 			//Add programatically the locate in File Explorer and navigator for Eclipse 3.1 users
 			
@@ -877,6 +983,7 @@ public class CFMLEditor extends TextEditor implements
 			int startpos = sel.getOffset();
 			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 			CFEPartition part = partitioner.findClosestPartition(startpos);
+//			ITypedRegion part = cfd.getDocumentPartitioner(CFDocumentSetupParticipant.CFML_PARTITIONING).getPartition(startpos);
 			
 			if(part != null && EditableTags.isEditable(part.getType())){
 				menu.add(act);
@@ -904,12 +1011,7 @@ public class CFMLEditor extends TextEditor implements
 					getSelectionCursorListener().getSelectedTag().getName().equalsIgnoreCase("cfproperty")){
 				menu.add(act);
 			}
-			
-			
-			
-				
-			
-			
+						
 			act = new Action("Jump to matching tag", null) {
 			    public void run() {
 			        JumpToMatchingTagAction matchTagAction = new JumpToMatchingTagAction();
@@ -1007,11 +1109,20 @@ public class CFMLEditor extends TextEditor implements
 		
 	}
 
-	public void createActions() {
+    /**
+     * Returns the viewer associated with this editor
+     * @return The viewer associated with this editor
+     */
+    public ISourceViewer getViewer() {
+        return getSourceViewer();
+    }
+
+    public void createActions() {
 		super.createActions();
 
 		//this sets up the ctrl+space code insight stuff
 		try {
+			/*
 			IAction action = new TextOperationAction(CFMLPlugin.getDefault()
 					.getResourceBundle(), "ContentAssistProposal.",
 			//"ContentAssistTip.",
@@ -1029,21 +1140,20 @@ public class CFMLEditor extends TextEditor implements
 			setActionActivationCode(
 					ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS, ' ', -1,
 					SWT.CTRL);
+*/
 
+			IAction action = new TextOperationAction(CFMLPlugin.getDefault()
+					.getResourceBundle(), "ContentFormat.", this, ISourceViewer.FORMAT); //$NON-NLS-1$
+			action.setActionDefinitionId(CFMLPlugin.PLUGIN_ID + ".FormatAction");
+			action.setEnabled(true);
+			markAsStateDependentAction("ContentFormat", true); //$NON-NLS-1$
+			markAsSelectionDependentAction("ContentFormat", true); //$NON-NLS-1$
+			setAction("ContentFormat", action); //$NON-NLS-1$			
+			
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
-		
-		/*
-		 * TODO: Implement Templates
-		 * IAction action= new TextOperationAction(
-				org.cfeclipse.cfml.editors.templates.TemplateMessages.getResourceBundle(),
-				"Editor." + TEMPLATE_PROPOSALS + ".", //$NON-NLS-1$ //$NON-NLS-2$
-				this,
-				ISourceViewer.CONTENTASSIST_PROPOSALS);
-		action.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
-		setAction(TEMPLATE_PROPOSALS, action);
-		markAsStateDependentAction(TEMPLATE_PROPOSALS, true);*/
+
 	}
 
 	/**
@@ -1144,7 +1254,10 @@ public class CFMLEditor extends TextEditor implements
 		CFMLPlugin.getDefault().getLastActionManager().removeAction(this);
 		
 		//Remove the listener
-		
+		if(SelectionCursorListener!=null){			
+			SelectionCursorListener.uninstallOccurrencesFinder();
+		}
+		fCFDocument = null;
 		
 		super.dispose();
 	}
@@ -1152,8 +1265,11 @@ public class CFMLEditor extends TextEditor implements
 	public void propertyChange(PropertyChangeEvent event) {
 		handlePreferenceStoreChanged(event);
 		System.out.println(event);
-		setStatusLine();
-		setSelectionCursorListener();
+		if(getViewer()!= null){
+			setStatusLine();
+			setSelectionCursorListener();			
+			isMarkOccurrenceEnabled= getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES);
+		}
 	}
 
 	protected void handlePreferenceStoreChanged(PropertyChangeEvent event) {
@@ -1168,7 +1284,6 @@ public class CFMLEditor extends TextEditor implements
 			}
 		}
 		setBackgroundColor();
-		setMarkOccurrenceEnabled(getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES));
 
 		super.handlePreferenceStoreChanged(event);
 	}
@@ -1269,23 +1384,62 @@ public class CFMLEditor extends TextEditor implements
 		return this.fSourceViewerDecorationSupport;
 	}
 
-	/**
-	 * @param isMarkOccurrenceEnabled the isMarkOccurrenceEnabled to set
-	 */
-	public void setMarkOccurrenceEnabled(boolean isMarkOccurrenceEnabled) {
-		this.isMarkOccurrenceEnabled = isMarkOccurrenceEnabled;
-		SelectionCursorListener.setMarkOccurrenceEnabled(isMarkOccurrenceEnabled);
-		if(!isMarkOccurrenceEnabled) {
-			SelectionCursorListener.clearMarkedOccurrences();			
-		} 
-	}
-
-	/**
-	 * @return the isMarkOccurrenceEnabled
-	 */
-	public boolean isMarkOccurrenceEnabled() {
+	public boolean isMarkingOccurrences() {
 		return isMarkOccurrenceEnabled;
 	}
 
+	public void projectionDisabled() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void projectionEnabled() {
+		// TODO Auto-generated method stub
+		System.out.println("wee");
+	}
+
+	/**
+	 * The editor has entered or exited linked mode.
+	 * @param inLinkedMode whether an enter or exit has occurred
+	 * @param effectsOccurrences whether to change the state of the occurrences finder
+	 */
+	public void setInLinkedMode(boolean inLinkedMode, boolean effectsOccurrences) {
+		if (inLinkedMode) {
+			getCFModel().setShouldReconcile(false);
+			if (effectsOccurrences) {
+				SelectionCursorListener.uninstallOccurrencesFinder();
+			}
+		} else {
+			getCFModel().setShouldReconcile(true);
+			if (effectsOccurrences) {
+				SelectionCursorListener.installOccurrencesFinder();
+			}
+		}
+	}
+
 	
+	
+	public void openReferenceElement() {
+		ISelection selection= getSelectionProvider().getSelection();
+		Object target= null;
+		if (selection instanceof ITextSelection) {
+			ITextSelection textSelection= (ITextSelection)selection;
+			ISourceViewer viewer= getSourceViewer();
+			int textOffset= textSelection.getOffset();
+			//IRegion region= XMLTextHover.getRegion(viewer, textOffset);
+			//target= findTarget(region);
+		}
+		
+		//openTarget(target);
+	}	
+	
+	
+	public void saveState(IMemento memento) {
+		System.out.println("ColdFusion Rocks!");
+	}
+	
+	public void restoreState(IMemento memento) {
+		System.out.println("ColdFusion Rolls!");
+	}
 }

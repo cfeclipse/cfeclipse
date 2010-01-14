@@ -101,6 +101,7 @@ public class CFScriptScanner extends RuleBasedScanner {
 				
 		List rules = new ArrayList();
 		
+		//rules.add(new MultiLineRule("component", "/}", cffunction));
 		//so the script tags look correct
 		rules.add(new SingleLineRule("<cfscript", ">", cftag));
 		rules.add(new SingleLineRule("</cfscript", ">", cftag));

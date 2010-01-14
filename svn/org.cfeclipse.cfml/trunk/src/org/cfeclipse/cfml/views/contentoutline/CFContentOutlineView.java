@@ -74,9 +74,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 
-import com.sun.corba.se.impl.io.FVDCodeBaseImpl;
-import com.sun.j3d.utils.universe.Viewer;
-
 /**
  * @author Rob
  * 
@@ -85,6 +82,7 @@ import com.sun.j3d.utils.universe.Viewer;
 public class CFContentOutlineView extends ContentOutlinePage implements IPartListener, IPropertyListener,
 		ISelectionListener {
 	public static final String ID_CONTENTOUTLINE = "org.cfeclipse.cfml.views.contentoutline.cfcontentoutlineview";
+	private static final int EXPAND_TO_LEVEL= 2;
 	protected Action jumpAction, selectAction, deleteItem, expandAction, collapseAction, filterOnAction, openAction,
 			removeFilters;
 	protected Action filters[];
@@ -277,7 +275,11 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		int endPos = firstItem.getEndPosition();
 		if (!selecteditems.hasNext()) {
 			// select whole tag
-			CfmlTagItem cti = (CfmlTagItem) firstItem;
+			if(firstItem.getClass().getName().endsWith("CfmlComment")){
+				editor.selectAndReveal(firstItem.getStartPosition(), firstItem.getEndPosition() - firstItem.getStartPosition() + 1);
+				return;
+			}
+			TagItem cti = (TagItem) firstItem;
 			if (cti.matchingItem != null) {
 				if (cti.matchingItem.getStartPosition() < cti.getStartPosition()) {
 					startPos = cti.matchingItem.getStartPosition();
@@ -331,20 +333,23 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 
 	public void reload(DocItem root) {
 		// saveExpandedElements();
-
 		getTreeViewer().setInput(root);
-		// temporary hack to expand a cfcomponent
-		if (root.hasChildren() && root.getFirstChild().getName().compareToIgnoreCase("cfcomponent") == 0) {
-			getTreeViewer().setExpandedState(root.getFirstChild(), true);
-			getTreeViewer().refresh(root, false);
-		}
 		if (filter.length() == 0) {
 			removeFilters.setEnabled(false);
 		} else {
 			removeFilters.setEnabled(true);
 		}
+		getControl().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				Control ctrl= getControl();
+				if (ctrl != null && !ctrl.isDisposed()) {
+					getTreeViewer().refresh();
+					updateTreeExpansion();
+				}
+			}
+		});
 	}
-
+	
 	public void reload() {
 		if (filter.length() == 0) {
 			DocItem di = getRootInput();
@@ -354,6 +359,19 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		}
 	}
 
+	private void updateTreeExpansion() {
+		DocItem root = getRootInput();
+		if (!getTreeViewer().getExpandedState(root) && root.hasChildren() && root.getFirstChild().getName().compareToIgnoreCase("cfcomponent") == 0) {
+			getTreeViewer().setExpandedState(root.getFirstChild(), true);
+			getTreeViewer().refresh(root, false);
+		}
+//		boolean wasModelEmpty= fIsModelEmpty;
+//		fIsModelEmpty= fModel == null || fModel.getProjectNode() == null;
+//		if (wasModelEmpty && !fIsModelEmpty) {
+//			getTreeViewer().expandToLevel(EXPAND_TO_LEVEL);
+//		}
+	}	
+	
 	/**
 	 * creates all the default actions
 	 */
@@ -561,7 +579,6 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 
 	public void selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent event) {
 		// this fires when tree node selection changed
-		// we check for a tree node so we don't make the editor jump
 		if(!fSelectionFromEditor) {	
 			jumpAction.run();
 		}
@@ -582,6 +599,17 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 				}
 			}
 		}
+//		if (!getControl().isDisposed()) {
+//			getControl().getDisplay().asyncExec(new Runnable() {
+//				public void run() {
+//					Control ctrl= getControl();
+//					if (ctrl != null && !ctrl.isDisposed()) {
+//						reload();
+//						getTreeViewer().refresh();
+//					}
+//				}
+//			});
+//		}
 	}
 
 	public void partActivated(IWorkbenchPart arg0) {
@@ -610,8 +638,9 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	}
 
 	public void propertyChanged(Object arg0, int arg1) {
-		// TODO Auto-generated method stub
-
+		// this generally comes from a save.  When we get the reconciler going, shouldn't need it
+		fSelectionFromEditor = true;
+		reload();
 	}
 
 }

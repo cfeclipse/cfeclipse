@@ -233,7 +233,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 	private void setRootAssistorsToCategories() {
 		if(fCategories == null) {			
 			ICFEFileDocument curDoc = (ICFEFileDocument)fSourceViewer.getDocument();
-			if(curDoc != null)
+			if(curDoc != null && curDoc instanceof ICFEFileDocument)
 				fCategories = curDoc.getContentAssistManager().getRootAssistors();
 		}
 	}
@@ -375,6 +375,8 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
     }
 
 	private List collectProposals(ITextViewer viewer, int offset, IProgressMonitor monitor) {
+		if(viewer == null) 
+			return new ArrayList();
 		fState = AssistUtils.initialiseDefaultAssistState(viewer, offset);
 		List proposals= new ArrayList();
 		List providers= getCategories();

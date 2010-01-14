@@ -164,7 +164,7 @@ public class CFMLFunctionAssist extends AssistContributor
     						while(childNode.getName().equals("cfargument")) {
     							matcher = pattern.matcher(childNode.getItemData());
     							while(matcher.find()) {
-    								String value = matcher.group(2).replace("'", "").replace("\"", "");
+    								String value = matcher.group(2).replaceAll("'", "").replaceAll("\"", "");
     								if(matcher.group(1).toLowerCase().equals("name")) {
     									name = value;
     								}

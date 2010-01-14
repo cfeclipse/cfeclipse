@@ -43,6 +43,7 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
+import org.eclipse.ui.XMLMemento;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 
@@ -118,7 +119,6 @@ public class CodeFoldingSetter {
 	                    model.collapse(p);
 	                }
 	            }
-	            
 	            
 	        }
         }catch (Exception e) {
@@ -600,6 +600,26 @@ public class CodeFoldingSetter {
         Iterator iter = model.getAnnotationIterator();
         while (iter.hasNext()) {
             ProjectionAnnotation p = (ProjectionAnnotation)iter.next();
+            snapshot.put(p,new Boolean(p.isCollapsed()));
+        }
+    }
+    
+    public void storeMemento() {
+        
+        if(!preferenceManager.enableFolding()) {
+    	    return;
+    	}
+        
+    	XMLMemento foldedState = XMLMemento.createWriteRoot("rockn");
+    	foldedState.putBoolean("yuppers",true);
+
+    	snapshot = new HashMap();
+        ProjectionAnnotationModel model = (ProjectionAnnotationModel) editor
+        .getAdapter(ProjectionAnnotationModel.class);
+        Iterator iter = model.getAnnotationIterator();
+        while (iter.hasNext()) {
+            ProjectionAnnotation p = (ProjectionAnnotation)iter.next();
+            foldedState.createChild("projection-annotation",p.getText());
             snapshot.put(p,new Boolean(p.isCollapsed()));
         }
     }

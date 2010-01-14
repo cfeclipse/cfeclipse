@@ -26,18 +26,40 @@ package org.cfeclipse.cfml.editors.dnd;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.OccurrencesFinder;
+import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
+import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
+import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
+import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IDocumentListener;
+import org.eclipse.jface.text.ISelectionValidator;
+import org.eclipse.jface.text.ITextInputListener;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.text.link.LinkedModeModel;
+import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.text.source.IAnnotationModelExtension;
+import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
@@ -53,6 +75,7 @@ import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
@@ -136,21 +159,37 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 	private CfmlTagItem lastSelectedTag;
 	private CfmlTagItem selectedTag;
 	private boolean selectedTagWasSelected;
-	private boolean isMarkOccurrenceEnabled;
+	private CFMLEditor editor;
 	private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
 	private static String tagBeginEndAnnotation = "org.cfeclipse.cfml.tagbeginendmarker";
 	//private static String TYPE = "org.eclipse.core.resources.textmarker";
 	//private static String TYPE = "org.cfeclipse.cfml.parserWarningMarker";
-    
+
+	/**
+	 * Holds the current occurrence annotations.
+	 * @since 3.1
+	 */
+	private Annotation[] fOccurrenceAnnotations= null;
+
+	private OccurrencesFinderJob fOccurrencesFinderJob;
+	private OccurrencesFinderJobCanceler fOccurrencesFinderJobCanceler;
+	
+	private ITextSelection fForcedMarkOccurrencesSelection;
+	private boolean fMarkOccurrenceAnnotations = true;
+	private boolean fStickyOccurrenceAnnotations = false;
+	private CfmlTagItem currentDocItem;
+	private MouseEvent lastMouseEvent;
+	private String[] wordCharArray;
+
     
     /**
      * This class listens to the mouse position relative to any selected text 
      * and keeps track of whether or not the mouse is currently over a selection.
      */
-    public SelectionCursorListener(ITextEditor editor, ProjectionViewer viewer, String[] wordChars) {
-        //this.editor = editor;
-        this.textWidget = viewer.getTextWidget();
+    public SelectionCursorListener(CFMLEditor editor, ProjectionViewer viewer, String[] wordChars) {
+        this.editor = editor;
         this.fViewer = viewer;
+        this.textWidget = viewer.getTextWidget();
         this.arrowCursor = new Cursor(this.textWidget.getDisplay(),SWT.CURSOR_ARROW);
         this.textCursor = new Cursor(this.textWidget.getDisplay(),SWT.CURSOR_IBEAM);
         this.widgetOffsetTracker = new WidgetPositionTracker(this.textWidget);
@@ -175,6 +214,8 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
      *
      */
 	public void setWordSelectionChars(String[] wordChars) {
+		// this is nasty.  Be sure to update OccurrencesFinder if changed!
+		this.wordCharArray = wordChars;
 		this.partOfWordChars = wordChars[0];
 		this.breakWordChars = wordChars[1];
 		this.partOfWordCharsAlt = wordChars[2];
@@ -183,14 +224,20 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		this.breakWordCharsShift = wordChars[5];		
 	}
     
-
+    /**
+     * gets the work selection break/continue chars.
+     *
+     */
+	public String[] getWordSelectionChars() {
+		return this.wordCharArray;
+	}
 
 	public void setSelectedTag() {
 		// TODO Auto-generated method stub
 		//CFMLEditor curDoc = (CFMLEditor) this.fViewer.getDocument();
 		//ICFDocument cfd = (ICFDocument) curDoc.getDocumentProvider().getDocument(curDoc.getEditorInput());
 		TextSelection sel = (TextSelection) this.fViewer.getSelection();
-		int startPos = sel.getOffset()+1;
+		int startPos = sel.getOffset();
 		ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
 		CfmlTagItem cti = cfd.getTagAt(startPos, startPos, true);
 		if(cti != null && this.selectedTag != null) {
@@ -203,16 +250,50 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		} else {
 			clearTagBeginEndMarkers();			
 		}
-		if(cti != null) {
-			markBeginEndTags(cti);			
+		this.selectedTag = null;
+		try {
+			// cfcomponent returns ASTVarDeclaration -- syntax is null for whatever reason (ASTVar's from cfscript?!)
+			if(cti != null 
+				&& !cti.getName().equals("CfmlComment") && !cti.getName().equals("cfscript")
+				&& !cti.getName().startsWith("AST")) {
+ 			if(cti.getName().equals("CfmlCustomTag") || cti.hasClosingTag() ) {
+					markBeginEndTags(cti);	
+			}
+		} 
+		} catch (Exception e) {
+			System.err.println(cti.getName());
+			e.printStackTrace();
+		}			
+		CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();		
+		CFEPartition part = partitioner.findClosestPartition(startPos);
+		if(part == null) {
+			return;
 		}
-		this.selectedTag = cti;
+		startPos = part.offset;
+		if (cti != null) {
+			this.currentDocItem = cti;
+			this.selectedTag = cti;
+		} else {
+			this.currentDocItem = cfd.getTagAt(startPos, startPos, false);
+			while (this.currentDocItem == null && startPos >= 0 && part != null) {
+				startPos = part.offset;
+				this.currentDocItem = cfd.getTagAt(startPos, startPos + part.length + 1, false);
+				part = partitioner.getPreviousPartition(startPos);
+			}
+			this.selectedTag = this.currentDocItem;
+		}
 	}
 	public CfmlTagItem getSelectedTag() {
 		return this.selectedTag;
 	}
+	public DocItem getCurrentDocItem() {
+		return this.currentDocItem;
+	}
 	public boolean getSelectedTagWasSelected() {
 		return this.selectedTagWasSelected;
+	}
+	public MouseEvent getLastMouseEvent() {
+		return this.lastMouseEvent;
 	}
     
     /**
@@ -298,24 +379,25 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
     public void selectionChanged(SelectionChangedEvent event) {
 		setSelectedTag();
         if (!this.hovering) {
-        	if(this.isMarkOccurrenceEnabled) {
-        		clearMarkedOccurrences();
-        		ITextSelection sel = (ITextSelection)this.fViewer.getSelection();
-        		this.selectionStart = sel.getOffset();
-        		this.selectionText = sel.getText().trim();
-        		if (event.getSelectionProvider() instanceof IPostSelectionProvider && this.selectionText.length() > 1) {
-        			try {
-        				markOccurrences(this.selectionText);
-        			} catch (BadLocationException e) {
-        				// TODO Auto-generated catch block
-        				e.printStackTrace();
-        			}			
+        	if(editor.isMarkingOccurrences()) {
+        		ISelection selection = event.getSelection();
+        		if (event.getSelectionProvider() instanceof IPostSelectionProvider) {
+        			if (selection instanceof ITextSelection) {
+						ITextSelection textSelection= (ITextSelection)selection;
+						try{
+							updateOccurrenceAnnotations(textSelection, editor.getCFModel());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					//markOccurrences(this.selectionText);			
         		}
         		else {
         			//System.out.println("MarkOccurrences got non POST selection changed");
         		}
         	}
         }
+		this.lastMouseEvent = null;
     }
     /**
      * Determines if the selection needs to be expanded
@@ -508,6 +590,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
             this.mouseDown = true;
             this.downUp = true;
         }
+        this.lastMouseEvent = e;
     }
 
     /**
@@ -516,7 +599,6 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
      * @param e an event containing information about the mouse button release
      */
     public void mouseUp(MouseEvent e) {
-        
         if ((e.stateMask & SWT.CONTROL) == 0) {
             this.mouseDown = false;
 	        if (this.downUp) {
@@ -581,87 +663,6 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 			}		
 		}
 	}
-	/**
-	 * Mark occurrences of selected string
-	 * 
-	 * @param findString
-	 * @throws BadLocationException 
-	 * 
-	 */
-	protected void markOccurrences(String findString) throws BadLocationException {
-		int index = 0;
-		int occurrenceCount = 0;
-
-		if (this.fViewer != null && findString.length() > 1) {
-
-			ISelection initialSelection = this.fViewer.getSelection();
-
-			if (initialSelection instanceof ITextSelection) {
-				ITextSelection textSelection = (ITextSelection) initialSelection;
-				if (!textSelection.isEmpty()) {
-					String text = this.fViewer.getDocument().get();
-					IDocument iDoc = (ICFDocument) this.fViewer.getDocument();
-					IResource resource = ((ICFDocument) this.fViewer.getDocument()).getResource();
-					index = text.indexOf(findString);
-					while (index != -1) {
-
-						occurrenceCount++;
-
-						// AnnotationModel model = (AnnotationModel)
-						// this.fViewer.getAnnotationModel();
-						// Annotation occurrenceAnnotation = new Annotation(
-						//									"org.eclipse.jdt.ui.occurrences", true, findString); //$NON-NLS-1$
-						// occurrenceAnnotation.setText("Found:"+findString);
-						// Position position = new Position(index,
-						// findString.length());
-						// if (position != null) {
-						// model.addAnnotation(occurrenceAnnotation, position);
-						// } else {
-						// System.out.println("Null Position! Not good!");
-						// }
-
-						Map attrs = new HashMap();
-						int lineNum = iDoc.getLineOfOffset(index)+1;
-						MarkerUtilities.setMessage(attrs, "Occurrence " + occurrenceCount + " of " + findString);
-						MarkerUtilities.setLineNumber(attrs, lineNum);
-						attrs.put(IMarker.LOCATION, "line " + lineNum + ", Chars " + index + "-" + index
-								+ findString.length());
-						attrs.put(IMarker.CHAR_START, index);
-						attrs.put(IMarker.CHAR_END, new Integer(index + findString.length()));
-
-						try {
-							MarkerUtilities.createMarker(resource, attrs, this.TYPE);
-						} catch (CoreException excep) {
-							excep.printStackTrace();
-						} catch (Exception anyExcep) {
-							anyExcep.printStackTrace();
-						}
-						index = text.indexOf(findString, index + findString.length());
-					}
-				}
-			}
-		}
-
-	}	
-	
-	/**
-	 * Clears any marked occurrences
-	 */
-	public void clearMarkedOccurrences() {
-		if (this.fViewer == null)
-			return;
-
-	      try {
-			IMarker[] markers = ((ICFDocument)this.fViewer.getDocument()).getResource().findMarkers(this.TYPE, true, IResource.DEPTH_INFINITE);
-			for(IMarker mark : markers) {
-				mark.delete();
-			}
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
 
 	/**
 	 * Clears any begin end tag markers
@@ -682,10 +683,305 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 
 	}
 	
-	public void setMarkOccurrenceEnabled(boolean isMarkOccurrenceEnabled) {
-		// TODO Auto-generated method stub
-		this.isMarkOccurrenceEnabled = isMarkOccurrenceEnabled;
+	/**
+	 * Finds and marks occurrence annotations.
+	 * 
+	 * @since 3.1
+	 */
+	class OccurrencesFinderJob extends Job {
+		
+		private IDocument fDocument;
+		private ISelection fSelection;
+		private ISelectionValidator fPostSelectionValidator;
+		private boolean fCanceled= false;
+		private IProgressMonitor fProgressMonitor;
+		private List fPositions;
+		
+		public OccurrencesFinderJob(IDocument document, List positions, ISelection selection) {
+			super("Occurrences Marker"); //$NON-NLS-1$
+			fDocument= document;
+			fSelection= selection;
+			fPositions= positions;
+			
+			if (editor.getSelectionProvider() instanceof ISelectionValidator)
+				fPostSelectionValidator= (ISelectionValidator)editor.getSelectionProvider();
+		}
+		
+		// cannot use cancel() because it is declared final
+		void doCancel() {
+			fCanceled= true;
+			cancel();
+		}
+		
+		private boolean isCanceled() {
+			return fCanceled || fProgressMonitor.isCanceled() || fForcedMarkOccurrencesSelection == fSelection;
+
+			//			return fCanceled || fProgressMonitor.isCanceled()
+//				||  fPostSelectionValidator != null && !(fPostSelectionValidator.isValid(fSelection) || fForcedMarkOccurrencesSelection == fSelection)
+//				|| LinkedModeModel.hasInstalledModel(fDocument);
+		}
+		
+		/*
+		 * @see Job#run(org.eclipse.core.runtime.IProgressMonitor)
+		 */
+		public IStatus run(IProgressMonitor progressMonitor) {
+			
+			fProgressMonitor= progressMonitor;
+			
+			if (isCanceled())
+				return Status.CANCEL_STATUS;
+			
+			ITextViewer textViewer= (ITextViewer) fViewer;
+			if (textViewer == null)
+				return Status.CANCEL_STATUS;
+			
+			IDocument document= textViewer.getDocument();
+			if (document == null)
+				return Status.CANCEL_STATUS;
+			
+			IDocumentProvider documentProvider= editor.getDocumentProvider();
+			if (documentProvider == null)
+				return Status.CANCEL_STATUS;
+		
+			IAnnotationModel annotationModel= documentProvider.getAnnotationModel(editor.getEditorInput());
+			if (annotationModel == null)
+				return Status.CANCEL_STATUS;
+			
+			// Add occurrence annotations
+			int length= fPositions.size();
+			Map annotationMap= new HashMap(length);
+			for (int i= 0; i < length; i++) {
+				
+				if (isCanceled())
+					return Status.CANCEL_STATUS;
+				
+				String message;
+				Position position= (Position) fPositions.get(i);
+				
+				// Create & add annotation
+				try {
+					message= document.get(position.offset, position.length);
+				} catch (BadLocationException ex) {
+					// Skip this match
+					continue;
+				}
+				annotationMap.put(
+						new Annotation("org.cfeclipse.cfml.occurrenceAnnotation", false, message), //$NON-NLS-1$
+						position);
+			}
+			
+			if (isCanceled()) {
+				return Status.CANCEL_STATUS;
+            }
+			
+            Object lock= editor.getLockObject(document);
+            if (lock == null) {
+                updateAnnotations(annotationModel, annotationMap);
+            } else {
+                synchronized (lock) {
+                    updateAnnotations(annotationModel, annotationMap);
+                }
+            }
+
+			return Status.OK_STATUS;
+		}
+
+        private void updateAnnotations(IAnnotationModel annotationModel, Map annotationMap) {
+            if (annotationModel instanceof IAnnotationModelExtension) {
+            	((IAnnotationModelExtension)annotationModel).replaceAnnotations(fOccurrenceAnnotations, annotationMap);
+            } else {
+            	removeOccurrenceAnnotations();
+            	Iterator iter= annotationMap.entrySet().iterator();
+            	while (iter.hasNext()) {
+            		Map.Entry mapEntry= (Map.Entry)iter.next();
+            		annotationModel.addAnnotation((Annotation)mapEntry.getKey(), (Position)mapEntry.getValue());
+            	}
+            }
+            fOccurrenceAnnotations= (Annotation[])annotationMap.keySet().toArray(new Annotation[annotationMap.keySet().size()]);
+        }
+	}	
+	
+	/**
+	 * Cancels the occurrences finder job upon document changes.
+	 * 
+	 * @since 3.1
+	 */
+	class OccurrencesFinderJobCanceler implements IDocumentListener, ITextInputListener {
+
+		public void install() {
+			ISourceViewer sourceViewer= fViewer;
+			if (sourceViewer == null)
+				return;
+				
+			StyledText text= sourceViewer.getTextWidget();
+			if (text == null || text.isDisposed())
+				return;
+
+			sourceViewer.addTextInputListener(this);
+			
+			IDocument document= sourceViewer.getDocument();
+			if (document != null)
+				document.addDocumentListener(this);
+		}
+		
+		public void uninstall() {
+			ISourceViewer sourceViewer= fViewer;
+			if (sourceViewer != null)
+				sourceViewer.removeTextInputListener(this);
+
+			IDocumentProvider documentProvider= editor.getDocumentProvider();
+			if (documentProvider != null) {
+				IDocument document= documentProvider.getDocument(editor.getEditorInput());
+				if (document != null)
+					document.removeDocumentListener(this);
+			}
+		}
+				
+
+		/*
+		 * @see org.eclipse.jface.text.IDocumentListener#documentAboutToBeChanged(org.eclipse.jface.text.DocumentEvent)
+		 */
+		public void documentAboutToBeChanged(DocumentEvent event) {
+			if (fOccurrencesFinderJob != null)
+				fOccurrencesFinderJob.doCancel();
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.IDocumentListener#documentChanged(org.eclipse.jface.text.DocumentEvent)
+		 */
+		public void documentChanged(DocumentEvent event) {
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.ITextInputListener#inputDocumentAboutToBeChanged(org.eclipse.jface.text.IDocument, org.eclipse.jface.text.IDocument)
+		 */
+		public void inputDocumentAboutToBeChanged(IDocument oldInput, IDocument newInput) {
+			if (oldInput == null)
+				return;
+
+			oldInput.removeDocumentListener(this);
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.ITextInputListener#inputDocumentChanged(org.eclipse.jface.text.IDocument, org.eclipse.jface.text.IDocument)
+		 */
+		public void inputDocumentChanged(IDocument oldInput, IDocument newInput) {
+			if (newInput == null)
+				return;
+			newInput.addDocumentListener(this);
+		}
 	}
 	
+	
+	public void installOccurrencesFinder() {
+		fMarkOccurrenceAnnotations= true;
+		
+		if (editor.getSelectionProvider() != null) {
+			ISelection selection= editor.getSelectionProvider().getSelection();
+			if (selection instanceof ITextSelection) {
+				fForcedMarkOccurrencesSelection= (ITextSelection) selection;
+				updateOccurrenceAnnotations(fForcedMarkOccurrencesSelection, editor.getCFModel());
+			}
+		}
+		if (fOccurrencesFinderJobCanceler == null) {
+			fOccurrencesFinderJobCanceler= new OccurrencesFinderJobCanceler();
+			fOccurrencesFinderJobCanceler.install();
+		}
+	}
+	
+	public void uninstallOccurrencesFinder() {
+		fMarkOccurrenceAnnotations= false;
+		
+		if (fOccurrencesFinderJob != null) {
+			fOccurrencesFinderJob.cancel();
+			fOccurrencesFinderJob= null;
+		}
+
+		if (fOccurrencesFinderJobCanceler != null) {
+			fOccurrencesFinderJobCanceler.uninstall();
+			fOccurrencesFinderJobCanceler= null;
+		}
+		
+		removeOccurrenceAnnotations();
+	}
+
+	/**
+	 * Updates the occurrences annotations based
+	 * on the current selection.
+	 * 
+	 * @param selection the text selection
+	 * @param antModel the model for the buildfile
+	 * @since 3.1
+	 */
+	public void updateOccurrenceAnnotations(ITextSelection selection, CFDocument antModel) {
+
+		if (fOccurrencesFinderJob != null)
+			fOccurrencesFinderJob.cancel();
+
+		if (!fMarkOccurrenceAnnotations) {
+			return;
+		}
+		
+		if (selection == null || antModel == null) {
+			return;
+		}
+		
+		IDocument document= fViewer.getDocument();
+		if (document == null) {
+			return;
+		}
+		
+		List positions= null;
+		
+		OccurrencesFinder finder= new OccurrencesFinder(editor, antModel, document, selection.getOffset());
+		positions= finder.perform();
+		
+		if (positions == null || positions.size() == 0) {
+			if (!fStickyOccurrenceAnnotations) {
+				removeOccurrenceAnnotations();
+			}
+			return;
+		}
+		
+		fOccurrencesFinderJob= new OccurrencesFinderJob(document, positions, selection);
+		fOccurrencesFinderJob.run(new NullProgressMonitor());
+	}
+	
+	private void removeOccurrenceAnnotations() {
+		IDocumentProvider documentProvider= editor.getDocumentProvider();
+		if (documentProvider == null) {
+			return;
+		}
+		
+		IAnnotationModel annotationModel= documentProvider.getAnnotationModel(editor.getEditorInput());
+		if (annotationModel == null || fOccurrenceAnnotations == null) {
+			return;
+		}
+
+		IDocument document= documentProvider.getDocument(editor.getEditorInput());
+        Object lock= editor.getLockObject(document);
+        if (lock == null) {
+            updateAnnotationModelForRemoves(annotationModel);
+        } else {
+            synchronized (lock) {
+                updateAnnotationModelForRemoves(annotationModel);
+            }
+        }
+	}
+
+
+    private void updateAnnotationModelForRemoves(IAnnotationModel annotationModel) {
+        if (annotationModel instanceof IAnnotationModelExtension) {
+        	((IAnnotationModelExtension)annotationModel).replaceAnnotations(fOccurrenceAnnotations, null);
+        } else {
+        	for (int i= 0, length= fOccurrenceAnnotations.length; i < length; i++) {
+        		annotationModel.removeAnnotation(fOccurrenceAnnotations[i]);
+        	}
+        }
+        fOccurrenceAnnotations= null;
+    }	
+	public boolean isMarkingOccurrences() {
+		return fMarkOccurrenceAnnotations;
+	}	
 	
 }
