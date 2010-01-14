@@ -793,7 +793,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 	 * Hides the margin.
 	 */	
 	private void hideMargin() {
-		if (fMarginPainter != null) {
+		if (fMarginPainter != null && fFontPropertyChangeListener != null) {
 			if (fSourceViewer instanceof ITextViewerExtension2) {
 				JFaceResources.getFontRegistry().removeListener(fFontPropertyChangeListener);
 				fFontPropertyChangeListener= null;
