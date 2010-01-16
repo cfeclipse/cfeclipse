@@ -208,6 +208,8 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 	
 	/* (non-Javadoc)
 	 * @see org.cfeclipse.cfml.editors.text.IReconcilingParticipant#reconciled()
+	 * 
+	 * this runs a parse 500ms after user stops changing stuff
 	 */
 	public void reconciled() {
 		if (fInitialReconcile) {
@@ -231,9 +233,11 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 			shell.getDisplay().asyncExec(new Runnable() {
 				public void run() {
 					if (getSite().getShell() == null || getSite().getShell().isDisposed()) {
-						//((ICFDocument) getDocumentProvider().getDocument(getEditorInput())).parseDocument();
 						return;
 					}
+					ICFDocument document = (ICFDocument) getDocumentProvider().getDocument(getEditorInput());
+					document.clearAllMarkers();
+					(document).parseDocument();
 				}
 			});
 		}
@@ -452,7 +456,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		IKeyBindingService service = this.getSite().getKeyBindingService();
 		service.setScopes(new String[]{EDITOR_CONTEXT});
 		this.setBackgroundColor();
-		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
+//		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
 
 		ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
 
@@ -480,6 +484,8 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 			}
 		});
 		this.fProjectionSupport.install();
+		// ensure decoration support has been created and configured.
+		getSourceViewerDecorationSupport(getSourceViewer());
 		//Object lay = parent.getLayoutData();
 
 		//System.out.println(lay.getClass());
@@ -1346,8 +1352,6 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 		ProjectionViewer viewer = new ProjectionViewer(parent, ruler,
 				getOverviewRuler(), isOverviewRulerVisible(), styles);
-		// ensure decoration support has been created and configured.
-		getSourceViewerDecorationSupport(viewer);
 	
 		/*
 		 * TODO: ADD hyperlink support
