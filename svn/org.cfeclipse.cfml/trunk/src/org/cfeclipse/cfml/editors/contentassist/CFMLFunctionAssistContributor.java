@@ -91,7 +91,7 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 	
 	// 1) The standard completion chars. These are some activation characters 
 	//that non-opener/closer characters
-	protected static final String completionChars = ".(;~\"#[\'>,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	protected static final String completionChars = ".(;~\"#[\',abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	// 2) The opener/closer characters. This assists with the opening & closing 
 	//of things such as brackets
@@ -262,7 +262,9 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 				//the toLowerCase is because of the createobject hack, we need
 				//to either make a setting in prefs for upper/lower or find a
 				//better way to handle the createobject case
-				String name = fun.getName().toLowerCase();
+				// dunnow what creatobject hack is, trying to comment out : denny
+				//String name = fun.getName().toLowerCase();
+				String name = fun.getName();
 				//now remove chars so when they hit enter it wont write the whole
 				//word just the part they havent typed
 				if(name.length() > 0)
@@ -274,10 +276,11 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 				//the tag len and icon
 				int insertlen = 0;
 				Image img = null;
-				//if there is anyof the function name left add a closing(
-				if(name.length() > 0) name += "(";
+				// add a closing(
+				name += "(";
 				//default to the tag len and icon
 				insertlen = name.length();
+				name += ")";
 				img = CFPluginImages.get(CFPluginImages.ICON_FUNC);
 				
 				result[z] = new CompletionProposal(

@@ -86,9 +86,8 @@ public class Function extends Procedure {
 		StringBuffer sb = new StringBuffer();
 		if(this.name != null)
 		{	
-			sb.append(this.returns + " ");
 			//to lowercase for the createobject hack
-			sb.append(this.name.toLowerCase() + "(");
+			sb.append(this.name + "(");
 			
 			if(parameters != null)
 			{
@@ -104,6 +103,7 @@ public class Function extends Procedure {
 				sb.delete(sb.length()-2,sb.length());
 			}
 			sb.append(")");
+			sb.append(" : "+this.returns);
 		}
 		
 		return sb.toString();
