@@ -39,6 +39,14 @@
 			<grammar location="cf8.xml" />
 			<grammar location="user.xml" />
 		</version>
+		<version key="railo3" label="Railo 3">
+			<grammar location="railo3.xml" />
+			<grammar location="user.xml" />
+		</version>
+		<version key="bd70" label="BlueDragon 7.0">
+			<grammar location="cfmlBD70.xml" />
+			<grammar location="user.xml" />
+		</version>
 		<version key="cfmx701" label="ColdFusion MX 7.01">
 			<grammar location="cfml7.xml" />
 			<grammar location="user.xml" />
@@ -49,10 +57,6 @@
 		</version>
 		<version key="cfmx5" label="ColdFusion 5.0">
 			<grammar location="cfml5.xml" />
-			<grammar location="user.xml" />
-		</version>
-		<version key="bd70" label="BlueDragon 7.0">
-			<grammar location="cfmlBD70.xml" />
 			<grammar location="user.xml" />
 		</version>
 		<version key="bd621" label="BlueDragon 6.2.1">

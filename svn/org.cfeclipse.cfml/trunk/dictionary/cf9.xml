@@ -2575,6 +2575,20 @@ To use this attribute, you must also specify a bind attribute.
         ]]></help>
                 <values/>
             </parameter>
+            <parameter name="localurl" required="false" type="boolean">
+                <help><![CDATA[
+            Specifies whether to retrieve image files directly 
+            from the local drive:
+            * yes: ColdFusion retrieves image files directly from 
+                the local drive rather than by using HTTP, HTTPS, or proxy.
+            * no: ColdFusion uses HTTP, HTTPS, or proxy to retrieve 
+                image files even if the files are stored locally.
+        ]]></help>
+                <values default="false">
+                    <value option="true"/>
+                    <value option="false"/>
+                </values>
+            </parameter>
             <parameter name="overwrite" required="false" type="boolean">
                 <help><![CDATA[
             Specifies whether ColdFusion MX overwrites an
@@ -3106,7 +3120,7 @@ Text to put in the HTTP User-Agent request header field. Used to identify the re
         expand = "boolean"
         label = "text"
 -->
-        <tag endtagrequired="false" name="cfdump" single="false"
+        <tag endtagrequired="false" name="cfdump" single="true"
              xmlstyle="false">
             <help><![CDATA[
         Outputs the elements, variables and values of most kinds of
@@ -19404,7 +19418,7 @@ Used to specify the slide numbers required to export from ppt file
                 </combination>
             </possiblecombinations>
         </tag>
-        <tag creator="8" endtagrequired="true" name="cfthread"
+        <tag allowanyattribute="true" creator="8" endtagrequired="true" name="cfthread"
             single="false" xmlstyle="true">
             <help><![CDATA[
         The cfthread tag enables multithreaded programming in ColdFusion.
