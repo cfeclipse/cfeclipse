@@ -161,7 +161,11 @@ public class CFParser {
 	 *  (\w+)\s*=\s*(((\x22|\x27|#)((?!\4).|\4{2})*\4)((\s*&\s*\w+)*(\s*\&\s*((\x22|\x27|#)((?!\10).|\10{2})*\10))*(\s*&\s*\w+)*)*)
 	 */ 
 	//static protected final String REG_ATTRIBUTES = "(\\w+)\\s*=\\s*(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4)((\\s*&\\s*\\w+)*(\\s*\\&\\s*((\\x22|\\x27|#)((?!\\10).|\\10{2})*\\10))*(\\s*&\\s*\\w+)*)*)";
-	static protected final String REG_ATTRIBUTES = "(\\w+)?[\\s=]?((((\\w+ & )?\\x22|\\x27)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
+
+	// this was closest out of all so far
+	//static protected final String REG_ATTRIBUTES = "(\\w+)?[\\s=]?((((\\w+ & )?\\x22|\\x27)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
+	//peter's go at it
+	static protected final String REG_ATTRIBUTES = "(\\w++)?\\s*+=?\\s*+((((\\w++ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
 	
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
