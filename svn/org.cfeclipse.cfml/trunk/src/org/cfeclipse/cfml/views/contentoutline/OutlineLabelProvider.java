@@ -198,7 +198,7 @@ public class OutlineLabelProvider extends LabelProvider {
 				data = data.replaceAll(">","");
 				sb.append( data );
 			}
-			else
+			else if (!tname.equalsIgnoreCase("cffunction"))
 			{
 				//synchronized(syntax)
 				//{
@@ -222,6 +222,33 @@ public class OutlineLabelProvider extends LabelProvider {
 						}
 					}
 				//}
+			}
+			else if(tname.equalsIgnoreCase("cffunction")){
+				TagItem tagItem = (TagItem)element;
+				String name = tagItem.getAttributeValue("name");
+				String returnType = tagItem.getAttributeValue("returntype");
+				sb.append(name+" (");
+				Iterator kids = tagItem.getChildNodes().iterator();
+				while(kids.hasNext()) {
+					DocItem kid = (DocItem) kids.next();
+					if(kid instanceof TagItem && kid.getName().equals("cfargument")) {						
+						String argName = ((TagItem)kid).getAttributeValue("name");
+						String argType = ((TagItem)kid).getAttributeValue("type");
+						if(argType != null) {
+							sb.append(argType.replaceAll("^string$", "String").replaceAll("^any$", "Any").replaceAll("^struct$", "Struct"));
+						} else {
+							sb.append(argName);							
+						}
+						sb.append(", ");							
+					}
+				}
+				if(sb.charAt(sb.length()-2) == ',') {					
+					sb.setLength(sb.length()-2);
+				}
+				sb.append(")");
+				if(returnType != null) {
+					sb.append(" : "+returnType.replaceAll("^string$", "String").replaceAll("^void$", "Void").replaceAll("^any$", "Any").replaceAll("^struct$", "Struct"));
+				}
 			}
 			
 			return sb.toString();
