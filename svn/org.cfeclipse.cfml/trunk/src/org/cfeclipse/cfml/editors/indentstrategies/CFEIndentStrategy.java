@@ -181,7 +181,7 @@ public class CFEIndentStrategy extends DefaultIndentLineAutoEditStrategy {
 			// System.out.println(nextPartition);
 			if (nextPartition != null && prevPartition != null) {
 				if (prevPartition.getType().endsWith("end_tag") || prevPartition.getTagName().equals("cfset")) {
-					doIndent = false;
+					//doIndent = false;
 				}
 			}
 		}
