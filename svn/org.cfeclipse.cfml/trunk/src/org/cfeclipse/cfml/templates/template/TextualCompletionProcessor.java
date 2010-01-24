@@ -201,7 +201,7 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		// TODO: move these variables to the CFTemplateContext class
 		context.setVariable("selection", selectionText); // name of the selection variables {line, word}_selection //$NON-NLS-1$
 		if(((ICFDocument)doc).getCFDocument() != null) {			
-			context.setVariable("filename", ((ICFDocument)doc).getCFDocument().getFilename());
+			context.setVariable("currentfile", ((ICFDocument)doc).getCFDocument().getFilename());
 		}
 		boolean inChevron = false;
 		try {

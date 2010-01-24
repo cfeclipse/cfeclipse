@@ -61,7 +61,7 @@ public class CFTemplateContext extends DocumentTemplateContext {
 
   		StringBuffer indented = new StringBuffer();
 		String pattern = templateBuffer.getString();
-		String[] lines = pattern.split(fLineDelimiter);
+		String[] lines = pattern.replaceAll("\\r?(\\n)","$1").split("\\n");
 		int lineOffset = doc.getLineInformationOfOffset(selection.getOffset()).getOffset();
 		String soFar = doc.get(lineOffset, selection.getOffset() - lineOffset);
 		soFar = soFar.replaceAll("\\S", "");
