@@ -265,10 +265,10 @@ public abstract class CFEContentAssist extends AssistContributor implements IAss
 							/* TODO figure out how to do this properly. 
 							 * Right now the whole auto insertion thing is a mess that needs to be seriously thought out and refactored. 
 							 */ 
-							replacementString += "</"+name;
+							replacementString += "</"+name.substring(0,name.length()-1);
 						}
 						else {
-							replacementString += "</"+name;
+							replacementString += "</"+name.substring(0,name.length()-1);
 						}
 					}
 					
