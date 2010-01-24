@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         point="org.eclipse.ui.editors.templates">
+      <include
+      		file="templates_standard/cfml.xml"
+      		translations="$nl$/templates_standard/cfml.properties">
+      </include>
+   </extension>
+
+</fragment>
