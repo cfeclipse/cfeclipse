@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+	<template context="org.cfeclipse.cfml.templateeditor.cfscript"
+		description="%cfml.cfscript.templates.cfcomponent.desc" id="org.cfeclipse.cfml.cfscript.templateeditor.cfcomponent"
+		name="lala">&lt;cfcomponent displayname=&quot;${displayname}&quot;
+		hint=&quot;${hint}&quot;&gt;
+		this should give insight ${dst}
+		${cursor}
+		&lt;/cfcomponent&gt;</template>
+	<template context="org.cfeclipse.cfml.templateeditor.cfscript"
+		description="%cfml.cfscript.templates.cfcomponent.desc" id="org.cfeclipse.cfml.cfscript.templateeditor.todayis"
+		name="cfscriptis">
+		${cursor} ${date}
+	</template>
+
+</templates>
