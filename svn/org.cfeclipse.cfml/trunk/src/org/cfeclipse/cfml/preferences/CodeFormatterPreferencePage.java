@@ -98,8 +98,8 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		String labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_7;
 		String[] errorMessages= new String[]{CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_8, CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_9};
 		addTextField(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_MAX_LINE_LENGTH, 3, 0, errorMessages);
-//		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_10;
-//		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_WRAP_LONG, 1);
+		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_10;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_WRAP_LONG, 1);
 //		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_5;
 //		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_ALIGN, 1);
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_11;
