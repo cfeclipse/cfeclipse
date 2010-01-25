@@ -39,6 +39,7 @@ public class AutoIndentPreferencePage
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS, "Auto insert a closing tag", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_USE_SMART_INDENT, "Use smart indenting", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE, "Auto-indent on tag close", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_USE_SMART_PASTE, "Auto-indent pasted tags", getFieldEditorParent()));
 		}
 		catch (Exception e){
 			e.printStackTrace();

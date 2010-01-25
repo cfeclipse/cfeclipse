@@ -47,6 +47,8 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 	 */
 	public static final String P_AUTOINDENT_ONTAGCLOSE = "__autoIndentOnTagClose";
 
+	public static final String P_USE_SMART_PASTE = "__useSmartpaste";
+
 	/**
 	 * Sets the default values for the preferences managed by {@link AutoIndentPreferencePage}:
 	 * <ul>
@@ -73,6 +75,7 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_AUTOINSERT_CLOSE_TAGS, true);
 		store.setDefault(P_AUTOINDENT_ONTAGCLOSE,false);
 		store.setDefault(P_USE_SMART_INDENT,true);
+		store.setDefault(P_USE_SMART_PASTE,false);
 	}
 
 

@@ -68,6 +68,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	/** When to trigger the auto-indent strategy when the user is in a tag */
 	private int autoIndent_OnTagClose = INDENT_ONCLOSEDTAGENTER;
 
+	/** When to trigger the auto-indent strategy when the user is in a tag */
+	private boolean useSmartPaste = true;
+
 	/**
 	 * @param editor
 	 */
@@ -268,7 +271,6 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		// the fact we're inserting code IN the tag itself!
 		if (!autoCloseTag || nextChar != '>')
 			// System.out.println("Next char is a " + nextChar);
-			// if(!autoCloseTag)
 			closingTag += ">";
 
 		closingTag = "</" + closingTag;
@@ -526,7 +528,9 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			// carriage return)
 			if (docCommand.text.length() > 1
 					&& !isLineDelimiter(doc, docCommand.text)) {
-				smartPaste(doc, docCommand);
+				if(isUseSmartPaste()) {
+					smartPaste(doc, docCommand);
+				}
 				return;
 			}
 
@@ -1218,5 +1222,19 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	public void setAutoInsert_CloseTags(boolean autoInsert_CloseTags) {
 		this.autoInsert_CloseTags = autoInsert_CloseTags;
+	}
+
+	/**
+	 * @param useSmartPaste the useSmartPaste to set
+	 */
+	public void setUseSmartPaste(boolean useSmartPaste) {
+		this.useSmartPaste = useSmartPaste;
+	}
+
+	/**
+	 * @return the useSmartPaste
+	 */
+	public boolean isUseSmartPaste() {
+		return useSmartPaste;
 	}
 }

@@ -46,6 +46,7 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 	private CFPreviewerUpdater fPreviewerUpdater;
 	private CFMLEditor fEditor;
 	
+	@SuppressWarnings("unchecked")
 	protected OverlayPreferenceStore createOverlayStore() {
 		List overlayKeys= new ArrayList();
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_WRAP_LONG));
@@ -54,7 +55,11 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_TAB_WIDTH));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_CLOSE_TAGS));
-		
+
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_COLLAPSE_WHITESPACE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_INDENT_ALL_ELEMENTS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_TIDY_TAGS));
+
 		OverlayPreferenceStore.OverlayKey[] keys= new OverlayPreferenceStore.OverlayKey[overlayKeys.size()];
 		overlayKeys.toArray(keys);
 		return new OverlayPreferenceStore(getPreferenceStore(), keys);
@@ -101,6 +106,13 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CLOSE_TAGS, 1);
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_12;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_SQL, 1);
+
+		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_13;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_COLLAPSE_WHITESPACE, 1);
+		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_14;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_INDENT_ALL_ELEMENTS, 1);
+		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_15;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_TIDY_TAGS, 1);
 		
 		
 		Label label= new Label(result, SWT.LEFT);

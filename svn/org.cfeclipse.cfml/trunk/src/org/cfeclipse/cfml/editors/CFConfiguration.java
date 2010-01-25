@@ -930,6 +930,9 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
         	int indentValue = setting ? TagIndentStrategy.INDENT_ONTAGCLOSE : TagIndentStrategy.INDENT_DONTDOIT;
         	indentTagStrategy.setAutoIndent_OnTagClose(indentValue);
         }
+        else if(prop.equals(AutoIndentPreferenceConstants.P_USE_SMART_PASTE)) {
+    		indentTagStrategy.setUseSmartPaste(setting);
+        }
         else if(prop.equals(EditorPreferenceConstants.P_TAB_INDENTS_CURRENT_LINE)) {
         	indentTagStrategy.setTabIndentSingleLine(setting);
         	indentCFScriptStrategy.setTabIndentSingleLine(setting);

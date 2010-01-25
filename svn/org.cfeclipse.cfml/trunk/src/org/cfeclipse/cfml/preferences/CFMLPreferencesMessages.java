@@ -17,6 +17,10 @@ public class CFMLPreferencesMessages extends NLS {
 
 
 
+
+
+
+
 	public static String CFMLEditorPreferencePage_9;
 
 	public static String CFMLCodeFormatterPreferencePage_0;
@@ -32,6 +36,9 @@ public class CFMLPreferencesMessages extends NLS {
 	public static String CFMLCodeFormatterPreferencePage_10;
 	public static String CFMLCodeFormatterPreferencePage_11;
 	public static String CFMLCodeFormatterPreferencePage_12;
+	public static String CFMLCodeFormatterPreferencePage_13;
+	public static String CFMLCodeFormatterPreferencePage_14;
+	public static String CFMLCodeFormatterPreferencePage_15;
 
 	static {
 		// load message values from bundle file

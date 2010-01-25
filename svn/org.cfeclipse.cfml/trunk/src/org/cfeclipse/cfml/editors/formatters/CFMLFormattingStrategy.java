@@ -156,6 +156,9 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		source.ignoreWhenParsing(source.getAllElements(HTMLElementName.SCRIPT));
 
 		boolean enforceMaxLineWidth = prefs.getEnforceMaximumLineWidth();
+		boolean tidyTags = prefs.tidyTags();
+		boolean collapseWhitespace = prefs.collapseWhiteSpace();
+		boolean indentAllElements = prefs.indentAllElements();
 		int maxLineWidth = prefs.getMaximumLineWidth();
 
 		// displaySegments(source.getAllElements(HTMLElementName.SCRIPT));
@@ -169,9 +172,9 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 
 		SourceFormatter sourceFormatter = source.getSourceFormatter();
 		sourceFormatter.setIndentString(indentation);
-		sourceFormatter.setTidyTags(false);
-		sourceFormatter.setIndentAllElements(true);
-		sourceFormatter.setCollapseWhiteSpace(true);
+		sourceFormatter.setTidyTags(tidyTags);
+		sourceFormatter.setIndentAllElements(indentAllElements);
+		sourceFormatter.setCollapseWhiteSpace(collapseWhitespace);
 		sourceFormatter.setNewLine(newLine);
 		String results = sourceFormatter.toString();
 		if(prefs.getCloseTags()) {			

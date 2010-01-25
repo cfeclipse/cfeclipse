@@ -145,6 +145,12 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	public static final String FORMATTER_CLOSE_TAGS = "formatter_close_tags";
 
 	public static final String FORMATTER_FORMAT_SQL = "formatter_format_sql";
+
+	public static final String FORMATTER_TIDY_TAGS = "formatter_tidy_tags";
+
+	public static final String FORMATTER_COLLAPSE_WHITESPACE = "formatter_collapse_whitespace";
+
+	public static final String FORMATTER_INDENT_ALL_ELEMENTS = "formatter_indent_all_elements";
 		
 	/**
 	 * Sets the default values for the preferences managed by {@link EditorPreferencePage}:
@@ -209,6 +215,10 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		
 		store.setDefault(TEMPLATES_USE_CODEFORMATTER, true);
 		store.setDefault(FORMATTER_FORMAT_SQL, false);
+
+		store.setDefault(FORMATTER_TIDY_TAGS, false);
+		store.setDefault(FORMATTER_COLLAPSE_WHITESPACE, true);
+		store.setDefault(FORMATTER_INDENT_ALL_ELEMENTS, true);
 
 	}
 	

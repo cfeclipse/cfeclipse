@@ -1,1 +1,40 @@
-<cfcomponent name="fun" hint="have it"><cffunction name="whynot"><cfargument name="question" hint="good question"><cfset blah="foo"></cffunction><cfscript>blah = "wee";</cfscript><script language="javascript">wee=2;</script></cfcomponent>
+<cfcomponent name="fun" hint="have it"><cffunction name="whynot"><cfargument name="question" hint="good question"><cfset blah="foo"></cffunction><cfscript>blah = "wee";</cfscript><script language="javascript">wee=2;</script>
+<html>
+	<cffunction name="test">
+		<cfargument name="fred" test="test"/>
+		<cfscript>
+			WriteOutput("FREDFREDFRED");
+		</cfscript>
+		<cfif thisisatest is 1>
+			<cfoutput>asdfasdf</cfoutput>
+		</cfif>
+	</cffunction>
+<P>blah
+<ul><li>weet</ul>
+<script language="javascript">
+	already tabbed here
+	same here
+no tab
+		two tabs in
+</script>
+asdlfsdf
+alsdfkasdfasdfasdf
+	sdfasldfkj
+asdf
+
+	<cfset fred = 2/>
+	<cfset test(fred)/>
+	<cffunction name="test" >
+		<cfargument name="test" default="#WriteOutput("">"")#"/> <!--- I think this is valid! --->
+	</cffunction>
+	<cfoutput>
+		This is a <b>test</b>
+	</cfoutput>
+	<table>
+		<tr>
+			<td style="<cfoutput>#somethinghere#</cfoutput>">asdfasdf</td>
+			<td style="fred"></td>
+		</td>
+	</table>
+</html>
+</cfcomponent>
