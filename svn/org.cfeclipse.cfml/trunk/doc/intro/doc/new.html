@@ -28,11 +28,10 @@ significant changes made to CFEclipse. They are grouped into:</p>
 <ul>
 	<li><a href="#ContentAssist">Content Assist</a></li>
 	<li><a href="#CodeFormatter">Code Formatter</a></li>
-	<li><a href="#TextSelection">Text Selection</a></li>
+	<li><a href="#Editing">Editing</a></li>
 	<li><a href="#UniversalWelcome">Universal Welcome</a></li>
 	<li><a href="#UpdatedDictionaries">Updated Dictionaries</a></li>
-	<li><a href="#JIRAConnector">JIRA Connector</a></li>
-	<li><a href="#TracConnector">Trac Connector</a></li>
+	<li><a href="#OutlineView">Outline View</a></li>
 </ul>
 <br>
 <table cellpadding="10" cellspacing="0" width="600">
@@ -50,7 +49,7 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b> Proposal Categories </b></p>
 			</td>
-			<td valign="top"><i>Content Assist</i> has been updated to use <i>proposal
+			<td valign="top">Content Assist has been updated to use <i>proposal
 			categories</i>. Eventually this will give us finer-grained control over
 			what we propose and when.
 
@@ -61,154 +60,28 @@ significant changes made to CFEclipse. They are grouped into:</p>
 				<li>Eventually we will add a preference to filter the initial
 				list of proposals</li>
 			</ul>
-			<p><img src="images/1.3.5/tasklist-tree.gif">
+			<p><img src="../images/1.3.5/proposals.png">
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>Function Proposals</b></p>
 			</td>
-			<td valign="top">You can now get function proposals more places
-			<p><img src="images/2.0M3/ui-legend-connectors.gif">
+			<td valign="top">Function proposals are now a proposal category, and 
+			are available anywhere proposals are.  Their presentation has been
+			changed to a more intuitive format. 
+			<p><img src="../images/1.3.5/functionProposals.png">
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>In-page Function Proposals</b></p>
 			</td>
-			<td valign="top">The current document is now parsed for functions, and the function & arguments are added to the proposal list
-			<p><img src="images/2.0M3/tasks-content-assist.gif">
+			<td valign="top">The current document is now parsed for functions and
+			function arguments, any found are added to the function proposal
+			list.
+			<p>
 			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Task tooltips show changes</b></p>
-			</td>
-			<td valign="top">Task List tooltips now summarize incoming
-			changes, making it easier to scan for changes without opening the
-			task editor.&nbsp; Note that the popup menu can be used to mark tasks
-			read without opening.
-			<p><img src="images/2.0M3/task-tooltip-incoming.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Task Working Sets<br>
-			(Experimental)<br>
-			3.3 only</b></p>
-			</td>
-			<td valign="top">Categories and Queries can be added to a Task
-			Working Set.&nbsp; Switching Task Working Sets makes only the tasks
-			for that working set appear.&nbsp; This can be useful for those with
-			a large Task List, several non-overlapping projects, different sets
-			of tasks for different venues (e.g. home vs. work).&nbsp; For 2.0M3
-			switching working sets is only supported via the working set switcher
-			on the main toolbar.&nbsp; To switch to see only one working set you
-			need to Ctrl+click that working set, otherwise multiple will be
-			visible.&nbsp; The create a new Task Working Set use the <i>Edit...</i>
-			button visible below.
-			<p><img src="images/2.0M3/tasks-working-sets.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Offline Improvements</b></p>
-			</td>
-			<td valign="top">The offline support has been improved to be
-			more transparent.&nbsp; Offline data for all tasks, even unread ones,
-			is downloaded in the background, so before going offline all you need
-			to do is run one successful synchronization.&nbsp; If switching
-			frequently between being connected note that you can toggle
-			background synchronizations via the <i> Synchronize Automatically</i>
-			button in the <i>Task List</i> view menu.&nbsp; Opening repository
-			tasks is now much faster due to synchronization and offline
-			concurrency improvements.&nbsp; Any submission errors are now shown
-			on the task editor header (Eclipse 3.3) instead of the <i>Error
-			Log</i> view.&nbsp; Also note that the <i>History</i> button is now on
-			the toolbar and a <i>Submit </i>buttons has been added as well.
-			<p><img src="images/2.0M3/task-editor-error.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Task Editor Improvements</b></p>
-			</td>
-			<td valign="top">The performance of repository task opening has
-			improved dramatically because there are no more synchronous trips to
-			the server and all editor pages load lazily.&nbsp; If editor contents
-			become stale, the header will be updated as below (Eclipse 3.3) or a
-			dialog will show (Eclipse 3.2).&nbsp; The <i>Synchronize</i> button
-			on the right of the header retrieves the latest contents.&nbsp; There
-			have also been numerous layout and improvements.
-			<p><img src="images/2.0M2/task-editor-warning.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Hyperlinks in Text Editors<br>
-			(3.3 only)</b></p>
-			</td>
-			<td valign="top">Hyperlinks are now supported in all text
-			editors.&nbsp; Modify enablement or behavior via <i>Preferences
-			-&gt; General -&gt; Editors -&gt; Text Editors -&gt; Hyperlinking.</i>
-			<p><img src="images/2.0M2/hyperlinks-text.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Scheduled Task Presentation<br>
-			(Experimental)</b></p>
-			</td>
-			<td valign="top">The <i>Task Activity</i> view has been removed
-			and replaced by the <i>Scheduled</i> presentation of the <i>Task
-			List</i>.&nbsp; When in focused mode this presentation shows only the
-			tasks scheduled for the current workweek.&nbsp; Since unscheduled
-			query hits will not show, this makes it easier to work without
-			getting distracted by incoming items.&nbsp; To focus on the workday,
-			use the <i>Go Into</i> action on the day container.&nbsp; When the
-			focused mode is off, this presentation both past task activity and
-			tasks scheduled for the future.&nbsp;&nbsp;
-			<p><img src="images/2.0M2/tasklist-schedule.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Task Editor lifecycle streamlined</b></p>
-			</td>
-			<td valign="top">The <i>Task Editor</i> no longer closes on
-			submission, and instead shows progress while it synchronizes with the
-			repository. If incoming changes occur while editor is open the
-			refresh will preserve and mark any outgoing changes.&nbsp; In order
-			to clear outgoing changes use the context menu -&gt; <i>Mark </i>-&gt;
-			<i> Clear Outgoing</i>.&nbsp; If an editor is opened for a task not
-			in the <i> Task List </i>the <i>Add to Task List</i> action can be
-			used on the editor's context menu. Formatting of the editor has been
-			improved and uses the new form look on Eclipse 3.3.
-			<p><img src="images/2.0M1/task-editor-progress.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Hyperlinks in Java Editor<br>
-			(3.3 only)</b></p>
-			</td>
-			<td valign="top">References to tasks and bugs in the Java Editor
-			and now hyperlinked consistently with the Task Editor.&nbsp; The Task
-			Repository must be defined on the corresponding project (set via <i>Project
-			Properties </i>-&gt; <i>Task Repository</i>). References to tasks must be
-			moused over to turn into hyperlinks.
-			<p><img src="images/2.0M1/java-editor-hyperlink.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Drag and Drop improvements</b></p>
-			</td>
-			<td valign="top">To attach files to a repository task them onto
-			the Task Editor from a navigator view or operating system
-			window.&nbsp; Dragging a URL that corresponds to a task onto the Task
-			List will cause the corresponding task to be created and added to the
-			Task List, if the corresponding repository exists.</td>
 		</tr>
 		<tr>
 			<td colspan="2"><a name="CodeFormatter"></a>
@@ -217,40 +90,57 @@ significant changes made to CFEclipse. They are grouped into:</p>
 		</tr>
 		<tr>
 			<td valign="top">
-			<p align="right"><b>Platform Proxy Settings<br>
-			(3.3 only)</b></p>
+			<p align="right"><b>Overview</b></p>
 			</td>
-			<td valign="top">By default task repositories now use the global
-			platform proxy settings instead of the Platform Update
-			settings.&nbsp; These can be overridden per-repository.
-			<p><img src="images/2.0M2/repository-settings-proxy.gif">
+			<td valign="top">This implementation uses the Jericho HTML
+			library. It will do a decent job of formatting tag-based source, but
+			has no support for cfscript or javascript. Any text within these
+			elements will be left alone.</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Preferences</b></p>
+			</td>
+			<td valign="top">The preferences for changing the available code
+			formatting options are under <i>Preferences > CFEclipse > Code Style > Formatter</i>.
+			<p><img src="../images/1.3.5/formattingPrefs.png">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="Editing"></a>
+			<div style="font-size: 20px; font-weight: bold;">Editing</div>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
-			<p align="right"><b>Max hits settings removed</b></p>
+			<p align="right"><b>Occurrence Marking</b></p>
 			</td>
-			<td valign="top">The &quot;Max hits&quot; setting on task
-			repository queries has been removed since it was too easy to not
-			notice when the max was reached.</td>
-		</tr>
-		<tr>
-			<td colspan="2"><a name="TextSelection"></a>
-			<div style="font-size: 20px; font-weight: bold;">Text Selection</div>
+			<td valign="top"><i>Occurrence marking</i> has been refactored to be more
+			like JTD. The selection of the current word is controlled by the same
+			preferences that control the double-click text selection under
+			<i>Preferences > CFEclipse > Editor > Text Selection</i>
+			<p><img src="../images/1.3.5/markOccurrence.png">
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
-			<p align="right"><b>Hyperlinks in Annotations and History<br>
-			(3.3 only)</b></p>
+			<p align="right"><b>Rename in file</b></p>
 			</td>
-			<td valign="top">Team annotations, enabled in the Java editor
-			via popup menu -&gt; <i> Team -&gt; Show Annotation</i> now show
-			hyperlinked references to tasks.&nbsp; Note that you must press F2
-			for focus and Ctrl to activate the hyperlink.&nbsp; Task Hyperlinks
-			are also available in the <i>History</i> view.
-			<p><img src="images/2.0M3/team-hyperlinks-annotations.gif">
-			<p><img src="images/2.0M3/team-hyperlinks-history.gif">
+			<td valign="top">
+			The refactored occurrence marking enabled us to add a <i>Rename in file</i>
+			command.  The default key binding is <i>MOD1+2 R</i>.  This feature allows
+			you to quickly rename all of the currently marked occurrences.
+			<p><img src="../images/1.3.5/renameInFile.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Reconciler</b></p>
+			</td>
+			<td valign="top">
+			The editor now uses a reconciling strategy deal, which basically means the
+			document will be parsed after you stop changing it, vs. only when you save.
+			There should probably be a preference to turn this off.  But there isn't.  Yet.
 			</td>
 		</tr>
 		<tr>
@@ -262,218 +152,57 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b>Overview<br></p>
 			</td>
-			<td valign="top"><i>File -&gt; New -&gt; Other -&gt;
-			cfeclipse -&gt; UI Usage Report</i> will generate a report of your
-			perspective, view, preference, command and editor usage in
-			Eclipse.&nbsp; This reporting facility builds on the cfeclipse
-			Monitor used to study early releases of cfeclipse and has been
-			extended to upload statistics to the cfeclipse.eclipse.org server
-			where they can be accessed by all interested (via the button in the <i>
-			Actions</i> section).&nbsp; As before, we will be using these statistics
-			as input to evolving and improving the cfeclipse UI.&nbsp;
-			<p><i>UI Usage Reporting</i> is installable as a separate feature
-			that can be used independently of the rest of cfeclipse.&nbsp;
-			Currently it is only available to Eclipse 3.3 users but will be made
-			available to 3.2 users for the next release.&nbsp; If installed it
-			will ask to run once every three weeks, at which point you will see
-			statistics displayed as below.&nbsp; We then ask that you share your
-			usage data with the community, via the <i>Submit to Eclipse.org</i>
-			button, so that it can help inform Eclipse developers how the UI is
-			being used.&nbsp; Note that only interaction events that have IDs
-			starting with &quot;org.eclipse&quot; will be uploaded in order to
-			avoid having private ID names made public.&nbsp; Note that the
-			information gathered also includes interaction information about
-			elements, so to avoid sharing the IDs of private elements make sure
-			to leave on &quot;Obfuscate elements using SHA message digest one-way
-			hash&quot; via the <i>Preferences -&gt; cfeclipse -&gt; Usage
-			Data</i> page.&nbsp; More information on how the monitor works can be
-			found in <a
-				href="http://wiki.eclipse.org/index.php/cfeclipse_Integrator_Reference#Monitor_API">
-			Eclipsepedia</a>.</p>
-			<p><img src="images/2.0M3/ui-usage-report.gif">
+			<td valign="top">
+			CFEclipse now has some representation in the Universal Welcome
+			(the screen that shows up with a fresh workspace).
+			.</p>
+			<p><img src="../images/1.3.5/outlineView.png">
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>What's New</b></p>
 			</td>
-			<td valign="top">Task contexts are now dramatically quicker to
-			activate and provide a perfect restore of the editors that were
-			available when the task was deactivated.&nbsp; This includes
-			restoring the line numbers and selections of editors closed.&nbsp; As
-			a result there should be no more need to use the &quot;Pause
-			Capturing Context&quot; action and we are considering removing it
-			(comment on <a
-				href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=186874">bug
-			186874</a> if you still have a use case for it).</td>
+			<td valign="top">All this</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>Cheatsheets</b></p>
 			</td>
-			<td valign="top">There is now quick view of the task context
-			that&nbsp; similar to the Ctrl+O quick outline.&nbsp; Invoke it via <i>Navigate
-			-&gt; Quick Context view</i> or Ctrl+Alt+Shift+RightArrow.&nbsp; This
-			quick view can be used to show the task context when a navigator view
-			is not visible (e.g. in the <i>Debug</i> perspective) or when the
-			navigator view is not in filtered mode.
-			<p><img src="images/2.0M2/context-quick-view.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Retrieve from Attachments Table</b></p>
-			</td>
-			<td valign="top">The <i>Retrieve Context</i> action on the
-			attachments table can be used to bypass the <i>Retrieve Context</i>
-			wizard.
-			<p><img src="images/2.0M2/context-apply-attachments.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Add to Task Context from Synchronize View</b></p>
-			</td>
-			<td valign="top">The <i>Add to Task Context</i> action can be
-			invoked on change sets or resources that appear in the <i>Synchronize
-			</i>view.&nbsp; This can be useful when an incoming change set should be
-			reviewed but has no corresponding task context or when outgoing
-			changes have no task context, e.g. if applied from a patch with no
-			context attached.
-			<p><img src="images/2.0M2/synchronize-view-add.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Task Context editor</b></p>
-			</td>
-			<td valign="top">The <i>Context</i> tab on the Task Editor
-			provides a preview of the task context contents.&nbsp; This facility
-			can be used to remove elements and edit their interest, for example,
-			before sharing the context with others. When first opened this view
-			will show all of the elements in the task context that have a
-			corresponding content provider (e.g. Java elements and files). For
-			long-running tasks this can cause a large number of elements that
-			have decayed in interest to show.&nbsp; The filter slider bar can be
-			used to adjust degree-of-interest threshold to show only the most
-			interesting elements.
-			<p><img src="images/2.0M1/task-context-editor.gif">
+			<td valign="top">There is a cheatsheet with this release, but it is currently useless.
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2"><a name="UpdatedDictionaries"></a>
-			<div style="font-size: 20px; font-weight: bold;">updated</div>
+			<div style="font-size: 20px; font-weight: bold;">Updated Dictionaries</div>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
-			<p align="right"><b>Dependencies show as subtasks<br>
-			(Experimental)</b></p>
+			<p align="right"><b>ColdFusion</b></p>
 			</td>
-			<td valign="top">If a bug A is set to &quot;depend on&quot; B,
-			bug B will be shown as a subtask of A.&nbsp; This supports creating
-			dependent bugs to indicate that the work is not completed until all
-			dependent bugs are done.&nbsp; Enable this functionality by toggling
-			off <i>Filter Subtasks</i> in the <i>Task List</i> view menu.
-			<p><img src="images/2.0M3/bugzilla-subtasks.gif">
+			<td valign="top">The dictionaries for ColdFusion versions 5 through 8 have been updated, and a dictionary for version 9 has been added.
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
-			<p align="right"><b>Shared Due Dates and Time Tracking</b></p>
+			<p align="right"><b>Railo</b></p>
 			</td>
-			<td valign="top">If Time Tracking is enabled on the repository,
-			shared due dates can be scheduled.&nbsp; When the due date arrives
-			the task will get a small red bell overlay in its upper-right
-			corner.&nbsp; Personal scheduled for dates can be used independently
-			of due dates.&nbsp; Tasks with due dates that are not past will have
-			a blue bell overlay instead.&nbsp; If the time tracking is not
-			enabled, or not supported by the repository, due dates can be used
-			locally as with personal tasks.&nbsp;
-			<p><img src="images/2.0M2/bugzilla-due-dates.gif">
+			<td valign="top">An initial dictionary for Railo 3 has been added.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="OutlineView"></a>
+			<div style="font-size: 20px; font-weight: bold;">Outline View</div>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
-			<p align="right"><b>Local user names</b></p>
+			<p align="right"><b>Display</b></p>
 			</td>
-			<td valign="top">If your Bugzilla repository is configured to
-			use local user IDs rather than full email IDs enable the
-			corresponding option on the <i> Task Repository </i>properties page.
-			<p><img src="images/2.0M1/bugzilla-local-users.gif">
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2"><a name="JIRAConnector"></a>
-			<div style="font-size: 20px; font-weight: bold;">JIRA Connector</div>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Attachment support</b></p>
-			</td>
-			<td valign="top">The JIRA task editor now supports attachments,
-			both for files and for task contexts.&nbsp; Submission errors are now
-			displayed instead of failing silently.
+			<td valign="top">The outline view has been refactored to provide more
+			usefual information.
 			<p><img src="images/2.0M3/jira-attachments.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Hyperlinks in Java Editor<br>
-			(3.3 only)</b></p>
-			</td>
-			<td valign="top">If a JIRA repository is set as the task
-			repository on a project hyperlinking will work per task key.
-			<p><img src="images/2.0M2/jira-java-hyperlinks.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Proxies and Http Auth</b></p>
-			</td>
-			<td valign="top">The JIRA Connector now supports proxy settings
-			and http auth.&nbsp; In addition, there have been numerous bug fixes
-			of connectivity and rich editor support.</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Hyperlinks in Task Editor</b></p>
-			</td>
-			<td valign="top">References to JIRA issue keys are now
-			hyperlinked.
-			<p><img src="images/2.0M1/jira-editor-hyperlink.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>JIRA Core Services</b></p>
-			</td>
-			<td valign="top">The JIRA feature will now install without
-			requiring additional downloads from Tigris.org.</td>
-		</tr>
-		<tr>
-			<td colspan="2"><a name="TracConnector"></a>
-			<div style="font-size: 20px; font-weight: bold;">Trac Connector</div>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Hyperlinks in Task Editor<br>
-			(3.3 only)</b></p>
-			</td>
-			<td valign="top">Trac hyperlinks are now supported in the task
-			editor.
-			<p><img src="images/2.0M2/trac-hyperlinks.gif">
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Custom Fields</b></p>
-			</td>
-			<td valign="top">
-			<p class="MsoPlainText">Trac now supports the selection from a
-			list of pre-defined values for custom fields.</p>
 			</td>
 		</tr>
 	</tbody>
