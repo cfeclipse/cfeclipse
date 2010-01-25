@@ -190,6 +190,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		results = results.replaceAll("(?s)<(cfcomponent[^>]*)>", "<$1>" + newLine);
 		results = results.replaceAll("(?s)(\\s+)<(/cfcomponent[^>]*)>", newLine + "$1<$2>");
 		results = results.replaceAll("(?s)(\\s+)<(cffunction[^>]*)>", newLine + "$1<$2>");
+		results = results.replaceAll(newLine+newLine+"(\\s+)<cffunction", newLine+"$1<cffunction");
 		results = results.replaceAll(indentation + "<cfelse", "<cfelse");
 		// indent to whatever the current level is, split long lines
 		String[] lines = results.split(newLine);

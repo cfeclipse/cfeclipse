@@ -85,23 +85,23 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		layout.marginWidth= 0;
 		result.setLayout(layout);
 		
-		Group indentationGroup= createGroup(numColumns, result, CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_0);
-		
-		String labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_1;
-		String[] errorMessages= new String[]{CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_2, CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_3};
-		addTextField(indentationGroup, labelText, EditorPreferenceConstants.P_TAB_WIDTH, 3, 0, errorMessages);
-		
-		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_4;
-		addCheckBox(indentationGroup, labelText, EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS, 1);
+//		Group indentationGroup= createGroup(numColumns, result, CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_0);
+//		
+//		String labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_1;
+//		String[] errorMessages= new String[]{CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_2, CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_3};
+//		addTextField(indentationGroup, labelText, EditorPreferenceConstants.P_TAB_WIDTH, 3, 0, errorMessages);
+//		
+//		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_4;
+//		addCheckBox(indentationGroup, labelText, EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS, 1);
 		
 		Group wrappingGroup= createGroup(numColumns, result, CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_6);
-		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_7;
-		errorMessages= new String[]{CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_8, CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_9};
+		String labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_7;
+		String[] errorMessages= new String[]{CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_8, CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_9};
 		addTextField(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_MAX_LINE_LENGTH, 3, 0, errorMessages);
-		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_10;
-		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_WRAP_LONG, 1);
-		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_5;
-		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_ALIGN, 1);
+//		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_10;
+//		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_WRAP_LONG, 1);
+//		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_5;
+//		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_ALIGN, 1);
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_11;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CLOSE_TAGS, 1);
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_12;
