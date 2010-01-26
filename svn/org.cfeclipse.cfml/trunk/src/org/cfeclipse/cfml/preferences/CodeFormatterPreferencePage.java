@@ -121,9 +121,9 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_16;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE, 1);
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_17;
-		addRadioButton(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_LOWER, 2);
+		addRadioButton(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_LOWER, 15);
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_18;
-		addRadioButton(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_UPPER, 2);
+		addRadioButton(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_UPPER, 15);
 		
 		Label label= new Label(result, SWT.LEFT);
 		label.setText(CFMLPreferencesMessages.CFMLEditorPreferencePage_9);

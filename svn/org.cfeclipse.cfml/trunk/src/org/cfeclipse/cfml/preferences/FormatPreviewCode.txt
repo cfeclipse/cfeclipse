@@ -1,7 +1,7 @@
-<cfcomponent name="fun" hint="have it"><cffunction name="whynot"><cfargument name="question" hint="good question"><cfset blah="foo"></cffunction><cfscript>blah = "wee";</cfscript><script language="javascript">wee=2;</script>
+<cfcomponent name="fun" hint="have it"><cffunction name="whynot"><cfargument NAME="question" hint="good question"><cfset blah="foo"></cffunction><cfscript>blah = "wee";</cfscript><script language="javascript">wee=2;</script>
 <html>
 	<cffunction name="test">
-		<cfargument name="fred" test="test"/>
+		<CFARGUMENT name="fred" TEST="test"/>
 		<cfscript>
 			WriteOutput("FREDFREDFRED");
 		</cfscript>
@@ -11,16 +11,16 @@
 	</cffunction>
 <P>blah
 <ul><li>weet</ul>
+asdlfsdf
+alsdfkasdfasdfasdf
+	sdfasldfkj
+asdf
 <script language="javascript">
 	already tabbed here
 	same here
 no tab
 		two tabs in
 </script>
-asdlfsdf
-alsdfkasdfasdfasdf
-	sdfasldfkj
-asdf
 
 	<cfset fred = 2/>
 	<cfset test(fred)/>
