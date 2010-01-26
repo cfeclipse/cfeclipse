@@ -20,14 +20,16 @@
 
 package org.cfeclipse.cfml.editors.formatters.jericho;
 
+import net.htmlparser.jericho.EndTagType;
 import net.htmlparser.jericho.StartTagTypeGenericImplementation;
 
  // note this has the same startdelimiter as processing instruction, so overrides it if registered
- final class StartTagTypeCFMLShort extends StartTagTypeGenericImplementation {
-	protected static final StartTagTypeCFMLShort INSTANCE=new StartTagTypeCFMLShort();
+ final class StartTagTypeCfFunction extends StartTagTypeGenericImplementation {
+	protected static final StartTagTypeCfFunction INSTANCE=new StartTagTypeCfFunction();
 
-	private StartTagTypeCFMLShort() {
-		super("CFML short tag","<?","?>",null,true);
+	private StartTagTypeCfFunction() {
+		//super("CFSET","<cfset",">",null,true,false,false);
+		super("CFML short tag","<cffunction",">",EndTagType.NORMAL,false,true,true);
 	}
 }
 

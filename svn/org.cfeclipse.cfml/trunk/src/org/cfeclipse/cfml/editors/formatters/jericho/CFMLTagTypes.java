@@ -105,7 +105,6 @@ public final class CFMLTagTypes {
 	 *   <dd><code>&lt;? echo '&lt;p&gt;Hello World&lt;/p&gt;'; ?&gt;</code></dd>
 	 * </dl>
 	 */
-	public static final StartTagType CFML_SHORT=StartTagTypeCFMLShort.INSTANCE;
 
 	/**
 	 * The tag type given to a 
@@ -140,15 +139,16 @@ public final class CFMLTagTypes {
 	public static final StartTagType CFML_ARGUMENT=StartTagTypeCfArgument.INSTANCE;
 	public static final StartTagType CFML_INCLUDE=StartTagTypeCfInclude.INSTANCE;
 	public static final StartTagType CFML_INPUT=StartTagTypeCfInput.INSTANCE;
+	public static final StartTagType CFML_FUNCTION=StartTagTypeCfFunction.INSTANCE;
 
 	private static final TagType[] TAG_TYPES={
 		CFML_STANDARD,
-		CFML_SHORT,
 		CFML_COMMENT,
 		CFML_SET,
 		CFML_IF,
 		CFML_ELSE,
 		CFML_ELSEIF,
+		CFML_FUNCTION,
 		CFML_ARGUMENT,
 		CFML_INCLUDE,
 		CFML_INPUT,

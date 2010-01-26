@@ -29,7 +29,7 @@ import net.htmlparser.jericho.StartTagTypeGenericImplementation;
 
 	private StartTagTypeCfElseIf() {
 		//super("CFSET","<cfset",">",null,true,false,false);
-		super("CFML short tag","<cfelse",">",null,false);
+		super("CFML short tag","<cfelse",">",null,false,false,true);
 	}
 }
 

@@ -60,14 +60,17 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 				StringBuffer currentIndent = XmlDocumentFormatter.getLeadingWhitespace(region.getOffset(), document);
 				String formattedText = format(regionText, currentIndent.toString());
 				int lineOffset = document.getLineInformationOfOffset(region.getOffset()).getOffset();
-//				String formattedText = format(regionText, "");
+				// String formattedText = format(regionText, "");
 				if (formattedText != null && !formattedText.equals(regionText)) {
 					int newLength = region.getLength() + (region.getOffset() - lineOffset);
 					document.replace(lineOffset, newLength, formattedText);
-//					ITextEditor editor = (ITextEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-//					IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
-//					TextSelection selection = new TextSelection(doc, lineOffset, 10);
-//					editor.getSelectionProvider().setSelection(selection);
+					// ITextEditor editor =
+					// (ITextEditor)CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+					// IDocument doc =
+					// editor.getDocumentProvider().getDocument(editor.getEditorInput());
+					// TextSelection selection = new TextSelection(doc,
+					// lineOffset, 10);
+					// editor.getSelectionProvider().setSelection(selection);
 				}
 			} catch (BadLocationException e) {
 				// TODO Auto-generated catch block
@@ -159,6 +162,9 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		boolean tidyTags = prefs.tidyTags();
 		boolean collapseWhitespace = prefs.collapseWhiteSpace();
 		boolean indentAllElements = prefs.indentAllElements();
+		boolean changeTagCase = prefs.changeTagCase();
+		boolean changeTagCaseUpper = prefs.changeTagCaseUpper();
+		boolean changeTagCaseLower = prefs.changeTagCaseLower();
 		int maxLineWidth = prefs.getMaximumLineWidth();
 
 		// displaySegments(source.getAllElements(HTMLElementName.SCRIPT));
@@ -177,22 +183,29 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		sourceFormatter.setCollapseWhiteSpace(collapseWhitespace);
 		sourceFormatter.setNewLine(newLine);
 		String results = sourceFormatter.toString();
-		if(prefs.getCloseTags()) {			
-			results = results.replaceAll("(?s)<(cfabort?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?s)<(cfargument?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?s)<(cfreturn?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?s)<(cfset?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?s)<(cfinput?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?s)<(cfimport?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?s)<(cfdump?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?s)<(cfthrow?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
+		if (changeTagCase) {
+			if (changeTagCaseLower) {
+				results = changeTagCase(results, false);
+			} else {
+				results = changeTagCase(results, true);
+			}
 		}
-		results = results.replaceAll("(?s)<(cfcomponent[^>]*)>", "<$1>" + newLine);
-		results = results.replaceAll("(?s)(\\s+)<(/cfcomponent[^>]*)>", newLine + "$1<$2>");
-		results = results.replaceAll("(?s)(\\s+)<(cffunction[^>]*)>", newLine + "$1<$2>");
-		results = results.replaceAll(newLine+newLine+"(\\s+)<cffunction", newLine+"$1<cffunction");
-		results = results.replaceAll(indentation + "<cfelse", "<cfelse");
-		// indent to whatever the current level is, split long lines
+		if (prefs.getCloseTags()) {
+			results = results.replaceAll("(?si)<(cfabort?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
+			results = results.replaceAll("(?si)<(cfargument?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
+			results = results.replaceAll("(?si)<(cfreturn?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
+			results = results.replaceAll("(?si)<(cfset?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
+			results = results.replaceAll("(?si)<(cfinput?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
+			results = results.replaceAll("(?si)<(cfimport?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
+			results = results.replaceAll("(?si)<(cfdump?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
+			results = results.replaceAll("(?si)<(cfthrow?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
+		}
+		results = results.replaceAll("(?si)<(cfcomponent[^>]*)>", "<$1>" + newLine);
+		results = results.replaceAll("(?si)(\\s+)<(/cfcomponent[^>]*)>", newLine + "$1<$2>");
+		results = results.replaceAll("(?si)(\\s+)<(cffunction[^>]*)>", newLine + "$1<$2>");
+		results = results.replaceAll("(?i)" + newLine + newLine + "(\\s+)<(cffunction)", newLine + "$1<$2");
+		results = results.replaceAll("(?i)" + indentation + "<(cfelse)", "<$1");
+		// indent to whatever the current level is
 		String[] lines = results.split(newLine);
 		StringBuffer indented = new StringBuffer();
 		for (int x = 0; x < lines.length; x++) {
@@ -207,6 +220,41 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		} else {
 			return formatLineLength(indented.toString(), maxLineWidth);
 		}
+	}
+
+	public String changeTagCase(String contents, boolean uppercase) {
+		Source source = new Source(contents);
+		source.fullSequentialParse();
+		OutputDocument outputDocument = new OutputDocument(source);
+		List<Tag> tags = source.getAllTags();
+		int pos = 0;
+		for (Tag tag : tags) {
+			Element tagElement = tag.getElement();
+			if (tagElement == null) {
+				System.out.println(tag.getName());
+			} else {
+				StartTag startTag = tagElement.getStartTag();
+				Attributes attributes = startTag.getAttributes();
+				if (attributes != null) {
+					for (Attribute attribute : startTag.getAttributes()) {
+						if (uppercase) {
+							outputDocument.replace(attribute.getNameSegment(), attribute.getNameSegment().toString()
+									.toUpperCase());
+						} else {
+							outputDocument.replace(attribute.getNameSegment(), attribute.getNameSegment().toString()
+									.toLowerCase());
+						}
+					}
+				}
+				if (uppercase) {
+					outputDocument.replace(tag.getNameSegment(), tag.getNameSegment().toString().toUpperCase());
+				} else {
+					outputDocument.replace(tag.getNameSegment(), tag.getNameSegment().toString().toLowerCase());
+				}
+				pos = tag.getEnd();
+			}
+		}
+		return outputDocument.toString();
 	}
 
 	public String format(String contents, String currentIndent) {
@@ -251,31 +299,31 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 			for (Tag tag : source.getAllTags()) {
 				if (pos != tag.getBegin()) {
 					print(line.subSequence(pos, tag.getBegin()), indented); // print
-																			// the
-																			// text
-																			// between
-																			// this
-																			// tag
-																			// and
-																			// the
-																			// last
+					// the
+					// text
+					// between
+					// this
+					// tag
+					// and
+					// the
+					// last
 				}
 				formatTag(tag, line, indented);
 				pos = tag.getEnd();
 			}
 			if (pos != line.length()) {
 				print(line.subSequence(pos, line.length()), indented); // print
-																		// the
-																		// text
-																		// between
-																		// the
-																		// last
-																		// tag
-																		// and
-																		// the
-																		// end
-																		// of
-																		// line
+				// the
+				// text
+				// between
+				// the
+				// last
+				// tag
+				// and
+				// the
+				// end
+				// of
+				// line
 			}
 			indented.append(newLine);
 			if (col == 0)

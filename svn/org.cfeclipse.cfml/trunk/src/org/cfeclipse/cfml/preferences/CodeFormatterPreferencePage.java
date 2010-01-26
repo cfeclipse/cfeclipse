@@ -60,6 +60,10 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_INDENT_ALL_ELEMENTS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_TIDY_TAGS));
 
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_UPPER));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_LOWER));
+		
 		OverlayPreferenceStore.OverlayKey[] keys= new OverlayPreferenceStore.OverlayKey[overlayKeys.size()];
 		overlayKeys.toArray(keys);
 		return new OverlayPreferenceStore(getPreferenceStore(), keys);
@@ -114,6 +118,12 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_15;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_TIDY_TAGS, 1);
 		
+		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_16;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE, 1);
+		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_17;
+		addRadioButton(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_LOWER, 2);
+		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_18;
+		addRadioButton(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_UPPER, 2);
 		
 		Label label= new Label(result, SWT.LEFT);
 		label.setText(CFMLPreferencesMessages.CFMLEditorPreferencePage_9);

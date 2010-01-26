@@ -15,12 +15,6 @@ public class CFMLPreferencesMessages extends NLS {
 	private static final String BUNDLE_NAME = "org.cfeclipse.cfml.preferences.CFMLPreferencesMessages";//$NON-NLS-1$
 
 
-
-
-
-
-
-
 	public static String CFMLEditorPreferencePage_9;
 
 	public static String CFMLCodeFormatterPreferencePage_0;
@@ -39,6 +33,10 @@ public class CFMLPreferencesMessages extends NLS {
 	public static String CFMLCodeFormatterPreferencePage_13;
 	public static String CFMLCodeFormatterPreferencePage_14;
 	public static String CFMLCodeFormatterPreferencePage_15;
+	public static String CFMLCodeFormatterPreferencePage_16;
+	public static String CFMLCodeFormatterPreferencePage_17;
+	public static String CFMLCodeFormatterPreferencePage_18;
+	public static String CFMLCodeFormatterPreferencePage_19;
 
 	static {
 		// load message values from bundle file

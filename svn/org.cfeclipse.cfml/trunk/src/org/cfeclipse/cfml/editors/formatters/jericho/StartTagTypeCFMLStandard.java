@@ -20,13 +20,14 @@
 
 package org.cfeclipse.cfml.editors.formatters.jericho;
 
+import net.htmlparser.jericho.EndTagType;
 import net.htmlparser.jericho.StartTagTypeGenericImplementation;
 
 final class StartTagTypeCFMLStandard extends StartTagTypeGenericImplementation {
 	protected static final StartTagTypeCFMLStandard INSTANCE=new StartTagTypeCFMLStandard();
 
 	private StartTagTypeCFMLStandard() {
-		super("cf standard tag","<cf",">",null,false);
+		super("cf standard tag","<cf",">",EndTagType.NORMAL,false);
 	}
 }
 

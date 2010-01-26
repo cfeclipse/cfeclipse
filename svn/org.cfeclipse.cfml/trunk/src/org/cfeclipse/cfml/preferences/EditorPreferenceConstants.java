@@ -151,7 +151,11 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	public static final String FORMATTER_COLLAPSE_WHITESPACE = "formatter_collapse_whitespace";
 
 	public static final String FORMATTER_INDENT_ALL_ELEMENTS = "formatter_indent_all_elements";
-		
+
+	public static final String FORMATTER_CHANGE_TAG_CASE = "formatter_change_tag_case";
+	public static final String FORMATTER_CHANGE_TAG_CASE_UPPER = "formatter_uppercase_tags";
+	public static final String FORMATTER_CHANGE_TAG_CASE_LOWER = "formatter_lowercase_tags";
+
 	/**
 	 * Sets the default values for the preferences managed by {@link EditorPreferencePage}:
 	 * <ul>
@@ -220,6 +224,10 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(FORMATTER_COLLAPSE_WHITESPACE, true);
 		store.setDefault(FORMATTER_INDENT_ALL_ELEMENTS, true);
 
+		store.setDefault(FORMATTER_CHANGE_TAG_CASE, false);
+		store.setDefault(FORMATTER_CHANGE_TAG_CASE_UPPER, false);
+		store.setDefault(FORMATTER_CHANGE_TAG_CASE_LOWER, true);		
+		
 	}
 	
 	
