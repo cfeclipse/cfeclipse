@@ -1,0 +1,54 @@
+CFEclipseCall is a custom EclipseCall client for OS X, used to open files with 
+cfm, cfc, and cfml file extensions in Eclipse.
+
+It also gives them a nifty icon on the filesystem.
+
+INSTALLATION
+
+First install the EclipseCall plugin into the Eclipse instance you want to use.
+
+Eclipse Update site:   http://www.jaylib.org/EclipseCall
+
+Copy the CFEclipseCall app bundle to wherever you want to keep it.
+
+Then edit the properties.eclipsecall file to point at your Eclipse executable.
+
+I use a .sh script, but you can specify the eclipse executable like so:
+
+/Applications/Eclipse.app/Contents/MacOS/eclipse
+
+Assuming you've got it installed in /Applications.  
+
+You can context-click on the Eclipse icon and select "Show Package Contents", 
+browse to Contents/MacOS/ and do "get info" on the eclipse file to get the path
+if you need to.
+
+The properties.eclipsecall contents should look something like this:
+
+eclipsecall.call=/Users/denny/programs/eclipse-inst/eclipse35.command
+eclipsecall.socket=2341  
+
+Then double-click on the CFEclipseCall app, which will set the file association
+for CFML files, and import (hopefully) your properties.eclipsecall settings.
+
+Then double-click a CFML file and pray it opens in Eclipse!
+
+The eclipsecall.call property is used for launching Eclipse if the EclipseCall
+client can't connect to the EclipseCall plugin in a running instance.
+
+If you change eclipsecall.socket property you need to change the socket for the 
+EclipseCall plugin under Preferences > EclipseCall as well.
+
+APPENDIX
+
+This is what my eclipse35.command script looks like (I used .command just for
+an Eclipse icon on the script, silly, I know):
+
+workspace="~/workspace/cf"
+~/programs/eclipse-inst/eclipse3.5/Eclipse.app/Contents/MacOS/eclipse \
+-data $workspace -clean \
+-vmargs \
+ -Djava.library.path=/opt/local/lib \
+ -Xverify:none -XX:+UseParallelGC  \
+ -XX:PermSize=128M -XX:MaxNewSize=128M \
+ -XX:NewSize=128M -Xmx612m -Xms612m $*

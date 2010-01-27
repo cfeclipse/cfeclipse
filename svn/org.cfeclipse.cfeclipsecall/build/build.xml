@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="cfeclipsecall" default="dist" basedir=".">
+
+	<property name="dist.dir" location="../dist/CFEclipseCall"/>
+	<property name="dmg.name" value="CFEclipseCall" />
+	<property name="dmg.content.name" value="${dmg.name}" />
+	<property name="dmg.content.dir" value="../dist/" />
+
+	<property name="jarbundler.jar" location="./lib/jarbundler-2.1.0.jar"/>
+	<property name="antfarm.jar" location="./lib/antfarm.jar"/>
+	<property name="version" value="4.3.1"/>
+	<property name="buildnumber" value="213"/>
+	<property name="copyright" value="Woohoo"/>
+
+	<target name="compile">
+		<javac srcdir="../src" destdir="../bin" deprecation="on" source="1.4"/>
+	</target>
+
+	<target name="jar" depends="compile">
+		<mkdir dir="${dist.dir}"/>
+		<jar destfile="${dist.dir}/${ant.project.name}.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="org.cfeclipse.cfeclipsecall.CallClient" />
+				<attribute name="Class-Path" value="." />
+			</manifest>
+			<fileset dir="../bin" />
+		</jar>
+	</target>
+
+	<!-- Create a JNI library for launching the Help Viewer -->
+	<target name="jni"  description="Create HelpBook JNI Library">
+		<mkdir dir="build"/>
+		<exec executable="cc">
+			<arg line="-c"/>
+			<arg line="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
+			<arg line="-o build/HelpBookJNI.o"/>
+			<arg value="src/obj-c/HelpBookJNI.m"/>
+		</exec>
+
+		<exec executable="cc">
+			<arg line="-dynamiclib"/>
+			<arg line="-framework JavaVM"/>
+			<arg line="-framework Cocoa"/>
+			<arg line="-o build/libHelpBookJNI.jnilib"/>
+			<arg value="build/HelpBookJNI.o"/>
+		</exec>
+
+		<delete file="build/HelpBookJNI.o" quiet="true"/>
+	</target>
+
+	
+	<target name="dist" depends="jar" description="Build an example application">
+
+		<taskdef name="jarbundler"
+             classpath="${jarbundler.jar}" 
+             classname="net.sourceforge.jarbundler.JarBundler"/>
+
+		<taskdef name="osacompile" classname="com.fivevoltlogic.antfarm.OSACompile" classpath="${antfarm.jar}" />
+		<taskdef name="osascript" classname="com.fivevoltlogic.antfarm.OSAScript" classpath="${antfarm.jar}" />
+
+		<jarbundler dir="${dist.dir}" verbose="true" showPlist="false"
+                name="CFEclipseCall"
+                shortname="cfeclipsecall"
+                signature="CFeclipseCall"
+                stubfile="cfeclipsecall"
+					      jar="${dist.dir}/${ant.project.name}.jar"
+					      mainclass="org.cfeclipse.cfeclipsecall.CallClient"
+					      icon="icons/${ant.project.name}.icns"
+                jvmversion="1.4+"
+                version="${version}"
+                infostring="${ant.project.name}, ${copyright}"
+                build="${buildnumber}"
+                bundleid="org.cfeclipse.cfeclipsecall.CallClient" 
+                >
+
+			<!-- Adjust the look, feel and behavior
+      <javaproperty name="apple.laf.useScreenMenuBar" value="true"/>
+      <javaproperty name="apple.awt.brushMetal" value="true"/>
+      <javaproperty name="apple.awt.showGrowBox" value="false"/>
+       -->
+
+			<!-- Associate document types with this application -->
+			<documenttype name="CFML document"
+                    extensions="cfm cfc cfml" 
+						        ostypes="TEXT sEXT ttro" 
+                    iconFile="icons/${ant.project.name}.icns"
+                    role="Editor"/>
+
+			<documenttype name="CFEclipseCall properties file"
+                    extensions="eclipsecall" 
+						        ostypes="TEXT sEXT ttro" 
+                    iconFile="icons/${ant.project.name}.icns"
+                    role="Editor"/>
+
+			<!-- Just proving we can included these files.  Might use them in About boxes
+      <resourcefilelist dir=".." files="LICENSE.TXT"/>
+       -->
+
+			<!-- Copy the HelpBook JNI library 
+      <javafilelist dir="${basedir}/build" files="libHelpBookJNI.jnilib"/>
+       -->
+
+
+			<!-- Copy the HelpBooks to the language specific folders            -->
+			<!--  English will use the foldername and book name from the Bundle -->
+			<!--  German or 'de' will use the custom folder name and book name  -->
+
+			<!-- 
+      <HelpBook locale="English">
+      	<fileset dir="HelpBook/English" />
+      	<fileset dir="HelpBook/common" />
+      </HelpBook>
+   
+      <helpbook foldername="Hilfebuch" name="Hallo Welt Hilfe" locale="German">
+      	<fileset dir="HelpBook/German" />
+      	<fileset dir="HelpBook/common" />
+      </helpbook>
+
+      <helpbook name="Hjälp" locale="sv">
+      	<fileset dir="HelpBook/Swedish" />
+      	<fileset dir="HelpBook/common" />
+      </helpbook>
+-->
+
+
+		</jarbundler>
+
+	</target>
+
+	<target name="clean" description="Clean up anything we can't rebuild">
+		<delete dir="${dist.dir}" quiet="true"/>
+	</target>
+
+	<import file="./build-dmg.xml"/>
+	
+</project>
+
+<!--
+cc -c -I/System/Library/Frameworks/JavaVM.framework/Headers src/obj-c/HelpBookJNI.m
+cc -dynamiclib -o libHelpBookJNI.jnilib HelpBookJNI.o -framework JavaVM -framework Cocoa
+-->
+
+
