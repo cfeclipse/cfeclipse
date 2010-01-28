@@ -194,7 +194,7 @@ class ListenerProxy implements InvocationHandler {
 						new Class[] {});
 				String fileName = (String) eventGetFile.invoke(event, new Object[] {});
 				System.out.println(appBundleRoot+" Processing handleOpenFile() method for " + fileName);
-				if(fileName.indexOf("properties.eclipsecall") != -1) {
+				if(fileName.indexOf("properties.cfeclipsecall") != -1) {
 					System.out.println(appBundleRoot+"FSCK " + fileName);
 					importProperties(fileName);
 				} else {

@@ -11,7 +11,7 @@ Eclipse Update site:   http://www.jaylib.org/EclipseCall
 
 Copy the CFEclipseCall app bundle to wherever you want to keep it.
 
-Then edit the properties.eclipsecall file to point at your Eclipse executable.
+Then edit the properties.cfeclipsecall file to point at your Eclipse executable.
 
 I use a .sh script, but you can specify the eclipse executable like so:
 
@@ -23,13 +23,13 @@ You can context-click on the Eclipse icon and select "Show Package Contents",
 browse to Contents/MacOS/ and do "get info" on the eclipse file to get the path
 if you need to.
 
-The properties.eclipsecall contents should look something like this:
+The properties.cfeclipsecall contents should look something like this:
 
 cfeclipsecall.call=/Users/denny/programs/eclipse-inst/eclipse35.command
 cfeclipsecall.socket=2342
 
 Then double-click on the CFEclipseCall app, which will set the file association
-for CFML files, and import (hopefully) your properties.eclipsecall settings.
+for CFML files, and import (hopefully) your properties.cfeclipsecall settings.
 
 Then double-click a CFML file and pray it opens in Eclipse!
 

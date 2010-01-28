@@ -52,7 +52,7 @@ public class CallClient {
 	public static void doOpen(String socketNumber, String eclipse, String call) {
 		Socket server = null;
 		int sockno = DEFAULT_SOCKET;
-		File props = new File("properties.eclipsecall");
+		File props = new File("properties.cfeclipsecall");
 		System.out.println("Trying to open: " + call);
 		if (props.exists()) {
 			Properties properties = getProperties(props.getPath());
@@ -60,7 +60,7 @@ public class CallClient {
 			socketNumber = properties.getProperty("cfeclipsecall.socket");
 			System.out.println("loaded properties");
 		} else {
-			System.out.println("No properties.eclipsecall found!");
+			System.out.println("No properties.cfeclipsecall found!");
 		}
 		if (socketNumber != null) {
 			sockno = Integer.parseInt(socketNumber);

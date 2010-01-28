@@ -1,0 +1,4 @@
+#Wed Nov 25 04:00:08 MST 2009
+#Windows slashes will automagically be converted
+cfeclipsecall.call=/path/to/eclipse/executable
+cfeclipsecall.socket=2342
