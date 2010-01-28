@@ -1,27 +1,71 @@
 package org.cfeclipse.cfeclipsecall;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 public class CallClient {
 	private static boolean firstCall = true;
 
-	public static final String ENV_SOCKET = "eclipsecall.socket";
-	public static final String ENV_CALL = "eclipsecall.call";
-	public static final int DEFAULT_SOCKET = 2341;
+	public static final String ENV_SOCKET = "cfeclipsecall.socket";
+	public static final String ENV_CALL = "cfeclipsecall.call";
+	public static final int DEFAULT_SOCKET = 2342;
 	private static final Pattern p_arg = Pattern.compile("\\-[SG][0-9,\\-]+");
+
+	private static Properties getProperties(String filename) {
+		Properties properties = new Properties();
+		try {
+			String str = null;
+			FileInputStream fis = new FileInputStream(filename);
+			BufferedReader replaceWindowsSlashes = new BufferedReader(new InputStreamReader(fis));
+			String replaced = "";
+			while (null != ((str = replaceWindowsSlashes.readLine()))) {
+				replaced = replaced + str.replace('\\', '/') + System.getProperty("line.separator");
+			}
+			fis.close();
+			replaceWindowsSlashes.close();
+			FileOutputStream fos = new FileOutputStream(filename);
+			fos.write(replaced.getBytes());
+			fos.close();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			properties.load(new FileInputStream(filename));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return properties;
+	}
 
 	public static void doOpen(String socketNumber, String eclipse, String call) {
 		Socket server = null;
 		int sockno = DEFAULT_SOCKET;
+		File props = new File("properties.eclipsecall");
+		System.out.println("Trying to open: " + call);
+		if (props.exists()) {
+			Properties properties = getProperties(props.getPath());
+			eclipse = properties.getProperty("cfeclipsecall.call");
+			socketNumber = properties.getProperty("cfeclipsecall.socket");
+			System.out.println("loaded properties");
+		} else {
+			System.out.println("No properties.eclipsecall found!");
+		}
 		if (socketNumber != null) {
 			sockno = Integer.parseInt(socketNumber);
 		}
-		System.out.println(call);
+		System.out.println("CFEclipseCall Port: " + socketNumber);
 
 		try {
 			// try to establish the socket connection
@@ -31,20 +75,25 @@ public class CallClient {
 			out.flush();
 			server.close();
 		} catch (ConnectException ex) {
+			ex.printStackTrace();
 			// on connection exception: try to start the program given by the
 			// "-E" parameter
 			if (firstCall) {
 				firstCall = false;
 				if (eclipse != null) {
 					try {
+						System.out.println("Eclipse does not seem to be listening...");
+						System.out.println("Calling: " + eclipse);
 						Runtime.getRuntime().exec(eclipse);
 						synchronized (CallClient.class) {
+							System.out.println("Waiting 1...");
 							CallClient.class.wait(3000);
 						}
-						for (int i = 0; i < 120; i++) {
+						for (int i = 0; i < 15; i++) {
 							try {
 								server = new Socket("localhost", sockno);
 								synchronized (CallClient.class) {
+									System.out.println("Waiting 2...");
 									CallClient.class.wait(1000);
 								}
 								server.close();
@@ -56,6 +105,7 @@ public class CallClient {
 								new Thread(new Runnable() {
 									public void run() {
 										synchronized (CallClient.class) {
+											System.out.println("Waiting 3...");
 											try {
 												CallClient.class.wait(200);
 											} catch (Throwable T) {
@@ -69,12 +119,14 @@ public class CallClient {
 								// nothing to do - wait a little longer
 							}
 							synchronized (CallClient.class) {
+								System.out.println("Waiting 4...");
 								CallClient.class.wait(500);
 							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					System.out.println("Tried too many times, giving up.");
 				}
 			}
 		} catch (Exception e) {
@@ -141,8 +193,9 @@ public class CallClient {
 			}
 		}
 		retStrings[0] = Integer.toString(sockno);
-		retStrings[0] = eclipse;
-		retStrings[0] = call;
+		retStrings[1] = eclipse;
+		retStrings[2] = call;
+		System.out.println("Opening: " + call);
 		return retStrings;
 
 	}
@@ -157,12 +210,12 @@ public class CallClient {
 			System.out.println("use -usage argument for cfeclipsecall options");
 		} else if (args.length == 1 && args[0].equals("-usage")) {
 			System.out.println("usage: ");
-			System.out.println("eclipsecall <filename> [-G<lineno>[,<col>-<col>]] [-S<socketno>] [-E<eclipse.exe>]");
+			System.out.println("cfeclipsecall <filename> [-G<lineno>[,<col>-<col>]] [-S<socketno>] [-E<eclipse.exe>]");
 			System.out.println("example:");
 			System.out.println("mark column 10-20 in line 100 of myfile: ");
 			System.out.println("> eclipsecall D:\\mydir\\myfile -G100,10-20");
 			System.out.println("only show myfile without marking: ");
-			System.out.println("> eclipsecall D:\\mydir\\myfile");
+			System.out.println("> cfeclipsecall D:\\mydir\\myfile");
 		} else {
 			String[] parsedArgs = parseArgs(args);
 			doOpen(parsedArgs[0], parsedArgs[1], parsedArgs[2]);

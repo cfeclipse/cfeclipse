@@ -25,18 +25,18 @@ if you need to.
 
 The properties.eclipsecall contents should look something like this:
 
-eclipsecall.call=/Users/denny/programs/eclipse-inst/eclipse35.command
-eclipsecall.socket=2341  
+cfeclipsecall.call=/Users/denny/programs/eclipse-inst/eclipse35.command
+cfeclipsecall.socket=2342
 
 Then double-click on the CFEclipseCall app, which will set the file association
 for CFML files, and import (hopefully) your properties.eclipsecall settings.
 
 Then double-click a CFML file and pray it opens in Eclipse!
 
-The eclipsecall.call property is used for launching Eclipse if the EclipseCall
+The cfeclipsecall.call property is used for launching Eclipse if the EclipseCall
 client can't connect to the EclipseCall plugin in a running instance.
 
-If you change eclipsecall.socket property you need to change the socket for the 
+If you change cfeclipsecall.socket property you need to change the socket for the 
 EclipseCall plugin under Preferences > EclipseCall as well.
 
 APPENDIX

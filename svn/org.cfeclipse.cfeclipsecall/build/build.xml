@@ -13,7 +13,9 @@
 	<property name="copyright" value="Woohoo"/>
 
 	<target name="compile">
-		<javac srcdir="../src" destdir="../bin" deprecation="on" source="1.4"/>
+		<delete dir="../bin" />
+		<mkdir dir="../bin" />
+		<javac srcdir="../src" destdir="../bin" deprecation="on" source="1.5"/>
 	</target>
 
 	<target name="jar" depends="compile">
@@ -57,20 +59,20 @@
 
 		<taskdef name="osacompile" classname="com.fivevoltlogic.antfarm.OSACompile" classpath="${antfarm.jar}" />
 		<taskdef name="osascript" classname="com.fivevoltlogic.antfarm.OSAScript" classpath="${antfarm.jar}" />
-
+		<copy file="scripts/cfeclipsecal.bat" todir="${dist.dir}/" overwrite="true" />
 		<jarbundler dir="${dist.dir}" verbose="true" showPlist="false"
                 name="CFEclipseCall"
                 shortname="cfeclipsecall"
                 signature="CFeclipseCall"
                 stubfile="cfeclipsecall"
 					      jar="${dist.dir}/${ant.project.name}.jar"
-					      mainclass="org.cfeclipse.cfeclipsecall.CallClient"
+					      mainclass="org.cfeclipse.cfeclipsecall.callClient"
 					      icon="icons/${ant.project.name}.icns"
                 jvmversion="1.4+"
                 version="${version}"
                 infostring="${ant.project.name}, ${copyright}"
                 build="${buildnumber}"
-                bundleid="org.cfeclipse.cfeclipsecall.CallClient" 
+                bundleid="org.cfeclipse.cfeclipsecall.callClient" 
                 >
 
 			<!-- Adjust the look, feel and behavior
