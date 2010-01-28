@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CFEclipseCall
+Bundle-SymbolicName: org.cfeclipse.cfeclipsecall.plugin;singleton:=true
+Bundle-Version: 1.1.0.qualifier
+Bundle-Activator: org.cfeclipse.cfeclipsecall.plugin.CFECallPlugin
+Bundle-Vendor: cfeclipse.org
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.core.filesystem,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.ui.ide,
+ org.eclipse.core.resources,
+ org.eclipse.jface.text
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true

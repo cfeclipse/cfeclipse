@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="org.cfeclipse.cfeclipsecall.core.openhandler" name="eclipseCallOpenHandler" schema="schema/org.cfeclipse.cfeclipsecall.core.openhandler.exsd"/>
+
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.cfeclipse.cfeclipsecall.plugin.CFECallPlugin"></startup>
+   </extension>
+     <extension
+         point="org.cfeclipse.cfeclipsecall.core.openhandler">
+      <openHandler
+            handlerClass="org.cfeclipse.cfeclipsecall.plugin.pub.HandleOpenRequest">
+      </openHandler>
+      <prefs
+            prefsClass="org.cfeclipse.cfeclipsecall.plugin.pub.Preferences"></prefs>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+      category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
+            class="org.cfeclipse.cfeclipsecall.plugin.preferences.EclipseCallPreferencePage"
+            id="org.cfeclipse.cfeclipsecall.plugin.preferences.EclipseCallPreferencePage"
+            name="CFEclipseCall">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.cfeclipse.cfeclipsecall.plugin.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+
+</plugin>
