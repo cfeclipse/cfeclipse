@@ -165,8 +165,11 @@ public class CFParser {
 	// this was closest out of all so far
 	//static protected final String REG_ATTRIBUTES = "(\\w+)?[\\s=]?((((\\w+ & )?\\x22|\\x27)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
 	//peter's go at it
+	// will we need ['s too?  If so: Square ([]): (?<!\\)\[(\\\[|\\\]|[^\[\]]|(?<!\\)\[.*(?<!\\)\])*(?<!\\)\]
+	static protected final String REG_ATTRIBUTES_BRACKETS = "(\\w++)?\\s*+=?\\s*+((?<!\\\\)\\{(\\\\\\{|\\\\\\}|[^\\{\\}]|(?<!\\\\)\\{.*(?<!\\\\)\\})*(?<!\\\\)\\})";
+	// unescaped: Curly ({}): (?<!\\)\{(\\\{|\\\}|[^\{\}]|(?<!\\)\{.*(?<!\\)\})*(?<!\\)\}
 	static protected final String REG_ATTRIBUTES = "(\\w++)?\\s*+=?\\s*+((((\\w++ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
-	
+	// unescaped: (\w++)?\s*+=?\s*+((((\w++ & )?\x22|\x27|#)((?!\4).|\4{2})*\4?(.*&.*)?))
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
 	static protected final int USRMSG_ERROR		= 0x02;
@@ -385,11 +388,25 @@ public class CFParser {
 		Matcher matcher;
 		Pattern pattern;
 		String attributeName,attributeValue;
-		//SPIKE: Added the case insensitive bit
+		// this first matcher is a hack to get any cf9 type struct declarations
+		pattern = Pattern.compile(REG_ATTRIBUTES_BRACKETS,Pattern.CASE_INSENSITIVE);
+		// this removes anything like: wee="fun={woo}" and then looks for {.*}
+		matcher = pattern.matcher(inData.replaceAll(REG_ATTRIBUTES, ""));
+		if(matcher.find()) {
+		    if (matcher.group(1) != null && matcher.group(2) != null) {
+		    	AttributeItem newAttr;
+		    	
+			    attributeName = matcher.group(1).trim();
+			    attributeValue = matcher.group(2).trim();
+			    attributeValue = attributeValue.substring(1,attributeValue.length()-1);
+			    newAttr = new AttributeItem(lineNum, offset + matcher.start(1), offset + matcher.end(1),
+			    								attributeName, attributeValue);
+			    attributes.add(newAttr);
+			    return attributes;			
+		    }
+		}
+
 		pattern = Pattern.compile(REG_ATTRIBUTES,Pattern.CASE_INSENSITIVE);
-		
-		//SPIKE: Added the toLowerCase() bit.
-		//matcher = pattern.matcher(inData.toLowerCase());
 		matcher = pattern.matcher(inData);
 		if(inData.trim().endsWith("&")){
 			userMessage(0, 
@@ -404,8 +421,6 @@ public class CFParser {
 		    	AttributeItem newAttr;
 		    	
 			    attributeName = matcher.group(1).trim();
-			    // denny added because param ends with "=" due to his regex
-			    //attributeName = attributeName.substring(0,attributeName.length());
 			    attributeValue = matcher.group(2).trim();
 			    attributeValue = attributeValue.substring(1,attributeValue.length()-1);
 			    newAttr = new AttributeItem(lineNum, offset + matcher.start(1), offset + matcher.end(1),
