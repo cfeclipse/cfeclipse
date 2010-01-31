@@ -155,7 +155,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		String indentation = prefs.getCanonicalIndent();
 		String newLine = org.eclipse.jface.text.TextUtilities.determineLineDelimiter(contents, lineSeparator);
 		CFMLTagTypes.register();
-		Source source = new Source(contents);
+		Source source = new Source(contents.replaceAll("\\r?\\n", newLine));
 		source.ignoreWhenParsing(source.getAllElements(HTMLElementName.SCRIPT));
 
 		boolean enforceMaxLineWidth = prefs.getEnforceMaximumLineWidth();
@@ -203,7 +203,8 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		results = results.replaceAll("(?si)<(cfcomponent[^>]*)>", "<$1>" + newLine);
 		results = results.replaceAll("(?si)(\\s+)<(/cfcomponent[^>]*)>", newLine + "$1<$2>");
 		results = results.replaceAll("(?si)(\\s+)<(cffunction[^>]*)>", newLine + "$1<$2>");
-		results = results.replaceAll("(?i)" + newLine + newLine + "(\\s+)<(cffunction)", newLine + "$1<$2");
+		results = results.replaceAll("(?si)(\\s+)<(/cffunction[^>]*)>", "$1<$2>" + newLine);
+		results = results.replaceAll("(?i)" + newLine + "{3}(\\s+)<(cffunction)", newLine + newLine + "$1<$2");
 		results = results.replaceAll("(?i)" + indentation + "<(cfelse)", "<$1");
 		// indent to whatever the current level is
 		String[] lines = results.split(newLine);

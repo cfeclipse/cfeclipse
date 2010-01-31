@@ -136,7 +136,12 @@ public ScriptItem scriptItem;
 	public void jjtRemoveChild(int elementToDelete) {
 		int i = 0;
 		int j = 0;
-		int newLen = children.length - 1;
+		int newLen;
+		if(children == null) {
+			newLen = -1;
+		} else {
+			newLen = children.length - 1;			
+		}
 		if (newLen < 0) {
 			children = null;
 		} else {
