@@ -41,8 +41,6 @@ import org.eclipse.ui.texteditor.ITextEditor;
  */
 public class CFAbortAction extends GenericEncloserAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 
-	protected ITextEditor editor = null;
-
 	public void run(IAction action){
 		String startTag = "<cfabort>\n";
 		String endTag = "";
