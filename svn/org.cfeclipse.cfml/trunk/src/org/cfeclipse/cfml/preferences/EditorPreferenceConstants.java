@@ -195,7 +195,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_RTRIM_ON_SAVE,false);
 		store.setDefault(P_LINE_NUMBER_COLOR,"0,0,0");
 		store.setDefault(P_CURRENT_LINE_COLOR,"232,242,254");
-		store.setDefault(P_SHOW_PRINT_MARGIN,true);
+		store.setDefault(P_SHOW_PRINT_MARGIN,false);
 		store.setDefault(P_PRINT_MARGIN_SIZE,80);
 		store.setDefault(P_PRINT_MARGIN_COLOR,"176,180,185");
 		store.setDefault(P_SELECTION_FOREGROUND_COLOR,"255,255,255");
