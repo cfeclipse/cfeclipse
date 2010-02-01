@@ -205,6 +205,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		results = results.replaceAll("(?si)(\\s+)<(cffunction[^>]*)>", newLine + "$1<$2>");
 		results = results.replaceAll("(?si)(\\s+)<(/cffunction[^>]*)>", "$1<$2>" + newLine);
 		results = results.replaceAll("(?i)" + newLine + "{3}(\\s+)<(cffunction)", newLine + newLine + "$1<$2");
+		results = results.replaceAll("(?si)(\\s+)<(/cffunction[^>]*)>"+ newLine + "{3}", "$1<$2>" + newLine + newLine);
 		results = results.replaceAll("(?i)" + indentation + "<(cfelse)", "<$1");
 		// indent to whatever the current level is
 		String[] lines = results.split(newLine);
