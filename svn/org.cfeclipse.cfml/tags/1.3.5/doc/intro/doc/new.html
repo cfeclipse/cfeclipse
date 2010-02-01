@@ -1,0 +1,246 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="STYLESHEET" href="book.css" charset="ISO-8859-1"
+	type="text/css">
+<style>
+td {
+	border-top: solid thin black;
+}
+
+img[alt] {
+	background-color: #ffdddd;
+}
+
+tr {
+	vertical-align: top;
+}
+</style>
+<title>What's New in CFEclipse 1.3.5</title>
+<script language="JavaScript"
+	src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"> </script>
+</head>
+<body>
+<h2>What's New in CFEclipse 1.3.5</h2>
+<p>Here are descriptions of some of the more interesting or
+significant changes made to CFEclipse. They are grouped into:</p>
+<ul>
+	<li><a href="#ContentAssist">Content Assist</a></li>
+	<li><a href="#CodeFormatter">Code Formatter</a></li>
+	<li><a href="#Editing">Editing</a></li>
+	<li><a href="#UniversalWelcome">Universal Welcome</a></li>
+	<li><a href="#UpdatedDictionaries">Updated Dictionaries</a></li>
+	<li><a href="#OutlineView">Outline View</a></li>
+</ul>
+<br>
+<table cellpadding="10" cellspacing="0" width="600">
+	<colgroup>
+		<col width="20%">
+		<col width="80%">
+	</colgroup>
+	<tbody>
+		<tr>
+			<td colspan="2"><a name="ContentAssist"></a>
+			<div style="font-size: 20px; font-weight: bold;">Content Assist</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b> Proposal Categories </b></p>
+			</td>
+			<td valign="top">Content Assist has been updated to use <i>proposal
+			categories</i>. Eventually this will give us finer-grained control over
+			what we propose and when.
+
+			<ul>
+				<li>Cycle through the proposal categories by repeatedly
+				pressing ctrl+space.</li>
+				<li>The fist cycle, all proposals are listed.</li>
+				<li>Eventually we will add a preference to filter the initial
+				list of proposals</li>
+			</ul>
+			<p><img src="../images/1.3.5/proposals.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Function Proposals</b></p>
+			</td>
+			<td valign="top">Function proposals are now a proposal category, and 
+			are available anywhere proposals are.  Their presentation has been
+			changed to a more intuitive format. 
+			<p><img src="../images/1.3.5/functionProposals.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>In-page Function Proposals</b></p>
+			</td>
+			<td valign="top">The current document is now parsed for functions and
+			function arguments, any found are added to the function proposal
+			list.
+			<p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="CodeFormatter"></a>
+			<div style="font-size: 20px; font-weight: bold;">Code Formatter</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Overview</b></p>
+			</td>
+			<td valign="top">This implementation uses the Jericho HTML
+			library. It will do a decent job of formatting tag-based source, but
+			has no support for cfscript or javascript. Any text within these
+			elements will be left alone.
+			<p><img src="../images/1.3.5/sourceFormat.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Preferences</b></p>
+			</td>
+			<td valign="top">The preferences for changing the available code
+			formatting options are under <i>Preferences > CFEclipse > Code Style > Formatter</i>.
+			<p><img src="../images/1.3.5/formattingPrefs.png">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="Editing"></a>
+			<div style="font-size: 20px; font-weight: bold;">Editing</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Occurrence Marking</b></p>
+			</td>
+			<td valign="top"><i>Occurrence marking</i> has been refactored to be more
+			like JTD. The selection of the current word is controlled by the same
+			preferences that control the double-click text selection under
+			<i>Preferences > CFEclipse > Editor > Text Selection</i>
+			<p><img src="../images/1.3.5/markOccurrence.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Rename in file</b></p>
+			</td>
+			<td valign="top">
+			The refactored occurrence marking enabled us to add a <i>Rename in file</i>
+			command.  The default key binding is <i>MOD1+2 R</i>.  This feature allows
+			you to quickly rename all of the currently marked occurrences.
+			<p><img src="../images/1.3.5/renameInFile.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Reconciler</b></p>
+			</td>
+			<td valign="top">
+			The editor now uses a reconciling strategy deal, which basically means the
+			document will be parsed after you stop changing it, vs. only when you save.
+			There should probably be a preference to turn this off.  But there isn't.  Yet.
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Auto-indent pasted tags</b></p>
+			</td>
+			<td valign="top">An initial "smart paste" implementation has been
+			added. This feature automatically indents pasted code to the correct
+			level, and keeps indentation at the correct level while adding tag
+			attributes on new lines within a tag. It still needs a little work.
+			<p><img src="../images/1.3.5/smartPaste.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Marking of opening and closing tags</b></p>
+			</td>
+			<td valign="top">The editor will now mark the start and end of
+			the current tag if the cursor is on the start or end of the tag. 
+			The presentation style is configurable via <i> Preferences > CFEclipse >
+			Editor > Annotations </i>
+			<p><img src="../images/1.3.5/highlightStartEnd.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Opening Files from the OS (CFEclipseCall)</b></p>
+			</td>
+			<td valign="top">You can now associate cfml files with the
+			CFEclipseCall executable to be able to open them directly in CFE
+			without starting a new instance of Eclipse each time. See <a
+				href="http://trac.cfeclipse.org/wiki/CFEclipseCall">the wiki
+			page for CFEclipseCall</a>.</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="UniversalWelcome"></a>
+			<div style="font-size: 20px; font-weight: bold;">Universal Welcome</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Overview<br></p>
+			</td>
+			<td valign="top">
+			CFEclipse now has some representation in the Universal Welcome
+			(the screen that shows up with a fresh workspace).
+			.</p>
+			<p><img src="../images/1.3.5/whatsNew.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>What's New</b></p>
+			</td>
+			<td valign="top">All this</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Cheatsheets</b></p>
+			</td>
+			<td valign="top">There is a cheatsheet with this release, but it is currently useless.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="UpdatedDictionaries"></a>
+			<div style="font-size: 20px; font-weight: bold;">Updated Dictionaries</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>ColdFusion</b></p>
+			</td>
+			<td valign="top">The dictionaries for ColdFusion versions 5 through 8 have been updated, and a dictionary for version 9 has been added.
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Railo</b></p>
+			</td>
+			<td valign="top">An initial dictionary for Railo 3 has been added.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="OutlineView"></a>
+			<div style="font-size: 20px; font-weight: bold;">Outline View</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Display</b></p>
+			</td>
+			<td valign="top">The outline view has been refactored to provide more
+			usefual information.
+			<p><img src="../images/1.3.5/outlineView.png">
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

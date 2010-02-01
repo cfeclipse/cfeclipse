@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+	<extensionContent id="org.eclipse.cfml" name="CFEclipse"
+		style="css/overview.css" path="overview/@">
+		<group id="content-group" style-id="content-group">
+			<link label="CFEclipse"
+				url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.cfeclipse.cfml/doc/toc_general.xml"
+				id="cfeclipse-overview" style-id="content-link">
+				<text>Learn more about CFEclipse</text>
+			</link>
+		</group>
+	</extensionContent>
+</introContent>

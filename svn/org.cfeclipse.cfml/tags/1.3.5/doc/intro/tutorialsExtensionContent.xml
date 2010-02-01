@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+	<extensionContent id="org.eclipse.cfeclipse" name="cfeclipse"
+		style="css/tutorials.css" path="tutorials/@">
+		<group label="cfeclipse" id="cfeclipse" style-id="content-group">
+			<link
+				url="http://org.eclipse.ui.intro/showStandby?partId=org.eclipse.platform.cheatsheet&amp;input=org.cfeclipse.cfml.cheatsheets.cheatsheet"
+				label="Use Task-Focused UI" id="cfeclipse-task" style-id="content-link">
+				<text>Learn how to use Task-Focused UI.</text>
+			</link>
+		</group>
+	</extensionContent>
+</introContent>

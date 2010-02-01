@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+	<template context="org.cfeclipse.cfml.templateeditor.xml"
+		description="%cfml.templates.cfcomponent.desc" id="org.cfeclipse.cfml.templateeditor.cfcomponent"
+		name="%cfml.templates.cfcomponent.name">&lt;cfcomponent displayname=&quot;${displayname}&quot;
+		hint=&quot;${hint}&quot;&gt;
+		this should give insight ${dst}
+		${cursor}
+		&lt;/cfcomponent&gt;</template>
+
+	<template context="org.cfeclipse.cfml.templateeditor.xml"
+		description="%cfml.templates.cfcomponent.desc" id="org.cfeclipse.cfml.templateeditor.todayis"
+		name="%cfml.templates.todayis.name">
+		${cursor} ${date}</template>
+
+	<template autoinsert="true" context="org.cfeclipse.cfml.templateeditor.xml" deleted="false" description="mxunitTestCase" enabled="true" name="mxunitTestCase" id="org.cfeclipse.cfml.templateeditor.mxunittestcase">&lt;cfcomponent displayname="Test${component}" extends="mxunit.framework.TestCase"&gt;
+
+	&lt;cffunction name="setUp" returntype="void" access="public"&gt;
+		&lt;cfset variables.${component} = createObject("component","${componentPath}") /&gt;
+	&lt;/cffunction&gt;
+
+    &lt;cffunction name="test${method}"&gt;
+        &lt;cfscript&gt;
+            variables.${component}.${method}(${cursor});
+        &lt;/cfscript&gt;
+    &lt;/cffunction&gt;
+
+&lt;/cfcomponent&gt;</template>
+
+	<template autoinsert="true" context="org.cfeclipse.cfml.templateeditor.xml" deleted="false" description="try catch for cf" enabled="true" name="cftry" id="org.cfeclipse.cfml.templateeditor.cftry">&lt;cftry&gt;
+${line_selection}
+&lt;cfcatch&gt;
+&lt;/cfcatch&gt;
+&lt;/cftry&gt;</template>
+
+<template autoinsert="true" context="org.cfeclipse.cfml.templateeditor.xml" deleted="false" description="debug" enabled="true" name="debug" id="org.cfeclipse.cfml.templateeditor.debug">&lt;cfset request.debug(${word_selection})&gt;</template>
+
+<template autoinsert="true" context="org.cfeclipse.cfml.templateeditor.xml" deleted="false" description="cfthrow template" enabled="true" name="cfthrow" id="org.cfeclipse.cfml.templateeditor.cfthrow">&lt;cfthrow type="${type}" message="${message}" detail="${detail}" /&gt;</template>
+</templates>

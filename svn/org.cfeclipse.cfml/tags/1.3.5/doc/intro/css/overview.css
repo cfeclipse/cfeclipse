@@ -1,0 +1,7 @@
+a#cfeclipse-overview img {
+	background-image: url(../images/ov_cfeclipse48.png);
+}
+
+a#cfeclipse-overview:hover img {
+	background-image: url(../images/ov_cfeclipse48_hov.png);
+}
