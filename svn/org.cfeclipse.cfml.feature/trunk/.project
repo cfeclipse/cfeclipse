@@ -3,6 +3,9 @@
 	<name>org.cfeclipse.cfml.feature</name>
 	<comment></comment>
 	<projects>
+		<project>org.cfeclipse.cfml</project>
+		<project>org.cfeclipse.cfml.cfunit</project>
+		<project>org.cfeclipse.cfml.frameworks</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
