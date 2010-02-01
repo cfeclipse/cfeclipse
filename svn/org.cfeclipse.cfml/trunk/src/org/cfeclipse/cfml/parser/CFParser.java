@@ -164,9 +164,10 @@ public class CFParser {
 
 	// this was closest out of all so far
 	//static protected final String REG_ATTRIBUTES = "(\\w+)?[\\s=]?((((\\w+ & )?\\x22|\\x27)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
-	//peter's go at it
-	// will we need ['s too?  If so: Square ([]): (?<!\\)\[(\\\[|\\\]|[^\[\]]|(?<!\\)\[.*(?<!\\)\])*(?<!\\)\]
-	static protected final String REG_ATTRIBUTES_BRACKETS = "(\\w++)?\\s*+=?\\s*+((?<!\\\\)\\{(\\\\\\{|\\\\\\}|[^\\{\\}]|(?<!\\\\)\\{.*(?<!\\\\)\\})*(?<!\\\\)\\})";
+
+	static protected final String REG_ATTRIBUTES_BRACKETS= "(?<!\\\\)\\[(\\\\\\[|\\\\\\]|[^\\[\\]]|(?<!\\\\)\\[.*(?<!\\\\)\\])*(?<!\\\\)\\]";
+	static protected final String REG_ATTRIBUTES_BRACES = "(?<!\\\\)\\{(\\\\\\{|\\\\\\}|[^\\{\\}]|(?<!\\\\)\\{.*(?<!\\\\)\\})*(?<!\\\\)\\}";
+	static protected final String REG_ATTRIBUTES_BB = "(\\w++)?\\s*+=?\\s*+(" + REG_ATTRIBUTES_BRACKETS + "|" + REG_ATTRIBUTES_BRACES + ")";
 	// unescaped: Curly ({}): (?<!\\)\{(\\\{|\\\}|[^\{\}]|(?<!\\)\{.*(?<!\\)\})*(?<!\\)\}
 	static protected final String REG_ATTRIBUTES = "(\\w++)?\\s*+=?\\s*+((((\\w++ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
 	// unescaped: (\w++)?\s*+=?\s*+((((\w++ & )?\x22|\x27|#)((?!\4).|\4{2})*\4?(.*&.*)?))
@@ -388,9 +389,9 @@ public class CFParser {
 		Matcher matcher;
 		Pattern pattern;
 		String attributeName,attributeValue;
-		// this first matcher is a hack to get any cf9 type struct declarations
-		pattern = Pattern.compile(REG_ATTRIBUTES_BRACKETS,Pattern.CASE_INSENSITIVE);
-		// this removes anything like: wee="fun={woo}" and then looks for {.*}
+		// this first matcher is a hack to get any cf9 type struct/array declarations
+		pattern = Pattern.compile(REG_ATTRIBUTES_BB,Pattern.CASE_INSENSITIVE);
+		// this removes anything like: wee="fun={woo};and=[hoo]" and then looks for matched {.*} & [.*]
 		matcher = pattern.matcher(inData.replaceAll(REG_ATTRIBUTES, ""));
 		if(matcher.find()) {
 		    if (matcher.group(1) != null && matcher.group(2) != null) {
