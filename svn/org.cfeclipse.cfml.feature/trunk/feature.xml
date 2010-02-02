@@ -2,7 +2,7 @@
 <feature
       id="org.cfeclipse.cfml.feature"
       label="CFEclipse (including CFUnit and Frameworks)"
-      version="1.3.5.qualifier"
+      version="1.3.6.qualifier"
       provider-name="CFEclipse Project"
       plugin="org.cfeclipse.cfml">
 
