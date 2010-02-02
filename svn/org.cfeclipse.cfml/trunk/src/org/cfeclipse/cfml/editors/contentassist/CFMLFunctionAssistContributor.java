@@ -91,7 +91,7 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 	
 	// 1) The standard completion chars. These are some activation characters 
 	//that non-opener/closer characters
-	protected static final String completionChars = ".(;~\"#[\',abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	protected static final String completionChars = "(;~\"#[\',abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	// 2) The opener/closer characters. This assists with the opening & closing 
 	//of things such as brackets

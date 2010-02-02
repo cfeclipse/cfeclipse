@@ -470,7 +470,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 	    autoActivationString += "0123456789";
 // with short auto-activate times these are annoying now:	    
 //	    autoActivationString += "(,=._<~\t\n\r\"'# ";
-	    autoActivationString += "(,=._<~#";
+	    autoActivationString += "(,=_<~#";
 	    char[] chars = autoActivationString.toCharArray();
 	    
 	    this.autoActivationChars = chars;
