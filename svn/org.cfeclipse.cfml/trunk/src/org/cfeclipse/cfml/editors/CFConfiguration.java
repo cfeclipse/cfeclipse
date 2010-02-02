@@ -136,6 +136,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		indentTagStrategy.setAutoClose_Tags(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_TAGS));
 		indentTagStrategy.setAutoInsert_CloseTags(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS));
 		indentTagStrategy.setUseSmartIndent(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_USE_SMART_INDENT));
+		indentTagStrategy.setUseSmartPaste(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_USE_SMART_PASTE));
 		//indentTagStrategy.setAutoClose_DoubleQuotes(preferenceManager.getBooleanPref(ICFMLPreferenceConstants.P_AUTOCLOSE_DOUBLE_QUOTES));
 	}
 	
