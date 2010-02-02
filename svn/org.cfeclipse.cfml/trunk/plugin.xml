@@ -1968,7 +1968,7 @@
             highlightPreferenceKey="occurrenceAnnotation.background"
 			highlightPreferenceValue="true"
 			textStylePreferenceKey="occurrenceAnnotation.style"
-			textStylePreferenceValue="HIGHLIGHT"
+			textStylePreferenceValue="DASHED_BOX"
             overviewRulerPreferenceKey="occurrenceAnnotation.IndicationInOverviewRuler"
 			overviewRulerPreferenceValue="true"
             verticalRulerPreferenceKey="occurrenceAnnotation.IndicationInVerticalRuler"

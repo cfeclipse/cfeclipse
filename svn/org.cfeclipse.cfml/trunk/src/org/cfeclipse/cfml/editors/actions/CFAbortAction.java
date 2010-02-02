@@ -60,7 +60,7 @@ public class CFAbortAction extends GenericEncloserAction implements IWorkbenchWi
 				
 				ITextSelection selectioner = (ITextSelection)sel;
 				if(partition.getType().equals(CFPartitionScanner.CF_SCRIPT)){
-					startTag = "abort();\n";
+					startTag = "abort;\n";
 					endTag = "";
 					
 					
