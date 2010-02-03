@@ -59,13 +59,12 @@ public class CFMLEditorActionContributor extends BasicTextEditorActionContributo
 		fContentFormat = new RetargetTextEditorAction(bundle, "ContentFormat."); //$NON-NLS-1$
 		fContentFormat.setActionDefinitionId(CFMLPlugin.PLUGIN_ID + ".FormatAction");
 		//fTogglePresentation= new TogglePresentationAction();
-		fToggleMarkOccurrencesAction= new ToggleMarkOccurrencesAction();
         //fToggleAutoReconcileAction= new ToggleAutoReconcileAction();
 		
 	}
 	
 	protected void initializeActions(CFMLEditor editor) {
-//		fOpenDeclarationAction= new OpenDeclarationAction(editor);
+		fToggleMarkOccurrencesAction= new ToggleMarkOccurrencesAction();
 //		fOpenExternalDocAction= new OpenExternalDocAction(editor);
 	}
 	
@@ -81,8 +80,8 @@ public class CFMLEditorActionContributor extends BasicTextEditorActionContributo
 		fContentFormat.setAction(getAction(editor, "ContentFormat")); //$NON-NLS-1$
 		
 		if (editor instanceof CFMLEditor) {
-		    CFMLEditor antEditor= (CFMLEditor) part;
-			initializeActions(antEditor);
+		    CFMLEditor cfmlEditor= (CFMLEditor) part;
+			initializeActions(cfmlEditor);
 			contributeToMenu(getActionBars().getMenuManager());
 //			if (fOpenDeclarationAction == null) {
 //				initializeActions(antEditor);
@@ -115,15 +114,13 @@ public class CFMLEditorActionContributor extends BasicTextEditorActionContributo
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.part.EditorActionBarContributor#contributeToMenu(org.eclipse.jface.action.IMenuManager)
 	 */
-	public void contributeToMenu(IMenuManager menu) {
+	public void contributeToMenu(IMenuManager menu) {		
+		// we only want to add the defualt text editor stuff once, our stuff is more dynamic
+		if (fToggleMarkOccurrencesAction != null) {
+			return;
+		}
 		super.contributeToMenu(menu);
-		
-		return;
-//		if (fOpenDeclarationAction == null) {
-//			return;
-//		}
-//		super.contributeToMenu(menu);
-//		
+//		this stuff will be useful when we have good parsing
 //		IMenuManager navigateMenu= menu.findMenuUsingPath(IWorkbenchActionConstants.M_NAVIGATE);
 //		if (navigateMenu != null) {
 //			navigateMenu.appendToGroup(IWorkbenchActionConstants.OPEN_EXT, fOpenDeclarationAction);
