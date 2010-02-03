@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <description name="CFEclipse Nightly Update Site" url="http://cfeclipse.org/update-nightly">
-      CFEclipse Nightly Build Update site
+   <description name="CFEclipse Preview Update Site" url="http://cfeclipse.org/update-preview">
+      CFEclipse Preview Build Update site
    </description>
    <feature url="features/org.cfeclipse.cfml.feature_1.3.6.quantifier.jar" id="org.cfeclipse.cfml.feature" version="1.3.6.quantifier">
-      <category name="[Nightly] CFEclipse CFML Editor (Required)"/>
+      <category name="[Preview] CFEclipse CFML Editor (Required)"/>
    </feature>
    <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.200906240102.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.200906240102">
-      <category name="[Nightly] CFEclipse DocShare Support (Optional)"/>
+      <category name="[Preview] CFEclipse DocShare Support (Optional)"/>
    </feature>
    <feature url="features/org.cfeclipse.cfml.docsharesupport35.feature_1.0.0.200906240103.jar" id="org.cfeclipse.cfml.docsharesupport35.feature" version="1.0.0.200906240103">
-      <category name="[Nightly] CFEclipse DocShare Support (Optional)"/>
+      <category name="[Preview] CFEclipse DocShare Support (Optional)"/>
    </feature>
-   <category-def name="[Nightly] CFEclipse CFML Editor (Required)" label="[Nightly] CFEclipse CFML Editor (Required)"/>
-   <category-def name="[Nightly] CFEclipse DocShare Support (Optional)" label="[Nightly] CFEclipse DocShare Support (Optional)"/>
+   <category-def name="[Preview] CFEclipse CFML Editor (Required)" label="[Preview] CFEclipse CFML Editor (Required)"/>
+   <category-def name="[Preview] CFEclipse DocShare Support (Optional)" label="[Preview] CFEclipse DocShare Support (Optional)"/>
 </site>

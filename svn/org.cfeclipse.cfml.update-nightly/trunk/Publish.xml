@@ -14,7 +14,11 @@
 		<!-- publish.properties must live in this directory, and it must contain
 		ftp.username, ftp.password, and ftp.site properties -->
 		<property file="publish.properties" />
-
+		<copy todir="./web">
+			<fileset dir="../org.cfeclipse.cfml">
+				<include name="doc/**" />
+			</fileset>
+		</copy>
 	</target>
 
 	<target name="update-nightly" depends="init">
@@ -35,6 +39,9 @@
 			</scp>
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/web" trust="true" verbose="true">
 				<fileset dir="web" />
+			</scp>
+			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/cfeclipsecall" trust="true" verbose="true">
+				<fileset dir="cfeclipsecall" />
 			</scp>
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/plugins/" trust="true" verbose="true">
 				<fileset dir="plugins" includes="*.jar">
