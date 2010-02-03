@@ -1369,9 +1369,20 @@ public class CFParser {
 		// If it's even we're out of quotes, odd we're in 'em. Try it out manually and see!
 		char currQuote = 0;
 		int quoteCount = 0;
+		boolean inComment = false;
 		
 		for(; currPos < inData.length(); currPos++) {
 			char currChar = inData.charAt(currPos);
+			if(currChar == '<' && inData.length() >= 5 && inData.substring(currPos,currPos+5).equals("<!---")) {
+				inComment = true;
+			}
+			if(currChar == '-' && inData.length() >= 4 && inData.substring(currPos,currPos+4).equals("--->")) {
+				inComment = false;
+			}
+			if(inComment) {
+				// if we're inside a comment, we don't give a hoot, keep going until out of it
+				continue;
+			}
 			boolean inQuotes = (1 == quoteCount % 2);
 			if(!inQuotes && currChar == '>') {
 				finalOffset = currPos;
@@ -1389,7 +1400,7 @@ public class CFParser {
 			}
 		}
 		
-		if(finalOffset != currPos) {
+		if(finalOffset != currPos && reportErrors) {
 			//System.err.println("FATAL ERROR: Failed to find the end of a CFML tag!: " + inData.substring(currDocOffset, currPos));
 			
 			parseState.addMessage(new ParseError(getLineNumber(currDocOffset), currDocOffset, currPos,
