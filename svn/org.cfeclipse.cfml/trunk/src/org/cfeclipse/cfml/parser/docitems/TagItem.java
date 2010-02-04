@@ -81,7 +81,7 @@ public class TagItem extends DocItem {
 		/*
 		 * Is the attribute already present in the tag's attribute list? 
 		 */
-		if(itemAttributes.containsKey(attrName.toLowerCase()) && !attrName.toLowerCase().matches("eq|gt|lt|lte|gte"))
+		if(itemAttributes.containsKey(attrName.toLowerCase()) && !attrName.toLowerCase().matches("eq|gt|lt|lte|gte|neq"))
 		{
 			parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData, 
 									"Attribute \'" + attrName + "\' has already been defined."));
