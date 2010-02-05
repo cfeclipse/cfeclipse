@@ -160,7 +160,7 @@ import org.eclipse.ui.texteditor.rulers.RulerColumnRegistry;
  * the image manager and syntax dictionaries.
  */
 public class CFMLEditor extends TextEditor implements
-IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSource, IPersistableEditor {
+IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSource {
 	/*
 	 * 
 	 *Need to add mouse listeners
@@ -1438,12 +1438,12 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		//openTarget(target);
 	}	
 	
-	
-	public void saveState(IMemento memento) {
-		System.out.println("ColdFusion Rocks!");
-	}
-	
-	public void restoreState(IMemento memento) {
-		System.out.println("ColdFusion Rolls!");
-	}
+//	someday we'll use this
+//	public void saveState(IMemento memento) {
+//		System.out.println("ColdFusion Rocks!");
+//	}
+//	
+//	public void restoreState(IMemento memento) {
+//		System.out.println("ColdFusion Rolls!");
+//	}
 }
