@@ -2,6 +2,7 @@
 
 	<taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar" />
 	<taskdef name="twitter" classname="de.ecw.ant.twitter.AntTwitterTask" classpathref="build.lib.path" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build.lib.path" />
 
 	<classloader loader="project">
 		<classpath>
@@ -30,6 +31,12 @@
 	</target>
 
 	<target name="twitter-test" depends="init">
+		<twitter message="${info.smaller}" 
+			username="${twitter.username}" 
+			password="${twitter.password}" 
+			bitlyUsername="bitly-username" 
+			bitlyApiKey="bitly-key" 
+			enableBitly="false" />
 	</target>
 
 	<target name="twitter-head-info" depends="init">
@@ -40,12 +47,12 @@
 			      <arg value="-rHEAD"/>
 		      <arg value="${repository.URL}/"/>
 		    </java>
-		<twitter message="${" 
-			username="${twitter.username}" 
-			password="${twitter.password}" 
-			bitlyUsername="bitly-username" 
-			bitlyApiKey="bitly-key" 
-			enableBitly="false" />
+		<propertyregex property="info.smaller"
+		              input="${last.revision.info}"
+		              regexp="(?s)[-//s]+(.*)[//s]+"
+		              select="\1"
+		              casesensitive="false" />
+		<echo message="${info.smaller}"/>
 	</target>
 
 	<macrodef name="push">
