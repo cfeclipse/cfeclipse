@@ -169,7 +169,7 @@ public class CFParser {
 	static protected final String REG_ATTRIBUTES_BRACES = "(?<!\\\\)\\{(\\\\\\{|\\\\\\}|[^\\{\\}]|(?<!\\\\)\\{.*(?<!\\\\)\\})*(?<!\\\\)\\}";
 	static protected final String REG_ATTRIBUTES_BB = "(\\w++)?\\s*+=?\\s*+(" + REG_ATTRIBUTES_BRACKETS + "|" + REG_ATTRIBUTES_BRACES + ")";
 	// unescaped: Curly ({}): (?<!\\)\{(\\\{|\\\}|[^\{\}]|(?<!\\)\{.*(?<!\\)\})*(?<!\\)\}
-	static protected final String REG_ATTRIBUTES = "(\\w++)[\\s=]+((((\\w++ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
+	static protected final String REG_ATTRIBUTES = "(?si)(\\w++)\\s?=\\s?+((((\\w++ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
 	// unescaped: (\w++)[\s=]+((((\w++ & )?\x22|\x27|#)((?!\4).|\4{2})*\4?(.*&.*)?))
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
