@@ -1,14 +1,18 @@
-<project name="Publish  CFEclipse Plugin" default="update-nightly" basedir="." >
+<project name="Publish  CFEclipse Plugin" default="update-nightly" basedir=".">
 
-	<taskdef resource="net/jtools/classloadertask/antlib.xml"
-	                classpath="lib/ant-classloadertask.jar"/>
+	<taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar" />
+	<taskdef name="twitter" classname="de.ecw.ant.twitter.AntTwitterTask" classpathref="build.lib.path" />
 
 	<classloader loader="project">
 		<classpath>
-			<fileset dir="lib/" includes="js*.jar"/>
+			<fileset dir="lib/" includes="*.jar" excludes="ant-classloadertask.jar" />
 		</classpath>
 	</classloader>
-
+	<path id="build.lib.path">
+		<fileset dir="${basedir}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
 
 	<target name="init">
 		<!-- publish.properties must live in this directory, and it must contain
@@ -23,6 +27,25 @@
 
 	<target name="update-nightly" depends="init">
 		<push remotedir="update-nightly" />
+	</target>
+
+	<target name="twitter-test" depends="init">
+	</target>
+
+	<target name="twitter-head-info" depends="init">
+		    <property name="repository.URL" value="http://svn.cfeclipse.org"/>
+		    <java classname="org.tmatesoft.svn.cli.SVN" classpathref="build.lib.path"
+		        fork="true" outputproperty="last.revision.info">
+			      <arg value="log"/>
+			      <arg value="-rHEAD"/>
+		      <arg value="${repository.URL}/"/>
+		    </java>
+		<twitter message="${" 
+			username="${twitter.username}" 
+			password="${twitter.password}" 
+			bitlyUsername="bitly-username" 
+			bitlyApiKey="bitly-key" 
+			enableBitly="false" />
 	</target>
 
 	<macrodef name="push">
@@ -57,6 +80,4 @@
 			<echoproperties prefix="site" />
 		</sequential>
 	</macrodef>
-
-
 </project>
