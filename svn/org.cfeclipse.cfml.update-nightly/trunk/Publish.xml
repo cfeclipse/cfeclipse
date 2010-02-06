@@ -50,7 +50,7 @@
 		<propertyregex property="info.smaller"
 			input="${last.revision.info}"
 			regexp="(?s)-+.(r\d+ \| \w+)\s?\|\s?.+(\(.*?).\|\s\d+\slines?(.*?).-{3}"
-			select=" \2 \1 > \3"
+			select=" #ColdFusion \2 \1 > \3"
 			casesensitive="false" />
 		<twitter message="${info.smaller}" 
 			username="${twitter.username}" 
