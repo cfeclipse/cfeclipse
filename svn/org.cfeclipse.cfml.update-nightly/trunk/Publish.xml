@@ -40,19 +40,24 @@
 	</target>
 
 	<target name="twitter-head-info" depends="init">
-		    <property name="repository.URL" value="http://svn.cfeclipse.org"/>
-		    <java classname="org.tmatesoft.svn.cli.SVN" classpathref="build.lib.path"
-		        fork="true" outputproperty="last.revision.info">
-			      <arg value="log"/>
-			      <arg value="-rHEAD"/>
-		      <arg value="${repository.URL}/"/>
-		    </java>
+	    <property name="repository.URL" value="http://svn.cfeclipse.org"/>
+	    <java classname="org.tmatesoft.svn.cli.SVN" classpathref="build.lib.path"
+	        fork="true" outputproperty="last.revision.info">
+		      <arg value="log"/>
+		      <arg value="-rHEAD"/>
+	      <arg value="${repository.URL}/"/>
+	    </java>
 		<propertyregex property="info.smaller"
-		              input="${last.revision.info}"
-		              regexp="(?s)[-//s]+(.*)[//s]+"
-		              select="\1"
-		              casesensitive="false" />
-		<echo message="${info.smaller}"/>
+			input="${last.revision.info}"
+			regexp="(?s)-+.(r\d+ \| \w+)\s?\|\s?.+(\(.*?).\|\s\d+\slines?(.*?).-{3}"
+			select=" \2 \1 > \3"
+			casesensitive="false" />
+		<twitter message="${info.smaller}" 
+			username="${twitter.username}" 
+			password="${twitter.password}" 
+			bitlyUsername="bitly-username" 
+			bitlyApiKey="bitly-key" 
+			enableBitly="false" />
 	</target>
 
 	<macrodef name="push">
@@ -83,7 +88,7 @@
 					<date datetime="${filefilter}" when="after" />
 				</fileset>
 			</scp>
-
+			<antcall target="twitter-head-info" />
 			<echoproperties prefix="site" />
 		</sequential>
 	</macrodef>
