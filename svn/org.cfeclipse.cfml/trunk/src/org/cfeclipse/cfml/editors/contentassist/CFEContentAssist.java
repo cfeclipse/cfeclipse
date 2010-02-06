@@ -25,6 +25,7 @@
 package org.cfeclipse.cfml.editors.contentassist;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
@@ -84,16 +85,10 @@ public abstract class CFEContentAssist extends AssistContributor implements IAss
 	{
 		if(inStr.trim().length() == 0)
 			return new ArrayList();
+		String[] allTokens = inStr.split("\\s+"); 
+				
+		return new ArrayList(Arrays.asList(allTokens));
 		
-		StringTokenizer st = new StringTokenizer(inStr, " ");
-		
-		ArrayList retArray = new ArrayList(st.countTokens());
-		
-		while(st.hasMoreTokens()) {
-			retArray.add(st.nextToken());
-		}
-		
-		return retArray;
 	}
 	
 	/**

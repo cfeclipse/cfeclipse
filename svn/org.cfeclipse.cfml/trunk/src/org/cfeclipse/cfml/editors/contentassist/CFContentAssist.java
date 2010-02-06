@@ -450,7 +450,8 @@ public class CFContentAssist extends CFEContentAssist{
 		
 		// if it looks like they have started typing the contents of an
 		// attribtue (or they are done) set limiting to nothing
-		if(attrText.indexOf("\"") > 0 || attrText.indexOf("'") > 0) {
+		// also check that we're not like <cffunc|<-here
+		if(attrText.endsWith("\"") || attrText.endsWith("'") || attrText.startsWith("<")) {
 			attrText = "";
 		}
 		
