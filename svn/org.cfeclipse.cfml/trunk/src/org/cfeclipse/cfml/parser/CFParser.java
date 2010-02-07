@@ -1376,8 +1376,9 @@ public class CFParser {
 			if(currChar == '<' && inData.length() >= 5 && inData.substring(currPos,currPos+5).equals("<!---")) {
 				inComment = true;
 			}
-			if(currChar == '-' && inData.length() >= 4 && inData.substring(currPos,currPos+4).equals("--->")) {
+			if(currChar == '>' && inData.length()-3 >= 0 && inData.substring(currPos-3, currPos).equals("---")) {
 				inComment = false;
+				continue;
 			}
 			if(inComment) {
 				// if we're inside a comment, we don't give a hoot, keep going until out of it
