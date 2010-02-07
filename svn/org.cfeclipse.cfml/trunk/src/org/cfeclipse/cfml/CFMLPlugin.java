@@ -30,6 +30,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.PropertyConfigurator;
+import org.cfeclipse.cfml.console.ConsoleUtil;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.actions.LastActionManager;
 import org.cfeclipse.cfml.editors.contentassist.CFContentAssist;
@@ -71,6 +72,7 @@ import org.osgi.framework.BundleContext;
 public class CFMLPlugin extends AbstractUIPlugin {
 
 	public static final String PLUGIN_ID = "org.cfeclipse.cfml";
+	public static final String CONSOLE_NAME = "CFEclipse";
 
 	/** Singleton instance so that everything can access the plugin */
 	private static CFMLPlugin plugin;
@@ -314,6 +316,14 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			fRegistry.addContextType(CFScriptTemplateContextType.CFSCRIPT_CONTEXT_TYPE);
 		}
 		return fRegistry;
+	}
+	
+	public static void log(String msg) {
+		ConsoleUtil.printInfo(CONSOLE_NAME, msg);
+	}
+
+	public static void logError(String msg) {
+		ConsoleUtil.printError(CONSOLE_NAME, msg);
 	}
 
 	public void notifyCFModelListeners(CFModelChangeEvent cfModelChangeEvent) {
