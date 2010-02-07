@@ -80,6 +80,9 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 
 	private int fLastOffset;
 
+
+	private int fPrevDocLen = 0;
+
 	private static final Comparator ORDER_COMPARATOR= new Comparator() {
 
 		public int compare(Object o1, Object o2) {
@@ -374,13 +377,23 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 		return result;
     }
 
+    private boolean isWhiteSpace(char c) {
+    	return Character.isWhitespace(c);
+    }
+    
 	private List collectProposals(ITextViewer viewer, int offset, IProgressMonitor monitor) {
 		if(viewer == null) 
 			return new ArrayList();
 		fState = AssistUtils.initialiseDefaultAssistState(viewer, offset);
+		boolean isDocLenDiff = viewer.getDocument().getLength() != fPrevDocLen;
 		List proposals= new ArrayList();
 		List providers= getCategories();
 		IAssistContributor cat = null;
+		// this is a hack for our over-eager proposals
+		if((fState.getTriggerData() == '>' || isWhiteSpace(fState.getTriggerData())) && !isDocLenDiff) {
+			return proposals;
+		}
+		fPrevDocLen = viewer.getDocument().getLength();
 		for (Iterator it= providers.iterator(); it.hasNext();) {
 			Object assistor = it.next();
 			if(assistor instanceof CFContentAssist) {
