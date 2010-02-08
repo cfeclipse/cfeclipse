@@ -15,7 +15,21 @@
 		</fileset>
 	</path>
 
-	<target name="init">
+	<target name="clean">
+		<delete>
+			<fileset dir="${basedir}/plugins">
+				<exclude name="org.cfeclipse.cfml.docshare*.jar" />
+			</fileset>
+			<fileset dir="${basedir}/features">
+				<exclude name="org.cfeclipse.cfml.docshare*.jar" />
+			</fileset>
+			<fileset dir="${basedir}/">
+				<include name="*.jar *.zip" />
+			</fileset>
+		</delete>
+	</target>
+
+		<target name="init">
 		<!-- publish.properties must live in this directory, and it must contain
 		ftp.username, ftp.password, and ftp.site properties -->
 		<property file="publish.properties" />
