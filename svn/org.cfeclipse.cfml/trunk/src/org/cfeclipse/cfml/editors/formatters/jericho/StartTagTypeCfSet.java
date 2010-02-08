@@ -23,8 +23,7 @@ package org.cfeclipse.cfml.editors.formatters.jericho;
 import net.htmlparser.jericho.EndTagType;
 import net.htmlparser.jericho.StartTagTypeGenericImplementation;
 
- // note this has the same startdelimiter as processing instruction, so overrides it if registered
- final class StartTagTypeCfSet extends StartTagTypeGenericImplementation {
+ final class StartTagTypeCfSet extends GenericStartTagTypeCf {
 	protected static final StartTagTypeCfSet INSTANCE=new StartTagTypeCfSet();
 
 	private StartTagTypeCfSet() {

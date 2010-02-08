@@ -27,12 +27,17 @@ import net.htmlparser.jericho.StartTag;
 import net.htmlparser.jericho.StartTagTypeGenericImplementation;
 import net.htmlparser.jericho.Tag;
 
-final class StartTagTypeCfIf extends StartTagTypeGenericImplementation {
-	protected static final StartTagTypeCfIf INSTANCE = new StartTagTypeCfIf();
+class GenericStartTagTypeCf extends StartTagTypeGenericImplementation {
 
-	private StartTagTypeCfIf() {
-		super("CFML if tag", "<cfif", ">", EndTagType.NORMAL, false, false, false);
+	protected GenericStartTagTypeCf(final String description, final String startDelimiter, final String closingDelimiter, final EndTagType correspondingEndTagType, final boolean isServerTag) {
+		super(description,startDelimiter,closingDelimiter,correspondingEndTagType,isServerTag,false,false);
 	}
+
+
+	protected GenericStartTagTypeCf(final String description, final String startDelimiter, final String closingDelimiter, final EndTagType correspondingEndTagType, final boolean isServerTag, final boolean hasAttributes, final boolean isNameAfterPrefixRequired) {
+		super(description,startDelimiter,closingDelimiter,correspondingEndTagType,isServerTag,hasAttributes,isNameAfterPrefixRequired);
+	}
+
 
 	protected int getEnd(final Source source, final int pos) {
 		final ParseText text = source.getParseText();

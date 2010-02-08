@@ -24,7 +24,7 @@ import net.htmlparser.jericho.EndTagType;
 import net.htmlparser.jericho.StartTagTypeGenericImplementation;
 
  // note this has the same startdelimiter as processing instruction, so overrides it if registered
- final class StartTagTypeCfArgument extends StartTagTypeGenericImplementation {
+ final class StartTagTypeCfArgument extends GenericStartTagTypeCf {
 	protected static final StartTagTypeCfArgument INSTANCE=new StartTagTypeCfArgument();
 
 	private StartTagTypeCfArgument() {

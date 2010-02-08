@@ -23,7 +23,7 @@ package org.cfeclipse.cfml.editors.formatters.jericho;
 import net.htmlparser.jericho.EndTagType;
 import net.htmlparser.jericho.StartTagTypeGenericImplementation;
 
-final class StartTagTypeCFMLStandard extends StartTagTypeGenericImplementation {
+final class StartTagTypeCFMLStandard extends GenericStartTagTypeCf {
 	protected static final StartTagTypeCFMLStandard INSTANCE=new StartTagTypeCFMLStandard();
 
 	private StartTagTypeCFMLStandard() {
