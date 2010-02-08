@@ -13132,7 +13132,7 @@ The name of a JavaScript function to execute if evaluating a bind expression res
     ...
     /cfsilent
 -->
-        <tag endtagrequired="true" name="cfsilent" single="true"
+        <tag endtagrequired="false" name="cfsilent" single="false"
              xmlstyle="true">
             <help><![CDATA[
         Suppresses output produced by CFML within a tag's scope.
@@ -17809,7 +17809,7 @@ One or more valid fonts to use for the CAPTCHA text. Separate multiple fonts wit
             </possiblecombinations>
         </tag>
         <tag creator="8" endtagrequired="true" canHaveAttributeCollection="false" name="cfinterface"
-            single="true" xmlstyle="false">
+            single="false" xmlstyle="false">
             <help><![CDATA[
         Defines an interface that consists of a set of signatures for functions.
         The interface does not include the full function definitions;
