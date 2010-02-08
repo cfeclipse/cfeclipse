@@ -1152,6 +1152,8 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 					.getResourceBundle(), "ContentFormat.", this, ISourceViewer.FORMAT); //$NON-NLS-1$
 			action.setActionDefinitionId(CFMLPlugin.PLUGIN_ID + ".FormatAction");
 			action.setEnabled(true);
+			// for some reason this isn't getting picked up from the RB above.  #517
+			action.setText("Format Source");
 			markAsStateDependentAction("ContentFormat", true); //$NON-NLS-1$
 			markAsSelectionDependentAction("ContentFormat", true); //$NON-NLS-1$
 			setAction("ContentFormat", action); //$NON-NLS-1$			
