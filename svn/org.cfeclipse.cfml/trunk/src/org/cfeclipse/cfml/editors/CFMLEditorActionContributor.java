@@ -49,6 +49,7 @@ public class CFMLEditorActionContributor extends BasicTextEditorActionContributo
 	//private TogglePresentationAction fTogglePresentation;
 	//private OpenExternalDocAction fOpenExternalDocAction;
 	private ToggleMarkOccurrencesAction fToggleMarkOccurrencesAction;
+	private boolean fMenuHasBeenAdded = false;
     //private ToggleAutoReconcileAction fToggleAutoReconcileAction;
 
 	public CFMLEditorActionContributor() {
@@ -60,11 +61,12 @@ public class CFMLEditorActionContributor extends BasicTextEditorActionContributo
 		fContentFormat.setActionDefinitionId(CFMLPlugin.PLUGIN_ID + ".FormatAction");
 		//fTogglePresentation= new TogglePresentationAction();
         //fToggleAutoReconcileAction= new ToggleAutoReconcileAction();
+		fToggleMarkOccurrencesAction= new ToggleMarkOccurrencesAction();
 		
 	}
 	
 	protected void initializeActions(CFMLEditor editor) {
-		fToggleMarkOccurrencesAction= new ToggleMarkOccurrencesAction();
+		fMenuHasBeenAdded = true;
 //		fOpenExternalDocAction= new OpenExternalDocAction(editor);
 	}
 	
@@ -116,7 +118,7 @@ public class CFMLEditorActionContributor extends BasicTextEditorActionContributo
 	 */
 	public void contributeToMenu(IMenuManager menu) {		
 		// we only want to add the defualt text editor stuff once, our stuff is more dynamic
-		if (fToggleMarkOccurrencesAction != null) {
+		if (fMenuHasBeenAdded) {
 			return;
 		}
 		super.contributeToMenu(menu);

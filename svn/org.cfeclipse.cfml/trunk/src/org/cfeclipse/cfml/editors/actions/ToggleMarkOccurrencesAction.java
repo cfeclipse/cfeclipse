@@ -17,6 +17,7 @@ import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
 import org.cfeclipse.cfml.preferences.TextSelectionPreferenceConstants;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.PlatformUI;
@@ -48,6 +49,15 @@ public class ToggleMarkOccurrencesAction extends TextEditorAction implements IPr
 	 */
 	public void run() {
 		fStore.setValue(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES, isChecked());
+		ITextEditor editor= getTextEditor();
+		if (editor instanceof CFMLEditor) {
+			CFMLEditor cfe = (CFMLEditor) editor;
+			if(isChecked()) {				
+				(cfe).getSelectionCursorListener().updateOccurrenceAnnotations((ITextSelection) cfe.getSelectionProvider().getSelection(), cfe.getCFModel());
+			} else {
+				(cfe).getSelectionCursorListener().removeOccurrenceAnnotations();				
+			}
+		}
 	}
 	
 	/*

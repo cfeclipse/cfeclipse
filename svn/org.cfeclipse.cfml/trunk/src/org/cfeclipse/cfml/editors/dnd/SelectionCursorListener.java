@@ -947,7 +947,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		fOccurrencesFinderJob.run(new NullProgressMonitor());
 	}
 	
-	private void removeOccurrenceAnnotations() {
+	public void removeOccurrenceAnnotations() {
 		IDocumentProvider documentProvider= editor.getDocumentProvider();
 		if (documentProvider == null) {
 			return;
