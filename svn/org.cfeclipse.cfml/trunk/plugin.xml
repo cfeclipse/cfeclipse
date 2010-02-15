@@ -681,7 +681,7 @@
 	                visible="true" />
 	        <menu id="org.cfeclipse.menues.source"
 	                label="Source">
-				<command commandId="org.cfeclipse.cfml.FormatAction" style="push" label="%ContentFormat.label">
+				<command commandId="org.cfeclipse.cfml.FormatAction" style="push">
 						<visibleWhen checkEnabled="false">
 							<reference definitionId="isActiveEditorAnInstanceOfCFMLEditor" />
 						</visibleWhen>
@@ -1163,7 +1163,7 @@
             categoryId="org.cfeclipse.cfml.commandCategory"
             description="%renameInFile.label" />
         <command 
-        	name="ContentFormat" 
+        	name="%ContentFormat.label"
         	description="Format Source" 
         	categoryId="org.cfeclipse.cfml.commandCategory" 
         	id="org.cfeclipse.cfml.FormatAction"

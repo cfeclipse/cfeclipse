@@ -2,29 +2,20 @@ package org.cfeclipse.cfml.editors.formatters;
 
 import net.htmlparser.jericho.*;
 
-import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.formatters.jericho.*;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.text.TextUtilities;
 import org.eclipse.jface.text.formatter.ContextBasedFormattingStrategy;
 import org.eclipse.jface.text.formatter.FormattingContextProperties;
 import org.eclipse.jface.text.formatter.IFormattingContext;
 import org.eclipse.jface.text.formatter.IFormattingStrategyExtension;
-import org.eclipse.ui.texteditor.ITextEditor;
+import cfml.formatting.preferences.FormatterPreferences;
+import cfml.formatting.Formatter;
 
 //import com.egen.develop.util.jspFormatter.JSPFormatter;
 //import com.egen.develop.util.jspFormatter.Options;
 
 import java.util.*;
-import java.awt.BufferCapabilities.FlipContents;
-import java.io.*;
-import java.net.*;
 
 public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy implements IFormattingStrategyExtension {
 	private static final String lineSeparator = System.getProperty("line.separator");
@@ -34,6 +25,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 
 	/** access to the preferences store * */
 	private FormattingPreferences prefs;
+	private Formatter fFormatter;
 	private static String fCurrentIndent;
 	private static int MAX_LENGTH = 0;
 	private static int col;
@@ -48,6 +40,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 	 * @see
 	 * org.eclipse.jface.text.formatter.IFormattingStrategyExtension#format()
 	 */
+	@Override
 	public void format() {
 
 		super.format();
@@ -88,6 +81,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		}
 	}
 
+	@Override
 	public String format(String content, boolean isLineStart, String indentation, int[] positions) {
 		// MicrosoftTagTypes.register();
 		// PHPTagTypes.register();
@@ -124,6 +118,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 	// System.out.println("\n*******************************************************************************\n");
 	// }
 
+	@Override
 	public void formatterStarts(String initialIndentation) {
 		// System.out.println("Start"+formatted);
 	}
@@ -132,6 +127,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 	 * @seeorg.eclipse.jface.text.formatter.ContextBasedFormattingStrategy#
 	 * formatterStarts(org.eclipse.jface.text.formatter.IFormattingContext)
 	 */
+	@Override
 	public void formatterStarts(final IFormattingContext context) {
 		super.formatterStarts(context);
 		context.setProperty(FormattingContextProperties.CONTEXT_DOCUMENT, Boolean.FALSE);
@@ -146,6 +142,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 	 * @seeorg.eclipse.jface.text.formatter.ContextBasedFormattingStrategy#
 	 * formatterStops()
 	 */
+	@Override
 	public void formatterStops() {
 		super.formatterStops();
 		fDocuments.clear();
@@ -154,9 +151,6 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 	public String format(String contents, FormattingPreferences prefs, String currentIndent) {
 		String indentation = prefs.getCanonicalIndent();
 		String newLine = org.eclipse.jface.text.TextUtilities.determineLineDelimiter(contents, lineSeparator);
-		CFMLTagTypes.register();
-		Source source = new Source(contents.replaceAll("\\r?\\n", newLine));
-		source.ignoreWhenParsing(source.getAllElements(HTMLElementName.SCRIPT));
 
 		boolean enforceMaxLineWidth = prefs.getEnforceMaximumLineWidth();
 		boolean tidyTags = prefs.tidyTags();
@@ -167,61 +161,22 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		boolean changeTagCaseLower = prefs.changeTagCaseLower();
 		int maxLineWidth = prefs.getMaximumLineWidth();
 
-		// displaySegments(source.getAllElements(HTMLElementName.SCRIPT));
-		// source.fullSequentialParse();
+		FormatterPreferences formatprefs = new FormatterPreferences();
+		formatprefs.setEnforceMaximumLineWidth(enforceMaxLineWidth);
+		formatprefs.tidyTags(tidyTags);
+		formatprefs.collapseWhiteSpace(collapseWhitespace);
+		formatprefs.indentAllElements(indentAllElements);
+		formatprefs.changeTagCase(changeTagCase);
+		formatprefs.changeTagCaseUpper(changeTagCaseUpper);
+		formatprefs.changeTagCaseLower(changeTagCaseLower);
+		formatprefs.setMaximumLineWidth(maxLineWidth);
+		formatprefs.setInitialIndent(currentIndent);
+		formatprefs.setCloseTags(prefs.getCloseTags());
 
-		// java 5 req?
-		// System.out.println("Unregistered start tags:");
-		// displaySegments(source.getAllTags(StartTagType.UNREGISTERED));
-		// System.out.println("Unregistered end tags:");
-		// displaySegments(source.getAllTags(EndTagType.UNREGISTERED));
+		fFormatter = new Formatter(formatprefs);
+		String formatted = fFormatter.format(contents);
+		return formatted;
 
-		SourceFormatter sourceFormatter = source.getSourceFormatter();
-		sourceFormatter.setIndentString(indentation);
-		sourceFormatter.setTidyTags(tidyTags);
-		sourceFormatter.setIndentAllElements(indentAllElements);
-		sourceFormatter.setCollapseWhiteSpace(collapseWhitespace);
-		sourceFormatter.setNewLine(newLine);
-		String results = sourceFormatter.toString();
-		if (changeTagCase) {
-			if (changeTagCaseLower) {
-				results = changeTagCase(results, false);
-			} else {
-				results = changeTagCase(results, true);
-			}
-		}
-		if (prefs.getCloseTags()) {
-			results = results.replaceAll("(?si)<(cfabort?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?si)<(cfargument?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?si)<(cfreturn?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?si)<(cfset?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?si)<(cfinput?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?si)<(cfimport?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?si)<(cfdump?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-			results = results.replaceAll("(?si)<(cfthrow?.*?[^\\s$|/|]?)\\s?/?>", "<$1 />");
-		}
-		results = results.replaceAll("(?si)<(cfcomponent[^>]*)>", "<$1>" + newLine);
-		results = results.replaceAll("(?si)(\\s+)<(/cfcomponent[^>]*)>", newLine + "$1<$2>");
-		results = results.replaceAll("(?si)(\\s+)<(cffunction[^>]*)>", newLine + "$1<$2>");
-		results = results.replaceAll("(?si)(\\s+)<(/cffunction[^>]*)>", "$1<$2>" + newLine);
-		results = results.replaceAll("(?i)" + newLine + "{3}(\\s+)<(cffunction)", newLine + newLine + "$1<$2");
-		results = results.replaceAll("(?si)(\\s+)<(/cffunction[^>]*)>"+ newLine + "{3}", "$1<$2>" + newLine + newLine);
-		results = results.replaceAll("(?i)" + indentation + "<(cfelse)", "<$1");
-		// indent to whatever the current level is
-		String[] lines = results.split(newLine);
-		StringBuffer indented = new StringBuffer();
-		for (int x = 0; x < lines.length; x++) {
-			indented.append(currentIndent);
-			indented.append(lines[x]);
-			indented.append(newLine);
-		}
-		// indented.setLength(indented.lastIndexOf(newLine));
-		// return indented.toString();
-		if (!enforceMaxLineWidth) {
-			return indented.toString();
-		} else {
-			return formatLineLength(indented.toString(), maxLineWidth);
-		}
 	}
 
 	public String changeTagCase(String contents, boolean uppercase) {
@@ -263,121 +218,6 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		return format(contents, prefs, currentIndent);
 	}
 
-	/*
-	 * 
-	 * HERE LIES LINE TRIMMING STUPHS
-	 */
-	public String formatLineLength(String contents, int maxLineWidth) {
-		String indentation = prefs.getCanonicalIndent();
-		String newLine = org.eclipse.jface.text.TextUtilities.determineLineDelimiter(contents, lineSeparator);
-		CFMLTagTypes.register();
-		String line = "";
-		int indentLen = 0;
-		char isWS;
-		MAX_LENGTH = maxLineWidth;
-		String[] lines = contents.split(newLine);
-		StringBuffer indented = new StringBuffer();
-		for (int x = 0; x < lines.length; x++) {
-			line = lines[x];
-			indentLen = 0;
-			if (line.length() > 0) {
-				isWS = line.charAt(indentLen);
-				while ((isWS == ' ' || isWS == '\t') && indentLen < line.length()) {
-					isWS = line.charAt(indentLen);
-					indentLen++;
-				}
-				if (indentLen > 0)
-					indentLen--;
-			}
-			fCurrentIndent = line.substring(0, indentLen);
-			if (line.length() <= MAX_LENGTH) {
-				indented.append(line);
-				indented.append(newLine);
-				col = 0;
-				continue;
-			}
-			Source source = new Source(line);
-			int pos = 0;
-			for (Tag tag : source.getAllTags()) {
-				if (pos != tag.getBegin()) {
-					print(line.subSequence(pos, tag.getBegin()), indented); // print
-					// the
-					// text
-					// between
-					// this
-					// tag
-					// and
-					// the
-					// last
-				}
-				formatTag(tag, line, indented);
-				pos = tag.getEnd();
-			}
-			if (pos != line.length()) {
-				print(line.subSequence(pos, line.length()), indented); // print
-				// the
-				// text
-				// between
-				// the
-				// last
-				// tag
-				// and
-				// the
-				// end
-				// of
-				// line
-			}
-			indented.append(newLine);
-			if (col == 0)
-				indented.append(fCurrentIndent);
-			col = 0;
 
-		}
-		// indented.setLength(indented.lastIndexOf(newLine));
-		return indented.toString();
-	}
-
-	private static void formatTag(Tag tag, String line, StringBuffer indented) {
-		if (tag.length() <= MAX_LENGTH || tag instanceof EndTag) {
-			print(fCurrentIndent + tag, indented);
-			return;
-		}
-		StartTag startTag = (StartTag) tag;
-		Attributes attributes = startTag.getAttributes();
-		if (attributes != null) {
-			print(line.substring(startTag.getBegin(), attributes.getBegin()), indented);
-			for (Attribute attribute : attributes) {
-				print(" ", indented);
-				print(attribute, indented);
-			}
-			print(line.substring(attributes.getEnd(), startTag.getEnd()), indented);
-		} else {
-			print(startTag, indented);
-		}
-	}
-
-	private static void print(CharSequence text, StringBuffer indented) {
-		print(text, true, indented);
-	}
-
-	private static void print(CharSequence text, boolean splitLongText, StringBuffer indented) {
-		if (splitLongText && text.length() > MAX_LENGTH) {
-			String[] words = text.toString().split("\\s");
-			// indented.append(text.toString().indexOf(words[0]));
-			for (int i = 0; i < words.length; i++) {
-				print(words[i], false, indented);
-				if (i < words.length - 1)
-					print(" ", indented);
-			}
-			return;
-		}
-		if (col > 0 && col + text.length() > MAX_LENGTH) {
-			indented.append(lineSeparator);
-			indented.append(fCurrentIndent);
-			col = 0;
-		}
-		indented.append(text);
-		col += text.length();
-	}
 
 }

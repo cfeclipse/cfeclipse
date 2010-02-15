@@ -34,6 +34,9 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.htmlparser.jericho.ParseText;
+import net.htmlparser.jericho.Source;
+
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlComment;
@@ -169,9 +172,10 @@ public class CFParser {
 	static protected final String REG_ATTRIBUTES_BRACKETS= "[^\\[]*(\\[.*\\])[^\\]]*";	
 //	static protected final String REG_ATTRIBUTES_BRACES = "(?<!\\\\)\\{(\\\\\\{|\\\\\\}|[^\\{\\}]|(?<!\\\\)\\{.*(?<!\\\\)\\})*(?<!\\\\)\\}";
 	static protected final String REG_ATTRIBUTES_BRACES = "[^\\{]*(\\{.*\\})[^\\}]*";
-	static protected final String REG_ATTRIBUTES_BB = "(\\w++)?\\s*+=?\\s*+(" + REG_ATTRIBUTES_BRACKETS + "|" + REG_ATTRIBUTES_BRACES + ")";
+	static protected final String REG_ATTRIBUTES_BB = "(?s)(\\w+)+\\s*+=\\s*+(" + REG_ATTRIBUTES_BRACKETS + "|" + REG_ATTRIBUTES_BRACES + ")";
 	// unescaped: Curly ({}): (?<!\\)\{(\\\{|\\\}|[^\{\}]|(?<!\\)\{.*(?<!\\)\})*(?<!\\)\}
-	static protected final String REG_ATTRIBUTES = "(?si)(\\w++)\\s?=\\s?+((((\\w++ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
+//	static protected final String REG_ATTRIBUTES = "(?s)(\\w++)\\s?=\\s?+((((\\w++ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
+	static protected final String REG_ATTRIBUTES = "(\\w+)[\\s=]+(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4))";
 	// unescaped: (\w++)[\s=]+((((\w++ & )?\x22|\x27|#)((?!\4).|\4{2})*\4?(.*&.*)?))
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
@@ -379,6 +383,7 @@ public class CFParser {
 		}
 	}	
 	
+	
 	/**
 	 * <code>stripAttributes</code> - Strips the attributes from some data and puts them into a hash map
 	 * @param inData - the string data to get the attributes out of
@@ -391,24 +396,6 @@ public class CFParser {
 		Matcher matcher;
 		Pattern pattern;
 		String attributeName,attributeValue;
-		// this first matcher is a hack to get any cf9 type struct/array declarations
-		pattern = Pattern.compile(REG_ATTRIBUTES_BB,Pattern.CASE_INSENSITIVE);
-		// this removes anything like: wee="fun={woo};and=[hoo]" and then looks for matched {.*} & [.*]
-		matcher = pattern.matcher(inData.replaceAll(REG_ATTRIBUTES, ""));
-		if(matcher.find()) {
-		    if (matcher.group(1) != null && matcher.group(2) != null) {
-		    	AttributeItem newAttr;
-		    	
-			    attributeName = matcher.group(1).trim();
-			    attributeValue = matcher.group(2).trim();
-			    attributeValue = attributeValue.substring(1,attributeValue.length()-1);
-			    newAttr = new AttributeItem(lineNum, offset + matcher.start(1), offset + matcher.end(1),
-			    								attributeName, attributeValue);
-			    attributes.add(newAttr);
-			    return attributes;			
-		    }
-		}
-
 		pattern = Pattern.compile(REG_ATTRIBUTES,Pattern.CASE_INSENSITIVE);
 		matcher = pattern.matcher(inData);
 		if(inData.trim().endsWith("&")){
@@ -432,7 +419,7 @@ public class CFParser {
 			    //System.out.println(attributeName + " = " +attributeValue);
 		    }
 		    else {
-//		        System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
+		        System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
 //		        for (int i = 0; i<=matcher.groupCount(); i++) {
 //		        	System.out.println("Match " + i + " : " + matcher.group(i));
 //		        }
@@ -658,7 +645,6 @@ public class CFParser {
 						for(Node child:((SimpleNode)node).children) {
 							((SimpleNode)child).setParent(((SimpleNode)node).getParent());
 							node.jjtGetParent().jjtAddChild(child, node.jjtGetParent().jjtGetNumChildren());
-							System.out.println("");
 						}
 					}
 					((SimpleNode)node.jjtGetParent()).jjtRemoveChild(curNode);
@@ -1062,7 +1048,13 @@ public class CFParser {
 						switch(match.getMatchType())
 						{
 							case MATCHER_CFMLTAG:
-								handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd, match), isACloser);
+								if(tagName.startsWith("<cfif") || tagName.startsWith("<cfelseif") || tagName.startsWith("<cfmodule")
+										|| tagName.startsWith("<cfset"))								
+								{
+									handleCFTag(tagName, match, matchStack, new ArrayList(), isACloser);
+								} else {
+									handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd, match), isACloser);									
+								}
 								if((tagName.startsWith("<cfif") || tagName.startsWith("<cfelseif") || tagName.startsWith("<cfmodule")
 										|| tagName.startsWith("<cfset")) 
 										&& attributes.trim().length() == 0)
