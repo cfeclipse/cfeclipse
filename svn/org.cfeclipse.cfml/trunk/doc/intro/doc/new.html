@@ -17,11 +17,35 @@ tr {
 	vertical-align: top;
 }
 </style>
-<title>What's New in CFEclipse 1.3.5</title>
+<title>What's New in CFEclipse 1.3.6</title>
 <script language="JavaScript"
 	src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"> </script>
 </head>
 <body>
+<h2>What's New in CFEclipse 1.3.6</h2>
+<p>CFEclipse 1.3.6 is a bugfix release. We're happy to announce the creation of some initial unit tests, in an effort
+to prevent regressions.  They're pretty weak tests, but they'll get better as we proress.</p>
+<p>[Theoretically] Fixed in this release:</p>
+<pre>
+#509	Errors with implicit structure/array creation
+#106 	mishandling of multiline strings   	 
+#478 	attribute validation with spaces 	
+#486 	asking for content assist when you have a broken parse tree throws error
+#496 	word wrap throws null pointer exception 	
+#510 	insert cfabort action, doesn't 
+#512 	useSmartPaste preference default is not initialized 
+#513 	context menu added with each file opened
+#515 	smartpaste preference doesn't seem to take 
+#516 	Code Formatting splits regex onto 2 lines 	
+#520 	syntax errors inside comments 
+#521 	space at the end of strings/single quotes inside double quotes 	
+#523 	Code Parsing error with cfinterface/cffunction 
+#504 	cfdump and cfabort tags should print out their respective dump() and abort() functions in cfscript
+#517 	Content Format menu option incorrect display
+#518 	Code Parsing and formatting
+</pre>
+
+<p>For full descriptions, see <a href="http://trac.cfeclipse.org/query?status=closed&group=resolution&milestone=1.3.6">the list on trac</a></p>
 <h2>What's New in CFEclipse 1.3.5</h2>
 <p>Here are descriptions of some of the more interesting or
 significant changes made to CFEclipse. They are grouped into:</p>
