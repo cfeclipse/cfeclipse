@@ -175,7 +175,7 @@ public class CFParser {
 	static protected final String REG_ATTRIBUTES_BB = "(?s)(\\w+)+\\s*+=\\s*+(" + REG_ATTRIBUTES_BRACKETS + "|" + REG_ATTRIBUTES_BRACES + ")";
 	// unescaped: Curly ({}): (?<!\\)\{(\\\{|\\\}|[^\{\}]|(?<!\\)\{.*(?<!\\)\})*(?<!\\)\}
 //	static protected final String REG_ATTRIBUTES = "(?s)(\\w++)\\s?=\\s?+((((\\w++ & )?\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4?(.*&.*)?))";
-	static protected final String REG_ATTRIBUTES = "(\\w+)[\\s=]+(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4))";
+	static protected final String REG_ATTRIBUTES = "(?si)(\\w+)[\\s=]+(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4))";
 	// unescaped: (\w++)[\s=]+((((\w++ & )?\x22|\x27|#)((?!\4).|\4{2})*\4?(.*&.*)?))
 	static protected final int USRMSG_INFO 		= 0x00;
 	static protected final int USRMSG_WARNING 	= 0x01;
@@ -1018,7 +1018,7 @@ public class CFParser {
 					} else {
 						// get just tag name, e.g. : <cffunction name="blah" becomes cffunction
 						String tagName = matchStr.split("[\\s/>]")[0];
-						tagName = "<"+tagName.substring(1, tagName.length());
+						tagName = "<"+tagName.substring(1, tagName.length()).toLowerCase();
 						int tagEnd = matchStr.indexOf(tagName)+tagName.length();
 						boolean isACloser = false;
 						//
