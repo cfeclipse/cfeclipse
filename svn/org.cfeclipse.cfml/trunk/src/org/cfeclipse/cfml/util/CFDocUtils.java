@@ -100,7 +100,8 @@ public class CFDocUtils {
 		 * \s*(\w+)\s*=\s*('(?:[^']*(?:'')?[^']*)*'|"(?:[^"]*(?:"")?[^"]*)*")
 		 */
 		//Old Reg-ex that breaks thigns :: String regExForAtributes = "\\s*(\\w+)\\s*=\\s*('(?:[^']*(?:'')?[^']*)*'|\"(?:[^\"]*(?:\"\")?[^\"]*)*\")";
-		String regExForAtributes = "\\s*(\\w+)\\s*=\\s*(\"([^\"](\"\")?[^\"])*\"|'([^']('')?[^'])*')";
+		final String regExForAtributes = "(?s)(\\w+)[\\s=]+(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4))";
+		//String regExForAtributes = "\\s*(\\w+)\\s*=\\s*(\"([^\"](\"\")?[^\"])*\"|'([^']('')?[^'])*')";
 		//Do a reg ex rather than just a split
 		 Pattern pattern = Pattern.compile(regExForAtributes);
 		 Matcher matcher = pattern.matcher(string2Scan);
