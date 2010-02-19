@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="CFEclipse Development Update Site" url="http://cfeclipse.org/update-Dev">
+      CFEclipse Dev Build Update site
+   </description>
+   <feature url="features/org.cfeclipse.cfml.feature_1.3.7.201002172332.jar" id="org.cfeclipse.cfml.feature" version="1.3.7.201002172332">
+      <category name="[Dev] CFEclipse CFML Editor (Required)"/>
+   </feature>
+   <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.200906240701.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.200906240102">
+      <category name="[Dev] CFEclipse DocShare Support (Optional)"/>
+   </feature>
+   <feature url="features/org.cfeclipse.cfml.docsharesupport35.feature_1.0.0.200906240705.jar" id="org.cfeclipse.cfml.docsharesupport35.feature" version="1.0.0.200906240103">
+      <category name="[Dev] CFEclipse DocShare Support (Optional)"/>
+   </feature>
+   <category-def name="[Dev] CFEclipse CFML Editor (Required)" label="[Dev] CFEclipse CFML Editor (Required)"/>
+   <category-def name="[Dev] CFEclipse DocShare Support (Optional)" label="[Dev] CFEclipse DocShare Support (Optional)"/>
+</site>
