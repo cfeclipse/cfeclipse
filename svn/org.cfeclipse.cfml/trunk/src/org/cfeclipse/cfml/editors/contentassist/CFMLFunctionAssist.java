@@ -97,6 +97,8 @@ public class CFMLFunctionAssist extends AssistContributor
      *
      */
     //private HashMap paramPositions = new HashMap();
+
+	private IAssistState fState;
     
     /**
      * 
@@ -118,6 +120,7 @@ public class CFMLFunctionAssist extends AssistContributor
          * We should probably find a better way than this, but the 
          * content assist is getting in the way right now.
          */
+    	fState = state;
         if (state.getTriggerData() != ','
             && state.getTriggerData() != '(') {
             return null;
@@ -404,6 +407,8 @@ public class CFMLFunctionAssist extends AssistContributor
   
     private ICompletionProposal[] getValueProposals(Parameter activeParam,String extraInfo,int offset, int paramCount) {
       //String value = "";
+      String docText = fState.getDataSoFar();
+      char strDelim = (docText.lastIndexOf("'") > docText.lastIndexOf("\"")) ? '\'' : '\"';
       String suffix = ",";
       Set values = activeParam.getValues();
       ICompletionProposal[] tmpResult = new ICompletionProposal[values.size()];
@@ -435,9 +440,13 @@ public class CFMLFunctionAssist extends AssistContributor
       	Object o = i.next();
       	if (o instanceof Value) {
       		Value val = (Value)o;
+      		boolean wee = val.toString().matches("^\"");
       		if (cleanParamText.length() == 0
       		        || val.toString().toLowerCase().startsWith(cleanParamText.toLowerCase())) {
       		    String insertion = val.toString().substring(cleanParamText.length(),val.toString().length());
+      		    if(activeParam.getType().equalsIgnoreCase("string") && !insertion.matches("^[\"|'].*")) {
+      		    	insertion = strDelim + insertion + strDelim;
+      		    }
       		    int cursorOffset = insertion.length()+suffix.length();
       		    
       		    if (!paramText.endsWith("\"") 
@@ -463,7 +472,7 @@ public class CFMLFunctionAssist extends AssistContributor
 		              0,
 		              cursorOffset,
 		              CFPluginImages.get(CFPluginImages.ICON_PARAM),
-		              activeParam.toString() + " - " + val.toString(),
+		              activeParam.toString() + " - " + insertion,
 		              null,
 		              extraInfo);
 		      
