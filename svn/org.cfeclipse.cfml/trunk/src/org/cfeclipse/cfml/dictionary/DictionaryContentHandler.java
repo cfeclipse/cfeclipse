@@ -156,6 +156,9 @@ public class DictionaryContentHandler implements ContentHandler {
 			//adds help
 		} else if(str2.equals("component"))	{
 		    handleComponentStart(attributes);
+//  these came with the dict from CFB side, looks like a work in progress
+//		} else if(str2.equals("scopevar"))	{
+//		    handleScopeStart(attributes);
 		} else if(str2.equals("scope"))	{
 		    handleScopeStart(attributes);
 		} else if(str2.equals("triggers")) {
@@ -283,7 +286,7 @@ public class DictionaryContentHandler implements ContentHandler {
 		}
 		
 		//System.out.println("Param: " + name + " " + type + " " + required);
-		
+		//
 		// Create a new parameter and store it as the current parameter
 		this.paramItem = new Parameter(name,type,required,defaultValue, category);
 	}
@@ -320,18 +323,9 @@ public class DictionaryContentHandler implements ContentHandler {
 		//
 	    // Create a new value and assign it to the current parameter
 		String option = attributes.getValue(0);
-		
-		if(option != null && paramItem != null) {
-			// If this is an option for a function and it is supposed to be a string add the quotes
-			// But, don't want to add the quotes if it is is a function call
-			if(currentitem instanceof Function
-				&& paramItem.getType().equals("string") 
-				&& !option.matches("[a-zA-Z0-9]*\\(.*\\)")) {
-				option = "'" + option + "'";
-			}
-			
+
+		if(option != null && paramItem != null)
 			paramItem.addValue(new Value(option));
-		}
 	}
 	
 	private void handleValueEnd() {
@@ -375,14 +369,15 @@ public class DictionaryContentHandler implements ContentHandler {
 	
 	private void handleScopeStart(org.xml.sax.Attributes attributes) {
 	    //create a new value and assign it to the current parameter
-		String scope = attributes.getValue(0);
-		//System.out.println("Value: " + option);
+		String type = attributes.getValue(0);
+		String scope = attributes.getValue(1);
+		System.out.println("Value: " + scope);
 		if(currentitem instanceof Component) {
 			((Component)currentitem).addScope(scope);
 			dscopeVars.put(scope,currentitem);
 		}
 		else {
-		    dscopeVars.put(scope,new ScopeVar(scope));
+		    dscopeVars.put(scope,new ScopeVar(type,scope));
 		}
 	}
 	

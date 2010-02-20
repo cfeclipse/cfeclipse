@@ -15,7 +15,7 @@ import org.cfeclipse.cfml.dictionary.ScopeVar;
 class ScopeItem extends DictionaryItem {
    private ScopeVar scopevar;
     public ScopeItem(ScopeVar scope){
-        super(scope.getValue());
+        super(scope.getName());
         this.scopevar = scope;
     } 
     public String getHelp(){

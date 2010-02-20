@@ -38,6 +38,7 @@ import org.cfeclipse.cfml.dictionary.ScopeVar;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.dictionary.Value;
+import org.cfeclipse.cfml.editors.contentassist.CFEContentAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.resources.IFile;
@@ -155,7 +156,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 				return null;
 			
 			//System.err.println("CFCompletionProcessor::computeCompletionProposals() - I have " + attrProps.size() + " elements available to me");
-			return makeSetToProposal(
+			return CFEContentAssist.makeSetToProposal(
 				attrProps,
 				docOffset,
 				VALUETYPE,
@@ -362,7 +363,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 			    
 			    
 			    
-				return makeSetToProposal(
+				return CFEContentAssist.makeSetToProposal(
 					proposalSet,
 					documentOffset,
 					ATTRTYPE,
@@ -417,7 +418,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		{
 		/*////////////////////////// copy from above dup code! //////*/	
 			
-			return makeSetToProposal(
+			return CFEContentAssist.makeSetToProposal(
 				((ISyntaxDictionary)syntax).getFilteredElements(taglimiting),
 				documentOffset,
 				TAGTYPE,
@@ -449,7 +450,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		
 		
 		// Do we have methods in the returned set?
-			return makeSetToProposal(
+			return CFEContentAssist.makeSetToProposal(
 				proposals,
 				documentOffset,
 				SCOPETYPE,
@@ -532,7 +533,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 		}
 		else
 		{
-			return makeSetToProposal(
+			return CFEContentAssist.makeSetToProposal(
 				((ISyntaxDictionary)syntax).getFilteredElements(taglimiting),
 				documentOffset,
 				TAGTYPE,
@@ -542,163 +543,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	}
 
 
-	/** 
-	 * helper function
-	 * @param st the set to get the information from
-	 * @param offset where in the document the items will be
-	 * @param type attribute or tag (see finals in this class)
-	 * @return
-	 */
-	private ICompletionProposal[] makeSetToProposal(Set st, int offset, short type, int currentlen)
-	{
-		if(st != null)
-		{
-			Object obj[] = new Object[st.size()];
-			//System.err.println("st is " + st.size() + " elements in size");
-			TreeSet ts = new TreeSet();
-			ts.addAll(st);
-			obj = ts.toArray();
-			
-			//build a Completion dodad with the right amount of records
-			ICompletionProposal[] result = new ICompletionProposal[obj.length];
-			
-			for(int i=0; i<obj.length; i++)
-			{
-				String name = "";
-				String display = "";
-				String help = "";
-				
-				if(obj[i] instanceof Tag) 
-				{	
-					Tag ptr_tg = (Tag)obj[i];
-					
-					//get the full on name
-					name = ptr_tg.getName();
-					display = ptr_tg.toString();
-					help = ptr_tg.getHelp();
-					
-					if(!ptr_tg.isXMLStyle() && !ptr_tg.hasParameters())
-					{
-						name += ">";
-					}
-					else if( ptr_tg.isSingle() && ptr_tg.isXMLStyle() && !ptr_tg.hasParameters())
-					{
-						name += " />";
-					}
-					else
-					{
-						name += " ";
-					}
-				}
-				else if(obj[i] instanceof Parameter)
-				{					
-					name = ((Parameter)obj[i]).getName() + "=";
-					display = ((Parameter)obj[i]).toString();
-					//if(((Parameter)obj[i]).isRequired())
-					//	display += "*";
-					help = ((Parameter)obj[i]).getHelp();
-				}
-				else if(obj[i] instanceof Value) 
-				{
-					/* spike@spike.org.uk :: Added code
-                     * Append qoute to end of value so the cursor jumps past the 
-                     * closing quote when the user selects the insight value. 
-                     */
-					name = ((Value)obj[i]).getValue() + "\"";
-					display = ((Value)obj[i]).toString();
-					help = ((Value)obj[i]).getHelp();
-				}
-				else if(obj[i] instanceof ScopeVar) 
-				{
-					name = ((ScopeVar)obj[i]).getValue();
-					display = ((ScopeVar)obj[i]).toString();
-					help = ((ScopeVar)obj[i]).getHelp();
-					//System.out.println("Scope var found with name " + name);
-				}
-				else if(obj[i] instanceof Function) 
-				{
-					name = ((Function)obj[i]).getInsertion();
-					display = ((Function)obj[i]).getInsertion();
-					help = ((Function)obj[i]).getHelp();
-					//System.out.println("Function found with name " + name);
-					// Dirty hack
-					currentlen=0;
-				}
-				else if(obj[i] instanceof String)
-				{
-					name = obj[i].toString();
-					display = new String(name);
-					help = "";
-				}
-				else {
-				    //System.out.println("Proposal of type " + obj[i].getClass().getName());
-				}
-				
-				//System.err.println(name);
-				result[i] = finaliseProposal(offset, type, currentlen, name, display, help);
-			}	
-			return result;
-		}
-		return null;
-	}
 
-	/**
-	 * Gets the proposal ready. Sets up the image, the text to insert into the text,
-	 * and finally returns the completed proposal.
-	 * 
-	 * @param offset - offset in the document
-	 * @param type - type of thing we're making a proposal for
-	 * @param currentlen - length that we'd need to insert if the user selected the proposal
-	 * @param name - name of the proposal
-	 * @param display - string to display
-	 * @param help - the help associated with this proposal
-	 * @return - the completed, indented, image'd proposal
-	 */
-	private CompletionProposal finaliseProposal(int offset, short type, int currentlen, String name, 
-												String display, String help) 
-	{
-		//now remove chars so when they hit enter it wont write the whole
-		//word just the part they havent typed
-		name = name.substring(currentlen, name.length());
-		
-		//the tag len and icon
-		int insertlen = 0;
-		org.eclipse.swt.graphics.Image img = null;
-		
-		switch(type)
-		{
-			case ATTRTYPE:
-				name += "\"\"";
-				insertlen = name.length() - 1;
-				img = CFPluginImages.get(CFPluginImages.ICON_ATTR);
-				break;
-			case TAGTYPE:
-				//name += " ";
-				//default to the tag len and icon
-				insertlen = name.length();
-				img = CFPluginImages.get(CFPluginImages.ICON_TAG);
-				break;
-			case VALUETYPE:
-				insertlen = name.length();
-				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
-				break;
-			case SCOPETYPE:
-				insertlen = name.length();
-				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
-				break;
-		}
-		CompletionProposal prop = new CompletionProposal(
-				name,
-				offset, 
-				0, 
-				insertlen,
-				img,
-				display,
-				null,
-				help
-			);
-		return prop;
-	}
 
 
 	/**
