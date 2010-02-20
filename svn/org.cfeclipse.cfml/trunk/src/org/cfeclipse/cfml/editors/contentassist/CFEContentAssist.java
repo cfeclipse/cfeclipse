@@ -184,8 +184,8 @@ public abstract class CFEContentAssist extends AssistContributor implements IAss
 					display = ((Value)obj[i]).toString();
 					help = "";
 				} else if(obj[i] instanceof ScopeVar) {
-					name = ((ScopeVar)obj[i]).getValue();
-					display = ((ScopeVar)obj[i]).toString();
+					name = ((ScopeVar)obj[i]).getName();
+					display = ((ScopeVar)obj[i]).toString() + ": " + ((ScopeVar)obj[i]).getType();
 					help = ((ScopeVar)obj[i]).getHelp();
 					// System.out.println("Scope var found with name " + name);
 				} else if(obj[i] instanceof Function) {
