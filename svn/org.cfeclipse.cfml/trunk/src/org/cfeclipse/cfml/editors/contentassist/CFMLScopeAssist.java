@@ -117,7 +117,7 @@ public class CFMLScopeAssist extends AssistContributor
         if (prefix.indexOf(".") < 0) {
             return null;
         }
-        
+        //prefix = prefix.substring(0, prefix.lastIndexOf('.'));
         
         // Get an initial set of possibilities.
 		Set proposals = ((ISyntaxDictionary)this.sourceDict).getFilteredScopeVars(prefix);
@@ -137,9 +137,9 @@ public class CFMLScopeAssist extends AssistContributor
 		    if (o instanceof ScopeVar) {
 		        ScopeVar s = (ScopeVar)o;
 		        
-		        StringBuffer sb = new StringBuffer(s.getValue());
+		        StringBuffer sb = new StringBuffer(s.getName());
 		        
-		        String newValue = s.getValue();
+		        String newValue = s.getName();
 		        
 		        // Eliminate anything that exactly matches the prefix or has a "." immediately after the end of current prefix. 
 		        if (!newValue.equalsIgnoreCase(prefix) 
