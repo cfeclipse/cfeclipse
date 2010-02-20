@@ -1,4 +1,4 @@
-<project name="Publish  CFEclipse Plugin" default="update-nightly" basedir=".">
+<project name="Publish  CFEclipse Plugin" default="update-dev" basedir=".">
 
 	<taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar" />
 	<taskdef name="twitter" classname="de.ecw.ant.twitter.AntTwitterTask" classpathref="build.lib.path" />
@@ -23,7 +23,7 @@
 		 <sshexec host="${site.url}"
 			username="${site.username}"
 			password="${site.password}"
-			command="/bin/sh ${site.htmlroot}/update-nightly/removePreviousBuilds.sh"/>
+			command="/bin/sh ${site.htmlroot}/update-dev/removePreviousBuilds.sh"/>
 		<delete>
 			<fileset dir="${basedir}/plugins">
 				<date datetime="${daybefore}" when="before" />
@@ -51,8 +51,8 @@
 		</copy>
 	</target>
 
-	<target name="update-nightly" depends="init">
-		<push remotedir="update-nightly" />
+	<target name="update-dev" depends="init">
+		<push remotedir="update-dev" />
 	</target>
 
 	<target name="twitter-test" depends="init">
