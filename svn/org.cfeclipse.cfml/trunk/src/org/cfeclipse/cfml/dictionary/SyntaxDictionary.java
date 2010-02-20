@@ -478,7 +478,7 @@ public abstract class SyntaxDictionary {
 				}
 				else if(item instanceof ScopeVar)
 				{
-					possible = ((ScopeVar)item).getValue();
+					possible = ((ScopeVar)item).getName();
 				}
 				else if(item instanceof Component)
 				{
@@ -490,9 +490,9 @@ public abstract class SyntaxDictionary {
 				        possible = (String)i.next();
 				        //System.out.println("Checking " + possible + ":" + start);
 				        if (possible.toUpperCase().startsWith(start.toUpperCase())) {
-				            val = new ScopeVar(possible);
+				            val = new ScopeVar("componentscope",possible);
 				            val.setHelp(((Component)item).getHelp());
-				            filterset.add(new ScopeVar(possible));
+				            filterset.add(new ScopeVar("componentscope",possible));
 				        }
 				        else if((possible+".").toUpperCase().equals(start.toUpperCase())) {
 				            Iterator j = ((Component)item).getMethods().iterator();

@@ -32,11 +32,13 @@ package org.cfeclipse.cfml.dictionary;
  * additions
  */
 public class ScopeVar implements Comparable {
-	protected String value;
+	protected String type;
+	protected String name;
 	protected String help;
-	public ScopeVar(String val)
+	public ScopeVar(String type, String val)
 	{
-		value = val;
+		type = type;
+		name = val;
 		this.help = "";	// Must set this to something even if there is no help
 	}
 	
@@ -44,14 +46,22 @@ public class ScopeVar implements Comparable {
 	 * gets this values value
 	 * @return the value
 	 */
-	public String getValue()
+	public String getName()
 	{
-		return value.trim();
+		return name.trim();
 	}
 	
-	public void setValue(String newValue)
+	public void setName(String newValue)
 	{
-		value = newValue;
+		name = newValue;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	public String getHelp() {
@@ -64,7 +74,7 @@ public class ScopeVar implements Comparable {
 	
 	public String toString()
 	{
-		return value;
+		return name;
 	}
 
 	/**
@@ -77,7 +87,7 @@ public class ScopeVar implements Comparable {
 		{
 			//if the name is the same and the type is the same
 			//assume its the same
-			if( ((ScopeVar)obj).getValue().equals(this.value))
+			if( ((ScopeVar)obj).getName().equals(this.name))
 			{
 				return true;
 			}
@@ -96,7 +106,7 @@ public class ScopeVar implements Comparable {
 		
 		if(o instanceof ScopeVar)
 		{
-			return value.compareTo( ((ScopeVar)o).getValue() );
+			return name.compareTo( ((ScopeVar)o).getName() );
 		}
 		
 		return 0;
