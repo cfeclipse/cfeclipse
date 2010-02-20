@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site>
+<site
+      associateSitesURL="associateSites.xml">
    <description name="CFEclipse Development Update Site" url="http://cfeclipse.org/update-Dev">
       CFEclipse Dev Build Update site
    </description>
-   <feature url="features/org.cfeclipse.cfml.feature_1.3.7.201002172332.jar" id="org.cfeclipse.cfml.feature" version="1.3.7.201002172332">
+   <feature url="features/org.cfeclipse.cfml.feature_1.3.7.201002200542.jar" id="org.cfeclipse.cfml.feature" version="1.3.7.201002200542">
       <category name="[Dev] CFEclipse CFML Editor (Required)"/>
    </feature>
    <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.200906240701.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.200906240102">

@@ -52,6 +52,14 @@
 	</target>
 
 	<target name="update-dev" depends="init">
+		  <input
+		    message="Do you want to tweet this build upload?"
+		    validargs="y,n"
+		    addproperty="do.delete"
+		  />
+		  <condition property="do.tweet">
+		    <equals arg1="n" arg2="${do.delete}"/>
+		  </condition>
 		<push remotedir="update-dev" />
 	</target>
 
@@ -117,7 +125,7 @@
 					<date datetime="${filefilter}" when="after" />
 				</fileset>
 			</scp>
-			<antcall target="twitter-head-info" />
+			<antcall target="twitter-head-info" if="do.tweet" />
 			<echoproperties prefix="site" />
 		</sequential>
 	</macrodef>

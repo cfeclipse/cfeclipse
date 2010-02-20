@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.cfeclipse.cfml.feature"
-      label="CFEclipse (including CFUnit and Frameworks)"
-      version="1.3.6.qualifier"
+      label="CFEclipse (including MXUnit and Frameworks)"
+      version="1.3.7.qualifier"
       provider-name="CFEclipse Project"
       plugin="org.cfeclipse.cfml">
 
@@ -14,9 +14,9 @@ problem finding, and a lot more for CF developers. It also provides
 code highlighting for HTML, XML and for inline CSS and Javascript,
 plus code insight for HTML 4.01, and a snippet (code fragment)
 feature. CFML is a simple, yet powerful server side scripting
-language that sits on top of a J2EE server. Two companies that
-make engines that can process CFML scripts are Macromedia and
-New Atlanta. Features: * Code highlighting * HTML and CF tag
+language that sits on top of a J2EE server. Three companies that
+make engines that can process CFML scripts are Adobe,
+New Atlanta, and Railo Technologies. Features: * Code highlighting * HTML and CF tag
 code completion * Tag and function code insight (including data
 types) * Snips for frequently used code * CFC method outline
 view * Integrated web browser for quick previewing * Problem
@@ -24,7 +24,7 @@ view, parses your code to find problems * And much more...
    </description>
 
    <copyright url="http://www.cfeclipse.org/copyright">
-      Copyright (c) 2004-2009 The CFEclipse Crew (http://cfeclipse.tigris.org)
+      Copyright (c) 2004-2010 The CFEclipse Crew (http://www.cfeclipse.org/)
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 &amp;amp;quot;Software&amp;amp;quot;), to deal in the Software without
@@ -261,6 +261,7 @@ litigation.
       <import plugin="org.eclipse.ui.browser"/>
       <import plugin="com.ibm.icu"/>
       <import plugin="org.eclipse.core.filesystem"/>
+      <import plugin="org.mxunit.eclipseplugin"/>      
    </requires>
 
    <plugin
@@ -268,13 +269,6 @@ litigation.
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-
-   <plugin
-         id="org.cfeclipse.cfml.cfunit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
 
    <plugin
          id="org.cfeclipse.cfml.frameworks"
