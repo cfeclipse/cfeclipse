@@ -103,7 +103,7 @@
 			<!-- I have no idea why i needed to do this. when i had all of them 
 			in a single scp call, it kept hanging.-->
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}" trust="true" verbose="true">
-				<fileset dir="." includes="site.xml,index.html,artifacts.jar,content.jar,logs.zip,removePreviousBuilds.sh" />
+				<fileset dir="." includes="site.xml,associateSites.xml,index.html,artifacts.jar,content.jar,logs.zip,removePreviousBuilds.sh" />
 			</scp>
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/web" trust="true" verbose="true">
 				<fileset dir="web">
@@ -125,7 +125,7 @@
 					<date datetime="${filefilter}" when="after" />
 				</fileset>
 			</scp>
-			<antcall target="twitter-head-info" if="do.tweet" />
+			<antcall target="twitter-head-info"/>
 			<echoproperties prefix="site" />
 		</sequential>
 	</macrodef>
