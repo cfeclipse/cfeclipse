@@ -24,6 +24,7 @@
  */
 package org.cfeclipse.cfml.editors.contentassist;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -85,13 +86,17 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 	//private String className = "CFScriptCompletionProcessor";
 	
 	private String DictionaryToUse = DictionaryManager.CFDIC;
+
+	private IAssistState fState;
 	
 	// Define the characters that make up the activation set.
 	// There are three parts to the activation set:
 	
 	// 1) The standard completion chars. These are some activation characters 
 	//that non-opener/closer characters
-	protected static final String completionChars = "(;~\"#[\',abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	// dunno tha twe need strings in here
+//	protected static final String completionChars = "(;~\"#[\',abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	protected static final String completionChars = "(;~#[,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	// 2) The opener/closer characters. This assists with the opening & closing 
 	//of things such as brackets
@@ -205,7 +210,7 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
 
-			changeDictionary(DictionaryManager.CFDIC);			
+	        changeDictionary(DictionaryManager.CFDIC);			
 
 	
 			IDocument document = viewer.getDocument();
@@ -215,6 +220,9 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 			scanData = scanData.replace('\r',' ');	// as this allows us to treat the buffer as
 			scanData = scanData.replace('\t',' ');	// one long string
 				String toBeMatched = extractPrefix(viewer,documentOffset).replaceAll("[\r\n\t]", " ").trim();
+				if(toBeMatched.length() <= 0) {
+					//return null;
+				}
 				Set poss = SyntaxDictionary.limitSet(
 						DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions(),
 						toBeMatched
@@ -419,6 +427,15 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 
 	public ICompletionProposal[] getTagProposals(IAssistState state) {
 		// TODO Auto-generated method stub
-		return computeCompletionProposals(state.getITextView(), state.getOffset());
+		fState = state;
+		char activator = fState.getTriggerData();
+		char[] activationChars = getCompletionProposalAutoActivationCharacters();
+		String activationString = String.copyValueOf(activationChars, 0, activationChars.length);
+		int wee = Arrays.asList(activationChars).indexOf(activator);
+		if(activationString.indexOf(activator) != -1) {
+			return computeCompletionProposals(state.getITextView(), state.getOffset());			
+		} else {
+			return null;
+		}
 	}
 }
