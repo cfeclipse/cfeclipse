@@ -72,7 +72,7 @@
 			enableBitly="false" />
 	</target>
 
-	<target name="twitter-head-info" depends="init">
+	<target name="twitter-head-info" depends="init" if="do.tweet">
 	    <property name="repository.URL" value="http://svn.cfeclipse.org"/>
 	    <java classname="org.tmatesoft.svn.cli.SVN" classpathref="build.lib.path"
 	        fork="true" outputproperty="last.revision.info">
