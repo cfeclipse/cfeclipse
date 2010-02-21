@@ -2,6 +2,6 @@
 
 <associateSites>
 
-<associateSite url="http://mxunit.org/update/site.xml" label="MXUnit"/>
+<associateSite url="http://mxunit.org/update/" label="MXUnit"/>
 
 </associateSites>

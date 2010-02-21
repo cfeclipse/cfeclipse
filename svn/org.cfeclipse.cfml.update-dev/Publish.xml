@@ -16,21 +16,11 @@
 	</path>
 
 	<target name="cleanup">
-		<tstamp>
-			<format pattern="MM/dd/yyyy hh:mm aa" offset="-1" unit="day" property="daybefore" />
-		</tstamp>
-		<property file="publish.properties" />
-		 <sshexec host="${site.url}"
-			username="${site.username}"
-			password="${site.password}"
-			command="/bin/sh ${site.htmlroot}/update-dev/removePreviousBuilds.sh"/>
 		<delete>
 			<fileset dir="${basedir}/plugins">
-				<date datetime="${daybefore}" when="before" />
 				<exclude name="org.cfeclipse.cfml.docshare*.jar" />
 			</fileset>
 			<fileset dir="${basedir}/features">
-				<date datetime="${daybefore}" when="before" />
 				<exclude name="org.cfeclipse.cfml.docshare*.jar" />
 			</fileset>
 			<fileset dir="${basedir}/">
@@ -39,6 +29,18 @@
 			</fileset>
 		</delete>
 	</target>
+
+	<target name="clean-site">
+		<tstamp>
+			<format pattern="MM/dd/yyyy hh:mm aa" offset="-1" unit="day" property="daybefore" />
+		</tstamp>
+		<property file="publish.properties" />
+		 <sshexec host="${site.url}"
+			username="${site.username}"
+			password="${site.password}"
+			command="/bin/sh ${site.htmlroot}update-dev/removePreviousBuilds.sh"/>
+	</target>
+
 
 	<target name="init">
 		<!-- publish.properties must live in this directory, and it must contain
@@ -51,16 +53,19 @@
 		</copy>
 	</target>
 
-	<target name="update-dev" depends="init">
+	<target name="update-dev" depends="init,clean-site">
 		  <input
-		    message="Do you want to tweet this build upload?"
+		    message="Do you want to tweet that this build is available?"
 		    validargs="y,n"
 		    addproperty="do.delete"
 		  />
 		  <condition property="do.tweet">
-		    <equals arg1="n" arg2="${do.delete}"/>
+		    <equals arg1="y" arg2="${do.delete}"/>
 		  </condition>
 		<push remotedir="update-dev" />
+		<!--
+		<antcall target="cleanup" />
+		-->
 	</target>
 
 	<target name="twitter-test" depends="init">
@@ -85,7 +90,7 @@
 			regexp="(?s)-+.(r\d+ \| \w+)\s?\|\s?.+(\(.*?).\|\s\d+\slines?(.*?).-{3}"
 			select=" #ColdFusion \2 \1 > \3"
 			casesensitive="false" />
-		<twitter message="${info.smaller}" 
+		<twitter message="${info.smaller} update-dev" 
 			username="${twitter.username}" 
 			password="${twitter.password}" 
 			bitlyUsername="bitly-username" 
