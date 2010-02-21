@@ -1,4 +1,5 @@
 <project name="Publish  CFEclipse Plugin" default="update-dev" basedir=".">
+	<property name="buildtype" value="update-dev"/>
 
 	<taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar" />
 	<taskdef name="twitter" classname="de.ecw.ant.twitter.AntTwitterTask" classpathref="build.lib.path" />
@@ -90,7 +91,7 @@
 			regexp="(?s)-+.(r\d+ \| \w+)\s?\|\s?.+(\(.*?).\|\s\d+\slines?(.*?).-{3}"
 			select=" #ColdFusion \2 \1 > \3"
 			casesensitive="false" />
-		<twitter message="${info.smaller} update-dev" 
+		<twitter message="${info.smaller} ${buildtype}" 
 			username="${twitter.username}" 
 			password="${twitter.password}" 
 			bitlyUsername="bitly-username" 
