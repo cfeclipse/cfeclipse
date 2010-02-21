@@ -261,7 +261,7 @@ litigation.
       <import plugin="org.eclipse.ui.browser"/>
       <import plugin="com.ibm.icu"/>
       <import plugin="org.eclipse.core.filesystem"/>
-      <import plugin="org.mxunit.eclipseplugin"/>      
+      <import plugin="org.mxunit.eclipseplugin" version="1.2" match="greaterOrEqual"/>
    </requires>
 
    <plugin
