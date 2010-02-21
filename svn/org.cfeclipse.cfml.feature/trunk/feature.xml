@@ -247,7 +247,15 @@ litigation.
 
    <url>
       <update label="CFEclipse Update Site" url="http://www.cfeclipse.org/update"/>
+      <discovery label="MXUnit discovery site" url="http://mxunit.org/update"/>
+      <discovery label="CFEclipse discovery site" url="http://cfeclipse.org/update"/>
    </url>
+
+   <includes
+         id="org.mxunit.eclipseplugin.feature"
+         version="1.2.0.201001051839"
+         name="MXUnit"
+         search-location="both"/>
 
    <requires>
       <import plugin="org.eclipse.ui"/>
