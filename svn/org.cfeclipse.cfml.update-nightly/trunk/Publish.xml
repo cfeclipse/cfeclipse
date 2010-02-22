@@ -39,7 +39,7 @@
 		 <sshexec host="${site.url}"
 			username="${site.username}"
 			password="${site.password}"
-			command="/bin/sh ${site.htmlroot}update-dev/removePreviousBuilds.sh"/>
+			command="/bin/sh ${site.htmlroot}${buildtype}/removePreviousBuilds.sh"/>
 	</target>
 
 
@@ -63,7 +63,7 @@
 		  <condition property="do.tweet">
 		    <equals arg1="y" arg2="${do.delete}"/>
 		  </condition>
-		<push remotedir="update-dev" />
+		<push remotedir="${buildtype}" />
 		<!--
 		<antcall target="cleanup" />
 		-->
