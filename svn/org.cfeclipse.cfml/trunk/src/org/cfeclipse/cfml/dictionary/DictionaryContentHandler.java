@@ -371,7 +371,7 @@ public class DictionaryContentHandler implements ContentHandler {
 	    //create a new value and assign it to the current parameter
 		String type = attributes.getValue(0);
 		String scope = attributes.getValue(1);
-		System.out.println("Value: " + scope);
+		//System.out.println("Value: " + scope);
 		if(currentitem instanceof Component) {
 			((Component)currentitem).addScope(scope);
 			dscopeVars.put(scope,currentitem);
