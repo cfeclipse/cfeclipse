@@ -29,6 +29,8 @@
  */
 package org.cfeclipse.cfml.plugindebug;
 
+import org.cfeclipse.cfml.CFMLPlugin;
+
 /**
  * This class outputs debugging information and should be used in place of
  * System.out.println(); when you want to find out what's going on in your
@@ -76,12 +78,12 @@ package org.cfeclipse.cfml.plugindebug;
 public class DebugUtils {
 
     public static void printMessage(final Class caller, final String message) {
-        System.out.println(caller.getName() + ":: " + message);
+		CFMLPlugin.log(caller.getName() + ":: " + message);
     }
 
 
     public static void printError(final Class caller, final String message) {
-        System.err.println(caller.getName() + ":: " + message);
+    	CFMLPlugin.log(caller.getName() + ":: " + message);
     }
     
 }
