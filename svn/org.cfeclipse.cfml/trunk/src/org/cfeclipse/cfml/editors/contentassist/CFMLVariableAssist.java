@@ -39,6 +39,7 @@ import org.cfeclipse.cfml.parser.CFParser;
 import org.cfeclipse.cfml.parser.VariableParserItem;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
+import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -136,6 +137,10 @@ public class CFMLVariableAssist extends AssistContributor //extends DefaultTagAs
      * @see org.cfeclipse.cfml.editors.contentassist.IAssistContributor#getTagProposals(org.cfeclipse.cfml.editors.contentassist.IAssistState)
      */
     public ICompletionProposal[] getTagProposals(IAssistState state) {
+		if(!preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_SUGGEST_VARIABLES)) {
+			return null;
+		}
+
     	ICFDocument doc = (ICFDocument)state.getIDocument();
     	// verify we have a parse tree to work with
     	if(doc.getCFDocument() == null || state.getITextView().getTextWidget().getSelectionText().length() > 0) {

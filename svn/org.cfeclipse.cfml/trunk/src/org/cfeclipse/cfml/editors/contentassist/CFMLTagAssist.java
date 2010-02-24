@@ -27,6 +27,7 @@ package org.cfeclipse.cfml.editors.contentassist;
 
 //import org.eclipse.core.internal.utils.Assert;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
+import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 
@@ -58,6 +59,9 @@ public class CFMLTagAssist extends DefaultTagAssistContributor implements IAssis
 	 * @see org.cfeclipse.cfml.editors.contentassistors.IAssistContributor#getProposals(org.cfeclipse.cfml.editors.contentassistors.IAssistState)
 	 */
 	public ICompletionProposal[] getTagProposals(IAssistState state) {
+		if(!preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_SUGGEST_TAGS)) {
+			return null;
+		}
 	    
 		//Assert.isNotNull(state,"CFMLTagAssist::getTagProposals()");
 		if(state == null)

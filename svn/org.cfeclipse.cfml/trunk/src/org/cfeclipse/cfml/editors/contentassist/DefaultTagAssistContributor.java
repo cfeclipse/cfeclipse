@@ -33,6 +33,7 @@ import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Value;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;

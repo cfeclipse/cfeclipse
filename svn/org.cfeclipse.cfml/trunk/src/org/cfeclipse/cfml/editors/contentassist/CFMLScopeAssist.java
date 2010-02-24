@@ -34,6 +34,7 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.ISyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.ScopeVar;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
+import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -72,6 +73,9 @@ public class CFMLScopeAssist extends AssistContributor
      * @see org.cfeclipse.cfml.editors.contentassist.IAssistContributor#getTagProposals(org.cfeclipse.cfml.editors.contentassist.IAssistState)
      */
     public ICompletionProposal[] getTagProposals(IAssistState state) {
+		if(!preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_SUGGEST_SCOPES)) {
+			return null;
+		}
         
         int dotOffset = 0;
         Properties filteredItems = new Properties();

@@ -28,6 +28,8 @@ public class ParserPreferenceConstants extends AbstractPreferenceConstants {
 	/** Should we parse variables */
 	public static final String P_PARSE_VARIABLES = "__parseVariables";
 
+	public static final String P_AUTO_RECONCILE = "__autoReconcile";
+
 
 
 	/**
@@ -44,6 +46,7 @@ public class ParserPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_PARSE_DOCFML,true); 
 		store.setDefault(P_PARSE_REPORT_ERRORS,true); 
 		store.setDefault(P_PARSE_VARIABLES, true);
+		store.setDefault(P_AUTO_RECONCILE, true);
 	}
 
 }

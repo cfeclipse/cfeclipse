@@ -232,15 +232,14 @@ public class CFMLFunctionAssist extends AssistContributor
 				  x++;
 				}
 				
-				if (this.paramsSoFar == paramCount) {
+				if (this.paramsSoFar == paramCount || activeParam == null) {
 					//System.out.println("End of params");
 					return null;
 				}
 				
 				extraInfo += paramIndent + ") \n\n";
 				extraInfo += helpText;
-				
-				
+								
 				return getParamProposals(activeParam,extraInfo,state.getOffset(),paramCount);
 				
         }
@@ -255,6 +254,7 @@ public class CFMLFunctionAssist extends AssistContributor
       
       Object[] paramValues = paramList.toArray();
       Object[] paramNames = params.toArray();
+      if(paramNames.length == 0) return new Parameter[0];
       int n = 0;
       //System.out.println(paramValues.length + ":" + paramList.size());
       while(n < paramValues.length-1) {

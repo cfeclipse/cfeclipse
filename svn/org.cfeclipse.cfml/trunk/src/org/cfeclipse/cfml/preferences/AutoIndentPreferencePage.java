@@ -40,6 +40,13 @@ public class AutoIndentPreferencePage
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_USE_SMART_INDENT, "Use smart indenting", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE, "Auto-indent on tag close", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_USE_SMART_PASTE, "Auto-indent pasted tags", getFieldEditorParent()));
+
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_TAGS, "Suggest CFML Tags", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_FUNCTIONS, "Suggest Functions", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_SCOPES, "Suggest Scopes", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_VARIABLES, "Suggest Variables", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_HTML, "Suggest HMTL Tags", getFieldEditorParent()));
+		
 		}
 		catch (Exception e){
 			e.printStackTrace();

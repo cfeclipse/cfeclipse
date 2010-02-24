@@ -1,5 +1,6 @@
 package org.cfeclipse.cfml.editors.contentassist;
 
+import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 public class AssistContributor {
@@ -10,6 +11,7 @@ public class AssistContributor {
 	private boolean fIsSeparateCommand= true;
 	private boolean fIsEnabled= true;
 	private boolean fIsIncluded= true;
+	protected static CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
 	
 	private int fSortOrder= 0x10000;
 	private String fLastError= null;

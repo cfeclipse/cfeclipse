@@ -28,6 +28,7 @@ import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Value;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 
@@ -41,6 +42,9 @@ public class HTMLTagAssistContributor extends DefaultTagAssistContributor {
    
     
     public ICompletionProposal[] getTagProposals(IAssistState state) {
+		if(!preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_SUGGEST_HTML)) {
+			return null;
+		}
         if(!DefaultTagAssistContributor.isCorrectPartition(state, CFPartitionScanner.UNK_TAG))
             return null;
         

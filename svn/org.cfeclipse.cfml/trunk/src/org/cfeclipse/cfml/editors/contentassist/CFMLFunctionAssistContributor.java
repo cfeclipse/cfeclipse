@@ -41,6 +41,8 @@ import org.cfeclipse.cfml.editors.contentassist.IAssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.IAssistState;
 import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
+import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -96,7 +98,7 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 	//that non-opener/closer characters
 	// dunno tha twe need strings in here
 //	protected static final String completionChars = "(;~\"#[\',abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	protected static final String completionChars = "(;~#[,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	protected static final String completionChars = "(~#[,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	// 2) The opener/closer characters. This assists with the opening & closing 
 	//of things such as brackets
@@ -115,7 +117,7 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 	 * a match-check.
 	 */
 	public char[] getCompletionProposalAutoActivationCharacters() {
-		return (completionChars + closerChars + openerChars).toCharArray();
+		return (completionChars).toCharArray();
 	}
 
 	/**
@@ -426,7 +428,10 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 	}
 
 	public ICompletionProposal[] getTagProposals(IAssistState state) {
-		// TODO Auto-generated method stub
+		if(!preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_SUGGEST_FUNCTIONS)) {
+			return null;
+		}
+		
 		fState = state;
 		char activator = fState.getTriggerData();
 		char[] activationChars = getCompletionProposalAutoActivationCharacters();
