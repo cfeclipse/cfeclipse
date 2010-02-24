@@ -58,6 +58,7 @@ import org.eclipse.ui.editors.text.templates.ContributionContextTypeRegistry;
 import org.eclipse.ui.editors.text.templates.ContributionTemplateStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Version;
 
 /**
  * 
@@ -91,6 +92,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 
 	/** Storage for the Templates */
 	private static final String CUSTOM_TEMPLATES_KEY = "org.cfeclipse.cfml.customtemplates"; //$NON-NLS-1$
+	private static final String LAST_PLUGIN_VERSION = "__lastPluginVersion";
+	private static final String SHOW_WELCOME = "__showWelcome";
 	private TemplateStore fStore;
 	private ContributionContextTypeRegistry fRegistry;
 
@@ -170,6 +173,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 
 			setupCAM();
 			setupLastEncMgr();
+			checkForPluginVersionChange();
 		} catch (Exception e) {
 			// lots of bad things can happen...
 			e.printStackTrace(System.err);
@@ -180,6 +184,20 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		// needs it-- if so, rethink
 		// this.getWorkbench().getActiveWorkbenchWindow().getPartService().addPartListener(editorListener);
 
+	}
+
+	private void checkForPluginVersionChange() {
+		Version currentVersion = getBundle().getVersion();
+		String lastVersion = getPreferenceStore().getString(LAST_PLUGIN_VERSION);
+		if(lastVersion == null || lastVersion.length() == 0 || !lastVersion.equals(currentVersion.toString())) {
+			getPreferenceStore().setValue(SHOW_WELCOME,true);
+			UrlViewer htmlViewer = new UrlViewer();
+			String whatsNewURL = CFMLPlugin.PLUGIN_ID + "/doc/intro/doc/new.html";
+			htmlViewer.loadHelp(whatsNewURL);
+		} else {
+			getPreferenceStore().setValue(SHOW_WELCOME,false);			
+		}
+		getPreferenceStore().setValue(LAST_PLUGIN_VERSION,currentVersion.toString());		
 	}
 
 	/**

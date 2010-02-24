@@ -17,14 +17,35 @@ tr {
 	vertical-align: top;
 }
 </style>
-<title>What's New in CFEclipse 1.3.6</title>
+<title>What's New in CFEclipse 1.3.7</title>
 <script language="JavaScript"
 	src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"> </script>
 </head>
 <body>
+<h2>What's New in CFEclipse 1.3.7</h2>
+<p>CFEclipse 1.3.7 is another maintenance release. Several annoying
+bugs have been fixed, like the missing scope proposals (CGI, CFHTTP,
+etc.) and preferences have been added for enabling and disabling the
+various proposal categories.</p>
+<p>[Theoretically] Fixed in this release:</p>
+<pre>
+#497  inherent inconsistency in bugfix for quotes in function args
+#526  formatter and &lt;cfoutput>#small#&lt;/cfoutput> type stuff
+#525  Scope assist is missing
+#528  auto-reconcile should have a preference
+#524  attribute parsing for tag name seems to be case sensitive
+#522  Code Formatting ignores for cfsavecontent
+</pre>
+
+<p>For full descriptions, see <a
+	href="http://trac.cfeclipse.org/query?status=closed&group=resolution&milestone=1.3.7">the
+list on trac</a></p>
+
 <h2>What's New in CFEclipse 1.3.6</h2>
-<p>CFEclipse 1.3.6 is a maintenance release. No new features to speak of.  We are happy to announce the creation of some initial unit tests, in an effort
-to prevent regressions.  They're pretty weak tests, but they'll get better as we progress.</p>
+<p>CFEclipse 1.3.6 is a maintenance release. No new features to
+speak of. We are happy to announce the creation of some initial unit
+tests, in an effort to prevent regressions. They're pretty weak tests,
+but they'll get better as we progress.</p>
 <p>[Theoretically] Fixed in this release:</p>
 <pre>
 #509	Errors with implicit structure/array creation
@@ -45,7 +66,9 @@ to prevent regressions.  They're pretty weak tests, but they'll get better as we
 #518 	Code Parsing and formatting
 </pre>
 
-<p>For full descriptions, see <a href="http://trac.cfeclipse.org/query?status=closed&group=resolution&milestone=1.3.6">the list on trac</a></p>
+<p>For full descriptions, see <a
+	href="http://trac.cfeclipse.org/query?status=closed&group=resolution&milestone=1.3.6">the
+list on trac</a></p>
 <h2>What's New in CFEclipse 1.3.5</h2>
 <p>Here are descriptions of some of the more interesting or
 significant changes made to CFEclipse. They are grouped into:</p>
@@ -91,9 +114,9 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b>Function Proposals</b></p>
 			</td>
-			<td valign="top">Function proposals are now a proposal category, and 
-			are available anywhere proposals are.  Their presentation has been
-			changed to a more intuitive format. 
+			<td valign="top">Function proposals are now a proposal category,
+			and are available anywhere proposals are. Their presentation has been
+			changed to a more intuitive format.
 			<p><img src="../images/1.3.5/functionProposals.png">
 			</td>
 		</tr>
@@ -101,9 +124,9 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b>In-page Function Proposals</b></p>
 			</td>
-			<td valign="top">The current document is now parsed for functions and
-			function arguments, any found are added to the function proposal
-			list.
+			<td valign="top">The current document is now parsed for
+			functions and function arguments, any found are added to the function
+			proposal list.
 			<p>
 			</td>
 		</tr>
@@ -128,7 +151,8 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<p align="right"><b>Preferences</b></p>
 			</td>
 			<td valign="top">The preferences for changing the available code
-			formatting options are under <i>Preferences > CFEclipse > Code Style > Formatter</i>.
+			formatting options are under <i>Preferences > CFEclipse > Code
+			Style > Formatter</i>.
 			<p><img src="../images/1.3.5/formattingPrefs.png">
 			</td>
 		</tr>
@@ -141,10 +165,11 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b>Print Margin</b></p>
 			</td>
-			<td valign="top">The print margin will now be at the correct offset
-			when the editor opens. I think a side effect to this fix might have
-			been this preference getting turned on for some users. It's
-			controlled via <i>Preferences > CFEclipse > Editor > Show print margin</i>
+			<td valign="top">The print margin will now be at the correct
+			offset when the editor opens. I think a side effect to this fix might
+			have been this preference getting turned on for some users. It's
+			controlled via <i>Preferences > CFEclipse > Editor > Show print
+			margin</i>
 			<p><img src="../images/1.3.5/printMargin.png">
 			</td>
 		</tr>
@@ -152,10 +177,10 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b>Occurrence Marking</b></p>
 			</td>
-			<td valign="top"><i>Occurrence marking</i> has been refactored to be more
-			like JTD. The selection of the current word is controlled by the same
-			preferences that control the double-click text selection under
-			<i>Preferences > CFEclipse > Editor > Text Selection</i>
+			<td valign="top"><i>Occurrence marking</i> has been refactored
+			to be more like JTD. The selection of the current word is controlled
+			by the same preferences that control the double-click text selection
+			under <i>Preferences > CFEclipse > Editor > Text Selection</i>
 			<p><img src="../images/1.3.5/markOccurrence.png">
 			</td>
 		</tr>
@@ -163,10 +188,10 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b>Rename in file</b></p>
 			</td>
-			<td valign="top">
-			The refactored occurrence marking enabled us to add a <i>Rename in file</i>
-			command.  The default key binding is <i>MOD1+2 R</i>.  This feature allows
-			you to quickly rename all of the currently marked occurrences.
+			<td valign="top">The refactored occurrence marking enabled us to
+			add a <i>Rename in file</i> command. The default key binding is <i>MOD1+2
+			R</i>. This feature allows you to quickly rename all of the currently
+			marked occurrences.
 			<p><img src="../images/1.3.5/renameInFile.png">
 			</td>
 		</tr>
@@ -174,20 +199,20 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b>Reconciler</b></p>
 			</td>
-			<td valign="top">
-			The editor now uses a reconciling strategy deal, which basically means the
-			document will be parsed after you stop changing it, vs. only when you save.
-			There should probably be a preference to turn this off.  But there isn't.  Yet.
-			</td>
+			<td valign="top">The editor now uses a reconciling strategy
+			deal, which basically means the document will be parsed after you
+			stop changing it, vs. only when you save. There should probably be a
+			preference to turn this off. But there isn't. Yet.</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>Auto-indent pasted tags</b></p>
 			</td>
-			<td valign="top">An initial "smart paste" implementation has been
-			added. This feature automatically indents pasted code to the correct
-			level, and keeps indentation at the correct level while adding tag
-			attributes on new lines within a tag. It still needs a little work.
+			<td valign="top">An initial "smart paste" implementation has
+			been added. This feature automatically indents pasted code to the
+			correct level, and keeps indentation at the correct level while
+			adding tag attributes on new lines within a tag. It still needs a
+			little work.
 			<p><img src="../images/1.3.5/smartPaste.png">
 			</td>
 		</tr>
@@ -196,9 +221,9 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<p align="right"><b>Marking of opening and closing tags</b></p>
 			</td>
 			<td valign="top">The editor will now mark the start and end of
-			the current tag if the cursor is on the start or end of the tag. 
-			The presentation style is configurable via <i> Preferences > CFEclipse >
-			Editor > Annotations </i>
+			the current tag if the cursor is on the start or end of the tag. The
+			presentation style is configurable via <i> Preferences >
+			CFEclipse > Editor > Annotations </i>
 			<p><img src="../images/1.3.5/highlightStartEnd.png">
 			</td>
 		</tr>
@@ -214,17 +239,18 @@ significant changes made to CFEclipse. They are grouped into:</p>
 		</tr>
 		<tr>
 			<td colspan="2"><a name="UniversalWelcome"></a>
-			<div style="font-size: 20px; font-weight: bold;">Universal Welcome</div>
+			<div style="font-size: 20px; font-weight: bold;">Universal
+			Welcome</div>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>Overview<br></p>
 			</td>
-			<td valign="top">
-			CFEclipse now has some representation in the Universal Welcome
-			(the screen that shows up with a fresh workspace).
-			.</p>
+			<td valign="top">CFEclipse now has some representation in the
+			Universal Welcome (the screen that shows up with a fresh workspace).
+			.
+			</p>
 			<p><img src="../images/1.3.5/whatsNew.png">
 			</td>
 		</tr>
@@ -238,27 +264,29 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b>Cheatsheets</b></p>
 			</td>
-			<td valign="top">There is a cheatsheet with this release, but it is currently useless.
-			</td>
+			<td valign="top">There is a cheatsheet with this release, but it
+			is currently useless.</td>
 		</tr>
 		<tr>
 			<td colspan="2"><a name="UpdatedDictionaries"></a>
-			<div style="font-size: 20px; font-weight: bold;">Updated Dictionaries</div>
+			<div style="font-size: 20px; font-weight: bold;">Updated
+			Dictionaries</div>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>ColdFusion</b></p>
 			</td>
-			<td valign="top">The dictionaries for ColdFusion versions 5 through 8 have been updated, and a dictionary for version 9 has been added.
-			</td>
+			<td valign="top">The dictionaries for ColdFusion versions 5
+			through 8 have been updated, and a dictionary for version 9 has been
+			added.</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>Railo</b></p>
 			</td>
-			<td valign="top">An initial dictionary for Railo 3 has been added.
-			</td>
+			<td valign="top">An initial dictionary for Railo 3 has been
+			added.</td>
 		</tr>
 		<tr>
 			<td colspan="2"><a name="OutlineView"></a>
@@ -269,8 +297,8 @@ significant changes made to CFEclipse. They are grouped into:</p>
 			<td valign="top">
 			<p align="right"><b>Display</b></p>
 			</td>
-			<td valign="top">The outline view has been refactored to provide more
-			usefual information.
+			<td valign="top">The outline view has been refactored to provide
+			more usefual information.
 			<p><img src="../images/1.3.5/outlineView.png">
 			</td>
 		</tr>

@@ -12,8 +12,15 @@
             </instanceof>
          </with>
       </definition>
-
    </extension>
+
+	<extension point="org.eclipse.help.toc">
+	    <toc file="doc/toc_main.xml" primary="true" />
+	</extension>
+    <extension point="org.eclipse.help.toc">
+	    <toc file="doc/toc_general.xml" />
+    </extension>
+    
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
 
    <extension 

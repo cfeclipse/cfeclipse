@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.UrlViewer;
 import org.cfeclipse.cfml.editors.actions.EditTagAction;
 import org.cfeclipse.cfml.editors.actions.GenericEncloserAction;
 import org.cfeclipse.cfml.editors.actions.GotoFileAction;
@@ -66,6 +67,7 @@ import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
+import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.cfeclipse.cfml.preferences.TextSelectionPreferenceConstants;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.views.contentoutline.CFContentOutlineView;
@@ -227,19 +229,20 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 				((CFEIndentStrategy)strategy).reconciled();
 			}
 		}
-		
-		Shell shell= getSite().getShell();
-		if (shell != null && !shell.isDisposed()) {
-			shell.getDisplay().asyncExec(new Runnable() {
-				public void run() {
-					if (getSite().getShell() == null || getSite().getShell().isDisposed()) {
-						return;
+		if(getPreferenceStore().getBoolean(ParserPreferenceConstants.P_AUTO_RECONCILE)){			
+			Shell shell= getSite().getShell();
+			if (shell != null && !shell.isDisposed()) {
+				shell.getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						if (getSite().getShell() == null || getSite().getShell().isDisposed()) {
+							return;
+						}
+						ICFDocument document = (ICFDocument) getDocumentProvider().getDocument(getEditorInput());
+						document.clearAllMarkers();
+						(document).parseDocument();
 					}
-					ICFDocument document = (ICFDocument) getDocumentProvider().getDocument(getEditorInput());
-					document.clearAllMarkers();
-					(document).parseDocument();
-				}
-			});
+				});
+			}
 		}
 	}
 
