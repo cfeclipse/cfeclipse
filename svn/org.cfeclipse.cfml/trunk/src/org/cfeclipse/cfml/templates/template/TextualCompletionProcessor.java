@@ -100,8 +100,9 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 	 */
 	protected int getRelevance(Template template, String prefix) {
 		if (prefix.length() == 0) {
-			//return 0;
-			return 90;
+			// this controls if all proposals are suggested when nothing matches
+			return 0;
+			//return 90;
 		}
 		if (prefix.startsWith("<")) //$NON-NLS-1$
 			prefix = prefix.substring(1);
