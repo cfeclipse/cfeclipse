@@ -39,7 +39,7 @@ import org.eclipse.ui.texteditor.MarkerUtilities;
 
 public class OccurrencesFinder {
     
-	private CFDocument fAntModel;
+	private CFDocument fCFModel;
 	private CFMLEditor fEditor;
 	private int fOffset;
 	private IDocument fDocument;
@@ -47,7 +47,7 @@ public class OccurrencesFinder {
 	private String[] fWordCharArray;
 	
 	public OccurrencesFinder(CFMLEditor editor, CFDocument model, IDocument document, int offset) {
-		fAntModel= model;
+		fCFModel= model;
 		fEditor= editor;
 		fDocument= document;
 		fOffset= offset;
@@ -58,7 +58,7 @@ public class OccurrencesFinder {
 	}
 	
 	public List perform() {
-		if (fOffset == 0 || fAntModel == null || fDocument == null) {
+		if (fOffset == 0 || fCFModel == null || fDocument == null) {
 			return null;
 		}
 		//IRegion region= getRegionOld(fEditor.getViewer(), fOffset);
@@ -69,7 +69,7 @@ public class OccurrencesFinder {
         List positions= new ArrayList();
 		String findString = "";
 		try {
-			findString = fDocument.get(region.getOffset(), region.getLength());
+			findString = fDocument.get(region.getOffset(), region.getLength()).toLowerCase();
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,7 +82,7 @@ public class OccurrencesFinder {
 			if (initialSelection instanceof ITextSelection) {
 				ITextSelection textSelection = (ITextSelection) initialSelection;
 				if (!textSelection.isEmpty()) {
-					String text = this.fViewer.getDocument().get();
+					String text = this.fViewer.getDocument().get().toLowerCase();
 					IDocument iDoc = (ICFDocument) this.fViewer.getDocument();
 					IResource resource = ((ICFDocument) this.fViewer.getDocument()).getResource();
 					int index = text.indexOf(findString);
