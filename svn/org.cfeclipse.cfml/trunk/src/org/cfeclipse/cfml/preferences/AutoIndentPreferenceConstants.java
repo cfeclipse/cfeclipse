@@ -64,6 +64,8 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 	public static final String P_SUGGEST_VARIABLES = "__suggestVariables";
 
 	public static final String P_SUGGEST_HTML = "__suggestHtml";
+
+	public static final String P_SUGGEST_TEMPLATES = "__suggestTemplates";
 	/**
 	 * Sets the default values for the preferences managed by
 	 * {@link AutoIndentPreferencePage}:
@@ -98,6 +100,7 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_SUGGEST_SCOPES, true);
 		store.setDefault(P_SUGGEST_VARIABLES, true);
 		store.setDefault(P_SUGGEST_HTML, true);
+		store.setDefault(P_SUGGEST_TEMPLATES, true);
 	}
 
 }

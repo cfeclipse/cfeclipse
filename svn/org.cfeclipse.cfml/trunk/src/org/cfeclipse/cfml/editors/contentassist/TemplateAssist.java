@@ -24,57 +24,61 @@
  */
 package org.cfeclipse.cfml.editors.contentassist;
 
-import java.util.regex.Pattern;
-
+import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.cfeclipse.cfml.templates.template.TextualCompletionProcessor;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.templates.Template;
 import org.eclipse.swt.graphics.Image;
 
-
 /**
- * Provides CFML Scope Assist at the tag-insight level. So the if
- * the user is tapping away
- *
+ * Provides CFML Scope Assist at the tag-insight level. So the if the user is
+ * tapping away
+ * 
  * @author Oliver Tupman
  */
-public class TemplateAssist extends AssistContributor 
-	   		 implements IAssistContributor 
-{
-	private static final String DEFAULT_IMAGE= "$nl$/icons/template.gif"; //$NON-NLS-1$
-    /**
-     * Source dictionary for the scope info. Currently defaults
-     * to the global CF dictionary.
-     */
-    private TextualCompletionProcessor templateProcessor = new TextualCompletionProcessor();
-	private int fSortOrder= 0x00000;
-       
-    
-    /**
-     * @param cfmlAssistor 
-     * 
-     */
-    public TemplateAssist() {
-    }
+public class TemplateAssist extends AssistContributor implements IAssistContributor {
+	private static final String DEFAULT_IMAGE = "$nl$/icons/template.gif"; //$NON-NLS-1$
+	/**
+	 * Source dictionary for the scope info. Currently defaults to the global CF
+	 * dictionary.
+	 */
+	private TextualCompletionProcessor templateProcessor = new TextualCompletionProcessor();
+	private int fSortOrder = 0x00000;
 
-    /* (non-Javadoc)
-     * @see org.cfeclipse.cfml.editors.contentassist.IAssistContributor#getTagProposals(org.cfeclipse.cfml.editors.contentassist.IAssistState)
-     */
+	/**
+	 * @param cfmlAssistor
+	 * 
+	 */
+	public TemplateAssist() {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cfeclipse.cfml.editors.contentassist.IAssistContributor#getTagProposals
+	 * (org.cfeclipse.cfml.editors.contentassist.IAssistState)
+	 */
 	public ICompletionProposal[] getTagProposals(IAssistState state) {
-		ICompletionProposal[] templateProposals = templateProcessor.computeCompletionProposals(state.getITextView(),state.getOffset());
+		if (!preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_SUGGEST_TEMPLATES)) {
+			return null;
+		}
+		ICompletionProposal[] templateProposals = templateProcessor.computeCompletionProposals(state.getITextView(),
+				state.getOffset());
 		// TODO Auto-generated method stub
 		return templateProposals;
-	}    
+	}
 
 	/**
 	 * Always return the default image.
 	 * 
-	 * @param template the template, ignored in this implementation
+	 * @param template
+	 *            the template, ignored in this implementation
 	 * @return the default template image
 	 */
 	protected Image getImage(Template template) {
-        return CFPluginImages.get(CFPluginImages.ICON_TEMPLATE_SNIP);
+		return CFPluginImages.get(CFPluginImages.ICON_TEMPLATE_SNIP);
 	}
 
 	public String getId() {
@@ -94,12 +98,12 @@ public class TemplateAssist extends AssistContributor
 
 	public void sessionEnded() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void sessionStarted() {
 		// TODO Auto-generated method stub
-		
+
 	}
-    
+
 }
