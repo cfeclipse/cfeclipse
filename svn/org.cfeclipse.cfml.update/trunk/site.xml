@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site>
+<site
+      associateSitesURL="http://cfeclipse.org/update/associateSites.xml">
    <description name="CFEclipse Update Site" url="http://cfeclipse.org/update">
       CFEclipse Update site
    </description>
-   <feature url="features/org.cfeclipse.cfml.feature_1.3.6.quantifier.jar" id="org.cfeclipse.cfml.feature" version="1.3.6.quantifier">
+   <feature url="features/org.cfeclipse.cfml.feature_1.3.7.201002282355.jar" id="org.cfeclipse.cfml.feature" version="1.3.7.201002282355">
       <category name="CFEclipse CFML Editor (Required)"/>
    </feature>
    <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.200906240701.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.200906240701">
