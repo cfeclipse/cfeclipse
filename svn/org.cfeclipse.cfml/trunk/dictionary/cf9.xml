@@ -2437,6 +2437,8 @@ Action to perform
                         required="false" value="list"/>
                     <selectedValue attributeName="action"
                         required="false" value="delete"/>
+                    <selectedValue attributeName="action"
+                        required="false" value="create"/>
                 </triggers>
             </parameter>
             <parameter name="type" required="false" type="String">
@@ -19590,7 +19592,7 @@ Used to specify the slide numbers required to export from ppt file
         ]]></help>
                 <values/>
                 <triggers>
-                    <selectedValue attributeName="unzip" required="true" value="read"/>
+                    <selectedValue attributeName="action" required="true" value="unzip"/>
                 </triggers>
             </parameter>
             <parameter name="entrypath" required="false" type="String">
