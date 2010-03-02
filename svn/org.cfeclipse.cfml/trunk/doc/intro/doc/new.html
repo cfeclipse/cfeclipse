@@ -23,10 +23,11 @@ tr {
 </head>
 <body>
 <h2>What's New in CFEclipse 1.4.0</h2>
-<p>Several annoying
-bugs have been fixed, like the missing scope proposals (CGI, CFHTTP,
-etc.) and preferences have been added for enabling and disabling the
-various proposal categories.  MXUnit replaces CFUnit.</p>
+<p>A new preference has been added to set the <i>auto-activation
+charachters</i>. These are the characters that, when entered, automatically
+activates content proposals.</p>
+<p>A bug that caused 1.3.7 to not work in Eclipse versions below 3.5
+has been fixed.</p>
 
 <table cellpadding="10" cellspacing="0" width="600">
 	<colgroup>
@@ -43,13 +44,47 @@ various proposal categories.  MXUnit replaces CFUnit.</p>
 			<td valign="top">
 			<p align="right"><b> Auto-activation</b></p>
 			</td>
-			<td valign="top">
-			A new preference has been added to set the <i>auto-activation charachters</i>.  These are the characters that, when entered, automatically activates content proposals.  
-			<i>Preferences > CFEclipse > Editor  > Auto-insertion and Closing > Auto-activation chars</i>
+			<td valign="top">A new preference has been added to set the <i>auto-activation
+			charachters</i>. These are the characters that, when entered,
+			automatically activates content proposals. <i>Preferences >
+			CFEclipse > Editor > Auto-insertion and Closing > Auto-activation
+			chars</i> <br/><br/>For the 1.4.0 preview, I've tweaked the content assist to be
+			more like<br>
+			how it was, where it pops up as soon as you type the period in
+			"cgi.".<br>
+			<br>
+			This is possible because I refactored the way the auto-activation
+			characters work. &nbsp;I've removed the alphabet + all numbers, and
+			replaced it with just a few chars and a preference to set them
+			ourselves, even.<br>
+			<br>The defaults are:<br>
+			<br>
+			" (,=_&lt;~."<br>
+
+			&nbsp;^--there's a space in there<br>
+			<br>
+			Things work a little different now, but this should speed up working<br>
+			in large files (a tiny bit), and just seems saner to me.<br>
+			<br>
+			Back again is using space within a tag to prompt for attribute<br>
+			completion (controlled by that preference I mentioned, so if you
+			don't<br>
+			like it, change it). &nbsp;Space should only trigger for tag
+			attributes-<br>
+			otherwise it would be popping up everywhere. &nbsp;More refactoring
+			needs<br>
+
+			to be done to the way proposals are proposed before we can get the
+			hop<br>
+			over the last " or ' back again (meaning: output="false"|&lt;--
+			cursor<br>
+			jumps past last quote when you select the proposal).<br>
+
 			<p><img src="../images/1.4.0/proposal_prefs.png">
 			</td>
 		</tr>
-		</tbody></table>
+	</tbody>
+</table>
 <p>[Theoretically] Fixed in this release:</p>
 
 
@@ -58,10 +93,10 @@ various proposal categories.  MXUnit replaces CFUnit.</p>
 list on trac</a></p>
 
 <h2>What's New in CFEclipse 1.3.7</h2>
-<p>Several annoying
-bugs have been fixed, like the missing scope proposals (CGI, CFHTTP,
-etc.) and preferences have been added for enabling and disabling the
-various proposal categories.  MXUnit replaces CFUnit.</p>
+<p>Several annoying bugs have been fixed, like the missing scope
+proposals (CGI, CFHTTP, etc.) and preferences have been added for
+enabling and disabling the various proposal categories. MXUnit replaces
+CFUnit.</p>
 
 <table cellpadding="10" cellspacing="0" width="600">
 	<colgroup>
@@ -78,9 +113,11 @@ various proposal categories.  MXUnit replaces CFUnit.</p>
 			<td valign="top">
 			<p align="right"><b> Proposal Categories Preferences</b></p>
 			</td>
-			<td valign="top">
-			A rough UI has been added to control what proposal categories are active while editing.  If you are annoyed by the current proposal implementation, you'll want to play with these settings:
-			<i>Preferences > CFEclipse > Editor  > Auto-insertion and Closing > Suggest...</i>
+			<td valign="top">A rough UI has been added to control what
+			proposal categories are active while editing. If you are annoyed by
+			the current proposal implementation, you'll want to play with these
+			settings: <i>Preferences > CFEclipse > Editor > Auto-insertion
+			and Closing > Suggest...</i>
 			<p><img src="../images/1.3.7/proposal_prefs.png">
 			</td>
 		</tr>
@@ -93,97 +130,88 @@ various proposal categories.  MXUnit replaces CFUnit.</p>
 			<td valign="top">
 			<p align="right"><b> MXUnit</b></p>
 			</td>
-			<td valign="top">
-			CFUnit has been replaced with <a href="http://mxunit.org">MXUnit</a>.
-			With any luck we did it in a way that won't mess up existing MXUnit installs.  So far, so good.</td>
+			<td valign="top">CFUnit has been replaced with <a
+				href="http://mxunit.org">MXUnit</a>. With any luck we did it in a
+			way that won't mess up existing MXUnit installs. So far, so good.</td>
 		</tr>
-		</tbody></table>
+	</tbody>
+</table>
 <p>[Theoretically] Fixed in this release:</p>
-        <table class="listing tickets">
-          <thead>
-            <tr>
-              <th>
-                  Ticket
-              </th><th>
+<table class="listing tickets">
+	<thead>
+		<tr>
+			<th>Ticket</th>
+			<th>Summary</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="color4-even"
+			style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+			<td class="ticket"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/461">#461</a></td>
+			<td class="summary"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/461">How to use CFunit?</a></td>
+		</tr>
+		<tr class="color4-even"
+			style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
 
-                  Summary
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr class="color4-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-                          <td class="ticket">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/461">#461</a>
-                          </td>
-                          <td class="summary">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/461">How to use CFunit?</a>
-                          </td>
-              </tr>
-                            <tr class="color4-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+			<td class="ticket"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/533">#533</a></td>
+			<td class="summary"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/533">jump to matching tag
+			isn't working for HTML elements</a></td>
+		</tr>
+		<tr class="color3-odd"
+			style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+			<td class="ticket"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/497">#497</a></td>
+			<td class="summary"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/497">inherent
+			inconsistency in bugfix for quotes in function args</a></td>
+		</tr>
+		<tr class="color4-even"
+			style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+			<td class="ticket"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/526">#526</a></td>
+			<td class="summary"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/526">formatter and
+			&lt;cfoutput&gt;#small#&lt;/cfoutput&gt; type stuff</a></td>
+		</tr>
+		<tr class="color4-odd"
+			style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+			<td class="ticket"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/525">#525</a></td>
+			<td class="summary"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/525">Scope assist is
+			missing</a></td>
+		</tr>
+		<tr class="color4-even"
+			style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+			<td class="ticket"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/528">#528</a></td>
+			<td class="summary"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/528">auto-reconcile
+			should have a preference</a></td>
+		</tr>
 
-                          <td class="ticket">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/533">#533</a>
-                          </td>
-                          <td class="summary">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/533">jump to matching tag isn't working for HTML elements</a>
-                          </td>
-              </tr>
-              <tr class="color3-odd" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-                          <td class="ticket">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/497">#497</a>
-                          </td>
-                          <td class="summary">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/497">inherent inconsistency in bugfix for quotes in function args</a>
-
-                          </td>
-              </tr>
-              <tr class="color4-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-                          <td class="ticket">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/526">#526</a>
-
-                          </td>
-                          <td class="summary">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/526">formatter and &lt;cfoutput&gt;#small#&lt;/cfoutput&gt; type stuff</a>
-                          </td>
-              </tr>
-              <tr class="color4-odd" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-                          <td class="ticket">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/525">#525</a>
-                          </td>
-                          <td class="summary">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/525">Scope assist is missing</a>
-
-                          </td>
-              </tr>
-              <tr class="color4-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-                          <td class="ticket">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/528">#528</a>
-
-                          </td>
-                          <td class="summary">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/528">auto-reconcile should have a preference</a>
-                          </td>
-              </tr>
-
-              <tr class="color4-odd" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-                          <td class="ticket">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/524">#524</a>
-                          </td>
-                          <td class="summary">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/524">attribute parsing for tag name seems to be case sensitive</a>
-                          </td>
-              </tr>
-              <tr class="color3-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-                          <td class="ticket">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/522">#522</a>
-                          </td>
-                          <td class="summary">
-                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/522">Code Formatting ignores for cfsavecontent</a>
-
-                          </td>
-              </tr>
-          </tbody>
-        </table>
+		<tr class="color4-odd"
+			style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+			<td class="ticket"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/524">#524</a></td>
+			<td class="summary"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/524">attribute parsing
+			for tag name seems to be case sensitive</a></td>
+		</tr>
+		<tr class="color3-even"
+			style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+			<td class="ticket"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/522">#522</a></td>
+			<td class="summary"><a title="View ticket"
+				href="http://trac.cfeclipse.org/ticket/522">Code Formatting
+			ignores for cfsavecontent</a></td>
+		</tr>
+	</tbody>
+</table>
 
 
 <p>For full descriptions, see <a
