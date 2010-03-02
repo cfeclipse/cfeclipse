@@ -51,6 +51,7 @@ import org.cfeclipse.cfml.templates.template.CFTemplateContextType;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.PreferenceStore;
 import org.eclipse.jface.text.templates.ContextTypeRegistry;
 import org.eclipse.jface.text.templates.persistence.TemplateStore;
@@ -187,9 +188,9 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	}
 
 	private void checkForPluginVersionChange() {
-		Version currentVersion = getBundle().getVersion();
+		String currentVersion = (String) Platform.getBundle(getBundle().getSymbolicName()).getHeaders().get("Bundle-Version");
 		String lastVersion = getPreferenceStore().getString(LAST_PLUGIN_VERSION);
-		if(lastVersion == null || lastVersion.length() == 0 || !lastVersion.equals(currentVersion.toString())) {
+		if(lastVersion == null || lastVersion.length() == 0 || !lastVersion.equals(currentVersion)) {
 			getPreferenceStore().setValue(SHOW_WELCOME,true);
 			UrlViewer htmlViewer = new UrlViewer();
 			String whatsNewURL = CFMLPlugin.PLUGIN_ID + "/doc/intro/doc/new.html";
@@ -197,7 +198,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		} else {
 			getPreferenceStore().setValue(SHOW_WELCOME,false);			
 		}
-		getPreferenceStore().setValue(LAST_PLUGIN_VERSION,currentVersion.toString());		
+		getPreferenceStore().setValue(LAST_PLUGIN_VERSION,currentVersion);		
 	}
 
 	/**
