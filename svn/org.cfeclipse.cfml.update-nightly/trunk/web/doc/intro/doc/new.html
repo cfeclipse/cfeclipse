@@ -1,0 +1,423 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="STYLESHEET" href="book.css" charset="ISO-8859-1"
+	type="text/css">
+<style>
+td {
+	border-top: solid thin black;
+}
+
+img[alt] {
+	background-color: #ffdddd;
+}
+
+tr {
+	vertical-align: top;
+}
+</style>
+<title>What's New in CFEclipse 1.3.7</title>
+<script language="JavaScript"
+	src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"> </script>
+</head>
+<body>
+<h2>What's New in CFEclipse 1.3.7</h2>
+<p>Several annoying
+bugs have been fixed, like the missing scope proposals (CGI, CFHTTP,
+etc.) and preferences have been added for enabling and disabling the
+various proposal categories.  MXUnit replaces CFUnit.</p>
+
+<table cellpadding="10" cellspacing="0" width="600">
+	<colgroup>
+		<col width="20%">
+		<col width="80%">
+	</colgroup>
+	<tbody>
+		<tr>
+			<td colspan="2">
+			<div style="font-size: 20px; font-weight: bold;">Content Assist</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b> Proposal Categories Preferences</b></p>
+			</td>
+			<td valign="top">
+			A rough UI has been added to control what proposal categories are active while editing.  If you are annoyed by the current proposal implementation, you'll want to play with these settings:
+			<i>Preferences > CFEclipse > Editor  > Auto-insertion and Closing > Suggest...</i>
+			<p><img src="../images/1.3.7/proposal_prefs.png">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<div style="font-size: 20px; font-weight: bold;">Unit Testing</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b> MXUnit</b></p>
+			</td>
+			<td valign="top">
+			CFUnit has been replaced with <a href="http://mxunit.org">MXUnit</a>.
+			With any luck we did it in a way that won't mess up existing MXUnit installs.  So far, so good.</td>
+		</tr>
+		</tbody></table>
+<p>[Theoretically] Fixed in this release:</p>
+        <table class="listing tickets">
+          <thead>
+            <tr>
+              <th>
+                  Ticket
+              </th><th>
+
+                  Summary
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr class="color4-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+                          <td class="ticket">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/461">#461</a>
+                          </td>
+                          <td class="summary">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/461">How to use CFunit?</a>
+                          </td>
+              </tr>
+                            <tr class="color4-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+
+                          <td class="ticket">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/533">#533</a>
+                          </td>
+                          <td class="summary">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/533">jump to matching tag isn't working for HTML elements</a>
+                          </td>
+              </tr>
+              <tr class="color3-odd" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+                          <td class="ticket">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/497">#497</a>
+                          </td>
+                          <td class="summary">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/497">inherent inconsistency in bugfix for quotes in function args</a>
+
+                          </td>
+              </tr>
+              <tr class="color4-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+                          <td class="ticket">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/526">#526</a>
+
+                          </td>
+                          <td class="summary">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/526">formatter and &lt;cfoutput&gt;#small#&lt;/cfoutput&gt; type stuff</a>
+                          </td>
+              </tr>
+              <tr class="color4-odd" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+                          <td class="ticket">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/525">#525</a>
+                          </td>
+                          <td class="summary">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/525">Scope assist is missing</a>
+
+                          </td>
+              </tr>
+              <tr class="color4-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+                          <td class="ticket">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/528">#528</a>
+
+                          </td>
+                          <td class="summary">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/528">auto-reconcile should have a preference</a>
+                          </td>
+              </tr>
+
+              <tr class="color4-odd" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+                          <td class="ticket">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/524">#524</a>
+                          </td>
+                          <td class="summary">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/524">attribute parsing for tag name seems to be case sensitive</a>
+                          </td>
+              </tr>
+              <tr class="color3-even" style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+                          <td class="ticket">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/522">#522</a>
+                          </td>
+                          <td class="summary">
+                            <a title="View ticket" href="http://trac.cfeclipse.org/ticket/522">Code Formatting ignores for cfsavecontent</a>
+
+                          </td>
+              </tr>
+          </tbody>
+        </table>
+
+
+<p>For full descriptions, see <a
+	href="http://trac.cfeclipse.org/query?status=closed&group=resolution&milestone=1.3.7">the
+list on trac</a></p>
+
+<h2>What's New in CFEclipse 1.3.6</h2>
+<p>CFEclipse 1.3.6 is a maintenance release. No new features to
+speak of. We are happy to announce the creation of some initial unit
+tests, in an effort to prevent regressions. They're pretty weak tests,
+but they'll get better as we progress.</p>
+<p>[Theoretically] Fixed in this release:</p>
+<pre>
+#509	Errors with implicit structure/array creation
+#106 	mishandling of multiline strings   	 
+#478 	attribute validation with spaces 	
+#486 	asking for content assist when you have a broken parse tree throws error
+#496 	word wrap throws null pointer exception 	
+#510 	insert cfabort action, doesn't 
+#512 	useSmartPaste preference default is not initialized 
+#513 	context menu added with each file opened
+#515 	smartpaste preference doesn't seem to take 
+#516 	Code Formatting splits regex onto 2 lines 	
+#520 	syntax errors inside comments 
+#521 	space at the end of strings/single quotes inside double quotes 	
+#523 	Code Parsing error with cfinterface/cffunction 
+#504 	cfdump and cfabort tags should print out their respective dump() and abort() functions in cfscript
+#517 	Content Format menu option incorrect display
+#518 	Code Parsing and formatting
+</pre>
+
+<p>For full descriptions, see <a
+	href="http://trac.cfeclipse.org/query?status=closed&group=resolution&milestone=1.3.6">the
+list on trac</a></p>
+<h2>What's New in CFEclipse 1.3.5</h2>
+<p>Here are descriptions of some of the more interesting or
+significant changes made to CFEclipse. They are grouped into:</p>
+<ul>
+	<li><a href="#ContentAssist">Content Assist</a></li>
+	<li><a href="#CodeFormatter">Code Formatter</a></li>
+	<li><a href="#Editing">Editing</a></li>
+	<li><a href="#UniversalWelcome">Universal Welcome</a></li>
+	<li><a href="#UpdatedDictionaries">Updated Dictionaries</a></li>
+	<li><a href="#OutlineView">Outline View</a></li>
+</ul>
+<br>
+<table cellpadding="10" cellspacing="0" width="600">
+	<colgroup>
+		<col width="20%">
+		<col width="80%">
+	</colgroup>
+	<tbody>
+		<tr>
+			<td colspan="2"><a name="ContentAssist"></a>
+			<div style="font-size: 20px; font-weight: bold;">Content Assist</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b> Proposal Categories </b></p>
+			</td>
+			<td valign="top">Content Assist has been updated to use <i>proposal
+			categories</i>. Eventually this will give us finer-grained control over
+			what we propose and when.
+
+			<ul>
+				<li>Cycle through the proposal categories by repeatedly
+				pressing ctrl+space.</li>
+				<li>The fist cycle, all proposals are listed.</li>
+				<li>Eventually we will add a preference to filter the initial
+				list of proposals</li>
+			</ul>
+			<p><img src="../images/1.3.5/proposals.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Function Proposals</b></p>
+			</td>
+			<td valign="top">Function proposals are now a proposal category,
+			and are available anywhere proposals are. Their presentation has been
+			changed to a more intuitive format.
+			<p><img src="../images/1.3.5/functionProposals.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>In-page Function Proposals</b></p>
+			</td>
+			<td valign="top">The current document is now parsed for
+			functions and function arguments, any found are added to the function
+			proposal list.
+			<p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="CodeFormatter"></a>
+			<div style="font-size: 20px; font-weight: bold;">Code Formatter</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Overview</b></p>
+			</td>
+			<td valign="top">This implementation uses the Jericho HTML
+			library. It will do a decent job of formatting tag-based source, but
+			has no support for cfscript or javascript. Any text within these
+			elements will be left alone.
+			<p><img src="../images/1.3.5/sourceFormat.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Preferences</b></p>
+			</td>
+			<td valign="top">The preferences for changing the available code
+			formatting options are under <i>Preferences > CFEclipse > Code
+			Style > Formatter</i>.
+			<p><img src="../images/1.3.5/formattingPrefs.png">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="Editing"></a>
+			<div style="font-size: 20px; font-weight: bold;">Editing</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Print Margin</b></p>
+			</td>
+			<td valign="top">The print margin will now be at the correct
+			offset when the editor opens. I think a side effect to this fix might
+			have been this preference getting turned on for some users. It's
+			controlled via <i>Preferences > CFEclipse > Editor > Show print
+			margin</i>
+			<p><img src="../images/1.3.5/printMargin.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Occurrence Marking</b></p>
+			</td>
+			<td valign="top"><i>Occurrence marking</i> has been refactored
+			to be more like JTD. The selection of the current word is controlled
+			by the same preferences that control the double-click text selection
+			under <i>Preferences > CFEclipse > Editor > Text Selection</i>
+			<p><img src="../images/1.3.5/markOccurrence.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Rename in file</b></p>
+			</td>
+			<td valign="top">The refactored occurrence marking enabled us to
+			add a <i>Rename in file</i> command. The default key binding is <i>MOD1+2
+			R</i>. This feature allows you to quickly rename all of the currently
+			marked occurrences.
+			<p><img src="../images/1.3.5/renameInFile.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Reconciler</b></p>
+			</td>
+			<td valign="top">The editor now uses a reconciling strategy
+			deal, which basically means the document will be parsed after you
+			stop changing it, vs. only when you save. There should probably be a
+			preference to turn this off. But there isn't. Yet.</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Auto-indent pasted tags</b></p>
+			</td>
+			<td valign="top">An initial "smart paste" implementation has
+			been added. This feature automatically indents pasted code to the
+			correct level, and keeps indentation at the correct level while
+			adding tag attributes on new lines within a tag. It still needs a
+			little work.
+			<p><img src="../images/1.3.5/smartPaste.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Marking of opening and closing tags</b></p>
+			</td>
+			<td valign="top">The editor will now mark the start and end of
+			the current tag if the cursor is on the start or end of the tag. The
+			presentation style is configurable via <i> Preferences >
+			CFEclipse > Editor > Annotations </i>
+			<p><img src="../images/1.3.5/highlightStartEnd.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Opening Files from the OS (CFEclipseCall)</b></p>
+			</td>
+			<td valign="top">You can now associate cfml files with the
+			CFEclipseCall executable to be able to open them directly in CFE
+			without starting a new instance of Eclipse each time. See <a
+				href="http://trac.cfeclipse.org/wiki/CFEclipseCall">the wiki
+			page for CFEclipseCall</a>.</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="UniversalWelcome"></a>
+			<div style="font-size: 20px; font-weight: bold;">Universal
+			Welcome</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Overview<br></p>
+			</td>
+			<td valign="top">CFEclipse now has some representation in the
+			Universal Welcome (the screen that shows up with a fresh workspace).
+			.
+			</p>
+			<p><img src="../images/1.3.5/whatsNew.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>What's New</b></p>
+			</td>
+			<td valign="top">All this</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Cheatsheets</b></p>
+			</td>
+			<td valign="top">There is a cheatsheet with this release, but it
+			is currently useless.</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="UpdatedDictionaries"></a>
+			<div style="font-size: 20px; font-weight: bold;">Updated
+			Dictionaries</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>ColdFusion</b></p>
+			</td>
+			<td valign="top">The dictionaries for ColdFusion versions 5
+			through 8 have been updated, and a dictionary for version 9 has been
+			added.</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Railo</b></p>
+			</td>
+			<td valign="top">An initial dictionary for Railo 3 has been
+			added.</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="OutlineView"></a>
+			<div style="font-size: 20px; font-weight: bold;">Outline View</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Display</b></p>
+			</td>
+			<td valign="top">The outline view has been refactored to provide
+			more usefual information.
+			<p><img src="../images/1.3.5/outlineView.png">
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

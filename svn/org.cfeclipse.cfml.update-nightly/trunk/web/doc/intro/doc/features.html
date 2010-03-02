@@ -1,0 +1,89 @@
+<html><body>
+<h1>CFEclipse Features</h1>
+<br><h3>Bracket Matching</h3>
+<p>When writing code, it is very easy to get lost in nested elements. If you place your cursor next to a character that supports matching brackets <strong>( ) { } [ ]</strong>, CFEclipse will highlight both matching characters.</p>
+
+
+
+
+<h3>Code Folding</h3>
+<p>Available in CF Studio and Homesite, this feature has been resurrected in CFEclipse and has had some bells and whistles added to it. When working in large files it is often helpful to highlight a section of code and collapse it. This feature adds an icon to the left margin allowing you to expand and collapse this section of code as you need it. By default, when you open a file it will collapse CFML and HTML comments and cffunction blocks that span more than three lines. It will also add folding markers in the right margin for cfquery, cfscript, cfloop, cfif, cfswitch, and cfcase, and blocks that span more than three lines, but these will not be collapsed automatically. These defaults can be customized in the preferences area. A very handy organization feature!</p>
+
+
+
+<h3>Methods View</h3>
+<p>Since the addition of ColdFusion Components in CFMX, many developers have been wooed by the benefits they provide. When working in CFEclipse you can open a CFC and in the Methods View see a summary of the cffunction tags in your document. You can filter your functions based on type of access (private, package, public, remote) and you can sort them alphabetically. Double-clicking on a method name will move the cursor to that method in the document and expand the method if it is currently collapsed.</p>
+
+
+
+
+<h3>Outline View</h3>
+
+<p>The Methods view is convenient for files such as CFCs, which are mostly made up of cffunction tags. Sometimes it's also nice to have an overview of the structure of normal CFML files. The Outline view is designed to do exactly this. The real benefit is that when working in large files, you can filter your view based on the type of tag. You can filter on the currently selected element, or on a list of predefined tags such as cfmodule, cfset, cfquery, cfinclude, and cfcase. This makes working with long documents much more manageable.</p>
+
+
+
+<h3>Integrated Browser</h3>
+<p>Many Web-centric IDEs will allow you to launch the page you are currently working on into an external browser. CFEclipse allows you to open a browser window inside the IDE itself. This is very similar to what you get in both DreamWeaver and Homesite. The difference in CFEclipse is that you can specify a single root URL for a project and always have that URL loaded when you fire up the browser. CFEclipse also allows you to have two tabbed browsers active. This allows you to review the page you are working on, as well as keep&nbsp; Livedocs or any other Web site at your fingertips.</p>
+
+
+
+<h3>Scribble Pad</h3>
+<p>At one point or another pretty much every Web developer has created a temporary .cfm file to test some small snippet of code outside the existing project. CFEclipse allows you to designate a file within any project that will act as a "scribble" file. While working in CFEclipse you can activate the scribble pad via a keyboard shortcut. This will open the scribble file and load it into the integrated browser, allowing you to quickly test short snippets of code.</p>
+
+
+<h3>Dynamic Snippets</h3>
+<p>Reminiscent of the snippets of Homesite, snippets allow you to create blocks of code that can be entered into your document by double-clicking the snippet from the snippet view. A text trigger can also be assigned to a snippet, allowing you to type the text trigger followed by a keyboard shortcut to add the snippet to your document. The CFEclipse snippets implementation allows you to use dynamic Homesite-style snippet variables of the form <em>$${variable:default} </em>within the snippets. When you insert a snippet of this type you are prompted for the values you would like to use. This is very convenient for creating snippets that contain skeleton code for constructs like CFC getter and setter function pairs.</p>
+
+
+
+<h3>File Explorer</h3>
+<p>One of the most frequent complaints I have heard of Eclipse-based plug-ins is that there is no way to edit a file that is not part of a project. The File Explorer solves this problem by allowing you to explore your computer and open any file. Another benefit of the File Explorer is that it uses the same split-view approach that Homesite uses, with folders on top and files below.</p>
+
+
+<h3>TODO Tasks</h3>
+<p>Another popular feature is the ability of the IDE to track comments containing TODO items. Any comment that contains the string "<em>TODO</em>:" is tracked globally and can be viewed in the tasks view. When looking at the tasks view you can double-click on a task and the relevant file will be opened with the cursor on the line where the TODO: marker is located.</p>
+
+
+
+<h3>CF Frameworks Explorer<br></h3>
+<p>The CF Frameworks Explorer is an additional CFEclipse plugin that helps navigate ColdFusion framework configuration files.&nbsp; You can easily navigate your config files from popular ColdFusion frameworks like Fusebox, Mach-ii, and Model-Glue.</p>
+
+
+
+<h3>Problems View</h3>
+<p>CFEclipse also includes a parser that checks for syntax errors in your ColdFusion document. When problems are found, they are compiled into a list that is tracked globally in the same way as the TODO tasks. In the latest development versions of CFEclipse, parser problems are also underlined in the text of the document. This makes it much easier to see exactly where the parser found a problem and it is usually relatively easy to spot the cause, such as an extra  tag in a nested set of if statements.</p>
+
+
+
+<h3>Syntax Dictionaries</h3>
+<p>There are a lot of functions and tags to keep up with in ColdFusion.  The searchable Dictionary View gives you quick insight displaying the available attributes and a brief description for each tag and function.</p>
+
+
+
+<h1>Extending CFEclipse<br></h1><p>In addition to all the features listed above, since CFEclipse is built as an Eclipse plugin you can add additional plugins to gain even more productivity boosting functionality:<br></p>
+
+
+<h3>Project Management</h3><p>
+				<a href="http://www.eclipse.org/mylyn/" title="Mylyn">Mylyn</a> is a Task-Focused Interface for Eclipse that reduces information overload and makes multi-tasking easy.  
+				It does this by making tasks a first class part of Eclipse, and integrating rich and offline editing for
+				repositories such as Bugzilla, Trac, and JIRA.  Once your tasks are integrated, Mylyn monitors your work 
+				activity to identify information relevant to the task-at-hand, and uses this task context to focus the 
+				Eclipse UI on the interesting information, hide the uninteresting, and automatically find what's related. 
+				This puts the information you need to get work done at your fingertips and improves productivity by reducing 
+				searching, scrolling, and navigation.</p>
+
+
+<h3>Unit Testing</h3><p>Popular ColdFusion unit testing tools like <a href="http://mxunit.org/" title="MXUnit">MXUnit</a> and <a href="http://cfunit.sourceforge.net/" title="CFUnit">CFUnit</a> work within CFEclipse.&nbsp; Allowing you to easily setup and run your unit tests from within the IDE!<br></p>
+
+
+<h3>Version Control</h3><p>Tight integration with many of the popular version control systems like Subversion and CVS.<br></p>
+
+
+<h3>Automation</h3><p><a href="http://ant.apache.org/" title="Ant">Apache Ant</a> is built right into Eclipse - allowing you to automate almost anything.&nbsp; Deploy code, integrate with version control systems, automate testing and more.<br></p>
+
+
+<h3>Adobe ColdFusion 8 Extensions for Eclipse</h3><p>This collection of plugins adds the ColdFusion 8 code debugger, code
+wizards, RDS capabilities and more to Adobe Flex Builder or Eclipse.&nbsp; Adobe also provides the ColdFusion 8 documentation set as an Eclipse plug-in. More information and downloads available on the <a href="http://www.adobe.com/support/coldfusion/downloads.html" title="Adobe ColdFusion Support Center">Adobe ColdFusion Support Center</a>.<br></p>
+
+</body></html>
