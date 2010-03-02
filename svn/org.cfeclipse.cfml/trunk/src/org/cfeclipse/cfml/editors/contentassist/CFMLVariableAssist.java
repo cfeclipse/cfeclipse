@@ -151,6 +151,9 @@ public class CFMLVariableAssist extends AssistContributor //extends DefaultTagAs
     	System.out.println(state.getOffsetPartition().toString());
     	    	
     	
+        if (state.getTriggerData() == ' ') {
+            return null;
+        }
         if (state.getTriggerData() == '#') {
             return getPageVariables(state, doc);
         }
@@ -427,7 +430,7 @@ public class CFMLVariableAssist extends AssistContributor //extends DefaultTagAs
         	String key = (String)keyIter.next();
  		   if(key.toUpperCase().startsWith(prefix.toUpperCase()) && !key.toUpperCase().equals(prefix.toUpperCase())){
 			   String replacementString = key.toString().replace(prefix, "");    			   
- 			   CompletionProposal proposal = new CompletionProposal(key.toString(), state.getOffset()-prefix.length(), prefix.length(), prefix.length()+replacementString.length());            	
+ 			   CompletionProposal proposal = new CompletionProposal(key.toString(), state.getOffset()-prefix.length(), prefix.length(), prefix.length()+replacementString.length());
  			   proposals.add(proposal);
  			   propIter++;
  		   }

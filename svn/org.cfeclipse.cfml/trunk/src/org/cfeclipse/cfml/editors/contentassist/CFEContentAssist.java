@@ -173,7 +173,8 @@ public abstract class CFEContentAssist extends AssistContributor implements IAss
 						name += (isXmlStyle) ? "/" : "";
 						name += (isSingle) ? " " : ">";
 					} else {
-						name+= " ";
+						// don't want <cfabort >, etc.
+						//name+= " ";
 					}
 				} else if(obj[i] instanceof Parameter) {
 					name = ((Parameter)obj[i]).getName();

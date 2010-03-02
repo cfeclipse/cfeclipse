@@ -3,6 +3,7 @@ package org.cfeclipse.cfml.preferences;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -41,11 +42,13 @@ public class AutoIndentPreferencePage
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE, "Auto-indent on tag close", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_USE_SMART_PASTE, "Auto-indent pasted tags", getFieldEditorParent()));
 
+		addField(new StringFieldEditor(AutoIndentPreferenceConstants.P_AUTOACTIVATION_CHARS, "Auto-activation chars", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_TAGS, "Suggest CFML Tags", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_FUNCTIONS, "Suggest Functions", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_SCOPES, "Suggest Scopes", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_VARIABLES, "Suggest Variables", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_HTML, "Suggest HMTL Tags", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_TEMPLATES, "Suggest Templates", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_TEMPLATES, "Suggest Templates", getFieldEditorParent()));
 		
 		}

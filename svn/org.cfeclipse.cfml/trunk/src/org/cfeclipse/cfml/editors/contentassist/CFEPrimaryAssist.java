@@ -31,6 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.cfeclipse.cfml.editors.ICFEFileDocument;
+import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
+import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.bindings.TriggerSequence;
@@ -60,6 +62,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 	// stats checking
 	private static final boolean DEBUG= false;
     
+	protected static CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
     
 	/** Characters that will trigger content assist */
 	private char[] autoActivationChars = null;
@@ -477,17 +480,9 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 	 * Creates the array of characters that will trigger content assist
 	 */
 	private void generateAutoActivationChars() {
-	    String autoActivationString = new String("");
-	    autoActivationString += "abcdefghijklmnopqrstuvwxyz";
-	    autoActivationString += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	    autoActivationString += "0123456789";
-// with short auto-activate times these are annoying now:	    
-//	    autoActivationString += "(,=._<~\t\n\r\"'# ";
-	    autoActivationString += "(,=_<~#";
-	    char[] chars = autoActivationString.toCharArray();
-	    
-	    this.autoActivationChars = chars;
-	    
+		String autoActivationString = preferenceManager.getStringPref(AutoIndentPreferenceConstants.P_AUTOACTIVATION_CHARS);
+	    char[] chars = autoActivationString.toCharArray();	    
+	    this.autoActivationChars = chars;	    
 	}
 		
 	/**

@@ -61,7 +61,8 @@ public class TemplateAssist extends AssistContributor implements IAssistContribu
 	 * (org.cfeclipse.cfml.editors.contentassist.IAssistState)
 	 */
 	public ICompletionProposal[] getTagProposals(IAssistState state) {
-		if (!preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_SUGGEST_TEMPLATES)) {
+		if (!preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_SUGGEST_TEMPLATES)
+				|| state.getTriggerData() == (' ')) {
 			return null;
 		}
 		ICompletionProposal[] templateProposals = templateProcessor.computeCompletionProposals(state.getITextView(),
