@@ -137,6 +137,14 @@
       </participant>
    </extension>
  
+ <extension point="org.eclipse.search.searchPages">
+  <page
+    class="org.cfeclipse.cfml.search.CFMLTagSearchPage"
+    id="org.cfeclipse.cfml.search.TagSearchPage"
+    label="CFML Tag Search">
+  </page>
+</extension>
+ 
 	<!-- ////////////////////////////////////////////////////////////// -->
 	
 	
@@ -306,6 +314,16 @@
                class="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction"
                menubarPath="edit/additions"
                id="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction">
+         </action>
+		<!-- wrap tag -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.WrapTag"
+               label="%action.label.WrapTag"
+               icon="icons/ctool16/toupper.gif"
+               tooltip="%action.tooltip.WrapTag"
+               class="org.cfeclipse.cfml.editors.actions.WrapTagAction"
+               menubarPath="edit/additions"
+               id="org.cfeclipse.cfml.editors.actions.WrapTagAction">
          </action>
 		<!-- insert date -->
          <action
@@ -747,6 +765,13 @@
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
                id="org.cfeclipse.cfml.editors.actions.ToUpperCase">
          </action>
+         <action
+               label="%action.label.WrapTag"
+               class="org.cfeclipse.cfml.editors.actions.WrapTagAction"
+               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
+               id="org.cfeclipse.cfml.editors.actions.WrapTagAction">
+         </action>
+
 
 		<!-- ////// -->
          <action
@@ -978,6 +1003,13 @@
 			description="%command.description.9"
 			categoryId="org.cfeclipse.cfml.commandCategory"
 			id="org.cfeclipse.cfml.editors.actions.ToUpperCase"/>
+		
+		<!-- wrap tag -->
+		<command
+			name="%command.name.wrapTag"
+			description="%command.description.wrapTag"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.WrapTag"/>
 		
 		<!-- Insert Color -->
 		<command
@@ -1414,6 +1446,12 @@
 		<!-- Upper Case -->
 		<key sequence="M1+M2+U"
 			commandId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+
+		<!-- Wrap tag -->
+		<key sequence="M1+M2+W"
+			commandId="org.cfeclipse.cfml.editors.actions.WrapTag"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 
@@ -2280,6 +2318,16 @@
                class="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction"
                toolbarPath="BasicCFEditorText"
                id="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction">
+         </action>
+		<!-- wrap tag -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.WrapTag"
+               label="%action.label.WrapTag"
+               icon="icons/ctool16/toupper.gif"
+               tooltip="%action.tooltip.WrapTag"
+               class="org.cfeclipse.cfml.editors.actions.WrapTagAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.WrapTagAction">
          </action>
 		<!-- insert date -->
          <action
