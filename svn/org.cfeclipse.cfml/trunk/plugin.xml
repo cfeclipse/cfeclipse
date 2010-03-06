@@ -319,7 +319,7 @@
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.WrapTag"
                label="%action.label.WrapTag"
-               icon="icons/ctool16/toupper.gif"
+               icon="icons/ctool16/repeattag.gif"
                tooltip="%action.tooltip.WrapTag"
                class="org.cfeclipse.cfml.editors.actions.WrapTagAction"
                menubarPath="edit/additions"
@@ -2323,7 +2323,7 @@
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.WrapTag"
                label="%action.label.WrapTag"
-               icon="icons/ctool16/toupper.gif"
+               icon="icons/ctool16/repeattag.gif"
                tooltip="%action.tooltip.WrapTag"
                class="org.cfeclipse.cfml.editors.actions.WrapTagAction"
                toolbarPath="BasicCFEditorText"

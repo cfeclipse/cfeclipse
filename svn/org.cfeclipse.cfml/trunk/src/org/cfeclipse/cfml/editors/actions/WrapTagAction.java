@@ -108,9 +108,8 @@ public class WrapTagAction extends GenericEncloserAction implements IEditorActio
 		Point curRange = viewer.getSelectedRange();
 		this.enclose(doc, sel, "<>", "</>");
 		List positions = new ArrayList();
+		// the offset / content of groups much match ("<[>]" and "</[>]")
 		offset++;
-//		Position tagOpen = new Position(sel.getOffset(),1);
-//		Position tagClose = new Position(sel.getOffset() + sel.getLength() + 2,1);
 		Position tagOpen = new Position(offset,1);
 		Position tagClose = new Position(offset+ sel.getLength() + 3,1);
 		positions.add(tagOpen);
