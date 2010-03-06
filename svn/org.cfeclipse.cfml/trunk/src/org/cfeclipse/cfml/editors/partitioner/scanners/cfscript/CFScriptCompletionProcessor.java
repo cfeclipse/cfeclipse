@@ -576,6 +576,10 @@ public class CFScriptCompletionProcessor extends AssistContributor implements IA
 			scanData = scanData.replace('\n',' ');	// Eliminate any non-character characters
 			scanData = scanData.replace('\r',' ');	// as this allows us to treat the buffer as
 			scanData = scanData.replace('\t',' ');	// one long string
+			if (invoker.equals(" ")) {
+	            return null;
+	        }
+
 			if (!",".equals(invoker) 
 			    && !"(".equals(invoker)) {
 				String toBeMatched = extractPrefix(viewer,documentOffset).replaceAll("[\r\n\t]", " ").trim();
@@ -590,8 +594,7 @@ public class CFScriptCompletionProcessor extends AssistContributor implements IA
 
 			
 			char lastChar = scanData.charAt(scanData.length()-1);
-			
-			
+						
 			// Gonna allow debug by entering the tilde character. Entering this will cause
 			// my debug function to run...
 			if(lastChar == '~')
