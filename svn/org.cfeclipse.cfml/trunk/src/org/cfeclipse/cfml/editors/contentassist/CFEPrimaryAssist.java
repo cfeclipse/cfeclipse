@@ -124,7 +124,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 					IAssistContributor cat= (IAssistContributor) it.next();
 					cat.sessionStarted();
 				}
-				System.out.println("catItSize "+fCategoryIteration.size());
+				//System.out.println("catItSize "+fCategoryIteration.size());
 				fRepetition= 0;
 				if (event.assistant instanceof IContentAssistantExtension2) {
 					IContentAssistantExtension2 extension= (IContentAssistantExtension2) event.assistant;

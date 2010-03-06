@@ -98,7 +98,7 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 	//that non-opener/closer characters
 	// dunno tha twe need strings in here
 //	protected static final String completionChars = "(;~\"#[\',abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	protected static final String completionChars = "(~#[,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	protected static final String completionChars = "(~#[,";
 
 	// 2) The opener/closer characters. This assists with the opening & closing 
 	//of things such as brackets
@@ -437,7 +437,7 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 		char[] activationChars = getCompletionProposalAutoActivationCharacters();
 		String activationString = String.copyValueOf(activationChars, 0, activationChars.length);
 		int wee = Arrays.asList(activationChars).indexOf(activator);
-		if(activationString.indexOf(activator) != -1) {
+		if(activationString.indexOf(activator) != -1 || activator != ' ') {
 			return computeCompletionProposals(state.getITextView(), state.getOffset());			
 		} else {
 			return null;
