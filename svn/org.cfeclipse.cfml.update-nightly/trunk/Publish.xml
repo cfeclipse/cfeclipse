@@ -62,7 +62,7 @@
 		  />
 		  <condition property="do.tweet">
 		    <equals arg1="y" arg2="${do.delete}"/>
-		  </condition>
+		  </condition> 
 		<push remotedir="${buildtype}" />
 		<!--
 		<antcall target="cleanup" />
