@@ -24,6 +24,7 @@
  */
 package org.cfeclipse.cfml.editors.dnd;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -76,8 +77,11 @@ import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.MarkerUtilities;
+
+import cfml.parsing.CFMLParser;
+import cfml.parsing.CFMLSource;
+import cfml.parsing.ParserTag;
 
 
 /**
@@ -473,31 +477,25 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 
 		if ((e.stateMask & SWT.MOD1) != 0) {
 
+			CFMLParser fCfmlParser = new CFMLParser();
 			ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
-			CfmlTagItem cti = (CfmlTagItem)cfd.getTagAt(startpos, startpos, true);				
-
+			CFMLSource cfmlSource = fCfmlParser.addCFMLSource(cfd.getCFDocument().getFilename(),cfd.get());
+			ParserTag tag = cfmlSource.getEnclosingTag(startpos);
 			int start = 0;
 			int length = 0;
-			if (cti != null) {
+			if (tag != null) {
 
-				if ((e.stateMask & SWT.SHIFT) != 0 && cti.matchingItem != null) {
-
-					if (cti.matchingItem.getStartPosition() < cti.getStartPosition()) {
-						start = cti.matchingItem.getStartPosition();
-						length = cti.getEndPosition() - cti.matchingItem.getStartPosition() + 1;
-					} else {
-						start = cti.getStartPosition();
-						length = cti.matchingItem.getEndPosition() - cti.getStartPosition() + 1;
-					}
-
+				if ((e.stateMask & SWT.SHIFT) != 0) {
+					start = tag.getBegin();
+					length = tag.getEnd() - tag.getBegin();
 				} else {
-					if (cti.matchingItem != null && cti.matchingItem.getStartPosition() <= startpos
-							&& cti.matchingItem.getEndPosition() >= startpos) {
-						start = cti.matchingItem.getStartPosition();
-						length = cti.matchingItem.getEndPosition() - cti.matchingItem.getStartPosition() + 1;
+					if (tag.getEndTagBegin() <= startpos
+							&& tag.getEndTagEnd() >= startpos) {
+						start = tag.getEndTagBegin();
+						length = tag.getEndTagEnd() - tag.getEndTagBegin();
 					} else {
-						start = cti.getStartPosition();
-						length = cti.getEndPosition() - cti.getStartPosition() + 1;
+						start = tag.getStartTagBegin();
+						length = tag.getStartTagEnd() - tag.getStartTagBegin();
 					}
 				}
 
