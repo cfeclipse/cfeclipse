@@ -53,7 +53,10 @@ public class CFECallPlugin extends AbstractUIPlugin implements IStartup  {
 								}
 								CallServer.getDefault().start();
 							} catch (Throwable T) {
-								T.printStackTrace();
+								if (T instanceof java.net.BindException) {
+									log(IStatus.ERROR,T.getMessage() + ".  Is another instance already running?");
+								}
+								//T.printStackTrace();
 							}
 						}
 					}).start();
@@ -131,6 +134,7 @@ public class CFECallPlugin extends AbstractUIPlugin implements IStartup  {
 				bufMessage.append("0");
 			}
 			bufMessage.append(calendar.get(Calendar.SECOND));
+			bufMessage.append(" CFEclipseCall");
 
 			bufMessage.append(" - ");
 			if (severity == IStatus.ERROR) {
