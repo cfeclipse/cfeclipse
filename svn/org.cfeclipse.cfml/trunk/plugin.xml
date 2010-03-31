@@ -632,6 +632,26 @@
                label="%action.label.GotoFileAction"
                menubarPath="navigate/additions">
          </action>
+		 <!-- ExpandTagSelectionUp Action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.ExpandTagSelectionUp"
+               definitionId="org.cfeclipse.cfml.commands.ExpandTagSelectionUp"
+               icon="icons/obj16/default.gif"
+               id="org.cfeclipse.cfml.editors.actions.ExpandTagSelectionUp"
+               label="%action.label.ExpandTagSelectionUp"
+               menubarPath="org.cfeclipse.cfml.menus.source/source"
+               tooltip="%action.tooltip.ExpandTagSelectionUp">
+         </action>
+		 <!-- ExpandTagSelectionDown Action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.ExpandTagSelectionDown"
+               definitionId="org.cfeclipse.cfml.commands.ExpandTagSelectionDown"
+               icon="icons/obj16/default.gif"
+               id="org.cfeclipse.cfml.editors.actions.ExpandTagSelectionDown"
+               label="%action.label.ExpandTagSelectionDown"
+               menubarPath="org.cfeclipse.cfml.menus.source/source"
+               tooltip="%action.tooltip.ExpandTagSelectionDown">
+         </action>
          
          <!-- Surround with clipboard link -->
          <action
@@ -1223,6 +1243,20 @@
         	id="org.cfeclipse.cfml.FormatAction"
         	>
       	</command>
+        <command 
+        	name="%ExpandTagSelectionUp.label"
+        	description="ExpandTagSelectionUp" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.commands.ExpandTagSelectionUp"
+        	>
+      	</command>
+        <command 
+        	name="%ExpandTagSelectionDown.label"
+        	description="ExpandTagSelectionDown" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.commands.ExpandTagSelectionDown"
+        	>
+      	</command>
 		
 		<!-- Find a matching bracket pair -->
 		<!--
@@ -1416,6 +1450,17 @@
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		-->
 		
+		<!-- Expand Tag Selection Up -->
+		<key sequence="M1+["
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			commandId="org.cfeclipse.cfml.commands.ExpandTagSelectionUp"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		<!-- Expand Tag Selection Down -->
+		<key sequence="M1+]"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			commandId="org.cfeclipse.cfml.commands.ExpandTagSelectionDown"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+
 		<!-- New File -->
 		<key sequence="M1+N"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
