@@ -159,6 +159,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		boolean changeTagCase = prefs.changeTagCase();
 		boolean changeTagCaseUpper = prefs.changeTagCaseUpper();
 		boolean changeTagCaseLower = prefs.changeTagCaseLower();
+		boolean condenseTags = prefs.condenseTags();
 		int maxLineWidth = prefs.getMaximumLineWidth();
 
 		FormatterPreferences formatprefs = new FormatterPreferences();
@@ -172,6 +173,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		formatprefs.setMaximumLineWidth(maxLineWidth);
 		formatprefs.setInitialIndent(currentIndent);
 		formatprefs.setCloseTags(prefs.getCloseTags());
+		formatprefs.condenseTags(condenseTags);
 
 		fFormatter = new Formatter(formatprefs);
 		String formatted = fFormatter.format(contents);

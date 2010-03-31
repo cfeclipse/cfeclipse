@@ -103,6 +103,10 @@ public class FormattingPreferences {
 		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_LOWER);
 	}
 
+	public boolean condenseTags() {
+		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_CONDENSE_TAGS);
+	}
+
 	public static boolean affectsFormatting(PropertyChangeEvent event) {
 		String property = event.getProperty();
 		return property.startsWith(EditorPreferenceConstants.FORMATTER_ALIGN)
@@ -116,6 +120,7 @@ public class FormattingPreferences {
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_LOWER)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_UPPER)
+				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CONDENSE_TAGS)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_WRAP_LONG);
 	}
 
