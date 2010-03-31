@@ -107,6 +107,10 @@ public class CFPluginImages {
 	public static final String ICON_REMOVE	= "remove.gif";
 	/** a big red X */
 	public static final String ICON_DELETE	= "delete.gif";
+	/** magnifying glass + */
+	public static final String ICON_ZOOMIN= "zoom_in.gif";
+	/** magnifying glass - */
+	public static final String ICON_ZOOMOUT	= "zoom_out.gif";
 	/** the two arrows icon */
 	public static final String ICON_REFRESH	= "refresh.gif";
 	/** arrow pointing left */
@@ -335,6 +339,8 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR,ICON_EDIT);
 			addImageToRegistry(TOOLBAR,ICON_REMOVE);
 			addImageToRegistry(TOOLBAR,ICON_DELETE);
+			addImageToRegistry(TOOLBAR,ICON_ZOOMIN);
+			addImageToRegistry(TOOLBAR,ICON_ZOOMOUT);
 			addImageToRegistry(TOOLBAR,ICON_REFRESH);
 			
 			addImageToRegistry(TOOLBAR,ICON_BACK);

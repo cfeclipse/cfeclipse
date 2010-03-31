@@ -923,6 +923,21 @@
 					label="Edit URL"
 					menubarPath="org.cfeclipse.cfml.fileMenu/group1"/>
 		</objectContribution>
+		<objectContribution
+			adaptable="true"
+			id="org.cfeclipse.cfml.images.objectContribution1"
+			objectClass="org.eclipse.core.resources.IContainer">
+			<action
+				class="org.cfeclipse.cfml.images.PasteImageAction"
+				icon="icons/obj16/image_icon.png"
+				id="org.cfeclipse.cfml.images.action1"
+				label="Paste Image"
+				menubarPath="additions"
+				style="push">
+			</action>
+		</objectContribution>
+
+
 	</extension>
 	
 	<!-- Commands -->
@@ -1529,7 +1544,13 @@
             category="org.cfeclipse.cfml"
             name="%view.name.5"
             id="org.cfeclipse.cfml.views.explorer.FileExplorerView"/>
-         
+      <view
+            class="org.cfeclipse.cfml.views.images.ImagesView"
+            category="org.cfeclipse.cfml"
+            icon="icons/obj16/image_icon.png"
+            id="org.cfeclipse.cfml.images.imagesView"
+            name="%view.name.7">
+      </view>         
       <!-- 
       <view
             icon="icons/obj16/document.gif"
@@ -2069,7 +2090,23 @@
      	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
      	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
      	 <showInPart id= "org.cfeclipse.cfml.views.snips.SnipTreeView" />
+     	 <showInPart id= "org.cfeclipse.cfml.images.imagesView" />     	 
+         <viewShortcut
+               id="org.eclipse.ui.navigator.ProjectExplorer">
+         </viewShortcut>
+         <viewShortcut
+               id="org.eclipse.ui.navigator.CommonNavigator">
+         </viewShortcut>         
+         <viewShortcut
+               id="org.cfeclipse.cfml.images.imagesView">
+         </viewShortcut>
       </perspectiveExtension>
+      <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+         <viewShortcut
+               id="org.cfeclipse.cfml.images.imagesView">
+         </viewShortcut>
+      </perspectiveExtension>
+
   </extension>
    <extension
          point="org.eclipse.ui.contexts">
@@ -2549,5 +2586,15 @@
       </action>
    </extension>   
 -->   
+
+<!-- this is all for image viewing / hovers etc. -->
+
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.cfeclipse.cfml.images.StartupHandler"></startup>
+   </extension>
+   <!--
+   -->
    
 </plugin>
