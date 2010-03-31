@@ -156,6 +156,9 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	public static final String FORMATTER_CHANGE_TAG_CASE_UPPER = "formatter_uppercase_tags";
 	public static final String FORMATTER_CHANGE_TAG_CASE_LOWER = "formatter_lowercase_tags";
 
+	public static final String FORMATTER_CONDENSE_TAGS = "formatter_condense_tags";
+
+
 	/**
 	 * Sets the default values for the preferences managed by {@link EditorPreferencePage}:
 	 * <ul>
@@ -216,6 +219,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(FORMATTER_MAX_LINE_LENGTH, 80);
 		store.setDefault(FORMATTER_WRAP_LONG, false);
 		store.setDefault(FORMATTER_CLOSE_TAGS, true);
+		store.setDefault(FORMATTER_CONDENSE_TAGS, true);
 		
 		store.setDefault(TEMPLATES_USE_CODEFORMATTER, true);
 		store.setDefault(FORMATTER_FORMAT_SQL, false);

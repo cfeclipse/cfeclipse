@@ -56,6 +56,7 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, EditorPreferenceConstants.P_TAB_WIDTH));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_CLOSE_TAGS));
 
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_CONDENSE_TAGS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_COLLAPSE_WHITESPACE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_INDENT_ALL_ELEMENTS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_TIDY_TAGS));
@@ -104,6 +105,8 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		addTextField(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_MAX_LINE_LENGTH, 3, 0, errorMessages);
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_10;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_WRAP_LONG, 1);
+		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_19;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CONDENSE_TAGS, 1);
 //		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_5;
 //		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_ALIGN, 1);
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_11;
