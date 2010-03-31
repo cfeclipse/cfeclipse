@@ -141,7 +141,7 @@
   <page
     class="org.cfeclipse.cfml.search.CFMLTagSearchPage"
     id="org.cfeclipse.cfml.search.TagSearchPage"
-    label="CFML Tag Search">
+    label="CFML Search">
   </page>
 </extension>
  
