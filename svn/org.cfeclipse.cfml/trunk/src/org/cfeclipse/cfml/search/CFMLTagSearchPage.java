@@ -105,7 +105,7 @@ public class CFMLTagSearchPage extends DialogPage implements ISearchPage {
 		TableItem item = new TableItem(table, SWT.NONE);
 		item.setText(new String[] { "Tag Name", "Enter tag name to search" });
 		item = new TableItem(table, SWT.NONE);
-		item.setText(new String[] { "Tag body contains", "Enter attributes values to search for" });
+		item.setText(new String[] { "Tag body contains", "Enter values to search tag body for" });
 		item = new TableItem(table, SWT.NONE);
 		item.setText(new String[] { "Attributes", "Enter attributes to search" });
 		item = new TableItem(table, SWT.NONE);
