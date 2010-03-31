@@ -29,6 +29,7 @@ import org.cfeclipse.cfml.views.cfcmethods.CFCMethodsView;
 import org.cfeclipse.cfml.views.dictionary.DictionaryView;
 import org.cfeclipse.cfml.views.explorer.FileExplorerView;
 import org.cfeclipse.cfml.views.explorer.ftp.FtpLogView;
+import org.cfeclipse.cfml.views.images.ImagesView;
 import org.cfeclipse.cfml.views.packageview.PackageView;
 import org.cfeclipse.cfml.views.snips.SnipTreeView;
 import org.eclipse.ui.IFolderLayout;
@@ -96,6 +97,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		layout.addShowViewShortcut(DictionaryView.ID_DICTIONARY);
 		layout.addShowViewShortcut(BrowserView.ID_BROWSER);
 		layout.addShowViewShortcut(PackageView.ID_COMPONENTEXPLORER);
+		layout.addShowViewShortcut(ImagesView.ID_IMAGES);
 		//layout.addShowViewShortcut(FtpLogView.ID_FTP_LOG_VIEW);
 		
 		//add wizards here
