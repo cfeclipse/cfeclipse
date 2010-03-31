@@ -25,7 +25,8 @@ Bundle-ClassPath: cfml.jar,
  lib/commons-httpclient-3.0.1.jar,
  lib/commons-collections-3.2.jar,
  lib/commons-vfs-1.0.jar,
- lib/org.eclipse.nebula.widgets.gallery.jar
+ lib/org.eclipse.nebula.widgets.gallery.jar,
+ lib/org.eclipse.nebula.widgets.pshelf.jar
 Bundle-Activator: org.cfeclipse.cfml.CFMLPlugin
 Bundle-Vendor: CFEclipse Project
 Bundle-Localization: plugin
