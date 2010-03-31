@@ -90,6 +90,8 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 	private String DictionaryToUse = DictionaryManager.CFDIC;
 
 	private IAssistState fState;
+
+	private boolean fSessionStarted;
 	
 	// Define the characters that make up the activation set.
 	// There are three parts to the activation set:
@@ -141,7 +143,7 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 	{
 		DictionaryToUse = to;
 	}
-	
+
 	/**
 	 * Startup the completer
 	 */
@@ -265,6 +267,20 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 			
 			int z=0;
 			Iterator i = st.iterator();
+			
+////			hack job for blank proposal until proposals are less aggressive ticket #543
+//			result[z] = new CompletionProposal(
+//					"",
+//					offset, 
+//					0, 
+//					0,
+//					null,
+//					"",
+//					null,
+//					""
+//				);
+//			z++;
+////			hack over
 			while(i.hasNext())
 			{
 				Function fun = (Function)i.next();
@@ -434,13 +450,31 @@ public class CFMLFunctionAssistContributor extends AssistContributor implements 
 		
 		fState = state;
 		char activator = fState.getTriggerData();
+		
 		char[] activationChars = getCompletionProposalAutoActivationCharacters();
 		String activationString = String.copyValueOf(activationChars, 0, activationChars.length);
 		int wee = Arrays.asList(activationChars).indexOf(activator);
-		if(activationString.indexOf(activator) != -1 || activator != ' ') {
+        if (state.getTriggerData() == ' '
+        	|| state.getTriggerData() == '\t') {
+            return null;
+        }
+		if(activationString.indexOf(activator) == -1) {
+		//if(activationString.indexOf(activator) != -1 || fSessionStarted) {
 			return computeCompletionProposals(state.getITextView(), state.getOffset());			
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	public void sessionStarted() {
+		fSessionStarted = true;
+		super.sessionStarted();
+	}
+	
+	@Override
+	public void sessionEnded() {
+		fSessionStarted = false;
+		super.sessionEnded();
 	}
 }
