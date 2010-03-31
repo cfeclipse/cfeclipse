@@ -1,8 +1,22 @@
- 	
-
 a#cfeclipse-noteworthy img {
 	background-image: url(../images/wn_cfeclipse48.png);
 }
+
 a#cfeclipse-noteworthy:hover img {
 	background-image: url(../images/wn_cfeclipse48_hov.png);
+}
+
+.moon_full {
+	background-image: url(../images/moon_full.png);
+	background-repeat: no-repeat;
+}
+
+.moon_crescent {
+	background-image: url(../images/moon_crescent.png);
+	background-repeat: no-repeat;
+}
+
+.moon_new {
+	background-image: url(../images/moon_new.png);
+	background-repeat: no-repeat;
 }
