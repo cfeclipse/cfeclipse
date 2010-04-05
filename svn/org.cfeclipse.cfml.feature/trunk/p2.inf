@@ -1,0 +1,3 @@
+requires.1.namespace = org.eclipse.equinox.p2.iu
+requires.1.name = org.mxunit.eclipseplugin
+requires.1.range = [1.0.0, 9.9.9)
