@@ -59,7 +59,7 @@
 
 		<taskdef name="osacompile" classname="com.fivevoltlogic.antfarm.OSACompile" classpath="${antfarm.jar}" />
 		<taskdef name="osascript" classname="com.fivevoltlogic.antfarm.OSAScript" classpath="${antfarm.jar}" />
-		<copy file="scripts/cfeclipsecal.bat" todir="${dist.dir}/" overwrite="true" />
+		<copy file="scripts/cfeclipsecall.bat" todir="${dist.dir}/" overwrite="true" />
 		<copy file="properties.cfeclipsecall" todir="${dist.dir}/" overwrite="true" />
 		<jarbundler dir="${dist.dir}" verbose="true" showPlist="false"
                 name="CFEclipseCall"

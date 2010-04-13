@@ -3,11 +3,7 @@ cfm, cfc, and cfml file extensions in Eclipse.
 
 It also gives them a nifty icon on the filesystem.
 
-INSTALLATION
-
-First install the EclipseCall plugin into the Eclipse instance you want to use.
-
-Eclipse Update site:   http://www.jaylib.org/EclipseCall
+INSTALLATION (OS X)
 
 Copy the CFEclipseCall app bundle to wherever you want to keep it.
 
@@ -23,23 +19,38 @@ You can context-click on the Eclipse icon and select "Show Package Contents",
 browse to Contents/MacOS/ and do "get info" on the eclipse file to get the path
 if you need to.
 
+Then double-click on the CFEclipseCall app, which will set the file association
+for CFML files, and import (hopefully) your properties.cfeclipsecall settings.
+
+PROPERTIES.CFECLIPSECALL
+
 The properties.cfeclipsecall contents should look something like this:
 
 cfeclipsecall.call=/Users/denny/programs/eclipse-inst/eclipse35.command
 cfeclipsecall.socket=2342
 
-Then double-click on the CFEclipseCall app, which will set the file association
-for CFML files, and import (hopefully) your properties.cfeclipsecall settings.
-
-Then double-click a CFML file and pray it opens in Eclipse!
-
-The cfeclipsecall.call property is used for launching Eclipse if the EclipseCall
-client can't connect to the EclipseCall plugin in a running instance.
+The cfeclipsecall.call property is used for launching Eclipse if the CFEclipseCall
+client can't connect to the CFEclipseCall plugin in a running instance.
 
 If you change cfeclipsecall.socket property you need to change the socket for the 
-EclipseCall plugin under Preferences > EclipseCall as well.
+CFEclipseCall plugin under Preferences > CFEclipse > CFEclipseCall as well.
+
+USING CFECLIPSECALL
+
+Double-click a CFML file and pray it opens in Eclipse!
+
+USING THE JAR
+cfeclipsecall.jar [path/to/eclipse] [path/to/cfml/file]
+
+Example:
+java -jar cfeclipsecall.jar path/to/eclipse path/to/cfml/file
 
 APPENDIX
+
+Here is a .bat file for windows:
+=== cfeclipsecall.bat ===
+@echo off
+java -jar cfeclipsecall.jar %1 %2
 
 This is what my eclipse35.command script looks like (I used .command just for
 an Eclipse icon on the script, silly, I know):
