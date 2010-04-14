@@ -35,15 +35,28 @@ client can't connect to the CFEclipseCall plugin in a running instance.
 If you change cfeclipsecall.socket property you need to change the socket for the 
 CFEclipseCall plugin under Preferences > CFEclipse > CFEclipseCall as well.
 
-USING CFECLIPSECALL
+USAGE
 
 Double-click a CFML file and pray it opens in Eclipse!
 
-USING THE JAR
-cfeclipsecall.jar [path/to/eclipse] [path/to/cfml/file]
+or:
 
-Example:
-java -jar cfeclipsecall.jar path/to/eclipse path/to/cfml/file
+cfeclipsecall <filename> [-G<lineno>[,<col>-<col>]] [-S<socketno>] [-E<eclipse.exe>]
+example:
+mark column 10-20 in line 100 of myfile:
+> cfeclipsecall D:\mydir\myfile -G100,10-20
+only show myfile without marking:
+> cfeclipsecall D:\mydir\myfile
+
+USING THE JAR
+
+java -jar cfeclipsecall.jar <filename> [-G<lineno>[,<col>-<col>]] [-S<socketno>] [-E<eclipse.exe>]
+example:
+mark column 10-20 in line 100 of myfile:
+> java -jar cfeclipsecall.jar D:\mydir\myfile -G100,10-20
+only show myfile without marking:
+> java -jar cfeclipsecall.jar D:\mydir\myfile
+
 
 APPENDIX
 
