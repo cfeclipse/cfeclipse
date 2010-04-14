@@ -49,10 +49,10 @@ public class CallClient {
 		return properties;
 	}
 
-	public static void doOpen(String socketNumber, String eclipse, String call) {
+	public static void doOpen(String propertyFile, String socketNumber, String eclipse, String call) {
 		Socket server = null;
 		int sockno = DEFAULT_SOCKET;
-		File props = new File("properties.cfeclipsecall");
+		File props = new File(propertyFile);
 		System.out.println("Trying to open: " + call);
 		if (props.exists()) {
 			Properties properties = getProperties(props.getPath());
@@ -201,7 +201,7 @@ public class CallClient {
 	}
 
 	public static void main(String[] args) {
-
+		String propertyFile;
 		if (System.getProperty("os.name").indexOf("Mac") != -1) {
 			MacOsHandler.initializeMacOsHandler();
 		}
@@ -217,8 +217,16 @@ public class CallClient {
 			System.out.println("only show myfile without marking: ");
 			System.out.println("> cfeclipsecall D:\\mydir\\myfile");
 		} else {
-			String[] parsedArgs = parseArgs(args);
-			doOpen(parsedArgs[0], parsedArgs[1], parsedArgs[2]);
+			if (args[0].equals("-propertyfile")) {
+				System.out.println("using property file: " + args[1]);
+				String[] parsedArgs = parseArgs(args);
+				propertyFile = args[1];
+				doOpen(parsedArgs[0], parsedArgs[1], parsedArgs[2], parsedArgs[3]);
+			} else {
+				propertyFile = "properties.cfeclipsecall";
+				String[] parsedArgs = parseArgs(args);
+				doOpen(propertyFile, parsedArgs[0], parsedArgs[1], parsedArgs[2]);
+			}
 		}
 	}
 }

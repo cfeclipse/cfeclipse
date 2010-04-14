@@ -203,7 +203,7 @@ class ListenerProxy implements InvocationHandler {
 						eclipse = System.getProperty(CallClient.ENV_CALL);
 					}
 					System.out.println();
-					CallClient.doOpen(null, eclipse, fileName);					
+					CallClient.doOpen("properties.cfeclipsecall",null, eclipse, fileName);					
 				}
 
 			} else {
