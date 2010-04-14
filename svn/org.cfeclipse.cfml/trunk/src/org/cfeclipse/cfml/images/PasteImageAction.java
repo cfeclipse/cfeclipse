@@ -47,15 +47,12 @@ public class PasteImageAction implements IObjectActionDelegate {
 	private final class NameEndExtensionDialog extends InputDialog {
 
 		private NameEndExtensionDialog(Shell parentShell) {
-			super(parentShell, "Please specify file name and format", "Please specify file name:", "",
+			super(parentShell, "Please specify file name and format", "Please specify file name:", "clipboardimage.tif",
 					new IInputValidator() {
-
 						public String isValid(String newText) {
 							return null;
 						}
-
 					});
-
 		}
 
 		int selection;
