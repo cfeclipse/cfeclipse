@@ -8,8 +8,8 @@ public class CFMLPreferenceConstants {
 
 	public static final String P_SNIPPETS_PATH = "_snippetsPath";
 	/** Preference key identifier for current line highlight color */
-	public static final String P_TAB_WIDTH = "_tabWidth";
-	public static final String P_INSERT_SPACES_FOR_TABS = "_insertSpacesForTabs";
+	public static final String P_TAB_WIDTH = AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH;
+	public static final String P_INSERT_SPACES_FOR_TABS = AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS;
 
 	/**
 	 * Sets up the default values for preferences managed by {@link CFMLPreferencesPage} .
