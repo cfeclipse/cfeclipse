@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<extension point="org.eclipse.ui.views">
+		<category name="Snippets" id="org.cfeclipse.cfml.snippets">
+		</category>
+		<view name="Snippet Tree View" icon="icons/ctool16/library.gif"
+			category="org.cfeclipse.cfml.snippet" class="org.cfeclipse.cfml.snippets.views.snips.SnipTreeView"
+			id="org.cfeclipse.cfml.snippets.views.SnippetsView">
+		</view>
+	</extension>
+	<extension point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension targetID="org.eclipse.jdt.ui.JavaPerspective">
+			<view ratio="0.5" relative="org.eclipse.ui.views.TaskList"
+				relationship="right" id="org.cfeclipse.cfml.snippets.views.SnippetsView">
+			</view>
+		</perspectiveExtension>
+	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page class="org.cfeclipse.cfml.snippets.preferences.SnipExPreferencePage"
+			name="Snippets Preferences" id="org.cfeclipse.cfml.snippets.preferences.CFMLPreferencePage">
+		</page>
+	</extension>
+	<extension point="org.eclipse.ui.propertyPages">
+		<page class="org.cfeclipse.cfml.snippets.properties.ProjectPropertyPage"
+			id="org.cfeclipse.cfml.snippets.properties.snippetProjectPropertyPage"
+			name="%snippet.project.property.label" icon="icons/ctool16/library.gif"
+			nameFilter="*">
+			<enabledWhen>
+				<instanceof value="org.eclipse.core.resources.IProject">
+				</instanceof>
+			</enabledWhen>
+		</page>
+	</extension>
+	<extension point="org.eclipse.help.contexts">
+		<contexts file="contexts.xml">
+		</contexts>
+	</extension>
+
+	<!-- Actions -->
+	<extension point="org.eclipse.ui.popupMenus">
+		<viewerContribution
+			id="org.eclipse.ui.articles.action.contribution.popup.editor"
+			targetID="#TextEditorContext">
+			<action id="org.eclipse.ui.articles.action.contribution.editor.action1"
+				enablesFor="*" label="%insertsnippet.action.label" icon="icons/ctool16/insertsnip.gif"
+				menubarPath="additions"
+				class="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippetAction">
+			</action>
+		</viewerContribution>
+	</extension>
+	<extension point="org.eclipse.ui.editorActions">
+		<editorContribution targetID="org.eclipse.ui.DefaultTextEditor"
+			id="org.cfeclipse.cfml.snippets.editors.CFMLEditorActions">
+			<action id="org.eclipse.ui.articles.action.contribution.editor.action1"
+				enablesFor="*" label="%insertsnippet.action.label" icon="icons/ctool16/insertsnip.gif"
+				menubarPath="additions"
+				class="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippetAction">
+			</action>
+		</editorContribution>
+	</extension>
+
+	<extension point="org.eclipse.ui.actionSets">
+		<actionSet description="%GitActions_description" id="org.cfeclipse.cfml.snippets.actionset"
+			label="%GitActions_label" visible="false">
+			<action id="org.eclipse.ui.articles.action.contribution.editor.action1"
+				enablesFor="*" label="%insertsnippet.action.label" icon="icons/ctool16/insertsnip.gif"
+				menubarPath="additions"
+				class="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippetAction">
+			</action>
+		</actionSet>
+	</extension>
+
+	<!-- Command handlers -->
+	<extension
+        point="org.eclipse.ui.handlers">
+		<handler commandId="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippet" class="org.cfeclipse.cfml.snippets.handlers.SnippetActionHandler" />
+	</extension>
+
+	<!-- Commands -->
+	<extension point="org.eclipse.ui.commands">
+
+		<category name="%snippets.category.name" description="%snippets.category.description"
+			id="org.cfeclipse.cfml.snippets.commandCategory" />
+		<!-- insert a snippet -->
+		<command name="%insertsnippet.command.name" description="%insertsnippet.command.description"
+			categoryId="org.cfeclipse.cfml.snippets.commandCategory"
+			id="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippet">
+         <commandParameter 
+         		id="org.eclipse.egit.ui.command.action.class"
+               name="CommandActionClass" optional="false" values="" />
+               </command>
+	</extension>
+	<extension point="org.eclipse.ui.bindings">
+		<!--
+			The "M" modifier keys are a platform-independent way of representing
+			keys, and these are generally preferred. M1 is the COMMAND key on
+			MacOS X, and the CTRL key on most other platforms. M2 is the SHIFT
+			key. M3 is the Option key on MacOS X, and the ALT key on most other
+			platforms. M4 is the CTRL key on MacOS X, and is undefined on other
+			platforms. See:
+			http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_bindings.html
+		-->
+
+		<!-- auto comment -->
+		<key sequence="M1+M2+I"
+			commandId="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippet"
+			contextId="org.eclipse.ui.textEditorScope" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+			<parameter id="org.eclipse.egit.ui.command.action.class"
+		        value="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippetAction" />
+		        </key>
+	</extension>
+
+</plugin>

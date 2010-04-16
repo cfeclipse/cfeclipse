@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>SimpleType</name>
+<help>Simple documentation type (lifted from many types)</help>
+<starttext><![CDATA[<!-- $${CURRENTFILE} -->
+<!---
+	Date: $${YEAR}-$${MONTHNUMBER}-$${DAYOFMONTH}
+	Author: $${USERNAME}
+	Purpose: ]]></starttext>
+<endtext><![CDATA[
+--->]]></endtext>
+</snippet>

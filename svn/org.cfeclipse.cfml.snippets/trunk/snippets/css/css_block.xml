@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<snippet>
+<name>css_block</name>
+<help>Create a bare bones css block</help>
+<starttext><![CDATA[<style type="text/css">
+	]]></starttext>
+<endtext><![CDATA[
+</style>]]></endtext>
+</snippet>
