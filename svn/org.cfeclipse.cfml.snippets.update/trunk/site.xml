@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.cfeclipse.cfml.snippets.feature_1.0.0.qualifier.jar" id="org.cfeclipse.cfml.snippets.feature" version="1.0.0.qualifier">
+      <category name="SnippetsCategory"/>
+   </feature>
+   <category-def name="SnippetsCategory" label="Snippets">
+      <description>
+         Snippets
+      </description>
+   </category-def>
+</site>
