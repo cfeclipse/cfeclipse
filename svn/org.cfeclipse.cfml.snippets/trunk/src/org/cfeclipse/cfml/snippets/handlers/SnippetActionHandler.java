@@ -1,6 +1,5 @@
 package org.cfeclipse.cfml.snippets.handlers;
 
-import org.cfeclipse.cfml.snippets.editors.actions.GenericEncloserAction;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
