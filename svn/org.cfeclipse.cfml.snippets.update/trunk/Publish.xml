@@ -1,4 +1,4 @@
-<project name="Publish Snippets Plugin" default="update-dev" basedir=".">
+<project name="Publish Snippets Plugin" default="update" basedir=".">
 	<property name="buildtype" value="snippets/update"/>
 
 	<taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar" />
@@ -48,13 +48,13 @@
 		ftp.username, ftp.password, and ftp.site properties -->
 		<property file="publish.properties" />
 		<copy todir="./web">
-			<fileset dir="../org.cfeclipse.cfml">
+			<fileset dir="../org.cfeclipse.cfml.snippets">
 				<include name="doc/**" />
 			</fileset>
 		</copy>
 	</target>
 
-	<target name="update-dev" depends="init,clean-site">
+	<target name="update" depends="init,clean-site">
 		  <input
 		    message="Do you want to tweet that this build is available?"
 		    validargs="y,n"
@@ -113,11 +113,6 @@
 			</scp>
 			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/web" trust="true" verbose="true">
 				<fileset dir="web">
-					<!-- <date datetime="${filefilter}" when="after" /> -->
-				</fileset>
-			</scp>
-			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/cfeclipsecall" trust="true" verbose="true">
-				<fileset dir="cfeclipsecall">
 					<!-- <date datetime="${filefilter}" when="after" /> -->
 				</fileset>
 			</scp>
