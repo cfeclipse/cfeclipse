@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Snippets
+Bundle-Name: %bundle-name
 Bundle-SymbolicName: org.cfeclipse.cfml.snippets;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.cfeclipse.cfml.snippets.SnippetPlugin
