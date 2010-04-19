@@ -24,6 +24,7 @@
  */
 package org.cfeclipse.cfml.snippets.commands;
 
+import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.util.Encloser;
 import org.cfeclipse.cfml.snippets.views.snips.SnipKeyCombos;
 import org.cfeclipse.cfml.snippets.views.snips.SnipReader;
@@ -159,6 +160,13 @@ public class InsertSnippetCommand extends AbstractHandler {
 				IFile activeFile = null;
 				if (editor.getEditorInput() instanceof IFileEditorInput) {
 					activeFile = ((IFileEditorInput) editor.getEditorInput()).getFile();
+				}
+				if(fileName == null) {
+					// nasty nasty hack to tell the user no snippet found
+		    		MessageBox dialog = new MessageBox(editor.getSite().getShell(),SWT.ICON_ERROR);
+		    		dialog.setMessage("No snippet found for : "+sequence);
+		    		dialog.open();
+		    		return null;
 				}
 
 				snipReader.read(fileName);

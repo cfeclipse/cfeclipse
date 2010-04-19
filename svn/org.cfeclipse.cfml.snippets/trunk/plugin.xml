@@ -38,62 +38,64 @@
 		</contexts>
 	</extension>
 
-	<!-- Actions 
-	<extension point="org.eclipse.ui.popupMenus">
+	<!--
+		Actions <extension point="org.eclipse.ui.popupMenus">
 		<viewerContribution
-			id="org.eclipse.ui.articles.action.contribution.popup.editor"
-			targetID="#TextEditorContext">
-			<action id="org.eclipse.ui.articles.action.contribution.editor.action1"
-				enablesFor="*" label="%snippets.insertsnippet.action.label" icon="icons/ctool16/insertsnip.gif"
-				menubarPath="additions"
-				definitionId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
-				class="org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand">
-			</action>
-		</viewerContribution>
-	</extension>
-	<extension point="org.eclipse.ui.editorActions">
-		<editorContribution targetID="org.eclipse.ui.DefaultTextEditor"
-			id="org.cfeclipse.cfml.snippets.editors.CFMLEditorActions">
-			<action id="org.eclipse.ui.articles.action.contribution.editor.action1"
-				enablesFor="*" label="%snippets.insertsnippet.action.label" icon="icons/ctool16/insertsnip.gif"
-				menubarPath="additions"
-				definitionId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
-				class="org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand">
-			</action>
-		</editorContribution>
-	</extension>
-
-	<extension point="org.eclipse.ui.actionSets">
-		<actionSet description="%snippets.actionset.description"
-			id="org.cfeclipse.cfml.snippets.actionset" label="%snippets.actionset.label"
-			visible="false">
-			<menu id="org.cfeclipse.cfml.snippetsmenu" label="%snippets.menu.label"
-				path="additions">
-				<separator name="snippetsGroup">
-				</separator>
-			</menu>
-			<action id="org.cfeclipse.cfml.snippets.InsertSnippetCommand"
-				enablesFor="*" label="%snippets.insertsnippet.action.label" icon="icons/ctool16/insertsnip.gif"
-				menubarPath="additions"
-				definitionId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
-				class="org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand">
-			</action>
-		</actionSet>
-	</extension>
--->
+		id="org.eclipse.ui.articles.action.contribution.popup.editor"
+		targetID="#TextEditorContext"> <action
+		id="org.eclipse.ui.articles.action.contribution.editor.action1"
+		enablesFor="*" label="%snippets.insertsnippet.action.label"
+		icon="icons/ctool16/insertsnip.gif" menubarPath="additions"
+		definitionId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+		class="org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand">
+		</action> </viewerContribution> </extension> <extension
+		point="org.eclipse.ui.editorActions"> <editorContribution
+		targetID="org.eclipse.ui.DefaultTextEditor"
+		id="org.cfeclipse.cfml.snippets.editors.CFMLEditorActions"> <action
+		id="org.eclipse.ui.articles.action.contribution.editor.action1"
+		enablesFor="*" label="%snippets.insertsnippet.action.label"
+		icon="icons/ctool16/insertsnip.gif" menubarPath="additions"
+		definitionId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+		class="org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand">
+		</action> </editorContribution> </extension> <extension
+		point="org.eclipse.ui.actionSets"> <actionSet
+		description="%snippets.actionset.description"
+		id="org.cfeclipse.cfml.snippets.actionset"
+		label="%snippets.actionset.label" visible="false"> <menu
+		id="org.cfeclipse.cfml.snippetsmenu" label="%snippets.menu.label"
+		path="additions"> <separator name="snippetsGroup"> </separator>
+		</menu> <action id="org.cfeclipse.cfml.snippets.InsertSnippetCommand"
+		enablesFor="*" label="%snippets.insertsnippet.action.label"
+		icon="icons/ctool16/insertsnip.gif" menubarPath="additions"
+		definitionId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+		class="org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand">
+		</action> </actionSet> </extension>
+	-->
 	<extension point="org.eclipse.ui.menus">
 
-<menuContribution
-      locationURI="toolbar:org.eclipse.ui.main.toolbar">
-   <toolbar
-         id="com.eclipse-tips.commands.toolbar1">
-      <command
-            commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
-            id="com.eclipse-tips.commands.someCommandInToolBar">
-      </command>
-   </toolbar>
-</menuContribution>
-</extension>
+		<menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
+			<toolbar id="com.eclipse-tips.commands.toolbar1">
+				<command commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+					id="com.eclipse-tips.commands.someCommandInToolBar">
+				</command>
+			</toolbar>
+		</menuContribution>
+		<menuContribution locationURI="popup:#TextEditorContext?after=additions">
+			<menu id="com.eclipse-tips.commands.popup1" label="Snippets">
+				<command commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+					id="com.eclipse-tips.commands.someCommandInPopUp">
+				</command>
+			</menu>
+		</menuContribution>
+		<menuContribution locationURI="menu:org.eclipse.search.menu?after=contextMenuActionsGroup">
+			<menu id="com.eclipse-tips.commands.menu1" label="Snippets">
+				<command commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+					id="com.eclipse-tips.commands.someCommandInMenu">
+				</command>
+			</menu>
+		</menuContribution>
+
+	</extension>
 
 	<!-- Command handlers -->
 	<extension point="org.eclipse.ui.handlers">
@@ -104,16 +106,17 @@
 	<!-- Commands -->
 	<extension point="org.eclipse.ui.commands">
 
-		<category name="%snippets.category.name" description="%snippets.category.description"
-			id="org.cfeclipse.cfml.snippets.commandCategory" />
+		<category name="%snippets.insertsnippet.command.name"
+			description="%snippets.category.description" id="org.cfeclipse.cfml.snippets.commandCategory" />
 		<!-- insert a snippet -->
-		<command name="%insertsnippet.command.name" description="%snippets.insertsnippet.command.description"
-			categoryId="org.cfeclipse.cfml.snippets.commandCategory"
+		<command name="%snippets.insertsnippet.command.name"
+			description="%snippets.insertsnippet.command.description" categoryId="org.cfeclipse.cfml.snippets.commandCategory"
 			id="org.cfeclipse.cfml.snippets.commands.InsertSnippet">
 		</command>
 	</extension>
 	<extension point="org.eclipse.ui.commandImages">
-		<image commandId="com.eclipse-tips.commands.someCommand" icon="icons/sample.gif">
+		<image commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+			icon="icons/ctool16/insertsnip.gif">
 		</image>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
@@ -128,8 +131,7 @@
 		-->
 
 		<!-- auto comment -->
-		<key sequence="M1+M2+I"
-			commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+		<key sequence="M1+M2+I" commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
 			contextId="org.eclipse.ui.textEditorScope" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
 		</key>
 		<key commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
