@@ -25,6 +25,7 @@
 package org.cfeclipse.cfml.snippets.editors.actions;
 
 import org.cfeclipse.cfml.snippets.SnippetPlugin;
+import org.cfeclipse.cfml.snippets.util.Encloser;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;

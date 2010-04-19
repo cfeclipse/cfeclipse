@@ -23,12 +23,11 @@ public class SnipExPreferencePage extends FieldEditorPreferencePage implements I
 		super(GRID);
 		setPreferenceStore(SnippetPlugin.getDefault().getPreferenceStore());
 		setDescription("These preferences will allow you to customize the what SnipEx servers will be aggregated in your snippet view.\n\n");
-		cfmlpm = new CFMLPreferenceManager();
+		cfmlpm = SnippetPlugin.getDefault().getPreferenceManager();
 	}
 
-	
 	protected void createFieldEditors() {
-		addField(new DirectoryFieldEditor(CFMLPreferenceConstants.P_SNIPPETS_PATH, "Path to snippets directory", getFieldEditorParent()));
+		addField(new DirectoryFieldEditor(CFMLPreferenceConstants.P_SNIPPETS_PATH, "Default snippets directory", getFieldEditorParent()));
 		addField(new StringFieldEditor(SnipExPreferenceConstants.P_SNIPEX_URL1,"URL 1",getFieldEditorParent()));
 		addField(new StringFieldEditor(SnipExPreferenceConstants.P_SNIPEX_URL2,"URL 2",getFieldEditorParent()));
 		addField(new StringFieldEditor(SnipExPreferenceConstants.P_SNIPEX_URL3,"URL 3",getFieldEditorParent()));
@@ -42,7 +41,7 @@ public class SnipExPreferencePage extends FieldEditorPreferencePage implements I
 
     protected void performDefaults() {
         super.performDefaults();
-        snippetsPathField.setStringValue(preferenceManager.defaultSnippetsPath());
+        snippetsPathField.setStringValue(preferenceManager.getPluginStateLocation());
     }
 	
 	public void init(IWorkbench workbench) {}

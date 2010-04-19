@@ -31,6 +31,7 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.snippets.properties.CFMLPropertyManager;
 import org.w3c.dom.CDATASection;
@@ -93,8 +94,8 @@ public class SnipReader {
 		 */
 		if (!snippetFile.exists()) {
 
-			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
-			this.snippetFile = new File(propertyManager.defaultSnippetsPath()
+    		CFMLPropertyManager propertyManager = SnippetPlugin.getDefault().getPropertyManager();
+			this.snippetFile = new File(propertyManager.getSnippetsPath()
 					+ fileName);
 
 		}
@@ -269,10 +270,13 @@ public class SnipReader {
 	}
 
 	public void performIndent(String indentString) {
-		CFMLPreferenceManager preferenceManager = new CFMLPreferenceManager();
+		CFMLPreferenceManager preferenceManager = SnippetPlugin.getDefault().getPreferenceManager();
 		int tabWidth = preferenceManager.tabWidth();
 		boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
 		int i;
+		if(tabWidth < 1) {
+			tabWidth = 4;
+		}
 
 		if (!insertSpacesForTabs) {
 			String spaces = "";

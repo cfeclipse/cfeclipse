@@ -1,5 +1,6 @@
 package org.cfeclipse.cfml.snippets.properties;
 
+import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -34,7 +35,7 @@ public class ProjectPropertyPage extends PropertyPage {
 	 */
 	public ProjectPropertyPage() {
 		super();
-		propertyManager = new CFMLPropertyManager();
+		propertyManager = SnippetPlugin.getDefault().getPropertyManager();
 		
 		this.propStore = new ProjectPropertyStore();
 		DEFAULT_SNIPPETS_PATH = propertyManager.defaultSnippetsPath();

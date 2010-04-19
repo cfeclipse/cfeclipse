@@ -24,71 +24,144 @@
  */
 package org.cfeclipse.cfml.snippets.properties;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 
+import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceManager;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.ui.IWorkbenchPartSite;
+import org.eclipse.ui.ide.ResourceUtil;
+import org.eclipse.ui.internal.Workbench;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author Stephen Milligan
- *
- * This controls the properies for the per project settings
  * 
- * TODO: We should put things like project mapping that the open new browser works with
+ *         This controls the properies for the per project settings
+ * 
+ *         TODO: We should put things like project mapping that the open new
+ *         browser works with
  */
 public class CFMLPropertyManager {
-	//private PreferenceStore store;
+	// private PreferenceStore store;
 	private CFMLPreferenceManager preferenceManager;
-	
-	public CFMLPropertyManager() 
-	{
+	/** The list of items that are listenening for property changes */
+	private ArrayList listeners;
+
+	public CFMLPropertyManager() {
 		super();
-		//this.store = CFMLPlugin.getDefault().getPropertyStore();
-	
-		try 
-		{
-			//store.load();
+		// this.store = CFMLPlugin.getDefault().getPropertyStore();
+
+		try {
+			// store.load();
+		} catch (Exception e) {
+			// System.err.println("CFMLPropertyManager::CFMLPropertyManager() - Couldn't load property store");
+			// e.printStackTrace();
 		}
-		catch (Exception e) 
-		{
-			//System.err.println("CFMLPropertyManager::CFMLPropertyManager() - Couldn't load property store");
-			//e.printStackTrace();
-		} 
-		this.preferenceManager = new CFMLPreferenceManager();
+		this.preferenceManager = SnippetPlugin.getDefault().getPreferenceManager();
+		this.listeners = new ArrayList();
 	}
-	
-	public IPreferenceStore getStore(IProject project)
-	{
+
+	public IPreferenceStore getStore(IProject project) {
 		return new ProjectPropertyStore(project);
 	}
-	
+
 	public void initializeDefaultValues(IProject project) {
 		IPreferenceStore store = new ProjectPropertyStore(project);
-        store.setDefault(CFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
+		store.setDefault(CFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
 	}
-		
+
 	public String snippetsPath(IProject project) {
 		IPreferenceStore store = new ProjectPropertyStore(project);
-		return store.getString(CFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
+		String snippetsPath = store.getString(CFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
+		if(snippetsPath.length() == 0) {
+			snippetsPath = preferenceManager.snippetsPath();
+			if(snippetsPath.length() == 0) {				
+				return defaultSnippetsPath();
+			}			
+		}
+		return snippetsPath;
 	}
-	
 
 	public String defaultSnippetsPath() {
-		return preferenceManager.snippetsPath();
+		return preferenceManager.getPluginStateLocation();
 	}
-	
+
+	public String getSnippetsPath() {
+		IResource currentResource = ResourceUtil.getResource(Workbench.getInstance().getActiveWorkbenchWindow()
+				.getActivePage().getActiveEditor().getEditorInput());
+		return snippetsPath(currentResource.getProject());
+	}
+
 	public void setSnippetsPath(String path, IProject project) {
 		IPreferenceStore store = new ProjectPropertyStore(project);
-		store.setValue(CFMLPreferenceConstants.P_SNIPPETS_PATH,path);
+		firePropertyChangeEvent(store, CFMLPreferenceConstants.P_SNIPPETS_PATH, store
+				.getString(CFMLPreferenceConstants.P_SNIPPETS_PATH), path);
+		store.setValue(CFMLPreferenceConstants.P_SNIPPETS_PATH, path);
 	}
-				
-	public void setComponentRoot(String root, IProject project){
+
+	public void setComponentRoot(String root, IProject project) {
 		IPreferenceStore store = new ProjectPropertyStore(project);
 		store.setValue("componentRoot", root);
-	
+
 	}
+
+	protected IStructuredSelection getSelection() {
+		IWorkbenchPartSite site = Workbench.getInstance().getActiveWorkbenchWindow()
+		.getActivePage().getActivePart().getSite();
+		if (site != null) {
+			final ISelection partSelection = site
+					.getSelectionProvider().getSelection();
+			if (partSelection != null) {
+				if (partSelection instanceof IStructuredSelection) {
+					return (IStructuredSelection) partSelection;
+				} else if (partSelection instanceof ITextSelection) {
+					IResource resource = ResourceUtil.getResource(site.getWorkbenchWindow().getActivePage()
+							.getActiveEditor().getEditorInput());
+					return new StructuredSelection(resource);
+				}
+			}
+		}
+		return null;
+	}	
 	
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.IPreferenceStore#addPropertyChangeListener
+	 * (org.eclipse.jface.util.IPropertyChangeListener)
+	 */
+	public void addPropertyChangeListener(IPropertyChangeListener listener) {
+		listeners.add(listener);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.jface.preference.IPreferenceStore#firePropertyChangeEvent
+	 * (java.lang.String, java.lang.Object, java.lang.Object)
+	 */
+	public void firePropertyChangeEvent(Object srcObj, String name, Object oldValue, Object newValue) {
+		Iterator listenerIter = this.listeners.iterator();
+		PropertyChangeEvent event = new PropertyChangeEvent(srcObj, name, oldValue, newValue);
+
+		while (listenerIter.hasNext()) {
+			IPropertyChangeListener listener = (IPropertyChangeListener) listenerIter.next();
+			listener.propertyChange(event);
+		}
+	}
+
 }

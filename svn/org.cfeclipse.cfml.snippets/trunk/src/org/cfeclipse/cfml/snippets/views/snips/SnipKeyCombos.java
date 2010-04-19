@@ -32,7 +32,10 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.properties.CFMLPropertyManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
 
 
 /**
@@ -46,12 +49,15 @@ public class SnipKeyCombos {
     private static String HEADER_TEXT = "These key combos are used by the cfeclipse plugin.";
     
     public SnipKeyCombos() {
-    	CFMLPropertyManager propertyManager = new CFMLPropertyManager();
-		this.snippetFilePath = new File(propertyManager.defaultSnippetsPath()).toString();
+		CFMLPropertyManager propertyManager = SnippetPlugin.getDefault().getPropertyManager();
+		this.snippetFilePath = new File(propertyManager.getSnippetsPath()).toString();
 		this.keyComboFilePath = this.snippetFilePath + "/keyCombos.properties";
-		
        
         loadKeyCombos();
+    }
+    
+    public String getKeyCombosFilePath() {
+    	return this.keyComboFilePath;
     }
 
     private void loadKeyCombos() {
@@ -65,6 +71,8 @@ public class SnipKeyCombos {
 	            keyCombos.store(output,HEADER_TEXT);
             }
             catch (IOException ex) {
+        		MessageBox dialog = new MessageBox(null,SWT.ICON_ERROR);
+        		dialog.setMessage("Error opening keyCombos : "+this.keyComboFilePath);
                 ex.printStackTrace();
             }
         }

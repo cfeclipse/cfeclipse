@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceManager;
+import org.cfeclipse.cfml.snippets.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.snippets.util.CFPluginImages;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -26,7 +28,11 @@ public class SnippetPlugin extends AbstractUIPlugin {
 	private PreferenceStore propertyStore;
 	/** The bundle of resources for the plugin */
 	private ResourceBundle resourceBundle;
-	
+
+	private CFMLPropertyManager fPropertyManager;
+
+	private CFMLPreferenceManager fPreferenceManager;
+
 	/**
 	 * The constructor
 	 */
@@ -43,27 +49,38 @@ public class SnippetPlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		CFPluginImages.initCFPluginImages();
 		this.propertyStore = new PreferenceStore(SnippetPlugin.getDefault().getStateLocation().toString()
 				+ "/properties.ini");
-		// startup the image registry
-		CFPluginImages.initCFPluginImages();
+		fPreferenceManager = new CFMLPreferenceManager();
+		try {
+			fPropertyManager = new CFMLPropertyManager();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
 
 		String defaultSnippetPath = SnippetPlugin.getDefault().getStateLocation().toString() + "/snippets";
-
 		File f = new File(defaultSnippetPath);
 		if (!f.exists()) {
 			f.mkdir();
-		}		
+		}
 		plugin = this;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
@@ -72,7 +89,7 @@ public class SnippetPlugin extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static SnippetPlugin getDefault() {
@@ -80,10 +97,11 @@ public class SnippetPlugin extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
+	 * Returns an image descriptor for the image file at the given plug-in
+	 * relative path
+	 * 
+	 * @param path
+	 *            the path
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
@@ -99,6 +117,20 @@ public class SnippetPlugin extends AbstractUIPlugin {
 
 	public PreferenceStore getPropertyStore() {
 		return this.propertyStore;
+	}
+
+	public CFMLPropertyManager getPropertyManager() {
+		return fPropertyManager;
+	}
+
+	public CFMLPreferenceManager getPreferenceManager() {
+		return fPreferenceManager;
+	}
+
+	protected void initializeDefaultPluginPreferences() {
+
+		fPreferenceManager.initializeDefaultValues();
+
 	}
 
 }

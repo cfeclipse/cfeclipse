@@ -38,7 +38,7 @@
 		</contexts>
 	</extension>
 
-	<!-- Actions -->
+	<!-- Actions 
 	<extension point="org.eclipse.ui.popupMenus">
 		<viewerContribution
 			id="org.eclipse.ui.articles.action.contribution.popup.editor"
@@ -46,8 +46,8 @@
 			<action id="org.eclipse.ui.articles.action.contribution.editor.action1"
 				enablesFor="*" label="%snippets.insertsnippet.action.label" icon="icons/ctool16/insertsnip.gif"
 				menubarPath="additions"
-               	definitionId="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippet"				
-				class="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippetAction">
+				definitionId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+				class="org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand">
 			</action>
 		</viewerContribution>
 	</extension>
@@ -57,8 +57,8 @@
 			<action id="org.eclipse.ui.articles.action.contribution.editor.action1"
 				enablesFor="*" label="%snippets.insertsnippet.action.label" icon="icons/ctool16/insertsnip.gif"
 				menubarPath="additions"
-               	definitionId="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippet"				
-				class="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippetAction">
+				definitionId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+				class="org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand">
 			</action>
 		</editorContribution>
 	</extension>
@@ -72,15 +72,34 @@
 				<separator name="snippetsGroup">
 				</separator>
 			</menu>
-			<action id="org.eclipse.ui.articles.action.contribution.editor.action1"
+			<action id="org.cfeclipse.cfml.snippets.InsertSnippetCommand"
 				enablesFor="*" label="%snippets.insertsnippet.action.label" icon="icons/ctool16/insertsnip.gif"
 				menubarPath="additions"
-               	definitionId="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippet"				
-				class="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippetAction">
+				definitionId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+				class="org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand">
 			</action>
 		</actionSet>
 	</extension>
+-->
+	<extension point="org.eclipse.ui.menus">
 
+<menuContribution
+      locationURI="toolbar:org.eclipse.ui.main.toolbar">
+   <toolbar
+         id="com.eclipse-tips.commands.toolbar1">
+      <command
+            commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+            id="com.eclipse-tips.commands.someCommandInToolBar">
+      </command>
+   </toolbar>
+</menuContribution>
+</extension>
+
+	<!-- Command handlers -->
+	<extension point="org.eclipse.ui.handlers">
+		<handler commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+			class="org.cfeclipse.cfml.snippets.handlers.SnippetActionHandler" />
+	</extension>
 
 	<!-- Commands -->
 	<extension point="org.eclipse.ui.commands">
@@ -90,8 +109,12 @@
 		<!-- insert a snippet -->
 		<command name="%insertsnippet.command.name" description="%snippets.insertsnippet.command.description"
 			categoryId="org.cfeclipse.cfml.snippets.commandCategory"
-			id="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippet">
+			id="org.cfeclipse.cfml.snippets.commands.InsertSnippet">
 		</command>
+	</extension>
+	<extension point="org.eclipse.ui.commandImages">
+		<image commandId="com.eclipse-tips.commands.someCommand" icon="icons/sample.gif">
+		</image>
 	</extension>
 	<extension point="org.eclipse.ui.bindings">
 		<!--
@@ -106,15 +129,13 @@
 
 		<!-- auto comment -->
 		<key sequence="M1+M2+I"
-			commandId="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippet"
+			commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
 			contextId="org.eclipse.ui.textEditorScope" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
 		</key>
-  <key
-        commandId="org.cfeclipse.cfml.snippets.editors.actions.InsertSnippet"
-        contextId="org.eclipse.jdt.ui.javaEditorScope"
-        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-        sequence="M1+M2+I">
-  </key>
+		<key commandId="org.cfeclipse.cfml.snippets.commands.InsertSnippet"
+			contextId="org.eclipse.jdt.ui.javaEditorScope" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			sequence="M1+M2+I">
+		</key>
 	</extension>
 
 </plugin>

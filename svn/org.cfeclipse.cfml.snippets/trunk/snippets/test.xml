@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <snippet filetemplate="false" extension="cfm">
 <name>test</name>
-<help>tesdt</help>
+<help>test</help>
 <starttext><![CDATA[tesdt	=]]></starttext>
 <endtext><![CDATA[test]]></endtext>
 </snippet>

@@ -1,5 +1,6 @@
 package org.cfeclipse.cfml.snippets.handlers;
 
+import org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -13,17 +14,8 @@ public class SnippetActionHandler extends AbstractHandler {
 	 */
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		String actionClass = event
-				.getParameter("org.eclipse.egit.ui.command.action.class");
-		try {
-			java.lang.reflect.Constructor co;
-			co = Class.forName(actionClass).getConstructor();
-			IEditorActionDelegate action = (IEditorActionDelegate) co.newInstance();
-			action.run(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		InsertSnippetCommand snippetCommand = new InsertSnippetCommand();
+		return snippetCommand.execute(event);
 	}
 
 }

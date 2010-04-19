@@ -143,13 +143,14 @@ public class SnipTreeView extends ViewPart
 		super();
 	
 		
-		propertyManager = new CFMLPropertyManager();
+		propertyManager = SnippetPlugin.getDefault().getPropertyManager();
 		// By default we want to use cfeclipse style snippets
 		snippetType = CFECLIPSE_SNIP_TYPE;
 
 		// This ensures that we are notified when the properties are saved
-		SnippetPlugin.getDefault().getPropertyStore().addPropertyChangeListener(this);
-		snipBase = new Path(propertyManager.defaultSnippetsPath());
+		SnippetPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
+		propertyManager.addPropertyChangeListener(this);
+		snipBase = new Path(propertyManager.getSnippetsPath());
 		
 
 		if(tmpAction == null)
@@ -243,7 +244,7 @@ public class SnipTreeView extends ViewPart
 		
 		Object[] snipex = new Object[0];
 		
-		CFMLPreferenceManager pm = new CFMLPreferenceManager();
+		CFMLPreferenceManager pm = SnippetPlugin.getDefault().getPreferenceManager();
 		
 		for(int i = 0; i < prefKeys.length; i++ ) {
 			
@@ -692,8 +693,8 @@ public class SnipTreeView extends ViewPart
 							
 					}
 				}
-		
-		treeViewer.setInput(getRootInput());		
+		snipBase = new Path(propertyManager.getSnippetsPath());		
+		treeViewer.setInput(getRootInput());
 	}
 	
 	
@@ -826,12 +827,8 @@ public class SnipTreeView extends ViewPart
     {
 
     	if (event.getProperty().equals(CFMLPreferenceConstants.P_SNIPPETS_PATH)) {
-    		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
-			snipBase = new Path(propertyManager.defaultSnippetsPath());
-    		treeViewer.setInput(getRootInput());	
-    		
-    		
-    		
+			snipBase = new Path(event.getNewValue().toString());
+    		treeViewer.setInput(getRootInput());    		    		    		
     	}
     }
 	/*

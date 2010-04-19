@@ -39,7 +39,6 @@ public class CFMLPreferenceManager {
 
 	public CFMLPreferenceManager() {
 		store = SnippetPlugin.getDefault().getPreferenceStore();
-		initializeDefaultValues();
 	}
 
 	public boolean getBooleanPref(String prefKey) {
@@ -125,13 +124,12 @@ public class CFMLPreferenceManager {
 		return store.getString(CFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
 	}
 
-	public String defaultSnippetsPath() {
+	public String getPluginStateLocation() {
 		return SnippetPlugin.getDefault().getStateLocation().toString();
 	}
 
 	public int tabWidth() {
-		// System.out.println("Tab width retrieved as: " +
-		// Integer.parseInt(store.getString(ICFMLPreferenceConstants.P_TAB_WIDTH).trim()));
+		 System.out.println("Tab width retrieved as: " +store.getInt(CFMLPreferenceConstants.P_TAB_WIDTH));
 		return Integer.parseInt(store.getString(
 				CFMLPreferenceConstants.P_TAB_WIDTH).trim());
 	}

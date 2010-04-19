@@ -22,11 +22,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package org.cfeclipse.cfml.snippets.editors.actions;
+package org.cfeclipse.cfml.snippets.commands;
 
+import org.cfeclipse.cfml.snippets.util.Encloser;
 import org.cfeclipse.cfml.snippets.views.snips.SnipKeyCombos;
 import org.cfeclipse.cfml.snippets.views.snips.SnipReader;
 import org.cfeclipse.cfml.snippets.views.snips.SnipVarParser;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.FindReplaceDocumentAdapter;
@@ -35,6 +39,8 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
@@ -48,21 +54,20 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @author Stephen Milligan
  * 
  */
-public class InsertSnippetAction extends Encloser implements IWorkbenchWindowActionDelegate, IEditorActionDelegate {
+public class InsertSnippetCommand extends AbstractHandler {
 
-	protected ITextEditor editor = null;
 	protected String start = "";
 	protected String end = "";
 	
-	public InsertSnippetAction() {
+	public InsertSnippetCommand() {
 		super();
 	}
 
 	// used from the toolbars
-	public InsertSnippetAction(String triggerText, Shell shell) {
+	public InsertSnippetCommand(String triggerText, Shell shell) {
 
 		SnipKeyCombos keyCombos = new SnipKeyCombos();
-		editor = (ITextEditor) Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		ITextEditor editor = (ITextEditor) Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
 		ISelection sel = editor.getSelectionProvider().getSelection();
 
@@ -70,8 +75,8 @@ public class InsertSnippetAction extends Encloser implements IWorkbenchWindowAct
 
 		SnipReader snipReader = new SnipReader();
 		IFile activeFile = null;
-		if (this.editor.getEditorInput() instanceof IFileEditorInput) {
-			activeFile = ((IFileEditorInput) this.editor.getEditorInput()).getFile();
+		if (editor.getEditorInput() instanceof IFileEditorInput) {
+			activeFile = ((IFileEditorInput) editor.getEditorInput()).getFile();
 		}
 
 		snipReader.read(keyCombos.getSnippetFolder() + fileName);
@@ -84,11 +89,8 @@ public class InsertSnippetAction extends Encloser implements IWorkbenchWindowAct
 
 	}
 
-	public void run() {
-		run(null);
-	}
-
-	public void run(IAction action) {
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		ITextEditor editor = (ITextEditor) Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		if (editor != null && editor.isEditable()) {
 			SnipKeyCombos keyCombos = new SnipKeyCombos();
 
@@ -155,8 +157,8 @@ public class InsertSnippetAction extends Encloser implements IWorkbenchWindowAct
 				SnipReader snipReader = new SnipReader();
 
 				IFile activeFile = null;
-				if (this.editor.getEditorInput() instanceof IFileEditorInput) {
-					activeFile = ((IFileEditorInput) this.editor.getEditorInput()).getFile();
+				if (editor.getEditorInput() instanceof IFileEditorInput) {
+					activeFile = ((IFileEditorInput) editor.getEditorInput()).getFile();
 				}
 
 				snipReader.read(fileName);
@@ -181,9 +183,9 @@ public class InsertSnippetAction extends Encloser implements IWorkbenchWindowAct
 				int finalCursorOffset = -1;
 
 				for (int i = 0; i < loopcount; i++) {
-					start = SnipVarParser.parse(snipReader.getSnipStartBlock(), activeFile, this.editor.getSite()
+					start = SnipVarParser.parse(snipReader.getSnipStartBlock(), activeFile, editor.getSite()
 							.getShell());
-					end = SnipVarParser.parse(snipReader.getSnipEndBlock(), activeFile, this.editor.getSite()
+					end = SnipVarParser.parse(snipReader.getSnipEndBlock(), activeFile, editor.getSite()
 							.getShell());
 					if (start == null || end == null) {
 						snippet = null;
@@ -193,8 +195,8 @@ public class InsertSnippetAction extends Encloser implements IWorkbenchWindowAct
 					}
 
 					if (snippet != null && snippet.length() > 0) {
-
-						this.enclose(doc, (ITextSelection) sel, snippet, "");
+						Encloser encloser = new Encloser();
+						encloser.enclose(doc, (ITextSelection) sel, snippet, "");
 						// move the cursor to before the end of the new insert
 						int offset = ((ITextSelection) sel).getOffset();
 						offset += ((ITextSelection) sel).getLength();
@@ -216,6 +218,11 @@ public class InsertSnippetAction extends Encloser implements IWorkbenchWindowAct
 						}
 
 						editor.setHighlightRange(offset, 0, true);
+					} else {
+			    		MessageBox dialog = new MessageBox(editor.getSite().getShell(),SWT.ICON_ERROR);
+			    		dialog.setMessage("No key combo specified for : "+trigger + "in " + keyCombos.getKeyCombosFilePath());
+			    		dialog.open();
+						
 					}
 				}
 				if (finalCursorOffset > 0) {
@@ -223,31 +230,7 @@ public class InsertSnippetAction extends Encloser implements IWorkbenchWindowAct
 				}
 			}
 		}
-	}
-
-	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		// System.err.println(targetEditor);
-		// System.out.println( "Changin (" + start + ")(" + end + ")" );
-		if (targetEditor instanceof ITextEditor) {
-			editor = (ITextEditor) targetEditor;
-		}
-	}
-
-	public void selectionChanged(IAction action, ISelection selection) {
-		if (editor != null) {
-			setActiveEditor(null, editor.getSite().getPage().getActiveEditor());
-		}
-	}
-
-	public void dispose() {
-	}
-
-	public void init(IWorkbenchWindow window) {
-		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
-		if (activeEditor instanceof ITextEditor) {
-			editor = (ITextEditor) activeEditor;
-		}
-
+		return null;
 	}
 
 }
