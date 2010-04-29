@@ -158,6 +158,9 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 
 	public static final String FORMATTER_CONDENSE_TAGS = "formatter_condense_tags";
 
+	public static final String TASK_TAGS = "task_tags";
+	public static final String TASK_TAGS_PRIORTIES = "task_tags_priorities";
+	public static final String TASK_TAGS_PRIORTIES_LIST = "task_tags_priorities_list";
 
 	/**
 	 * Sets the default values for the preferences managed by {@link EditorPreferencePage}:
@@ -232,6 +235,9 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(FORMATTER_CHANGE_TAG_CASE_UPPER, false);
 		store.setDefault(FORMATTER_CHANGE_TAG_CASE_LOWER, true);		
 		
+		store.setDefault(TASK_TAGS, "TODO");
+		store.setDefault(TASK_TAGS_PRIORTIES, 1);		
+		store.setDefault(TASK_TAGS_PRIORTIES_LIST, "LOW,NORMAL,HIGH");		
 	}
 	
 	

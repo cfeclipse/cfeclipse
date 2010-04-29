@@ -32,8 +32,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.parser.docitems.CFCommentItem;
+import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.ui.texteditor.MarkerUtilities;
@@ -48,6 +52,7 @@ import org.eclipse.ui.texteditor.MarkerUtilities;
 public class CommentParser {
 
     private ArrayList CFCommentList; 
+	IPreferenceStore fPrefs = CFMLPlugin.getDefault().getPreferenceStore();
     
     private CFCommentItem comment; 
     private IResource resource = null;
@@ -272,42 +277,50 @@ public class CommentParser {
     }
     
     
-    public void setTaskMarkers() {
-        Iterator i = CFCommentList.iterator();
-        
-        int taskLine;
-        
-        while (i.hasNext()) {
-            CFCommentItem comment = (CFCommentItem)i.next();
-            
-            Pattern markerPattern = Pattern.compile("TODO[^A-Za-z]",Pattern.CASE_INSENSITIVE);
-            
-            String[] lines = comment.getContents().split("[\\n]");
-            
-            for (int line = 0; line < lines.length; line++) {
-                Matcher matcher = markerPattern.matcher(lines[line]);
-                
-                if (matcher.find()) {
-                    try {
-	                    Map attrs = new HashMap();
-	                    MarkerUtilities.setLineNumber(attrs, comment.getLineNumber()+line + 1);
-	                    
-                        String message = lines[line].substring(matcher.start(),lines[line].length());
-	                    MarkerUtilities.setMessage(attrs, message);
-	                    MarkerUtilities.createMarker(resource,attrs,"org.cfeclipse.cfml.todomarker");
-	                    
-	                    
-	                    //System.out.println("Marker added for " + comment.getContents());
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            
-        }
-    }
-    
+	public void setTaskMarkers() {
+		Iterator i = CFCommentList.iterator();
+
+		int taskLine;
+
+		String[] tasktags = fPrefs.getString(EditorPreferenceConstants.TASK_TAGS).split(",");
+		String[] priorities = fPrefs.getString(EditorPreferenceConstants.TASK_TAGS_PRIORTIES).split(",");
+
+		while (i.hasNext()) {
+			CFCommentItem comment = (CFCommentItem) i.next();
+
+			for (int x = 0; x < tasktags.length; x++) {
+				if (tasktags[x].length() != 0) {
+
+					Pattern markerPattern = Pattern.compile(tasktags[x] + "[^A-Za-z]", Pattern.CASE_INSENSITIVE);
+
+					String[] lines = comment.getContents().split("[\\n]");
+
+					for (int line = 0; line < lines.length; line++) {
+						Matcher matcher = markerPattern.matcher(lines[line]);
+
+						if (matcher.find()) {
+							try {
+								if (priorities[x].length() == 0) {
+									priorities[x] = "0";
+								}
+								Map attrs = new HashMap();
+								MarkerUtilities.setLineNumber(attrs, comment.getLineNumber() + line + 1);
+								attrs.put(IMarker.PRIORITY, Integer.parseInt(priorities[x]));
+								String message = lines[line].substring(matcher.start(), lines[line].length());
+								MarkerUtilities.setMessage(attrs, message);
+								MarkerUtilities.createMarker(resource, attrs, "org.cfeclipse.cfml.todomarker");
+
+								// System.out.println("Marker added for " +
+								// comment.getContents());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}
+		}
+	}   
     
     
 }

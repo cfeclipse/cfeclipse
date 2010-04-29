@@ -1689,6 +1689,12 @@
             id="org.cfeclipse.cfml.preferences.AnnotationPreferencePage"/>
 
       <page
+            class="org.cfeclipse.cfml.preferences.TaskTagPreferencePage"
+            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
+            name="Task Tags"
+            id="org.cfeclipse.cfml.preferences.TaskTagPreferencePage"/>
+
+      <page
             name="%page.name.textselection"
             class="org.cfeclipse.cfml.preferences.TextSelectionPreferencePage"
             category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
@@ -1971,7 +1977,7 @@
 
    <extension point="org.eclipse.core.resources.markers" 
    			  id="todomarker" 
-   			  name="CFEclipse TODO Task">
+   			  name="CFEclipse Task Tag">
    	<super type="org.eclipse.core.resources.taskmarker"/>
    	<persistent value="true"/>
    	<attribute name="priority"/>
