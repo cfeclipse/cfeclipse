@@ -602,9 +602,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			// Opening / Closing Brackets
 			case '[':
 				if (! this.isAutoClose_Brackets()) {
-					if (doc.getLength() > docCommand.offset
-							&& doc.getChar(docCommand.offset + 1) == '>')
-						stepThrough(docCommand);
+					return;
 				}
 				else {
 					handleOpenBracket(docCommand);
@@ -618,9 +616,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			// Opening / Closing Parens
 			case '(':
 				if (! this.isAutoClose_Parens()) {
-					if (doc.getLength() > docCommand.offset
-							&& doc.getChar(docCommand.offset + 1) == '>')
-						stepThrough(docCommand);
+					return;
 				}
 				else {
 					handleOpenParen(docCommand);
