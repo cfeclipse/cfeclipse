@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -82,6 +83,11 @@ public class TaskTagPreferencePage extends AbstractCFEditorPreferencePage {
 		// Add a button to remove the task tag
 		Button removeTaskTag = new Button(buttonGroup, SWT.PUSH);
 		removeTaskTag.setText("Remove Task Tag");
+
+		Label label = new Label(composite, SWT.NONE);
+		label.setText("Task Tags use this regular expression: Task Tag + [^A-Za-z]");
+		label = new Label(composite, SWT.NONE);
+		label.setText("To escape characters, use \"\\\"  --   Ex: \\[fun\\]");
 
 		// Add the TableViewer
 		final TableViewer tv = new TableViewer(composite, SWT.FULL_SELECTION);
