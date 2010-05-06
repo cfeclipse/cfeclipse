@@ -174,7 +174,9 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	            && position instanceof CFEPartition) {
 	        //System.out.println("Removing position " + position.offset + ":" + Integer.toString(position.offset + position.length) + ((CFEPartition)position).getType());
 	    }
-	    super.removePosition(category,position);
+	    if(position != null) {	    	
+	    	super.removePosition(category,position);
+	    }
 	}
 	
 	/**
