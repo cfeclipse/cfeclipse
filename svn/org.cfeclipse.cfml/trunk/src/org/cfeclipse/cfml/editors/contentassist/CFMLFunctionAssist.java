@@ -222,7 +222,9 @@ public class CFMLFunctionAssist extends AssistContributor
 					    activeParam = p;
 						extraInfo += "<b>";
 					}
-					extraInfo += p.toString() + delimiter;
+					if(p != null) {
+						extraInfo += p.toString() + delimiter;
+					}
 					
 					if (x == this.paramsSoFar) {
 						extraInfo += "</b>";
