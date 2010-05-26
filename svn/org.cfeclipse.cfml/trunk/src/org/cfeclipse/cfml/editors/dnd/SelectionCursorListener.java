@@ -786,7 +786,9 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 
         private void updateAnnotations(IAnnotationModel annotationModel, Map annotationMap) {
             if (annotationModel instanceof IAnnotationModelExtension) {
-            	((IAnnotationModelExtension)annotationModel).replaceAnnotations(fOccurrenceAnnotations, annotationMap);
+            	if(fOccurrenceAnnotations != null && fOccurrenceAnnotations.length > 0) {            		
+            		((IAnnotationModelExtension)annotationModel).replaceAnnotations(fOccurrenceAnnotations, annotationMap);
+            	}
             } else {
             	removeOccurrenceAnnotations();
             	Iterator iter= annotationMap.entrySet().iterator();
