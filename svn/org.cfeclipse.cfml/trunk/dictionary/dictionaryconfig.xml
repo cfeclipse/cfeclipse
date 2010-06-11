@@ -33,39 +33,49 @@
 <dictionary_config>
 	<dictionary id="CF_DICTIONARY">
 		<version key="ColdFusion9" label="ColdFusion 9">
-            <grammar location="cf9.xml" />            
+            <grammar location="cf9.xml" />
+			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
         </version>
 		<version key="cf8" label="ColdFusion MX 8">
 			<grammar location="cf8.xml" />
 			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
 		</version>
 		<version key="railo3" label="Railo 3">
 			<grammar location="railo3.xml" />
 			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
 		</version>
 		<version key="bd70" label="BlueDragon 7.0">
 			<grammar location="cfmlBD70.xml" />
 			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
 		</version>
 		<version key="cfmx701" label="ColdFusion MX 7.01">
 			<grammar location="cfml7.xml" />
 			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
 		</version>
 		<version key="cfmx61" label="ColdFusion MX 6.1">
 			<grammar location="cfml61.xml" />
 			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
 		</version>
 		<version key="cfmx5" label="ColdFusion 5.0">
 			<grammar location="cfml5.xml" />
 			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
 		</version>
 		<version key="bd621" label="BlueDragon 6.2.1">
 			<grammar location="cfmlBD621.xml" />
 			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
 		</version>
 		<version key="railo1" label="Railo 1.0">
 			<grammar location="railo1.xml" />
 			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
 		</version>
 	</dictionary>
 
