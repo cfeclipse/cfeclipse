@@ -215,8 +215,7 @@ public class InsertSnippetCommand extends AbstractHandler {
 
 					if (snippet != null && snippet.length() > 0) {
 						Encloser encloser = new Encloser();
-						//we pass the "forceAttempt" flag to the encloser because multi-part text editor selections will be "empty", unlike ITextEditor selections, so we need to force the enclosure to ignore its emptiness and proceed
-						encloser.enclose(doc, (ITextSelection) sel, snippet, "", true);
+						encloser.enclose(doc, (ITextSelection) sel, snippet, "");
 						// move the cursor to before the end of the new insert
 						int offset = ((ITextSelection) sel).getOffset();
 						offset += ((ITextSelection) sel).getLength();

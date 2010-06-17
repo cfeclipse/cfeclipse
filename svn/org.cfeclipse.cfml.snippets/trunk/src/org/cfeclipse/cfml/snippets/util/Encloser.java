@@ -37,9 +37,6 @@ import org.eclipse.jface.text.ITextSelection;
 public class Encloser 
 {
 	
-	public void enclose(IDocument doc, ITextSelection sel, String start, String end){
-		enclose(doc, sel, start, end, false);
-	}
 	/** 
 	 * Wraps the selection with the start and end string
 	 * @param doc the document this belongs to
@@ -47,49 +44,39 @@ public class Encloser
 	 * @param start the string to put before the selection
 	 * @param end the string to put before the selection
 	 */
-	public void enclose(IDocument doc, ITextSelection sel, String start, String end, boolean forceAttempt)
+	public void enclose(IDocument doc, ITextSelection sel, String start, String end)
 	{
 		try
 		{
-			System.out.println(sel.toString());
-			System.out.println(sel.getLength());
-			System.out.println(sel.getOffset());
-			if(!sel.isEmpty() || forceAttempt)
-			{
-				StringBuffer cmtpart = new StringBuffer();
+			StringBuffer cmtpart = new StringBuffer();
+		
+			int offset = sel.getOffset();
+			int len  = sel.getLength();
 			
-				int offset = sel.getOffset();
-				int len  = sel.getLength();
-				
-				if(start.length() <= 0 || end.length() <= 0)
-				{
-					len++;
-				}
-				
-				cmtpart.append(start);
-				// dont go past end of file.
-				if( offset >= doc.getLength() ) {
-					len = 0;
-				}
+			if(start.length() <= 0 || end.length() <= 0)
+			{
+				len++;
+			}
+			
+			cmtpart.append(start);
+			// dont go past end of file.
+			if( offset >= doc.getLength() ) {
+				len = 0;
+			}
 
-				// Copy the selection into a local var and then check to see if it
-				// is a whitespace character before appending.. if it is white space,
-				// set the length of the insert to 0 and don't bother appending the selection.				
-				// This seems to stop any corruption of the text editor buffer. Paul V.
-				String selection = doc.get(offset,len);
-				if(len == 1 && selection.matches("[ \t\n\r]")) {
-					len = 0;
-				} else {
-					cmtpart.append(selection);
-				}
-				cmtpart.append(end);
-				
-				doc.replace(offset, len, cmtpart.toString());
+			// Copy the selection into a local var and then check to see if it
+			// is a whitespace character before appending.. if it is white space,
+			// set the length of the insert to 0 and don't bother appending the selection.				
+			// This seems to stop any corruption of the text editor buffer. Paul V.
+			String selection = doc.get(offset,len);
+			if(len == 1 && selection.matches("[ \t\n\r]")) {
+				len = 0;
+			} else {
+				cmtpart.append(selection);
 			}
-			else{
-				System.out.println("Selection is empty: " + sel.getText());
-				
-			}
+			cmtpart.append(end);
+			
+			doc.replace(offset, len, cmtpart.toString());
 		}
 		catch(BadLocationException ble)
 		{
