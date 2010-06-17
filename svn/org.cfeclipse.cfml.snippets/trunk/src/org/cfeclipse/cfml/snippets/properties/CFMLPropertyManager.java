@@ -101,6 +101,9 @@ public class CFMLPropertyManager {
 	public String getSnippetsPath() {
 		IResource currentResource = ResourceUtil.getResource(Workbench.getInstance().getActiveWorkbenchWindow()
 				.getActivePage().getActiveEditor().getEditorInput());
+		if(currentResource == null) {
+			return defaultSnippetsPath();
+		}
 		return snippetsPath(currentResource.getProject());
 	}
 
