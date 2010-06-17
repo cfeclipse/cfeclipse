@@ -36,6 +36,10 @@ import org.eclipse.jface.text.ITextSelection;
  */
 public class Encloser 
 {
+	
+	public void enclose(IDocument doc, ITextSelection sel, String start, String end){
+		enclose(doc, sel, start, end, false);
+	}
 	/** 
 	 * Wraps the selection with the start and end string
 	 * @param doc the document this belongs to
@@ -43,11 +47,14 @@ public class Encloser
 	 * @param start the string to put before the selection
 	 * @param end the string to put before the selection
 	 */
-	public void enclose(IDocument doc, ITextSelection sel, String start, String end)
+	public void enclose(IDocument doc, ITextSelection sel, String start, String end, boolean forceAttempt)
 	{
 		try
 		{
-			if(!sel.isEmpty())
+			System.out.println(sel.toString());
+			System.out.println(sel.getLength());
+			System.out.println(sel.getOffset());
+			if(!sel.isEmpty() || forceAttempt)
 			{
 				StringBuffer cmtpart = new StringBuffer();
 			
@@ -78,6 +85,10 @@ public class Encloser
 				cmtpart.append(end);
 				
 				doc.replace(offset, len, cmtpart.toString());
+			}
+			else{
+				System.out.println("Selection is empty: " + sel.getText());
+				
 			}
 		}
 		catch(BadLocationException ble)

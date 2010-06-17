@@ -48,7 +48,10 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.internal.Workbench;
+import org.eclipse.ui.part.MultiPageEditor;
+import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -91,13 +94,23 @@ public class InsertSnippetCommand extends AbstractHandler {
 	}
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ITextEditor editor = (ITextEditor) Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		IEditorPart editorPart = HandlerUtil.getActiveEditor(event);
+		Shell shell = editorPart.getSite().getShell();
+		ITextEditor editor = null;
+		
+		if(editorPart instanceof ITextEditor){
+			editor = (ITextEditor)editorPart;
+		}else if( editorPart instanceof MultiPageEditorPart){
+			editor = (ITextEditor)editorPart.getAdapter(ITextEditor.class);
+		}
+		ITextSelection sel = (ITextSelection)editor.getSelectionProvider().getSelection();		
+		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+		
 		if (editor != null && editor.isEditable()) {
 			SnipKeyCombos keyCombos = new SnipKeyCombos();
 
 			String sequence = "";
-			IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
-			ISelection sel = editor.getSelectionProvider().getSelection();
+
 
 			int cursorOffset = ((ITextSelection) sel).getOffset();
 			int lastSpaceOffset = -1;
@@ -163,7 +176,7 @@ public class InsertSnippetCommand extends AbstractHandler {
 				}
 				if(fileName == null) {
 					// nasty nasty hack to tell the user no snippet found
-		    		MessageBox dialog = new MessageBox(editor.getSite().getShell(),SWT.ICON_ERROR);
+		    		MessageBox dialog = new MessageBox(shell,SWT.ICON_ERROR);
 		    		dialog.setMessage("No snippet found for : "+sequence);
 		    		dialog.open();
 		    		return null;
@@ -191,10 +204,8 @@ public class InsertSnippetCommand extends AbstractHandler {
 				int finalCursorOffset = -1;
 
 				for (int i = 0; i < loopcount; i++) {
-					start = SnipVarParser.parse(snipReader.getSnipStartBlock(), activeFile, editor.getSite()
-							.getShell());
-					end = SnipVarParser.parse(snipReader.getSnipEndBlock(), activeFile, editor.getSite()
-							.getShell());
+					start = SnipVarParser.parse(snipReader.getSnipStartBlock(), activeFile, shell);
+					end = SnipVarParser.parse(snipReader.getSnipEndBlock(), activeFile, shell);
 					if (start == null || end == null) {
 						snippet = null;
 						break;
@@ -204,7 +215,8 @@ public class InsertSnippetCommand extends AbstractHandler {
 
 					if (snippet != null && snippet.length() > 0) {
 						Encloser encloser = new Encloser();
-						encloser.enclose(doc, (ITextSelection) sel, snippet, "");
+						//we pass the "forceAttempt" flag to the encloser because multi-part text editor selections will be "empty", unlike ITextEditor selections, so we need to force the enclosure to ignore its emptiness and proceed
+						encloser.enclose(doc, (ITextSelection) sel, snippet, "", true);
 						// move the cursor to before the end of the new insert
 						int offset = ((ITextSelection) sel).getOffset();
 						offset += ((ITextSelection) sel).getLength();
@@ -227,7 +239,7 @@ public class InsertSnippetCommand extends AbstractHandler {
 
 						editor.setHighlightRange(offset, 0, true);
 					} else {
-			    		MessageBox dialog = new MessageBox(editor.getSite().getShell(),SWT.ICON_ERROR);
+			    		MessageBox dialog = new MessageBox(shell,SWT.ICON_ERROR);
 			    		dialog.setMessage("No key combo specified for : "+trigger + "in " + keyCombos.getKeyCombosFilePath());
 			    		dialog.open();
 						
@@ -240,5 +252,6 @@ public class InsertSnippetCommand extends AbstractHandler {
 		}
 		return null;
 	}
+	
 
 }
