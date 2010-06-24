@@ -38,13 +38,17 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.link.ILinkedModeListener;
 import org.eclipse.jface.text.link.LinkedModeModel;
 import org.eclipse.jface.text.link.LinkedModeUI;
 import org.eclipse.jface.text.link.LinkedPosition;
 import org.eclipse.jface.text.link.LinkedPositionGroup;
+import org.eclipse.jface.text.link.LinkedModeUI.ExitFlags;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
@@ -125,6 +129,7 @@ public class WrapTagAction extends GenericEncloserAction implements IEditorActio
 			model.addLinkingListener(new EditorSynchronizer(editor));
 			LinkedModeUI ui = new EditorLinkedModeUI(model, viewer);
 			ui.setExitPosition(viewer, offset, 0, Integer.MAX_VALUE);
+			ui.setExitPolicy(new exitOnSpacePolicy());
 			ui.enter();
 			viewer.setSelectedRange(sel.getOffset()+1, 0);
 			//viewer.setSelectedRange(curRange.x,curRange.y);
@@ -140,6 +145,17 @@ public class WrapTagAction extends GenericEncloserAction implements IEditorActio
 		} else {
 			action.setEnabled(false);
 		}
+	}
+	/*
+	 * custom exit policy that exits when a space is detected
+	 */
+	public static class exitOnSpacePolicy implements org.eclipse.jface.text.link.LinkedModeUI.IExitPolicy {
+		public ExitFlags doExit(LinkedModeModel model, VerifyEvent event, int offset, int length) {
+			if (length == 0 && (event.character == ' ')) {
+				return new ExitFlags(ILinkedModeListener.EXIT_ALL, true);				
+			}
+			return null; // don't change behavior
+		}		
 	}
 
 	private void addPositionsToGroup(int offset, List positions, IDocument document, LinkedPositionGroup group) {
