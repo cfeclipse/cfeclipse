@@ -73,6 +73,7 @@ public class CFMLPreferencePage
 	DirectoryFieldEditor snippetsPathField;
 	/** combo field full off projects? */
 	Combo templateProjectsPathField;
+	private Button imageTooltipsCheckBox;
 	
 	public CFMLPreferencePage() {
 		super();
@@ -125,6 +126,9 @@ public class CFMLPreferencePage
         
         // File paths
         createFilePathGroup(defPanel);
+        
+        // Images tooltips
+        createImagesGroup(defPanel);
         
         // Template Sites
         
@@ -212,7 +216,28 @@ public class CFMLPreferencePage
        // templateProjectsPathField.setStringValue(preferenceManager.snippetsPath());
     }
 
+    private void createImagesGroup(Composite parent) {
+    	Group imagesComposite = new Group(parent, SWT.SHADOW_ETCHED_IN); 
+        GridLayout layout = new GridLayout();        
+        layout.numColumns = 3;              
+        imagesComposite.setLayout(layout);
+        GridData gridData =
+            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        gridData.horizontalSpan = 3;
+        imagesComposite.setLayoutData(gridData);        
+        
+        
+        imagesComposite.setText("Images"); //$NON-NLS-1$
+        
+        // Tabbed browsing
+        imageTooltipsCheckBox = createLabeledCheck(
+                "Show Image Tooltips (restart required)", //$NON-NLS-1$
+                preferenceManager.imageTooltips(), 
+				imagesComposite);
+                   
 
+    }
+    
     private IProject[] getProjects(){
     	IWorkspace workspace = CFMLPlugin.getWorkspace();
     	IProject[] projects = workspace.getRoot().getProjects();
@@ -309,6 +334,7 @@ public class CFMLPreferencePage
     protected void performDefaults() {
         super.performDefaults();
         tabbedBrowserCheckBox.setSelection(preferenceManager.defaultTabbedBrowser());
+        imageTooltipsCheckBox.setSelection(true);
         snippetsPathField.setStringValue(preferenceManager.defaultSnippetsPath());
         templateProjectsPathField.select(0);
     }
@@ -318,6 +344,7 @@ public class CFMLPreferencePage
         IPreferenceStore store = getPreferenceStore();
         store.setValue(CFMLPreferenceConstants.P_TABBED_BROWSER, String.valueOf(tabbedBrowserCheckBox.getSelection()));
         store.setValue(CFMLPreferenceConstants.P_SNIPPETS_PATH, snippetsPathField.getStringValue());
+        store.setValue(CFMLPreferenceConstants.P_IMAGE_TOOLTIPS, String.valueOf(imageTooltipsCheckBox.getSelection()));
         
         //Since from a combo we can only get the selection index, lets get the item from the array (plus one for the blank filled one)
         IProject[] projects = getProjects();

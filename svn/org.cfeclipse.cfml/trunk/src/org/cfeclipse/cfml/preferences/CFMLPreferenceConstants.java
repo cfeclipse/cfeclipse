@@ -41,7 +41,12 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
      */
     public static final String P_CFML_DICTIONARY_DEFAULT = "cfmx701";
 
-	/**
+    /** the default key to the dictionary to use in this project.
+     * @see DictionaryManager 
+     */
+    public static final String P_IMAGE_TOOLTIPS = "showImageTooltips";
+
+    /**
 	 * this is public because the browser uses it on errors 
 	 */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
@@ -62,6 +67,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_SNIPPETS_PATH,CFMLPlugin.getDefault().getStateLocation().toString()+"/snippets");
 		store.setDefault(P_PROJECT_URL,DEFAULT_PROJECT_URL);
 		store.setDefault(P_TABBED_BROWSER,false);
+		store.setDefault(P_IMAGE_TOOLTIPS,true);
 		store.setDefault(P_CFML_DICTIONARY,"cfml.xml");
 		store.setDefault(P_TEMPLATE_PROJECT_PATH, "");
 		

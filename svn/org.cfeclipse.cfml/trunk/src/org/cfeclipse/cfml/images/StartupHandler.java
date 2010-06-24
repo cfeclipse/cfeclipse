@@ -2,6 +2,8 @@ package org.cfeclipse.cfml.images;
 
 import java.lang.reflect.Method;
 
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -142,69 +144,72 @@ public class StartupHandler implements IStartup {
 	}
 
 	public void earlyStartup() {
-		Display.getDefault().asyncExec(new Runnable() {
-
-			public void run() {
-				Display.getDefault().addFilter(SWT.Show, new Listener() {
-
-					public void handleEvent(Event event) {
-						if (event.widget instanceof Composite) {
-							Composite cm = (Composite) event.widget;
-							rec(cm);
-						}
-					}
-
-					private void rec(Composite cm) {
-						Control[] children = cm.getChildren();
-						for (Control c : children) {
-							if (c instanceof Tree) {
-								Tree m = (Tree) c;
-								// final TreeViewer invoke = (TreeViewer) method
-								// .invoke(part);
-								final String name = this.getClass().getName();
-
-								final Object data = m.getData(name);
-								if (data == null) {
-
-									final ColumnViewerToolTipSupport ts = new MC(m, ToolTip.NO_RECREATE, false);
-									m.setData(name, ts);
-								}
-								// ColumnViewerToolTipSupport.enableFor(m);
-
-							} else if (c instanceof Composite) {
-								Composite m = (Composite) c;
-								rec(m);
+		if(CFMLPlugin.getDefault().getPreferenceStore().getBoolean(CFMLPreferenceConstants.P_IMAGE_TOOLTIPS)) {
+			
+			Display.getDefault().asyncExec(new Runnable() {
+				
+				public void run() {
+					Display.getDefault().addFilter(SWT.Show, new Listener() {
+						
+						public void handleEvent(Event event) {
+							if (event.widget instanceof Composite) {
+								Composite cm = (Composite) event.widget;
+								rec(cm);
 							}
 						}
-					}
-
-				});
+						
+						private void rec(Composite cm) {
+							Control[] children = cm.getChildren();
+							for (Control c : children) {
+								if (c instanceof Tree) {
+									Tree m = (Tree) c;
+									// final TreeViewer invoke = (TreeViewer) method
+									// .invoke(part);
+									final String name = this.getClass().getName();
+									
+									final Object data = m.getData(name);
+									if (data == null) {
+										
+										final ColumnViewerToolTipSupport ts = new MC(m, ToolTip.NO_RECREATE, false);
+										m.setData(name, ts);
+									}
+									// ColumnViewerToolTipSupport.enableFor(m);
+									
+								} else if (c instanceof Composite) {
+									Composite m = (Composite) c;
+									rec(m);
+								}
+							}
+						}
+						
+					});
+				}
+				
+			});
+			
+			final IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
+			PlatformUI.getWorkbench().addWindowListener(new IWindowListener() {
+				
+				public void windowActivated(IWorkbenchWindow window) {
+					
+				}
+				
+				public void windowClosed(IWorkbenchWindow window) {
+					
+				}
+				
+				public void windowDeactivated(IWorkbenchWindow window) {
+					
+				}
+				
+				public void windowOpened(IWorkbenchWindow window) {
+					StartupHandler.this.processWindow(window);
+				}
+				
+			});
+			for (final IWorkbenchWindow w : workbenchWindows) {
+				this.processWindow(w);
 			}
-
-		});
-
-		final IWorkbenchWindow[] workbenchWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
-		PlatformUI.getWorkbench().addWindowListener(new IWindowListener() {
-
-			public void windowActivated(IWorkbenchWindow window) {
-
-			}
-
-			public void windowClosed(IWorkbenchWindow window) {
-
-			}
-
-			public void windowDeactivated(IWorkbenchWindow window) {
-
-			}
-
-			public void windowOpened(IWorkbenchWindow window) {
-				StartupHandler.this.processWindow(window);
-			}
-
-		});
-		for (final IWorkbenchWindow w : workbenchWindows) {
-			this.processWindow(w);
 		}
 	}
 

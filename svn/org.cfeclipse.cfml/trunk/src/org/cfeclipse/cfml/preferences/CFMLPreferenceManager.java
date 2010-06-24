@@ -172,7 +172,9 @@ public class CFMLPreferenceManager {
 	}
 	
 	
-
+	public boolean imageTooltips() {
+	    return store.getBoolean(CFMLPreferenceConstants.P_IMAGE_TOOLTIPS);
+	}
 	
 	public String snippetsPath() {
 		return store.getString(CFMLPreferenceConstants.P_SNIPPETS_PATH).trim();
