@@ -29,8 +29,11 @@ public class ProjectPropertyPage extends PropertyPage {
 	private static final String SNIPPETS_PATH_PROPERTY = "snippetsPath";
 	private static String DEFAULT_SNIPPETS_PATH = "";
 	private static final String PROJECT_URL_TITLE = "Project URL:";
+	private static final String PROJECT_HELP_TITLE = "Project Help URL:";
 	private static final String PROJECT_URL_PROPERTY = CFMLPreferenceConstants.P_PROJECT_URL;
+	private static final String PROJECT_HELP_PROPERTY = CFMLPreferenceConstants.P_DEFAULT_HELP_URL;
 	private static final String DEFAULT_PROJECT_URL = "";
+	private static final String DEFAULT_HELP_URL = CFMLPreferenceConstants.DEFAULT_HELP_URL;
 	
 	private static final String CFML_DICTIONARY_TITLE = "&CFML Language Version";
 
@@ -40,6 +43,7 @@ public class ProjectPropertyPage extends PropertyPage {
 	
 	private DirectoryFieldEditor snippetsPathField;
 	private StringFieldEditor projectURLField;
+	private StringFieldEditor projectHelpURLField;
 	private StringFieldEditor projectComponentRootField;
 	private CFMLPropertyManager propertyManager;
 	private RadioGroupFieldEditor cfmlSyntaxField;
@@ -139,6 +143,25 @@ public class ProjectPropertyPage extends PropertyPage {
 		}
 	}
 
+	private void addHelpSection(Composite parent) {
+		Composite composite = createDefaultComposite(parent);
+
+
+		// Project URL field
+		projectHelpURLField = new StringFieldEditor("projectHelpURL",PROJECT_HELP_TITLE,composite);
+		try {
+			QualifiedName propertyName = new QualifiedName("", PROJECT_HELP_PROPERTY);
+			String projectHelpURL = ((IResource) getElement()).getPersistentProperty(propertyName);
+			if (projectHelpURL == null || projectHelpURL == "") {
+				projectHelpURL = propertyManager.defaultHelpURL();
+			}
+			projectHelpURLField.setStringValue(projectHelpURL);
+		} catch (CoreException e) {
+			projectHelpURLField.setStringValue(propertyManager.defaultHelpURL());
+		}
+	}
+	
+	
 	/**
 	 * The project language selection section
 	 * @param parent
@@ -179,6 +202,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		addPathSection(composite);
 		addSeparator(composite);
 		addSnippetsSection(composite);
+		addHelpSection(composite);
 		//addURLSection(composite);
 		//addComponentRootSection(composite);
 		addCFMLSyntaxSection(composite);
@@ -216,6 +240,11 @@ public class ProjectPropertyPage extends PropertyPage {
 				new QualifiedName("", SNIPPETS_PATH_PROPERTY),
 				snippetsPathField.getStringValue()
 			);
+			((IResource) getElement()).setPersistentProperty(
+					new QualifiedName("", PROJECT_HELP_PROPERTY),
+					projectHelpURLField.getStringValue()
+				);
+			propertyManager.setHelpURL(projectHelpURLField.getStringValue(),(IProject)getElement());
 			propertyManager.setSnippetsPath(snippetsPathField.getStringValue(),(IProject)getElement());
 		} 
 		catch (CoreException e) 

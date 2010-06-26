@@ -68,6 +68,7 @@ public class CFMLPropertyManager {
 		IPreferenceStore store = new ProjectPropertyStore(project);
         store.setDefault(CFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
         store.setDefault(CFMLPreferenceConstants.P_PROJECT_URL, preferenceManager.defaultProjectURL());
+        store.setDefault(CFMLPreferenceConstants.P_DEFAULT_HELP_URL, preferenceManager.defaultHelpURL());
 	}
 	
 	public String getCurrentDictionary(IFile file){
@@ -101,14 +102,27 @@ public class CFMLPropertyManager {
 		return store.getString(CFMLPreferenceConstants.P_PROJECT_URL).trim();
 	}
 	
+	public String helpURL(IProject project) {
+		IPreferenceStore store = new ProjectPropertyStore(project);
+		return store.getString(CFMLPreferenceConstants.P_DEFAULT_HELP_URL).trim();
+	}
+	
 	public String defaultProjectURL() {
-		
 		return preferenceManager.defaultProjectURL();
 	}
 	
 	public void setProjectURL(String path, IProject project) {
 		IPreferenceStore store = new ProjectPropertyStore(project);
 		store.setValue(CFMLPreferenceConstants.P_PROJECT_URL,path);
+	}
+	
+	public String defaultHelpURL() {		
+		return preferenceManager.defaultHelpURL();
+	}
+
+	public void setHelpURL(String url, IProject project) {
+		IPreferenceStore store = new ProjectPropertyStore(project);
+		store.setValue(CFMLPreferenceConstants.P_DEFAULT_HELP_URL,url);
 	}
 	
 	public void setComponentRoot(String root, IProject project){

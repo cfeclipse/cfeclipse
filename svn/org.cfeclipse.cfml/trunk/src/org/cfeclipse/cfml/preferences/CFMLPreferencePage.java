@@ -43,6 +43,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
@@ -74,6 +75,7 @@ public class CFMLPreferencePage
 	/** combo field full off projects? */
 	Combo templateProjectsPathField;
 	private Button imageTooltipsCheckBox;
+	private Text helpUrlTextbox;
 	
 	public CFMLPreferencePage() {
 		super();
@@ -82,7 +84,6 @@ public class CFMLPreferencePage
 		preferenceManager = new CFMLPreferenceManager();
 	}
 	
-
 	public void createControl(Composite parent) {
         super.createControl(parent);
     }
@@ -130,6 +131,9 @@ public class CFMLPreferencePage
         // Images tooltips
         createImagesGroup(defPanel);
         
+        // default help url
+        createHelpUrlGroup(defPanel);
+        
         // Template Sites
         
        // createTemplateSitesPathGroup(defPanel);
@@ -140,13 +144,9 @@ public class CFMLPreferencePage
         widgetSelected(selectionEvent);
     }
     
-    
     public void widgetSelected(SelectionEvent selectionEvent) {}
 
-    
 
-
-    
     private void createBrowserGroup(Composite parent) {
     	Group BrowserComposite = new Group(parent, SWT.SHADOW_ETCHED_IN); 
         GridLayout layout = new GridLayout();        
@@ -187,8 +187,7 @@ public class CFMLPreferencePage
         
         
         /** go and get the projects that are available, including a blank one */
-        
-        
+                
         templateProjectsPathField = new Combo(TemplateProjectsComposite, 10);
       
         templateProjectsPathField.add("");
@@ -208,8 +207,6 @@ public class CFMLPreferencePage
        
        //We need to find what has been selected in the combo box, getting the preference.
        templateProjectsPathField.select(selectedItem);
-       
-      
        
         
         //then set the value up 
@@ -236,6 +233,20 @@ public class CFMLPreferencePage
 				imagesComposite);
                    
 
+    }
+
+    private void createHelpUrlGroup(Composite parent) {
+    	Group helpComposite = new Group(parent, SWT.NONE); 
+        GridLayout layout = new GridLayout();        
+        layout.numColumns = 3;              
+        helpComposite.setLayout(layout);
+        GridData gridData =
+            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
+        gridData.horizontalSpan = 3;
+        helpComposite.setLayoutData(gridData);        
+        helpComposite.setText("Default help URL"); //$NON-NLS-1$
+        helpUrlTextbox = new Text(helpComposite, SWT.SHADOW_ETCHED_IN);
+        helpUrlTextbox.setText(preferenceManager.defaultHelpURL());
     }
     
     private IProject[] getProjects(){
@@ -336,6 +347,7 @@ public class CFMLPreferencePage
         tabbedBrowserCheckBox.setSelection(preferenceManager.defaultTabbedBrowser());
         imageTooltipsCheckBox.setSelection(true);
         snippetsPathField.setStringValue(preferenceManager.defaultSnippetsPath());
+        helpUrlTextbox.setText(preferenceManager.defaultHelpURL());
         templateProjectsPathField.select(0);
     }
 
@@ -345,6 +357,7 @@ public class CFMLPreferencePage
         store.setValue(CFMLPreferenceConstants.P_TABBED_BROWSER, String.valueOf(tabbedBrowserCheckBox.getSelection()));
         store.setValue(CFMLPreferenceConstants.P_SNIPPETS_PATH, snippetsPathField.getStringValue());
         store.setValue(CFMLPreferenceConstants.P_IMAGE_TOOLTIPS, String.valueOf(imageTooltipsCheckBox.getSelection()));
+        store.setValue(CFMLPreferenceConstants.P_DEFAULT_HELP_URL, String.valueOf(helpUrlTextbox.getText()));
         
         //Since from a combo we can only get the selection index, lets get the item from the array (plus one for the blank filled one)
         IProject[] projects = getProjects();

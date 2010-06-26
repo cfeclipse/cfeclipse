@@ -193,6 +193,10 @@ public class CFMLPreferenceManager {
 		return store.getDefaultString(CFMLPreferenceConstants.P_PROJECT_URL);
 	}
 	
+	public String defaultHelpURL() {
+		return store.getString(CFMLPreferenceConstants.P_DEFAULT_HELP_URL);
+	}
+
 	public boolean defaultTabbedBrowser() {
 	    return store.getDefaultBoolean(CFMLPreferenceConstants.P_TABBED_BROWSER);
 	}

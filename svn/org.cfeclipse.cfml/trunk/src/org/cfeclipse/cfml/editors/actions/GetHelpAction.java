@@ -27,6 +27,7 @@ package org.cfeclipse.cfml.editors.actions;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.partitioner.PartitionHelper;
+import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.views.browser.BrowserView;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -39,6 +40,7 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -46,6 +48,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.internal.Workbench;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -89,39 +92,44 @@ public class GetHelpAction implements IWorkbenchWindowActionDelegate,IEditorActi
 		 * if the selection hasnt got any characters in length, lets try and find it using our partition, if it has, use that
 		 */
 		
+        IEditorInput input = this.editor.getEditorInput();
+        if (input instanceof FileEditorInput) {
+            FileEditorInput fileInput = (FileEditorInput)input;
 		
-		String urldest = "http://www.cfeclipse.org/cfdocs/?query="; //TODO: Change this help url out.
-		String query = "";
+			CFMLPropertyManager manager = new CFMLPropertyManager();
+			String urldest = manager.helpURL(fileInput.getFile().getProject());	
+			String query = "";
+			
+			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
+			ITextSelection sel = (ITextSelection)editor.getSelectionProvider().getSelection();
+			
+			if(sel.getLength() > 0){
+				query = sel.getText(); 
+			}
+			else {
+				PartitionHelper ph = new PartitionHelper((ICFDocument)doc, sel.getOffset());
+				query = ph.getTagName();
+			}
 		
-		IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
-		ITextSelection sel = (ITextSelection)editor.getSelectionProvider().getSelection();
-		
-		if(sel.getLength() > 0){
-			query = sel.getText(); 
-		}
-		else {
-			PartitionHelper ph = new PartitionHelper((ICFDocument)doc, sel.getOffset());
-			query = ph.getTagName();
-		}
-	
-		String theFullURL = urldest + query;
-		
-		IExtensionRegistry extReg = Platform.getExtensionRegistry();
-		if(extReg.getExtensions("com.adobe.coldfusion_help_7").length > 0){
-			IWorkbenchHelpSystem helpsys = Workbench.getInstance().getHelpSystem();
-			helpsys.search(query);
-		}
-		else{
-				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				try {
-				   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
-				   browser.setUrl(theFullURL, BrowserView.HELP_TAB);
-				   browser.setFocus(BrowserView.HELP_TAB);
-				}
-				catch(Exception e) {
-				    e.printStackTrace();
-				}
-		}
+			String theFullURL = urldest + query;
+			
+			IExtensionRegistry extReg = Platform.getExtensionRegistry();
+			if(extReg.getExtensions("com.adobe.coldfusion_help_7").length > 0){
+				IWorkbenchHelpSystem helpsys = Workbench.getInstance().getHelpSystem();
+				helpsys.search(query);
+			}
+			else{
+					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					try {
+					   BrowserView browser = (BrowserView)page.showView(BrowserView.ID_BROWSER);
+					   browser.setUrl(theFullURL, BrowserView.HELP_TAB);
+					   browser.setFocus(BrowserView.HELP_TAB);
+					}
+					catch(Exception e) {
+					    e.printStackTrace();
+					}
+			}
+        }
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){

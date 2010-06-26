@@ -29,7 +29,6 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for the url of the project. */
 	public static final String P_PROJECT_URL 				= "projectURL";
 	
-	
 	/** Preference key identifier for tabbed browsing */
 	public static final String P_TABBED_BROWSER			= "tabbedBrowsing";
 	
@@ -51,6 +50,13 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	 */
 	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
+	/** Preference key identifier for the help url. */
+	public static final String P_DEFAULT_HELP_URL 				= "_helpURL";
+	
+    /**
+	 * the default help url 
+	 */
+	public static final String DEFAULT_HELP_URL = "http://www.cfeclipse.org/cfdocs/?query=";
 	
 	
 	/**
@@ -66,6 +72,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	public static void setDefaults(IPreferenceStore store) { 
 		store.setDefault(P_SNIPPETS_PATH,CFMLPlugin.getDefault().getStateLocation().toString()+"/snippets");
 		store.setDefault(P_PROJECT_URL,DEFAULT_PROJECT_URL);
+		store.setDefault(P_DEFAULT_HELP_URL,DEFAULT_HELP_URL);
 		store.setDefault(P_TABBED_BROWSER,false);
 		store.setDefault(P_IMAGE_TOOLTIPS,true);
 		store.setDefault(P_CFML_DICTIONARY,"cfml.xml");
