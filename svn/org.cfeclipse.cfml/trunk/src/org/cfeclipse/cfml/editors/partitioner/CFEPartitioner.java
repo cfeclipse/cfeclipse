@@ -156,6 +156,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
         fPseudoPartitions = new Properties();
         fPseudoPartitions.put("cfquery",CFPartitionScanner.SQL);
         fPseudoPartitions.put("cfscript",CFPartitionScanner.CF_SCRIPT);
+        fPseudoPartitions.put("cfcscript",CFPartitionScanner.CFC_SCRIPT);
         //fPseudoPartitions.put("cfxml",CFPartitionScanner.XML);
         fPseudoPartitions.put("style",CFPartitionScanner.CSS);
         fPseudoPartitions.put("script",CFPartitionScanner.J_SCRIPT);

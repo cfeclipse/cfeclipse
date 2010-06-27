@@ -28,7 +28,6 @@
  * ====================================================================
  */
 package org.cfeclipse.cfml.editors.partitioner;
-
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.eclipse.jface.text.IDocument;
 
@@ -59,6 +58,7 @@ public final class PartitionTypes {
     	CFPartitionScanner.HTM_START_TAG_END,
     	CFPartitionScanner.HTM_TAG_ATTRIBS,
     	CFPartitionScanner.CF_SCRIPT,
+    	CFPartitionScanner.CFC_SCRIPT,
     	CFPartitionScanner.CF_EXPRESSION,
     	CFPartitionScanner.J_SCRIPT,
     	CFPartitionScanner.CSS,
@@ -95,6 +95,7 @@ public final class PartitionTypes {
     	CFPartitionScanner.HTM_START_TAG_END,
     	CFPartitionScanner.HTM_TAG_ATTRIBS,
     	CFPartitionScanner.CF_SCRIPT,
+    	CFPartitionScanner.CFC_SCRIPT,
     	CFPartitionScanner.CF_EXPRESSION,
     	CFPartitionScanner.J_SCRIPT,
     	CFPartitionScanner.CSS,

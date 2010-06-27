@@ -101,12 +101,13 @@ public class CFScriptScanner extends RuleBasedScanner {
 				
 		List rules = new ArrayList();
 		
-		//rules.add(new MultiLineRule("component", "/}", cffunction));
 		//so the script tags look correct
 		rules.add(new SingleLineRule("<cfscript", ">", cftag));
 		rules.add(new SingleLineRule("</cfscript", ">", cftag));
 		rules.add(new SingleLineRule("<CFSCRIPT", ">", cftag));
 		rules.add(new SingleLineRule("</CFSCRIPT", ">", cftag));
+		// this colors the first line. rather lame
+		rules.add(new MultiLineRule("component", "{", cftag));
 		
 		//I think the reason this doesnt work as well as the <!-- type of comment
 		//is that the <! type is defined on the partition scanner where this is
@@ -160,6 +161,7 @@ public class CFScriptScanner extends RuleBasedScanner {
 			words.addWord(fun, cffunction);
 			words.addWord(fun.toUpperCase(), cffunction);
 		}
+		words.addWord("component", cfkeyword);
 		rules.add(words);
 		
 		IRule[] rulearry = new IRule[rules.size()];

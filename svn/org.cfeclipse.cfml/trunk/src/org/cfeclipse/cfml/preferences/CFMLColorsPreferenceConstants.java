@@ -97,14 +97,14 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_COLOR_CFSTRING,"0,0,255");
 		store.setDefault(P_COLOR_CFTAG,"128,0,0");
 		store.setDefault(P_COLOR_TAGLIB_TAG,"60,60,170");
-		store.setDefault(P_COLOR_CFKEYWORD,"0,0,255");
+		store.setDefault(P_COLOR_CFKEYWORD,"60,197,255");
 		store.setDefault(P_COLOR_CFNUMBER,"255,10,10");
 		store.setDefault(P_COLOR_CFCOMMENT,"128,128,128");
 		store.setDefault(P_COLOR_BACKGROUND_CFCOMMENT,"255,255,255");
 		store.setDefault(P_COLOR_CFSCRIPT_TEXT,"0,0,0");
 		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_CFSCRIPT_STRING,"0,102,0");
-		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION,"0,0,102");
+		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION,"30,197,255");
 		store.setDefault(P_COLOR_SQL_TEXT,"0,0,0");
 		store.setDefault(P_COLOR_SQL_KEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_SQL_STRING,"255,0,0");

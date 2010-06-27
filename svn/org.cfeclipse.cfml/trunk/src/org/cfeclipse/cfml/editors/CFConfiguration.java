@@ -570,10 +570,12 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//CF script (if this is put before the cfscript stuff
 		//you'll get jacked up keyword highlighting
 		dr = new DefaultDamagerRepairer(getCFScriptScanner());
+		
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SCRIPT);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_SCRIPT);
-//		reconciler.setDamager(dr, CFPartitionScanner.CFC_SCRIPT);
-//		reconciler.setRepairer(dr, CFPartitionScanner.CFC_SCRIPT);
+		// script based cfcs
+		reconciler.setDamager(dr, CFPartitionScanner.CFC_SCRIPT);
+		reconciler.setRepairer(dr, CFPartitionScanner.CFC_SCRIPT);
 		
 		// cfset tag contents.
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SET_STATEMENT);
@@ -586,7 +588,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		// cfreturn tag contents.
 		reconciler.setDamager(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
-		
+
 		//general CF
 		dr = new DefaultDamagerRepairer(getCFTagScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.CF_START_TAG_BEGIN);
