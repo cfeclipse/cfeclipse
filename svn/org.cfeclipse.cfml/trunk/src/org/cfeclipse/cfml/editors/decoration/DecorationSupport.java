@@ -778,8 +778,10 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 			if (fSourceViewer instanceof ITextViewerExtension2) {
 				fMarginPainter= new MarginPainter(fSourceViewer);
 				fMarginPainter.setMarginRulerColor(getColor(fMarginPainterColorKey));
-				if (fPreferenceStore != null)
+				if (fPreferenceStore != null) {					
 					fMarginPainter.setMarginRulerColumn(fPreferenceStore.getInt(fMarginPainterColumnKey));
+					fMarginPainter.setMarginRulerColor(getColor(fMarginPainterColorKey));			
+				}
 				ITextViewerExtension2 extension= (ITextViewerExtension2) fSourceViewer;
 				extension.addPainter(fMarginPainter);
 				
