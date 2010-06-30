@@ -33,9 +33,11 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
@@ -202,6 +204,23 @@ public abstract class AbstractCFEditorPreferencePage extends PreferencePage impl
 		super.dispose();
 	}
 
+	/**
+	 * Convenience method to create a group
+	 */
+	protected Group createGroup(int numColumns, Composite parent, String text ) {
+		final Group group= new Group(parent, SWT.NONE);
+		GridData gd= new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan= numColumns;
+		gd.widthHint= 0;
+		group.setLayoutData(gd);
+		group.setFont(parent.getFont());
+		
+		final GridLayout layout= new GridLayout(numColumns, false);
+		group.setLayout(layout);
+		group.setText(text);
+		return group;
+	}	
+	
 	protected Button addCheckBox(Composite parent, String labelText, String key, int indentation) {
 		Button checkBox = new Button(parent, SWT.CHECK);
 		checkBox.setText(labelText);

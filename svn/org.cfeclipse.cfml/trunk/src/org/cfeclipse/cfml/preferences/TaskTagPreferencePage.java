@@ -204,23 +204,6 @@ public class TaskTagPreferencePage extends AbstractCFEditorPreferencePage {
 		getOverlayStore().setValue(EditorPreferenceConstants.TASK_TAGS_PRIORTIES, priorities);
 		return super.performOk();
 	}
-
-	/**
-	 * Convenience method to create a group
-	 */
-	private Group createGroup(int numColumns, Composite parent, String text ) {
-		final Group group= new Group(parent, SWT.NONE);
-		GridData gd= new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan= numColumns;
-		gd.widthHint= 0;
-		group.setLayoutData(gd);
-		group.setFont(parent.getFont());
-		
-		final GridLayout layout= new GridLayout(numColumns, false);
-		group.setLayout(layout);
-		group.setText(text);
-		return group;
-	}
 	
 	/*
 	 * (non-Javadoc)
