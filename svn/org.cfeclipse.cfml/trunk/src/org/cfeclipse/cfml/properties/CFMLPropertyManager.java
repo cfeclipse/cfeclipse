@@ -104,7 +104,12 @@ public class CFMLPropertyManager {
 	
 	public String helpURL(IProject project) {
 		IPreferenceStore store = new ProjectPropertyStore(project);
-		return store.getString(CFMLPreferenceConstants.P_DEFAULT_HELP_URL).trim();
+		String helpUrl = store.getString(CFMLPreferenceConstants.P_DEFAULT_HELP_URL).trim();
+		if(helpUrl == "" || helpUrl == null) {
+			return defaultHelpURL();
+		} else {
+			return helpUrl;
+		}
 	}
 	
 	public String defaultProjectURL() {

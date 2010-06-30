@@ -144,24 +144,7 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 	
 		return result;
 	}
-	
-	/**
-	 * Convenience method to create a group
-	 */
-	private Group createGroup(int numColumns, Composite parent, String text ) {
-		final Group group= new Group(parent, SWT.NONE);
-		GridData gd= new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan= numColumns;
-		gd.widthHint= 0;
-		group.setLayoutData(gd);
-		group.setFont(parent.getFont());
 		
-		final GridLayout layout= new GridLayout(numColumns, false);
-		group.setLayout(layout);
-		group.setText(text);
-		return group;
-	}
-	
 	private Control createPreviewer(Composite parent) {
 		fPreviewViewer = new SourceViewer(parent, null, null, false, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
         fEditor = new CFMLEditor();
@@ -193,7 +176,7 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 	}
 
 	/* (non-Javadoc)
-	 * @see org.cfeclipse.cfml.preferences.AbstractAntEditorPreferencePage#handleDefaults()
+	 * @see org.cfeclipse.cfml.preferences.AbstractCFEditorPreferencePage#handleDefaults()
 	 */
 	protected void handleDefaults() {
 	}

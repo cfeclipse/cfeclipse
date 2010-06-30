@@ -57,10 +57,9 @@ public class CFMLPreferenceManager {
 	
 	public void initializeDefaultValues() {
 		
-		AutoIndentPreferenceConstants.setDefaults(store);
-		CFMLColorsPreferenceConstants.setDefaults(store);
 		CFMLPreferenceConstants.setDefaults(store);
 		EditorPreferenceConstants.setDefaults(store);
+		AutoIndentPreferenceConstants.setDefaults(store);
 		FoldingPreferenceConstants.setDefaults(store);
 		HTMLColorsPreferenceConstants.setDefaults(store);
 		CFMLColorsPreferenceConstants.setDefaults(store);
@@ -197,6 +196,10 @@ public class CFMLPreferenceManager {
 		return store.getString(CFMLPreferenceConstants.P_DEFAULT_HELP_URL);
 	}
 
+	public boolean helpUrlUseExternalBrowser() {
+		return store.getBoolean(CFMLPreferenceConstants.P_HELP_URL_USE_EXTERNAL_BROWSER);
+	}
+
 	public boolean defaultTabbedBrowser() {
 	    return store.getDefaultBoolean(CFMLPreferenceConstants.P_TABBED_BROWSER);
 	}
@@ -312,7 +315,6 @@ public class CFMLPreferenceManager {
 	public String templateProjectsPath(){
 		return store.getString(CFMLPreferenceConstants.P_TEMPLATE_PROJECT_PATH);
 	}
-	
-	
+		
 	
 }

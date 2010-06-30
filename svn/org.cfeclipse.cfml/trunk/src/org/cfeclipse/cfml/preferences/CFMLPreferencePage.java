@@ -30,6 +30,9 @@ package org.cfeclipse.cfml.preferences;
  * This generates the UI for the preferences page. When the preferences are updated CFConfiguration is notified
  * via the propertyChange() method. Anything else that wants to be notified needs to implement IPropertyChangeListener
  */
+import java.util.ArrayList;
+import java.util.List;
+
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -65,7 +68,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * be accessed directly via the preference store.
  */
 public class CFMLPreferencePage
-	extends PreferencePage
+	extends AbstractCFEditorPreferencePage
 	implements IWorkbenchPreferencePage, SelectionListener  {
 
 
@@ -76,6 +79,7 @@ public class CFMLPreferencePage
 	Combo templateProjectsPathField;
 	private Button imageTooltipsCheckBox;
 	private Text helpUrlTextbox;
+	private Object helpUrlUseExternalCheckBox;
 	
 	public CFMLPreferencePage() {
 		super();
@@ -84,6 +88,23 @@ public class CFMLPreferencePage
 		preferenceManager = new CFMLPreferenceManager();
 	}
 	
+	public void init(IWorkbench workbench) {
+	}
+
+	@Override
+	protected OverlayPreferenceStore createOverlayStore() {
+		List overlayKeys= new ArrayList();
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, CFMLPreferenceConstants.P_TABBED_BROWSER));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, CFMLPreferenceConstants.P_SNIPPETS_PATH));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, CFMLPreferenceConstants.P_IMAGE_TOOLTIPS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, CFMLPreferenceConstants.P_DEFAULT_HELP_URL));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, CFMLPreferenceConstants.P_HELP_URL_USE_EXTERNAL_BROWSER));
+		 
+		OverlayPreferenceStore.OverlayKey[] keys= new OverlayPreferenceStore.OverlayKey[overlayKeys.size()];
+		overlayKeys.toArray(keys);
+		return new OverlayPreferenceStore(getPreferenceStore(), keys);
+	}
+
 	public void createControl(Composite parent) {
         super.createControl(parent);
     }
@@ -103,7 +124,9 @@ public class CFMLPreferencePage
 	
     protected Control createContents(Composite parent) {
     	// The container for the preference page
-        Composite composite = createContainer(parent);       
+		getOverlayStore().load();
+		getOverlayStore().start();
+        Composite composite = createContainer(parent);
         
         // The layout info for the preference page
         GridLayout gridLayout = new GridLayout();
@@ -114,7 +137,8 @@ public class CFMLPreferencePage
         // A panel for the preference page
         Composite defPanel = new Composite(composite, SWT.NONE);
         GridLayout layout = new GridLayout();
-        layout.numColumns = 2;
+        int numColumns = 2;
+        layout.numColumns = numColumns;
         defPanel.setLayout(layout);
         GridData gridData =
             new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL);
@@ -122,22 +146,34 @@ public class CFMLPreferencePage
                 
 
         // Browser options
-        createBrowserGroup(defPanel);
-        
-        
+		Group wrappingGroup= createGroup(numColumns, defPanel, "Web Browser");
+		String labelText= "Use tabbed browsing";
+		labelText= "Used tabbed browsing";
+		addCheckBox(wrappingGroup, labelText, CFMLPreferenceConstants.P_TABBED_BROWSER, 1);
+                
         // File paths
         createFilePathGroup(defPanel);
         
         // Images tooltips
-        createImagesGroup(defPanel);
-        
-        // default help url
-        createHelpUrlGroup(defPanel);
+		Group imageGroup= createGroup(numColumns, defPanel, "Images");
+		labelText= "Show Image Tooltips (restart required)";
+		addCheckBox(imageGroup, labelText, CFMLPreferenceConstants.P_IMAGE_TOOLTIPS, 1);
+        		
+		// default help url
+		Group helpGroup= createGroup(numColumns, defPanel, "External Help Documentation");
+		labelText= "Default URL:";
+		addTextField(helpGroup, labelText, CFMLPreferenceConstants.P_DEFAULT_HELP_URL, 50, 0, null);
+		labelText= "Use external broswer";
+		addCheckBox(helpGroup, labelText, CFMLPreferenceConstants.P_HELP_URL_USE_EXTERNAL_BROWSER, 1);
         
         // Template Sites
         
        // createTemplateSitesPathGroup(defPanel);
-        return composite;
+
+		initializeFields();
+		applyDialogFont(defPanel);
+
+		return composite;
     }
 
     public void widgetDefaultSelected(SelectionEvent selectionEvent) {
@@ -146,28 +182,6 @@ public class CFMLPreferencePage
     
     public void widgetSelected(SelectionEvent selectionEvent) {}
 
-
-    private void createBrowserGroup(Composite parent) {
-    	Group BrowserComposite = new Group(parent, SWT.SHADOW_ETCHED_IN); 
-        GridLayout layout = new GridLayout();        
-        layout.numColumns = 3;              
-        BrowserComposite.setLayout(layout);
-        GridData gridData =
-            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
-        gridData.horizontalSpan = 3;
-        BrowserComposite.setLayoutData(gridData);        
-        
-        
-        BrowserComposite.setText("Web Browser"); //$NON-NLS-1$
-        
-        // Tabbed browsing
-        tabbedBrowserCheckBox = createLabeledCheck(
-                "Used tabbed browsing", //$NON-NLS-1$
-                preferenceManager.tabbedBrowser(), 
-				BrowserComposite);
-                   
-
-    }
 
     private void createTemplateSitesPathGroup(Composite parent){
     	Group TemplateProjectsComposite = new Group(parent, SWT.SHADOW_ETCHED_IN);
@@ -212,42 +226,6 @@ public class CFMLPreferencePage
         //then set the value up 
        // templateProjectsPathField.setStringValue(preferenceManager.snippetsPath());
     }
-
-    private void createImagesGroup(Composite parent) {
-    	Group imagesComposite = new Group(parent, SWT.SHADOW_ETCHED_IN); 
-        GridLayout layout = new GridLayout();        
-        layout.numColumns = 3;              
-        imagesComposite.setLayout(layout);
-        GridData gridData =
-            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
-        gridData.horizontalSpan = 3;
-        imagesComposite.setLayoutData(gridData);        
-        
-        
-        imagesComposite.setText("Images"); //$NON-NLS-1$
-        
-        // Tabbed browsing
-        imageTooltipsCheckBox = createLabeledCheck(
-                "Show Image Tooltips (restart required)", //$NON-NLS-1$
-                preferenceManager.imageTooltips(), 
-				imagesComposite);
-                   
-
-    }
-
-    private void createHelpUrlGroup(Composite parent) {
-    	Group helpComposite = new Group(parent, SWT.NONE); 
-        GridLayout layout = new GridLayout();        
-        layout.numColumns = 3;              
-        helpComposite.setLayout(layout);
-        GridData gridData =
-            new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
-        gridData.horizontalSpan = 3;
-        helpComposite.setLayoutData(gridData);        
-        helpComposite.setText("Default help URL"); //$NON-NLS-1$
-        helpUrlTextbox = new Text(helpComposite, SWT.SHADOW_ETCHED_IN);
-        helpUrlTextbox.setText(preferenceManager.defaultHelpURL());
-    }
     
     private IProject[] getProjects(){
     	IWorkspace workspace = CFMLPlugin.getWorkspace();
@@ -289,59 +267,23 @@ public class CFMLPreferencePage
 
     }
     
-    /* private Text createLabeledText(String labelText, String value, Composite defPanel) {
-        GridData gridData;
-        Label label = new Label(defPanel, SWT.WRAP);
-        gridData = new GridData();
-        label.setLayoutData(gridData);
-        label.setText(labelText);
-
-        Text fText = new Text(defPanel, SWT.SHADOW_IN | SWT.BORDER);
-        gridData = new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
-        gridData.horizontalSpan = 2;
-        fText.setLayoutData(gridData);
-        fText.setText(value);
-        fText.setToolTipText(labelText);
-        return fText;
-    } */
-    
-    
-    /* private Text createLabeledInt(String labelText, int value, Composite defPanel) {
-        GridData gridData;
-        Label label = new Label(defPanel, SWT.WRAP);
-        gridData = new GridData();
-        label.setLayoutData(gridData);
-        label.setText(labelText);
-
-        Text fText = new Text(defPanel, SWT.SHADOW_IN | SWT.BORDER);
-        gridData = new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
-        gridData.horizontalSpan = 2;
-        fText.setLayoutData(gridData);
-        fText.setText(Integer.toString(value));
-        fText.setToolTipText(labelText);
-        return fText;
-    } */
-
-    private Button createLabeledCheck(String labelText, boolean value, Composite defPanel) {
-        GridData gridData;
-        Label label = new Label(defPanel, SWT.WRAP);
-        gridData = new GridData();
-        label.setLayoutData(gridData);
-        label.setText(labelText);
-
-        Button fButton = new Button(defPanel, SWT.CHECK);
-        gridData = new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
-        gridData.horizontalSpan = 2;
-        fButton.setLayoutData(gridData);
-        fButton.setSelection(value);
-        fButton.setToolTipText(labelText);
-        return fButton;
+    public boolean performOk() {
+        getOverlayStore().setValue(CFMLPreferenceConstants.P_SNIPPETS_PATH, snippetsPathField.getStringValue());
+        
+        //Since from a combo we can only get the selection index, lets get the item from the array (plus one for the blank filled one)
+        IProject[] projects = getProjects();
+        String templateProject = "";
+       // if(templateProjectsPathField.getSelectionIndex() > 0){
+       // 	templateProject = projects[templateProjectsPathField.getSelectionIndex()-1].getFullPath().toString();
+        //}
+       // store.setValue(CFMLPreferenceConstants.P_TEMPLATE_PROJECT_PATH, templateProject);
+        return super.performOk();
     }
 
-
-/**
+ /**
  * Sets the default values of the preferences.
  */
+/*
     protected void performDefaults() {
         super.performDefaults();
         tabbedBrowserCheckBox.setSelection(preferenceManager.defaultTabbedBrowser());
@@ -350,7 +292,6 @@ public class CFMLPreferencePage
         helpUrlTextbox.setText(preferenceManager.defaultHelpURL());
         templateProjectsPathField.select(0);
     }
-
 
     public boolean performOk() {
         IPreferenceStore store = getPreferenceStore();
@@ -369,7 +310,11 @@ public class CFMLPreferencePage
         
         return true;
     }
+*/
 
-	public void init(IWorkbench workbench) {
+    @Override
+	protected void handleDefaults() {
+		// TODO Auto-generated method stub
+		
 	}
 }
