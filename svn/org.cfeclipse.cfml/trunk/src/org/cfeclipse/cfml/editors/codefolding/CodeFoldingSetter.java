@@ -30,11 +30,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.actions.SaveStateAction;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.parser.CFNodeList;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.ITextSelection;
@@ -43,9 +47,8 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
-import org.eclipse.ui.XMLMemento;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
-
 
 
 
@@ -56,10 +59,13 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * This class is used to set the code folding markers.
  */
 public class CodeFoldingSetter {
+	private QualifiedName foldStateQN = new QualifiedName("foldedCodeState", "foldState");
 
-    private ITextEditor editor;
+	private final SaveStateAction saveStateAction = new SaveStateAction();
+
+	private ITextEditor editor;
     
-    private HashMap snapshot = null;
+    private HashMap foldStateMap = null;
     
     private ProjectionAnnotationModel model = null;
     
@@ -67,20 +73,39 @@ public class CodeFoldingSetter {
     
     private CFMLPreferenceManager preferenceManager = null;
 
+	private IFile resource;
+	
+	private Boolean restoredFoldState;
+
     public CodeFoldingSetter(ITextEditor editor) {
         this.editor = editor;
         model = (ProjectionAnnotationModel) editor
         .getAdapter(ProjectionAnnotationModel.class);
         doc = (ICFDocument)editor.getDocumentProvider().getDocument(editor.getEditorInput());
-        preferenceManager = new CFMLPreferenceManager();
+        if ((editor.getEditorInput() instanceof IFileEditorInput)) {
+        	resource = ((IFileEditorInput)editor.getEditorInput()).getFile();
+        }
+       preferenceManager = new CFMLPreferenceManager();
+       restoredFoldState = false;
     }
 
-    public synchronized void docChanged(boolean autoCollapse) {
+	public synchronized void docChanged(boolean autoCollapse) {
+//        storeMemento();
+//        restoreMemento();
         if (preferenceManager.enableFolding()) {
             addMarksToModel(autoCollapse);
+            if (preferenceManager.persistFoldState()) {            	
+            	if(!restoredFoldState) {
+            		restoredFoldState = true;
+            		restoreFoldState();
+            	} else {            	
+            		persistFoldState();
+            	}
+            }
         }
     }
 
+	
     /**
      * @param root
      * @param model
@@ -168,8 +193,6 @@ public class CodeFoldingSetter {
             }
         }
     }
-    
-    
     
     
     private void foldPartitions(HashMap markerMap, String partitionType, boolean autoCollapse,int minLines) {
@@ -303,7 +326,6 @@ public class CodeFoldingSetter {
             markerMap.put(annotation,new Boolean(autoCollapse));
             model.addAnnotation(annotation, position);
             
-            
     }
     
     
@@ -391,9 +413,6 @@ public class CodeFoldingSetter {
         
     }
 
-
-    
-    
     public void expandMatchingMarkers() {
         
         if(!preferenceManager.enableFolding()) {
@@ -418,9 +437,6 @@ public class CodeFoldingSetter {
         
         
     }
-
-
-    
     
     public void collapseMatchingMarkers() {
         
@@ -508,8 +524,6 @@ public class CodeFoldingSetter {
     }
     
     
-    
-    
     /**
      * Returns a list of annotations that are either in or surrounding the selected text.
      * @param selection
@@ -587,31 +601,19 @@ public class CodeFoldingSetter {
 		
     } */
     
-    
-    public void takeSnapshot() {
-        
-        if(!preferenceManager.enableFolding()) {
-    	    return;
-    	}
-        
-        snapshot = new HashMap();
-        ProjectionAnnotationModel model = (ProjectionAnnotationModel) editor
-        .getAdapter(ProjectionAnnotationModel.class);
-        Iterator iter = model.getAnnotationIterator();
-        while (iter.hasNext()) {
-            ProjectionAnnotation p = (ProjectionAnnotation)iter.next();
-            snapshot.put(p,new Boolean(p.isCollapsed()));
-        }
-    }
-    
+    /*
     public void storeMemento() {
-        
+        initModel();
         if(!preferenceManager.enableFolding()) {
     	    return;
     	}
         
-    	XMLMemento foldedState = XMLMemento.createWriteRoot("rockn");
-    	foldedState.putBoolean("yuppers",true);
+    	IMemento memento = ((CFMLEditor) editor).getMemento();
+    	if(memento == null) {
+        	((CFMLEditor) editor).saveState(memento);
+    		saveStateAction.run(null);
+    		memento = ((CFMLEditor) editor).getMemento();
+    	}
 
     	snapshot = new HashMap();
         ProjectionAnnotationModel model = (ProjectionAnnotationModel) editor
@@ -619,30 +621,90 @@ public class CodeFoldingSetter {
         Iterator iter = model.getAnnotationIterator();
         while (iter.hasNext()) {
             ProjectionAnnotation p = (ProjectionAnnotation)iter.next();
-            foldedState.createChild("projection-annotation",p.getText());
             snapshot.put(p,new Boolean(p.isCollapsed()));
         }
+    	memento.createChild("CollapsedAnnotations");
+    	memento.getChild("CollapsedAnnotations").putTextData(snapshot.toString());
+    	((CFMLEditor) editor).saveState(memento);
+    	saveStateAction.run(null);
+
     }
     
     
-    public void restoreSnapshot() {
-        
-        if(!preferenceManager.enableFolding()) {
+    public void restoreMemento() {
+    	IMemento memento = ((CFMLEditor) editor).getMemento();        
+        if(preferenceManager.enableFolding()) {
+        	String data = memento.getChild("CollapsedAnnotations").getTextData();
     	    return;
     	}
         
-        if (this.snapshot != null) {
+    }
+    */
+    
+    public void persistFoldState() {
+        
+        foldStateMap = new HashMap();
+    	StringBuffer sb = new StringBuffer();
+    	model.getAnnotationIterator();
+        ProjectionAnnotationModel model = (ProjectionAnnotationModel) editor
+        .getAdapter(ProjectionAnnotationModel.class);
+    	Iterator iter = model.getAnnotationIterator();
+    	while(iter.hasNext()){
+    		ProjectionAnnotation annotation = (ProjectionAnnotation)iter.next();		       
+    		Position position = model.getPosition(annotation);
+    		sb.append(position.offset + ",");
+    		sb.append(annotation.isCollapsed());
+    		sb.append("\n");
+    	}
+        try {
+    		resource.setPersistentProperty(foldStateQN, sb.toString());
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public void loadSnapshotFromProperty() {
+        String foldStates = "";
+        foldStateMap = new HashMap();
+        try {
+			foldStates = resource.getPersistentProperty(foldStateQN);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        if(!preferenceManager.enableFolding() || foldStates == null) {
+    	    return;
+    	}
+        
+		String[] values = foldStates.split("\n");
+		for(int i=0;i<values.length;i++){
+			String[] split = values[i].split(",");
+			if(split.length==2){
+				foldStateMap.put(split[0], split[1]);
+			}
+		}
+    	
+    }
+    
+    public void restoreFoldState() {
+        loadSnapshotFromProperty();
+		if (this.foldStateMap != null) {
 	        ProjectionAnnotationModel model = (ProjectionAnnotationModel) editor
 	        .getAdapter(ProjectionAnnotationModel.class);
 	        Iterator iter = model.getAnnotationIterator();
 	        while (iter.hasNext()) {
 	            ProjectionAnnotation p = (ProjectionAnnotation)iter.next();
-	            if (((Boolean)snapshot.get(p)).booleanValue()) {
-	                model.collapse(p);
-	            }
-	            else {
-	                model.expand(p);
-	            }
+		        Position position = model.getPosition(p);
+		        Object snapPos = foldStateMap.get(Integer.toString(position.offset));
+		        if(snapPos != null) {
+		        	if (snapPos.equals("true")) {
+		        		model.collapse(p);
+		        	}
+		        	else {
+		        		model.expand(p);
+		        	}
+		        }
 	            
 	        }
         }
@@ -655,8 +717,5 @@ public class CodeFoldingSetter {
         }
     }
     
-    
-    
-
 	
 }

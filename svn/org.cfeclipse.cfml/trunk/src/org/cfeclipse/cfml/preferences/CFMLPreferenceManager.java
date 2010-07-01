@@ -315,6 +315,10 @@ public class CFMLPreferenceManager {
 	public String templateProjectsPath(){
 		return store.getString(CFMLPreferenceConstants.P_TEMPLATE_PROJECT_PATH);
 	}
+
+	public boolean persistFoldState() {
+		return store.getBoolean(FoldingPreferenceConstants.P_PERSIST_FOLD_STATE);
+	}
 		
 	
 }

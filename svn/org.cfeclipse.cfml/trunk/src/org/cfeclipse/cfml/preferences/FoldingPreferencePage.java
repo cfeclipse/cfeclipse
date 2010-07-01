@@ -104,6 +104,7 @@ public class FoldingPreferencePage extends PreferencePage
 	{
 		ArrayList overlayKeys = new ArrayList();
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_ENABLE_CODE_FOLDING));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_PERSIST_FOLD_STATE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.INT, FoldingPreferenceConstants.P_MINIMUM_CODE_FOLDING_LINES));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_CFMLCOMMENTS_COLLAPSE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_CFMLCOMMENTS_FOLD));
@@ -161,14 +162,16 @@ public class FoldingPreferencePage extends PreferencePage
 		appearanceComposite.setLayout(layout);
 		
 		// Enable/Disable Code Folding
-		String label = "Enable code folding:";
+		String label = "Enable code folding";
 		addCheckBox(appearanceComposite, label, FoldingPreferenceConstants.P_ENABLE_CODE_FOLDING, 4);
+		label = "Save fold state when saving document";
+		addCheckBox(appearanceComposite, label, FoldingPreferenceConstants.P_PERSIST_FOLD_STATE, 4);
 
 		createTable(appearanceComposite);
 		
 
-		label = "Minimum number of lines for folding:";
-		addTextField(appearanceComposite, label, FoldingPreferenceConstants.P_MINIMUM_CODE_FOLDING_LINES, 2, 4, true);
+		label = "Minimum number of lines for folding";
+		addTextField(appearanceComposite, label, FoldingPreferenceConstants.P_MINIMUM_CODE_FOLDING_LINES, 3, 4, true);
 		
 		return appearanceComposite;
 	}
