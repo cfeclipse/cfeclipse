@@ -271,7 +271,11 @@ public class ExternalBrowserAction implements IWorkbenchWindowActionDelegate, IE
 		properties
 				.append("#This file is used by CFEclipse to locate and open an external browser on a given project file.\n");
 		properties.append("#The path in the file system to the browser executable\n");
-		properties.append("BrowserPath=C:/Program Files/Mozilla Firefox/firefox.exe\n");
+		if (System.getProperty("os.name").equals("Mac OS X")) {
+			properties.append("BrowserPath=/Applications/Safari.app\n");			
+		} else {
+			properties.append("BrowserPath=C:/Program Files/Mozilla Firefox/firefox.exe\n");
+		}
 		properties.append("#The URL to the project webroot directory\n");
 		properties.append("RootURL=http://localhost" + project.getFullPath() + "/\n");
 		properties
