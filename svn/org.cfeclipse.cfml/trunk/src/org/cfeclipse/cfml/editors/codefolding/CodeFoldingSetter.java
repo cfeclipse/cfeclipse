@@ -610,21 +610,22 @@ public class CodeFoldingSetter {
 	 */
 
 	public void persistFoldState() {
-
-		StringBuffer sb = new StringBuffer();
-		Iterator iter = model.getAnnotationIterator();
-		while (iter.hasNext()) {
-			ProjectionAnnotation annotation = (ProjectionAnnotation) iter.next();
-			Position position = model.getPosition(annotation);
-			sb.append(position.offset + "," + position.length + ",");
-			sb.append((annotation.isCollapsed())?1:0);
-			sb.append("\n");
-		}
-		try {
-			resource.setPersistentProperty(foldStateQN, sb.toString());
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (preferenceManager.persistFoldState()) {			
+			StringBuffer sb = new StringBuffer();
+			Iterator iter = model.getAnnotationIterator();
+			while (iter.hasNext()) {
+				ProjectionAnnotation annotation = (ProjectionAnnotation) iter.next();
+				Position position = model.getPosition(annotation);
+				sb.append(position.offset + "," + position.length + ",");
+				sb.append((annotation.isCollapsed())?1:0);
+				sb.append("\n");
+			}
+			try {
+				resource.setPersistentProperty(foldStateQN, sb.toString());
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
