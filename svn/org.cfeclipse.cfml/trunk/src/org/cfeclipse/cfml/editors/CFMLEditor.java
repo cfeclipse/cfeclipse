@@ -139,6 +139,7 @@ import org.eclipse.ui.internal.EditorManager;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.PluginTransfer;
+import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.AnnotationPreference;
@@ -153,6 +154,7 @@ import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.texteditor.rulers.IColumnSupport;
 import org.eclipse.ui.texteditor.rulers.RulerColumnDescriptor;
 import org.eclipse.ui.texteditor.rulers.RulerColumnRegistry;
+import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
 
 
 /**
@@ -716,10 +718,11 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 			/*
 			 * this isn't quite working for 3.4 >
 			 *
-			 *
+			 */
 			StyledText tw = getSourceViewer().getTextWidget();
-			int ops = DND.DROP_DEFAULT | DND.DROP_COPY | DND.DROP_MOVE;
-			Transfer[] transfers = new Transfer[] { TextTransfer.getInstance(), PluginTransfer.getInstance() };
+			int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT;
+			Transfer[] transfers = new Transfer[] { TextTransfer.getInstance(),LocalSelectionTransfer.getTransfer(),ResourceTransfer.getInstance(),FileTransfer.getInstance() };
+/*
 			DropTargetListener editorListener = new DropTargetListener() {
 
 				public void dragEnter(DropTargetEvent event) {
@@ -749,15 +752,18 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 				}
 
 			};
-
-			IDragAndDropService dtSvc = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
-			dtSvc.addMergedDropTarget(tw, ops, transfers, editorListener);
-			*/
+*/
 
 			setSelectionCursorListener();
 			if (isMarkOccurrenceEnabled) {
 				SelectionCursorListener.installOccurrencesFinder();
 			}
+
+			CFEDragDropListener ddListener = new CFEDragDropListener(this,
+					(ProjectionViewer) this.getSourceViewer(), SelectionCursorListener);
+			IDragAndDropService dtSvc = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
+			dtSvc.addMergedDropTarget(tw, operations, transfers, ddListener);
+			
 			return;
 		}
 		

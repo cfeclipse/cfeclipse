@@ -30,11 +30,15 @@ import java.io.IOException;
 import org.cfeclipse.cfml.editors.actions.InsertFileLink;
 import org.cfeclipse.cfml.util.RelativePath;
 import org.cfeclipse.cfml.util.ResourceUtils;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceEvent;
@@ -42,10 +46,15 @@ import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.ImageTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.part.EditorInputTransfer;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
 
 /**
  * @author Stephen Milligan
@@ -91,6 +100,10 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
      * Class for converting OS data types to java types
      */
     final TextTransfer textTransfer = TextTransfer.getInstance();
+    final EditorInputTransfer editorTransfer = EditorInputTransfer.getInstance();
+    final ResourceTransfer resourceTransfer = ResourceTransfer.getInstance();
+    final LocalSelectionTransfer localSelectionTransfer = LocalSelectionTransfer.getInstance();
+    
     /**
      * This indidates whether or not the drag is internal.
      */
@@ -153,7 +166,12 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 	public void dragOver(DropTargetEvent event) {
 	    try {
 			event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
-			System.out.println(textTransfer.isSupportedType(event.currentDataType));
+			System.out.println("Supported text type:" + textTransfer.isSupportedType(event.currentDataType));
+			System.out.println("Supported file type:" + FileTransfer.getInstance().isSupportedType(event.currentDataType));
+			System.out.println("Supported image type:" + ImageTransfer.getInstance().isSupportedType(event.currentDataType));
+			event.detail = DND.DROP_COPY;
+
+			TransferData[] types = event.dataTypes;
 			if (textTransfer.isSupportedType(event.currentDataType)) {
 				//NOTE: on unsupported platforms this will return null
 			    
@@ -215,9 +233,14 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 			if(textTransfer.isSupportedType(event.currentDataType)) {
 				handleTextDrop(event);
 			}
-			
-			if(fileTransfer.isSupportedType(event.currentDataType)){
+			if(resourceTransfer.isSupportedType(event.currentDataType)) {
+				handleResourceDrop(event);
+			}
+			if(fileTransfer.isSupportedType(event.currentDataType)) {
 				handleFileDrop(event);
+			}
+			if(localSelectionTransfer.isSupportedType(event.currentDataType)) {
+				handleLocalSelectionDrop(event);
 			}
 
 	    }
@@ -250,8 +273,8 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 		    if (!isInternalDrag 
 		            && (event.detail & DND.DROP_MOVE) != 0) {
 		        // Offset of the selection start in viewer co-ordinates
-		        int selectionOffset = cursorListener.selectionStart;
-			    int length = cursorListener.selectionText.length();
+		        int selectionOffset = sel.getOffset();
+			    int length = sel.getLength();
 			    
 			    annotationTracker.createAnnotationList(selectionOffset,length);
 			    
@@ -384,8 +407,108 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 		*/
 	}
 	
+	/**
+	 * Opens a dropped resource in the CFMLEditor
+	 * 
+	 * @param event
+	 */
+	private void handleResourceDrop(DropTargetEvent event) {
+		/*
+		 * Changing this method to handle files dropped on the text editor to 
+		 * be linked, so files with the extension .css and .js for example create linked style and script blocks
+		 * 
+		 * Will also try and handle images, so an image is dropped. If it gets extended, there might be a need to get a bit clever
+		 * and call different classes to handle info
+		 * 
+		 */
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		String files[] = (String[])event.data;
+		for(int i=0; i < files.length; i++){
+			File dropped = new File(files[i]);
+			//IPath dPath = new IPath();
+			
+			if(dropped.isFile()){
+				String currentpath = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getLocation().toString();
+				File target = new File(currentpath);
+				
+				String relPath = "";
+				
+				try {
+					relPath = ResourceUtils.getRelativePath(target, dropped);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				//Figure out the relative paths
+				RelativePath relpather = new RelativePath();
+				
+				relPath =  relpather.getRelativePath(target, dropped);
+				
+				
+//				System.out.println("Dropped File: " + dropped.getAbsolutePath());
+//				System.out.println("Target File:  " + target.getAbsolutePath());
+//				System.out.println("Relative path:" + relPath);
+				
+				InsertFileLink ifl = new InsertFileLink(dropped, relPath, editor);
+				ifl.run();
+		
+			}
+		}
+		
+	    Object result = fileTransfer.nativeToJava(event.currentDataType);
+	    
+	    String[] filenames = (String[])result;
+	}
 	
-	
+	/**
+	 * Opens a dropped selection in the CFMLEditor
+	 * 
+	 * @param event
+	 */
+	private void handleLocalSelectionDrop(DropTargetEvent event) {
+		/*
+		 * Changing this method to handle files dropped on the text editor to be
+		 * linked, so files with the extension .css and .js for example create
+		 * linked style and script blocks
+		 * 
+		 * Will also try and handle images, so an image is dropped. If it gets
+		 * extended, there might be a need to get a bit clever and call
+		 * different classes to handle info
+		 */
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		ISelection selection = (ISelection) event.data;
+		if (selection instanceof TreeSelection) {
+			TreeSelection treeSelection = (TreeSelection) selection;
+			IAdaptable firstElement = (IAdaptable) treeSelection.getFirstElement();
+			IFile file = (IFile) firstElement.getAdapter(IFile.class);
+			if (file != null && file.isAccessible()) {
+				File dropped = file.getLocation().toFile();
+				String currentpath = ((IResource) ((FileEditorInput) editor.getEditorInput()).getFile()).getLocation()
+						.toString();
+				File target = new File(currentpath);
+
+				String relPath = "";
+
+				relPath = file.getProjectRelativePath().toString();
+				RelativePath relpather = new RelativePath();
+
+				relPath = relpather.getRelativePath(target, dropped);
+
+				// System.out.println("Dropped File: " +
+				// dropped.getAbsolutePath());
+				// System.out.println("Target File:  " +
+				// target.getAbsolutePath());
+				// System.out.println("Relative path:" + relPath);
+
+				InsertFileLink ifl = new InsertFileLink(dropped, relPath, editor);
+				ifl.run();
+			}
+			System.err.println(treeSelection.getPaths()[0].toString());
+
+		}
+		// Object result =
+		// localSelectionTransfer.nativeToJava(event.currentDataType);
+	}
 
 
     public void dragStart(DragSourceEvent event) {
