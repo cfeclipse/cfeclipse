@@ -34,6 +34,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
@@ -166,10 +167,6 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 	public void dragOver(DropTargetEvent event) {
 	    try {
 			event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
-			System.out.println("Supported text type:" + textTransfer.isSupportedType(event.currentDataType));
-			System.out.println("Supported file type:" + FileTransfer.getInstance().isSupportedType(event.currentDataType));
-			System.out.println("Supported image type:" + ImageTransfer.getInstance().isSupportedType(event.currentDataType));
-			event.detail = DND.DROP_COPY;
 
 			TransferData[] types = event.dataTypes;
 			if (textTransfer.isSupportedType(event.currentDataType)) {
@@ -180,6 +177,7 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 				//if(t != null) {
 				    // Convert the display co-ordinates to text widget co-ordinates
 				    
+			    	TextSelection selection = (TextSelection)viewer.getSelectionProvider().getSelection();
 			        Point mousePosition = textWidget.toControl(event.x,event.y);
 			        
 				    int widgetOffset = widgetPositionTracker.getWidgetOffset(mousePosition);
@@ -187,10 +185,9 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 				   
 				    widgetPositionTracker.doScroll(mousePosition);
 				    
-				    
 				    // Make sure we don't allow text to be dropped onto itself
-				    if (viewerOffset > cursorListener.selectionStart 
-				            && viewerOffset < cursorListener.selectionStart + cursorListener.selectionText.length()) {
+				    if (viewerOffset > selection.getOffset() 
+				            && viewerOffset < selection.getOffset() + selection.getLength()) {
 				        event.feedback = DND.DROP_NONE;
 				    }
 				    else if (viewerOffset != lastOffset) {
@@ -234,12 +231,18 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 				handleTextDrop(event);
 			}
 			if(resourceTransfer.isSupportedType(event.currentDataType)) {
+				// we set this because we don't want the source resource deleted (DND.MOVE is default)
+				event.detail = DND.DROP_COPY;
 				handleResourceDrop(event);
 			}
 			if(fileTransfer.isSupportedType(event.currentDataType)) {
+				// we set this because we don't want the source resource deleted (DND.MOVE is default)
+				event.detail = DND.DROP_COPY;
 				handleFileDrop(event);
 			}
 			if(localSelectionTransfer.isSupportedType(event.currentDataType)) {
+				// we set this because we don't want the source resource deleted (DND.MOVE is default)
+				event.detail = DND.DROP_COPY;
 				handleLocalSelectionDrop(event);
 			}
 
@@ -422,42 +425,17 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 		 * 
 		 */
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		String files[] = (String[])event.data;
-		for(int i=0; i < files.length; i++){
-			File dropped = new File(files[i]);
-			//IPath dPath = new IPath();
-			
-			if(dropped.isFile()){
-				String currentpath = ( (IResource) ((FileEditorInput)editor.getEditorInput()).getFile() ).getLocation().toString();
-				File target = new File(currentpath);
-				
-				String relPath = "";
-				
-				try {
-					relPath = ResourceUtils.getRelativePath(target, dropped);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				//Figure out the relative paths
-				RelativePath relpather = new RelativePath();
-				
-				relPath =  relpather.getRelativePath(target, dropped);
-				
-				
-//				System.out.println("Dropped File: " + dropped.getAbsolutePath());
-//				System.out.println("Target File:  " + target.getAbsolutePath());
-//				System.out.println("Relative path:" + relPath);
-				
-				InsertFileLink ifl = new InsertFileLink(dropped, relPath, editor);
-				ifl.run();
-		
-			}
-		}
-		
-	    Object result = fileTransfer.nativeToJava(event.currentDataType);
-	    
-	    String[] filenames = (String[])result;
+        Assert.isTrue(event.data instanceof IResource[]);
+        IResource[] files = (IResource[]) event.data;
+        for (int i = 0; i < files.length; i++) {
+            if (files[i] instanceof IFile) {
+                IFile file = (IFile) files[i];
+                
+                if (!file.isPhantom()) {
+                	//do stuff                	
+                }
+            }
+        }
 	}
 	
 	/**
@@ -483,7 +461,7 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 			IFile file = (IFile) firstElement.getAdapter(IFile.class);
 			if (file != null && file.isAccessible()) {
 				File dropped = file.getLocation().toFile();
-				String currentpath = ((IResource) ((FileEditorInput) editor.getEditorInput()).getFile()).getLocation()
+				String currentpath = ((IResource) ((FileEditorInput) editor.getEditorInput()).getFile()).getParent().getLocation()
 						.toString();
 				File target = new File(currentpath);
 
