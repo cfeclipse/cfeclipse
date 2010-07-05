@@ -109,7 +109,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		
 		
 		//layout.addActionSet("org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard");
-		//layout.addActionSet("org.cfeclipse.cfml.actionsets");
+		//layout.addActionSet("org.cfeclipse.cfml.actionset");
 		
 	}
 }

@@ -154,8 +154,6 @@
       <editorContribution
             targetID="org.cfeclipse.cfml.editors.CFMLEditor"
             id="org.cfeclipse.cfml.editors.CFMLEditorActions">
-        
-         
          <menu
                id="org.cfeclipse.cfml.menus.source"
                label="&amp;Source"
@@ -1986,17 +1984,13 @@
 
    </extension>
    
-   
-   
    <extension point="org.eclipse.core.resources.markers"
 		id="parserProblemMarker"
 		name="CFEclipse Parser problem">
 		<super type="org.eclipse.core.resources.problemmarker"/>
 		<persistent value="true"/>
 	</extension>
-   
-   
-   
+      
    <extension point="org.eclipse.core.resources.markers"
 		id="parserWarningMarker"
 		name="CFEclipse parser warning">
@@ -2274,10 +2268,9 @@
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
-            id="org.cfeclipse.cfml.actionsets"
+            id="org.cfeclipse.cfml.actionset"
             label="CFEclipse"
             visible="true">
-            
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
                id="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
@@ -2551,7 +2544,7 @@
 
   	<extension point="org.eclipse.ui.actionSetPartAssociations">
 	  	<actionSetPartAssociation
-	            targetID="org.cfeclipse.cfml.actionsets">
+	            targetID="org.cfeclipse.cfml.actionset">
 	         <part
 	               id="org.cfeclipse.cfml.editors.CFMLEditor">
 	         </part>
@@ -2626,7 +2619,7 @@
       		translations="$nl$/templates/cfscript.properties">
       </include>
    </extension>
-<!--
+   <!--   
    <extension
          id="cfeDrop"
          name="CFE Resource Drop"
@@ -2636,8 +2629,7 @@
             id="org.cfeclipse.ui.cfmlDrop">
       </action>
    </extension>   
--->   
-
+	-->
 <!-- this is all for image viewing / hovers etc. -->
 
    <extension
