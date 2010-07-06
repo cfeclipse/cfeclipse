@@ -37,6 +37,7 @@ import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.text.BadLocationException;
@@ -48,6 +49,7 @@ import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -78,9 +80,7 @@ public class CodeFoldingSetter {
 		this.editor = editor;
 		model = (ProjectionAnnotationModel) editor.getAdapter(ProjectionAnnotationModel.class);
 		doc = (ICFDocument) editor.getDocumentProvider().getDocument(editor.getEditorInput());
-		if ((editor.getEditorInput() instanceof IFileEditorInput)) {
-			resource = ((IFileEditorInput) editor.getEditorInput()).getFile();
-		}
+		resource = ((IFile) editor.getEditorInput().getAdapter(IFile.class));
 		preferenceManager = new CFMLPreferenceManager();
 		restoredFoldState = false;
 	}
@@ -610,7 +610,7 @@ public class CodeFoldingSetter {
 	 */
 
 	public void persistFoldState() {
-		if (preferenceManager.persistFoldState()) {			
+		if (preferenceManager.persistFoldState() && !resource.isPhantom()) {			
 			StringBuffer sb = new StringBuffer();
 			Iterator iter = model.getAnnotationIterator();
 			while (iter.hasNext()) {
@@ -644,32 +644,34 @@ public class CodeFoldingSetter {
 		String[] values = foldStates.split("\n");
 		for (int i = 0; i < values.length; i++) {
 				String[] split = values[i].split(",");
-			if(split.length == 3) {				
+			if(split.length == 3) {
 				storedFolds.add(new StoredFold(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2])));
 			}
 		}
 	}
 
 	public void restoreFoldState() {
-		loadSnapshotFromProperty();
-		if (this.storedFolds != null) {
-			Iterator iter;
-			HashMap aHashMap = new HashMap();
-			for (StoredFold fold : storedFolds) {
-				iter = model.getAnnotationIterator(fold.offset, fold.length, false, false);
-				if (iter.hasNext()) {
-					ProjectionAnnotation p = (ProjectionAnnotation) iter.next();
-					if (fold.collapsed!=0) {
-						model.collapse(p);
+		if(resource != null) {
+			loadSnapshotFromProperty();
+			if (this.storedFolds != null) {
+				Iterator iter;
+				HashMap aHashMap = new HashMap();
+				for (StoredFold fold : storedFolds) {
+					iter = model.getAnnotationIterator(fold.offset, fold.length, false, false);
+					if (iter.hasNext()) {
+						ProjectionAnnotation p = (ProjectionAnnotation) iter.next();
+						if (fold.collapsed!=0) {
+							model.collapse(p);
+						} else {
+							model.expand(p);
+						}
 					} else {
-						model.expand(p);
-					}
-				} else {
-					try {
-						addFoldingMark(aHashMap, fold.offset, fold.length, new CustomProjectionAnnotation(fold.collapsed!=0),
-								fold.collapsed!=0);
-					} catch (BadLocationException e) {
-						e.printStackTrace();
+						try {
+							addFoldingMark(aHashMap, fold.offset, fold.length, new CustomProjectionAnnotation(fold.collapsed!=0),
+									fold.collapsed!=0);
+						} catch (BadLocationException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
