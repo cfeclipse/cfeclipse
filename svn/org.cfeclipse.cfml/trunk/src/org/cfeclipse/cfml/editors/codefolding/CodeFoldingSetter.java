@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.actions.SaveStateAction;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.parser.CFNodeList;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
@@ -59,8 +58,6 @@ import org.eclipse.ui.texteditor.ITextEditor;
  */
 public class CodeFoldingSetter {
 	private QualifiedName foldStateQN = new QualifiedName("foldedCodeState", "foldState");
-
-	private final SaveStateAction saveStateAction = new SaveStateAction();
 
 	private ITextEditor editor;
 
