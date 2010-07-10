@@ -182,17 +182,17 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 			        
 				    int widgetOffset = widgetPositionTracker.getWidgetOffset(mousePosition);
 				    int viewerOffset = viewer.widgetOffset2ModelOffset(widgetOffset);
-				   
 				    widgetPositionTracker.doScroll(mousePosition);
 				    
 				    // Make sure we don't allow text to be dropped onto itself
+				    // doesn't seem to be working in E3.6 on Windows :-/
 				    if (viewerOffset > selection.getOffset() 
 				            && viewerOffset < selection.getOffset() + selection.getLength()) {
 				        event.feedback = DND.DROP_NONE;
 				    }
 				    else if (viewerOffset != lastOffset) {
-				        viewer.setSelectedRange(viewerOffset,0);
-				        editor.setHighlightRange(viewerOffset,0,true);
+				        //viewer.setSelectedRange(viewerOffset,0);
+				        //editor.setHighlightRange(viewerOffset,0,true);
 					    //editor.setFocus();
 				        lastOffset = viewerOffset;
 				    }

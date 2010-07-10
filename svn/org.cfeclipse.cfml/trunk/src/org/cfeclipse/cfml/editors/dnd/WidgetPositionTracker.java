@@ -33,6 +33,7 @@ import org.eclipse.swt.graphics.Point;
 public class WidgetPositionTracker {
 
     StyledText textWidget = null;
+    int lastGoodOffset;
     /**
      * 
      */
@@ -50,11 +51,13 @@ public class WidgetPositionTracker {
 	    int offset = -1;
 	    try {
 	        offset = textWidget.getOffsetAtLocation(pt);
+	        lastGoodOffset = offset;
 	    }
 	    catch (IllegalArgumentException e) {
 	        // Check if the cursor is past the end of the line
-	        Point startPt = new Point(0,pt.y);
-	        return getLineStart(startPt);
+	        //Point startPt = new Point(0,pt.y);
+	        //return getLineStart(startPt);
+	    	return lastGoodOffset;
 	    }
 	    
 	    return offset;
