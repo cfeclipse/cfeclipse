@@ -1268,12 +1268,14 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 			return;
 
 		StyledText st= getSourceViewer().getTextWidget();
-		dndService.removeMergedDropTarget(st);
-
-		DragSource dragSource= (DragSource)st.getData(DND.DRAG_SOURCE_KEY);
-		if (dragSource != null) {
-			dragSource.dispose();
-			st.setData(DND.DRAG_SOURCE_KEY, null);
+		if(st != null) {			
+			dndService.removeMergedDropTarget(st);
+			
+			DragSource dragSource= (DragSource)st.getData(DND.DRAG_SOURCE_KEY);
+			if (dragSource != null) {
+				dragSource.dispose();
+				st.setData(DND.DRAG_SOURCE_KEY, null);
+			}
 		}
 		//Remove the listener
 		if(SelectionCursorListener!=null){			
