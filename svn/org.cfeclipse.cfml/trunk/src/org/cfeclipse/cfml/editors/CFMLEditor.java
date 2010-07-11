@@ -1252,8 +1252,6 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 	}
 	
 	
-	
-	
 	public void dispose() {
 	    this.colorManager.dispose();
 		if (this.cfmlBracketMatcher != null) {
