@@ -382,6 +382,14 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
     
     public void selectionChanged(SelectionChangedEvent event) {
 		setSelectedTag();
+//		editor.getEditorSite().getPage().showActionSet("org.cfeclipse.cfml.actionset");
+		if (event.getSelection() instanceof ITextSelection) {
+			ITextSelection textSelection= (ITextSelection)event.getSelection();
+			this.selectionStart = textSelection.getOffset();
+			this.selectionText = textSelection.getText();
+        	//checkFolding();
+		}
+
         if (!this.hovering) {
         	if(editor.isMarkingOccurrences()) {
         		ISelection selection = event.getSelection();

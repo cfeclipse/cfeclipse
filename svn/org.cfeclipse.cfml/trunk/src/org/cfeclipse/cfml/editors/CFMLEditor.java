@@ -97,6 +97,7 @@ import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ISynchronizable;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.ITextViewerExtension5;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelExtension;
@@ -193,7 +194,18 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 	private boolean fInitialReconcile;
 	private CFDocument fCFDocument;
 
-
+	/**
+	 * Returns the offset of the given source viewer's document that corresponds
+	 * to the given widget offset or <code>-1</code> if there is no such offset.
+	 *
+	 * @param viewer the source viewer
+	 * @param widgetOffset the widget offset
+	 * @return the corresponding offset in the source viewer's document or <code>-1</code>
+	 * @since 2.1
+	 */
+	public static final int getWidgetOffset2ModelOffset(ISourceViewer viewer, int widgetOffset) {
+		return widgetOffset2ModelOffset(viewer, widgetOffset);
+	}
 
 	/**
 	 * Returns the cf model for the current editor input of this editor.
@@ -695,6 +707,29 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 	
 	/**
+	 * Initializes the drag and drop support for the given viewer based on
+	 * provided editor adapter for drop target listeners.
+	 *
+	 * @param viewer the viewer
+	 * @since 3.0
+	 */
+	@Override
+	protected void initializeDragAndDrop(ISourceViewer viewer) {
+		// TODO Auto-generated method stub
+		StyledText tw = getSourceViewer().getTextWidget();
+		int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT;
+		Transfer[] transfers = new Transfer[] { LocalSelectionTransfer.getTransfer(),TextTransfer.getInstance(),ResourceTransfer.getInstance(),FileTransfer.getInstance() };
+		//installTextDragAndDrop(getSourceViewer());
+		CFEDragDropListener ddListener = new CFEDragDropListener(this,
+				(ProjectionViewer) this.getSourceViewer(), SelectionCursorListener);
+		IDragAndDropService dtSvc = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
+		dtSvc.addMergedDropTarget(tw, operations, transfers, ddListener);
+		final DragSource source= new DragSource(tw, DND.DROP_COPY | DND.DROP_MOVE);
+		source.setTransfer(new Transfer[] {TextTransfer.getInstance()});
+		source.addDragListener(ddListener);			
+	}
+	
+	/**
 	 * sets up seleciton listeners, like the TextSelection listener, and DND (eventually)
 	 *
 	 */
@@ -714,61 +749,18 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 		if (c == null) // ie we are on 3.3 or higher
 		{
-			// Add a 'TextTransfer' drop target to the editor
-			/*
-			 * this isn't quite working for 3.4 >
-			 *
-			 */
-			StyledText tw = getSourceViewer().getTextWidget();
-			int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT;
-			Transfer[] transfers = new Transfer[] { TextTransfer.getInstance(),LocalSelectionTransfer.getTransfer(),ResourceTransfer.getInstance(),FileTransfer.getInstance() };
-/*
-			DropTargetListener editorListener = new DropTargetListener() {
-
-				public void dragEnter(DropTargetEvent event) {
-					System.out.println("dra1!");
-				}
-
-				public void dragLeave(DropTargetEvent event) {
-					System.out.println("dra2!");
-				}
-
-				public void dragOperationChanged(DropTargetEvent event) {
-					System.out.println("dra3!");
-				}
-
-				public void dragOver(DropTargetEvent event) {
-					System.out.println("dra4!");
-				}
-
-				public void drop(DropTargetEvent event) {
-					System.out.println("dra5!");
-					//event.widget.setData(event.data);
-					//event.getSource().notify();
-				}
-
-				public void dropAccept(DropTargetEvent event) {
-					System.out.println("dra6!");
-				}
-
-			};
-*/
-
 			setSelectionCursorListener();
 			if (isMarkOccurrenceEnabled) {
 				SelectionCursorListener.installOccurrencesFinder();
 			}
 
-			CFEDragDropListener ddListener = new CFEDragDropListener(this,
-					(ProjectionViewer) this.getSourceViewer(), SelectionCursorListener);
-			IDragAndDropService dtSvc = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
-			dtSvc.addMergedDropTarget(tw, operations, transfers, ddListener);
-			
 			return;
 		}
 		
 		setSelectionCursorListener();
 
+		/*
+		 * moved to initializeDragAndDrop but not tested on <3.3
 		//Allow data to be copied or moved from the drag source
 		int operations = DND.DROP_MOVE | DND.DROP_COPY;
 		this.dragsource = new DragSource(this.getSourceViewer().getTextWidget(),
@@ -795,6 +787,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		this.dragsource.addDragListener(ddListener);
 
 		target.addDropListener(ddListener);
+		*/
 
 	}
 
@@ -1269,7 +1262,19 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		CFMLPlugin.getDefault().getPreferenceStore().removePropertyChangeListener(
 				this);
 		CFMLPlugin.getDefault().getLastActionManager().removeAction(this);
-		
+		//remove the dnd listener
+		final IDragAndDropService dndService= (IDragAndDropService)getSite().getService(IDragAndDropService.class);
+		if (dndService == null)
+			return;
+
+		StyledText st= getSourceViewer().getTextWidget();
+		dndService.removeMergedDropTarget(st);
+
+		DragSource dragSource= (DragSource)st.getData(DND.DRAG_SOURCE_KEY);
+		if (dragSource != null) {
+			dragSource.dispose();
+			st.setData(DND.DRAG_SOURCE_KEY, null);
+		}
 		//Remove the listener
 		if(SelectionCursorListener!=null){			
 			SelectionCursorListener.uninstallOccurrencesFinder();

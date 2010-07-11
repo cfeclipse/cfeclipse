@@ -27,6 +27,7 @@ package org.cfeclipse.cfml.editors.dnd;
 import java.io.File;
 import java.io.IOException;
 
+import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.actions.InsertFileLink;
 import org.cfeclipse.cfml.util.RelativePath;
 import org.cfeclipse.cfml.util.ResourceUtils;
@@ -36,6 +37,9 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IRewriteTarget;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -54,9 +58,10 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.part.EditorInputTransfer;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ResourceTransfer;
+import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
-
+import org.eclipse.swt.dnd.DropTargetAdapter;
 /**
  * @author Stephen Milligan
  *
@@ -64,12 +69,12 @@ import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
  * within the editor and to and from it.
  * 
  */
-public class CFEDragDropListener  implements DropTargetListener, DragSourceListener {
+public class CFEDragDropListener implements DragSourceListener, DropTargetListener {
 
     /**
      * The text editor on which the listener is installed.
      */
-    private ITextEditor editor = null;
+    private CFMLEditor editor = null;
     /**
      * The text widget which belongs to the viewer
      */
@@ -115,7 +120,7 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
      * so that they are available to future method calls.
      * 
      */
-    public CFEDragDropListener(ITextEditor editor, ProjectionViewer viewer, SelectionCursorListener cursorListener) {
+    public CFEDragDropListener(CFMLEditor editor, ProjectionViewer viewer, SelectionCursorListener cursorListener) {
         try {
 	        this.editor = editor;
 	        this.textWidget = viewer.getTextWidget();
@@ -127,123 +132,62 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
         }
     }
 
-    /**
-     * This event is fired when a drag event enter the 
-     * text widget area (The editor area is the same as 
-     * the text widget area).
-     * 
-     * It sets up the cursor indicator for copy,move or none
-     * 
-     */
-    public void dragEnter(DropTargetEvent event) {
-        /*
-		if(event.detail == DND.DROP_DEFAULT) {
-			if ((event.operations & DND.DROP_MOVE) != 0 
-			        ||(event.operations & DND.DROP_COPY) != 0) {
-			    if (isCopy) {
-			        event.detail = DND.DROP_COPY;
-			    }
-			    else {
-			        event.detail = DND.DROP_MOVE;
-			    }
-			}
-			else {
-			    event.detail = DND.DROP_NONE;
-			}
-		}
-		*/
-        
-    }
-	
-    /**
-     * This event is fired when the mouse button is down and
-     * a drag is in progress.
-     * 
-     * It checks to see if the cursor needs to move, if
-     * the viewer needs to scroll, if a drop is valid on
-     * the current mouse position, and acts as appropriate.
-     * 
-     */
-	public void dragOver(DropTargetEvent event) {
-	    try {
-			event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
+	private Point fSelection;
 
-			TransferData[] types = event.dataTypes;
-			if (textTransfer.isSupportedType(event.currentDataType)) {
-				//NOTE: on unsupported platforms this will return null
-			    
-				//String t = (String)(textTransfer.nativeToJava(event.currentDataType));
-				
-				//if(t != null) {
-				    // Convert the display co-ordinates to text widget co-ordinates
-				    
-			    	TextSelection selection = (TextSelection)viewer.getSelectionProvider().getSelection();
-			        Point mousePosition = textWidget.toControl(event.x,event.y);
-			        
-				    int widgetOffset = widgetPositionTracker.getWidgetOffset(mousePosition);
-				    int viewerOffset = viewer.widgetOffset2ModelOffset(widgetOffset);
-				    widgetPositionTracker.doScroll(mousePosition);
-				    
-				    // Make sure we don't allow text to be dropped onto itself
-				    // doesn't seem to be working in E3.6 on Windows :-/
-				    if (viewerOffset > selection.getOffset() 
-				            && viewerOffset < selection.getOffset() + selection.getLength()) {
-				        event.feedback = DND.DROP_NONE;
-				    }
-				    else if (viewerOffset != lastOffset) {
-				        //viewer.setSelectedRange(viewerOffset,0);
-				        //editor.setHighlightRange(viewerOffset,0,true);
-					    //editor.setFocus();
-				        lastOffset = viewerOffset;
-				    }
-				//}
-			}
-	    }
-		catch (Exception e ) {
-		    e.printStackTrace();
-		}
-	}
-	
-	
-	public void dragOperationChanged(DropTargetEvent event){ 
-	
-		//allow text to be moved but files should only be copied
-	    /*
-	     * TODO Need to implement this for file drag and drop.
-		if(fileTransfer.isSupportedType(event.currentDataType)){
-			if(event.detail != DND.DROP_COPY) {
-				event.detail = DND.DROP_NONE;
+	public void dragEnter(DropTargetEvent event) {
+		fTextDragAndDropToken= null;
+		fSelection= textWidget.getSelection();
+		if (event.detail == DND.DROP_DEFAULT) {
+			if ((event.operations & DND.DROP_MOVE) != 0) {
+				event.detail= DND.DROP_MOVE;
+			} else if ((event.operations & DND.DROP_COPY) != 0) {
+				event.detail= DND.DROP_COPY;
+			} else {
+				event.detail= DND.DROP_NONE;
 			}
 		}
-		*/
 	}
-	
-	public void dragLeave(DropTargetEvent event){
-	    // Can't do much in here because the drag has already left
+
+	public void dragOperationChanged(DropTargetEvent event) {
+		if (event.detail == DND.DROP_DEFAULT) {
+			if ((event.operations & DND.DROP_MOVE) != 0) {
+				event.detail= DND.DROP_MOVE;
+			} else if ((event.operations & DND.DROP_COPY) != 0) {
+				event.detail= DND.DROP_COPY;
+			} else {
+				event.detail= DND.DROP_NONE;
+			}
+		}
 	}
-	
-	public void dropAccept(DropTargetEvent event){
+
+	public void dragOver(DropTargetEvent event) {
+		event.feedback |= DND.FEEDBACK_SCROLL;
 	}
+
 	
 	public void drop(DropTargetEvent event) {
 		try {
 			if(textTransfer.isSupportedType(event.currentDataType)) {
 				handleTextDrop(event);
+				return;
 			}
 			if(resourceTransfer.isSupportedType(event.currentDataType)) {
 				// we set this because we don't want the source resource deleted (DND.MOVE is default)
 				event.detail = DND.DROP_COPY;
 				handleResourceDrop(event);
+				return;
 			}
 			if(fileTransfer.isSupportedType(event.currentDataType)) {
 				// we set this because we don't want the source resource deleted (DND.MOVE is default)
 				event.detail = DND.DROP_COPY;
 				handleFileDrop(event);
+				return;
 			}
 			if(localSelectionTransfer.isSupportedType(event.currentDataType)) {
 				// we set this because we don't want the source resource deleted (DND.MOVE is default)
 				event.detail = DND.DROP_COPY;
 				handleLocalSelectionDrop(event);
+				return;
 			}
 
 	    }
@@ -263,55 +207,59 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 	 * @param event
 	 */
 	private void handleTextDrop(DropTargetEvent event) {
-		try
-		{
-		    String text =  (String)event.data;
-		    AnnotationTracker annotationTracker = new AnnotationTracker(viewer);
-		    // Figure out where to drop the text
-		    TextSelection sel = (TextSelection)viewer.getSelectionProvider().getSelection();
-		    // Offset of the drop point in viewer co-ordinates
-		    int dropOffset = sel.getOffset();
-		    		    
-		    // Delete the text from the old location
-		    if (!isInternalDrag 
-		            && (event.detail & DND.DROP_MOVE) != 0) {
-		        // Offset of the selection start in viewer co-ordinates
-		        int selectionOffset = sel.getOffset();
-			    int length = sel.getLength();
-			    
-			    annotationTracker.createAnnotationList(selectionOffset,length);
-			    
-		        viewer.getDocument().replace(selectionOffset,length,"");
-		        
-		        
-			    // Update the drop offset to adjust for deleted text.
-			    if (selectionOffset < dropOffset) {
-			        dropOffset -= length;
-			    }
-		    }
-		    
-		    //Drop the text in the cursor location
-			viewer.getDocument().replace(dropOffset, 0, text);
-		    
-			annotationTracker.applyAnnotations(dropOffset);
-			
-			//System.out.println("Selection dropped");
-			
-	        sel = new TextSelection(dropOffset,text.length());
+		try {
+			if (fTextDragAndDropToken != null && event.detail == DND.DROP_MOVE) {
+				// Move in same editor
+				int caretOffset= textWidget.getCaretOffset();
+				if (fSelection.x <= caretOffset && caretOffset <= fSelection.y) {
+					event.detail= DND.DROP_NONE;
+					return;
+				}
 
-			cursorListener.reset();
-			
-	        viewer.getSelectionProvider().setSelection(sel);
-	        //System.out.println("Dropped text re-selected.");
-			editor.setFocus();
-			isInternalDrag = false;
-			lastOffset = -1;
+				// Start compound change
+				IRewriteTarget target= (IRewriteTarget)editor.getAdapter(IRewriteTarget.class);
+				if (target != null)
+					target.beginCompoundChange();
+			}
 
+			if (!((AbstractTextEditor) editor).validateEditorInputState()) {
+				event.detail= DND.DROP_NONE;
+				return;
+			}
+
+			String text= (String)event.data;
+			if (((AbstractTextEditor) editor).isBlockSelectionModeEnabled()) {
+				// FIXME fix block selection and DND
+//				if (fTextDNDColumnSelection != null && fTextDragAndDropToken != null && event.detail == DND.DROP_MOVE) {
+//					// DND_MOVE within same editor - remove origin before inserting
+//					Rectangle newSelection= st.getColumnSelection();
+//					st.replaceColumnSelection(fTextDNDColumnSelection, ""); //$NON-NLS-1$
+//					st.replaceColumnSelection(newSelection, text);
+//					st.setColumnSelection(newSelection.x, newSelection.y, newSelection.x + fTextDNDColumnSelection.width - fTextDNDColumnSelection.x, newSelection.y + fTextDNDColumnSelection.height - fTextDNDColumnSelection.y);
+//				} else {
+//					Point newSelection= st.getSelection();
+//					st.insert(text);
+//					IDocument document= getDocumentProvider().getDocument(getEditorInput());
+//					int startLine= st.getLineAtOffset(newSelection.x);
+//					int startColumn= newSelection.x - st.getOffsetAtLine(startLine);
+//					int endLine= startLine + document.computeNumberOfLines(text);
+//					int endColumn= startColumn + TextUtilities.indexOf(document.getLegalLineDelimiters(), text, 0)[0];
+//					st.setColumnSelection(startColumn, startLine, endColumn, endLine);
+//				}
+			} else {
+				Point newSelection= textWidget.getSelection();
+				try {
+					int modelOffset= editor.getWidgetOffset2ModelOffset(viewer, newSelection.x);
+					viewer.getDocument().replace(modelOffset, 0, text);
+				} catch (BadLocationException e) {
+					return;
+				}
+				textWidget.setSelectionRange(newSelection.x, text.length());
+			}
+		} finally {
+			fTextDragAndDropToken= null;
 		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+
 	}
 
 	
@@ -489,68 +437,75 @@ public class CFEDragDropListener  implements DropTargetListener, DragSourceListe
 	}
 
 
-    public void dragStart(DragSourceEvent event) {
-	  	
-        try {
-	        if (!cursorListener.doDrag()) {
-	            event.doit = false;
-	            return;
-	        }
-	        
-	        isInternalDrag = false;
-	        
+	String fSelectedText;
+	private CFEDragDropListener fTextDragAndDropToken;
 
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
+	public void dragStart(DragSourceEvent event) {
+		fTextDragAndDropToken= null;
+		try {
+			fSelection= textWidget.getSelection();
+			event.doit= isLocationSelected(new Point(event.x, event.y));
+
+			ISelection selection= editor.getSelectionProvider().getSelection();
+			if (selection instanceof ITextSelection)
+				fSelectedText= ((ITextSelection)selection).getText();
+			else // fallback to widget
+				fSelectedText= textWidget.getSelectionText();
+		} catch (IllegalArgumentException ex) {
+			event.doit= false;
 		}
 	}
 
-    
+	private boolean isLocationSelected(Point point) {
+		// FIXME: https://bugs.eclipse.org/bugs/show_bug.cgi?id=260922
+		if (((AbstractTextEditor) editor).isBlockSelectionModeEnabled())
+			return false;
+
+		int offset= textWidget.getOffsetAtLocation(point);
+		Point p= textWidget.getLocationAtOffset(offset);
+		if (p.x > point.x)
+			offset--;
+		return offset >= fSelection.x && offset < fSelection.y;
+	}
+
 	public void dragSetData(DragSourceEvent event) {
-	    try {
-			// Provide the data of the requested type.
-			if(TextTransfer.getInstance().isSupportedType(event.dataType)) {
-				
-			    String selectedText = cursorListener.selectionText;
-	
-		        event.data = selectedText;
-	
-			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		event.data= fSelectedText;
+		fTextDragAndDropToken= this; // Can be any non-null object
 	}
-	
-	
 
-
-	/**
-	 * resets the <code>SelectionCursorListener</code> if the drag
-	 * finishes without a copy or move.
-	 */
 	public void dragFinished(DragSourceEvent event) {
-	    try {
-			if(event.detail == DND.DROP_MOVE){
-			    //System.out.println("Data Moved");
-			}
-			else if(event.detail == DND.DROP_COPY) {
-			    //System.out.println("Data Copied");
-			}
-			// We don't know why it stopped, but we want to reset the listener state. 
-			else {
-			    cursorListener.reset();
-			}
+		try {
+			if (event.detail == DND.DROP_MOVE && ((AbstractTextEditor) editor).validateEditorInputState()) {
+				Point newSelection= textWidget.getSelection();
+				int length= fSelection.y - fSelection.x;
+				int delta= 0;
+				if (newSelection.x < fSelection.x)
+					delta= length;
+				textWidget.replaceTextRange(fSelection.x + delta, length, ""); //$NON-NLS-1$
 
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
+				if (fTextDragAndDropToken == null) {
+					// Move in same editor - end compound change
+					IRewriteTarget target= (IRewriteTarget)editor.getAdapter(IRewriteTarget.class);
+					if (target != null)
+						target.endCompoundChange();
+				}
+
+			}
+		} finally {
+			fTextDragAndDropToken= null;
 		}
 	}
+
+	public void dragLeave(DropTargetEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void dropAccept(DropTargetEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }
