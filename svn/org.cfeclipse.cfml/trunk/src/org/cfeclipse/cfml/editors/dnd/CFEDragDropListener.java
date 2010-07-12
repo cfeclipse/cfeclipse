@@ -162,6 +162,15 @@ public class CFEDragDropListener implements DragSourceListener, DropTargetListen
 
 	public void dragOver(DropTargetEvent event) {
 		event.feedback |= DND.FEEDBACK_SCROLL;
+		Point selection= textWidget.getSelection();
+        Point mousePosition = textWidget.toControl(event.x,event.y);	  
+        int modelOffset= editor.getWidgetOffset2ModelOffset(viewer, selection.x);
+	    widgetPositionTracker.doScroll(mousePosition);
+	    if (modelOffset != lastOffset) {
+	        //viewer.setSelectedRange(modelOffset,0);
+	        //editor.setHighlightRange(modelOffset,0,true);
+	        lastOffset = modelOffset;
+	    }	
 	}
 
 	
