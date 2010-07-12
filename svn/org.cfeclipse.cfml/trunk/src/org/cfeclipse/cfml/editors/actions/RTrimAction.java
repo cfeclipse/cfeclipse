@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRewriteTarget;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
@@ -88,6 +89,9 @@ public class RTrimAction implements IWorkbenchWindowActionDelegate,IEditorAction
 			// foldingSetter.takeSnapshot();
 
 			// Loop over each line, performing the right trim
+			IRewriteTarget target= (IRewriteTarget)editor.getAdapter(IRewriteTarget.class);
+			if (target != null)
+				target.beginCompoundChange();
 			int currentLine = 0;
 			while (currentLine < doc.getNumberOfLines()) {
 				int offset = doc.getLineOffset(currentLine);
@@ -112,6 +116,8 @@ public class RTrimAction implements IWorkbenchWindowActionDelegate,IEditorAction
 
 			TextSelection selection = new TextSelection(doc, cursorOffset, selectionLength);
 			editor.getSelectionProvider().setSelection(selection);
+			if (target != null)
+				target.endCompoundChange();
 
 			// foldingSetter.restoreSnapshot();
 		} catch (Exception blx) {
