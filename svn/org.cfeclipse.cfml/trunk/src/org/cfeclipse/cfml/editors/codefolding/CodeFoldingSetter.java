@@ -607,7 +607,7 @@ public class CodeFoldingSetter {
 	 */
 
 	public void persistFoldState() {
-		if (preferenceManager.persistFoldState() && !resource.isPhantom()) {			
+		if (preferenceManager.persistFoldState() && resource != null && !resource.isPhantom()) {			
 			StringBuffer sb = new StringBuffer();
 			Iterator iter = model.getAnnotationIterator();
 			while (iter.hasNext()) {
