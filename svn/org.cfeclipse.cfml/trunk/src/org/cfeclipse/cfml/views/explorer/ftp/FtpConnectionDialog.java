@@ -9,6 +9,7 @@ package org.cfeclipse.cfml.views.explorer.ftp;
 import java.io.File;
 
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
+import org.cfeclipse.cfml.net.ftp.FTPConnection;
 import org.cfeclipse.cfml.preferences.BrowserPreferenceConstants;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -64,6 +65,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	private Combo connectionType = null;
 	private boolean isDirty = false;
 	private Button openDirButton;
+	private Button testButton;
 	
 	/**
 	 * @param parent
@@ -107,6 +109,8 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 	    port.setText(String.valueOf(connectionProperties.getPort()));
 	    username.setText(connectionProperties.getUsername());
 	    password.setText(connectionProperties.getPassword());
+	    passive.setSelection(connectionProperties.getPassive());
+	    userDirIsRoot.setSelection(connectionProperties.getUserDirIsRoot());
 	    if (connectionProperties.getConnectionid().length() == 0) {
 	        
 			okButton.setText("Create");
@@ -145,7 +149,6 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 				GridData.HORIZONTAL_ALIGN_FILL);
 		summaryLabelData.horizontalSpan = 2;
 		summaryLabel.setLayoutData(summaryLabelData);
-		//summaryLabel.setText("NOTE: Passive mode is currently forced because active mode causes the workspace to hang if the \nconnection hangs.");
 		summaryLabel.pack();
 		
 
@@ -169,10 +172,6 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		connectionTable.addSelectionChangedListener(this);
 		
 		connectionTable.setInput(new Object());
-		
-		
-
-		
 		
 		Composite editArea = new Composite(container,SWT.NONE);
 		editArea.setLayoutData(gridData);
@@ -212,9 +211,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 					host.setEnabled(true);
 					port.setEnabled(true);
 					passive.setEnabled(true);
-					passive.setSelection(connectionProperties.getPassive());
 					userDirIsRoot.setEnabled(true);
-					userDirIsRoot.setSelection(connectionProperties.getUserDirIsRoot());
 					username.setEnabled(true);
 					password.setEnabled(true);
 					openDirButton.setEnabled(false);
@@ -291,9 +288,7 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 			
 			
 		});
-		
-	
-		
+				
 		// Passive mode
 		passive = createCheckboxControl(editArea,"Passive mode:",connectionProperties.getPassive());
 		// userDirIsRoot
@@ -336,6 +331,37 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		
 		
 		selectItem();
+
+		testButton = new Button(editArea,SWT.NONE);
+		testButton.setText("Test Connection");
+		
+		testButton.addSelectionListener(new SelectionListener(){
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				
+				applyProperties();
+				FTPConnection ftpCon = new FTPConnection();
+				ftpCon.setConnectionProperties(connectionProperties);
+				MessageBox confirm = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_INFORMATION);
+				if(ftpCon.isConnectable()) {
+				    confirm.setMessage("Connection Successful!");					
+				} else {
+					if(connectionProperties.getType() == "ftp") {
+					    confirm.setMessage("Connection FAILURE! Try toggling the passive/userdir properties if you are sure the rest is correct");						
+					} else {
+						confirm.setMessage("Connection FAILURE!");
+					}
+				}
+				confirm.open();
+			}
+			
+			
+		});
 		
 		return container;
 	}
@@ -357,7 +383,6 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		    }
 		}
 		if (selectedItem >= 0) {
-			
 			connectionTable.getTable().setSelection(selectedItem);
 		}
 	}
@@ -423,11 +448,8 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 		return control;
 	}
 	
-	
-
-	protected void buttonPressed(int buttonId) {
-		if (buttonId == IDialogConstants.OK_ID) {
-			try {
+	private void applyProperties() {
+		try {
 			connectionProperties.setHost(host.getText());
 			connectionProperties.setPath(path.getText());
 			connectionProperties.setUsername(username.getText());
@@ -442,7 +464,18 @@ public class FtpConnectionDialog extends Dialog  implements ISelectionChangedLis
 			}
 			catch (Exception e) {
 				e.printStackTrace();
-			}
+			}		
+	}
+
+	protected void buttonPressed(int buttonId) {
+		if (buttonId == IDialogConstants.OK_ID) {
+			applyProperties();
+			try {
+				connectionProperties.save();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+			}		
 		} else if (buttonId == DELETE_ID) {
 		    MessageBox confirm = new MessageBox(Display.getCurrent().getActiveShell(),SWT.ICON_QUESTION | SWT.YES | SWT.NO);
 		    confirm.setMessage("Are you sure you want to delete this connection?");
