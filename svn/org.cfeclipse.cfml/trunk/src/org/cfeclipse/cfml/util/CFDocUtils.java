@@ -132,18 +132,23 @@ public class CFDocUtils {
 	private static String[] parseAttribute(String fullAttribute){
 		String[] parsedAttribute = {"",""};
 		//To split a var="something" we just need to find the location of the first "=" and we split it like that
-		String dirtyAttributeName = fullAttribute.substring(0, fullAttribute.lastIndexOf("="));
-		String dirtyAttributeValue = fullAttribute.substring(fullAttribute.lastIndexOf("=")+1, fullAttribute.length());
-		
-		parsedAttribute[0] = dirtyAttributeName.trim();
-		String cleanAttributeValue = dirtyAttributeValue.trim();
-		
-	//	remove starting " and ending "
-		if(cleanAttributeValue.startsWith("\"") && cleanAttributeValue.endsWith("\"")){
-			cleanAttributeValue = cleanAttributeValue.substring(1, cleanAttributeValue.length()-1);
+		if(fullAttribute.lastIndexOf("=") > 0) {
+			
+			String dirtyAttributeName = fullAttribute.substring(0, fullAttribute.lastIndexOf("="));
+			String dirtyAttributeValue = fullAttribute.substring(fullAttribute.lastIndexOf("=")+1, fullAttribute.length());
+
+			parsedAttribute[0] = dirtyAttributeName.trim();
+			String cleanAttributeValue = dirtyAttributeValue.trim();
+
+			//	remove starting " and ending "
+			if(cleanAttributeValue.startsWith("\"") && cleanAttributeValue.endsWith("\"")){
+				cleanAttributeValue = cleanAttributeValue.substring(1, cleanAttributeValue.length()-1);
+			}
+			
+			parsedAttribute[1] = cleanAttributeValue;
 		}
 		
-		parsedAttribute[1] = cleanAttributeValue;
+		
 		
 		return parsedAttribute;
 	}
