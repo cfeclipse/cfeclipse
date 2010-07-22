@@ -163,8 +163,6 @@ public class StartupHandler implements IStartup {
 							for (Control c : children) {
 								if (c instanceof Tree) {
 									Tree m = (Tree) c;
-									// final TreeViewer invoke = (TreeViewer) method
-									// .invoke(part);
 									final String name = this.getClass().getName();
 									
 									final Object data = m.getData(name);
@@ -173,7 +171,6 @@ public class StartupHandler implements IStartup {
 										final ColumnViewerToolTipSupport ts = new MC(m, ToolTip.NO_RECREATE, false);
 										m.setData(name, ts);
 									}
-									// ColumnViewerToolTipSupport.enableFor(m);
 									
 								} else if (c instanceof Composite) {
 									Composite m = (Composite) c;
@@ -277,6 +274,7 @@ public class StartupHandler implements IStartup {
 		return id.equals("org.cfeclipse.cfml.views.explorer.FileExplorerView")
 				|| id.equals("org.eclipse.ui.views.ResourceNavigator")
 				|| id.equals("org.eclipse.ui.navigator.ProjectExplorer")
+				|| id.equals("org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView")
 				|| id.equals("org.eclipse.jdt.ui.PackageExplorer") || id.equals("org.eclipse.jdt.ui.ProjectsView");
 	}
 

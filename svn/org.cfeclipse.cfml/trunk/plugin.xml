@@ -1588,6 +1588,12 @@
             name="%view.name.5"
             id="org.cfeclipse.cfml.views.explorer.FileExplorerView"/>
       <view
+            class="org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView"
+            icon="icons/obj16/explorer.gif"
+            category="org.cfeclipse.cfml"
+            name="%view.name.8"
+            id="org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView"/>
+      <view
             class="org.cfeclipse.cfml.views.images.ImagesView"
             category="org.cfeclipse.cfml"
             icon="icons/obj16/image_icon.png"
@@ -1697,11 +1703,6 @@
             class="org.cfeclipse.cfml.preferences.TextSelectionPreferencePage"
             category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
             id="org.cfeclipse.cfml.preferences.TextSelectionPreferencePage">
-         <enabledWhen>
-		     <adapt type="org.eclipse.core.resources.IProject">
-		          <test property="org.eclipse.core.resources.projectNature" value="org.cfeclipse.cfml.natures.CFENature"/>
-		     </adapt>         
-         </enabledWhen>
          <keywordReference id="org.cfeclipse.cfml.ui.TextSelection"/>
       </page>
 
@@ -1711,6 +1712,14 @@
             class="org.cfeclipse.cfml.preferences.CodeFormatterPreferencePage"
             id="org.cfeclipse.cfml.preferences.FormattingPreferencePage">
             <keywordReference id="org.cfeclipse.cfml.editors.formatters"/>
+      </page>
+
+      <page
+            name="%page.ConnectionPropertyPreferences"
+            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
+            class="org.cfeclipse.cfml.preferences.FtpConnectionDialog"
+            id="org.cfeclipse.cfml.preferences.FtpConnectionDialog">
+            <keywordReference id="org.cfeclipse.cfml.editors.connections"/>
       </page>
 
       <page
@@ -2023,6 +2032,7 @@
     		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
 
     	<type id="org.cfeclipse.cfml.occurrenceAnnotation" name="Occurrence Marker"
+    		super="org.eclipse.ui.workbench.texteditor.info"
     		markerType="org.cfeclipse.cfml.occurrencemarker"/>
  
 
@@ -2134,6 +2144,7 @@
        <perspectiveExtension targetID = "org.cfeclipse.cfml.perspective.CFML">
      	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
      	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
+     	 <showInPart id= "org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView" />
      	 <showInPart id= "org.cfeclipse.cfml.views.snips.SnipTreeView" />
      	 <showInPart id= "org.cfeclipse.cfml.images.imagesView" />     	 
          <viewShortcut
@@ -2141,9 +2152,15 @@
          </viewShortcut>
          <viewShortcut
                id="org.eclipse.ui.navigator.CommonNavigator">
-         </viewShortcut>         
+         </viewShortcut>
+         <viewShortcut
+               id="org.eclipse.pde.runtime.LogView">
+         </viewShortcut>
          <viewShortcut
                id="org.cfeclipse.cfml.images.imagesView">
+         </viewShortcut>
+         <viewShortcut
+               id="org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView">
          </viewShortcut>
       </perspectiveExtension>
       <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
@@ -2632,12 +2649,12 @@
 	-->
 <!-- this is all for image viewing / hovers etc. -->
 
+   <!--
    <extension
          point="org.eclipse.ui.startup">
       <startup
             class="org.cfeclipse.cfml.images.StartupHandler"></startup>
    </extension>
-   <!--
    -->
    
 </plugin>
