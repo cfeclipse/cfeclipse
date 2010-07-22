@@ -10868,7 +10868,7 @@ The user ID to send to the proxy server.
     [CFML tags]
     /cfprocessingdirective
 -->
-        <tag endtagrequired="true" canHaveAttributeCollection="false" name="cfprocessingdirective"
+        <tag endtagrequired="false" canHaveAttributeCollection="false" name="cfprocessingdirective"
             single="false"
              xmlstyle="false">
             <help><![CDATA[
@@ -19539,7 +19539,7 @@ Used to specify the slide numbers required to export from ppt file
             </possiblecombinations>
         </tag>
         <tag creator="8" endtagrequired="false" name="cfzip"
-            single="true" xmlstyle="false">
+            single="false" xmlstyle="true">
             <help><![CDATA[
         Manipulates ZIP and JavaTM Archive (JAR) files.
         In addition to the basic zip and unzip functions, use the cfzip tag to delete
@@ -19754,7 +19754,7 @@ Used to specify the slide numbers required to export from ppt file
                 <values/>
                 <triggers>
                     <selectedValue attributeName="action"
-                        required="true" value="zip"/>
+                        required="false" value="zip"/>
                 </triggers>
             </parameter>
             <parameter name="storePath" required="false" type="Boolean">
@@ -19816,8 +19816,8 @@ Used to specify the slide numbers required to export from ppt file
                 </combination>
             </possiblecombinations>
         </tag>
-        <tag creator="8" endtagrequired="false" name="cfzipparam"
-            single="true" xmlstyle="false">
+        <tag endtagrequired="false" name="cfzipparam"
+            single="false" xmlstyle="false">
             <help><![CDATA[
         Provides additional information to the cfzip tag.
         The cfzipparam tag is always a child tag of the cfzip tag.
