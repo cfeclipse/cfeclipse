@@ -430,7 +430,7 @@
          <!-- Collapse the selected text -->
          <action
                class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelectionAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"
+               definitionId="org.eclipse.ui.edit.text.folding.collapse"
                id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"
                label="%action.label.CollapseText"
                menubarPath="org.cfeclipse.cfml.menus.source/format"
@@ -439,7 +439,7 @@
          <!-- Expand the selected text -->
          <action
                class="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelectionAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"
+               definitionId="org.eclipse.ui.edit.text.folding.expand"
                id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"
                label="%action.label.ExpandSelected"
                menubarPath="org.cfeclipse.cfml.menus.source/format"
@@ -448,7 +448,7 @@
          <!-- Expand all markers -->
          <action
                class="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkersAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkers"
+               definitionId="org.eclipse.ui.edit.text.folding.expand_all"
                id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkers"
                label="%action.label.ExpandAll"
                menubarPath="org.cfeclipse.cfml.menus.source/format"
@@ -457,7 +457,7 @@
          <!-- Collapse all markers -->
          <action
                class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkersAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkers"
+               definitionId="org.eclipse.ui.edit.text.folding.collapse_all"
                id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkers"
                label="%action.label.CollapseAll"
                menubarPath="org.cfeclipse.cfml.menus.source/format"
@@ -484,7 +484,7 @@
          <!-- Toggle the expand/collapse state of the selected text -->
          <action
                class="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelectionAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"
+               definitionId="org.eclipse.ui.edit.text.folding.toggle"
                id="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"
                label="%action.label.ExpandCollapse"
                menubarPath="org.cfeclipse.cfml.menus.source/format"
@@ -1155,28 +1155,7 @@
 			description="%command.description.25"
 			categoryId="org.cfeclipse.cfml.commandCategory"
 			id="org.cfeclipse.cfml.editors.actions.LoadScribblePad"/>
-		
-		<!-- this will toggle the expand/collapse state ofthe selected block -->
-		<command
-			name="%command.name.26"
-			description="%command.description.26"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"/>
-		
-		<!-- This will expand selected block -->
-		<command
-			name="%command.name.27"
-			description="%command.description.27"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"/>
-		
-		<!-- This will collapse selected block -->
-		<command
-			name="%command.name.28"
-			description="%command.description.28"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"/>
-		
+								
 		<!-- Open in external browser -->
 		<command
 			name="%command.name.29"
@@ -1334,7 +1313,7 @@
 		<!-- Collapse Cold Folding on Selection -->
 		<key sequence="M1+-"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			commandId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseSelection"
+			commandId="org.eclipse.ui.edit.text.folding.collapse"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		
 		<!-- Double Quote -->
@@ -1354,13 +1333,7 @@
 			commandId="org.cfeclipse.cfml.editors.actions.EmTag"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Expand Code Folding on Selection -->
-		<key sequence="M1++"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			commandId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandSelection"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
+				
 		<!-- External Browser -->
 		<key sequence="F12"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
@@ -1494,13 +1467,7 @@
 			commandId="org.cfeclipse.cfml.editors.actions.StrongTag"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Toggle Code Folding on Selection -->
-		<key sequence="M1+\"
-			commandId="org.cfeclipse.cfml.editors.actions.codefolding.ToggleSelection"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
+				
 		<!-- Upper Case -->
 		<key sequence="M1+M2+U"
 			commandId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
@@ -1588,7 +1555,7 @@
             name="%view.name.5"
             id="org.cfeclipse.cfml.views.explorer.FileExplorerView"/>
       <view
-            class="org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView"
+            class="org.cfeclipse.cfml.views.explorer.vfs.view.VFSView"
             icon="icons/obj16/explorer.gif"
             category="org.cfeclipse.cfml"
             name="%view.name.8"
