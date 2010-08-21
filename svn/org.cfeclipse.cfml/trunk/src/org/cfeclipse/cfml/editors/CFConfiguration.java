@@ -573,9 +573,6 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SCRIPT);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_SCRIPT);
-		// script based cfcs
-		reconciler.setDamager(dr, CFPartitionScanner.CFC_SCRIPT);
-		reconciler.setRepairer(dr, CFPartitionScanner.CFC_SCRIPT);
 		
 		// cfset tag contents.
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SET_STATEMENT);

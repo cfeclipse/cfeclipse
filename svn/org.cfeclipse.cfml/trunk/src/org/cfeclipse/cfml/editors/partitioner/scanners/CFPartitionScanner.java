@@ -50,6 +50,7 @@ import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
 import org.eclipse.jface.text.rules.Token;
 
+
 public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	//public final static String CF_DEFAULT 	= "__cf_default";
 	public final static String DOCTYPE	 	= "__doctype";
@@ -69,7 +70,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String HTM_START_TAG_END		= "__htm_start_tag_end";
 	public final static String HTM_TAG_ATTRIBS		= "__htm_tag_attribs";
 	public final static String CF_SCRIPT		= "__cf_script";
-	public final static String CFC_SCRIPT		= "__cfc_script";
+	//public final static String CFC_SCRIPT		= "__cfc_script";
 	public final static String CF_EXPRESSION		= "__cf_expression";
 	public final static String J_SCRIPT		= "__jscript";
 	public final static String CSS		= "__css";
@@ -96,7 +97,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken htmComment 	= new Token(HTM_COMMENT);
 		IToken taglibtag		= new Token(TAGLIB_TAG);
 		IToken unktag		= new Token(UNK_TAG);
-		IToken cfcScript		= new Token(CFC_SCRIPT);
+		IToken cfcScript		= new Token(CF_SCRIPT);
+		
 		
 		List rules = new ArrayList();
 		
@@ -109,7 +111,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new NestableMultiLineRule("<!--", "-->", htmComment));
 		//doctype rule
 		rules.add(new MultiLineRule("<!doctype", ">", doctype));
-		rules.add(new MultiLineRule("component", "}", cfcScript));
+		rules.add(new MultiLineRule("component", "/}", cfcScript));
 		
 		// Handle the if/elsief/set/return tag partitioning
 		rules.add(new NamedTagRule("<cfset",">", CF_START_TAG, CF_SET_STATEMENT));
@@ -242,19 +244,6 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	    return this.fOffset;
 	}
 	
-	private boolean readsComponent(int inC) {
-		int c = Character.toLowerCase(inC);
-		if (c == 'c' && read() == 'o' && read() == 'm' && read() == 'p' && read() == 'o' && read() == 'n') {
-			unread();
-			unread();
-			unread();
-			unread();
-			unread();			
-	        return true;
-	    }
-		return false;		
-	}
-	
 	/**
 	 * Runs all configured rules at the current document offset and returns a token
 	 * to indicate what the partition type should be at that offset. The scanner 
@@ -290,10 +279,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 						    if (c == EOF) {
 						        return Token.EOF;
 						    }
-						    if (readsComponent(c)) {
-						    	break;
-						    }
-						    else if (c != '<') {
+						    if (c != '<') {
 						        return this.fDefaultReturnToken;
 						    }
 						    break;
