@@ -1372,7 +1372,7 @@
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		
 		<!-- Insert Color -->
-		<key sequence="M1+M2+Z"
+		<key sequence="M1+M2+C"
 			commandId="org.cfeclipse.cfml.editors.actions.InsertColor"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
