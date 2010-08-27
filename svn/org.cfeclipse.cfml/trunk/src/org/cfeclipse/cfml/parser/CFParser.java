@@ -83,13 +83,26 @@ import org.eclipse.ui.texteditor.MarkerUtilities;
 			WriteOutput("FREDFREDFRED");
 		</cfscript>
 		<cfif thisisatest is 1>
-			<cfoutput>asdfasdf</cfoutput>
+			<cfoutput>#fred#</cfoutput>
 		</cfif>
 	</cffunction>
+	<cfscript>
+	  todaysDate = now();
+	  
+	  function doSomething(String doWhat) {
+	  	var done = arguments.doWhat & " later";
+	  	return done; 
+	  }
+	  function returnSomething(theThing) {
+	  	return theThing; 
+	  }
+	</cfscript>
 
 	<cfset fred = 2/>
+	<cfset bob = doSomething("build a parser") />
 	<cfset test(fred)/>
 	<cffunction name="test" >
+		<cfset var woo="hoo" />
 		<cfargument name="test" default="#WriteOutput("">"")#"/> <!--- I think this is valid! --->
 	</cffunction>
 	<cfoutput>
