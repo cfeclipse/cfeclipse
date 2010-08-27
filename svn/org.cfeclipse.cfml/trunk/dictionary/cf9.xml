@@ -19539,7 +19539,7 @@ Used to specify the slide numbers required to export from ppt file
             </possiblecombinations>
         </tag>
         <tag creator="8" endtagrequired="false" name="cfzip"
-            single="false" xmlstyle="true">
+            single="false" xmlstyle="false">
             <help><![CDATA[
         Manipulates ZIP and JavaTM Archive (JAR) files.
         In addition to the basic zip and unzip functions, use the cfzip tag to delete
