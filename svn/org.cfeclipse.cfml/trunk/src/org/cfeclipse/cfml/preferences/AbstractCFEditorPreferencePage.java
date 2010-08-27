@@ -48,7 +48,7 @@ public abstract class AbstractCFEditorPreferencePage extends PreferencePage impl
 	private OverlayPreferenceStore fOverlayStore;
 	protected List fStatusList;
 	private boolean fInitialized = false;
-
+	
 	private Map fCheckBoxes = new HashMap();
 	private SelectionListener fCheckBoxListener = new SelectionListener() {
 		public void widgetDefaultSelected(SelectionEvent e) {
@@ -221,6 +221,28 @@ public abstract class AbstractCFEditorPreferencePage extends PreferencePage impl
 		return group;
 	}	
 	
+	protected void toggleGroup(Group group) {
+		if(group.isVisible()) {
+			setGroupVisible(group, false);
+		} else {
+			setGroupVisible(group, true);
+		}
+	}
+
+	protected void setGroupVisible(Group group, boolean visible) {
+		GridData gd= new GridData();
+		if(visible) {
+//			gd.heightHint=convertVerticalDLUsToPixels(3);
+//			group.setLayoutData(gd);
+			group.setVisible(true);
+		} else {
+			group.setVisible(false);
+//			gd.heightHint=1;
+//			group.setLayoutData(gd);
+			//group.getParent().pack(true);
+		}
+	}
+
 	protected Button addCheckBox(Composite parent, String labelText, String key, int indentation) {
 		Button checkBox = new Button(parent, SWT.CHECK);
 		checkBox.setText(labelText);
@@ -277,6 +299,19 @@ public abstract class AbstractCFEditorPreferencePage extends PreferencePage impl
 		checkBox.addSelectionListener(fRadioFieldListener);
 
 		getRadioFields().put(checkBox, key);
+
+		return checkBox;
+	}
+
+	protected Button addButton(Composite parent, String labelText, int indentation, int horizontalSpan) {
+		Button checkBox = new Button(parent, SWT.PUSH);
+		checkBox.setText(labelText);
+		checkBox.setFont(parent.getFont());
+
+		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gd.horizontalIndent = indentation;
+		gd.horizontalSpan = horizontalSpan;
+		checkBox.setLayoutData(gd);
 
 		return checkBox;
 	}

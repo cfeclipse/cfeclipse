@@ -70,9 +70,6 @@ public class FTPConnection implements IFileProvider {
 
     protected IViewPart viewPart = null;
 
-    protected int fConnectionTimeout = 500;
-    protected int fSocketTimeout = 333;
-
     protected boolean connectFailed = false;
     
     protected static FileSystemManager manager = null;
@@ -240,29 +237,7 @@ public class FTPConnection implements IFileProvider {
 	            String connectionType = connectionProperties.getType().toLowerCase();
 	
 	            // Start building the connection string
-	            connectionString = connectionType + ":";
-	
-				if(connectionType.equals("ftp") || connectionType.equals("sftp")) {
-	            	connectionString += "//";
-				}
-	
-	            // Add host
-	            if(connectionProperties.getHost().length() > 0) {
-	            	connectionString += connectionProperties.getHost();
-	            }
-	            
-	            // Add the port if it was given and the connection type is not file
-	            if(connectionProperties.getPort() > 0 && !connectionType.equals("file")) {
-	            	connectionString += ":" + connectionProperties.getPort();
-	            }
-	
-	            // Add the path to request if one was given
-	            if(connectionProperties.getPath().length() > 0) {
-	            	if (connectionProperties.getPath().charAt(0) != '/') {
-	            		connectionString += "/";
-	            	}
-	            	connectionString += connectionProperties.getPath();
-	            }
+	            connectionString = connectionProperties.getURI();
 
 	            // Set the manager
 	        	if (manager == null) {
@@ -272,21 +247,37 @@ public class FTPConnection implements IFileProvider {
 	            this.fileSystemOptions = new FileSystemOptions();
 	            StaticUserAuthenticator auth = new StaticUserAuthenticator(null, connectionProperties.getUsername(), connectionProperties.getPassword());
 	            DefaultFileSystemConfigBuilder.getInstance().setUserAuthenticator(fileSystemOptions, auth);
-	            if(connectionProperties.getType() == "ftp") {	            	
-	            	FtpFileSystemConfigBuilder.getInstance().setPassiveMode(fileSystemOptions, connectionProperties.getPassive());
-	            	FtpFileSystemConfigBuilder.getInstance().setDataTimeout(fileSystemOptions, new Integer(fConnectionTimeout));
-	            	FtpFileSystemConfigBuilder.getInstance().setSoTimeout(fileSystemOptions, new Integer(fSocketTimeout));
-	            	FtpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fileSystemOptions, connectionProperties.getUserDirIsRoot());
-	            }
-				SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");
-				SftpFileSystemConfigBuilder.getInstance().setTimeout(fileSystemOptions, new Integer(300));
+	            if(connectionProperties.getType().equals("ftp")) {	            	
+					//FtpFileSystemConfigBuilder.getInstance().setPassiveMode(fileSystemOptions, connectionProperties.getPassive());
+					FtpFileSystemConfigBuilder.getInstance().setDataTimeout(fileSystemOptions, connectionProperties.getTimeoutSeconds() * 10);
+					FtpFileSystemConfigBuilder.getInstance().setSoTimeout(fileSystemOptions, connectionProperties.getTimeoutSeconds() * 1000);
+					FtpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fileSystemOptions, connectionProperties.getUserDirIsRoot());
+				} else if(connectionProperties.getType().equals("sftp")) {
+					try {
+						SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");
+						SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fileSystemOptions, connectionProperties.getUserDirIsRoot());
+					} catch (FileSystemException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace(); 
+					}
+					SftpFileSystemConfigBuilder.getInstance().setTimeout(fileSystemOptions, connectionProperties.getTimeoutSeconds() * 10);
+				}
 				System.out.println("Connecting...Resolving Base File " + connectionString);
 				//manager.init();
 	
 				FileObject baseFile = manager.resolveFile(connectionString, fileSystemOptions);
 				// this is a real test, we get a false positive otherwise;
-				baseFile.getChildren();
-				((DefaultFileSystemManager) manager).setBaseFile(baseFile);
+				try{					
+					baseFile.getChildren();
+					((DefaultFileSystemManager) manager).setBaseFile(baseFile);
+		        } catch (Exception e) {
+		            if (! connectFailed) {
+		               AlertUtils.showStatusErrorMessage("Connect failed.",viewPart);
+		               AlertUtils.alertUser(e);
+		            }
+		            disconnect();
+		            connectFailed = true;
+		        }
 
 	        } catch (Exception e) {
 	            if (! connectFailed) {
