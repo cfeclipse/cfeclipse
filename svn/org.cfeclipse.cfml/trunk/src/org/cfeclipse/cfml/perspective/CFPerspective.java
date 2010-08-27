@@ -29,6 +29,7 @@ import org.cfeclipse.cfml.views.cfcmethods.CFCMethodsView;
 import org.cfeclipse.cfml.views.dictionary.DictionaryView;
 import org.cfeclipse.cfml.views.explorer.FileExplorerView;
 import org.cfeclipse.cfml.views.explorer.ftp.FtpLogView;
+import org.cfeclipse.cfml.views.explorer.vfs.view.VFSView;
 import org.cfeclipse.cfml.views.images.ImagesView;
 import org.cfeclipse.cfml.views.packageview.PackageView;
 import org.cfeclipse.cfml.views.snips.SnipTreeView;
@@ -65,6 +66,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		//standard resource nav (file / project lister)
 		left.addView(IPageLayout.ID_RES_NAV);
 		left.addView(SnipTreeView.ID_SNIPVIEWTREE);
+		left.addView(VFSView.ID_FILEEXPLORER);
 		left.addView(FileExplorerView.ID_FILE_EXPLORER);
 		
 		//views to the bottom
@@ -92,6 +94,7 @@ public class CFPerspective implements IPerspectiveFactory {
 		layout.addShowViewShortcut(IPageLayout.ID_TASK_LIST);
 		layout.addShowViewShortcut(IPageLayout.ID_BOOKMARKS);
 		layout.addShowViewShortcut(SnipTreeView.ID_SNIPVIEWTREE);
+		layout.addShowViewShortcut(VFSView.ID_FILEEXPLORER);
 		layout.addShowViewShortcut(CFCMethodsView.ID_CFCMETHODVIEW);
 		layout.addShowViewShortcut(FileExplorerView.ID_FILE_EXPLORER);
 		layout.addShowViewShortcut(DictionaryView.ID_DICTIONARY);
