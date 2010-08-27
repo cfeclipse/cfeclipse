@@ -18,8 +18,9 @@ import org.cfeclipse.cfml.net.FTPConnectionProperties;
 import org.cfeclipse.cfml.net.RemoteFile;
 import org.cfeclipse.cfml.net.RemoteFileEditorInput;
 import org.cfeclipse.cfml.net.ftp.FTPConnection;
+import org.cfeclipse.cfml.preferences.FtpConnectionDialog;
 import org.cfeclipse.cfml.util.AlertUtils;
-import org.cfeclipse.cfml.views.explorer.ftp.FtpConnectionDialog;
+import org.cfeclipse.cfml.views.explorer.vfs.view.VFSView;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
@@ -30,6 +31,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -63,6 +65,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInTarget;
@@ -158,7 +161,6 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
     
     
     public void createPartControl(Composite parent) {
-
         Composite container = new Composite(parent, SWT.NONE);
         GridLayout containerLayout = new GridLayout();
         containerLayout.numColumns = 2;
@@ -666,11 +668,14 @@ public class FileExplorerView extends ViewPart implements IShowInTarget {
 	            if (sel.getFirstElement() instanceof FTPConnectionProperties) {
 	                connectionID = ((FTPConnectionProperties)sel.getFirstElement()).getConnectionid();
 	            }
-                FtpConnectionDialog dialog = new FtpConnectionDialog(e.widget.getDisplay().getActiveShell(),connectionID);
-            	if (dialog.open() == IDialogConstants.OK_ID) {
-            		comboViewer.setInput(dialog.connectionProperties);
-            		
-            	}
+	            PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(getSite().getShell(), "org.cfeclipse.cfml.preferences.FtpConnectionDialog", new String[] {"org.cfeclipse.cfml.preferences.FtpConnectionDialog"}, null);
+	            if (pref != null)
+	            pref.open();                
+//	            FtpConnectionDialog dialog = new FtpConnectionDialog(e.widget.getDisplay().getActiveShell(),connectionID);
+//            	if (dialog.open() == IDialogConstants.OK_ID) {
+//            		comboViewer.setInput(dialog.connectionProperties);
+//            		
+//            	}
 	        	}
 	        	catch (Exception ex) {
 	        		ex.printStackTrace();
