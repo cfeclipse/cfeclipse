@@ -274,7 +274,7 @@ public class StartupHandler implements IStartup {
 		return id.equals("org.cfeclipse.cfml.views.explorer.FileExplorerView")
 				|| id.equals("org.eclipse.ui.views.ResourceNavigator")
 				|| id.equals("org.eclipse.ui.navigator.ProjectExplorer")
-				|| id.equals("org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView")
+				|| id.equals("org.cfeclipse.cfml.views.explorer.vfs.view.VFSView")
 				|| id.equals("org.eclipse.jdt.ui.PackageExplorer") || id.equals("org.eclipse.jdt.ui.ProjectsView");
 	}
 

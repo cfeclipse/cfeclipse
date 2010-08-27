@@ -8,6 +8,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
@@ -65,6 +66,19 @@ public class ColumnViewerToolTipSupport extends DefaultToolTip {
 		new ColumnViewerToolTipSupport(viewer, ToolTip.NO_RECREATE, false);
 	}
 
+	/**
+	 * Enable ToolTip support for the table by creating an instance from this
+	 * class. To get all necessary informations this support class consults the
+	 * {@link CellLabelProvider}.
+	 * 
+	 * @param viewer
+	 *            the viewer the support is attached to
+	 */
+	public static void enableFor(Table table) {
+		new ColumnViewerToolTipSupport(table, ToolTip.NO_RECREATE, false);
+	}
+	
+	
 	/**
 	 * Enable ToolTip support for the viewer by creating an instance from this
 	 * class. To get all necessary informations this support class consults the
@@ -153,4 +167,5 @@ public class ColumnViewerToolTipSupport extends DefaultToolTip {
 			}
 		}
 	}
+
 }
