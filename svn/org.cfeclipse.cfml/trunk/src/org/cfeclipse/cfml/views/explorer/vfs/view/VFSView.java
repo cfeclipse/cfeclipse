@@ -2077,7 +2077,7 @@ System.out.println("createTableDragSource::dragSetData: sourceNames ["
 	}
 	
 	/**
-	 * Resolve a FileSystem Uri seeting progress UI messages
+	 * Resolve a FileSystem Uri seting progress UI messages
 	 */
 	public FileObject resolveURI (String Uri, String connectionId) throws FileSystemException
 	{
