@@ -8,6 +8,7 @@ package org.cfeclipse.cfml.net.ftp;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.NoRouteToHostException;
@@ -52,6 +53,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IViewPart;
+
+import com.jcraft.jsch.UserInfo;
 
 
 
@@ -254,13 +257,30 @@ public class FTPConnection implements IFileProvider {
 					FtpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fileSystemOptions, connectionProperties.getUserDirIsRoot());
 				} else if(connectionProperties.getType().equals("sftp")) {
 					try {
-						SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");
+						if(connectionProperties.getStrictHostKeyCheck()) {
+							SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "yes");							
+						} else {
+							SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");							
+						}
+						//SftpFileSystemConfigBuilder.getInstance().setKnownHosts(fileSystemOptions, new File(connectionProperties.getHostsFile()));
+						if(connectionProperties.getIsPublicKeyAuth()) {	
+							SftpFileSystemConfigBuilder.getInstance().setUserInfo(fileSystemOptions,new PublicKeyAuthUserInfo(connectionProperties.getPassword()));
+							SftpFileSystemConfigBuilder.getInstance().setPreferredAuthentications(fileSystemOptions,"publickey");
+							File keyFile = new File(connectionProperties.getKeyFile());
+							if(!keyFile.exists()) {
+								AlertUtils.showStatusErrorMessage("Key file not found.",viewPart);
+								AlertUtils.alertUser("Key file not found.");
+							}
+							SftpFileSystemConfigBuilder.getInstance().setIdentities(fileSystemOptions,new File[] {keyFile});
+						} else {							
+							SftpFileSystemConfigBuilder.getInstance().setPreferredAuthentications(fileSystemOptions,"keyboard-interactive,password");
+						}
 						SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fileSystemOptions, connectionProperties.getUserDirIsRoot());
 					} catch (FileSystemException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace(); 
 					}
-					SftpFileSystemConfigBuilder.getInstance().setTimeout(fileSystemOptions, connectionProperties.getTimeoutSeconds() * 10);
+					SftpFileSystemConfigBuilder.getInstance().setTimeout(fileSystemOptions, connectionProperties.getTimeoutSeconds() * 100);
 				}
 				System.out.println("Connecting...Resolving Base File " + connectionString);
 				//manager.init();

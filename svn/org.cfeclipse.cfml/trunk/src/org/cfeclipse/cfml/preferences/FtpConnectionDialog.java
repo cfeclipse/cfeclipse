@@ -156,6 +156,8 @@ public class FtpConnectionDialog extends AbstractCFEditorPreferencePage  impleme
 	private Text timeoutSeconds;
 	private Button strictHostKeyCheck;
 	private Text hostsFile;
+	private Button isPublicKeyAuth;
+	private Text keyFile;
 	private Group saveGroup;	
 
 	public void setCurrentConnectionId(String connectionId) {
@@ -211,8 +213,14 @@ public class FtpConnectionDialog extends AbstractCFEditorPreferencePage  impleme
 	    port.setText(String.valueOf(connectionProperties.getPort()));
 	    username.setText(connectionProperties.getUsername());
 	    password.setText(connectionProperties.getPassword());
+	    timeoutSeconds.setText(String.valueOf(connectionProperties.getTimeoutSeconds()));
+	    keyFile.setText(connectionProperties.getKeyFile());
+	    keyFile.setEnabled(connectionProperties.getIsPublicKeyAuth());
+	    hostsFile.setText(connectionProperties.getHostsFile());
+	    hostsFile.setEnabled(connectionProperties.getStrictHostKeyCheck());
 	    //passive.setSelection(connectionProperties.getPassive());
 	    userDirIsRoot.setSelection(connectionProperties.getUserDirIsRoot());
+	    isPublicKeyAuth.setSelection(connectionProperties.getIsPublicKeyAuth());
 	    if (connectionProperties.getConnectionid().length() == 0) {
 	        
 			saveButton.setText("Create Connection");
@@ -381,13 +389,13 @@ public class FtpConnectionDialog extends AbstractCFEditorPreferencePage  impleme
 		// userDirIsRoot
 		//userDirIsRoot = createCheckboxControl(portGroup,USERDIR_TEXT,connectionProperties.getUserDirIsRoot());
 		userDirIsRoot = addCheckBox(portGroup,USERDIR_TEXT,"userDirIsRoot",0);
-		port = createNumberControl(portGroup,"Port:",connectionProperties.getPort(),5);
+		port = createNumberControl(portGroup,"Port:",connectionProperties.getPort(),6);
 		
 		timeoutSeconds = createNumberControl(portGroup,"Timeout (seconds):",connectionProperties.getTimeoutSeconds(),3);
 
 		// SFTP stuff
 		sftpGroup = createGroup(6, hostGroup, "");
-		strictHostKeyCheck = createCheckboxControl(sftpGroup,"Check Host:",connectionProperties.getStrictHostKeyCheck());
+		strictHostKeyCheck = createCheckboxControl(sftpGroup,"Verify Host:",connectionProperties.getStrictHostKeyCheck());
 		hostsFile = createTextControl(sftpGroup,"Hosts File:",connectionProperties.getHostsFile(),50);
 		if(connectionProperties.getStrictHostKeyCheck()) {
 			hostsFile.setEnabled(true);
@@ -399,6 +407,20 @@ public class FtpConnectionDialog extends AbstractCFEditorPreferencePage  impleme
 			}
 			public void widgetSelected(SelectionEvent e) {				
 				hostsFile.setEnabled(!hostsFile.isEnabled());
+			}
+		});
+		isPublicKeyAuth = createCheckboxControl(sftpGroup,"Public Key Auth:",connectionProperties.getStrictHostKeyCheck());
+		keyFile = createTextControl(sftpGroup,"Key File:",connectionProperties.getKeyFile(),50);
+		if(connectionProperties.getIsPublicKeyAuth()) {
+			keyFile.setEnabled(true);
+		} else {
+			keyFile.setEnabled(false);			
+		}
+		isPublicKeyAuth.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+			public void widgetSelected(SelectionEvent e) {				
+				keyFile.setEnabled(!keyFile.isEnabled());
 			}
 		});
 
@@ -624,9 +646,13 @@ public class FtpConnectionDialog extends AbstractCFEditorPreferencePage  impleme
 			connectionProperties.setConnectionid(connectionid.getText());
 			connectionProperties.setPort(Integer.parseInt(port.getText()));
 			connectionProperties.setType(connectionType.getText());
+			connectionProperties.setTimeoutSeconds(timeoutSeconds.getText());
+			connectionProperties.setIsPublicKeyAuth(isPublicKeyAuth.getSelection());
+			connectionProperties.setKeyFile(keyFile.getText());
+			connectionProperties.setHostsFile(hostsFile.getText());
 //			connectionProperties.setPassive(passive.getSelection());
 			connectionProperties.setUserDirIsRoot(userDirIsRoot.getSelection());
-			//connectionProperties.setSecure(sftp.getSelection());
+			connectionProperties.setStrictHostKeyCheck(strictHostKeyCheck.getSelection());
 			}
 			catch (Exception e) {
 				e.printStackTrace();

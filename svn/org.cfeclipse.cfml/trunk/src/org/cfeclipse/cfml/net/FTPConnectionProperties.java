@@ -22,6 +22,10 @@ import org.apache.commons.vfs.impl.DefaultFileSystemConfigBuilder;
 import org.apache.commons.vfs.provider.ftp.FtpFileSystemConfigBuilder;
 import org.apache.commons.vfs.provider.sftp.SftpFileSystemConfigBuilder;
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.net.ftp.PublicKeyAuthUserInfo;
+import org.cfeclipse.cfml.util.AlertUtils;
+
+import com.jcraft.jsch.UserInfo;
 
 
 /**
@@ -46,7 +50,9 @@ public class FTPConnectionProperties {
 	private static String fSecure = "secure";
 	private static String fTimeoutSeconds = "timeout";
 	private static String fStrictHostKeyCheck = "stricthostkey";
+	private static String fIsPublicKeyAuth= "publickeyauth";
 	private static String fHostsFile = "hostsfile";
+	private static String fKeyFile = "keyfile";
 	public static String USER_HOME = System.getProperty("user.home");
 	
 	
@@ -124,7 +130,23 @@ public class FTPConnectionProperties {
 				FtpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fileSystemOptions, getUserDirIsRoot());
 			} else if(getType().equals("sftp")) {
 				try {
-					SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");
+					if(getStrictHostKeyCheck()) {
+						SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "yes");							
+					} else {
+						SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fileSystemOptions, "no");							
+					}
+					//SftpFileSystemConfigBuilder.getInstance().setKnownHosts(fileSystemOptions, new File(connectionProperties.getHostsFile()));
+					if(getIsPublicKeyAuth()) {	
+						SftpFileSystemConfigBuilder.getInstance().setUserInfo(fileSystemOptions,new PublicKeyAuthUserInfo(getPassword()));
+						SftpFileSystemConfigBuilder.getInstance().setPreferredAuthentications(fileSystemOptions,"publickey");
+						File keyFile = new File(getKeyFile());
+						if(!keyFile.exists()) {
+							AlertUtils.alertUser("Key file not found.");
+						}
+						SftpFileSystemConfigBuilder.getInstance().setIdentities(fileSystemOptions,new File[] {keyFile});
+					} else {							
+						SftpFileSystemConfigBuilder.getInstance().setPreferredAuthentications(fileSystemOptions,"keyboard-interactive,password");
+					}
 					SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fileSystemOptions, getUserDirIsRoot());
 				} catch (FileSystemException e1) {
 					// TODO Auto-generated catch block
@@ -315,8 +337,8 @@ public class FTPConnectionProperties {
     	return Integer.parseInt(connectionProperties.getProperty(fTimeoutSeconds, "5"));
 	}
 
-	public void setStrictHostKeyCheck(String strictHostKeyCheck) {
-    	connectionProperties.setProperty(fStrictHostKeyCheck,strictHostKeyCheck);
+	public void setStrictHostKeyCheck(boolean b) {
+    	connectionProperties.setProperty(fStrictHostKeyCheck,String.valueOf(b));
 	}
 
 	public Boolean getStrictHostKeyCheck() {
@@ -330,6 +352,19 @@ public class FTPConnectionProperties {
     	return connectionProperties.getProperty(fHostsFile,USER_HOME + FileName.SEPARATOR + ".ssh/known_hosts");
 	}
 	
-	
-    
+	public void setKeyFile(String keyFile) {
+    	connectionProperties.setProperty(fKeyFile,keyFile);
+	}
+	public String getKeyFile() {
+    	return connectionProperties.getProperty(fKeyFile,USER_HOME + FileName.SEPARATOR + ".ssh/id_dsa");
+	}
+
+
+	public boolean getIsPublicKeyAuth() {
+    	return Boolean.parseBoolean(connectionProperties.getProperty(fIsPublicKeyAuth,"false"));
+	}
+	public void setIsPublicKeyAuth(boolean b) {
+    	connectionProperties.setProperty(fIsPublicKeyAuth,String.valueOf(b));
+	}
+
 }
