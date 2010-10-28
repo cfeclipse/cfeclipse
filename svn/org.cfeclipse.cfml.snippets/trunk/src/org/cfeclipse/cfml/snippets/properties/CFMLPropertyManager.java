@@ -25,7 +25,9 @@
 package org.cfeclipse.cfml.snippets.properties;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceConstants;
@@ -33,6 +35,7 @@ import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceManager;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -98,13 +101,40 @@ public class CFMLPropertyManager {
 		return preferenceManager.getPluginStateLocation();
 	}
 
+	/**
+	 * @param selection
+	 * @return the resources in the selection
+	 */
+	private IResource[] getSelectedResources(IStructuredSelection selection) {
+		Set<IResource> result = new HashSet<IResource>();
+		for (Object o : selection.toList()) {
+			IResource resource = (IResource) getAdapter(o, IResource.class);
+			if (resource != null)
+				result.add(resource);
+		}
+		return result.toArray(new IResource[result.size()]);
+	}
+
+	private Object getAdapter(Object adaptable, Class c) {
+		if (c.isInstance(adaptable)) {
+			return adaptable;
+		}
+		if (adaptable instanceof IAdaptable) {
+			IAdaptable a = (IAdaptable) adaptable;
+			Object adapter = a.getAdapter(c);
+			if (c.isInstance(adapter)) {
+				return adapter;
+			}
+		}
+		return null;
+	}
+	
 	public String getSnippetsPath() {
-		IResource currentResource = ResourceUtil.getResource(Workbench.getInstance().getActiveWorkbenchWindow()
-				.getActivePage().getActiveEditor().getEditorInput());
-		if(currentResource == null) {
+		IResource[] currentResource = getSelectedResources(getSelection());
+		if(currentResource.length == 0) {
 			return defaultSnippetsPath();
 		}
-		return snippetsPath(currentResource.getProject());
+		return snippetsPath(currentResource[0].getProject());
 	}
 
 	public void setSnippetsPath(String path, IProject project) {
