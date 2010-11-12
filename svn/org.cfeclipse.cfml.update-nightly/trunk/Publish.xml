@@ -1,4 +1,4 @@
-<project name="Publish  CFEclipse Plugin" default="update-nightly" basedir=".">
+<project name="Publish  CFEclipse Plugin" default="update-preview" basedir=".">
 	<property name="buildtype" value="update-preview"/>
 
 	<taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar" />
@@ -36,10 +36,12 @@
 			<format pattern="MM/dd/yyyy hh:mm aa" offset="-1" unit="day" property="daybefore" />
 		</tstamp>
 		<property file="publish.properties" />
+		<scp port="${site.ssh.port}" file="removePreviousBuilds.sh" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/${buildtype}" trust="true" verbose="true" />
 		 <sshexec host="${site.url}"
 			username="${site.username}"
+		 	port="${site.ssh.port}"
 			password="${site.password}"
-			command="/bin/sh ${site.htmlroot}${buildtype}/removePreviousBuilds.sh"/>
+			command="/bin/sh ${site.htmlroot}/${buildtype}/removePreviousBuilds.sh"/>
 	</target>
 
 
@@ -54,7 +56,7 @@
 		</copy>
 	</target>
 
-	<target name="update-nightly" depends="init,clean-site">
+	<target name="update-preview" depends="init,clean-site">
 		  <input
 		    message="Do you want to tweet that this build is available?"
 		    validargs="y,n"
@@ -89,7 +91,7 @@
 		<propertyregex property="info.smaller"
 			input="${last.revision.info}"
 			regexp="(?s)-+.(r\d+ \| \w+)\s?\|\s?.+(\(.*?).\|\s\d+\slines?(.*?).-{3}"
-			select=" #ColdFusion \2 \1 > \3"
+			select=" #CFML \2 \1 > \3"
 			casesensitive="false" />
 		<twitter message="${info.smaller} ${buildtype}" 
 			username="${twitter.username}" 
@@ -108,23 +110,23 @@
 			<echo>${filefilter}</echo>
 			<!-- I have no idea why i needed to do this. when i had all of them 
 			in a single scp call, it kept hanging.-->
-			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}" trust="true" verbose="true">
+			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}" trust="true" verbose="true">
 				<fileset dir="." includes="site.xml,associateSites.xml,index.html,artifacts.jar,content.jar,logs.zip,removePreviousBuilds.sh" />
 			</scp>
-			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/web" trust="true" verbose="true">
+			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/web" trust="true" verbose="true">
 				<fileset dir="web">
 					<date datetime="${filefilter}" when="after" />
 				</fileset>
 			</scp>
-			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/cfeclipsecall" trust="true" verbose="true">
+			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/cfeclipsecall" trust="true" verbose="true">
 				<fileset dir="cfeclipsecall">
 				</fileset>
 			</scp>
-			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/plugins/" trust="true" verbose="true">
+			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/plugins/" trust="true" verbose="true">
 				<fileset dir="plugins" includes="*.jar">
 				</fileset>
 			</scp>
-			<scp todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/features/" trust="true" verbose="true">
+			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/features" trust="true" verbose="true">
 				<fileset dir="features" includes="*.jar">
 				</fileset>
 			</scp>
