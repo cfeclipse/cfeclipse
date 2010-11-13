@@ -107,6 +107,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		
 		// Partitions in the document will get marked in this order
 		rules.add(new NestableMultiLineRule("<!---","--->",cfComment));
+		rules.add(new NestableMultiLineRule("/*","*/",cfComment));
 		//rules.add(new TagRule(htmComment));
 		rules.add(new NestableMultiLineRule("<!--", "-->", htmComment));
 		//doctype rule
