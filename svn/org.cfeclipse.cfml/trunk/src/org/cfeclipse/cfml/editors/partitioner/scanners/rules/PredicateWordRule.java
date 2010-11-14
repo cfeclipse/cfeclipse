@@ -42,7 +42,7 @@ public class PredicateWordRule extends WordRule implements IPredicateRule {
 	private StringBuffer fBuffer= new StringBuffer();
 	
 	/** Is this word rule case sensitive or not */
-	private boolean fCaseSensitive = true;
+	private boolean fCaseSensitive = false;
 	
 	/**
 	 * @see org.eclipse.jface.text.rules.IPredicateRule#getSuccessToken()

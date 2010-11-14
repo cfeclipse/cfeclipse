@@ -63,7 +63,8 @@ public abstract class SyntaxDictionary {
 	protected Map functions;
 	/** any scope variables including user defined components */
 	protected Map scopeVars;
-	
+	/** any scope variables */
+	protected Map scopes;
 	/** the file name for this dictionary */
 	protected String filename = null;
 	
@@ -78,6 +79,7 @@ public abstract class SyntaxDictionary {
 		syntaxelements = new HashMap();
 		functions = new HashMap();
 		scopeVars = new HashMap();
+		scopes = new HashMap();
 		
 		try 
 		{
@@ -167,6 +169,26 @@ public abstract class SyntaxDictionary {
 		return total;
 	}
 	
+	/**
+	 * gets a set that is a copy of all the scope vars
+	 * @return a set of all the scope var objects
+	 */
+	public Set getAllScopes()
+	{
+		Set total = new HashSet();
+		Set keys = scopes.keySet();
+		Iterator it = keys.iterator();
+		String name = null;
+		while(it.hasNext())
+		{
+			name = (String)it.next().toString();
+		    //System.out.println("Added " + name);		    
+			total.add(scopes.get(name));
+		}
+		
+		return total;
+	}
+
 	/**
 	 * gets a set that is a copy of all the scope vars
 	 * @return a set of all the scope var objects
@@ -582,7 +604,7 @@ public abstract class SyntaxDictionary {
 		
 		//setup the content handler and give it the maps for tags and functions
 		xmlReader.setContentHandler(
-			new DictionaryContentHandler(syntaxelements,functions,scopeVars)
+			new DictionaryContentHandler(syntaxelements,functions,scopeVars, scopes)
 		);
 		
 		InputSource input = new InputSource(xml);

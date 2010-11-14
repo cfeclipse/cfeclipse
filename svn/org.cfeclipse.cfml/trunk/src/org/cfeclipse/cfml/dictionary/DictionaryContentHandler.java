@@ -45,7 +45,8 @@ public class DictionaryContentHandler implements ContentHandler {
 	private Map dtags;
 	private Map dfunctions;	
 	private Map dscopeVars;
-	
+	private Map dscopes;
+
 	/** used to mark which part of the xml doc we are in */
 	private String currenttag = "";
 	/** current tag/function being built */
@@ -53,11 +54,12 @@ public class DictionaryContentHandler implements ContentHandler {
 	private Parameter paramItem = null;
 	private Function methoditem = null;
 	
-	public DictionaryContentHandler(Map tags, Map functions, Map scopeVars)
+	public DictionaryContentHandler(Map tags, Map functions, Map scopeVars, Map scopes)
 	{
 		dtags = tags;
 		dfunctions = functions;
 		dscopeVars = scopeVars;
+		dscopes = scopes;
 		//namespaceMappings = new java.util.HashMap();
 	}
 	
@@ -370,14 +372,18 @@ public class DictionaryContentHandler implements ContentHandler {
 	private void handleScopeStart(org.xml.sax.Attributes attributes) {
 	    //create a new value and assign it to the current parameter
 		String type = attributes.getValue(0);
-		String scope = attributes.getValue(1);
+		String scopeVar = attributes.getValue(1);
+		if (scopeVar.indexOf(".") > 0) {
+			String scope = scopeVar.substring(0, scopeVar.indexOf("."));
+			dscopes.put(scope, new ScopeVar(type, scope));
+		}
 		//System.out.println("Value: " + scope);
 		if(currentitem instanceof Component) {
-			((Component)currentitem).addScope(scope);
-			dscopeVars.put(scope,currentitem);
+			((Component)currentitem).addScope(scopeVar);
+			dscopeVars.put(scopeVar,currentitem);
 		}
 		else {
-		    dscopeVars.put(scope,new ScopeVar(type,scope));
+		    dscopeVars.put(scopeVar,new ScopeVar(type,scopeVar));
 		}
 	}
 	
