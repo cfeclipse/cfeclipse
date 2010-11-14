@@ -1,5 +1,5 @@
-<project name="Publish  CFEclipse Plugin" default="update-preview" basedir=".">
-	<property name="buildtype" value="update-preview"/>
+<project name="Publish  CFEclipse Plugin" default="update-dev" basedir=".">
+	<property name="buildtype" value="update-dev"/>
 
 	<taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar" />
 	<taskdef name="twitter" classname="den.ant.twitter.AntTwitterTask" classpathref="build.lib.path" />
@@ -56,7 +56,7 @@
 		</copy>
 	</target>
 
-	<target name="update-preview" depends="init">
+	<target name="update-dev" depends="init">
 		<input message="Do you want to tweet that this build is available?" validargs="y,n" addproperty="do.delete" />
 		<antcall target="clean-site" />
 		<condition property="do.tweet">
@@ -92,7 +92,8 @@
 			regexp="(?s)-+.(r\d+ \| \w+)\s?\|\s?.+(\(.*?).\|\s\d+\slines?(.*?).-{3}"
 			select=" #CFML \2 \1 > \3"
 			casesensitive="false" />
-		<twitter message="${info.smaller} ${buildtype}" 
+		<input message="Tweet:" defaultvalue="${info.smaller} ${buildtype}" addproperty="tweet" />		
+		<twitter message="${tweet}" 
 			consumerKey="${twitter.consumer.key}" 
 			consumerSecret="${twitter.consumer.secret}" 
 			token="${twitter.token}" 
