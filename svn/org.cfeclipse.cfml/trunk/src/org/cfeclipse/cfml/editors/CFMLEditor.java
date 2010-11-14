@@ -1187,6 +1187,8 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 			// editor has programmatically been  closed while the dialog was open
 			return;
 		}
+
+		// fix for RSE linked files
 		if(provider.isDeleted(input) && original != null && original.exists() && original.getFullPath().toString().contains("?")){
 			provider.aboutToChange(input);
 			try {
