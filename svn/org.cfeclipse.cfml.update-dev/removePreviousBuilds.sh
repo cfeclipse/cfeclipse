@@ -1,2 +1,2 @@
-rm -f /var/www/html/update-dev/features/*
-rm -f /var/www/html/update-dev/plugins/*
+rm -f /home/admin/cfeclipse.org/update-dev/features/*
+rm -f /home/admin/cfeclipse.org/update-dev/plugins/*
