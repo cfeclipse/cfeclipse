@@ -70,8 +70,8 @@
 
 	<target name="twitter-test" depends="init">
 		<twitter message="${info.smaller}" 
-			consumerKey="${twitter.consumerkey}" 
-			consumerSecret="${twitter.consumersecret}" 
+			consumerKey="${twitter.consumer.key}" 
+			consumerSecret="${twitter.consumer.secret}" 
 			token="${twitter.token}" 
 			tokenSecret="${twitter.token.secret}" 
 			bitlyUsername="bitly-username" 
@@ -80,19 +80,18 @@
 	</target>
 
 	<target name="twitter-head-info" depends="init" if="do.tweet">
-		<property name="repository.URL" value="http://svn.cfeclipse.org"/>
-		<java classname="org.tmatesoft.svn.cli.SVN" classpathref="build.lib.path"
+	    <property name="repository.URL" value="http://svn.cfeclipse.org"/>
+	    <java classname="org.tmatesoft.svn.cli.SVN" classpathref="build.lib.path"
 	        fork="true" outputproperty="last.revision.info">
-			<arg value="log"/>
-			<arg value="-rHEAD"/>
-			<arg value="${repository.URL}/"/>
-		</java>
+		      <arg value="log"/>
+		      <arg value="-rHEAD"/>
+	      <arg value="${repository.URL}/"/>
+	    </java>
 		<propertyregex property="info.smaller"
 			input="${last.revision.info}"
 			regexp="(?s)-+.(r\d+ \| \w+)\s?\|\s?.+(\(.*?).\|\s\d+\slines?(.*?).-{3}"
 			select=" #CFML \2 \1 > \3"
 			casesensitive="false" />
-		<echoproperties prefix="twitter" />
 		<twitter message="${info.smaller} ${buildtype}" 
 			consumerKey="${twitter.consumer.key}" 
 			consumerSecret="${twitter.consumer.secret}" 
