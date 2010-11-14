@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site
       associateSitesURL="http://cfeclipse.org/update-dev/associateSites.xml">
-   <description name="CFEclipse Development Update Site" url="http://cfeclipse.org/update-Dev">
+   <description name="CFEclipse Development Update Site" url="http://cfeclipse.org/update-dev">
       CFEclipse Dev Build Update site
    </description>
    <feature url="features/org.cfeclipse.cfml.feature_1.4.4.qualifier.jar" id="org.cfeclipse.cfml.feature" version="1.4.4.qualifier">
