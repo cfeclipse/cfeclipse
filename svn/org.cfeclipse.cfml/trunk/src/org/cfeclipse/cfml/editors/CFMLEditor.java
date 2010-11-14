@@ -26,7 +26,6 @@ package org.cfeclipse.cfml.editors;
 
 //import org.apache.log4j.Logger;
 
-
 //import java.util.Iterator;
 import java.io.File;
 import java.text.MessageFormat;
@@ -156,7 +155,6 @@ import org.eclipse.ui.texteditor.rulers.IColumnSupport;
 import org.eclipse.ui.texteditor.rulers.RulerColumnDescriptor;
 import org.eclipse.ui.texteditor.rulers.RulerColumnRegistry;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
-
 
 /**
  * @author Rob
@@ -1187,6 +1185,16 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		IDocumentProvider provider= getDocumentProvider();
 		if (provider == null) {
 			// editor has programmatically been  closed while the dialog was open
+			return;
+		}
+		if(provider.isDeleted(input) && original != null && original.exists() && original.getFullPath().toString().contains("?")){
+			provider.aboutToChange(input);
+			try {
+				provider.saveDocument(progressMonitor, input, provider.getDocument(input), true);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
 			return;
 		}
 		
