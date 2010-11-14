@@ -65,7 +65,7 @@
 		<push remotedir="${buildtype}" />
 		<!--
 		<antcall target="cleanup" />
-		-->
+		--> 
 	</target>
 
 	<target name="twitter-test" depends="init">
