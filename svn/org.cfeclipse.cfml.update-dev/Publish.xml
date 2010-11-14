@@ -122,17 +122,23 @@
 			</scp>
 			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/cfeclipsecall" trust="true" verbose="true">
 				<fileset dir="cfeclipsecall">
+					<!--
 					<date datetime="${filefilter}" when="after" />
+					-->
 				</fileset>
 			</scp>
 			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/plugins/" trust="true" verbose="true">
 				<fileset dir="plugins" includes="*.jar">
+					<!--
 					<date datetime="${filefilter}" when="after" />
+					-->
 				</fileset>
 			</scp>
 			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/features" trust="true" verbose="true">
 				<fileset dir="features" includes="*.jar">
+					<!--
 					<date datetime="${filefilter}" when="after" />
+					-->
 				</fileset>
 			</scp>
 			<antcall target="twitter-head-info"/>
