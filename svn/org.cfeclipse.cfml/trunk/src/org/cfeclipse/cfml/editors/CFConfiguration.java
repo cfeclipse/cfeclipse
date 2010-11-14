@@ -629,7 +629,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_TAG_ATTRIBS);
 		
 		//.... the default text in the document
-		dr = new DefaultDamagerRepairer(getTextScanner());
+		dr = new DefaultDamagerRepairer(getCFScriptScanner());
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 

@@ -77,6 +77,9 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements ISyntaxDicti
 	 */
 	protected static void buildScriptKeywordSyntax()
 	{
+		scriptkeywords.add("component");
+		scriptkeywords.add("persistent");
+		scriptkeywords.add("property");
 		scriptkeywords.add("for");
 		scriptkeywords.add("if");
 		scriptkeywords.add("else");
@@ -92,10 +95,8 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements ISyntaxDicti
 		scriptkeywords.add("switch");
 		scriptkeywords.add("default");
 		scriptkeywords.add("break");
-		scriptkeywords.add("true");
-		scriptkeywords.add("false");
-		scriptkeywords.add("to");
-		scriptkeywords.addAll(operators);
+		//scriptkeywords.add("to");
+		//scriptkeywords.add("from");
 	}
 	
 	/** 
@@ -106,8 +107,11 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements ISyntaxDicti
 		operators.add("gt");
 		operators.add("lt");
 		operators.add("gte");
+		operators.add(">=");
 		operators.add("lte");
+		operators.add("<=");
 		operators.add("eq");
+		operators.add("==");
 		operators.add("neq");
 		operators.add("not");
 		operators.add("and");
@@ -124,6 +128,8 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements ISyntaxDicti
 		operators.add("xor");
 		operators.add("eqv");
 		operators.add("imp");
+		operators.add("true");
+		operators.add("false");
 	}
 }
 

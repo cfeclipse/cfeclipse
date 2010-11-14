@@ -36,6 +36,13 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for cfml numbers */
 	public static final String P_COLOR_CFNUMBER = "cfnumberColor";
 	
+	/** Preference key identifier for cfml scopes */
+	public static final String P_COLOR_CFSCOPE = "cfbuiltinScopeColor";
+
+	/** Preference key identifier for cfml built-in scopes */
+	public static final String P_COLOR_CFBUILTINSCOPE = "cfscopeColor";
+	
+	
 	/** Preference key identifier for cfml comment */
 	public static final String P_COLOR_CFCOMMENT = "cfcommentColor";
 
@@ -69,6 +76,9 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 	/** Preference key identifier for SQL comment color */
 	public static final String P_COLOR_SQL_COMMENT = "SQLCommentColor";
 
+	public static final String P_COLOR_CFOPPERATOR = "cfmlOpperators";
+
+
 	
 	/**
 	 * Sets up the default values for the preferences managed by {@link CFMLColorsPreferencePage}
@@ -79,6 +89,7 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 	 * 	<li>P_COLOR_TAGLIB_TAG - "127,95,202"</li>
 	 * 	<li>P_COLOR_CFKEYWORD - "0,0,255"</li>
 	 * 	<li>P_COLOR_CFNUMBER - "255,10,10"</li>
+	 * 	<li>P_COLOR_CFSCOPE - "255,10,10"</li>
 	 * 	<li>P_COLOR_CFCOMMENT - "128,128,128"</li>
 	 * 	<li>P_COLOR_BACKGROUND_CFCOMMENT - "255,255,255"</li>
 	 * 	<li>P_COLOR_CFSCRIPT_TEXT - "0,0,0"</li>
@@ -98,13 +109,16 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_COLOR_CFTAG,"128,0,0");
 		store.setDefault(P_COLOR_TAGLIB_TAG,"60,60,170");
 		store.setDefault(P_COLOR_CFKEYWORD,"60,197,255");
+		store.setDefault(P_COLOR_CFOPPERATOR,"0,0,255");
 		store.setDefault(P_COLOR_CFNUMBER,"255,10,10");
+		store.setDefault(P_COLOR_CFBUILTINSCOPE,"204,0,0");
+		store.setDefault(P_COLOR_CFSCOPE,"204,0,0");
 		store.setDefault(P_COLOR_CFCOMMENT,"128,128,128");
 		store.setDefault(P_COLOR_BACKGROUND_CFCOMMENT,"255,255,255");
 		store.setDefault(P_COLOR_CFSCRIPT_TEXT,"0,0,0");
 		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_CFSCRIPT_STRING,"0,102,0");
-		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION,"30,197,255");
+		store.setDefault(P_COLOR_CFSCRIPT_FUNCTION,"0,112,0");
 		store.setDefault(P_COLOR_SQL_TEXT,"0,0,0");
 		store.setDefault(P_COLOR_SQL_KEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_SQL_STRING,"255,0,0");

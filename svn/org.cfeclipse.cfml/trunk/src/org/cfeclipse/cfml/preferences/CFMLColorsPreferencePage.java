@@ -24,11 +24,19 @@
  */
 package org.cfeclipse.cfml.preferences;
 
+import java.util.List;
+
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IPreferenceNode;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.internal.dialogs.WorkbenchPreferenceDialog;
 
 
 /**
@@ -37,11 +45,15 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implements 
 	IWorkbenchPreferencePage {
 	
+	private CFMLPreferenceManager cfmlpm;
+	private IWorkbench workbench;
+
 	public CFMLColorsPreferencePage() 
 	{
 		super(GRID);
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		setDescription("On this page you can change the colour preferences for CFML sections.");
+		cfmlpm = new CFMLPreferenceManager();
 	}
 	
 	/**
@@ -52,16 +64,18 @@ public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 	 */
 	public void createFieldEditors()
 	{
-
-		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT,"Default &Text:",getFieldEditorParent()));
+ColorFieldEditor daCol = new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT,"Default &Text:",getFieldEditorParent());
+		addField(daCol);
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT,"CFML &Comment:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_CFCOMMENT,"CFML Comment &Background:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFTAG,"CFML &Tag:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_TAGLIB_TAG,"Taglib &Tag:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSTRING,"CFML St&ring:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFKEYWORD,"CFML &Keyword:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFOPPERATOR,"CFML &Opperators (gt, lt, eq, etc.):",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFNUMBER,"CFML &Number:",getFieldEditorParent()));
-		
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFBUILTINSCOPE,"CFML B&uilt-in Scope (request,variables,url, etc.):",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCOPE,"CFML &Scope:",getFieldEditorParent()));
 		
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_TEXT,"CFScript Te&xt:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_KEYWORD,"CFScript Key&word:",getFieldEditorParent()));
@@ -69,7 +83,24 @@ public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_STRING,"CFScript Strin&g:",getFieldEditorParent()));
 		
 		addField(new ColorFieldEditor(EditorPreferenceConstants.P_COLOR_BACKGROUND,"Back&ground:",getFieldEditorParent()));
+		IPreferenceNode node = this.workbench.getPreferenceManager().find("org.cfeclipse.cfml.preferences.CFMLPreferencePage").findSubNode("org.cfeclipse.cfml.preferences.EditorPreferencePage").findSubNode("org.cfeclipse.cfml.preferences.CFMLColorsPreferencePage");
+		getFieldEditorParent().getParent().traverse(SWT.TRAVERSE_TAB_NEXT);
+		getFieldEditorParent().getParent().redraw();
+		System.err.println(node.toString());
+		
+		WorkbenchPreferenceDialog woot = (WorkbenchPreferenceDialog)getContainer();
+		Object wee = woot.getSelectedPage();
+		ISelection borg = woot.getTreeViewer().getSelection();
+		woot.getTreeViewer().setSelection(borg);
 	}
-	 
-	public void init(IWorkbench workbench){;}
+
+	protected void performDefaults() {
+		super.performDefaults();
+	}
+	
+	
+	public void init(IWorkbench workbench){
+		this.workbench = workbench;
+		//this.getControl().getParent().traverse(SWT.TRAVERSE_TAB_NEXT);
+	}
 }

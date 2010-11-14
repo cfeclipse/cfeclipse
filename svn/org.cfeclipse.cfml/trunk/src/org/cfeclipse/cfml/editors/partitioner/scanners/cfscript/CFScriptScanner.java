@@ -33,6 +33,7 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.CFSyntaxDictionary;
 import org.cfeclipse.cfml.editors.ColorManager;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.CFKeywordDetector;
+import org.cfeclipse.cfml.editors.partitioner.scanners.rules.NestableMultiLineRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
 import org.cfeclipse.cfml.preferences.CFMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
@@ -87,6 +88,24 @@ public class CFScriptScanner extends RuleBasedScanner {
 			)
 		));
 		
+		IToken cfscope = new Token(new TextAttribute(
+				manager.getColor(
+					prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCOPE)
+				)
+			));
+		
+		IToken cfopperators = new Token(new TextAttribute(
+				manager.getColor(
+					prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFOPPERATOR)
+				)
+			));
+
+		IToken cfbuiltinscope = new Token(new TextAttribute(
+				manager.getColor(
+					prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFBUILTINSCOPE)
+				)
+			));
+
 		IToken cffunction = new Token(new TextAttribute(
 			manager.getColor(
 				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_FUNCTION)
@@ -101,18 +120,17 @@ public class CFScriptScanner extends RuleBasedScanner {
 				
 		List rules = new ArrayList();
 		
-		//rules.add(new MultiLineRule("component", "/}", cffunction));
+		//I think the reason this doesnt work as well as the <!-- type of comment
+		//is that the <! type is defined on the partition scanner where this is
+		//only here... javascript has the same problem
+		rules.add(new MultiLineRule("/*","*/",cfcomment));
+		rules.add(new EndOfLineRule("//", cfcomment));
+		
 		//so the script tags look correct
 		rules.add(new SingleLineRule("<cfscript", ">", cftag));
 		rules.add(new SingleLineRule("</cfscript", ">", cftag));
 		rules.add(new SingleLineRule("<CFSCRIPT", ">", cftag));
 		rules.add(new SingleLineRule("</CFSCRIPT", ">", cftag));
-		
-		//I think the reason this doesnt work as well as the <!-- type of comment
-		//is that the <! type is defined on the partition scanner where this is
-		//only here... javascript has the same problem
-		rules.add(new MultiLineRule("/*", "*/", cfcomment));
-		rules.add(new EndOfLineRule("//", cfcomment));
 		
 		rules.add(new MultiLineRule("\"", "\"", string));
 		rules.add(new MultiLineRule("'", "'", string));
@@ -131,13 +149,12 @@ public class CFScriptScanner extends RuleBasedScanner {
 		
 		Set set = dic.getScriptKeywords();
 		
-		String allkeys[] = new String[set.size()<<1];
+		String allkeys[] = new String[set.size()];
 		int i=0;
 		Iterator it = set.iterator();
 		while(it.hasNext())
 		{
 			String opname = (String)it.next(); 
-			allkeys[i++] = opname;
 			allkeys[i++] = opname.toUpperCase();
 		}
 		
@@ -150,18 +167,44 @@ public class CFScriptScanner extends RuleBasedScanner {
 			cfkeyword
 		);
 		words.setCaseSensitive(false);
-		
+
+		//now do the opperators
+		set = dic.getOperators();
+		it = set.iterator();
+		while(it.hasNext())
+		{
+			String opp = (String)it.next().toString().toLowerCase();
+			words.addWord(opp, cfopperators);
+		}
+
 		//now do the cffuntions so they look pretty too :)
 		set = dic.getFunctions();
 		it = set.iterator();
 		while(it.hasNext())
 		{
-			String fun = (String)it.next();
+			String fun = (String)it.next().toString().toLowerCase();
 			words.addWord(fun, cffunction);
-			words.addWord(fun.toUpperCase(), cffunction);
 		}
 		rules.add(words);
 		
+		//now do the scopes so they look pretty too :)
+		set = dic.getAllScopes();
+		it = set.iterator();
+		while(it.hasNext())
+		{
+			String scope = (String)it.next().toString().toLowerCase();
+			words.addWord(scope, cfscope);
+		}
+		words.addWord("this",cfbuiltinscope);
+		words.addWord("form",cfbuiltinscope);
+		words.addWord("url",cfbuiltinscope);
+		words.addWord("variables",cfbuiltinscope);
+		words.addWord("arguments",cfbuiltinscope);
+		words.addWord("session",cfbuiltinscope);
+		words.addWord("request",cfbuiltinscope);
+		words.addWord("application",cfbuiltinscope);
+		rules.add(words);
+
 		IRule[] rulearry = new IRule[rules.size()];
 		rules.toArray(rulearry);
 		
