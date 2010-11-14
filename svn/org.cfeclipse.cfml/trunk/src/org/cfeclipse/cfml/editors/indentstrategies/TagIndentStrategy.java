@@ -31,6 +31,7 @@ import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.formatters.XmlDocumentFormatter;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 import org.eclipse.jface.text.BadLocationException;
@@ -821,10 +822,15 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			String prefix = getPrevLineWhiteSpace(doc, docCommand.offset);
 
 			int extraIndentSize = 0;
+			int startOffset = docCommand.offset;
+			while(doc.getChar(startOffset) == ' ') {
+				startOffset++;
+			}
+			doc.replace(docCommand.offset, startOffset-docCommand.offset, "");
+
 
 			for (int i = docCommand.offset - 1; i > 0; i--) {
 				char c = doc.getChar(i);
-				extraIndentSize++;
 				if (c == '\r' || c == '\n')
 					break; // Got to the start of the line.
 				if (c == '\t' || c == ' ') {
@@ -833,13 +839,19 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 				if (doc.getChar(i) == '<') {
 					break;
 				}
+				startOffset--;
+				extraIndentSize++;
 			}
+			String textOnLine = doc.get(doc.getLineOffset(currLine),docCommand.offset - startOffset);
 
 			int cnt = (int) Math.round(new Float(extraIndentSize).floatValue()
 					/ new Float(indentSize).floatValue());
 
-			for (int i = 0; i < cnt; i++) {
-				prefix += indentString;
+			// only add indent if previous line was tag start
+			if(textOnLine.matches("^\\s<.*")){
+				for (int i = 0; i < cnt; i++) {
+					prefix += indentString;
+				}
 			}
 
 			// figure out what the indent level is and take into account the
