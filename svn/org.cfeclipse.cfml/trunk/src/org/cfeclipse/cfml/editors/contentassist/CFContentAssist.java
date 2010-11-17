@@ -379,6 +379,7 @@ public class CFContentAssist extends CFEContentAssist{
 	            CFPartitionScanner.FORM_START_TAG_END,
 	            CFPartitionScanner.FORM_TAG_ATTRIBS,
 	            CFPartitionScanner.CSS, 
+	            CFPartitionScanner.CF_SCRIPT,
 	            CFPartitionScanner.SQL,
 	            CFPartitionScanner.TABLE_END_TAG,
 	            CFPartitionScanner.TABLE_START_TAG_BEGIN,

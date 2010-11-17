@@ -1067,8 +1067,9 @@ public class CFEPartitioner implements IDocumentPartitioner,
             
            
             //System.out.println("Reparsing from " + fReparseStart + " to " + fReparseEnd + " doc length is " + fDocument.getLength());
+			// changed DEFAULT_PARITION to CF_SCRIPT partition for cfscript componenets
             fScanner.setPartialRange(d, fReparseStart, d.getLength()
-                    - fReparseStart, IDocument.DEFAULT_CONTENT_TYPE, fReparseStart);
+                    - fReparseStart, CFPartitionScanner.CF_SCRIPT, fReparseStart);
 
             int lastScannedPosition = fReparseStart;
             IToken token = fScanner.nextToken();

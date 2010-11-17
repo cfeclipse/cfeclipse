@@ -174,6 +174,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		indentCFScriptStrategy.setIndentString(tabWidth,insertSpacesForTabs);
 		indentCFScriptStrategy.setTabIndentSingleLine(preferenceManager.tabIndentSingleLine());
 		configTagIndentStrat();
+		// do we even need this strategy?
 		configCFScriptIndentStrat();
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);

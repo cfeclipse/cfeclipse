@@ -56,6 +56,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String DOCTYPE	 	= "__doctype";
 	public final static String CF_COMMENT		= "__cf_comment";
 	public final static String HTM_COMMENT 	= "__htm_comment";
+	public final static String CF_SCRIPT		= "__cf_script";
 	public final static String CF_START_TAG = "__cf_start_tag";
 	public final static String CF_START_TAG_BEGIN		= "__cf_start_tag_begin";
 	public final static String CF_START_TAG_END		= "__cf_start_tag_end";
@@ -69,8 +70,6 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String HTM_START_TAG_BEGIN		= "__htm_start_tag_begin";
 	public final static String HTM_START_TAG_END		= "__htm_start_tag_end";
 	public final static String HTM_TAG_ATTRIBS		= "__htm_tag_attribs";
-	public final static String CF_SCRIPT		= "__cf_script";
-	//public final static String CFC_SCRIPT		= "__cfc_script";
 	public final static String CF_EXPRESSION		= "__cf_expression";
 	public final static String J_SCRIPT		= "__jscript";
 	public final static String CSS		= "__css";
@@ -97,8 +96,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken htmComment 	= new Token(HTM_COMMENT);
 		IToken taglibtag		= new Token(TAGLIB_TAG);
 		IToken unktag		= new Token(UNK_TAG);
-		IToken cfcScript		= new Token(CF_SCRIPT);
-		
+		IToken cfScript = new Token(CF_SCRIPT);
 		
 		List rules = new ArrayList();
 		
@@ -107,18 +105,19 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		
 		// Partitions in the document will get marked in this order
 		rules.add(new NestableMultiLineRule("<!---","--->",cfComment));
-		rules.add(new NestableMultiLineRule("/*","*/",cfComment));
 		//rules.add(new TagRule(htmComment));
 		rules.add(new NestableMultiLineRule("<!--", "-->", htmComment));
 		//doctype rule
 		rules.add(new MultiLineRule("<!doctype", ">", doctype));
-		rules.add(new MultiLineRule("component", "/}", cfcScript));
 		
 		// Handle the if/elsief/set/return tag partitioning
 		rules.add(new NamedTagRule("<cfset",">", CF_START_TAG, CF_SET_STATEMENT));
 		rules.add(new NamedTagRule("<cfif",">", CF_START_TAG, CF_BOOLEAN_STATEMENT));
 		rules.add(new NamedTagRule("<cfelseif",">", CF_START_TAG, CF_BOOLEAN_STATEMENT));
 		rules.add(new NamedTagRule("<cfreturn",">", CF_START_TAG, CF_RETURN_STATEMENT));
+		// hack for cfscript components to encompass whole page. what we really need is a cfscriptcomponent rule.
+		rules.add(new NestableMultiLineRule("component", "$!$*@", cfScript));
+		
 		
 		/*
 		 * TODO: Need to add some code to track the partition changes
@@ -280,9 +279,12 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 						    if (c == EOF) {
 						        return Token.EOF;
 						    }
-						    if (c != '<') {
+						    /*
+						    cfscript-based components trounces this idea
+							if (c != '<') {
 						        return this.fDefaultReturnToken;
 						    }
+							*/
 						    break;
 						}
 						unread();
