@@ -383,19 +383,25 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			int line= document.getLineOfOffset(p);
 
 			StringBuffer buf= new StringBuffer(command.text);
-			if (command.offset < docLength && document.getChar(command.offset) == '}') {
+			if (command.offset < docLength && (document.getChar(command.offset) == '}' || document.getChar(command.offset-1) == '{')) {
 				int indLine= findMatchingOpenBracket(document, line, command.offset, 0);
 				if (indLine == -1) {
 					indLine= line;
 				}
-				buf.append(getIndentOfLine(document, indLine));
+				String curLineIndent = getIndentOfLine(document, indLine); 
+				buf.append(curLineIndent);
+				buf.append(curLineIndent);
+				if(document.getChar(command.offset-1) == '{' && document.getChar(command.offset) == '}') {					
+					buf.append(document.getLineDelimiter(line));
+					buf.append(curLineIndent);
+					int cursorPos = command.offset;
+					command.caretOffset = cursorPos+2 +curLineIndent.length()*2;
+					command.shiftsCaret = false;
+				}
 			} else {
 				int start= document.getLineOffset(line);
 				int whiteend= findEndOfWhiteSpace(document, start, command.offset);
 				buf.append(document.get(start, whiteend - start));
-				if (getBracketCount(document, start, command.offset, true) > 0) {
-					buf.append('\t');
-				}
 			}
 			command.text= buf.toString();
 
