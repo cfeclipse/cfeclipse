@@ -43,13 +43,13 @@ public class Encloser
 	 * @param start the string to put before the selection
 	 * @param end the string to put before the selection
 	 */
-	public void enclose(IDocument doc, ITextSelection sel, String start, String end)
+	public int enclose(IDocument doc, ITextSelection sel, String start, String end)
 	{
+		StringBuffer cmtpart = new StringBuffer();
 		try
 		{
 			if(!sel.isEmpty())
 			{
-				StringBuffer cmtpart = new StringBuffer();
 			
 				int offset = sel.getOffset();
 				int len  = sel.getLength();
@@ -84,5 +84,6 @@ public class Encloser
 		{
 			ble.printStackTrace(System.err);
 		}
+		return cmtpart.length();
 	}
 }

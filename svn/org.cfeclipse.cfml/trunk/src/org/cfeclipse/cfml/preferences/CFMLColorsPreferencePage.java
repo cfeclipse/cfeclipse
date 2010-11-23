@@ -24,16 +24,12 @@
  */
 package org.cfeclipse.cfml.preferences;
 
-import java.util.List;
-
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.internal.dialogs.WorkbenchPreferenceDialog;
@@ -66,8 +62,12 @@ public class CFMLColorsPreferencePage extends FieldEditorPreferencePage implemen
 	{
 ColorFieldEditor daCol = new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_DEFAULT_TEXT,"Default &Text:",getFieldEditorParent());
 		addField(daCol);
+		addField(new ColorFieldEditor(EditorPreferenceConstants.P_COLOR_BACKGROUND, "Back&ground:", getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT,"CFML &Comment:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_CFCOMMENT,"CFML Comment &Background:",getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_JAVADOC, "CFScript JavaDoc:", getFieldEditorParent()));
+		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_JAVADOC, "CFScript JavaDoc Background:",
+				getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFTAG,"CFML &Tag:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_TAGLIB_TAG,"Taglib &Tag:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSTRING,"CFML St&ring:",getFieldEditorParent()));
@@ -81,8 +81,7 @@ ColorFieldEditor daCol = new ColorFieldEditor(CFMLColorsPreferenceConstants.P_CO
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_KEYWORD,"CFScript Key&word:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_FUNCTION,"CFScript Funct&ion:",getFieldEditorParent()));
 		addField(new ColorFieldEditor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_STRING,"CFScript Strin&g:",getFieldEditorParent()));
-		
-		addField(new ColorFieldEditor(EditorPreferenceConstants.P_COLOR_BACKGROUND,"Back&ground:",getFieldEditorParent()));
+
 		IPreferenceNode node = this.workbench.getPreferenceManager().find("org.cfeclipse.cfml.preferences.CFMLPreferencePage").findSubNode("org.cfeclipse.cfml.preferences.EditorPreferencePage").findSubNode("org.cfeclipse.cfml.preferences.CFMLColorsPreferencePage");
 		getFieldEditorParent().getParent().traverse(SWT.TRAVERSE_TAB_NEXT);
 		getFieldEditorParent().getParent().redraw();

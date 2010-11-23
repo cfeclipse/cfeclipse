@@ -39,11 +39,14 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.ISyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
+import org.cfeclipse.cfml.editors.partitioner.scanners.rules.CFScriptComponentEndRule;
+import org.cfeclipse.cfml.editors.partitioner.scanners.rules.CFScriptComponentRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.CustomTagRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.NamedTagRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.NestableMultiLineRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.TagRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.TaglibRule;
+import org.eclipse.jface.text.rules.EndOfLineRule;
 import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.MultiLineRule;
@@ -55,6 +58,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	//public final static String CF_DEFAULT 	= "__cf_default";
 	public final static String DOCTYPE	 	= "__doctype";
 	public final static String CF_COMMENT		= "__cf_comment";
+	public final static String CF_SCRIPT_COMMENT = "__cf_script_comment";
+	public final static String JAVADOC_COMMENT = "__cf_javadoc_comment";
 	public final static String HTM_COMMENT 	= "__htm_comment";
 	public final static String CF_SCRIPT		= "__cf_script";
 	public final static String CF_START_TAG = "__cf_start_tag";
@@ -93,6 +98,8 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	{
 		IToken doctype	 	= new Token(DOCTYPE);
 		IToken cfComment 	= new Token(CF_COMMENT);
+		IToken cfscriptComment = new Token(CF_SCRIPT_COMMENT);
+		IToken javaDocComment = new Token(JAVADOC_COMMENT);
 		IToken htmComment 	= new Token(HTM_COMMENT);
 		IToken taglibtag		= new Token(TAGLIB_TAG);
 		IToken unktag		= new Token(UNK_TAG);
@@ -103,6 +110,17 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		//the order here is important. It should go from specific to
 		//general as the rules are applied in order
 		
+
+		// NestableMultiLineRule cfScriptRule = new NestableMultiLineRule("component", "}", cfScript);
+		// cfScriptRule.setColumnConstraint(0);
+		// rules.add(cfScriptRule);
+		rules.add(new CFScriptComponentRule("component", "{", CF_START_TAG, CF_TAG_ATTRIBS));
+		rules.add(new CFScriptComponentEndRule("}", CF_END_TAG, CF_SCRIPT));
+		// rules.add(new CFScriptComponentRule("}", "}", CF_SCRIPT, CF_SCRIPT));
+
+		rules.add(new MultiLineRule("/**", "*/", javaDocComment, (char) 0, true));
+		rules.add(new MultiLineRule("/*", "*/", cfscriptComment, (char) 0, true));
+		rules.add(new EndOfLineRule("//", cfscriptComment));
 		// Partitions in the document will get marked in this order
 		rules.add(new NestableMultiLineRule("<!---","--->",cfComment));
 		//rules.add(new TagRule(htmComment));
@@ -115,10 +133,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new NamedTagRule("<cfif",">", CF_START_TAG, CF_BOOLEAN_STATEMENT));
 		rules.add(new NamedTagRule("<cfelseif",">", CF_START_TAG, CF_BOOLEAN_STATEMENT));
 		rules.add(new NamedTagRule("<cfreturn",">", CF_START_TAG, CF_RETURN_STATEMENT));
-		// hack for cfscript components to encompass whole page. what we really need is a cfscriptcomponent rule.
-		rules.add(new NestableMultiLineRule("component", "$!$*@", cfScript));
-		
-		
+
 		/*
 		 * TODO: Need to add some code to track the partition changes
 		 * as we run the nextToken() method.

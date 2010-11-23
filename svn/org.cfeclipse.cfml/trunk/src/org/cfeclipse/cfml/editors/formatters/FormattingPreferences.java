@@ -13,7 +13,6 @@ package org.cfeclipse.cfml.editors.formatters;
 
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
-import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.PropertyChangeEvent;
 

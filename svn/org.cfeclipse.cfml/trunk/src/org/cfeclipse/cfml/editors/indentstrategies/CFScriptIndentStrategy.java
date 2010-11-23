@@ -12,15 +12,19 @@ Contributors:
 package org.cfeclipse.cfml.editors.indentstrategies;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.formatters.FormattingPreferences;
+import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITypedRegion;
 
 
 public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	
 	/** Auto-insert a closing brace */
 	private boolean autoClose_Braces = true;
+	private String fIndentString = new FormattingPreferences().getCanonicalIndent();
 	
 	/**
 	 * @param editor
@@ -89,6 +93,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 		char prevChar = ' ';
 		//char currChar = ' ';
 		char trigChar = ' ';
+		boolean inComment = false;
 		
 		//
 		// We don't do anything if there isn't any text that's been entered.
@@ -110,6 +115,12 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			doc.getChar(docCommand.offset-1);
 			if(docCommand.offset > 0) {
 				prevChar = doc.getChar(docCommand.offset-2);
+			}
+			ITypedRegion partition = doc.getPartition(docCommand.offset);
+			String partType = partition.getType();
+			if (partType == CFPartitionScanner.CF_COMMENT || partType == CFPartitionScanner.CF_SCRIPT_COMMENT
+					|| partType == CFPartitionScanner.JAVADOC_COMMENT) {
+				inComment = true;
 			}
 			
 		
@@ -143,40 +154,40 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	// The following are for closed chars that have the same
 	// opening and closing character.
 			case '\'':
-				if (this.isAutoClose_SingleQuotes())
+				if (this.isAutoClose_SingleQuotes() && !inComment)
 					handlePotentialClosingChar(doc, docCommand, '\'');
 				break;
 			case '\"':
-				if (this.isAutoClose_DoubleQuotes())
+				if (this.isAutoClose_DoubleQuotes() && !inComment)
 					handlePotentialClosingChar(doc, docCommand, '\"');
 				break;
 			case '#':
-				if (this.isAutoClose_Hashes())
+				if (this.isAutoClose_Hashes() && !inComment)
 					handlePotentialClosingChar(doc, docCommand, '#');
 				break;
 	// The following is for braces...
 			case '[':
-				if (this.isAutoClose_Brackets())
+				if (this.isAutoClose_Brackets() && !inComment)
 					insertSingleChar(docCommand, ']');
 				break;
 			case '{':
-				if (this.isAutoClose_Braces())
+				if (this.isAutoClose_Braces() && !inComment)
 					insertSingleChar(docCommand, '}');
 				break;
 			case '(':
-				if (this.isAutoClose_Parens())
+				if (this.isAutoClose_Parens() && !inComment)
 					insertSingleChar(docCommand, ')');
 				break;
 			case ')':
-				if (this.isAutoClose_Parens())
+				if (this.isAutoClose_Parens() && !inComment)
 					handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
 				break;
 			case '}':
-				if (this.isAutoClose_Braces())
+				if (this.isAutoClose_Braces() && !inComment)
 					handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
 				break;
 			case ']':
-				if (this.isAutoClose_Brackets())
+				if (this.isAutoClose_Brackets() && !inComment)
 					handleClosingBracket(nextChar, prevChar, trigChar, doc, docCommand);
 				break;
 			}
@@ -193,9 +204,12 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	public void customizeDocumentCommand(IDocument d, DocumentCommand c) {
 	    
 		codeInsertion(d, c);
-		if (c.length == 0 && c.text != null && endsWithDelimiter(d, c.text))
+		if (c.length == 0 && c.text != null && endsWithDelimiter(d, c.text)) {
 			if (this.isUseSmartIndent())
 				smartIndentAfterNewLine(d, c);
+			if (this.isUseSmartComments())
+				smartCommentAfterNewLine(d, c);
+		}
 		else if ("}".equals(c.text)) {  
 			if (this.isUseSmartIndent())
 				smartInsertAfterBracket(d, c);
@@ -220,14 +234,19 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 
 		return false;
 	}
-	
+
 	/**
 	 * Returns the line number of the next bracket after end.
+	 * 
 	 * @returns the line number of the next matching bracket after end
-	 * @param document - the document being parsed
-	 * @param line - the line to start searching back from
-	 * @param end - the end position to search back from
-	 * @param closingBracketIncrease - the number of brackets to skip
+	 * @param document
+	 *            - the document being parsed
+	 * @param line
+	 *            - the line to start searching back from
+	 * @param end
+	 *            - the end position to search back from
+	 * @param closingBracketIncrease
+	 *            - the number of brackets to skip
 	 */
 	 protected int findMatchingOpenBracket(IDocument document, int line, int end, int closingBracketIncrease) throws BadLocationException {
 
@@ -258,7 +277,6 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	 * @param ignoreCloseBrackets - whether or not to ignore closing brackets in the count
 	 */
 	 private int getBracketCount(IDocument document, int start, int end, boolean ignoreCloseBrackets) throws BadLocationException {
-
 		int begin = start;
 		int bracketcount= 0;
 		while (begin < end) {
@@ -366,13 +384,27 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 		}
 		return end;
 	}
-	
+
+	/*
+	 * protected boolean inComment(IDocument document, int offset) { try { int curLine =
+	 * document.getLineOfOffset(offset); int lineStart = document.getLineOffset(curLine); int curOffset = lineStart;
+	 * boolean inComment = false; char curChar = document.getChar(lineStart); char nextChar = document.getChar(lineStart
+	 * + 1); while (curChar == ' ' || curChar == '\t' || curChar == '*' || curChar == '/' || curChar == '\n') { if
+	 * (curChar == '*' || curChar == '/' || nextChar == '/') { inComment = true; if (curChar == '/' && nextChar == '*')
+	 * { return inComment; } } if (curChar == '\n') { curLine--; lineStart = document.getLineOffset(curLine); } curChar
+	 * = document.getChar(lineStart); nextChar = document.getChar(lineStart + 1); lineStart++; } return false; } catch
+	 * (BadLocationException e) { // TODO Auto-generated catch block e.printStackTrace(); } return true; }
+	 */
+
 	/**
 	 * Set the indent of a new line based on the command provided in the supplied document.
-	 * @param document - the document being parsed
-	 * @param command - the command being performed
+	 * 
+	 * @param document
+	 *            - the document being parsed
+	 * @param command
+	 *            - the command being performed
 	 */
-	 protected void smartIndentAfterNewLine(IDocument document, DocumentCommand command) {
+	protected void smartCommentAfterNewLine(IDocument document, DocumentCommand command) {
 
 		int docLength= document.getLength();
 		if (command.offset == -1 || docLength == 0)
@@ -380,36 +412,108 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 
 		try {
 			int p= (command.offset == docLength ? command.offset - 1 : command.offset);
-			int line= document.getLineOfOffset(p);
+			int line = document.getLineOfOffset(p);
+			int lineOffset = document.getLineOffset(line);
+			int offset = p;
+			char prevPrevChar = document.getChar(offset - 2);
+			char prevChar = document.getChar(offset-1);
+			char curChar = document.getChar(offset);
+			char nextChar = document.getChar(offset+1);
 
 			StringBuffer buf= new StringBuffer(command.text);
-			if (command.offset < docLength && (document.getChar(command.offset) == '}' || document.getChar(command.offset-1) == '{')) {
-				int indLine= findMatchingOpenBracket(document, line, command.offset, 0);
-				if (indLine == -1) {
-					indLine= line;
-				}
-				String curLineIndent = getIndentOfLine(document, indLine); 
-				buf.append(curLineIndent);
-				buf.append(curLineIndent);
-				if(document.getChar(command.offset-1) == '{' && document.getChar(command.offset) == '}') {					
-					buf.append(document.getLineDelimiter(line));
-					buf.append(curLineIndent);
-					int cursorPos = command.offset;
-					command.caretOffset = cursorPos+2 +curLineIndent.length()*2;
+			String curIndent = getIndentOfLine(document, line);
+			String curText = document.get(lineOffset, offset - lineOffset).trim();
+			ITypedRegion partition = document.getPartition(p);
+			String partType = partition.getType();
+			if (partType == CFPartitionScanner.CF_SCRIPT_COMMENT || partType == CFPartitionScanner.JAVADOC_COMMENT) {
+				if ((curText.equals("/**") || curText.equals("/*"))
+						&& (curChar == '\n' || curChar == '*' || (curChar == '/') && nextChar == '\n')) {
+					buf.append(" * ");
+					if (curChar == '*') {
+						buf.append(document.getLineDelimiter(line) + curIndent + " *");
+						if (nextChar != '/' && curChar != '/') {
+							buf.append('/');
+						}
+					} else {
+						buf.append(document.getLineDelimiter(line) + curIndent + " **");
+						if (nextChar != '/' && curChar != '/') {
+							buf.append('/');
+						}
+					}
+					command.caretOffset = offset + curIndent.length() + 4;
 					command.shiftsCaret = false;
+				} else {
+					buf.append("* ");
 				}
-			} else {
-				int start= document.getLineOffset(line);
-				int whiteend= findEndOfWhiteSpace(document, start, command.offset);
-				buf.append(document.get(start, whiteend - start));
+				command.text = buf.toString();
+				return;
 			}
-			command.text= buf.toString();
+
+			command.text = buf.toString();
 
 		} catch (BadLocationException excp) {
 			System.err.println("BadLocationException in CFScriptIndentStrategy::smartIndentAfterNewLine");
 		}
 	}
-	
+
+	/**
+	 * Set the indent of a new line based on the command provided in the supplied document.
+	 * 
+	 * @param document
+	 *            - the document being parsed
+	 * @param command
+	 *            - the command being performed
+	 */
+	protected void smartIndentAfterNewLine(IDocument document, DocumentCommand command) {
+
+		int docLength = document.getLength();
+		if (command.offset == -1 || docLength == 0)
+			return;
+
+		try {
+			int p = (command.offset == docLength ? command.offset - 1 : command.offset);
+			int line = document.getLineOfOffset(p);
+			int lineOffset = document.getLineOffset(line);
+			int offset = p;
+			char prevPrevChar = document.getChar(offset - 2);
+			char prevChar = document.getChar(offset - 1);
+			char curChar = document.getChar(offset);
+			char nextChar = document.getChar(offset + 1);
+
+			StringBuffer buf = new StringBuffer(command.text);
+
+			if (command.offset < docLength && (document.getChar(command.offset) == '}' || document.getChar(command.offset - 1) == '{')) {
+				int indLine = findMatchingOpenBracket(document, line, command.offset, 0);
+				if (indLine == -1) {
+					indLine = line;
+					}
+				String curLineIndent = getIndentOfLine(document, indLine);
+				buf.append(curLineIndent);
+					buf.append(curLineIndent);
+				int cursorPos = command.offset;
+				// for when flush and no existing indent
+				if (document.getChar(command.offset - 1) == '{' && document.getChar(command.offset) == '}') {
+					if (curLineIndent.length() == 0) {
+						buf.append(fIndentString);
+						cursorPos = cursorPos + fIndentString.length();
+					}
+					buf.append(document.getLineDelimiter(line));
+					buf.append(curLineIndent);
+					command.caretOffset = cursorPos + 1 + curLineIndent.length() * 2;
+					command.shiftsCaret = false;
+				}
+			} else {
+				int start = document.getLineOffset(line);
+				int whiteend = findEndOfWhiteSpace(document, start, command.offset);
+				buf.append(document.get(start, whiteend - start));
+				}
+			command.text = buf.toString();
+
+		} catch (BadLocationException excp) {
+			System.err.println("BadLocationException in CFScriptIndentStrategy::smartIndentAfterNewLine");
+			}
+		}
+
 	/**
 	 * Set the indent of a bracket based on the command provided in the supplied document.
 	 * @param document - the document being parsed
@@ -455,6 +559,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	public boolean isAutoClose_Braces() {
 		return autoClose_Braces;
 	}
+
 
 	/**
 	 * @param autoClose_Braces the autoClose_Braces to set

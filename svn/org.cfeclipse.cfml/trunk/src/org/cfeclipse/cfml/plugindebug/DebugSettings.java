@@ -59,7 +59,7 @@ public class DebugSettings {
     public static final boolean DICTIONARY = false;
 
     /** Debug flag for classes in the org.cfeclipse.cfml.editors package */
-    public static final boolean EDITORS = true;
+	public static final boolean EDITORS = false;
 
     /** Debug flag for classes in the org.cfeclipse.cfml.editors.actions package */
     public static final boolean ACTIONS = false;
@@ -104,19 +104,19 @@ public class DebugSettings {
      * Debug flag for classes in the org.cfeclipse.cfml.editors.partitioner
      * package
      */
-    public static final boolean PARTITIONER = false;
+	public static final boolean PARTITIONER = false;
 
     /**
      * Debug flag for classes in the
      * org.cfeclipse.cfml.editors.partitioner.scanners package
      */
-    public static final boolean SCANNERS = false;
+	public static final boolean SCANNERS = false;
 
     /**
      * Debug flag for classes in the
      * org.cfeclipse.cfml.editors.partitioner.scanners.cfscript package
      */
-    public static final boolean SCANNERS_CFSCRIPT = false;
+	public static final boolean SCANNERS_CFSCRIPT = false;
 
     /**
      * Debug flag for classes in the

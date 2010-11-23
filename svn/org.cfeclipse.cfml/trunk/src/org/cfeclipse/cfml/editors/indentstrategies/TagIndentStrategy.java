@@ -31,7 +31,6 @@ import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.formatters.XmlDocumentFormatter;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 import org.eclipse.jface.text.BadLocationException;
@@ -325,7 +324,6 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 */
 	private void handleEnterBetweenTags(IDocument doc,
 			DocumentCommand docCommand) {
-
 		if (doc instanceof ICFDocument 
 				&& this.isUseSmartIndent()) {
 			ICFDocument cfd = (ICFDocument) doc;

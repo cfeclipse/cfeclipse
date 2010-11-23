@@ -30,7 +30,6 @@ import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.formatters.XmlDocumentFormatter;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
-import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
 import org.eclipse.jface.text.BadLocationException;
@@ -67,6 +66,13 @@ public class CFEIndentStrategy extends DefaultIndentLineAutoEditStrategy {
 
 	/** Use smart indent */
 	private boolean useSmartIndent = true;
+
+	/** Use smart comments */
+	protected boolean useSmartComments = true;
+
+	public void setUseSmartComments(boolean useSmartComments) {
+		this.useSmartComments = useSmartComments;
+	}
 
 	private boolean tabIndentSingleLine = false;
 	protected String indentString = "\t";
@@ -589,6 +595,13 @@ public class CFEIndentStrategy extends DefaultIndentLineAutoEditStrategy {
 	 */
 	public boolean isUseSmartIndent() {
 		return useSmartIndent;
+	}
+
+	/**
+	 * @return the useSmartComments
+	 */
+	public boolean isUseSmartComments() {
+		return useSmartComments;
 	}
 
 	/**

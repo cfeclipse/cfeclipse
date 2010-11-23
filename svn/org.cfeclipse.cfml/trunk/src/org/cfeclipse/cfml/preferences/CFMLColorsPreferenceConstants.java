@@ -78,6 +78,9 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 
 	public static final String P_COLOR_CFOPPERATOR = "cfmlOpperators";
 
+	public static final String P_COLOR_JAVADOC = "javaDocStyeComments";
+
+	public static final String P_COLOR_BACKGROUND_JAVADOC = "javaDocStyeCommentsBackground";
 
 	
 	/**
@@ -114,7 +117,9 @@ public class CFMLColorsPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_COLOR_CFBUILTINSCOPE,"204,0,0");
 		store.setDefault(P_COLOR_CFSCOPE,"204,0,0");
 		store.setDefault(P_COLOR_CFCOMMENT,"128,128,128");
-		store.setDefault(P_COLOR_BACKGROUND_CFCOMMENT,"255,255,255");
+		store.setDefault(P_COLOR_BACKGROUND_CFCOMMENT, "255,255,255");
+		store.setDefault(P_COLOR_JAVADOC, "42,42,42");
+		store.setDefault(P_COLOR_BACKGROUND_JAVADOC, "255,255,255");
 		store.setDefault(P_COLOR_CFSCRIPT_TEXT,"0,0,0");
 		store.setDefault(P_COLOR_CFSCRIPT_KEYWORD,"0,0,255");
 		store.setDefault(P_COLOR_CFSCRIPT_STRING,"0,102,0");

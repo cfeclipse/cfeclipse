@@ -156,9 +156,12 @@ public class CFEPartitioner implements IDocumentPartitioner,
         fPseudoPartitions = new Properties();
         fPseudoPartitions.put("cfquery",CFPartitionScanner.SQL);
         fPseudoPartitions.put("cfscript",CFPartitionScanner.CF_SCRIPT);
+		fPseudoPartitions.put("javadoc", CFPartitionScanner.JAVADOC_COMMENT);
         //fPseudoPartitions.put("cfxml",CFPartitionScanner.XML);
         fPseudoPartitions.put("style",CFPartitionScanner.CSS);
         fPseudoPartitions.put("script",CFPartitionScanner.J_SCRIPT);
+		fPseudoPartitions.put("cfcomment", CFPartitionScanner.CF_COMMENT);
+		fPseudoPartitions.put("cfscriptcomment", CFPartitionScanner.CF_SCRIPT_COMMENT);
     }
 
     /*
@@ -243,12 +246,11 @@ public class CFEPartitioner implements IDocumentPartitioner,
                 int start = fScanner.getTokenOffset();
                 length = data.getFirstPartitionEnd();
                 rawData = data.getRawData().toLowerCase();
-                
                 //System.out.println("Found a tag token. " + rawData);
                 if (!fDocument.containsPosition(fPositionCategory,start,length)) {
                     // Add a partition for the start part of the tag.
                      p = new CFEPartition(start, length, data.getStartPartitionType());
-                     p.setTagName(data.tagName());
+					p.setTagName(data.tagName());
                      if (data.isCloser()) {
                          // System.out.println("Setting partition to be a closer " + rawData);
                          p.setCloser(true);
@@ -261,7 +263,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
                         p.setNextPartitionType(data.getMidPartitionType());
                         p.setStartPartition(true);
                     }
-                    if (data.fHasMid) {
+					if (data.fHasMid) {
                         
                         indexOffset++;
                         start = start + data.getFirstPartitionEnd();
@@ -269,7 +271,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
                         p = new CFEPartition(start, length, data.getMidPartitionType());
                         p.setNextPartitionType(p.getType());
                         p.setMidPartition(true);
-                        p.setTagName(data.tagName());
+						p.setTagName(data.tagName());
                         if (!fDocument.containsPosition(fPositionCategory,p.offset,p.length)) {
                             fDocument.addPosition(fPositionCategory, p);
                             //System.out.println("Added mid partition of type " + p.getType() + " from " + p.offset + " to " + Integer.toString(p.offset + p.length));
@@ -284,7 +286,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
 	                    if (!fDocument.containsPosition(fPositionCategory,start,length)) {
 		                    p = new CFEPartition(start, length, data.getEndPartitionType());
 		                    p.setEndPartition(true);
-	                        p.setTagName(data.tagName());
+							p.setTagName(data.tagName());
 	                        fDocument.addPosition(fPositionCategory, p);
 	                    }
 
@@ -296,8 +298,9 @@ public class CFEPartitioner implements IDocumentPartitioner,
             } // End token is instance of tagData 
             else {
                 
-                if (!fDocument.containsPosition(fPositionCategory,fScanner.getTokenOffset(),fScanner.getTokenLength())) {
-                    p = new CFEPartition(fScanner.getTokenOffset(),fScanner.getTokenLength(), contentType);
+				if (!fDocument.containsPosition(fPositionCategory, fScanner.getTokenOffset(), fScanner.getTokenLength())) {
+					p = new CFEPartition(fScanner.getTokenOffset(), fScanner.getTokenLength(), contentType);
+					p.setTagName("cfscript");
                     fDocument.addPosition(fPositionCategory, p);
                 }
             }
@@ -1332,17 +1335,17 @@ public class CFEPartitioner implements IDocumentPartitioner,
             int index = fDocument.computeIndexInCategory(fPositionCategory, offset);
             Position[] category = fDocument.getPositions(fPositionCategory);
             if (index == 0) {
-            	System.out.println("No previous partition found");
+				// System.out.println("No previous partition found");
                 return null;
             }
-            System.out.println("Previous partition found at index " + (index - 1));
+			// System.out.println("Previous partition found at index " + (index - 1));
             return (CFEPartition) category[index - 1];
         }
         catch (BadLocationException e) {
-        	System.out.println("Previous partition not found");
+			// System.out.println("Previous partition not found");
             return null;
         } catch (BadPositionCategoryException e) {
-        	System.out.println("Previous partition not found");
+			// System.out.println("Previous partition not found");
             return null;
         }
     }
@@ -1482,8 +1485,14 @@ public class CFEPartitioner implements IDocumentPartitioner,
             if (category == null || category.length == 0)
                 return new TypedRegion(0, fDocument.getLength(),
                         IDocument.DEFAULT_CONTENT_TYPE);
+			if (DEBUG) {
+				DebugUtils.printMessage(getClass(), "");
+				for (int x = 0; x < category.length; x++) {
+					DebugUtils.printMessage(getClass(), "cats: " + category[x].toString());
+				}
+			}
 
-            int index = fDocument.computeIndexInCategory(fPositionCategory,
+			int index = fDocument.computeIndexInCategory(fPositionCategory,
                     offset);
 
             if (index < category.length) {
@@ -1711,7 +1720,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
                     && !region.getType().equals(IDocument.DEFAULT_CONTENT_TYPE)) {
                 if (offset > 0) {
                     region = getPartition(offset - 1);
-                    if (region.getType().equals(IDocument.DEFAULT_CONTENT_TYPE))
+					if (region.getType().equals(IDocument.DEFAULT_CONTENT_TYPE))
                         return region;
                 }
                 return new TypedRegion(offset, 0,

@@ -46,7 +46,19 @@ public class NestableMultiLineRule extends MultiLineRule {
 	    super(start, end, token);
 	    fBreaksOnEOF = true;
 	}
-	
+
+	/**
+	 * Sets a column constraint for this rule. If set, the rule's token will only be returned if the pattern is detected
+	 * starting at the specified column. If the column is smaller then 0, the column constraint is considered removed.
+	 * 
+	 * @param column
+	 *            the column in which the pattern starts
+	 */
+	public void setColumnConstraint(int column) {
+		if (column < 0)
+			column = UNDEFINED;
+		fColumn = column;
+	}
 
 	protected boolean endSequenceDetected(ICharacterScanner scanner) {
 	    try {

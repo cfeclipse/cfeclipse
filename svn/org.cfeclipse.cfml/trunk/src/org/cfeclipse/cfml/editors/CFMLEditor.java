@@ -29,15 +29,10 @@ package org.cfeclipse.cfml.editors;
 //import java.util.Iterator;
 import java.io.File;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.UrlViewer;
 import org.cfeclipse.cfml.editors.actions.EditTagAction;
 import org.cfeclipse.cfml.editors.actions.GenericEncloserAction;
 import org.cfeclipse.cfml.editors.actions.GotoFileAction;
@@ -47,8 +42,6 @@ import org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction;
 import org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction;
 import org.cfeclipse.cfml.editors.actions.LocateInTreeAction;
 import org.cfeclipse.cfml.editors.actions.RTrimAction;
-import org.cfeclipse.cfml.editors.actions.RenameInFileAction;
-import org.cfeclipse.cfml.editors.actions.TextEditorWordNavigationAction;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.cfeclipse.cfml.editors.decoration.DecorationSupport;
 import org.cfeclipse.cfml.editors.dnd.CFEDragDropListener;
@@ -58,8 +51,6 @@ import org.cfeclipse.cfml.editors.pairs.CFMLPairMatcher;
 import org.cfeclipse.cfml.editors.pairs.Pair;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
-import org.cfeclipse.cfml.editors.partitioner.PartitionTypes;
-import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.editors.text.IReconcilingParticipant;
 import org.cfeclipse.cfml.editors.ui.CFMLEditorToolbar;
 import org.cfeclipse.cfml.parser.CFDocument;
@@ -82,8 +73,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -91,15 +80,10 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ISynchronizable;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.ITextViewerExtension5;
-import org.eclipse.jface.text.ITypedRegion;
-import org.eclipse.jface.text.source.IAnnotationModel;
-import org.eclipse.jface.text.source.IAnnotationModelExtension;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
@@ -109,15 +93,11 @@ import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
-import org.eclipse.swt.dnd.DropTarget;
-import org.eclipse.swt.dnd.DropTargetEvent;
-import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -128,32 +108,22 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
-import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IPersistableEditor;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.dnd.IDragAndDropService;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.ITextEditorHelpContextIds;
 import org.eclipse.ui.editors.text.TextEditor;
-import org.eclipse.ui.internal.EditorManager;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
-import org.eclipse.ui.part.PluginTransfer;
 import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.part.ShowInContext;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
-import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.IDocumentProviderExtension;
 import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.ui.texteditor.ITextEditorActionConstants;
-import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
-import org.eclipse.ui.texteditor.rulers.IColumnSupport;
-import org.eclipse.ui.texteditor.rulers.RulerColumnDescriptor;
-import org.eclipse.ui.texteditor.rulers.RulerColumnRegistry;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
 
 /**
@@ -358,6 +328,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
+	@Override
 	public void doSave(IProgressMonitor monitor) {
 		//TODO: On save parsing should apparently go into a builder.
 
@@ -381,6 +352,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 	}
 
+	@Override
 	public boolean isSaveAsAllowed() {
 	    return true;
 	}
@@ -434,6 +406,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 	 * providing a custom source fViewer configuration, subclasses may extend this
 	 * method.
 	 */
+	@Override
 	protected void initializeEditor() {
 		IPreferenceStore generalTextStore= EditorsUI.getPreferenceStore();
 		IPreferenceStore cfmlStore = CFMLPlugin.getDefault().getPreferenceStore();
@@ -1189,7 +1162,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		}
 
 		// fix for RSE linked files
-		if(provider.isDeleted(input) && original != null && original.exists() && original.getFullPath().toString().contains("?")){
+		if (provider.isDeleted(input) && original != null && original.exists()) {
 			provider.aboutToChange(input);
 			try {
 				provider.saveDocument(progressMonitor, input, provider.getDocument(input), true);

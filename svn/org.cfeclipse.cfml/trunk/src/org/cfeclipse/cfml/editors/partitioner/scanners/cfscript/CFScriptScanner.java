@@ -33,7 +33,6 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.CFSyntaxDictionary;
 import org.cfeclipse.cfml.editors.ColorManager;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.CFKeywordDetector;
-import org.cfeclipse.cfml.editors.partitioner.scanners.rules.NestableMultiLineRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.PredicateWordRule;
 import org.cfeclipse.cfml.preferences.CFMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
@@ -111,6 +110,8 @@ public class CFScriptScanner extends RuleBasedScanner {
 				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFSCRIPT_FUNCTION)
 			)
 		));
+
+		IToken javadoc = new Token(new TextAttribute(manager.getColor(prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_JAVADOC))));
 		
 		IToken cfdefault = new Token(new TextAttribute(
 			manager.getColor(
@@ -119,12 +120,6 @@ public class CFScriptScanner extends RuleBasedScanner {
 		));
 				
 		List rules = new ArrayList();
-		
-		//I think the reason this doesnt work as well as the <!-- type of comment
-		//is that the <! type is defined on the partition scanner where this is
-		//only here... javascript has the same problem
-		rules.add(new MultiLineRule("/*","*/",cfcomment));
-		rules.add(new EndOfLineRule("//", cfcomment));
 		
 		//so the script tags look correct
 		rules.add(new SingleLineRule("<cfscript", ">", cftag));
@@ -135,6 +130,9 @@ public class CFScriptScanner extends RuleBasedScanner {
 		rules.add(new MultiLineRule("\"", "\"", string));
 		rules.add(new MultiLineRule("'", "'", string));
 		
+		rules.add(new MultiLineRule("/**", "*/", javadoc, (char) 0, true));
+		rules.add(new MultiLineRule("/*", "*/", cfcomment, (char) 0, true));
+		rules.add(new EndOfLineRule("//", cfcomment));
 		rules.add(new NumberRule(cfnumber));
 		
 		CFSyntaxDictionary dic = (CFSyntaxDictionary)DictionaryManager.getDictionary(DictionaryManager.CFDIC);

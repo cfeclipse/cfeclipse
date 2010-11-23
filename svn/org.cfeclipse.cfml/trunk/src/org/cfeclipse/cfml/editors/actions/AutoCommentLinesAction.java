@@ -45,7 +45,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * So, for example, javascript comments will be used if in a javascript block
  * or cf comments in a cfblock.
  */
-public class AutoCommentAction extends Encloser implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
+public class AutoCommentLinesAction extends Encloser implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 	
 	ITextEditor editor = null;
 	
@@ -57,6 +57,46 @@ public class AutoCommentAction extends Encloser implements IWorkbenchWindowActio
 		}	
 	}
 
+	/**
+	 * Wraps the selection with the start and end string
+	 * 
+	 * @param doc
+	 *            the document this belongs to
+	 * @param sel
+	 *            the selection to be wrapped
+	 * @param string
+	 * @param start
+	 *            the string to put before the selection
+	 * @param end
+	 *            the string to put before the selection
+	 */
+	public void prependLines(IDocument doc, ITextSelection sel, String prependString, String appendString)
+	{
+		try
+		{
+			if(!sel.isEmpty())
+			{
+				int offset = sel.getOffset();
+				int len  = sel.getLength();
+				String lineDelim = doc.getLineDelimiter(doc.getLineOfOffset(offset));
+				String selection = doc.get(offset, len);
+				if (selection.matches("(?ms).*" + prependString + ".*" + appendString)) {
+					selection = selection.replaceAll("(?m)^" + prependString + "(.+)" + appendString + "$", "$1");
+				} else {
+					selection = selection.replaceAll("(?m)^(.+)$", prependString + "$1" + appendString);
+				}
+				if (selection.length() == 0)
+					selection = prependString;
+				doc.replace(offset, len, selection);
+				editor.selectAndReveal(offset, selection.length());
+			}
+		}
+		catch(BadLocationException ble)
+		{
+			ble.printStackTrace(System.err);
+		}
+	}	
+	
 	public void run(IAction action) 
 	{ 
 		try
@@ -75,15 +115,13 @@ public class AutoCommentAction extends Encloser implements IWorkbenchWindowActio
 				
 				String parttype = doc.getPartition(((ITextSelection)sel).getOffset()).getType();
 				String start="";
-				int selectionLength = 0;
 				
 				if(
 					parttype.equals(CFPartitionScanner.CF_SCRIPT)
 					|| parttype.equals(CFPartitionScanner.J_SCRIPT)
 					|| parttype.equals(CFPartitionScanner.CSS))
 				{
-					start = "/* ";
-					selectionLength = this.enclose(doc, (ITextSelection) sel, start, " */");
+					prependLines(doc, (ITextSelection) sel, "//", "");
 				}
 				else if(
 						parttype.equals(CFPartitionScanner.CF_START_TAG_BEGIN)
@@ -92,20 +130,19 @@ public class AutoCommentAction extends Encloser implements IWorkbenchWindowActio
 						|| parttype.equals(CFPartitionScanner.CF_END_TAG)
 				)
 				{
-					start = "<!--- ";
-					selectionLength = this.enclose(doc, (ITextSelection) sel, start, " --->");
+					prependLines(doc, (ITextSelection) sel, "<!--- ", " --->");
 				}
 				else
 				{
 					start = "<!-- ";
-					selectionLength = this.enclose(doc, (ITextSelection) sel, start, " -->");
+					prependLines(doc, (ITextSelection) sel, start, " -->");
 				}
 				
 				//move the cursor to before the end of the new insert
 				int offset = ((ITextSelection)sel).getOffset();
 				offset += ((ITextSelection)sel).getLength();
 				offset += start.length();
-				editor.selectAndReveal(((ITextSelection) sel).getOffset(), selectionLength);
+				// editor.setHighlightRange(offset,0,true);
 
 				// Tell the plugin's Last Encloser Manager that this was the last one used for this editor
 				CFMLPlugin.getDefault().getLastActionManager().setLastAction(editor, this);

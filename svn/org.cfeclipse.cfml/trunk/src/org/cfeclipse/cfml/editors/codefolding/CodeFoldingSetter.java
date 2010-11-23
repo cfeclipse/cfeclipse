@@ -36,7 +36,6 @@ import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.text.BadLocationException;
@@ -47,8 +46,6 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
-import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.ide.FileStoreEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
@@ -115,6 +112,10 @@ public class CodeFoldingSetter {
 				if (preferenceManager.foldCFMLComments()) {
 					foldPartitions(markerMap, CFPartitionScanner.CF_COMMENT, preferenceManager.collapseCFMLComments()
 							&& autoCollapse, preferenceManager.minimumFoldingLines() - 1);
+					foldPartitions(markerMap, CFPartitionScanner.CF_SCRIPT_COMMENT, preferenceManager.collapseCFMLComments()
+							&& autoCollapse, preferenceManager.minimumFoldingLines() - 1);
+					foldPartitions(markerMap, CFPartitionScanner.JAVADOC_COMMENT, preferenceManager.collapseCFMLComments() && autoCollapse,
+							preferenceManager.minimumFoldingLines() - 1);
 				}
 				if (preferenceManager.foldHTMLComments()) {
 					foldPartitions(markerMap, CFPartitionScanner.HTM_COMMENT, preferenceManager.collapseHTMLComments()

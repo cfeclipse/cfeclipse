@@ -53,8 +53,6 @@ import org.cfeclipse.cfml.preferences.HTMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jface.bindings.TriggerSequence;
-import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IAutoEditStrategy;
@@ -68,16 +66,8 @@ import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.TextViewerUndoManager;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
-import org.eclipse.jface.text.contentassist.IContentAssistantExtension2;
-import org.eclipse.jface.text.contentassist.IContentAssistantExtension3;
-import org.eclipse.jface.text.formatter.ContentFormatter;
-import org.eclipse.jface.text.formatter.FormattingContext;
-import org.eclipse.jface.text.formatter.FormattingContextProperties;
 import org.eclipse.jface.text.formatter.IContentFormatter;
-import org.eclipse.jface.text.formatter.IFormattingContext;
-import org.eclipse.jface.text.formatter.IFormattingStrategy;
 import org.eclipse.jface.text.formatter.MultiPassContentFormatter;
-import org.eclipse.jface.text.IDocumentExtension3;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.reconciler.IReconciler;
@@ -85,18 +75,13 @@ import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.jface.text.source.SourceViewer;
-import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
-import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
-import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 /**
  * <p>
  * This sets up the whole editor. Assigin partition damagers and repairers, and
@@ -153,6 +138,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		indentCFScriptStrategy.setAutoClose_Braces(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_BRACES));
 		indentCFScriptStrategy.setAutoClose_Parens(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOCLOSE_PARENS));
 		indentCFScriptStrategy.setUseSmartIndent(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_USE_SMART_INDENT));
+		indentCFScriptStrategy.setUseSmartComments(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_USE_SMART_COMMENTS));
 	}
 
 	/**
@@ -571,10 +557,12 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//CF script (if this is put before the cfscript stuff
 		//you'll get jacked up keyword highlighting
 		dr = new DefaultDamagerRepairer(getCFScriptScanner());
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SCRIPT);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_SCRIPT);
-		
+		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
+		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
+
 		// cfset tag contents.
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SET_STATEMENT);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_SET_STATEMENT);
@@ -629,33 +617,25 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		reconciler.setDamager(dr, CFPartitionScanner.TABLE_TAG_ATTRIBS);
 		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_TAG_ATTRIBS);
 		
-		//.... the default text in the document
-		dr = new DefaultDamagerRepairer(getCFScriptScanner());
-		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
-		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
-
 		//unknown tags
 		dr = new DefaultDamagerRepairer(getUNKTagScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.UNK_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.UNK_TAG);
-		
-		//set up the cf comment section
-		NonRuleBasedDamagerRepairer ndr = new NonRuleBasedDamagerRepairer(
-			new TextAttribute(
-				colorManager.getColor(
-					preferenceManager.getColor(
-							CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT
-					)
-				),
-				colorManager.getColor(
-					preferenceManager.getColor(
-							CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_CFCOMMENT
-					)
-				), tabWidth
-			)
-		);
+
+		NonRuleBasedDamagerRepairer ndr = new NonRuleBasedDamagerRepairer(new TextAttribute(colorManager.getColor(preferenceManager
+				.getColor(CFMLColorsPreferenceConstants.P_COLOR_JAVADOC)), colorManager.getColor(preferenceManager
+				.getColor(CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_JAVADOC)), tabWidth));
+		reconciler.setDamager(ndr, CFPartitionScanner.JAVADOC_COMMENT);
+		reconciler.setRepairer(ndr, CFPartitionScanner.JAVADOC_COMMENT);
+
+		// set up the cf comment section
+		ndr = new NonRuleBasedDamagerRepairer(new TextAttribute(colorManager.getColor(preferenceManager
+				.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT)), colorManager.getColor(preferenceManager
+				.getColor(CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_CFCOMMENT)), tabWidth));
 		reconciler.setDamager(ndr, CFPartitionScanner.CF_COMMENT);
 		reconciler.setRepairer(ndr, CFPartitionScanner.CF_COMMENT);
+		reconciler.setDamager(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT);
+		reconciler.setRepairer(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT);
 		
 		//set up the html comment section
 		NonRuleBasedDamagerRepairer ndr2 = new NonRuleBasedDamagerRepairer(
@@ -785,25 +765,6 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
         for (int i=0;i<PartitionTypes.ASSIST_PARTITION_TYPES.length;i++) {
             assistant.setContentAssistProcessor(mainCFAssistant,PartitionTypes.ASSIST_PARTITION_TYPES[i]);
         }
-        /*
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_START_TAG_END);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.CF_TAG_ATTRIBS);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.HTM_END_TAG);	//inside any other tags
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.HTM_START_TAG_BEGIN);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.HTM_START_TAG_END);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.HTM_TAG_ATTRIBS);	
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.UNK_TAG);	//unknown tags
-		assistant.setContentAssistProcessor(mainCFAssistant,IDocument.DEFAULT_CONTENT_TYPE);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_END_TAG);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_START_TAG_BEGIN);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_START_TAG_END);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_TAG_ATTRIBS);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.TABLE_END_TAG);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.TABLE_START_TAG_BEGIN);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.TABLE_START_TAG_END);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.FORM_TAG_ATTRIBS);
-		assistant.setContentAssistProcessor(mainCFAssistant,CFPartitionScanner.J_SCRIPT);
-		*/
     }
 
     /**
@@ -853,7 +814,9 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		if(partitionType == null) {
 			return new CFEIndentStrategy[] { indentTagStrategy };
 		}
-		if(partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0) 
+		if (partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0
+				|| partitionType.compareTo(CFPartitionScanner.CF_SCRIPT_COMMENT) == 0
+				|| partitionType.compareTo(CFPartitionScanner.JAVADOC_COMMENT) == 0)
 		{
 			return new CFEIndentStrategy[] { indentCFScriptStrategy };
 		} else if(partitionType.compareTo(CFPartitionScanner.J_SCRIPT) == 0) 
@@ -922,6 +885,9 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_AUTOINSERT_CLOSE_TAGS)) {
     		indentTagStrategy.setAutoInsert_CloseTags(setting);
+        }
+        else if(prop.equals(AutoIndentPreferenceConstants.P_USE_SMART_COMMENTS)) {
+			indentCFScriptStrategy.setUseSmartComments(setting);
         }
         else if(prop.equals(AutoIndentPreferenceConstants.P_USE_SMART_INDENT)) {
         	indentCFScriptStrategy.setUseSmartIndent(setting);
