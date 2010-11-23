@@ -58,6 +58,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	//public final static String CF_DEFAULT 	= "__cf_default";
 	public final static String DOCTYPE	 	= "__doctype";
 	public final static String CF_COMMENT		= "__cf_comment";
+	public final static String CF_SCRIPT_COMMENT_BLOCK = "__cf_script_comment_block";
 	public final static String CF_SCRIPT_COMMENT = "__cf_script_comment";
 	public final static String JAVADOC_COMMENT = "__cf_javadoc_comment";
 	public final static String HTM_COMMENT 	= "__htm_comment";
@@ -98,6 +99,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	{
 		IToken doctype	 	= new Token(DOCTYPE);
 		IToken cfComment 	= new Token(CF_COMMENT);
+		IToken cfscriptCommentBlock = new Token(CF_SCRIPT_COMMENT_BLOCK);
 		IToken cfscriptComment = new Token(CF_SCRIPT_COMMENT);
 		IToken javaDocComment = new Token(JAVADOC_COMMENT);
 		IToken htmComment 	= new Token(HTM_COMMENT);
@@ -119,7 +121,7 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		// rules.add(new CFScriptComponentRule("}", "}", CF_SCRIPT, CF_SCRIPT));
 
 		rules.add(new MultiLineRule("/**", "*/", javaDocComment, (char) 0, true));
-		rules.add(new MultiLineRule("/*", "*/", cfscriptComment, (char) 0, true));
+		rules.add(new MultiLineRule("/*", "*/", cfscriptCommentBlock, (char) 0, true));
 		rules.add(new EndOfLineRule("//", cfscriptComment));
 		// Partitions in the document will get marked in this order
 		rules.add(new NestableMultiLineRule("<!---","--->",cfComment));

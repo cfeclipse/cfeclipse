@@ -632,6 +632,8 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 				.getColor(CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_CFCOMMENT)), tabWidth));
 		reconciler.setDamager(ndr, CFPartitionScanner.CF_COMMENT);
 		reconciler.setRepairer(ndr, CFPartitionScanner.CF_COMMENT);
+		reconciler.setDamager(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK);
+		reconciler.setRepairer(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK);
 		reconciler.setDamager(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT);
 		reconciler.setRepairer(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT);
 
@@ -817,6 +819,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 			return new CFEIndentStrategy[] { indentTagStrategy };
 		}
 		if (partitionType.compareTo(CFPartitionScanner.CF_SCRIPT) == 0
+				|| partitionType.compareTo(CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK) == 0
 				|| partitionType.compareTo(CFPartitionScanner.CF_SCRIPT_COMMENT) == 0
 				|| partitionType.compareTo(CFPartitionScanner.JAVADOC_COMMENT) == 0)
 		{

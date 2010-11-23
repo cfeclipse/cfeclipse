@@ -69,6 +69,9 @@ public class CFScriptScanner extends RuleBasedScanner {
 			)
 		));
 	
+		IToken cfcommentBlock = new Token(new TextAttribute(manager.getColor(prefs
+				.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT))));
+
 		IToken cfcomment = new Token(new TextAttribute(
 			manager.getColor(
 				prefs.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT)
@@ -131,7 +134,7 @@ public class CFScriptScanner extends RuleBasedScanner {
 		rules.add(new MultiLineRule("'", "'", string));
 		
 		rules.add(new MultiLineRule("/**", "*/", javadoc, (char) 0, true));
-		rules.add(new MultiLineRule("/*", "*/", cfcomment, (char) 0, true));
+		rules.add(new MultiLineRule("/*", "*/", cfcommentBlock, (char) 0, true));
 		rules.add(new EndOfLineRule("//", cfcomment));
 		rules.add(new NumberRule(cfnumber));
 		

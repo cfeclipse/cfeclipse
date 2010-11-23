@@ -118,7 +118,8 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			}
 			ITypedRegion partition = doc.getPartition(docCommand.offset);
 			String partType = partition.getType();
-			if (partType == CFPartitionScanner.CF_COMMENT || partType == CFPartitionScanner.CF_SCRIPT_COMMENT
+			if (partType == CFPartitionScanner.CF_COMMENT || partType == CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK
+					|| partType == CFPartitionScanner.CF_SCRIPT_COMMENT
 					|| partType == CFPartitionScanner.JAVADOC_COMMENT) {
 				inComment = true;
 			}
@@ -425,7 +426,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			String curText = document.get(lineOffset, offset - lineOffset).trim();
 			ITypedRegion partition = document.getPartition(p);
 			String partType = partition.getType();
-			if (partType == CFPartitionScanner.CF_SCRIPT_COMMENT || partType == CFPartitionScanner.JAVADOC_COMMENT) {
+			if (partType == CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK || partType == CFPartitionScanner.JAVADOC_COMMENT) {
 				if ((curText.equals("/**") || curText.equals("/*"))
 						&& (curChar == '\n' || curChar == '*' || (curChar == '/') && nextChar == '\n')) {
 					buf.append(" * ");
