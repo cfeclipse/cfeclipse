@@ -560,8 +560,6 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SCRIPT);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_SCRIPT);
-		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
-		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 
 		// cfset tag contents.
 		reconciler.setDamager(dr, CFPartitionScanner.CF_SET_STATEMENT);
@@ -636,6 +634,11 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		reconciler.setRepairer(ndr, CFPartitionScanner.CF_COMMENT);
 		reconciler.setDamager(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT);
 		reconciler.setRepairer(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT);
+
+		// .... the default text in the document
+		dr = new DefaultDamagerRepairer(getTextScanner());
+		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
+		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		
 		//set up the html comment section
 		NonRuleBasedDamagerRepairer ndr2 = new NonRuleBasedDamagerRepairer(
@@ -700,8 +703,10 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		
 		int delay = preferenceManager.insightDelay();
 		
-		assistant.enableAutoActivation(true);
+		assistant.enableAutoActivation(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOACTIVATION));
 		assistant.setAutoActivationDelay(delay);
+		// automatically insert if only one suggestion
+		assistant.enableAutoInsert(preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_AUTOINSERT));
 		//assistant.setDocumentPartitioning(CFDocumentSetupParticipant.CFML_PARTITIONING);
 		
 		assistant.setProposalPopupOrientation(
@@ -727,10 +732,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//the popup window when you hit enter on a function name
 		assistant.setContextInformationPopupBackground(
 			colorManager.getColor(new RGB(255,255,255)	)
-		);
-		// automatically insert if only one suggestion
-		assistant.enableAutoInsert(false);
-		
+);
 		
 		return assistant;
 	}
