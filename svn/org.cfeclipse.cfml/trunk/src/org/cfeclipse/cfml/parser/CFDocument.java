@@ -27,13 +27,20 @@ package org.cfeclipse.cfml.parser;
 //import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.dictionary.Function;
+import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.model.CFModelChangeEvent;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ISynchronizable;
 /** 
@@ -158,6 +165,55 @@ public class CFDocument {
 	public CFDocument(IDocument eclipseDocument) {
 	}
 
+	public Set<Function> getFunctions() {
+		Matcher matcher;
+		Pattern pattern;
+		String name = "", type ="", required="", defaultvalue = "";
+		CFNodeList nodes = getDocumentRoot().selectNodes("//cffunction");
+		Iterator i = nodes.iterator();
+        Set<Function> functions = new HashSet<Function>();
+		pattern = Pattern.compile("(\\w+)[\\s=]+(((\\x22|\\x27)((?!\\4).|\\4{2})*\\4))", Pattern.CASE_INSENSITIVE);
+		while(i.hasNext()) {
+			TagItem currItem = (TagItem) i.next();
+			String funcName = currItem.getAttributeValue("name", "unnamed");
+			String funcReturn = currItem.getAttributeValue("returntype", "any");
+
+			Function function = new Function(funcName, funcReturn, Byte.parseByte("8"));
+				//System.out.println(currItem.getItemData());
+				if(currItem.getFirstChild().getName().equals("cfargument")){
+					CFNodeList childNodes = currItem.getChildNodes();
+					int x = 0;
+					DocItem childNode = (DocItem) childNodes.get(x);
+					while(childNode.getName().equals("cfargument")) {
+						matcher = pattern.matcher(childNode.getItemData());
+						while(matcher.find()) {
+							String value = matcher.group(2).replaceAll("'", "").replaceAll("\"", "");
+							if(matcher.group(1).toLowerCase().equals("name")) {
+								name = value;
+							}
+							if(matcher.group(1).toLowerCase().equals("type")) {
+								type = value;
+							}
+							if(matcher.group(1).toLowerCase().equals("required")) {
+								required = value;
+							}
+							if(matcher.group(1).toLowerCase().equals("default")) {
+								defaultvalue = value;
+							}
+						}
+					Parameter newParam = new Parameter(name, type, Boolean.valueOf(required), defaultvalue);
+					name = type = required = defaultvalue = "";
+					function.addParameter(newParam);
+					// System.out.println(currItem.getFirstChild().getItemData());
+					x++;
+					childNode = (DocItem) childNodes.get(x);
+					}
+			}
+				functions.add(function);
+			}
+		return functions;
+	}
+	
 	public ArrayList getDocVariables() {
 		return docVariables;
 	}
