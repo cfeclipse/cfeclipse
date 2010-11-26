@@ -225,6 +225,16 @@
                menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.AutoCommentAction">
          </action>
+		<!-- smart line comment -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.AutoCommentLines"
+               label="%action.label.AutoCommentLines"
+               icon="icons/ctool16/smartcomment.gif"
+               tooltip="%action.tooltip.AutoCommentLines"
+               class="org.cfeclipse.cfml.editors.actions.AutoCommentLinesAction"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
+               id="org.cfeclipse.cfml.editors.actions.AutoCommentLinesAction">
+         </action>
 		<!-- Surround with #s -->
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.CFVariable"
@@ -292,6 +302,16 @@
                label="%action.label.CFScript"
                menubarPath="org.cfeclipse.cfml.menus.source/output"
                tooltip="%action.tooltip.CFScript">
+         </action>
+		<!-- to CFScript action -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.ToCFScript"
+               label="%action.label.ToLower"
+               icon="icons/ctool16/tolower.gif"
+               tooltip="%action.tooltip.ToLower"
+               class="org.cfeclipse.cfml.editors.actions.ToCFScriptAction"
+               menubarPath="edit/additions"
+               id="org.cfeclipse.cfml.editors.actions.ToCFScriptAction">
          </action>
 		<!-- to lower case -->
          <action
@@ -772,6 +792,12 @@
             </separator>
          </menu>
          <action
+               label="%action.label.ToCFScript"
+               class="org.cfeclipse.cfml.editors.actions.ToCFScriptAction"
+               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
+               id="org.cfeclipse.cfml.editors.actions.ToCFScript">
+         </action>
+         <action
                label="%action.label.ToLower"
                class="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
@@ -981,6 +1007,13 @@
 			categoryId="org.cfeclipse.cfml.commandCategory"
 			id="org.cfeclipse.cfml.editors.actions.AutoComment"/>
 			
+		<!-- comment lines based on section (i.e. js comments in js blocks, etc) -->
+		<command
+			name="%command.name.AutoCommentLines"
+			description="%command.description.AutoCommentLines"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.AutoCommentLines"/>
+			
 		<!-- enclose in pound ... er ... hash signs -->
 		<command
 			name="%command.name.2"
@@ -1023,6 +1056,13 @@
 			categoryId="org.cfeclipse.cfml.commandCategory"
 			id="org.cfeclipse.cfml.editors.actions.CFScript"/>
 		
+		<!-- to lower case -->
+		<command
+			name="%command.name.ToCFScript"
+			description="%command.description.toCFScript"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ToCFScript"/>
+
 		<!-- to lower case -->
 		<command
 			name="%command.name.8"
@@ -2363,6 +2403,16 @@
                label="%action.label.CFScript"
                toolbarPath="BasicCFEditorCommand"
                tooltip="%action.tooltip.CFScript">
+         </action>
+		<!-- to cfscript -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.ToCFScript"
+               label="%action.label.ToCFScript"
+               icon="icons/ctool16/tolower.gif"
+               tooltip="%action.tooltip.ToCFScript"
+               class="org.cfeclipse.cfml.editors.actions.ToCFScriptAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.ToCFScriptAction">
          </action>
 		<!-- to lower case -->
          <action
