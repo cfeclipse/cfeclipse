@@ -13486,7 +13486,7 @@ Specifies if the format is:html/applet
         ]]></help>
                 <values/>
             </parameter>
-            <parameter name="datasource" required="true" type="String">
+            <parameter name="datasource" required="false" type="String">
                 <help><![CDATA[
             Name of data source that points to database that contains
             stored procedure.

@@ -19,13 +19,175 @@ tr {
 	vertical-align: top;
 }
 </style>
-<title>What's New in CFEclipse 1.4.3</title>
+<title>What's New in CFEclipse 1.4.4</title>
 <script language="JavaScript"
 	src="PLUGINS_ROOT/org.eclipse.help/livehelp.js">
 	
 </script>
 </head>
 <body>
+
+<table cellpadding="5" cellspacing="0" width="600">
+	<colgroup>
+		<col width="20%">
+		<col width="80%">
+	</colgroup>
+	<tbody>
+		<tr>
+			<td valign="top"><img src="../images/moon_crescent.png"
+				align="right" /></td>
+			<td>
+			<h2>What's New in CFEclipse 1.4.4</h2>
+			<p><span style="color: green;">Color!</span> There is now some
+			color for cfscript-based components! Also, several wonky color issues
+			have been addressed. Things are far from perfect, but they're much
+			much better, in our humble opinion.</p>
+			<table class="listing tickets">
+				<thead>
+					<tr>
+						<th>Ticket</th>
+						<th>Summary</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="color4-odd"
+						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+						<td class="ticket"><a title="View ticket" href="/ticket/581">#581</a>
+						</td>
+						<td class="summary"><a title="View ticket" href="/ticket/581">Add
+						option to disable auto indent</a></td>
+					</tr>
+					<tr class="color4-even"
+						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+						<td class="ticket"><a title="View ticket" href="/ticket/582">#582</a>
+						</td>
+						<td class="summary"><a title="View ticket" href="/ticket/582">files
+						linked via RSE are unmodifiable</a></td>
+					</tr>
+					<tr class="color4-odd"
+						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+						<td class="ticket"><a title="View ticket" href="/ticket/591">#591</a>
+						</td>
+						<td class="summary"><a title="View ticket" href="/ticket/591">disable
+						auto-close when in comments</a></td>
+					</tr>
+					<tr class="color4-even"
+						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+						<td class="ticket"><a title="View ticket" href="/ticket/587">#587</a>
+						</td>
+
+						<td class="summary"><a title="View ticket" href="/ticket/587">I
+						would love you forever if we could have cfscript comments
+						auto-expand with each newline</a></td>
+					</tr>
+					<tr class="color4-odd"
+						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+						<td class="ticket"><a title="View ticket" href="/ticket/588">#588</a>
+						</td>
+						<td class="summary"><a title="View ticket" href="/ticket/588">the
+						editor needs to know that cfscript components are cfscript code
+						blocks</a></td>
+
+					</tr>
+					<tr class="color4-even"
+						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+						<td class="ticket"><a title="View ticket" href="/ticket/586">#586</a>
+						</td>
+						<td class="summary"><a title="View ticket" href="/ticket/586">it
+						would rock my world if we could have "smart" indenting when
+						entering a newline between { and }</a></td>
+					</tr>
+					<tr class="color4-odd"
+						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+						<td class="ticket"><a title="View ticket" href="/ticket/154">#154</a>
+						</td>
+
+						<td class="summary"><a title="View ticket" href="/ticket/154">indent
+						not preserved when replacing selected text with new line</a></td>
+					</tr>
+					<tr class="color3-even"
+						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+						<td class="ticket"><a title="View ticket" href="/ticket/103">#103</a>
+						</td>
+						<td class="summary"><a title="View ticket" href="/ticket/103">checking
+						out a file with VSS plugin screws up color coding</a></td>
+					</tr>
+					<tr class="color4-odd"
+						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
+						<td class="ticket"><a title="View ticket" href="/ticket/583">#583</a>
+						</td>
+						<td class="summary"><a title="View ticket" href="/ticket/583">newline
+						within tag adds extra indent</a></td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<div style="font-size: 20px; font-weight: bold;">Color</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>cfscript cfc</b></p>
+			</td>
+			<td valign="top">There is now color in the cfscript-based components!<br>
+			<p><img src="../images/1.4.4/cfscript_color.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>scope coloring</b></p>
+			</td>
+			<td valign="top">There are two new types of scope coloring.  Built-in scopes, like variables, request, and session, and scopes picked up from the dictionary file, like cgi, cffile, and cfhttp. (they look like the same color below, but one is really a darker red.)<br>
+			<p><img src="../images/1.4.4/scope_color.png"></p>
+			  If you don't like this you can change the color to whatever color your other text is.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<div style="font-size: 20px; font-weight: bold;">"Smart" Comments</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>auto-expansion</b></p>
+			</td>
+			<td valign="top">While in cfscript style "block" comments, new lines can now automatically be prepended with "*".<br>
+			<p><img src="../images/1.4.4/comment_grow.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>auto-closing</b></p>
+			</td>
+			<td valign="top">While in cfscript style "block" comments, if you hit enter after typing "/**", the comment will automatically be closed.<br>
+			<p><img src="../images/1.4.4/comment_auto1.png"> <img src="../images/1.4.4/comment_auto2.png">
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>preference</b></p>
+			</td>
+			<td valign="top">You can turn these on and off with the new preference.<br>
+			<p><img src="../images/1.4.4/comment_prefs.png">
+			</td>
+		</tr>
+					
+		
+		<tr>
+			<td valign="top">
+			<p align="right"><b>color style</b></p>
+			</td>
+			<td valign="top">You can now set the color of "JavaDoc" style comments separately from normal comments<br>
+			<p><img src="../images/1.4.4/comment_color.png">
+			<img src="../images/1.4.4/comment_color_prefs.png">
+			</td>
+		</tr>
+
+	</tbody>
+</table>
 
 <table cellpadding="5" cellspacing="0" width="600">
 	<colgroup>
@@ -42,6 +204,8 @@ tr {
 			<p>A couple of SFTP related bugs have been fixed, and there was a
 			major change to the way we build the less modified plugins, which
 			should cut down a lot on what gets downloaded with each update.</p>
+
+
 			</td>
 		</tr>
 	</tbody>

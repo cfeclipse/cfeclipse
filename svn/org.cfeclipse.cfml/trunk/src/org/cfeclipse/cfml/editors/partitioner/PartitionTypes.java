@@ -43,7 +43,7 @@ public final class PartitionTypes {
         IDocument.DEFAULT_CONTENT_TYPE,
     	CFPartitionScanner.DOCTYPE,
     	CFPartitionScanner.CF_COMMENT,
-    	CFPartitionScanner.CF_SCRIPT_COMMENT,
+    	CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK,
     	CFPartitionScanner.JAVADOC_COMMENT,
     	CFPartitionScanner.HTM_COMMENT,
     	CFPartitionScanner.CF_START_TAG,

@@ -60,7 +60,7 @@ import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 /**
  * @author Denny Valliant
  * 
- *         This class is invoked to rename occurrences
+ *         This class wraps the selection with an linked editor field at each end.
  */
 public class WrapTagAction extends GenericEncloserAction implements IEditorActionDelegate, IWorkbenchWindowActionDelegate {
 

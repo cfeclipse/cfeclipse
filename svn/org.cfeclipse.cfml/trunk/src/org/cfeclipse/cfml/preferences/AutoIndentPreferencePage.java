@@ -44,6 +44,10 @@ public class AutoIndentPreferencePage
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOINDENT_ONTAGCLOSE, "Auto-indent on tag close", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_USE_SMART_PASTE, "Auto-indent pasted tags", getFieldEditorParent()));
 
+			addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOINSERT, "Automatically insert suggestion if only one",
+					getFieldEditorParent()));
+			addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_AUTOACTIVATION, "Automatically activate when chars detected",
+					getFieldEditorParent()));
 		addField(new StringFieldEditor(AutoIndentPreferenceConstants.P_AUTOACTIVATION_CHARS, "Auto-activation chars", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_TAGS, "Suggest CFML Tags", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_FUNCTIONS, "Suggest Functions", getFieldEditorParent()));

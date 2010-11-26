@@ -112,7 +112,7 @@ public class CodeFoldingSetter {
 				if (preferenceManager.foldCFMLComments()) {
 					foldPartitions(markerMap, CFPartitionScanner.CF_COMMENT, preferenceManager.collapseCFMLComments()
 							&& autoCollapse, preferenceManager.minimumFoldingLines() - 1);
-					foldPartitions(markerMap, CFPartitionScanner.CF_SCRIPT_COMMENT, preferenceManager.collapseCFMLComments()
+					foldPartitions(markerMap, CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK, preferenceManager.collapseCFMLComments()
 							&& autoCollapse, preferenceManager.minimumFoldingLines() - 1);
 					foldPartitions(markerMap, CFPartitionScanner.JAVADOC_COMMENT, preferenceManager.collapseCFMLComments() && autoCollapse,
 							preferenceManager.minimumFoldingLines() - 1);

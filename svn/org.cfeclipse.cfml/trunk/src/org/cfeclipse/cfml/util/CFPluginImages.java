@@ -31,10 +31,13 @@ import java.net.URL;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Display;
 
 
@@ -99,6 +102,10 @@ public class CFPluginImages {
 	public static final String ICON_DW      = "dw.gif";
 	
 	//toolbar dir
+	/** copy icon */
+	public static final String ICON_COPY		= "copy.gif";
+	/** copy icon */
+	public static final String ICON_PASTE		= "paste.gif";
 	/** the + sign */
 	public static final String ICON_ADD		= "add.gif";
 	/** a pen */
@@ -143,6 +150,8 @@ public class CFPluginImages {
 	public static final String ICON_FOLDER = "dir.gif";
 	/** an open folder (directory) */
 	public static final String ICON_FOLDER_OPEN = "dir_open.gif";
+	public static final String ICON_FOLDER_NEW = "folder_new.png";
+	public static final String ICON_FOLDER_PARENT = "folder_parent.gif";
 	/** a closed folder with a little arrow */
 	public static final String ICON_IMPORT = "import.gif";
 	/** coffee bean icon */
@@ -258,7 +267,13 @@ public class CFPluginImages {
 	public static final String MODEL_OBJECTS = "obj16";
 	public static final String TOOLBAR 		 = "ctool16";
 	public static final String EDITORTOOLBAR   = "toolbars";
-	
+
+	public static final int
+	cursorDefault = 0,
+	cursorWait = 1;
+
+	public static Cursor cursors[];
+
 	
 	private CFPluginImages(){;}
 	
@@ -309,6 +324,8 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS,ICON_SERVER);
 			addImageToRegistry(MODEL_OBJECTS,ICON_FILE);
 			addImageToRegistry(MODEL_OBJECTS,ICON_FOLDER);
+			addImageToRegistry(MODEL_OBJECTS,ICON_FOLDER_PARENT);
+			addImageToRegistry(MODEL_OBJECTS,ICON_FOLDER_NEW);
 			addImageToRegistry(MODEL_OBJECTS,ICON_FOLDER_OPEN);
 			addImageToRegistry(MODEL_OBJECTS,ICON_REPOSITORY);
 			addImageToRegistry(MODEL_OBJECTS,ICON_BEAN);
@@ -336,6 +353,8 @@ public class CFPluginImages {
 			addImageToRegistry(MODEL_OBJECTS, ICON_SNIP_IMPORT);
 			addImageToRegistry(MODEL_OBJECTS, ICON_SNIPEX);
 			addImageToRegistry(TOOLBAR,ICON_ADD);
+			addImageToRegistry(TOOLBAR,ICON_COPY);
+			addImageToRegistry(TOOLBAR,ICON_PASTE);
 			addImageToRegistry(TOOLBAR,ICON_EDIT);
 			addImageToRegistry(TOOLBAR,ICON_REMOVE);
 			addImageToRegistry(TOOLBAR,ICON_DELETE);
@@ -417,6 +436,13 @@ public class CFPluginImages {
 			addImageToRegistry(TOOLBAR, ICON_LINK_TO_EDITOR);
 
 		}
+		if (cursors == null) {
+			cursors = new Cursor[] {
+				null,
+				new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT)
+			};
+		}
+
 	}
 	
 	/**
@@ -439,6 +465,25 @@ public class CFPluginImages {
 		return createDescriptor(offset, imageid);
 	}
 	 
+	/**
+	 * Gets an image for a file associated with a given program
+	 *
+	 * @param program the Program
+	 */
+	public static Image getIconFromProgram(Program program) {
+		Image image = (Image) get(program.toString());
+		if (image == null) {
+			ImageData imageData = program.getImageData().scaledTo(16, 16);
+			if (imageData != null) {
+				image = new Image(null, imageData);
+				IMAGE_REGISTRY.put(program.toString(), image);
+			} else {
+				image = get(ICON_FILE);
+			}
+		}
+		return image;
+	}
+
 	/**
 	 * add and image to the image registry
 	 */

@@ -70,6 +70,10 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 	public static final String P_AUTOACTIVATION_CHARS = "__autoActivationChars";
 
 	public static final String P_USE_SMART_COMMENTS = "__smartComments";
+
+	public static final String P_AUTOACTIVATION = "__autoActivation";
+
+	public static final String P_AUTOINSERT = "__autoInsert";
 	/**
 	 * Sets the default values for the preferences managed by
 	 * {@link AutoIndentPreferencePage}:
@@ -107,6 +111,8 @@ public class AutoIndentPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_SUGGEST_HTML, true);
 		store.setDefault(P_SUGGEST_TEMPLATES, true);
 		store.setDefault(P_AUTOACTIVATION_CHARS, "(,=_<~. ");
+		store.setDefault(P_AUTOACTIVATION, true);
+		store.setDefault(P_AUTOINSERT, false);
 	}
 
 }

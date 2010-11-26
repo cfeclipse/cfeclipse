@@ -161,7 +161,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
         fPseudoPartitions.put("style",CFPartitionScanner.CSS);
         fPseudoPartitions.put("script",CFPartitionScanner.J_SCRIPT);
 		fPseudoPartitions.put("cfcomment", CFPartitionScanner.CF_COMMENT);
-		fPseudoPartitions.put("cfscriptcomment", CFPartitionScanner.CF_SCRIPT_COMMENT);
+		fPseudoPartitions.put("cfscriptcomment", CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK);
     }
 
     /*

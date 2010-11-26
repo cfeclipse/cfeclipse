@@ -74,14 +74,14 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 				// Get the partition
 				ITypedRegion partition = doc.getPartition(((ITextSelection)sel).getOffset());
 				String partType = partition.getType();
-				if (partType.equals(CFPartitionScanner.CF_SCRIPT) || partType.equals(CFPartitionScanner.CF_SCRIPT_COMMENT)
+				if (partType.equals(CFPartitionScanner.CF_SCRIPT) || partType.equals(CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK)
 						|| partType.equals(CFPartitionScanner.JAVADOC_COMMENT)) {
 					openComment = "/*";
 					closeComment = "*/";
 				}
 				
 				// if we already are in a comment partition, remove it, else add it
-				if (partType.equals(CFPartitionScanner.CF_COMMENT) || partType.equals(CFPartitionScanner.CF_SCRIPT_COMMENT)
+				if (partType.equals(CFPartitionScanner.CF_COMMENT) || partType.equals(CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK)
 						|| partType.equals(CFPartitionScanner.JAVADOC_COMMENT)) {
 					// Track the position in the document that the actual comments blocks are
 					int openCommentStart = partition.getOffset();

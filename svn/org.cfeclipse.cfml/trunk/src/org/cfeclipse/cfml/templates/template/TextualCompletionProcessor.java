@@ -15,31 +15,26 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.Region;
-import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.formatters.XmlDocumentFormatter;
-import org.cfeclipse.cfml.editors.indentstrategies.CFEIndentStrategy;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.templates.editors.TemplateEditorUI;
 import org.cfeclipse.cfml.util.CFPluginImages;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.text.templates.TemplateContext;
-import org.eclipse.jface.text.templates.TemplateContextType;
 import org.eclipse.jface.text.templates.Template;
 import org.eclipse.jface.text.templates.TemplateCompletionProcessor;
+import org.eclipse.jface.text.templates.TemplateContext;
+import org.eclipse.jface.text.templates.TemplateContextType;
 import org.eclipse.jface.text.templates.TemplateException;
 import org.eclipse.jface.text.templates.TemplateProposal;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 
 /**
  * A completion processor for templates.
@@ -208,9 +203,7 @@ public class TextualCompletionProcessor extends TemplateCompletionProcessor {
 		}
 		boolean inChevron = false;
 		try {
-			if(doc.getChar(offset-1) == '<' || doc.getChar(offset+1) == '>') {
-				System.out.println(doc.getChar(offset+length));
-				System.out.println(doc.getChar(offset - 1));
+			if (doc.getLength() > offset + 1 && (doc.getChar(offset - 1) == '<' || doc.getChar(offset + 1) == '>')) {
 				inChevron = true;
 			}
 		} catch (BadLocationException e1) {
