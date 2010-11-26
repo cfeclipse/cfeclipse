@@ -29,24 +29,23 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
+
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
+import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.contentassist.AssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.AssistUtils;
-import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionAssist;
-import org.cfeclipse.cfml.editors.contentassist.DefaultAssistState;
 import org.cfeclipse.cfml.editors.contentassist.IAssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.IAssistState;
-import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.swt.graphics.Image;
@@ -91,7 +90,7 @@ public class CFScriptCompletionProcessor extends AssistContributor implements IA
 	
 	// 1) The standard completion chars. These are some activation characters 
 	//that non-opener/closer characters
-	protected static final String completionChars = ".(;~\"#[\'>,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	protected static final String completionChars = ".(;~\"#[\',abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	// 2) The opener/closer characters. This assists with the opening & closing 
 	//of things such as brackets
@@ -563,14 +562,13 @@ public class CFScriptCompletionProcessor extends AssistContributor implements IA
 			changeDictionary(DictionaryManager.JSDIC);			
 		} else if (AssistUtils.isCorrectPartitionType(viewer, documentOffset, CFPartitionScanner.CF_SCRIPT)) {
 			changeDictionary(DictionaryManager.CFDIC);			
-		} else {
-			return null;
 		}
 
 	
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
 			IDocument document = viewer.getDocument();
+			CFDocument doc = ((ICFDocument) document).getCFDocument();
 			int start = document.getPartition(documentOffset).getOffset();
 			String scanData =	document.get(start, documentOffset - start);
 			scanData = scanData.replace('\n',' ');	// Eliminate any non-character characters
@@ -581,14 +579,21 @@ public class CFScriptCompletionProcessor extends AssistContributor implements IA
 	        }
 
 			if (!",".equals(invoker) 
-			    && !"(".equals(invoker)) {
+ && !"(".equals(invoker) && !"<".equals(invoker)) {
 				String toBeMatched = extractPrefix(viewer,documentOffset).replaceAll("[\r\n\t]", " ").trim();
+				Set allPoss = SyntaxDictionary.limitSet(doc.getFunctions(), toBeMatched);
 				Set poss = SyntaxDictionary.limitSet(
 						DictionaryManager.getDictionary(DictionaryToUse).getAllFunctions(),
 						toBeMatched
 					);
-				ICompletionProposal[] theseProps = makeSetToProposal(poss, documentOffset, TAGTYPE, toBeMatched.length());
-		        return theseProps;
+				Iterator it = poss.iterator();
+				while(it.hasNext())
+				{
+					allPoss.add(it.next());
+				}
+				
+				ICompletionProposal[] funks = makeSetToProposal(allPoss, documentOffset, TAGTYPE, toBeMatched.length());
+				return funks;
 			}
 			//String originalData = scanData;	// This should never be changed.
 
@@ -793,9 +798,13 @@ public class CFScriptCompletionProcessor extends AssistContributor implements IA
 				int insertlen = 0;
 				Image img = null;
 				//if there is anyof the function name left add a closing(
-				if(name.length() > 0) name += "(";
-				//default to the tag len and icon
 				insertlen = name.length();
+				if (name.length() > 0) {
+					name += "(";
+					insertlen = name.length();
+				}
+				//default to the tag len and icon
+				name += ")";
 				img = CFPluginImages.get(CFPluginImages.ICON_FUNC);
 				
 				result[z] = new CompletionProposal(

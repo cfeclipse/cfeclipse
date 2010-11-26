@@ -47,11 +47,14 @@ import org.cfeclipse.cfml.editors.partitioner.scanners.rules.NestableMultiLineRu
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.TagRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.TaglibRule;
 import org.eclipse.jface.text.rules.EndOfLineRule;
+import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.IToken;
+import org.eclipse.jface.text.rules.IWordDetector;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.RuleBasedPartitionScanner;
 import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.rules.WordRule;
 
 
 public class CFPartitionScanner extends RuleBasedPartitionScanner {
@@ -94,7 +97,54 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String TABLE_TAG_ATTRIBS		= "__table_tag_attribs";
 	public final static String TABLE_START_TAG_END		= "__table_start_tag_end";
 	
+	/**
+	 * Detector for empty comments.
+	 */
+	static class EmptyCommentDetector implements IWordDetector {
+
+		/*
+		 * (non-Javadoc) Method declared on IWordDetector
+		 */
+		public boolean isWordStart(char c) {
+			return (c == '/');
+		}
+
+		/*
+		 * (non-Javadoc) Method declared on IWordDetector
+		 */
+		public boolean isWordPart(char c) {
+			return (c == '*' || c == '/');
+		}
+	}
 	
+	/**
+	 * 
+	 */
+	static class WordPredicateRule extends WordRule implements IPredicateRule {
+
+		private IToken fSuccessToken;
+
+		public WordPredicateRule(IToken successToken) {
+			super(new EmptyCommentDetector());
+			fSuccessToken = successToken;
+			addWord("/**/", fSuccessToken); //$NON-NLS-1$
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.rules.IPredicateRule#evaluate(ICharacterScanner, boolean)
+		 */
+		public IToken evaluate(ICharacterScanner scanner, boolean resume) {
+			return super.evaluate(scanner);
+		}
+
+		/*
+		 * @see org.eclipse.jface.text.rules.IPredicateRule#getSuccessToken()
+		 */
+		public IToken getSuccessToken() {
+			return fSuccessToken;
+		}
+	}
+
 	public CFPartitionScanner() 
 	{
 		IToken doctype	 	= new Token(DOCTYPE);
@@ -112,14 +162,13 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		//the order here is important. It should go from specific to
 		//general as the rules are applied in order
 		
-
 		// NestableMultiLineRule cfScriptRule = new NestableMultiLineRule("component", "}", cfScript);
 		// cfScriptRule.setColumnConstraint(0);
 		// rules.add(cfScriptRule);
 		rules.add(new CFScriptComponentRule("component", "{", CF_START_TAG, CF_TAG_ATTRIBS));
 		rules.add(new CFScriptComponentEndRule("}", CF_END_TAG, CF_SCRIPT));
 		// rules.add(new CFScriptComponentRule("}", "}", CF_SCRIPT, CF_SCRIPT));
-
+		rules.add(new WordPredicateRule(cfscriptCommentBlock));
 		rules.add(new MultiLineRule("/**", "*/", javaDocComment, (char) 0, true));
 		rules.add(new MultiLineRule("/*", "*/", cfscriptCommentBlock, (char) 0, true));
 		rules.add(new EndOfLineRule("//", cfscriptComment));
