@@ -168,49 +168,49 @@ public class CFDocument {
 	public Set<Function> getFunctions() {
 		Matcher matcher;
 		Pattern pattern;
-		String name = "", type ="", required="", defaultvalue = "";
+		String name = "", type = "", required = "", defaultvalue = "";
 		CFNodeList nodes = getDocumentRoot().selectNodes("//cffunction");
 		Iterator i = nodes.iterator();
-        Set<Function> functions = new HashSet<Function>();
+		Set<Function> functions = new HashSet<Function>();
 		pattern = Pattern.compile("(\\w+)[\\s=]+(((\\x22|\\x27)((?!\\4).|\\4{2})*\\4))", Pattern.CASE_INSENSITIVE);
-		while(i.hasNext()) {
+		while (i.hasNext()) {
 			TagItem currItem = (TagItem) i.next();
 			String funcName = currItem.getAttributeValue("name", "unnamed");
 			String funcReturn = currItem.getAttributeValue("returntype", "any");
 
 			Function function = new Function(funcName, funcReturn, Byte.parseByte("8"));
-				//System.out.println(currItem.getItemData());
-				if(currItem.getFirstChild().getName().equals("cfargument")){
-					CFNodeList childNodes = currItem.getChildNodes();
-					int x = 0;
-					DocItem childNode = (DocItem) childNodes.get(x);
-					while(childNode.getName().equals("cfargument")) {
+			// System.out.println(currItem.getItemData());
+			if (currItem.hasChildren() && currItem.getFirstChild().getName().equals("cfargument")) {
+				Iterator childNodes = currItem.getChildNodes().iterator();
+				DocItem childNode;
+				while (childNodes.hasNext()) {
+					childNode = (DocItem) childNodes.next();
+					if (childNode.getName().equals("cfargument")) {
 						matcher = pattern.matcher(childNode.getItemData());
-						while(matcher.find()) {
+						while (matcher.find()) {
 							String value = matcher.group(2).replaceAll("'", "").replaceAll("\"", "");
-							if(matcher.group(1).toLowerCase().equals("name")) {
+							if (matcher.group(1).toLowerCase().equals("name")) {
 								name = value;
 							}
-							if(matcher.group(1).toLowerCase().equals("type")) {
+							if (matcher.group(1).toLowerCase().equals("type")) {
 								type = value;
 							}
-							if(matcher.group(1).toLowerCase().equals("required")) {
+							if (matcher.group(1).toLowerCase().equals("required")) {
 								required = value;
 							}
-							if(matcher.group(1).toLowerCase().equals("default")) {
+							if (matcher.group(1).toLowerCase().equals("default")) {
 								defaultvalue = value;
 							}
 						}
-					Parameter newParam = new Parameter(name, type, Boolean.valueOf(required), defaultvalue);
-					name = type = required = defaultvalue = "";
-					function.addParameter(newParam);
-					// System.out.println(currItem.getFirstChild().getItemData());
-					x++;
-					childNode = (DocItem) childNodes.get(x);
+						Parameter newParam = new Parameter(name, type, Boolean.valueOf(required), defaultvalue);
+						name = type = required = defaultvalue = "";
+						function.addParameter(newParam);
 					}
+
+				}
 			}
-				functions.add(function);
-			}
+			functions.add(function);
+		}
 		return functions;
 	}
 	

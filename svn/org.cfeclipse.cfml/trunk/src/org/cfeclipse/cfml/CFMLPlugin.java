@@ -39,9 +39,9 @@ import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionParamAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLScopeAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLTagAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLVariableAssist;
+import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionCompletionProcessor;
 import org.cfeclipse.cfml.editors.contentassist.HTMLTagAssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
-import org.cfeclipse.cfml.editors.partitioner.scanners.cfscript.CFScriptCompletionProcessor;
 import org.cfeclipse.cfml.images.StartupHandler;
 import org.cfeclipse.cfml.model.CFModelChangeEvent;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
@@ -221,7 +221,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		HTMLTagAssistContributor htmlAssistor = new HTMLTagAssistContributor(DictionaryManager
 				.getDictionary(DictionaryManager.HTDIC));
 
-		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
+		CFMLFunctionCompletionProcessor cfscp = new CFMLFunctionCompletionProcessor();
 
 		camInstance.registerRootAssist(cfscp);
 		camInstance.registerRootAssist(new CFContentAssist());

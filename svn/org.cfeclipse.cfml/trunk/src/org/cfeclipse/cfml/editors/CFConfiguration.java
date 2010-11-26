@@ -695,7 +695,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//in javascript tags - try to give js its own type of completion using the
 		//cfscript processor but using the js dictionary...
 		/*
-		CFScriptCompletionProcessor cfscp = new CFScriptCompletionProcessor();
+		CFMLFunctionCompletionProcessor cfscp = new CFMLFunctionCompletionProcessor();
 		cfscp.changeDictionary(DictionaryManager.JSDIC);
 		assistant.setContentAssistProcessor(cfscp,	CFPartitionScanner.J_SCRIPT);
 		*/

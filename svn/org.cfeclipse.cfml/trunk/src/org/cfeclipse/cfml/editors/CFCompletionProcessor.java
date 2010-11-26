@@ -34,9 +34,7 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.ISyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Parameter;
-import org.cfeclipse.cfml.dictionary.ScopeVar;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
-import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.dictionary.Value;
 import org.cfeclipse.cfml.editors.contentassist.CFEContentAssist;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
@@ -52,7 +50,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.TextPresentation;
-import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.eclipse.jface.text.contentassist.ContextInformation;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -550,7 +547,7 @@ public class CFCompletionProcessor implements IContentAssistProcessor {
 	 * What characters cause us to wake up (for tags and attributes)
 	 */
 	public char[] getCompletionProposalAutoActivationCharacters() {
-		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r', '>', '\"', '.' };
+		return new char[] { '<', 'f', ' ', 'F', '~', '\t', '\n', '\r', '\"', '.' };
 	}
 
 	/**
