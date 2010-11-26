@@ -108,8 +108,6 @@ public class CFMLComponentAssist extends AssistContributor
     	ICFDocument doc = (ICFDocument)state.getIDocument();
     	IProject project = doc.getResource().getProject();
     	
-    	
-    	
     	/*
          * Only show content assist if the trigger was .
          */

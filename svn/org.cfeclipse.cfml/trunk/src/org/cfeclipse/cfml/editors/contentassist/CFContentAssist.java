@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -612,6 +611,7 @@ public class CFContentAssist extends CFEContentAssist{
 		
 		String prefix = state.getDataSoFar();
 		String attrText = state.getAttributeText().trim();
+		System.out.println(state.getOffsetPartition().getType());
 		
 		//System.out.println("Prefix is now  " + prefix);
 		// hacks hacks everywhere :) this looks to see if there are an
@@ -621,7 +621,7 @@ public class CFContentAssist extends CFEContentAssist{
 		int tagNameLen = state.getTagName().length();
 		String quote_parts[] = null;
 		
-		if(tagNameLen > 1)
+		if (tagNameLen >= 1)
 		{
 			quote_parts = prefix.substring(1, tagNameLen).split("\"");
 		}

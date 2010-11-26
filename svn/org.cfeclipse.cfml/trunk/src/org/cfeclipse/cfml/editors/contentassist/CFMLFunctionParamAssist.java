@@ -42,7 +42,6 @@ import org.cfeclipse.cfml.dictionary.Value;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
-import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -55,7 +54,7 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
  *
  * @author Stephen Milligan
  */
-public class CFMLFunctionAssist extends AssistContributor 
+public class CFMLFunctionParamAssist extends AssistContributor 
 	   		 implements IAssistContributor 
 {
     /**
@@ -103,11 +102,11 @@ public class CFMLFunctionAssist extends AssistContributor
     /**
      * 
      */
-    public CFMLFunctionAssist() {
+    public CFMLFunctionParamAssist() {
         this.sourceDict = DictionaryManager.getDictionary(DictionaryManager.CFDIC);
-        //Assert.isNotNull(this.sourceDict,"CFMLFunctionAssist::CFMLFunctionAssist()");
+        //Assert.isNotNull(this.sourceDict,"CFMLFunctionParamAssist::CFMLFunctionParamAssist()");
         if(this.sourceDict == null)
-        		throw new IllegalArgumentException("CFMLFunctionAssist::CFMLFunctionAssist()");
+        		throw new IllegalArgumentException("CFMLFunctionParamAssist::CFMLFunctionParamAssist()");
     }
 
     /* (non-Javadoc)
@@ -121,16 +120,7 @@ public class CFMLFunctionAssist extends AssistContributor
          * content assist is getting in the way right now.
          */
     	fState = state;
-        if (state.getTriggerData() != ','
-            && state.getTriggerData() != '(') {
-            return null;
-        }
-        
-        if (state.getTriggerData() == ' '
-        	|| state.getTriggerData() == '\t') {
-            return null;
-        }
-        if (!checkContext(state))
+		if (!checkContext(state))
         	return null;
 
         else {
@@ -138,62 +128,20 @@ public class CFMLFunctionAssist extends AssistContributor
             
     		Set params = ((ISyntaxDictionary)this.sourceDict).getFunctionParams(this.functionName);
     		String helpText = ((ISyntaxDictionary)this.sourceDict).getFunctionHelp(this.functionName);
-
-    		/*
-    		 * here begins denny's attempt at in-page function argument proposals 
-    		 */
     		if (params == null) {
     			params = new LinkedHashSet();
     			CFDocument doc = ((ICFDocument) state.getIDocument()).getCFDocument();
-    			DocItem rootItem = doc.getDocumentRoot();
-    			Matcher matcher;
-    			Pattern pattern;
-    			String name = "", type ="", required="", defaultvalue = "";
-    			pattern = Pattern.compile("(\\w+)[\\s=]+(((\\x22|\\x27)((?!\\4).|\\4{2})*\\4))",Pattern.CASE_INSENSITIVE);
-
-    			//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 200]");
-    			nodes = rootItem.selectNodes("//cffunction");
-    			Iterator i = nodes.iterator();
-    			while(i.hasNext()) {
-    				DocItem currItem = (DocItem) i.next();
-
-    				if(currItem.getItemData().indexOf(this.functionName) > 0){
-    					//Function newFunk = new Function(this.functionName);
-    					//System.out.println(currItem.getItemData());
-    					if(currItem.getFirstChild().getName().equals("cfargument")){
-    						CFNodeList childNodes = currItem.getChildNodes();
-    						int x = 0;
-    						DocItem childNode = (DocItem) childNodes.get(x);
-    						while(childNode.getName().equals("cfargument")) {
-    							matcher = pattern.matcher(childNode.getItemData());
-    							while(matcher.find()) {
-    								String value = matcher.group(2).replaceAll("'", "").replaceAll("\"", "");
-    								if(matcher.group(1).toLowerCase().equals("name")) {
-    									name = value;
-    								}
-    								if(matcher.group(1).toLowerCase().equals("type")) {
-    									type = value;
-    								}
-    								if(matcher.group(1).toLowerCase().equals("required")) {
-    									required = value;
-    								}
-    								if(matcher.group(1).toLowerCase().equals("default")) {
-    									defaultvalue = value;
-    								}
-    							}
-    							Parameter newParam = new Parameter(name,type,Boolean.valueOf(required),defaultvalue);
-    							//Parameter newParam = new Parameter(name,type);
-    							params.add(newParam);
-            					System.out.println(currItem.getFirstChild().getItemData());
-        						childNode = (DocItem) nodes.get(x);
-        						x++;    							
-    						}
-    					}
-    				}
+				Set functions = doc.getFunctions();
+				Iterator it = functions.iterator();
+				while (it.hasNext()) {
+					Function function = (Function) it.next();
+					if (function.getParameters() != null) {
+						Iterator funkParams = function.getParameters().iterator();
+						while (funkParams.hasNext()) {
+							params.add((Parameter) funkParams.next());
+						}
+					}
     			}
-        		/*
-        		 * here endss denny's attempt at in-page function argument proposals 
-        		 */
     			if(params == null) {
     				return null;    				
     			}

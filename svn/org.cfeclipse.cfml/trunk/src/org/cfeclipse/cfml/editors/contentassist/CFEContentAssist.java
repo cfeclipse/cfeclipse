@@ -46,7 +46,6 @@ import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 import org.eclipse.jface.util.Assert;
@@ -287,7 +286,7 @@ public abstract class CFEContentAssist extends AssistContributor implements IAss
 				break;
 			case PARAMETERTYPE:
 				insertlen = name.length();
-				img = CFPluginImages.get(CFPluginImages.ICON_VALUE);
+			img = CFPluginImages.get(CFPluginImages.ICON_PARAM);
 				break;
 		}
 		int replaceLength = 0;

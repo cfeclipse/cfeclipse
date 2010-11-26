@@ -86,6 +86,8 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 
 	private int fPrevDocLen = 0;
 
+	private int fPrevOffset = 0;
+
 	private static final Comparator ORDER_COMPARATOR= new Comparator() {
 
 		public int compare(Object o1, Object o2) {
@@ -176,10 +178,12 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 				}
 			}
 
+
 			/*
 			 * @see org.eclipse.jface.text.contentassist.ICompletionListener#selectionChanged(org.eclipse.jface.text.contentassist.ICompletionProposal, boolean)
 			 */
-			public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {}
+			public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {
+			}
 			
 		});
 		setRootAssistorsToCategories();
@@ -303,6 +307,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 		// default mix - enable all included computers
 		List included= getDefaultCategoriesUnchecked();
 		// TODO:  set up preference page for setting default vs. cycled
+		fLastOffset = 0;
 		return included;
 	}
 
@@ -389,14 +394,22 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 			return new ArrayList();
 		fState = AssistUtils.initialiseDefaultAssistState(viewer, offset);
 		boolean isDocLenDiff = viewer.getDocument().getLength() != fPrevDocLen;
+		fPrevDocLen = viewer.getDocument().getLength();
+		String partType = fState.getOffsetPartition().getType();
 		List proposals= new ArrayList();
 		List providers= getCategories();
 		IAssistContributor cat = null;
-		// this is a hack for our over-eager proposals
-		if((fState.getTriggerData() == '>' || isWhiteSpace(fState.getTriggerData())) && !isDocLenDiff) {
-			return proposals;
+		if (isDocLenDiff && fState.getTriggerData() == ' '
+				&& (!partType.endsWith("tag_attributes") && !partType.endsWith("tag_begin") && !partType.endsWith("tag_begin_end") && !partType
+						.endsWith("start_tag_end"))) {
+			fPrevOffset = offset;
+			return new ArrayList();
 		}
-		fPrevDocLen = viewer.getDocument().getLength();
+		if (fPrevOffset > offset && fPrevOffset != 0 && !isDocLenDiff || offset > fPrevOffset && !isDocLenDiff) {
+			fPrevOffset = offset;
+			return new ArrayList();
+		}
+		fPrevOffset = offset;
 		for (Iterator it= providers.iterator(); it.hasNext();) {
 			Object assistor = it.next();
 			if(assistor instanceof CFContentAssist) {
@@ -485,12 +498,25 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 	    this.autoActivationChars = chars;	    
 	}
 		
+	public char[] removeCharFromCharArray(char[] symbols, char c) {
+		for (int i = 0; i < symbols.length; i++) {
+			if (symbols[i] == c) {
+				char[] copy = new char[symbols.length - 1];
+				System.arraycopy(symbols, 0, copy, 0, i);
+				System.arraycopy(symbols, i + 1, copy, i, symbols.length - i - 1);
+				return copy;
+			}
+		}
+		return symbols;
+	}
+
 	/**
 	 * What characters cause us to wake up (for tags and attributes)
 	 */
 	public char[] getCompletionProposalAutoActivationCharacters() {
 	    //System.out.println("Auto-activation chars retrieved: " + new String(this.autoActivationChars));
-	    return this.autoActivationChars;
+		// return new char[] { '<', 'f', 'F', '~', '\t', '\n', '\r', '>', '\"', '.' };
+		return this.autoActivationChars;
 	}
 
 	/*

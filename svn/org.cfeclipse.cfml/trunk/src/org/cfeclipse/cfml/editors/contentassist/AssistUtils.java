@@ -138,7 +138,14 @@ public class AssistUtils {
 		ITypedRegion partition = currState.getOffsetPartition();
 		int start = partition.getOffset();
 		int offset = currState.getOffset();
-		
+		if (start == offset) {
+			try {
+				start = currState.getIDocument().getPartition(offset - 1).getOffset();
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		String prefix = "";
 		/*
 		if(partition.getType() == CFPartitionScanner.J_SCRIPT) {

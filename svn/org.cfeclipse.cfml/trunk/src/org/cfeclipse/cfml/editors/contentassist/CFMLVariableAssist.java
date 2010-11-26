@@ -43,12 +43,9 @@ import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.text.templates.Template;
 
 
 /**
@@ -151,9 +148,6 @@ public class CFMLVariableAssist extends AssistContributor //extends DefaultTagAs
     	System.out.println(state.getOffsetPartition().toString());
     	    	
     	
-        if (state.getTriggerData() == ' ') {
-            return null;
-        }
         if (state.getTriggerData() == '#') {
             return getPageVariables(state, doc);
         }
@@ -430,7 +424,17 @@ public class CFMLVariableAssist extends AssistContributor //extends DefaultTagAs
         	String key = (String)keyIter.next();
  		   if(key.toUpperCase().startsWith(prefix.toUpperCase()) && !key.toUpperCase().equals(prefix.toUpperCase())){
 			   String replacementString = key.toString().replace(prefix, "");    			   
- 			   CompletionProposal proposal = new CompletionProposal(key.toString(), state.getOffset()-prefix.length(), prefix.length(), prefix.length()+replacementString.length());
+				CompletionProposal proposal = new CompletionProposal(key.toString(), state.getOffset() - prefix.length(), prefix.length(),
+						prefix.length() + replacementString.length());
+				// CompletionProposal(
+				// name,
+				// offset,
+				// 0,
+				// insertlen,
+				// img,
+				// fun.toString(),
+				// null,
+				// fun.getHelp()
  			   proposals.add(proposal);
  			   propIter++;
  		   }
