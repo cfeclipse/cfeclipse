@@ -31,6 +31,7 @@ tokens
 {
 	FUNCTION_CALL;
 	FUNCTION_DECLARATION;
+	ARGUMENT_TYPE;
 	STRUCT_KEY;
 	ELSEIF;
 	STRING_CFML;
@@ -272,8 +273,18 @@ functionDeclaration
 	
 argumentDeclaration
 	:
-	IDENTIFIER (COMMA IDENTIFIER)* 
+	(argumentType)? IDENTIFIER (EQUALS codeStatement)? (COMMA (argumentType)? IDENTIFIER (EQUALS codeStatement)?)* 
 	;
+
+argumentType
+  : type -> ^( ARGUMENT_TYPE type)
+  ;
+
+type
+  : identifier ( DOT ( identifier) )*
+  | stringLiteral
+  ;
+
 	
 functionAttribute
 :
