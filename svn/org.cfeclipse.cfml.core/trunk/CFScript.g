@@ -71,6 +71,7 @@ THE SOFTWARE.
 {
 package org.cfeclipse.cfml.core.parser.antlr;
 
+
 /*
 Copyright (c) 2007 Mark Mandel, Mark Drew
 
@@ -114,10 +115,14 @@ THE SOFTWARE.
 	}
 }
 
+app : script;
+
 script
 	:
-	(
-		(
+	( 
+		( 
+		COMMENT
+		|
 			nonBlockStatement 
 			|
 			ifStatement
@@ -159,15 +164,22 @@ setStatement
 	I think I will just have to leave it, or I'll come back to it
 	and try and get clever.
 	*/
-	(VAR)? codeStatement (EQUALS codeStatement)?
+	varedSetStatement |
+	codeStatement (EQUALS codeStatement)? (EQUALS struct)?
 	;
+
+varedSetStatement
+  :
+  VAR setStatement
+  ;
+
 
 codeStatement
 	:
 	(
-		OPEN_PAREN codeStatement CLOSE_PAREN
+		OPEN_PAREN codeStatement? CLOSE_PAREN
 		|
-		cfmlBasicStatement
+		cfmlBasicStatement 
 	)
 	;
 	
@@ -178,7 +190,7 @@ returnStatement
 
 cfmlBasicStatement
 	:
-	cfmlValueStatement (OPERATOR codeStatement)? 
+	cfmlValueStatement (OPERATOR codeStatement)?
 	;
 
 
@@ -206,7 +218,7 @@ hashCfmlLinking
 
 cfmlBasicLinking
 	:
-	cfmlBasic (DOT cfmlBasic)*
+	cfmlBasic (DOT cfmlBasic)* (OPEN_SQUARE codeStatement CLOSE_SQUARE)*
 	;
 
 cfmlBasic
@@ -222,11 +234,11 @@ innerStringCFML
 stringLiteral
 	:
 	(
-		DOUBLE_QUOTE^ ( ESCAPE_DOUBLE_QUOTE | innerStringCFML | ~(DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH) )* DOUBLE_QUOTE
+		DOUBLE_QUOTE^ ( innerStringCFML | ESCAPE_DOUBLE_QUOTE | ~(DOUBLE_QUOTE | ESCAPE_DOUBLE_QUOTE | HASH) )* DOUBLE_QUOTE
 	)
 	|
 	(
-		SINGLE_QUOTE^ ( ESCAPE_SINGLE_QUOTE | innerStringCFML | ~(SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH) )* SINGLE_QUOTE
+		SINGLE_QUOTE^ ( innerStringCFML | ESCAPE_SINGLE_QUOTE | ~(SINGLE_QUOTE | ESCAPE_SINGLE_QUOTE | HASH) )* SINGLE_QUOTE
 	)
 	;
 
@@ -237,31 +249,36 @@ identifier
 	
 struct
 	:
-	OPEN_SQUARE codeStatement CLOSE_SQUARE
+	OPEN_CURLY codeStatement? CLOSE_CURLY
 	;
 
 function 
 	:
-	id=IDENTIFIER OPEN_PAREN (argumentStatement)? CLOSE_PAREN
+	('new')? id=IDENTIFIER OPEN_PAREN (argumentStatement)? CLOSE_PAREN
 	-> ^(FUNCTION_CALL[$id] OPEN_PAREN (argumentStatement)? CLOSE_PAREN)
 	;
 	
 argumentStatement
-	:
-	codeStatement (COMMA codeStatement)*
+	: 
+	codeStatement ((COMMA|EQUALS) codeStatement)*
 	;
 
 functionDeclaration
 	:
-	FUNCTION id=IDENTIFIER OPEN_PAREN (argumentDeclaration)? CLOSE_PAREN
+	MODIFIER? TYPE? FUNCTION id=IDENTIFIER OPEN_PAREN (argumentDeclaration)? CLOSE_PAREN
 	block
 	-> ^(FUNCTION FUNCTION_DECLARATION[$id] OPEN_PAREN (argumentDeclaration)? CLOSE_PAREN block)
 	;
 	
 argumentDeclaration
 	:
-	IDENTIFIER (COMMA IDENTIFIER)*
+	IDENTIFIER (COMMA IDENTIFIER)* 
 	;
+	
+functionAttribute
+:
+IDENTIFIER EQUALS stringLiteral ~(OPEN_CURLY)
+;
 
 ifStatement
 	:
@@ -377,6 +394,26 @@ breakStatement
 
 /* Lexer */
 
+MODIFIER
+    :   'public'
+    |   'protected'
+    |   'private'
+    |   'static'
+    |   'abstract'
+    |   'final'
+    |   'native'
+    |   'synchronized'
+    |   'transient'
+    |   'volatile'
+    |   'strictfp'
+    ;
+
+TYPE
+    :   'void'
+    |   'string'
+    ;
+
+
 FUNCTION
 	:
 	'function'
@@ -430,7 +467,7 @@ DO
 	;
 
 NOT	:
-	'not'
+	'not' | '!'
 	;
 
 EQUALS
@@ -517,7 +554,7 @@ DOT
 
 VAR
 	:
-	'var'
+	'var' ~(EQUALS)
 	;
 
 NUMBER
@@ -571,12 +608,12 @@ fragment STRING_OPERATOR
 	;
 fragment CONDITION_OPERATOR
 	:
-	('eq'|'neq'|'is'|'gt'|'lt'|'lte'|'gte')
+	('eq'|'neq'|'is'|'gt'|'lt'|'lte'|'gte'|'=='|'!=')
 	;
 
 fragment BOOLEAN_OPERATOR
 	:
-	('or'|'and'|'xor'|'eqv'|'imp')
+	('or'|'and'|'xor'|'eqv'|'imp'|'&&'|'||')
 	;
 
 fragment UNDERSCORE
@@ -591,18 +628,12 @@ fragment DIGIT
 
 fragment LETTER
 	:
-	'a'..'z' | 'A'..'Z'
+	'a'..'z' | 'A'..'Z' | '$'
 	;
 
 /* hidden tokens */
 
-WS  
-	:  
-	(' '|'\r'|'\t'|'\u000C'|'\n') 
-	{
-		$channel=HIDDEN;
-	}
-	;
+WS : (' '|'\t'|'\n')+ {$channel=HIDDEN;};
 
 COMMENT
 	:   
