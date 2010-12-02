@@ -225,15 +225,15 @@
                menubarPath="org.cfeclipse.cfml.menus.source/output"
                id="org.cfeclipse.cfml.editors.actions.AutoCommentAction">
          </action>
-		<!-- smart line comment -->
+		<!-- line comment -->
          <action
-               definitionId="org.cfeclipse.cfml.editors.actions.AutoCommentLines"
-               label="%action.label.AutoCommentLines"
+               definitionId="org.cfeclipse.cfml.editors.actions.LineComment"
+               label="%action.label.CommentLine"
                icon="icons/ctool16/smartcomment.gif"
-               tooltip="%action.tooltip.AutoCommentLines"
-               class="org.cfeclipse.cfml.editors.actions.AutoCommentLinesAction"
+               tooltip="%action.tooltip.CommentLine"
+               class="org.cfeclipse.cfml.editors.actions.LineCommentAction"
                menubarPath="org.cfeclipse.cfml.menus.source/output"
-               id="org.cfeclipse.cfml.editors.actions.AutoCommentLinesAction">
+               id="org.cfeclipse.cfml.editors.actions.LineCommentAction">
          </action>
 		<!-- Surround with #s -->
          <action
@@ -999,6 +999,12 @@
 			description="%command.description.0"
 			categoryId="org.cfeclipse.cfml.commandCategory"
 			id="org.cfeclipse.cfml.editors.actions.CFComment" />
+		<!-- line comment -->
+		<command
+			name="%command.name.lineComment"
+			description="%command.description.lineComment"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.LineComment" />
 		
 		<!-- comment based on section (i.e. js comments in js blocks, etc) -->
 		<command
@@ -1296,6 +1302,12 @@
 			See: http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_bindings.html
 		-->
 		
+		<!-- line comment -->
+		<key sequence="M1+/"
+			commandId="org.cfeclipse.cfml.editors.actions.LineComment"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+
 		<!-- auto comment -->
 		<key sequence="M1+M2+C"
 			commandId="org.cfeclipse.cfml.editors.actions.AutoComment"

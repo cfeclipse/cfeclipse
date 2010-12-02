@@ -32,6 +32,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRewriteTarget;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.viewers.ISelection;
@@ -61,28 +62,32 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 		//checks to see if you can edit the document
 		try {
 			if(editor != null && editor.isEditable()){
+				// make the edit atomic so one undo undos
+				IRewriteTarget target = (IRewriteTarget) editor.getAdapter(IRewriteTarget.class);
+				if (target != null)
+					target.beginCompoundChange();
 				String openComment = "<!--- ";
 				String closeComment = " --->";
 				int selectionLength = 0;
 				// Get the document
-				IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
+				IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
+				String lineEnding = doc.getLineDelimiter(0);
 				
 				// Get the selection 
 				ISelection sel = editor.getSelectionProvider().getSelection();
 				ITextSelection selectioner = (ITextSelection) sel;
-				
 				// Get the partition
 				ITypedRegion partition = doc.getPartition(((ITextSelection)sel).getOffset());
 				String partType = partition.getType();
 				if (partType.equals(CFPartitionScanner.CF_SCRIPT) || partType.equals(CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK)
-						|| partType.equals(CFPartitionScanner.JAVADOC_COMMENT)) {
+						|| partType.equals(CFPartitionScanner.JAVADOC_COMMENT) || partType.equals(CFPartitionScanner.CF_SCRIPT_COMMENT)) {
 					openComment = "/*";
 					closeComment = "*/";
 				}
 				
 				// if we already are in a comment partition, remove it, else add it
 				if (partType.equals(CFPartitionScanner.CF_COMMENT) || partType.equals(CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK)
-						|| partType.equals(CFPartitionScanner.JAVADOC_COMMENT)) {
+						|| partType.equals(CFPartitionScanner.JAVADOC_COMMENT) || partType.equals(CFPartitionScanner.CF_SCRIPT_COMMENT)) {
 					// Track the position in the document that the actual comments blocks are
 					int openCommentStart = partition.getOffset();
 					int closeCommentStart = partition.getOffset();
@@ -91,7 +96,7 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					String selection = doc.get().substring(partition.getOffset(), partition.getOffset() + partition.getLength());
 					
 					// Find the opening comment information with optional space at the end
-					Pattern pattern = Pattern.compile("^(" + openComment.replace("*", "[*]") + "[ ]?[\n]?)");
+					Pattern pattern = Pattern.compile("^(" + openComment.replace("*", "[*]") + "[ ]?[" + lineEnding + "]?)");
 					Matcher matcher = pattern.matcher(selection);
 					
 					if(matcher.find()) {
@@ -100,7 +105,7 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					}
 					
 					// Find the closing comment information with optional space at the beginning
-					pattern = Pattern.compile("([\n]?[ ]?" + closeComment.replace("*", "[*]") + ")$");
+					pattern = Pattern.compile("([" + lineEnding + "]?[ ]?" + closeComment.replace("*", "[*]") + ")$");
 					matcher = pattern.matcher(selection);
 					
 					if(matcher.find()) {
@@ -110,8 +115,8 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					
 					// Only get rid of the newline characters if the open and close both have them
 					// Check to see if the open has a newline but the close doesn't
-					if(openComment.charAt(openComment.length() - 1) == '\n' && closeComment.charAt(0) != '\n') {
-						openComment = openComment.substring(0, openComment.length() - 1);
+					if (selectioner.getText().endsWith(lineEnding) && selectioner.getText().startsWith(openComment + lineEnding)) {
+						openComment = openComment.substring(lineEnding.length() - 1, openComment.length() - lineEnding.length());
 					}
 					
 					FindReplaceDocumentAdapter finder = new FindReplaceDocumentAdapter(doc);
@@ -139,6 +144,9 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 				} else {
 					editor.selectAndReveal(selectioner.getOffset(), selectionLength);
 				}
+				if (target != null)
+					target.endCompoundChange();
+
 			}
 		} catch (BadLocationException e) {
 			e.printStackTrace(System.err);
