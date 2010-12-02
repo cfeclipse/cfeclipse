@@ -386,19 +386,8 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 		return end;
 	}
 
-	/*
-	 * protected boolean inComment(IDocument document, int offset) { try { int curLine =
-	 * document.getLineOfOffset(offset); int lineStart = document.getLineOffset(curLine); int curOffset = lineStart;
-	 * boolean inComment = false; char curChar = document.getChar(lineStart); char nextChar = document.getChar(lineStart
-	 * + 1); while (curChar == ' ' || curChar == '\t' || curChar == '*' || curChar == '/' || curChar == '\n') { if
-	 * (curChar == '*' || curChar == '/' || nextChar == '/') { inComment = true; if (curChar == '/' && nextChar == '*')
-	 * { return inComment; } } if (curChar == '\n') { curLine--; lineStart = document.getLineOffset(curLine); } curChar
-	 * = document.getChar(lineStart); nextChar = document.getChar(lineStart + 1); lineStart++; } return false; } catch
-	 * (BadLocationException e) { // TODO Auto-generated catch block e.printStackTrace(); } return true; }
-	 */
-
 	/**
-	 * Set the indent of a new line based on the command provided in the supplied document.
+	 * extends comment with each new line while in a comment block
 	 * 
 	 * @param document
 	 *            - the document being parsed
@@ -441,7 +430,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 							buf.append('/');
 						}
 					}
-					command.caretOffset = offset + curIndent.length() + 4;
+					command.caretOffset = offset + curIndent.length() + 5;
 					command.shiftsCaret = false;
 				} else {
 					buf.append("* ");
