@@ -35,11 +35,11 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.actions.LastActionManager;
 import org.cfeclipse.cfml.editors.contentassist.CFContentAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFEContentAssistManager;
+import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionCompletionProcessor;
 import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionParamAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLScopeAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLTagAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLVariableAssist;
-import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionCompletionProcessor;
 import org.cfeclipse.cfml.editors.contentassist.HTMLTagAssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
 import org.cfeclipse.cfml.images.StartupHandler;
@@ -221,11 +221,10 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		HTMLTagAssistContributor htmlAssistor = new HTMLTagAssistContributor(DictionaryManager
 				.getDictionary(DictionaryManager.HTDIC));
 
-		CFMLFunctionCompletionProcessor cfscp = new CFMLFunctionCompletionProcessor();
-
-		camInstance.registerRootAssist(cfscp);
 		camInstance.registerRootAssist(new CFContentAssist());
 		camInstance.registerRootAssist(new CFMLScopeAssist());
+		CFMLFunctionCompletionProcessor cfscp = new CFMLFunctionCompletionProcessor();
+		camInstance.registerRootAssist(cfscp);
 		camInstance.registerRootAssist(new CFMLFunctionParamAssist());
 
 		// camInstance.registerRootAssist(new CFMLComponentAssist());

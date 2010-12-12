@@ -36,6 +36,7 @@ import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.parser.CFDocument;
+import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -938,7 +939,10 @@ public class CFMLFunctionCompletionProcessor extends AssistContributor implement
 	}
 
 	public ICompletionProposal[] getTagProposals(IAssistState state) {
-		// TODO Auto-generated method stub
+		if (!preferenceManager.getBooleanPref(AutoIndentPreferenceConstants.P_SUGGEST_FUNCTIONS)) {
+			return null;
+		}
+
 		return computeCompletionProposals(state.getITextView(), state.getOffset());
 	}
 }

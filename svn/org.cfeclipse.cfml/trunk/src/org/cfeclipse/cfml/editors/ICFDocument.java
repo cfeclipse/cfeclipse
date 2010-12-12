@@ -393,7 +393,20 @@ public class ICFDocument extends Document implements ICFEFileDocument {
         while(natureIter.hasNext())
         {
             CFEContentAssistManager currManager = ((IContentAssistContributorNature)natureIter.next()).getNatureCAM();
-            Iterator currIter = currManager.getRootAssistors().iterator();
+			Iterator currIter = currManager.getTagAssistors().iterator();
+			while (currIter.hasNext()) {
+				this.docCAM.registerTagAssist((IAssistContributor) currIter.next());
+			}
+
+			currIter = currManager.getAttributeAssistors().iterator();
+			while (currIter.hasNext())
+				this.docCAM.registerAttributeAssist((IAssistTagContributor) currIter.next());
+
+			currIter = currManager.getValueAssistors().iterator();
+			while (currIter.hasNext())
+				this.docCAM.registerValueAssist((IAssistAttrValueContributor) currIter.next());
+
+			currIter = currManager.getRootAssistors().iterator();
             while(currIter.hasNext())
             {
                 Object currRoot = currIter.next();
@@ -403,19 +416,6 @@ public class ICFDocument extends Document implements ICFEFileDocument {
                     this.docCAM.registerRootAssist((IContentAssistProcessor)currRoot);
             }
             
-            currIter = currManager.getTagAssistors().iterator();
-            while(currIter.hasNext())
-            {
-                this.docCAM.registerTagAssist((IAssistContributor)currIter.next());
-            }
-            
-            currIter = currManager.getAttributeAssistors().iterator();
-            while(currIter.hasNext())
-                this.docCAM.registerAttributeAssist((IAssistTagContributor)currIter.next());
-            
-            currIter = currManager.getValueAssistors().iterator();
-            while(currIter.hasNext())
-                this.docCAM.registerValueAssist((IAssistAttrValueContributor)currIter.next());
         }
     }
     
