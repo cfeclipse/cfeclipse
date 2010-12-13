@@ -15,6 +15,7 @@ public class CFMLPreferencesMessages extends NLS {
 	private static final String BUNDLE_NAME = "org.cfeclipse.cfml.preferences.CFMLPreferencesMessages";//$NON-NLS-1$
 
 
+
 	public static String CFMLEditorPreferencePage_9;
 
 	public static String CFMLCodeFormatterPreferencePage_0;
@@ -37,6 +38,11 @@ public class CFMLPreferencesMessages extends NLS {
 	public static String CFMLCodeFormatterPreferencePage_17;
 	public static String CFMLCodeFormatterPreferencePage_18;
 	public static String CFMLCodeFormatterPreferencePage_19;
+	public static String CFMLCodeFormatterPreferencePage_CloseTagList;
+	public static String CFMLCodeFormatterPreferencePage_IgnoredTags;
+	public static String CFMLCodeFormatterPreferencePage_FormatJS;
+	public static String CFMLCodeFormatterPreferencePage_FormatCSS;
+	public static String CFMLCodeFormatterPreferencePage_FormatCFScript;
 
 	static {
 		// load message values from bundle file

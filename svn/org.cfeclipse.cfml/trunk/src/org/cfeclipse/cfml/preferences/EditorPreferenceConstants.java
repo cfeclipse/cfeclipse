@@ -7,9 +7,12 @@
 package org.cfeclipse.cfml.preferences;
 
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
+
+import cfml.formatting.preferences.FormatterPreferences;
 
 /**
  * @author Stephen Milligan
@@ -162,6 +165,17 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	public static final String TASK_TAGS_PRIORTIES = "task_tags_priorities";
 	public static final String TASK_TAGS_PRIORTIES_LIST = "task_tags_priorities_list";
 
+	public static final String FORMATTER_FORMAT_JS = "formatter_format_js";
+
+	public static final String FORMATTER_FORMAT_CSS = "formatter_format_css";
+
+	public static final String FORMATTER_CLOSE_TAGS_LIST = "formatter_close_tag_list";
+
+	public static final String FORMATTER_IGNORED_TAGS = "formatter_ignored_tag_list";
+
+	public static final String FORMATTER_FORMAT_CFSCRIPT = "formatter_format_cfscript";
+
+	public static final String FORMATTER_DICTIONARY_DIR = "formatter_dictionary_dir";
 	/**
 	 * Sets the default values for the preferences managed by {@link EditorPreferencePage}:
 	 * <ul>
@@ -192,6 +206,8 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	 * 
 	 */
 	public static void setDefaults(IPreferenceStore store) {
+		FormatterPreferences fPrefs = new FormatterPreferences();
+
 		store.setDefault(P_INSIGHT_DELAY,500);
 		store.setDefault(P_INSERT_SPACES_FOR_TABS,false);
 		store.setDefault(P_TAB_WIDTH,4);
@@ -222,10 +238,15 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(FORMATTER_MAX_LINE_LENGTH, 80);
 		store.setDefault(FORMATTER_WRAP_LONG, false);
 		store.setDefault(FORMATTER_CLOSE_TAGS, true);
+		store.setDefault(FORMATTER_IGNORED_TAGS, fPrefs.getIgnoredTags());
+		store.setDefault(FORMATTER_CLOSE_TAGS_LIST, fPrefs.getCloseTagsList());
 		store.setDefault(FORMATTER_CONDENSE_TAGS, true);
 		
 		store.setDefault(TEMPLATES_USE_CODEFORMATTER, true);
 		store.setDefault(FORMATTER_FORMAT_SQL, false);
+		store.setDefault(FORMATTER_FORMAT_JS, false);
+		store.setDefault(FORMATTER_FORMAT_CFSCRIPT, false);
+		store.setDefault(FORMATTER_FORMAT_CSS, false);
 
 		store.setDefault(FORMATTER_TIDY_TAGS, false);
 		store.setDefault(FORMATTER_COLLAPSE_WHITESPACE, true);
@@ -233,10 +254,13 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 
 		store.setDefault(FORMATTER_CHANGE_TAG_CASE, false);
 		store.setDefault(FORMATTER_CHANGE_TAG_CASE_UPPER, false);
-		store.setDefault(FORMATTER_CHANGE_TAG_CASE_LOWER, true);		
-		
+		store.setDefault(FORMATTER_CHANGE_TAG_CASE_LOWER, true);
+
+		store.setDefault(FORMATTER_DICTIONARY_DIR, CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "")
+				+ "dictionary");
+
 		store.setDefault(TASK_TAGS, "TODO");
-		store.setDefault(TASK_TAGS_PRIORTIES, 1);		
+		store.setDefault(TASK_TAGS_PRIORTIES, 1);
 		store.setDefault(TASK_TAGS_PRIORTIES_LIST, "LOW,NORMAL,HIGH");		
 	}
 	

@@ -19,12 +19,10 @@ import org.cfeclipse.cfml.editors.CFDocumentSetupParticipant;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ColorManager;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.formatters.FormattingPreferences;
 import org.cfeclipse.cfml.editors.formatters.CFMLFormatter;
+import org.cfeclipse.cfml.editors.formatters.FormattingPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -60,6 +58,14 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_COLLAPSE_WHITESPACE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_INDENT_ALL_ELEMENTS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_TIDY_TAGS));
+
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_SQL));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_JS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_CSS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_CFSCRIPT));
+
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.FORMATTER_CLOSE_TAGS_LIST));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.FORMATTER_IGNORED_TAGS));
 
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_UPPER));
@@ -109,10 +115,22 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CONDENSE_TAGS, 1);
 //		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_5;
 //		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_ALIGN, 1);
+
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_11;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CLOSE_TAGS, 1);
+		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_CloseTagList;
+		addExpandableTextField(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_CLOSE_TAGS_LIST, 80, 0, null);
+		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_IgnoredTags;
+		addExpandableTextField(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_IGNORED_TAGS, 80, 0, null);
+
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_12;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_SQL, 1);
+		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_FormatJS;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_JS, 1);
+		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_FormatCSS;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_CSS, 1);
+		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_FormatCFScript;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_CFSCRIPT, 1);
 
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_13;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_COLLAPSE_WHITESPACE, 1);

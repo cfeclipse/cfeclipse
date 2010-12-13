@@ -1,21 +1,28 @@
 package org.cfeclipse.cfml.editors.formatters;
 
-import net.htmlparser.jericho.*;
+import java.util.LinkedList;
+import java.util.List;
 
+import net.htmlparser.jericho.Attribute;
+import net.htmlparser.jericho.Attributes;
+import net.htmlparser.jericho.Element;
+import net.htmlparser.jericho.OutputDocument;
+import net.htmlparser.jericho.Source;
+import net.htmlparser.jericho.StartTag;
+import net.htmlparser.jericho.Tag;
+
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.formatter.ContextBasedFormattingStrategy;
 import org.eclipse.jface.text.formatter.FormattingContextProperties;
 import org.eclipse.jface.text.formatter.IFormattingContext;
 import org.eclipse.jface.text.formatter.IFormattingStrategyExtension;
-import cfml.formatting.preferences.FormatterPreferences;
+
 import cfml.formatting.Formatter;
-
-//import com.egen.develop.util.jspFormatter.JSPFormatter;
-//import com.egen.develop.util.jspFormatter.Options;
-
-import java.util.*;
+import cfml.formatting.preferences.FormatterPreferences;
 
 public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy implements IFormattingStrategyExtension {
 	private static final String lineSeparator = System.getProperty("line.separator");
@@ -48,10 +55,15 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		final IRegion region = (IRegion) fRegions.removeFirst();
 		if (region != null) {
 			String regionText = "";
+			String formattedText = "";
 			try {
 				regionText = document.get(region.getOffset(), region.getLength());
 				StringBuffer currentIndent = XmlDocumentFormatter.getLeadingWhitespace(region.getOffset(), document);
-				String formattedText = format(regionText, currentIndent.toString());
+				if (document.getPartition(region.getOffset()).getType().equals(CFPartitionScanner.CF_SCRIPT)) {
+					formattedText = formatCFScript(regionText, currentIndent.toString());
+				} else {
+					formattedText = format(regionText, currentIndent.toString());
+				}
 				int lineOffset = document.getLineInformationOfOffset(region.getOffset()).getOffset();
 				// String formattedText = format(regionText, "");
 				if (formattedText != null && !formattedText.equals(regionText)) {
@@ -148,7 +160,7 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		fDocuments.clear();
 	}
 
-	public String format(String contents, FormattingPreferences prefs, String currentIndent) {
+	public String format(String contents, FormattingPreferences prefs, String currentIndent, boolean inCFScript) {
 		String indentation = prefs.getCanonicalIndent();
 		String newLine = org.eclipse.jface.text.TextUtilities.determineLineDelimiter(contents, lineSeparator);
 
@@ -160,6 +172,8 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		boolean changeTagCaseUpper = prefs.changeTagCaseUpper();
 		boolean changeTagCaseLower = prefs.changeTagCaseLower();
 		boolean condenseTags = prefs.condenseTags();
+		boolean useSpacesInsteadOfTabs = prefs.useSpacesInsteadOfTabs();
+		String ignoredTags = prefs.getIgnoredTags();
 		int maxLineWidth = prefs.getMaximumLineWidth();
 
 		FormatterPreferences formatprefs = new FormatterPreferences();
@@ -174,6 +188,20 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		formatprefs.setInitialIndent(currentIndent);
 		formatprefs.setCloseTags(prefs.getCloseTags());
 		formatprefs.condenseTags(condenseTags);
+		formatprefs.inCFScript(inCFScript);
+		formatprefs.useSpacesInsteadOfTabs(useSpacesInsteadOfTabs);
+		if (useSpacesInsteadOfTabs) {
+			formatprefs.setTabWidth(prefs.getTabWidth());
+		} else {
+			formatprefs.setTabWidth(1);
+		}
+		formatprefs.formatCFScript(prefs.formatCFScript());
+		formatprefs.formatJavaScript(prefs.formatJavaScript());
+		formatprefs.formatCSS(prefs.formatCSS());
+		formatprefs.setIgnoredTags(ignoredTags);
+		formatprefs.setCloseTagsList(prefs.getCloseTagsList());
+		formatprefs.setDictionaryDir(CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary");
+		formatprefs.setCFDictionary("ColdFusion9");
 
 		fFormatter = new Formatter(formatprefs);
 		String formatted = fFormatter.format(contents);
@@ -217,9 +245,12 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 	}
 
 	public String format(String contents, String currentIndent) {
-		return format(contents, prefs, currentIndent);
+		return format(contents, prefs, currentIndent, false);
 	}
 
+	public String formatCFScript(String contents, String currentIndent) {
+		return format(contents, prefs, currentIndent, true);
+	}
 
 
 }

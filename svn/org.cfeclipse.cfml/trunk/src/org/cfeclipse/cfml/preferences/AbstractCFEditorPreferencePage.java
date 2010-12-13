@@ -13,7 +13,6 @@ package org.cfeclipse.cfml.preferences;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import com.ibm.icu.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,6 +31,8 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -42,6 +43,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+
+import com.ibm.icu.text.MessageFormat;
 
 public abstract class AbstractCFEditorPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
@@ -285,6 +288,37 @@ public abstract class AbstractCFEditorPreferencePage extends PreferencePage impl
 		}
 
 		return textControl;
+	}
+
+	protected Text addExpandableTextField(Composite composite, String labelText, String key, int length, int indentation,
+			String[] errorMessages) {
+
+		Label label = new Label(composite, SWT.NONE);
+		label.setText(labelText);
+		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+		gd.horizontalSpan = 2;
+		label.setLayoutData(gd);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		Text textControl = new Text(composite, SWT.BORDER | SWT.WRAP);
+		GC gc = new GC(textControl);
+		FontMetrics fm = gc.getFontMetrics();
+		int width = length * fm.getAverageCharWidth();
+		int height = fm.getHeight();
+		gd.horizontalSpan = 2;
+		gd.widthHint = width;
+		gd.heightHint = height;
+		gc.dispose();
+		textControl.setLayoutData(gd);
+		getTextFields().put(textControl, key);
+		if (errorMessages != null) {
+			getNumberFields().put(textControl, errorMessages);
+			textControl.addModifyListener(fNumberFieldListener);
+		} else {
+			textControl.addModifyListener(fTextFieldListener);
+		}
+
+		return textControl;
+
 	}
 
 	protected Button addRadioButton(Composite parent, String labelText, String key, int indentation) {

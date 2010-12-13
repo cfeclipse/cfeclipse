@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.cfeclipse.cfml.editors.CFConfiguration;
-import org.cfeclipse.cfml.editors.formatters.FormattingPreferences;
 import org.cfeclipse.cfml.editors.formatters.CFMLFormattingStrategy;
+import org.cfeclipse.cfml.editors.formatters.FormattingPreferences;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.resource.JFaceResources;
@@ -106,7 +106,7 @@ class CFPreviewerUpdater {
 				FormattingPreferences prefs= new FormattingPreferences();
 				prefs.setPreferenceStore(store);
 				CFMLFormattingStrategy formatter = new CFMLFormattingStrategy();
-				contents= formatter.format(contents, prefs, "");
+				contents = formatter.format(contents, prefs, "", false);
 				viewer.getDocument().set(contents);
 			}
 		};

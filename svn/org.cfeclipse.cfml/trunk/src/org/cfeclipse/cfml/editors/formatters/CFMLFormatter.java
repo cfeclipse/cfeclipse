@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.cfeclipse.cfml.editors.CFDocumentSetupParticipant;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.templates.template.CFTemplateContext;
@@ -35,12 +34,12 @@ import org.eclipse.jface.text.templates.TemplateBuffer;
 import org.eclipse.jface.text.templates.TemplateVariable;
 
 /**
- * Utility class for using the ant code formatter in contexts where an IDocument
- * containing the text to format is not readily available.
+ * Utility class for using the code formatter in contexts where an IDocument containing the text to format is not
+ * readily available.
  */
 public class CFMLFormatter {
 
-	private static final String POS_CATEGORY= "tempAntFormatterCategory"; //$NON-NLS-1$
+	private static final String POS_CATEGORY = "tempCFMLFormatterCategory"; //$NON-NLS-1$
 	
     /**
      * Format the text using the ant code formatter.
@@ -100,11 +99,11 @@ public class CFMLFormatter {
         return format(text,null);
     }
     
-    public static void format(TemplateBuffer templateBuffer, CFTemplateContext antContext, FormattingPreferences prefs) {	
+	public static void format(TemplateBuffer templateBuffer, CFTemplateContext cfContext, FormattingPreferences prefs) {
     	String templateString= templateBuffer.getString();
-    	IDocument fullDocument= new Document(antContext.getDocument().get());
+		IDocument fullDocument = new Document(cfContext.getDocument().get());
     	
-    	int completionOffset= antContext.getCompletionOffset();
+    	int completionOffset = cfContext.getCompletionOffset();
     	try {
     		//trim any starting whitespace
 			IRegion lineRegion= fullDocument.getLineInformationOfOffset(completionOffset);
@@ -119,7 +118,7 @@ public class CFMLFormatter {
 		
 		IDocument origTemplateDoc= new Document(fullDocument.get());
 		try {
-			origTemplateDoc.replace(completionOffset, antContext.getCompletionLength(), templateString);
+			origTemplateDoc.replace(completionOffset, cfContext.getCompletionLength(), templateString);
 		} catch (BadLocationException e) {
 			return; // don't format if the document has changed
 		}
@@ -127,7 +126,7 @@ public class CFMLFormatter {
     	IDocument templateDocument= createDocument(origTemplateDoc.get(), createPositions(offsets));
     	
     	//String leadingText= getLeadingText(fullDocument, antContext.getAntModel(), completionOffset);
-    	String leadingText= getLeadingText(fullDocument, ((ICFDocument)antContext.getDocument()).getCFDocument(), completionOffset);
+		String leadingText = getLeadingText(fullDocument, ((ICFDocument) cfContext.getDocument()).getCFDocument(), completionOffset);
     	String newTemplateString= leadingText + templateString;
     	int indent= XmlDocumentFormatter.computeIndent(leadingText, prefs.getTabWidth());
     	

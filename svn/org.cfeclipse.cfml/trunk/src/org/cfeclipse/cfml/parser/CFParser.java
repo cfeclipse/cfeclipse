@@ -34,9 +34,6 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.htmlparser.jericho.ParseText;
-import net.htmlparser.jericho.Source;
-
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlComment;
@@ -55,12 +52,10 @@ import org.cfeclipse.cfml.parser.cfscript.Node;
 import org.cfeclipse.cfml.parser.cfscript.ParseException;
 import org.cfeclipse.cfml.parser.cfscript.SPLParser;
 import org.cfeclipse.cfml.parser.cfscript.SimpleNode;
-import org.cfeclipse.cfml.parser.cfscript.Token;
 import org.cfeclipse.cfml.parser.docitems.AttributeItem;
 import org.cfeclipse.cfml.parser.docitems.CfmlCustomTag;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
-import org.cfeclipse.cfml.parser.docitems.ScriptItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.eclipse.core.resources.IMarker;
@@ -834,7 +829,6 @@ public class CFParser {
 		// If not then it's a child element and so we add it to the child list of the top element
 		// of the stack.
 	    
-		//TODO: this badly parses things like <cfif ListGetAt(i,1,"=") neq "errorType">
 	    tagName = tagName.substring(1, tagName.length());
 		TagItem newItem;
 		//System.out.println("CFParser::handleCFTag found " + tagName);

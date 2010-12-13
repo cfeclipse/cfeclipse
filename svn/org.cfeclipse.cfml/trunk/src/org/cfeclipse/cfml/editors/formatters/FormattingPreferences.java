@@ -54,8 +54,24 @@ public class FormattingPreferences {
 		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_CLOSE_TAGS);
 	}
 
+	public String getCloseTagsList() {
+		return fPrefs.getString(EditorPreferenceConstants.FORMATTER_CLOSE_TAGS_LIST);
+	}
+
+	public String getIgnoredTags() {
+		return fPrefs.getString(EditorPreferenceConstants.FORMATTER_IGNORED_TAGS);
+	}
+
 	public boolean formatSQL() {
 		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_FORMAT_SQL);
+	}
+
+	public boolean formatCSS() {
+		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_FORMAT_CSS);
+	}
+
+	public boolean formatCFScript() {
+		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_FORMAT_CFSCRIPT);
 	}
 
 	public int getMaximumLineWidth() {
@@ -106,6 +122,10 @@ public class FormattingPreferences {
 		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_CONDENSE_TAGS);
 	}
 
+	public boolean formatJavaScript() {
+		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_FORMAT_JS);
+	}
+
 	public static boolean affectsFormatting(PropertyChangeEvent event) {
 		String property = event.getProperty();
 		return property.startsWith(EditorPreferenceConstants.FORMATTER_ALIGN)
@@ -113,13 +133,18 @@ public class FormattingPreferences {
 				|| property.startsWith(EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS)
 				|| property.startsWith(EditorPreferenceConstants.P_TAB_WIDTH)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CLOSE_TAGS)
+				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CLOSE_TAGS_LIST)
+				|| property.startsWith(EditorPreferenceConstants.FORMATTER_IGNORED_TAGS)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_TIDY_TAGS)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_COLLAPSE_WHITESPACE)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_INDENT_ALL_ELEMENTS)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_LOWER)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CHANGE_TAG_CASE_UPPER)
-				|| property.startsWith(EditorPreferenceConstants.FORMATTER_CONDENSE_TAGS)
+				|| property.startsWith(EditorPreferenceConstants.FORMATTER_FORMAT_SQL)
+				|| property.startsWith(EditorPreferenceConstants.FORMATTER_FORMAT_JS)
+				|| property.startsWith(EditorPreferenceConstants.FORMATTER_FORMAT_CFSCRIPT)
+				|| property.startsWith(EditorPreferenceConstants.FORMATTER_FORMAT_CSS)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_WRAP_LONG);
 	}
 
