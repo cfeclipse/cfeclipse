@@ -1066,7 +1066,10 @@ public class CFEPartitioner implements IDocumentPartitioner,
                     && category.length > first) {
                 fReparseEnd = Math.max(fReparseEnd,category[first].getOffset()+category[first].getLength());
             }
-            
+			// short circuit if this is the first char in otherwise empty doc. ticket #605
+			if (fReparseEnd == 1 && newLength == 1) {
+				return null;
+			}
             
            
             //System.out.println("Reparsing from " + fReparseStart + " to " + fReparseEnd + " doc length is " + fDocument.getLength());
