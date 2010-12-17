@@ -134,7 +134,27 @@ public class CFMLPreferenceManager {
 		d = d.replaceAll("[RGB ]","").trim();
 		return d;
 	}
-	
+
+	/**
+	 * Returns an actual indent as either a tab or spaces depending on preferences
+	 * 
+	 * @return String indent
+	 */
+	public String getCanonicalIndent() {
+		String canonicalIndent;
+		if (!insertSpacesForTabs()) {
+			canonicalIndent = "\t"; //$NON-NLS-1$
+		} else {
+			String tab = ""; //$NON-NLS-1$
+			for (int i = 0; i < tabWidth(); i++) {
+				tab = tab.concat(" "); //$NON-NLS-1$
+			}
+			canonicalIndent = tab;
+		}
+
+		return canonicalIndent;
+	}
+
 	public int tabWidth() {
 	    //System.out.println("Tab width retrieved as: " + Integer.parseInt(store.getString(ICFMLPreferenceConstants.P_TAB_WIDTH).trim()));
 		return Integer.parseInt(store.getString(EditorPreferenceConstants.P_TAB_WIDTH).trim());

@@ -205,18 +205,23 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//formatter.setSlaveStrategy(new XmlCommentFormattingStrategy(), AntEditorPartitionScanner.XML_COMMENT);
 		 
 		return formatter;
-	}	
-	
+	}
+
 	/**
-	 * Returns the prefixes to be used by the line-shift operation. This implementation
-	 * always returns <code>new String[] { "\t", " " }</code>.
-	 *
-	 * @param sourceViewer the source viewer to be configured by this configuration
-	 * @param contentType the content type for which the prefix is applicable
+	 * Returns the prefixes to be used by the line-shift operation.
+	 * 
+	 * @param sourceViewer
+	 *            the source viewer to be configured by this configuration
+	 * @param contentType
+	 *            the content type for which the prefix is applicable
 	 * @return the prefixes or <code>null</code> if the prefix operation should not be supported
 	 */
 	public String[] getIndentPrefixes(ISourceViewer sourceViewer, String contentType) {
-		return new String[] { "\t", " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		if (preferenceManager.insertSpacesForTabs()) {
+			return new String[] { preferenceManager.getCanonicalIndent(), " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		} else {
+			return new String[] { "\t", " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
 	}
 	
 	/*
