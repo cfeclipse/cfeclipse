@@ -156,12 +156,12 @@ public class CFEPartitioner implements IDocumentPartitioner,
         fPseudoPartitions = new Properties();
         fPseudoPartitions.put("cfquery",CFPartitionScanner.SQL);
         fPseudoPartitions.put("cfscript",CFPartitionScanner.CF_SCRIPT);
-		fPseudoPartitions.put("javadoc", CFPartitionScanner.JAVADOC_COMMENT);
+		// fPseudoPartitions.put("javadoc", CFPartitionScanner.JAVADOC_COMMENT);
         //fPseudoPartitions.put("cfxml",CFPartitionScanner.XML);
         fPseudoPartitions.put("style",CFPartitionScanner.CSS);
-        fPseudoPartitions.put("script",CFPartitionScanner.J_SCRIPT);
-		fPseudoPartitions.put("cfcomment", CFPartitionScanner.CF_COMMENT);
-		fPseudoPartitions.put("cfscriptcomment", CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK);
+		fPseudoPartitions.put("script", CFPartitionScanner.J_SCRIPT);
+		// fPseudoPartitions.put("cfcomment", CFPartitionScanner.CF_COMMENT);
+		// fPseudoPartitions.put("cfscriptcomment", CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK);
     }
 
     /*
@@ -886,8 +886,8 @@ public class CFEPartitioner implements IDocumentPartitioner,
             || fInsertedText.indexOf('*') >= 0
             || fDeletedText.indexOf('*') >=0
             || fInsertedText.indexOf('/') >= 0
-            || fDeletedText.indexOf('/') >= 0
-            || fInsertedText.indexOf(10) >= 0) {
+ || fDeletedText.indexOf('/') >= 0
+				|| fDeletedText.indexOf(10) >= 0) {
 
             return true;
         }
@@ -1014,8 +1014,8 @@ public class CFEPartitioner implements IDocumentPartitioner,
      */
     public IRegion documentChanged2(DocumentEvent e) {
         try {
-            // Grab a reference to the document
-            IDocument d = e.getDocument();
+			// Grab a reference to the document
+			IDocument d = e.getDocument();
             
             if (!updateCouldChangePartitions(e)) {
                 return updatePartitionOffsets(e);
@@ -1066,11 +1066,6 @@ public class CFEPartitioner implements IDocumentPartitioner,
                     && category.length > first) {
                 fReparseEnd = Math.max(fReparseEnd,category[first].getOffset()+category[first].getLength());
             }
-			// short circuit if this is the first char in otherwise empty doc. ticket #605
-			if (fReparseEnd == 1 && newLength == 1) {
-				return null;
-			}
-            
            
             //System.out.println("Reparsing from " + fReparseStart + " to " + fReparseEnd + " doc length is " + fDocument.getLength());
 			// changed DEFAULT_PARITION to CF_SCRIPT partition for cfscript componenets

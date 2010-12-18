@@ -96,7 +96,27 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 	public final static String TABLE_START_TAG_BEGIN		= "__table_start_tag_begin";
 	public final static String TABLE_TAG_ATTRIBS		= "__table_tag_attribs";
 	public final static String TABLE_START_TAG_END		= "__table_start_tag_end";
-	
+
+	/**
+	 * Detector for empty markup comments.
+	 */
+	static class EmptyMarkupCommentDetector implements IWordDetector {
+
+		/*
+		 * (non-Javadoc) Method declared on IWordDetector
+		 */
+		public boolean isWordStart(char c) {
+			return (c == '<');
+		}
+
+		/*
+		 * (non-Javadoc) Method declared on IWordDetector
+		 */
+		public boolean isWordPart(char c) {
+			return (c == '-' || c == '!' || c == '>');
+		}
+	}
+
 	/**
 	 * Detector for empty comments.
 	 */
@@ -173,9 +193,9 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		rules.add(new MultiLineRule("/*", "*/", cfscriptCommentBlock, (char) 0, true));
 		rules.add(new EndOfLineRule("//", cfscriptComment));
 		// Partitions in the document will get marked in this order
-		rules.add(new NestableMultiLineRule("<!---","--->",cfComment));
-		//rules.add(new TagRule(htmComment));
-		rules.add(new NestableMultiLineRule("<!--", "-->", htmComment));
+		rules.add(new NestableMultiLineRule("<!---", "--->", cfComment, (char) 0, true));
+		// rules.add(new TagRule(htmComment));
+		rules.add(new MultiLineRule("<!--", "-->", htmComment));
 		//doctype rule
 		rules.add(new MultiLineRule("<!doctype", ">", doctype));
 		
@@ -419,4 +439,18 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 			return super.nextToken();
 		}
 
+	/**
+	 * Return the String ranging from the start of the current partition to the current scanning position. Some rules
+	 * (@see NestedMultiLineRule) need this information to calculate the comment nesting depth.
+	 * 
+	 */
+	public String getScannedPartitionString() {
+		try {
+			String scanned = fDocument.get(fPartitionOffset, fOffset - fPartitionOffset);
+			return scanned;
+		} catch (Exception e) {
+			// Do nothing
+		}
+		return "";
+	}
 }

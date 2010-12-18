@@ -24,157 +24,123 @@
  */
 package org.cfeclipse.cfml.editors.partitioner.scanners.rules;
 
+import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.MultiLineRule;
 import org.eclipse.jface.text.rules.Token;
 
-
 /**
+ * @author Hui Cao
  * 
- * @author Spike
- * Rule to handle areas that can be nested. 
- * This was designed to be used for multi-line comments
- * but it may prove useful in other areas.
  */
 public class NestableMultiLineRule extends MultiLineRule {
+	protected int _commentNestingDepth = 0;
 
-
-    
-	public NestableMultiLineRule(String start, String end, IToken token) 
-	{
-	    super(start, end, token);
-	    fBreaksOnEOF = true;
+	/**
+	 * @param startSequence
+	 * @param endSequence
+	 * @param token
+	 */
+	public NestableMultiLineRule(String startSequence, String endSequence, IToken token) {
+		super(startSequence, endSequence, token);
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * Sets a column constraint for this rule. If set, the rule's token will only be returned if the pattern is detected
-	 * starting at the specified column. If the column is smaller then 0, the column constraint is considered removed.
-	 * 
-	 * @param column
-	 *            the column in which the pattern starts
+	 * @param startSequence
+	 * @param endSequence
+	 * @param token
+	 * @param escapeCharacter
 	 */
-	public void setColumnConstraint(int column) {
-		if (column < 0)
-			column = UNDEFINED;
-		fColumn = column;
+	public NestableMultiLineRule(String startSequence, String endSequence, IToken token, char escapeCharacter) {
+		super(startSequence, endSequence, token, escapeCharacter);
+		// TODO Auto-generated constructor stub
 	}
 
-	protected boolean endSequenceDetected(ICharacterScanner scanner) {
-	    try {
-	   //System.out.println("Looking for end sequence in nested rule.");
+    /**
+	 * @param startSequence
+	 * @param endSequence
+	 * @param token
+	 * @param escapeCharacter
+	 * @param breaksOnEOF
+	 */
+	public NestableMultiLineRule(String startSequence, String endSequence, IToken token, char escapeCharacter, boolean breaksOnEOF) {
+		super(startSequence, endSequence, token, escapeCharacter, breaksOnEOF);
+		// TODO Auto-generated constructor stub
+	}
+
+    protected boolean endSequenceDetected(ICharacterScanner scanner) {
 		int c;
-		char[][] delimiters= scanner.getLegalLineDelimiters();
+		char[][] delimiters = scanner.getLegalLineDelimiters();
 		boolean previousWasEscapeCharacter = false;
-		//int nextChar = scanner.read();
-		scanner.unread();
-		int nestedLevel = 1;
 		while ((c = scanner.read()) != ICharacterScanner.EOF) {
-		    //System.out.println("Read character " + (char)c + " Start sequence match test: (" + fStartSequence[0] + ")" + (nextChar == fStartSequence[0]));
 			if (c == fEscapeCharacter) {
-				//System.out.println("Skipping an escape character." + fEscapeCharacter);
 				// Skip the escaped character.
 				scanner.read();
-			} else if (c == fStartSequence[0] 
-						&& sequenceDetected(scanner, fStartSequence, true)) {
-				//System.out.println("Found a nested start sequence." + new String(fStartSequence));
-			    // Check for a start sequence so the nesting gets updated correctly
-			    nestedLevel++;
-			    
+			} else if (fStartSequence.length > 0 && c == fStartSequence[0]) {
+				// Check if the nested start sequence has been found.
+				if (sequenceDetected(scanner, fStartSequence, false)) {
+					_commentNestingDepth++;
+				}
 			} else if (fEndSequence.length > 0 && c == fEndSequence[0]) {
 				// Check if the specified end sequence has been found.
 				if (sequenceDetected(scanner, fEndSequence, true)) {
-					//System.out.println("Found end sequence.");
-				    if (nestedLevel > 0) {
-				        nestedLevel--;
-				    }
-				    if (nestedLevel == 0) {
-					    return true;
-					}
-					
+					_commentNestingDepth--;
 				}
-			} else if (fBreaksOnEOL) {
-				//System.out.println("Checking for end of line. THIS SHOULDN'T HAPPEN");
-				// Check for end of line since it can be used to terminate the pattern.
-				for (int i= 0; i < delimiters.length; i++) {
-					if (c == delimiters[i][0] && sequenceDetected(scanner, delimiters[i], true)) {
-						if (!fEscapeContinuesLine || !previousWasEscapeCharacter)
-							return true;
-					}
+				if (_commentNestingDepth <= 0) {
+					return true;
 				}
 			}
 			previousWasEscapeCharacter = (c == fEscapeCharacter);
 		}
-		if (fBreaksOnEOF) return true;
-			scanner.unread();
-	    }
-	    catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		if (fBreaksOnEOF) {
+			return true;
+		}
+		scanner.unread();
 		return false;
 	}
 
-	protected IToken doEvaluate(ICharacterScanner scanner, boolean resume) {
-		
+    protected IToken doEvaluate(ICharacterScanner scanner, boolean resume) {
 		if (resume) {
-			
-			if (endSequenceDetected(scanner))
+			_commentNestingDepth = 0;
+			if (scanner instanceof CFPartitionScanner) {
+				String scanned = ((CFPartitionScanner) scanner).getScannedPartitionString();
+				if (scanned != null && scanned.length() > 0) {
+					String startSequence = new String(fStartSequence);
+					int index = 0;
+					while ((index = scanned.indexOf(startSequence, index)) >= 0) {
+						index++;
+						_commentNestingDepth++;
+					}
+					// must be aware of the closing sequences
+					String endSequence = new String(fEndSequence);
+					index = 0;
+					while ((index = scanned.indexOf(endSequence, index)) >= 0) {
+						index++;
+						_commentNestingDepth--;
+					}
+				}
+			}
+			if (endSequenceDetected(scanner)) {
 				return fToken;
-		
-		} else {
-			
-			int c = scanner.read();
+			}
+
+        } else {
+
+            int c = scanner.read();
 			if (c == fStartSequence[0]) {
 				if (sequenceDetected(scanner, fStartSequence, false)) {
-					//System.out.println("Start sequence detected." + new String(fStartSequence));
-				    scanner.read();
+					_commentNestingDepth = 1;
 					if (endSequenceDetected(scanner)) {
-					    return fToken;
+						return fToken;
 					}
 				}
 			}
 		}
-		
-		scanner.unread();
+
+        scanner.unread();
 		return Token.UNDEFINED;
-	}
-	
-	
-	
-	
 
-	
-	/**
-	 * Returns whether the next characters to be read by the character scanner
-	 * are an exact match with the given sequence. No escape characters are allowed 
-	 * within the sequence. If specified the sequence is considered to be found
-	 * when reading the EOF character.
-	 *
-	 * @param scanner the character scanner to be used
-	 * @param sequence the sequence to be detected
-	 * @param eofAllowed indicated whether EOF terminates the pattern
-	 * @return <code>true</code> if the given sequence has been detected
-	 */
-	protected boolean sequenceDetected(ICharacterScanner scanner, char[] sequence, boolean eofAllowed) {
-		// Something has already detected that the first char matched. So we start at char 1 rather than 0
-		for (int i= 1; i < sequence.length; i++) {
-			int c= scanner.read();
-			//System.out.println("Checking character " + sequence[i] + " at position " + ((CFPartitionScanner)scanner).getOffset());
-			
-			if (c == ICharacterScanner.EOF && eofAllowed) {
-				return true;
-			} else if (c != sequence[i]) {
-				// Non-matching character detected, rewind the scanner back to the start.
-				// Do not unread the first character.
-				scanner.unread();
-				for (int j= i-1; j > 0; j--) {
-					scanner.unread();
-				}
-				return false;
-			}
-		}
-
-		return true;
-	}
-	
+    }
 }
