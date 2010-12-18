@@ -405,10 +405,9 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			int line = document.getLineOfOffset(p);
 			int lineOffset = document.getLineOffset(line);
 			int offset = p;
-			char prevPrevChar = document.getChar(offset - 2);
-			char prevChar = document.getChar(offset-1);
 			char curChar = document.getChar(offset);
 			char nextChar = document.getChar(offset+1);
+			int newCaretOffset = offset;
 
 			StringBuffer buf= new StringBuffer(command.text);
 			String curIndent = getIndentOfLine(document, line);
@@ -419,18 +418,21 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 				if ((curText.equals("/**") || curText.equals("/*"))
 						&& (curChar == '\n' || curChar == '*' || (curChar == '/') && nextChar == '\n')) {
 					buf.append(" * ");
+					newCaretOffset += 3;
 					if (curChar == '*') {
 						buf.append(document.getLineDelimiter(line) + curIndent + " *");
+						newCaretOffset += curIndent.length();
 						if (nextChar != '/' && curChar != '/') {
 							buf.append('/');
 						}
 					} else {
 						buf.append(document.getLineDelimiter(line) + curIndent + " **");
+						newCaretOffset += curIndent.length();
 						if (nextChar != '/' && curChar != '/') {
 							buf.append('/');
 						}
 					}
-					command.caretOffset = offset + curIndent.length() + 5;
+					command.caretOffset = newCaretOffset + 1;
 					command.shiftsCaret = false;
 				} else {
 					buf.append("* ");
