@@ -171,9 +171,9 @@
                    name="insert">
              </groupMarker>
              <separator
-                   name="format">
+                   name="format_sep">
              </separator>
-             <groupMarker
+             <groupMarker 
                    name="format">
              </groupMarker>
          </menu> 
@@ -794,24 +794,28 @@
          <action
                label="%action.label.ToCFScript"
                class="org.cfeclipse.cfml.editors.actions.ToCFScriptAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.ToCFScript"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
                id="org.cfeclipse.cfml.editors.actions.ToCFScript">
          </action>
          <action
                label="%action.label.ToLower"
                class="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
                id="org.cfeclipse.cfml.editors.actions.ToLowerCase">
          </action>
          <action
                label="%action.label.ToUpper"
                class="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
                id="org.cfeclipse.cfml.editors.actions.ToUpperCase">
          </action>
          <action
                label="%action.label.WrapTag"
                class="org.cfeclipse.cfml.editors.actions.WrapTagAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.WrapTag"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
                id="org.cfeclipse.cfml.editors.actions.WrapTagAction">
          </action>
@@ -821,66 +825,77 @@
          <action
                label="%action.label.45"
                class="org.cfeclipse.cfml.editors.actions.CFVariableAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CFVariable"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
                id="org.cfeclipse.cfml.editors.actions.CFVariable">
          </action>
          <action
                label="%action.label.46"
                class="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CFSingleQuote"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
                id="org.cfeclipse.cfml.editors.actions.CFSingleQuote">
          </action>
          <action
                label="%action.label.47"
                class="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
                id="org.cfeclipse.cfml.editors.actions.CFDoubleQuote">
          </action>
          <action
                label="%action.label.ClipboardLink"
                class="org.cfeclipse.cfml.editors.actions.ClipboardLinkAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.ClipboardLink"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
                id="org.cfeclipse.cfml.editors.actions.ClipboardLinkAction">
          </action>
          <action
                label="%action.label.48"
                class="org.cfeclipse.cfml.editors.actions.LastActionAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.LastAction"
                menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
                id="org.cfeclipse.cfml.editors.actions.LastTag">
          </action>
          <action
                label="%action.label.51"
                class="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelectionAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection"
                menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
                id="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection">
          </action>
          <action
                label="%action.label.52"
                class="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelectionAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection"
                menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
                id="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection">
          </action>
          <action
                label="%action.label.53"
                class="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkersAction"
+               definitionId="org.eclipse.ui.edit.text.folding.expand_all"
                menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
                id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkers">
          </action>
          <action
                label="%action.label.54"
                class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkersAction"
+               definitionId="org.eclipse.ui.edit.text.folding.collapse_all"
                menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
                id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkers">
          </action>
          <action
                label="%action.label.55"
                class="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkersAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
                menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
                id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers">
          </action>
          <action
                label="%action.label.56"
                class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkersAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
                menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
                id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
          </action>
@@ -897,7 +912,7 @@
 					icon="icons/icons/16x16.gif"
 					id="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
 					label="%action.label.57"
-					menubarPath="additions"
+					menubarPath="org.eclipse.ui.projectConfigure/additions"
 					tooltip="%action.tooltip.40"/>
 		</objectContribution>      
 		
@@ -1015,8 +1030,8 @@
 			
 		<!-- comment lines based on section (i.e. js comments in js blocks, etc) -->
 		<command
-			name="%command.name.AutoCommentLines"
-			description="%command.description.AutoCommentLines"
+			name="%command.name.lineComment"
+			description="%command.name.lineComment"
 			categoryId="org.cfeclipse.cfml.commandCategory"
 			id="org.cfeclipse.cfml.editors.actions.AutoCommentLines"/>
 			
@@ -1280,6 +1295,13 @@
         	id="org.cfeclipse.cfml.commands.ExpandTagSelectionDown"
         	>
       	</command>
+        <command 
+        	name="%action.label.ExpandAll"
+        	description="%action.tooltip.ExpandAll" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.eclipse.ui.edit.text.folding.expand_all"
+        	>
+      	</command>
 		
 		<!-- Find a matching bracket pair -->
 		<!--
@@ -1371,7 +1393,7 @@
 		<!-- Double Quote -->
 		<key sequence="M1+M2+&apos;"
 			commandId="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext" 
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		
 		<!-- Edit Tag -->
@@ -1554,6 +1576,16 @@
 		<!-- Format Source -->
 		<key sequence="M1+M2+F"
 			commandId="org.cfeclipse.cfml.FormatAction"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+			
+		<key sequence="M1+= M1+="
+			commandId="org.eclipse.ui.edit.text.folding.expand_all"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+			
+		<key sequence="M1+= M1+="
+			commandId="org.eclipse.ui.edit.text.folding.collapse_all"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 
@@ -2214,7 +2246,7 @@
                value="plugin_customization.ini"/>
          <property
                name="aboutText"
-               value="CFEclipse&#x0A;&#x0A;Version: 1.3.1.3&#x0A;&#x0A;(c)  Copyright (c) 2004-2007 The CFEclipse Project &#x0A;Visit http://www.cfeclipse.org"/>
+               value="CFEclipse&#x0A;&#x0A;Version: 1.4.4&#x0A;&#x0A;(c)  Copyright (c) 2004-2011 The CFEclipse Project &#x0A;Visit http://www.cfeclipse.org"/>
       </product>
    </extension>
    <extension
