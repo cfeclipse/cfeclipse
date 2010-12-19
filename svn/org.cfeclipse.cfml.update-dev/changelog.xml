@@ -1,0 +1,48 @@
+<project name="changelog" default="update-whatsnew" basedir=".">
+	
+	<property name="cfe.version" value="1.4.4" />
+
+	<property name="temp.dir" value="${basedir}/temp" />
+	<path id="build.lib.path">
+		<fileset dir="${basedir}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build.lib.path" />
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="build.lib.path" />
+
+	<target name="getlist">
+		<mkdir dir="${temp.dir}" />
+		<get src="http://trac.cfeclipse.org/query?status=closed&amp;group=resolution&amp;milestone=${cfe.version}" dest="${temp.dir}/log.html" />
+	</target>
+
+	<target name="update-whatsnew" depends="getlist">
+		<copy file="${temp.dir}/log.html" tofile="${temp.dir}/log2.html" overwrite="true" />
+		<!--
+		<copy file="${basedir}/../org.cfeclipse.cfml/doc/intro/doc/new.html" tofile="${temp.dir}/new2.html" overwrite="true" />
+		-->
+		<replaceregexp file="${temp.dir}/log2.html" match='(?s).*?table class="listing tickets"&gt;.*?tbody&gt;(.*?)&lt;/tbody&gt;.*' replace="&lt;table&gt;\1&lt;/table&gt;" byline="false" />
+
+		<echo file="${temp.dir}/tickets.txt"><![CDATA[<table bgcolor="#eee" cellspacing="0" cellpadding="0"><tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>]]>
+		</echo>
+		<xmltask source="${temp.dir}/log2.html" destbuffer="tickets">
+			<call path="/table/tr">
+				<param name="href" path="td[1]/a/@href" />
+				<param name="ticket" path="td[1]/a/text()" />
+				<param name="summary" path="td[2]/a/text()" />
+				<actions>
+<echo file="${temp.dir}/tickets.txt" append="true"><![CDATA[<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org@{href}">@{ticket}</a></td><td valign="top" style="padding:5px">@{summary}</td></tr>]]>
+</echo>
+				</actions>
+			</call>
+		</xmltask>
+		<echo file="${temp.dir}/tickets.txt" append="true"><![CDATA[</table>]]></echo>
+		<loadfile srcfile="${temp.dir}/tickets.txt" property="ticket.table" />
+		<replaceregexp file="${basedir}/../org.cfeclipse.cfml/doc/intro/doc/new.html" 
+		match='(?s)&lt;!-- closedtickets --&gt;.*?&lt;!-- /closedtickets --&gt;' 
+		replace="&lt;!-- closedtickets --&gt;${ticket.table}&lt;!-- /closedtickets --&gt;" byline="false" />
+		<delete dir="${temp.dir}" />
+	</target>
+
+</project>
