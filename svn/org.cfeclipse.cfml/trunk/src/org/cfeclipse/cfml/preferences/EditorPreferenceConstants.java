@@ -176,6 +176,8 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	public static final String FORMATTER_FORMAT_CFSCRIPT = "formatter_format_cfscript";
 
 	public static final String FORMATTER_DICTIONARY_DIR = "formatter_dictionary_dir";
+
+	public static final String FORMATTER_SCRIPT_BRACES_ON_OWN_LINE = "formatter_script_braces_on_own_line";
 	/**
 	 * Sets the default values for the preferences managed by {@link EditorPreferencePage}:
 	 * <ul>
@@ -246,6 +248,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(FORMATTER_FORMAT_SQL, false);
 		store.setDefault(FORMATTER_FORMAT_JS, false);
 		store.setDefault(FORMATTER_FORMAT_CFSCRIPT, false);
+		store.setDefault(FORMATTER_SCRIPT_BRACES_ON_OWN_LINE, false);
 		store.setDefault(FORMATTER_FORMAT_CSS, false);
 
 		store.setDefault(FORMATTER_TIDY_TAGS, false);

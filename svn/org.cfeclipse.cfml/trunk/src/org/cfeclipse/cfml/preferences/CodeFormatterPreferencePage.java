@@ -59,10 +59,11 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_INDENT_ALL_ELEMENTS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_TIDY_TAGS));
 
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_SQL));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_JS));
-		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_CSS));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_CFSCRIPT));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_JS));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_SCRIPT_BRACES_ON_OWN_LINE));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_SQL));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, EditorPreferenceConstants.FORMATTER_FORMAT_CSS));
 
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.FORMATTER_CLOSE_TAGS_LIST));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.FORMATTER_IGNORED_TAGS));
@@ -123,14 +124,16 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_IgnoredTags;
 		addExpandableTextField(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_IGNORED_TAGS, 80, 0, null);
 
-		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_12;
-		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_SQL, 1);
-		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_FormatJS;
-		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_JS, 1);
-		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_FormatCSS;
-		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_CSS, 1);
 		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_FormatCFScript;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_CFSCRIPT, 1);
+		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_FormatJS;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_JS, 1);
+		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_BracesOnOwnLine;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_SCRIPT_BRACES_ON_OWN_LINE, 1);
+		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_12;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_SQL, 1);
+		labelText = CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_FormatCSS;
+		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_FORMAT_CSS, 1);
 
 		labelText= CFMLPreferencesMessages.CFMLCodeFormatterPreferencePage_13;
 		addCheckBox(wrappingGroup, labelText, EditorPreferenceConstants.FORMATTER_COLLAPSE_WHITESPACE, 1);

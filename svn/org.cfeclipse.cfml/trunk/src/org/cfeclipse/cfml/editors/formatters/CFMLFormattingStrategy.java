@@ -197,7 +197,9 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		}
 		formatprefs.formatCFScript(prefs.formatCFScript());
 		formatprefs.formatJavaScript(prefs.formatJavaScript());
+		formatprefs.braces_on_own_line(prefs.braces_on_own_line());
 		formatprefs.formatCSS(prefs.formatCSS());
+		formatprefs.setFormatSQL(prefs.formatSQL());
 		formatprefs.setIgnoredTags(ignoredTags);
 		formatprefs.setCloseTagsList(prefs.getCloseTagsList());
 		formatprefs.setDictionaryDir(CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary");

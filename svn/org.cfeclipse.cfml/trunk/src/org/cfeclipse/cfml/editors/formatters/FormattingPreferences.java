@@ -126,6 +126,10 @@ public class FormattingPreferences {
 		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_FORMAT_JS);
 	}
 
+	public boolean braces_on_own_line() {
+		return fPrefs.getBoolean(EditorPreferenceConstants.FORMATTER_SCRIPT_BRACES_ON_OWN_LINE);
+	}
+
 	public static boolean affectsFormatting(PropertyChangeEvent event) {
 		String property = event.getProperty();
 		return property.startsWith(EditorPreferenceConstants.FORMATTER_ALIGN)
@@ -144,6 +148,7 @@ public class FormattingPreferences {
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_FORMAT_SQL)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_FORMAT_JS)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_FORMAT_CFSCRIPT)
+				|| property.startsWith(EditorPreferenceConstants.FORMATTER_SCRIPT_BRACES_ON_OWN_LINE)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_FORMAT_CSS)
 				|| property.startsWith(EditorPreferenceConstants.FORMATTER_WRAP_LONG);
 	}
