@@ -42,89 +42,16 @@ tr {
 			color for cfscript-based components! Also, several wonky color issues
 			have been addressed. Things are far from perfect, but they're much
 			much better, in our humble opinion.</p>
-			<table class="listing tickets">
-				<thead>
-					<tr>
-						<th>Ticket</th>
-						<th>Summary</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="color4-odd"
-						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-						<td class="ticket"><a title="View ticket" href="/ticket/581">#581</a>
-						</td>
-						<td class="summary"><a title="View ticket" href="/ticket/581">Add
-						option to disable auto indent</a></td>
-					</tr>
-					<tr class="color4-even"
-						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-						<td class="ticket"><a title="View ticket" href="/ticket/582">#582</a>
-						</td>
-						<td class="summary"><a title="View ticket" href="/ticket/582">files
-						linked via RSE are unmodifiable</a></td>
-					</tr>
-					<tr class="color4-odd"
-						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-						<td class="ticket"><a title="View ticket" href="/ticket/591">#591</a>
-						</td>
-						<td class="summary"><a title="View ticket" href="/ticket/591">disable
-						auto-close when in comments</a></td>
-					</tr>
-					<tr class="color4-even"
-						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-						<td class="ticket"><a title="View ticket" href="/ticket/587">#587</a>
-						</td>
-
-						<td class="summary"><a title="View ticket" href="/ticket/587">I
-						would love you forever if we could have cfscript comments
-						auto-expand with each newline</a></td>
-					</tr>
-					<tr class="color4-odd"
-						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-						<td class="ticket"><a title="View ticket" href="/ticket/588">#588</a>
-						</td>
-						<td class="summary"><a title="View ticket" href="/ticket/588">the
-						editor needs to know that cfscript components are cfscript code
-						blocks</a></td>
-
-					</tr>
-					<tr class="color4-even"
-						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-						<td class="ticket"><a title="View ticket" href="/ticket/586">#586</a>
-						</td>
-						<td class="summary"><a title="View ticket" href="/ticket/586">it
-						would rock my world if we could have "smart" indenting when
-						entering a newline between { and }</a></td>
-					</tr>
-					<tr class="color4-odd"
-						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-						<td class="ticket"><a title="View ticket" href="/ticket/154">#154</a>
-						</td>
-
-						<td class="summary"><a title="View ticket" href="/ticket/154">indent
-						not preserved when replacing selected text with new line</a></td>
-					</tr>
-					<tr class="color3-even"
-						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-						<td class="ticket"><a title="View ticket" href="/ticket/103">#103</a>
-						</td>
-						<td class="summary"><a title="View ticket" href="/ticket/103">checking
-						out a file with VSS plugin screws up color coding</a></td>
-					</tr>
-					<tr class="color4-odd"
-						style="color: rgb(119, 119, 119); background: none repeat scroll 0% 0% rgb(221, 221, 221); border-color: rgb(204, 204, 204);">
-						<td class="ticket"><a title="View ticket" href="/ticket/583">#583</a>
-						</td>
-						<td class="summary"><a title="View ticket" href="/ticket/583">newline
-						within tag adds extra indent</a></td>
-					</tr>
-				</tbody>
-			</table>
+<ul>
+	<li><a href="#color">Color</a></li>
+	<li><a href="#comments">Comments</a></li>
+	<li><a href="#sourceformatting">Code Formatter</a></li>
+	<li><a href="#changelog">Change Log</a></li>
+</ul>
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2">
+			<td colspan="2"><a name="color"></a>
 			<div style="font-size: 20px; font-weight: bold;">Color</div>
 			</td>
 		</tr>
@@ -146,7 +73,7 @@ tr {
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2">
+			<td colspan="2"><a name="comments"></a>
 			<div style="font-size: 20px; font-weight: bold;">"Smart" Comments</div>
 			</td>
 		</tr>
@@ -198,8 +125,6 @@ tr {
 			<p><img src="../images/1.4.4/comment_prefs.png">
 			</td>
 		</tr>
-					
-		
 		<tr>
 			<td valign="top">
 			<p align="right"><b>color style</b></p>
@@ -207,6 +132,91 @@ tr {
 			<td valign="top">You can now set the color of "JavaDoc" style comments separately from normal comments<br>
 			<p><img src="../images/1.4.4/comment_color.png">
 			<img src="../images/1.4.4/comment_color_prefs.png">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="sourceformatting"></a>
+			<div style="font-size: 20px; font-weight: bold;">Source Formatting</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>ignored tags list</b></p>
+			</td>
+			<td valign="top">There is now an option for specifing which tags will be ignored when formatting
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>close tags list</b></p>
+			</td>
+			<td valign="top">There is now an option for specifing which tags will be closed when formatting the source (cfinclude, cfset, etc.).
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>cfscript formatting</b></p>
+			</td>
+			<td valign="top">There is now fledgeling support for cfscript formatting
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>JavaScript formatting</b></p>
+			</td>
+			<td valign="top">There is now fledgeling support for JavaScript formatting
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>SQL formatting</b></p>
+			</td>
+			<td valign="top">There is now fledgeling support for SQL formatting
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>CSS formatting</b></p>
+			</td>
+			<td valign="top">There is now fledgeling support for CSS formatting
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="changelog"></a>
+			<div style="font-size: 20px; font-weight: bold;">Change log</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Tickets</b></p>
+			</td>
+			<td valign="top">
+			<em>Here is the list of tickets closed with this release.  Some of these were tickets that had been left open, although they had already been fixed.</em>
+			<!-- closedtickets --><table bgcolor="#eee" cellspacing="0" cellpadding="0"><tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>
+		<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/592">#592</a></td><td valign="top" style="padding:5px">javascript comments colorization too greedy</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/605">#605</a></td><td valign="top" style="padding:5px">hitting enter in blank document sends the editor into limbo</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/601">#601</a></td><td valign="top" style="padding:5px">autocompletion : cannot disable function assist, and ordering is incorrect</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/154">#154</a></td><td valign="top" style="padding:5px">indent not preserved when replacing selected text with new line</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/581">#581</a></td><td valign="top" style="padding:5px">Add option to disable auto indent</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/582">#582</a></td><td valign="top" style="padding:5px">files linked via RSE are unmodifiable</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/583">#583</a></td><td valign="top" style="padding:5px">newline within tag adds extra indent</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/586">#586</a></td><td valign="top" style="padding:5px">it would rock my world if we could have "smart" indenting when entering a newline between { and }</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/587">#587</a></td><td valign="top" style="padding:5px">I would love you forever if we could have cfscript comments auto-expand with each newline</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/588">#588</a></td><td valign="top" style="padding:5px">the editor needs to know that cfscript components are cfscript code blocks</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/591">#591</a></td><td valign="top" style="padding:5px">disable auto-close when in comments</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/594">#594</a></td><td valign="top" style="padding:5px">comment mode continuation too eager.</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/595">#595</a></td><td valign="top" style="padding:5px">add auto-insert option for when there is only one proposal available</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/597">#597</a></td><td valign="top" style="padding:5px">C-Style comment continuation character indent off by one?</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/598">#598</a></td><td valign="top" style="padding:5px">add a selection to line comment action</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/599">#599</a></td><td valign="top" style="padding:5px">it would be totes awesome if the "selection to line comment" action was bound to M1+/</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/600">#600</a></td><td valign="top" style="padding:5px">disable auto-insert of quotes or apostrophes when in comment blocks</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/602">#602</a></td><td valign="top" style="padding:5px">formatting enhancements</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/603">#603</a></td><td valign="top" style="padding:5px">formatter needs "close tag" preference</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/604">#604</a></td><td valign="top" style="padding:5px">formatter needs "ignored tags" preference</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/607">#607</a></td><td valign="top" style="padding:5px">Show hotkey combos for "Collapse All" and "Expand All" in context menu</td></tr>
+<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/609">#609</a></td><td valign="top" style="padding:5px">several context menu items do not display their key binding</td></tr>
+</table><!-- /closedtickets -->
+
 			</td>
 		</tr>
 
