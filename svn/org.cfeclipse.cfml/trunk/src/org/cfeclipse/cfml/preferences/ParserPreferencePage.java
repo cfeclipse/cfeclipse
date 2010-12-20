@@ -39,6 +39,8 @@ public class ParserPreferencePage
 		addField(new BooleanFieldEditor(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS, "Report parse errors", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(ParserPreferenceConstants.P_PARSE_VARIABLES, "Parse Variables as you type", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(ParserPreferenceConstants.P_AUTO_RECONCILE, "Reconcile document changes as you type", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(ParserPreferenceConstants.PARSE_CFSCRIPT_CFCS, "Syntax coloring for cfscript based cfcs",
+				getFieldEditorParent()));
 	}
 	
 	 protected void performDefaults() 

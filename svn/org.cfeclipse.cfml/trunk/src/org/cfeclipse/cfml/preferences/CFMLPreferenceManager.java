@@ -325,6 +325,9 @@ public class CFMLPreferenceManager {
 	    return val;
 	}
 	
+	public boolean parseCFScriptCFCs() {
+		return store.getString(ParserPreferenceConstants.PARSE_CFSCRIPT_CFCS).trim().equalsIgnoreCase("true");
+	}
 	
 	
 	public boolean useFunkyContentAssist() {

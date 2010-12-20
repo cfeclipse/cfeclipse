@@ -46,6 +46,7 @@ import org.cfeclipse.cfml.editors.partitioner.scanners.rules.NamedTagRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.NestableMultiLineRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.TagRule;
 import org.cfeclipse.cfml.editors.partitioner.scanners.rules.TaglibRule;
+import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.eclipse.jface.text.rules.EndOfLineRule;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IPredicateRule;
@@ -165,8 +166,13 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		}
 	}
 
+	private CFMLPreferenceManager prefs;
+	private static boolean fParseCFScriptCFCs;
+
 	public CFPartitionScanner() 
 	{
+		prefs = new CFMLPreferenceManager();
+		fParseCFScriptCFCs = prefs.parseCFScriptCFCs();
 		IToken doctype	 	= new Token(DOCTYPE);
 		IToken cfComment 	= new Token(CF_COMMENT);
 		IToken cfscriptCommentBlock = new Token(CF_SCRIPT_COMMENT_BLOCK);
@@ -365,12 +371,12 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 						    if (c == EOF) {
 						        return Token.EOF;
 						    }
-						    /*
-						    cfscript-based components trounces this idea
+						if (!fParseCFScriptCFCs) {
+							/* shortcircuit if only parsing tags */
 							if (c != '<') {
-						        return this.fDefaultReturnToken;
+								return this.fDefaultReturnToken;
+							}
 						    }
-							*/
 						    break;
 						}
 						unread();

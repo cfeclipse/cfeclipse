@@ -30,6 +30,8 @@ public class ParserPreferenceConstants extends AbstractPreferenceConstants {
 
 	public static final String P_AUTO_RECONCILE = "__autoReconcile";
 
+	/** parce cfscript based cfcs **/
+	public static final String PARSE_CFSCRIPT_CFCS = "__parse_cfscript_cfcs";
 
 
 	/**
@@ -47,6 +49,7 @@ public class ParserPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_PARSE_REPORT_ERRORS,true); 
 		store.setDefault(P_PARSE_VARIABLES, true);
 		store.setDefault(P_AUTO_RECONCILE, true);
+		store.setDefault(PARSE_CFSCRIPT_CFCS, true);
 	}
 
 }
