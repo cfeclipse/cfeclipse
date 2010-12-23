@@ -19,13 +19,54 @@ tr {
 	vertical-align: top;
 }
 </style>
-<title>What's New in CFEclipse 1.4.4</title>
+<title>What's New in CFEclipse 1.4.5</title>
 <script language="JavaScript"
 	src="PLUGINS_ROOT/org.eclipse.help/livehelp.js">
 	
 </script>
 </head>
 <body>
+
+<table cellpadding="5" cellspacing="0" width="600">
+	<colgroup>
+		<col width="20%">
+		<col width="80%">
+	</colgroup>
+	<tbody>
+		<tr>
+			<td valign="top"><img src="../images/moon_new.png" align="right" /></td>
+			<td>
+			<h2>What's New in CFEclipse 1.4.5</h2>
+			<p>Slight tweak to syntax coloring.</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><a name="color1.4.5"></a>
+			<div style="font-size: 20px; font-weight: bold;">Color</div>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>cf expressions</b></p>
+			</td>
+			<td valign="top">There is now color inside #this.stuff#. Sorta.
+			<br>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+			<p align="right"><b>Tickets</b></p>
+			</td>
+			<td valign="top"><em>Here is the list of tickets closed
+			with this release. Some of these were tickets that had been left
+			open, although they had already been fixed.</em> 
+			<!-- closedtickets -->
+			<!-- /closedtickets -->
+			</td>
+		</tr>
+
+	</tbody>
+</table>
 
 <table cellpadding="5" cellspacing="0" width="600">
 	<colgroup>
@@ -42,12 +83,12 @@ tr {
 			color for cfscript-based components! Also, several wonky color issues
 			have been addressed. Things are far from perfect, but they're much
 			much better, in our humble opinion.</p>
-<ul>
-	<li><a href="#color">Color</a></li>
-	<li><a href="#comments">Comments</a></li>
-	<li><a href="#sourceformatting">Code Formatter</a></li>
-	<li><a href="#changelog">Change Log</a></li>
-</ul>
+			<ul>
+				<li><a href="#color">Color</a></li>
+				<li><a href="#comments">Comments</a></li>
+				<li><a href="#sourceformatting">Code Formatter</a></li>
+				<li><a href="#changelog">Change Log</a></li>
+			</ul>
 			</td>
 		</tr>
 		<tr>
@@ -59,53 +100,59 @@ tr {
 			<td valign="top">
 			<p align="right"><b>cfscript cfc</b></p>
 			</td>
-			<td valign="top">There is now color in the cfscript-based components!<br>
-			<p><img src="../images/1.4.4/cfscript_color.png">
-			</td>
+			<td valign="top">There is now color in the cfscript-based
+			components! <br>
+			<p><img src="../images/1.4.4/cfscript_color.png"></p>
+			You can turn it off in: Preferences > CFEclipse > File Parsing.</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>scope coloring</b></p>
 			</td>
-			<td valign="top">There are two new types of scope coloring.  Built-in scopes, like variables, request, and session, and scopes picked up from the dictionary file, like cgi, cffile, and cfhttp. (they look like the same color below, but one is really a darker red.)<br>
+			<td valign="top">There are two new types of scope coloring.
+			Built-in scopes, like variables, request, and session, and scopes
+			picked up from the dictionary file, like cgi, cffile, and cfhttp.
+			(they look like the same color below, but one is really a darker
+			red.)<br>
 			<p><img src="../images/1.4.4/scope_color.png"></p>
-			  If you don't like this you can change the color to whatever color your other text is.
-			</td>
+			If you don't like this you can change the color to whatever color
+			your other text is.</td>
 		</tr>
 		<tr>
 			<td colspan="2"><a name="comments"></a>
-			<div style="font-size: 20px; font-weight: bold;">"Smart" Comments</div>
+			<div style="font-size: 20px; font-weight: bold;">"Smart"
+			Comments</div>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>line comments</b></p>
 			</td>
-			<td valign="top">
-			You can now toggle line comments (// super nifty comment) with M1+/ 
-			</td>
+			<td valign="top">You can now toggle line comments (// super
+			nifty comment) with M1+/</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>block comments</b></p>
 			</td>
-			<td valign="top">
-			You can now un-comment block comments (/* cheese is the bee's knees */) from within the comment, similar to how the tag-based comments work. 
-			</td>
+			<td valign="top">You can now un-comment block comments (/*
+			cheese is the bee's knees */) from within the comment, similar to how
+			the tag-based comments work.</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>disabled auto-insert quotes</b></p>
 			</td>
-			<td valign="top">
-			When you are inside a comment block, and have auto insertion enabled for apostrophes or quotes, it''s now smart enough to tell, and won''t auto-insert. 
-			</td>
+			<td valign="top">When you are inside a comment block, and have
+			auto insertion enabled for apostrophes or quotes, it''s now smart
+			enough to tell, and won''t auto-insert.</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>auto-expansion</b></p>
 			</td>
-			<td valign="top">While in cfscript style "block" comments, new lines can now automatically be prepended with "*".<br>
+			<td valign="top">While in cfscript style "block" comments, new
+			lines can now automatically be prepended with "*".<br>
 			<p><img src="../images/1.4.4/comment_grow.png">
 			</td>
 		</tr>
@@ -113,15 +160,19 @@ tr {
 			<td valign="top">
 			<p align="right"><b>auto-closing</b></p>
 			</td>
-			<td valign="top">While in cfscript style "block" comments, if you hit enter after typing "/**", the comment will automatically be closed.<br>
-			<p><img src="../images/1.4.4/comment_auto1.png"> <img src="../images/1.4.4/comment_auto2.png">
+			<td valign="top">While in cfscript style "block" comments, if
+			you hit enter after typing "/**", the comment will automatically be
+			closed.<br>
+			<p><img src="../images/1.4.4/comment_auto1.png"> <img
+				src="../images/1.4.4/comment_auto2.png">
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>preference</b></p>
 			</td>
-			<td valign="top">You can turn these on and off with the new preference.<br>
+			<td valign="top">You can turn these on and off with the new
+			preference.<br>
 			<p><img src="../images/1.4.4/comment_prefs.png">
 			</td>
 		</tr>
@@ -129,57 +180,59 @@ tr {
 			<td valign="top">
 			<p align="right"><b>color style</b></p>
 			</td>
-			<td valign="top">You can now set the color of "JavaDoc" style comments separately from normal comments<br>
-			<p><img src="../images/1.4.4/comment_color.png">
-			<img src="../images/1.4.4/comment_color_prefs.png">
+			<td valign="top">You can now set the color of "JavaDoc" style
+			comments separately from normal comments<br>
+			<p><img src="../images/1.4.4/comment_color.png"> <img
+				src="../images/1.4.4/comment_color_prefs.png">
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2"><a name="sourceformatting"></a>
-			<div style="font-size: 20px; font-weight: bold;">Source Formatting</div>
+			<div style="font-size: 20px; font-weight: bold;">Source
+			Formatting</div>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>ignored tags list</b></p>
 			</td>
-			<td valign="top">There is now an option for specifing which tags will be ignored when formatting
-			</td>
+			<td valign="top">There is now an option for specifing which tags
+			will be ignored when formatting</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>close tags list</b></p>
 			</td>
-			<td valign="top">There is now an option for specifing which tags will be closed when formatting the source (cfinclude, cfset, etc.).
-			</td>
+			<td valign="top">There is now an option for specifing which tags
+			will be closed when formatting the source (cfinclude, cfset, etc.).</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>cfscript formatting</b></p>
 			</td>
-			<td valign="top">There is now fledgeling support for cfscript formatting
-			</td>
+			<td valign="top">There is now fledgeling support for cfscript
+			formatting</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>JavaScript formatting</b></p>
 			</td>
-			<td valign="top">There is now fledgeling support for JavaScript formatting
-			</td>
+			<td valign="top">There is now fledgeling support for JavaScript
+			formatting</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>SQL formatting</b></p>
 			</td>
-			<td valign="top">There is now fledgeling support for SQL formatting
-			</td>
+			<td valign="top">There is now fledgeling support for SQL
+			formatting</td>
 		</tr>
 		<tr>
 			<td valign="top">
 			<p align="right"><b>CSS formatting</b></p>
 			</td>
-			<td valign="top">There is now fledgeling support for CSS formatting
-			</td>
+			<td valign="top">There is now fledgeling support for CSS
+			formatting</td>
 		</tr>
 		<tr>
 			<td colspan="2"><a name="changelog"></a>
@@ -190,49 +243,257 @@ tr {
 			<td valign="top">
 			<p align="right"><b>Tickets</b></p>
 			</td>
-			<td valign="top">
-			<em>Here is the list of tickets closed with this release.  Some of these were tickets that had been left open, although they had already been fixed.</em>
-			<!-- closedtickets --><table bgcolor="#eee" cellspacing="0" cellpadding="0"><tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>
-		<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/592">#592</a></td><td valign="top" style="padding:5px">javascript comments colorization too greedy</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/605">#605</a></td><td valign="top" style="padding:5px">hitting enter in blank document sends the editor into limbo</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/67">#67</a></td><td valign="top" style="padding:5px">Insert-tabs-as-spaces doesn't acknowledge tab-stops</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/68">#68</a></td><td valign="top" style="padding:5px">Content Assist should come up with a full list of CF Functions</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/132">#132</a></td><td valign="top" style="padding:5px">CFC Code complete</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/439">#439</a></td><td valign="top" style="padding:5px">Intellisense bug.</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/556">#556</a></td><td valign="top" style="padding:5px">syntax coloring for cfscript CFCs</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/601">#601</a></td><td valign="top" style="padding:5px">autocompletion : cannot disable function assist, and ordering is incorrect</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/154">#154</a></td><td valign="top" style="padding:5px">indent not preserved when replacing selected text with new line</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/160">#160</a></td><td valign="top" style="padding:5px">Comments not recognized by 'problems' in CFC</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/281">#281</a></td><td valign="top" style="padding:5px">Print Margin on Windows</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/324">#324</a></td><td valign="top" style="padding:5px">generation of tabs instead of spaces when moving selected lines to the right</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/337">#337</a></td><td valign="top" style="padding:5px">Empty editor when opening a file from the File Menu</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/420">#420</a></td><td valign="top" style="padding:5px">File parser and using cfhtmlhead to include Javascript files.</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/514">#514</a></td><td valign="top" style="padding:5px">color syntax oddness</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/550">#550</a></td><td valign="top" style="padding:5px">Editor rendering fails and messes up</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/568">#568</a></td><td valign="top" style="padding:5px">revamp file explorer</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/581">#581</a></td><td valign="top" style="padding:5px">Add option to disable auto indent</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/582">#582</a></td><td valign="top" style="padding:5px">files linked via RSE are unmodifiable</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/583">#583</a></td><td valign="top" style="padding:5px">newline within tag adds extra indent</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/586">#586</a></td><td valign="top" style="padding:5px">it would rock my world if we could have "smart" indenting when entering a newline between { and }</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/587">#587</a></td><td valign="top" style="padding:5px">I would love you forever if we could have cfscript comments auto-expand with each newline</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/588">#588</a></td><td valign="top" style="padding:5px">the editor needs to know that cfscript components are cfscript code blocks</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/589">#589</a></td><td valign="top" style="padding:5px">Mis-colored items with some tags/scripts</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/591">#591</a></td><td valign="top" style="padding:5px">disable auto-close when in comments</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/594">#594</a></td><td valign="top" style="padding:5px">comment mode continuation too eager.</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/595">#595</a></td><td valign="top" style="padding:5px">add auto-insert option for when there is only one proposal available</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/597">#597</a></td><td valign="top" style="padding:5px">C-Style comment continuation character indent off by one?</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/598">#598</a></td><td valign="top" style="padding:5px">add a selection to line comment action</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/599">#599</a></td><td valign="top" style="padding:5px">it would be totes awesome if the "selection to line comment" action was bound to M1+/</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/600">#600</a></td><td valign="top" style="padding:5px">disable auto-insert of quotes or apostrophes when in comment blocks</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/602">#602</a></td><td valign="top" style="padding:5px">formatting enhancements</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/603">#603</a></td><td valign="top" style="padding:5px">formatter needs "close tag" preference</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/604">#604</a></td><td valign="top" style="padding:5px">formatter needs "ignored tags" preference</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/606">#606</a></td><td valign="top" style="padding:5px">"spaces for tabs" ignored.</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/607">#607</a></td><td valign="top" style="padding:5px">Show hotkey combos for "Collapse All" and "Expand All" in context menu</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/609">#609</a></td><td valign="top" style="padding:5px">several context menu items do not display their key binding</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/573">#573</a></td><td valign="top" style="padding:5px">context sensitive comments in cfscript</td></tr>
-</table><!-- /closedtickets -->
-
+			<td valign="top"><em>Here is the list of tickets closed
+			with this release. Some of these were tickets that had been left
+			open, although they had already been fixed.</em>
+			<table bgcolor="#eee" cellspacing="0" cellpadding="0">
+				<tr>
+					<td colspan="2"
+						style="border-top: 0px; padding-top: 3px; padding-left: 8px;"><em>Closed
+					Tickets</em></td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/592">#592</a></td>
+					<td valign="top" style="padding: 5px">javascript comments
+					colorization too greedy</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/605">#605</a></td>
+					<td valign="top" style="padding: 5px">hitting enter in blank
+					document sends the editor into limbo</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/67">#67</a></td>
+					<td valign="top" style="padding: 5px">Insert-tabs-as-spaces
+					doesn't acknowledge tab-stops</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/68">#68</a></td>
+					<td valign="top" style="padding: 5px">Content Assist should
+					come up with a full list of CF Functions</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/132">#132</a></td>
+					<td valign="top" style="padding: 5px">CFC Code complete</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/439">#439</a></td>
+					<td valign="top" style="padding: 5px">Intellisense bug.</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/556">#556</a></td>
+					<td valign="top" style="padding: 5px">syntax coloring for
+					cfscript CFCs</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/601">#601</a></td>
+					<td valign="top" style="padding: 5px">autocompletion : cannot
+					disable function assist, and ordering is incorrect</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/154">#154</a></td>
+					<td valign="top" style="padding: 5px">indent not preserved
+					when replacing selected text with new line</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/160">#160</a></td>
+					<td valign="top" style="padding: 5px">Comments not recognized
+					by 'problems' in CFC</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/281">#281</a></td>
+					<td valign="top" style="padding: 5px">Print Margin on Windows</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/324">#324</a></td>
+					<td valign="top" style="padding: 5px">generation of tabs
+					instead of spaces when moving selected lines to the right</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/337">#337</a></td>
+					<td valign="top" style="padding: 5px">Empty editor when
+					opening a file from the File Menu</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/420">#420</a></td>
+					<td valign="top" style="padding: 5px">File parser and using
+					cfhtmlhead to include Javascript files.</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/514">#514</a></td>
+					<td valign="top" style="padding: 5px">color syntax oddness</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/550">#550</a></td>
+					<td valign="top" style="padding: 5px">Editor rendering fails
+					and messes up</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/568">#568</a></td>
+					<td valign="top" style="padding: 5px">revamp file explorer</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/581">#581</a></td>
+					<td valign="top" style="padding: 5px">Add option to disable
+					auto indent</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/582">#582</a></td>
+					<td valign="top" style="padding: 5px">files linked via RSE are
+					unmodifiable</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/583">#583</a></td>
+					<td valign="top" style="padding: 5px">newline within tag adds
+					extra indent</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/586">#586</a></td>
+					<td valign="top" style="padding: 5px">it would rock my world
+					if we could have "smart" indenting when entering a newline between
+					{ and }</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/587">#587</a></td>
+					<td valign="top" style="padding: 5px">I would love you forever
+					if we could have cfscript comments auto-expand with each newline</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/588">#588</a></td>
+					<td valign="top" style="padding: 5px">the editor needs to know
+					that cfscript components are cfscript code blocks</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/589">#589</a></td>
+					<td valign="top" style="padding: 5px">Mis-colored items with
+					some tags/scripts</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/591">#591</a></td>
+					<td valign="top" style="padding: 5px">disable auto-close when
+					in comments</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/594">#594</a></td>
+					<td valign="top" style="padding: 5px">comment mode
+					continuation too eager.</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/595">#595</a></td>
+					<td valign="top" style="padding: 5px">add auto-insert option
+					for when there is only one proposal available</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/597">#597</a></td>
+					<td valign="top" style="padding: 5px">C-Style comment
+					continuation character indent off by one?</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/598">#598</a></td>
+					<td valign="top" style="padding: 5px">add a selection to line
+					comment action</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/599">#599</a></td>
+					<td valign="top" style="padding: 5px">it would be totes
+					awesome if the "selection to line comment" action was bound to M1+/</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/600">#600</a></td>
+					<td valign="top" style="padding: 5px">disable auto-insert of
+					quotes or apostrophes when in comment blocks</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/602">#602</a></td>
+					<td valign="top" style="padding: 5px">formatting enhancements</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/603">#603</a></td>
+					<td valign="top" style="padding: 5px">formatter needs "close
+					tag" preference</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/604">#604</a></td>
+					<td valign="top" style="padding: 5px">formatter needs "ignored
+					tags" preference</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/606">#606</a></td>
+					<td valign="top" style="padding: 5px">"spaces for tabs"
+					ignored.</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/607">#607</a></td>
+					<td valign="top" style="padding: 5px">Show hotkey combos for
+					"Collapse All" and "Expand All" in context menu</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/609">#609</a></td>
+					<td valign="top" style="padding: 5px">several context menu
+					items do not display their key binding</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/610">#610</a></td>
+					<td valign="top" style="padding: 5px">automate the changelog
+					generation in the "what's new" page</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/611">#611</a></td>
+					<td valign="top" style="padding: 5px">add "bracket on new
+					line" format option to cfscript/javascript formatting</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/612">#612</a></td>
+					<td valign="top" style="padding: 5px">add preference for
+					syntax coloring cfscript-based cfcs</td>
+				</tr>
+				<tr>
+					<td valign="top" style="padding: 5px"><a
+						href="http://trac.cfeclipse.org/ticket/573">#573</a></td>
+					<td valign="top" style="padding: 5px">context sensitive
+					comments in cfscript</td>
+				</tr>
+			</table>
 			</td>
 		</tr>
 
