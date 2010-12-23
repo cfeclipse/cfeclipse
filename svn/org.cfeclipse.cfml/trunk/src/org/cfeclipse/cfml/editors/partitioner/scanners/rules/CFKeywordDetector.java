@@ -43,7 +43,8 @@ public class CFKeywordDetector implements IWordDetector {
 	{
 		//make sure its a valid char (keywords should start with
 		//a letter or underscore ... ) TODO this needs work :-/
-		return Character.isLetter(character) || (character == '_');
+		// added '.' so server.variables doesn't color server and variables: ticket #614
+		return Character.isLetter(character) || (character == '_') || (character == '.');
 	}
 	
 	/**
@@ -52,7 +53,7 @@ public class CFKeywordDetector implements IWordDetector {
 	public boolean isWordPart(char character) 
 	{
 		//make sure any following char is a valid one
-		return Character.isLetterOrDigit(character) || (character == '-') 
+		return Character.isLetterOrDigit(character) || (character == '-')
 			|| (character == '_');
 	} 
 }
