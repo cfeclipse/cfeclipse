@@ -1,6 +1,6 @@
 <project name="changelog" default="update-whatsnew" basedir=".">
 	
-	<property name="cfe.version" value="1.4.4" />
+	<property name="cfe.version" value="1.4.5" />
 
 	<property name="temp.dir" value="${basedir}/temp" />
 	<path id="build.lib.path">
@@ -24,7 +24,7 @@
 		-->
 		<replaceregexp file="${temp.dir}/log2.html" match='(?s).*?table class="listing tickets"&gt;.*?tbody&gt;(.*?)&lt;/tbody&gt;.*' replace="&lt;table&gt;\1&lt;/table&gt;" byline="false" />
 
-		<echo file="${temp.dir}/tickets.txt"><![CDATA[<table bgcolor="#eee" cellspacing="0" cellpadding="0"><tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>]]>
+		<echo file="${temp.dir}/tickets.txt"><![CDATA[<table cellspacing="0" cellpadding="0"><tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>]]>
 		</echo>
 		<xmltask source="${temp.dir}/log2.html" destbuffer="tickets">
 			<call path="/table/tr">
