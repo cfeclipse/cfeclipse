@@ -2,11 +2,12 @@
 <feature
       id="org.cfeclipse.cfml.feature"
       label="CFEclipse (including MXUnit and Frameworks)"
-      version="1.4.2.qualifier"
+      version="1.4.5.qualifier"
       provider-name="CFEclipse Project"
       plugin="org.cfeclipse.cfml">
 
-   <description url="http://www.cfeclipse.org">CFEclipse is a feature-rich CFML (ColdFusion Markup Language)
+   <description url="http://www.cfeclipse.org">
+      CFEclipse is a feature-rich CFML (ColdFusion Markup Language)
 plugin for Eclipse. This plugin adds syntax highlighting, code
 insight, CFML script (cfscript) editing, a content outline, code
 problem finding, and a lot more for CF developers. It also provides
@@ -22,7 +23,8 @@ view * Integrated web browser for quick previewing * Problem
 view, parses your code to find problems * And much more...
    </description>
 
-   <copyright url="http://www.cfeclipse.org/copyright">Copyright (c) 2004-2010 The CFEclipse Crew (http://www.cfeclipse.org/)
+   <copyright url="http://www.cfeclipse.org/copyright">
+      Copyright (c) 2004-2010 The CFEclipse Crew (http://www.cfeclipse.org/)
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 &amp;amp;quot;Software&amp;amp;quot;), to deal in the Software without
@@ -44,7 +46,8 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    </copyright>
 
-   <license url="http://www.jclark.com/xml/copying.txt">Copyright (c) 2004-2010 The CFEclipse Crew (http://www.cfeclipse.org/)
+   <license url="http://www.jclark.com/xml/copying.txt">
+      Copyright (c) 2004-2010 The CFEclipse Crew (http://www.cfeclipse.org/)
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 &amp;amp;quot;Software&amp;amp;quot;), to deal in the Software without
