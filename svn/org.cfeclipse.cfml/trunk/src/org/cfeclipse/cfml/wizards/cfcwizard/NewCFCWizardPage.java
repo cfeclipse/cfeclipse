@@ -24,12 +24,6 @@
  */
 package org.cfeclipse.cfml.wizards.cfcwizard;
 
-import java.util.Iterator;
-import java.util.TreeSet;
-
-import org.cfeclipse.cfml.dictionary.DictionaryManager;
-import org.cfeclipse.cfml.dictionary.Value;
-import org.cfeclipse.cfml.editors.CFSyntaxDictionary;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -41,17 +35,13 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -100,10 +90,23 @@ public class NewCFCWizardPage extends WizardPage {
 		container.setLayout(layout);
 		layout.numColumns = 3;
 		Label label = new Label(container, SWT.NULL);
+		label.setText("&Component Name:");
+		this.cfcName = new Text(container, SWT.BORDER | SWT.SINGLE);
+		GridData gd = new GridData(GridData.BEGINNING);
+		gd.widthHint = 150;
+		gd.horizontalSpan = 2;
+		this.cfcName.setLayoutData(gd);
+		this.cfcName.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				dialogChanged();
+			}
+		});
+
+		label = new Label(container, SWT.NULL);
 		label.setText("&Path:");
 
 		this.cfcPath = new Text(container, SWT.BORDER | SWT.SINGLE);
-		GridData gd = new GridData(GridData.BEGINNING);
+		gd = new GridData(GridData.BEGINNING);
 		gd.widthHint = 150;
 		this.cfcPath.setLayoutData(gd);
 		this.cfcPath.addModifyListener(new ModifyListener() {
@@ -141,19 +144,6 @@ public class NewCFCWizardPage extends WizardPage {
 			}
 		});
 				
-		label = new Label(container, SWT.NULL);
-		label.setText("&Component Name:");
-		this.cfcName = new Text(container, SWT.BORDER | SWT.SINGLE);
-		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
-		gd.horizontalSpan = 2;
-		this.cfcName.setLayoutData(gd);
-		this.cfcName.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				dialogChanged();
-			}
-		});
-		
 		label = new Label(container, SWT.NULL);
 		label.setText("&Hint:");
 		this.cfcHint = new Text(container, SWT.BORDER | SWT.SINGLE);
