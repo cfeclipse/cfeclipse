@@ -85,9 +85,10 @@ public class CfmlTagItem extends TagItem {
 			if(!currParam.getTriggers().isEmpty()  && currParam.isRequired(suggestedAttributes) == 3 && !itemAttributes.containsKey(currParam.getName())){
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
 					"The attribute \'" + currParam.getName() + "\' is required for the <" + this.itemName + "> tag." + attributesFound));
-			} else if (!currParam.getTriggers().isEmpty()  && currParam.isTriggered(suggestedAttributes) == 0 && itemAttributes.containsKey(currParam.getName())) {
-				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
-					"The attribute \'" + currParam.getName() + "\' is not valid for the <" + this.itemName + "> tag." + attributesFound));
+//			the logic here is funky for optional tags with triggers TODO: refactor
+//			} else if (!currParam.getTriggers().isEmpty()  && currParam.isTriggered(suggestedAttributes) == 0 && itemAttributes.containsKey(currParam.getName())) {
+//				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
+//					"The attribute \'" + currParam.getName() + "\' is not valid for the <" + this.itemName + "> tag." + attributesFound));
 			}
 		}
 		
