@@ -51,8 +51,10 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			stepThrough(docCommand);
 			return;
 		}
-
-		insertSingleChar(docCommand, quoteChar);
+		if (docCommand.text.length() == 1) {
+			// do no auto insert if this is a paste
+			insertSingleChar(docCommand, quoteChar);
+		}
 		return;
 	}
 
@@ -481,18 +483,22 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 					}
 				String curLineIndent = getIndentOfLine(document, indLine);
 				buf.append(curLineIndent);
-					buf.append(curLineIndent);
 				int cursorPos = command.offset;
 				// for when flush and no existing indent
-				if (document.getChar(command.offset - 1) == '{' && document.getChar(command.offset) == '}') {
+				if (document.getChar(command.offset - 1) == '{'
+						&& document.getChar(command.offset) == '}') {
+					buf.append(fIndentString);
 					if (curLineIndent.length() == 0) {
 						buf.append(fIndentString);
 						cursorPos = cursorPos + fIndentString.length();
+						buf.append(document.getLineDelimiter(line));
 					}
 					buf.append(document.getLineDelimiter(line));
 					buf.append(curLineIndent);
-					command.caretOffset = cursorPos + 1 + curLineIndent.length() * 2;
+					command.caretOffset = cursorPos + 1 + curLineIndent.length() + fIndentString.length();
 					command.shiftsCaret = false;
+				} else {
+					buf.append(fIndentString);
 				}
 			} else {
 				int start = document.getLineOffset(line);
@@ -531,7 +537,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 					// take the indent of the found line
 					StringBuffer replaceText= new StringBuffer(getIndentOfLine(document, indLine));
 					// add the rest of the current line including the just added close bracket
-					replaceText.append(document.get(whiteend, command.offset - whiteend));
+					replaceText.append(fIndentString);
 					replaceText.append(command.text);
 					// modify document command
 					command.length= command.offset - start;
