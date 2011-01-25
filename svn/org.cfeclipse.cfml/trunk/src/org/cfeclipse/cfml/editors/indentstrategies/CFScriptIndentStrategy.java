@@ -51,24 +51,22 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			stepThrough(docCommand);
 			return;
 		}
-		if (docCommand.text.length() == 1) {
-			// do no auto insert if this is a paste
-			insertSingleChar(docCommand, quoteChar);
-		}
+		insertSingleChar(docCommand, quoteChar);
 		return;
 	}
 
-	
-	
 	/**
 	 * Inserts one character and steps over the character (make sense?)
 	 * @param docCommand - the doc command to work upon
 	 * @param newChar - the character to insert
 	 */
 	private void insertSingleChar(DocumentCommand docCommand, char newChar) {
-		docCommand.text += newChar;
-		docCommand.caretOffset = docCommand.offset + 1;
-		docCommand.shiftsCaret = false;
+		// do no auto insert if this is a paste
+		if (docCommand.text.length() == 1) {
+			docCommand.text += newChar;
+			docCommand.caretOffset = docCommand.offset + 1;
+			docCommand.shiftsCaret = false;
+		}
 	}
 	
 	/* private void handleOpeningParen(char nextChar,char prevChar, char trigChar, 
