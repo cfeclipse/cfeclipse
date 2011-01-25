@@ -45,13 +45,15 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	 */
 	private void handlePotentialClosingChar(IDocument doc, DocumentCommand docCommand, char quoteChar)
 	throws BadLocationException {
-		char nextChar = doc.getChar(docCommand.offset);
-		if(nextChar == quoteChar)
-		{
-			stepThrough(docCommand);
-			return;
+		// do no auto insert if this is a paste
+		if (docCommand.text.length() == 1) {
+			char nextChar = doc.getChar(docCommand.offset);
+			if (nextChar == quoteChar) {
+				stepThrough(docCommand);
+				return;
+			}
+			insertSingleChar(docCommand, quoteChar);
 		}
-		insertSingleChar(docCommand, quoteChar);
 		return;
 	}
 
