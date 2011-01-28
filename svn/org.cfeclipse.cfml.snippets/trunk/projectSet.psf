@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.tigris.subversion.subclipse.core.svnnature">
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.snippets/trunk,org.cfeclipse.cfml.snippets"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/http:/svn.cfeclipse.org/org.cfeclipse.cfml.snippets.feature/trunk,org.cfeclipse.cfml.snippets.feature"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.snippets.update/trunk,org.cfeclipse.cfml.snippets.update"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.snipex.server,org.cfeclipse.snipex.server"/>
+</provider>
+</psf>
