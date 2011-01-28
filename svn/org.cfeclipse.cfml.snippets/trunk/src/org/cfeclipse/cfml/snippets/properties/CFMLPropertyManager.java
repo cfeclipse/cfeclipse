@@ -130,7 +130,11 @@ public class CFMLPropertyManager {
 	}
 	
 	public String getSnippetsPath() {
-		IResource[] currentResource = getSelectedResources(getSelection());
+		IStructuredSelection currentSelection =  getSelection();
+		if(currentSelection == null) {
+			return defaultSnippetsPath();
+		}
+		IResource[] currentResource = getSelectedResources(currentSelection);
 		if(currentResource.length == 0) {
 			return defaultSnippetsPath();
 		}
@@ -153,7 +157,7 @@ public class CFMLPropertyManager {
 	protected IStructuredSelection getSelection() {
 		IWorkbenchPartSite site = Workbench.getInstance().getActiveWorkbenchWindow()
 		.getActivePage().getActivePart().getSite();
-		if (site != null) {
+		if (site != null && site.getSelectionProvider() != null) {
 			final ISelection partSelection = site
 					.getSelectionProvider().getSelection();
 			if (partSelection != null) {
