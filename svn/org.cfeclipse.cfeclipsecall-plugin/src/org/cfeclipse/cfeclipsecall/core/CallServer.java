@@ -122,7 +122,7 @@ public class CallServer {
 			final ServerSocket server = new ServerSocket(CallServer.this.port);
 
 			private void startServing() {
-				CFECallPlugin.log( IStatus.INFO, "Started serving on port: " + this.thePort);
+				CFECallPlugin.log( IStatus.INFO, "CFEclipseCall started listening on: " + this.thePort);
 
 				while (this.thePort == CallServer.this.port) {
 					Socket client = null;
