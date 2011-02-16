@@ -1,0 +1,219 @@
+<html>
+<head>
+<title>org.cfeclipse.cfml.update-preview</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="CFEclipse is a plugin for Eclipse that provides an Integrated Development Environment and editor for the ColdFusion Programming Language" />
+<meta name="keywords" content="CFEclipse, ColdFusion, Eclipse, plugin, IDE, Editor, Adobe ColdFusion, Railo, BlueDragon, Integrated Development Environment" />
+<link href="/primarytemplatefiles/cfeclipse.css" rel="stylesheet" type="text/css" />
+<meta name="robots" content="index, follow, noarchive" />
+<meta name="googlebot" content="noarchive" />
+<link rel="shortcut icon" href="favicon.ico" >
+<style>@import url("web/site.css");</style>
+<script type="text/javascript">
+	var returnval = 0;
+	var stylesheet, xmlFile, cache, doc;
+	function init(){
+		// NSCP 7.1+ / Mozilla 1.4.1+ / Safari
+		// Use the standard DOM Level 2 technique, if it is supported
+		if (document.implementation && document.implementation.createDocument) {
+			xmlFile = document.implementation.createDocument("", "", null);
+			stylesheet = document.implementation.createDocument("", "", null);
+			if (xmlFile.load){
+				xmlFile.load("site.xml");
+				stylesheet.load("web/site.xsl");
+			} else {
+				alert("Document could not be loaded by browser.");
+			}
+			xmlFile.addEventListener("load", transform, false);
+			stylesheet.addEventListener("load", transform, false);
+		}
+		//IE 6.0+ solution
+		else if (window.ActiveXObject) {
+			xmlFile = new ActiveXObject("msxml2.DOMDocument.3.0");
+			xmlFile.async = false;
+			xmlFile.load("site.xml");
+			stylesheet = new ActiveXObject("msxml2.FreeThreadedDOMDocument.3.0");
+			stylesheet.async = false;
+			stylesheet.load("web/site.xsl");
+			cache = new ActiveXObject("msxml2.XSLTemplate.3.0");
+			cache.stylesheet = stylesheet;
+			transformData();
+		}
+	}
+	// separate transformation function for IE 6.0+
+	function transformData(){
+		var processor = cache.createProcessor();
+		processor.input = xmlFile;
+		processor.transform();
+		data.innerHTML = processor.output;
+	}
+	// separate transformation function for NSCP 7.1+ and Mozilla 1.4.1+ 
+	function transform(){
+		returnval+=1;
+		if (returnval==2){
+			var processor = new XSLTProcessor();
+			processor.importStylesheet(stylesheet); 
+			doc = processor.transformToDocument(xmlFile);
+			document.getElementById("data").innerHTML = doc.documentElement.innerHTML;
+		}
+	}
+</script>
+<link rel="icon" href="/default/images/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/default/images/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="/default/css/default.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/default/includes/themes/merced/css/typography.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/default/includes/themes/merced/css/site.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/default/css/print.css" type="text/css" media="print" />
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="/default/includes/themes/merced/css/ie.css" type="text/css" media="all" />
+<script src="/default/includes/themes/merced/js/DD_roundies.js"></script>
+<script>
+DD_roundies.addRule('.submit, .buttons input, dd.textField .submit', '10px');
+/* string argument can be any CSS selector */
+</script>
+<![endif]-->
+
+<!--[if lte IE 6]>
+<script src="/default/js/DD_belatedPNG.js"></script>
+<script>
+/* EXAMPLE */
+DD_belatedPNG.fix('dd.rating');
+/* string argument can be any CSS selector */
+</script>
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="CFEclipse - CFEclipse Features" href="http://cfeclipse.org/tasks/feed/?feedID=874E8C40-9C12-D44A-2C62221D0A4D02FF" />
+
+				
+
+
+
+<script type="text/javascript">
+var dtExample="11/10/2018";
+var dtCh="/";
+var dtFormat =[0,1,2];
+var dtLocale="en-US";
+</script>
+	
+<script type="text/javascript" src="/default/js/global.js"></script>
+<script type="text/javascript">
+var loginURL="index.cfm?display=login";
+var siteid="default"; 
+var siteID="default"; 
+var context=""; 
+var jslib="jquery";
+var assetpath="/default";
+var themepath="/default/includes/themes/merced";
+var htmlEditorType="";
+var rb="en";
+</script>
+		<script type="text/javascript">!window.jQuery && document.write(unescape('%3Cscript type="text/javascript" src="/default/js/jquery/jquery.js"%3E%3C/script%3E'))</script></head>
+</head>
+<body onload="init();" id="aboutcfeclipse" class="twoColSL">
+<div id="container" class="sysSupportCfeclipse">
+<div id="header" class="clearfix">
+
+<h1><a href="/default/">CFEclipse</a></h1>
+<ul class="navUtility">
+<li><a href="http://trac.cfeclipse.org" title="CFEclipse Wiki">Wiki</a></li>
+<li class="last"><a href="/index.cfm/contact-us/" title="Contact CFEclipse">Contact</a></li>
+</ul>
+<form action="" id="searchForm">
+<fieldset>
+<input type="text" name="Keywords" id="txtKeywords" class="text" value="Search" onfocus="this.value=(this.value=='Search') ? '' : this.value;" onblur="this.value=(this.value=='') ? 'Search' : this.value;" />
+<input type="hidden" name="display" value="search" />
+<input type="hidden" name="newSearch" value="true" />
+<input type="hidden" name="noCache" value="1" />
+<input type="submit" class="submit" value="Go" />
+</fieldset>
+</form>
+
+<ul id="navPrimary">
+<li class="first" id="navHome"><a href="/">Home</a></li>
+<li class="current" id="navAbout"><a href="/index.cfm/about-cfeclipse/" class="current">About</a>
+<ul>
+<li class="first current" id="navSupportCfeclipse"><a href="/index.cfm/about-cfeclipse/volunteer/" class="current">Support CFEclipse</a></li>
+<li class="last" id="navContributors"><a href="/index.cfm/about-cfeclipse/contributors/">Contributors</a></li>
+</ul></li>
+<li id="navFeatures"><a href="/index.cfm/features/">Features</a>
+<ul>
+<li class="first" id="navCodeFolding"><a href="/index.cfm/features/code-folding/">Code Folding</a></li>
+<li id="navFrameworksExplorer"><a href="/index.cfm/features/frameworks-explorer/">Frameworks Explorer</a></li>
+
+<li id="navIntegratedBrowser"><a href="/index.cfm/features/code-folding3/">Integrated Browser</a></li>
+<li id="navMethodsView"><a href="/index.cfm/features/code-folding1/">Methods View</a></li>
+<li id="navOutlineView"><a href="/index.cfm/features/code-folding2/">Outline View</a></li>
+<li id="navProblemView"><a href="/index.cfm/features/code-folding4/">Problem View</a></li>
+<li id="navSnippets"><a href="/index.cfm/features/snippets/">Snippets</a></li>
+<li class="last" id="navTasks"><a href="/index.cfm/features/tasks/">Tasks</a></li>
+</ul></li>
+<li id="navDownload"><a href="/index.cfm/download/">Download</a></li>
+<li id="navHelp"><a href="/index.cfm/help/">Help</a></li>
+
+<li id="navBlog"><a href="/index.cfm/blog/">Blog</a></li>
+<li class="last" id="navContactUs"><a href="/index.cfm/contact-us/">Contact Us</a></li>
+</ul>
+</div>
+<div id="content" class="clearfix">
+<div id="left" class="sidebar">
+<div id="navPeer">
+<ul class="navSecondary">
+<li class="first current"><a href="/index.cfm/about-cfeclipse/volunteer/" class="current">Support CFEclipse</a></li>
+<li class="last"><a href="/index.cfm/about-cfeclipse/contributors/">Contributors</a></li>
+</ul>
+</div><div id="navSub"></div>
+</div>
+
+<div id="primary" class="content">
+<ul id="crumbList">
+<li class="first">
+<a href="/">Home</a></li>
+<li class="">
+&nbsp;&raquo;&nbsp;
+<a href="/index.cfm/about-cfeclipse/">About</a></li>
+<li class="last">
+&nbsp;&raquo;&nbsp;<a href="/index.cfm/about-cfeclipse/volunteer/">Support CFEclipse</a>
+</li>
+</ul>
+
+<h2 class="pageTitle">CFEclipse Preview Build Update Site</h2>
+<p>
+This is the preview build update site for the CFEclipse Eclipse plugin.  You need to have Eclipse version 3.4 or above, 
+and add an update site using this URL: 
+<br/><br/>http://cfeclipse.org/update-preview/<br/><br/>
+to install it.
+</p>
+<p>For raw info on the latest changes, here's a couple links:</p>
+<p>
+<a href="http://trac.cfeclipse.org/timeline">Commits Timeline</a>
+</p>
+<p>
+<a href="http://trac.cfeclipse.org/report/10">Closed Tickets by Milestone</a>
+</p>
+
+<div id="data"><!-- this is where the transformed data goes --></div>
+</div>
+</div>
+
+<div id="footer">
+<div class="wrap clearfix">
+<ul class="navUtility">
+<li>powered by <a href="http://www.getmura.com/" title="Mura CMS">Mura CMS</a></li>
+<li>hosted at <a href="http://www.viviotech.net/" title="Vivio Technologies">Vivio Technologies</a></li>
+<li>running on <a href="http://www.getrailo.org/" title="Railo - A free open-source CFML engine">Railo</a></li>
+</ul>
+<p>&copy;2010 CFEclipse</p>
+</div>
+</div>
+
+</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker( "UA-87045-8" );
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>
