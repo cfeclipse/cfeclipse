@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -141,7 +140,7 @@ public class CFDocUtils {
 			String cleanAttributeValue = dirtyAttributeValue.trim();
 
 			//	remove starting " and ending "
-			if(cleanAttributeValue.startsWith("\"") && cleanAttributeValue.endsWith("\"")){
+			if (cleanAttributeValue.startsWith("\"") && cleanAttributeValue.endsWith("\"")) {
 				cleanAttributeValue = cleanAttributeValue.substring(1, cleanAttributeValue.length()-1);
 			}
 			
