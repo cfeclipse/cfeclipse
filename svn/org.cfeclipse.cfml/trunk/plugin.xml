@@ -1446,7 +1446,7 @@
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		
 		<!-- Insert Color -->
-		<key sequence="M1+M2+C"
+		<key sequence="M1+M2+C C"
 			commandId="org.cfeclipse.cfml.editors.actions.InsertColor"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
@@ -1482,10 +1482,17 @@
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		
 		<!-- Lower Case -->
-		<key sequence="M1+M2+L"
+		<key sequence="M1+M2+L L"
 			commandId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
+			contextId="org.cfeclipse.cfml.cfmledif itorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+
+		<!-- Upper Case -->
+		<key sequence="M1+M2+U"
+			commandId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+
 		
 		<!-- Matching bracket pair -->
 		<!-- 
@@ -1542,12 +1549,6 @@
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 				
-		<!-- Upper Case -->
-		<key sequence="M1+M2+U"
-			commandId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-
 		<!-- Wrap tag -->
 		<key sequence="M1+M2+W"
 			commandId="org.cfeclipse.cfml.editors.actions.WrapTag"
@@ -1584,7 +1585,7 @@
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 			
-		<key sequence="M1+= M1+="
+		<key sequence="M1+- M1+-"
 			commandId="org.eclipse.ui.edit.text.folding.collapse_all"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
