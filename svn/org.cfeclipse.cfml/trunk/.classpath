@@ -8,9 +8,8 @@
 	<classpathentry exported="true" kind="lib" path="lib/jaxen-jdom.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/saxpath.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jericho-html-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/cfml.dictionary.jar"/>
+	<classpathentry kind="lib" path="lib/cfml.dictionary.jar" sourcepath="/cfml.dictionary"/>
 	<classpathentry kind="lib" path="lib/cfml.formatting.jar"/>
-	<classpathentry kind="lib" path="lib/cfml.parsing.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-net-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-net-ftp-2.0.jar"/>
@@ -23,6 +22,8 @@
 	<classpathentry kind="lib" path="lib/jsch-0.1.42.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jsbeautify.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/js.jar"/>
+	<classpathentry kind="lib" path="lib/javolution.jar"/>
+	<classpathentry kind="lib" path="lib/cfml.parsing.jar" sourcepath="/cfml.parsing"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
