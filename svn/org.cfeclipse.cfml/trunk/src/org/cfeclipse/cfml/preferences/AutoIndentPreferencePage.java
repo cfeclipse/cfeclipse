@@ -55,7 +55,6 @@ public class AutoIndentPreferencePage
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_VARIABLES, "Suggest Variables", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_HTML, "Suggest HMTL Tags", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_TEMPLATES, "Suggest Templates", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(AutoIndentPreferenceConstants.P_SUGGEST_TEMPLATES, "Suggest Templates", getFieldEditorParent()));
 		
 		}
 		catch (Exception e){
