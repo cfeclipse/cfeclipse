@@ -1644,7 +1644,7 @@
             icon="icons/obj16/explorer.gif"
             category="org.cfeclipse.cfml"
             name="%view.name.8"
-            id="org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView"/>
+            id="org.cfeclipse.cfml.views.explorer.vfs.view.VFSView"/>
       <view
             class="org.cfeclipse.cfml.views.images.ImagesView"
             category="org.cfeclipse.cfml"
@@ -2196,7 +2196,7 @@
        <perspectiveExtension targetID = "org.cfeclipse.cfml.perspective.CFML">
      	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
      	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
-     	 <showInPart id= "org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView" />
+     	 <showInPart id= "org.cfeclipse.cfml.views.explorer.vfs.view.VFSView" />
      	 <showInPart id= "org.cfeclipse.cfml.views.snips.SnipTreeView" />
      	 <showInPart id= "org.cfeclipse.cfml.images.imagesView" />     	 
          <viewShortcut
@@ -2212,7 +2212,7 @@
                id="org.cfeclipse.cfml.images.imagesView">
          </viewShortcut>
          <viewShortcut
-               id="org.cfeclipse.cfml.views.explorer.vfs.viewer.VFSView">
+               id="org.cfeclipse.cfml.views.explorer.vfs.view.VFSView">
          </viewShortcut>
       </perspectiveExtension>
       <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
