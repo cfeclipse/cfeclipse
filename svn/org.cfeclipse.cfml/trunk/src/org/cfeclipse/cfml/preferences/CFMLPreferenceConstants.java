@@ -38,7 +38,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
     /** the default key to the dictionary to use in this project.
      * @see DictionaryManager 
      */
-    public static final String P_CFML_DICTIONARY_DEFAULT = "cfmx701";
+    public static final String P_CFML_DICTIONARY_DEFAULT = "ColdFusion9";
 
     /** the default key to the dictionary to use in this project.
      * @see DictionaryManager 
