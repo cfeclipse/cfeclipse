@@ -130,6 +130,7 @@ public class CFScriptScanner extends RuleBasedScanner {
 		rules.add(new SingleLineRule("<CFSCRIPT", ">", cftag));
 		rules.add(new SingleLineRule("</CFSCRIPT", ">", cftag));
 		
+		// rules.add(new HashExpressionRule(cfnumber));
 		rules.add(new MultiLineRule("\"", "\"", string));
 		rules.add(new MultiLineRule("'", "'", string));
 		
@@ -196,14 +197,23 @@ public class CFScriptScanner extends RuleBasedScanner {
 			String scope = (String)it.next().toString().toLowerCase();
 			words.addWord(scope, cfscope);
 		}
+		words.addWord("application", cfbuiltinscope);
+		words.addWord("arguments", cfbuiltinscope);
+		words.addWord("attributes", cfbuiltinscope);
+		words.addWord("caller", cfbuiltinscope);
+		words.addWord("client", cfbuiltinscope);
+		words.addWord("cookie", cfbuiltinscope);
+		words.addWord("flash", cfbuiltinscope);
+		words.addWord("form", cfbuiltinscope);
+		words.addWord("request", cfbuiltinscope);
+		words.addWord("server", cfbuiltinscope);
+		words.addWord("session", cfbuiltinscope);
 		words.addWord("this",cfbuiltinscope);
-		words.addWord("form",cfbuiltinscope);
-		words.addWord("url",cfbuiltinscope);
+		words.addWord("thistag", cfbuiltinscope);
+		words.addWord("thread", cfbuiltinscope);
+		words.addWord("url", cfbuiltinscope);
 		words.addWord("variables",cfbuiltinscope);
-		words.addWord("arguments",cfbuiltinscope);
-		words.addWord("session",cfbuiltinscope);
-		words.addWord("request",cfbuiltinscope);
-		words.addWord("application",cfbuiltinscope);
+
 		rules.add(words);
 
 		IRule[] rulearry = new IRule[rules.size()];
