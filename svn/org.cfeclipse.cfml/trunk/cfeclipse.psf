@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.tigris.subversion.subclipse.core.svnnature">
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfeclipsecall,org.cfeclipse.cfeclipsecall"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfeclipsecall-plugin,org.cfeclipse.cfeclipsecall-plugin"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml/trunk,org.cfeclipse.cfml"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.feature/trunk,org.cfeclipse.cfml.feature"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.snippets/trunk,org.cfeclipse.cfml.snippets"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/http:/svn.cfeclipse.org/org.cfeclipse.cfml.snippets.feature/trunk,org.cfeclipse.cfml.snippets.feature"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.snippets.update/trunk,org.cfeclipse.cfml.snippets.update"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.frameworks/trunk,org.cfeclipse.cfml.frameworks"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.update/trunk,org.cfeclipse.cfml.update"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.templates.fragment/,org.cfeclipse.cfml.templates.fragment"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.update-dev,org.cfeclipse.cfml.update-dev"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.update-nightly/trunk,org.cfeclipse.cfml.update-preview"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.snipex.server,org.cfeclipse.snipex.server"/>
+<project reference="0.9.3,http://mxunit.googlecode.com/svn/org.mxunit.eclipseplugin/trunk,org.mxunit.eclipseplugin"/>
+<project reference="0.9.3,http://mxunit.googlecode.com/svn/org.mxunit.eclipseplugin.feature,org.mxunit.eclipseplugin.feature"/>
+</provider>
+</psf>
