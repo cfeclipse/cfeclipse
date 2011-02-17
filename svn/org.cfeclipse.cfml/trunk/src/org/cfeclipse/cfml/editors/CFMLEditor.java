@@ -337,8 +337,12 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 			// Perform Trim Trailing Spaces
 			RTrimAction trimAction = new RTrimAction();
-			trimAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
-			trimAction.run(null);
+			try {
+				trimAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
+				trimAction.run(null);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		}
 
