@@ -73,13 +73,21 @@ public class CFMLPropertyManager {
 	
 	public String getCurrentDictionary(IFile file){
 		IPreferenceStore store = new ProjectPropertyStore(file.getProject());
-		return store.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY);
+		String dict = store.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY);
+		if (dict.length() < 1) {
+			dict = CFMLPreferenceConstants.P_CFML_DICTIONARY_DEFAULT;
+		}
+		return dict;
 	}
 	
 	public String getCurrentDictionary(IProject project)
 	{
 		IPreferenceStore store = new ProjectPropertyStore(project);
-		return store.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY);
+		String dict = store.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY);
+		if (dict.length() < 1) {
+			dict = CFMLPreferenceConstants.P_CFML_DICTIONARY_DEFAULT;
+		}
+		return dict;
 	}
 	
 	public String snippetsPath(IProject project) {

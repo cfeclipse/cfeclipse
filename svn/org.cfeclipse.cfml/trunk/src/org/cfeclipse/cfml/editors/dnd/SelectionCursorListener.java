@@ -24,12 +24,12 @@
  */
 package org.cfeclipse.cfml.editors.dnd;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.OccurrencesFinder;
@@ -38,6 +38,7 @@ import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -56,7 +57,6 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.text.link.LinkedModeModel;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IAnnotationModelExtension;
@@ -76,6 +76,7 @@ import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
@@ -393,7 +394,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
         if (!this.hovering) {
         	if(editor.isMarkingOccurrences()) {
         		ISelection selection = event.getSelection();
-        		if (event.getSelectionProvider() instanceof IPostSelectionProvider) {
+				if (event.getSelectionProvider() instanceof IPostSelectionProvider) {
         			if (selection instanceof ITextSelection) {
 						ITextSelection textSelection= (ITextSelection)selection;
 						try{
@@ -485,7 +486,10 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 
 		if ((e.stateMask & SWT.MOD1) != 0) {
 
-			CFMLParser fCfmlParser = new CFMLParser();
+			String location = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
+			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+			String dict = propertyManager.getCurrentDictionary(((IFileEditorInput) editor.getEditorInput()).getFile().getProject());
+			CFMLParser fCfmlParser = new CFMLParser(location, dict);
 			ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
 			CFMLSource cfmlSource = fCfmlParser.addCFMLSource(cfd.getCFDocument().getFilename(),cfd.get());
 			ParserTag tag = cfmlSource.getEnclosingTag(startpos);
@@ -940,7 +944,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		}
 		
 		List positions= null;
-		
+
 		OccurrencesFinder finder= new OccurrencesFinder(editor, antModel, document, selection.getOffset());
 		positions= finder.perform();
 		

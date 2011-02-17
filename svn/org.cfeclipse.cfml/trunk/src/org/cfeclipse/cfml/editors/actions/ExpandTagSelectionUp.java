@@ -24,16 +24,20 @@
  */
 package org.cfeclipse.cfml.editors.actions;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+
 import cfml.parsing.CFMLParser;
 import cfml.parsing.CFMLSource;
 import cfml.parsing.ParserTag;
@@ -87,7 +91,10 @@ public class ExpandTagSelectionUp implements IWorkbenchWindowActionDelegate, IEd
 	}
 
 	public void expandTagSelection(IDocument doc, ITextSelection sel) {
-		CFMLParser fCfmlParser = new CFMLParser();
+		String location = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
+		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+		String dict = propertyManager.getCurrentDictionary(((IFileEditorInput) editor.getEditorInput()).getFile().getProject());
+		CFMLParser fCfmlParser = new CFMLParser(location, dict);
 		ICFDocument cfd = (ICFDocument) doc;
 		CFMLSource cfmlSource = fCfmlParser.addCFMLSource(cfd.getCFDocument().getFilename(), cfd.get());
 		int offset = sel.getOffset();
