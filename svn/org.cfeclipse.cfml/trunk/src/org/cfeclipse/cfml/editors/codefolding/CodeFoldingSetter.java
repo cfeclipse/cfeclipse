@@ -622,7 +622,9 @@ public class CodeFoldingSetter {
 			}
 			if (positions < 300) {
 				try {
-					resource.setPersistentProperty(foldStateQN, sb.toString());
+					if (resource.isAccessible()) {
+						resource.setPersistentProperty(foldStateQN, sb.toString());
+					}
 				} catch (CoreException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
