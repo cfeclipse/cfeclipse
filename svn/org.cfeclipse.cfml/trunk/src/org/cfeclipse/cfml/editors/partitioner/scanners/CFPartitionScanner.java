@@ -181,7 +181,6 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 		IToken htmComment 	= new Token(HTM_COMMENT);
 		IToken taglibtag		= new Token(TAGLIB_TAG);
 		IToken unktag		= new Token(UNK_TAG);
-		IToken cfScript = new Token(CF_SCRIPT);
 		
 		List rules = new ArrayList();
 		
@@ -359,20 +358,18 @@ public class CFPartitionScanner extends RuleBasedPartitionScanner {
 
 							
 						int c = -1;
-						/*
-						 * Short-circuit the rule check if the next character
-						 * isn't a '<'. This assumes that every rule has '<'
-						 * as the first character of the start sequence. Currently
-						 * this is the case, so it should be ok.
-						 * 
-						 */
 						while(true) {
 						    c = read();
-						    if (c == EOF) {
+						if (c == EOF || c == 65535) {
 						        return Token.EOF;
 						    }
 						if (!fParseCFScriptCFCs) {
-							/* shortcircuit if only parsing tags */
+							/*
+							 * Short-circuit the rule check if the next character
+							 * isn't a '<'. This assumes that every rule has '<'
+							 * as the first character of the start sequence. 
+							 * 
+							 */
 							if (c != '<') {
 								return this.fDefaultReturnToken;
 							}
