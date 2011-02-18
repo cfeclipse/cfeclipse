@@ -25,6 +25,7 @@
 
 package org.cfeclipse.cfml.parser;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,8 +50,6 @@ import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagProperty;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagQueryParam;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagSet;
 import org.cfeclipse.cfml.parser.cfscript.Node;
-import org.cfeclipse.cfml.parser.cfscript.ParseException;
-import org.cfeclipse.cfml.parser.cfscript.SPLParser;
 import org.cfeclipse.cfml.parser.cfscript.SimpleNode;
 import org.cfeclipse.cfml.parser.docitems.AttributeItem;
 import org.cfeclipse.cfml.parser.docitems.CfmlCustomTag;
@@ -58,14 +57,20 @@ import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
+import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.texteditor.MarkerUtilities;
+
+import cfml.parsing.CFMLParser;
+import cfml.parsing.cfscript.ParseException;
+import cfml.parsing.cfscript.script.CFScriptStatement;
 
 
 /*
@@ -265,6 +270,15 @@ public class CFParser {
 	//	this.data2Parse = data.toLowerCase();
 		this.data2Parse = data;
 	}
+
+	private void initOrgCFParser() {
+		if (parser == null) {
+			String location = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
+			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+			String dict = propertyManager.getCurrentDictionary(res.getProject());
+			parser = new CFMLParser(location, dict);
+		}
+	}
 	
 	/**
 	 * <code>CFParser</code> - Constructor.
@@ -277,12 +291,14 @@ public class CFParser {
 		parseDoc = doc2Parse;
 		this.setData2Parse(this.parseDoc.get());
 		res = newRes;
+		initOrgCFParser();
 	}
 
 	public CFParser(String inData, IResource dataRes)
 	{
 		this.setData2Parse(inData);
 		res = dataRes;
+		initOrgCFParser();
 	}
 	
 	/**
@@ -602,35 +618,23 @@ public class CFParser {
 		return true;
 	}
 	
-	static private SPLParser parser = null;
-	static {
-		parser = new SPLParser(new StringReader(""));
-	}
+	private CFMLParser parser;
 
 	/**
 	 * <code>addScriptItems</code> - handles a cfscript document items (at the moment it does nothing)
 	 */
 
-	private void addScriptItems(CFNodeList childs, DocItem parent, ParseItemMatch match, Stack matchStack) {
-		for(int childIndex = 0; childIndex < childs.size(); childIndex++){
-			SimpleNode child = (SimpleNode) childs.get(childIndex);
-			addDocItemToTree(match, matchStack, child);
-//			if(child.aNodeToken!=null) {
-//				DocItem newComment = new ScriptItem(
-//						child.aNodeToken.beginLine,
-//						child.aNodeToken.beginColumn,
-//						child.aNodeToken.endColumn,
-//						child.aNodeToken.image
-//				);
-//				newComment.setItemData(child.aNodeToken.image);
-//				newComment.setParent(parent);
-//				addDocItemToTree(match, matchStack, newComment);
-				
-//			}
-			if(child.children != null) {				
-				//addScriptItems(child.getChildNodes(), child, match, matchStack);		
-			}		
+	private void addScriptItems(CFScriptStatement rootElement, ParseItemMatch match, Stack matchStack) {
+		if(rootElement.getClass().getName() == "wee") {
 		}
+			
+//		for(int childIndex = 0; childIndex < childs.size(); childIndex++){
+//			SimpleNode child = (SimpleNode) childs.get(childIndex);
+//			addDocItemToTree(match, matchStack, child);
+//			if(child.children != null) {				
+//				//addScriptItems(child.getChildNodes(), child, match, matchStack);		
+//			}		
+//		}
 	}
 
 	/**
@@ -682,26 +686,35 @@ public class CFParser {
 		//SPIKE: Added the toLowerCase() bit.
 		mainData = mainData.toLowerCase().substring("<cfscript>".length());
 		StringReader tempRdr =new StringReader(mainData);
-		SimpleNode rootElement = null;
-		
+		CFScriptStatement rootElement = null;
+
 		if(!this.parseCFScript) {
 			return;
 		}
-		
-		if(parser == null) {
-			parser = new SPLParser(tempRdr);
-		}
-		else
-		{
-		    SPLParser.resetExceptions();
-		    SPLParser.ReInit(tempRdr);
-		    //this.parser.ReInit(tempRdr);
+		if (parser == null) {
+			initOrgCFParser();
 		}
 		
 		try {
-			SPLParser.CompilationUnit();
-		    //this.parser.CompilationUnit();
-			rootElement = ((SimpleNode)parser.getDocumentRoot());
+			rootElement = parser.parseScript(mainData);
+			if (parser.getMessages().size() > 0) {
+				Iterator i = parser.getMessages().iterator();
+				while (i.hasNext()) {
+					cfml.parsing.ParseError parseErr = (cfml.parsing.ParseError) i.next();
+					int lineNo = getLineNumber(match.getStartPos()) + parseErr.getLineNumber();
+					int startOffset = match.getStartPos() + parseErr.getDocStartOffset();
+					try {
+						startOffset = parseDoc.getLineOffset(lineNo - 1);
+					} catch (BadLocationException e) {
+					}
+					int docEnd = startOffset + parseErr.getDocEndOffset();
+					parserState.addMessage(new ParseError(lineNo, startOffset, docEnd, " ", parseErr.getMessage()));
+
+				}
+			} else {
+				addScriptItems(rootElement, match, matchStack);
+			}
+/*			rootElement = (SimpleNode) parser.parseScript(mainData);
 			pruneEmptyNodes(rootElement, match, matchStack);
 			//
 			if(rootElement != null) {
@@ -719,41 +732,23 @@ public class CFParser {
 				//rootElement.setParent(rootElement.getParent().getParent());				
 				//addDocItemToTree(match, matchStack, rootElement);
 			}
-						
-		}  catch(ParseException ex) {
-			//
-			// A ParseException has a nice error message for us... unfortunately the message returned
-			// contains a reference to the line number of the error from _the start of the CFScript block_
-			// which is therefore confusing to the user. 
-			// So we format our own message here. First we tell the user what the parser was processing
-			// when it encountered the error, then it goes through the tokens it was expecting.
-			// Finally we create a temp TagMatch that we ajust it's document positions so that the line
-			// number isn't the start of the CFScript block but the actual line of the error.
-			
-			String errMsg = "Encountered \"" + ex.currentToken.next.image + "\". Was expecting one of: ";
-			for(int i = 0; i < ex.expectedTokenSequences.length; i++) {
-				String expToken =ex.tokenImage[ex.expectedTokenSequences[i][0]]; 
-				errMsg+= expToken.substring(1, expToken.length()-1);
-				if(i > 0) errMsg += ",";
-			}
-			ParseItemMatch tempMatch = match;
-			tempMatch.lineNumber+= ex.currentToken.beginLine-1;
-			tempMatch.startPos += ex.currentToken.beginColumn;
-			tempMatch.endPos += ex.currentToken.endColumn;
-			try {
-				userMessage(matchStack.size(), "handleCFScriptBlock()", errMsg, CFParser.USRMSG_ERROR, tempMatch);
-			} catch(Exception innerEx) {
-				System.err.println("CFParser::handleCFScriptBlock() - Caught exception whilst creating markers!");
-				innerEx.printStackTrace();
-			}
-		} catch(Throwable lastDitch) {
-			userMessage(matchStack.size(), "handleCFScriptBlock()", "Error during parse: " + lastDitch.getMessage(), CFParser.USRMSG_ERROR, match);
-			lastDitch.printStackTrace();
+*/						
+		} catch (ParseException e) {
+			parserState.addMessage(new ParseError(
+					getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
+					e.getMessage()
+				));
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+			
 		return;
 		
 	}
 	
+
 	/**
 	 * <code>handleHTMLTag</code> - Handles an HTML tag (does nothing at the moment.)<br/>
 	 * <b>NB:</b> HTML files will bugger up the parser as handleClosing doesn't handle closing HTML tags!
