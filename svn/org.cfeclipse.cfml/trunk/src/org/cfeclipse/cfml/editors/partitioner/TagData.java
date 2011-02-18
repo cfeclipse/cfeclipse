@@ -166,9 +166,8 @@ public class TagData {
      */
     private void parseData() {
         try {
-        		//TODO: this seems to gack on the <a tag
-            if (fData.length() < 3) {
-                throw new Exception("Data length less than 3 characters for tag: " + fData);
+			if (fData.length() < 2) {
+				throw new Exception("Data length less than 2 characters for tag: " + fData);
             }
             if (fData.charAt(1) == '/') {
                 isCloser = true;
