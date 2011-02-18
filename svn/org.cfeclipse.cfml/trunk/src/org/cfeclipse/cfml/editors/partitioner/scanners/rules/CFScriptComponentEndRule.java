@@ -126,6 +126,12 @@ public class CFScriptComponentEndRule implements IPredicateRule {
 				}
 				scanner.unread();
 				scanner.unread();
+				if (scanner.getColumn() == -1) {
+					for (int j = i; j >= 0; j--) {
+						scanner.read();
+					}
+					return Token.UNDEFINED;
+				}
 				nextC = scanner.read();
 				i++;
 			}
