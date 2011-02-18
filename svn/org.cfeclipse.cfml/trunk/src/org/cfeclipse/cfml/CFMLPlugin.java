@@ -51,7 +51,12 @@ import org.cfeclipse.cfml.templates.template.CFTemplateContextType;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.preference.PreferenceStore;
 import org.eclipse.jface.text.templates.ContextTypeRegistry;
 import org.eclipse.jface.text.templates.persistence.TemplateStore;
@@ -169,9 +174,17 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			// load all the syntax dictionaries
 			DictionaryManager.initDictionaries();
 
-			// startup the image registry
-			StartupHandler = new StartupHandler(); 
-			StartupHandler.earlyStartup();
+			// startup the image hovers lazily so plugin starts fast
+			Job job = new WorkspaceJob("Initializing Image Hovers") {
+				public IStatus runInWorkspace(IProgressMonitor monitor) {
+					StartupHandler = new StartupHandler();
+					StartupHandler.earlyStartup();
+					return Status.OK_STATUS;
+				}
+			};
+			job.setPriority(Job.SHORT);
+			job.schedule();
+			// startup the image registry in job so doesn't slow down init
 			CFPluginImages.initCFPluginImages();
 
 			setupCAM();
