@@ -27,8 +27,6 @@ package org.cfeclipse.cfml.perspective;
 import org.cfeclipse.cfml.views.browser.BrowserView;
 import org.cfeclipse.cfml.views.cfcmethods.CFCMethodsView;
 import org.cfeclipse.cfml.views.dictionary.DictionaryView;
-import org.cfeclipse.cfml.views.explorer.FileExplorerView;
-import org.cfeclipse.cfml.views.explorer.ftp.FtpLogView;
 import org.cfeclipse.cfml.views.explorer.vfs.view.VFSView;
 import org.cfeclipse.cfml.views.images.ImagesView;
 import org.cfeclipse.cfml.views.packageview.PackageView;
@@ -67,7 +65,8 @@ public class CFPerspective implements IPerspectiveFactory {
 		left.addView(IPageLayout.ID_RES_NAV);
 		left.addView(SnipTreeView.ID_SNIPVIEWTREE);
 		left.addView(VFSView.ID_FILEEXPLORER);
-		left.addView(FileExplorerView.ID_FILE_EXPLORER);
+		// old file explorer we can keep for a bit but hide it
+		// left.addView(FileExplorerView.ID_FILE_EXPLORER);
 		
 		//views to the bottom
 		IFolderLayout bottom = layout.createFolder(
@@ -96,7 +95,8 @@ public class CFPerspective implements IPerspectiveFactory {
 		layout.addShowViewShortcut(SnipTreeView.ID_SNIPVIEWTREE);
 		layout.addShowViewShortcut(VFSView.ID_FILEEXPLORER);
 		layout.addShowViewShortcut(CFCMethodsView.ID_CFCMETHODVIEW);
-		layout.addShowViewShortcut(FileExplorerView.ID_FILE_EXPLORER);
+		// old file explorer we can keep for a bit but hide it
+		// layout.addShowViewShortcut(FileExplorerView.ID_FILE_EXPLORER);
 		layout.addShowViewShortcut(DictionaryView.ID_DICTIONARY);
 		layout.addShowViewShortcut(BrowserView.ID_BROWSER);
 		layout.addShowViewShortcut(PackageView.ID_COMPONENTEXPLORER);
