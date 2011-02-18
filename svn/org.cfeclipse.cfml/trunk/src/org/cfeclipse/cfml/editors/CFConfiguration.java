@@ -282,7 +282,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 			)
 		);
 	
-		TextScanner scanner = new TextScanner(colorManager);
+		TextScanner scanner = new TextScanner(colorManager, preferenceManager);
 		scanner.setDefaultReturnToken(textToken);
 		return scanner;
 	}
