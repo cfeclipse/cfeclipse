@@ -5,3 +5,11 @@ requires.1.range = [1.0.0, 9.9.9)
 requires.2.namespace = org.eclipse.equinox.p2.iu
 requires.2.name = org.mxunit.eclipseplugin.feature.feature.group
 requires.2.range = [1.0.0, 9.9.9)
+
+requires.3.namespace = org.eclipse.equinox.p2.iu
+requires.3.name = org.cfeclipse.cfml.snippets
+requires.3.range = [1.0.0, 9.9.9)
+
+requires.4.namespace = org.eclipse.equinox.p2.iu
+requires.4.name = org.cfeclipse.cfml.snippets.feature.feature.group
+requires.4.range = [1.0.0, 9.9.9)
