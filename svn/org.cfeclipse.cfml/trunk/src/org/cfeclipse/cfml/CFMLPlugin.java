@@ -101,7 +101,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	private static final String SHOW_WELCOME = "__showWelcome";
 	private TemplateStore fStore;
 	private ContributionContextTypeRegistry fRegistry;
-	private StartupHandler StartupHandler;
 
 	/**
 	 * Returns the global Content Assist Manager.
@@ -177,8 +176,8 @@ public class CFMLPlugin extends AbstractUIPlugin {
 			// startup the image hovers lazily so plugin starts fast
 			Job job = new WorkspaceJob("Initializing Image Hovers") {
 				public IStatus runInWorkspace(IProgressMonitor monitor) {
-					StartupHandler = new StartupHandler();
-					StartupHandler.earlyStartup();
+					StartupHandler startupHandler = new StartupHandler();
+					startupHandler.earlyStartup();
 					if (monitor.isCanceled()) return Status.CANCEL_STATUS;
 					return Status.OK_STATUS;
 				}
