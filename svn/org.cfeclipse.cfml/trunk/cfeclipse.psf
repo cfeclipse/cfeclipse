@@ -16,5 +16,9 @@
 <project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.snipex.server,org.cfeclipse.snipex.server"/>
 <project reference="0.9.3,http://mxunit.googlecode.com/svn/org.mxunit.eclipseplugin/trunk,org.mxunit.eclipseplugin"/>
 <project reference="0.9.3,http://mxunit.googlecode.com/svn/org.mxunit.eclipseplugin.feature,org.mxunit.eclipseplugin.feature"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.docsharesupport34/trunk,org.cfeclipse.cfml.docsharesupport34"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.docsharesupport34.feature/trunk,org.cfeclipse.cfml.docsharesupport34.feature"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.docsharesupport35/trunk,org.cfeclipse.cfml.docsharesupport35"/>
+<project reference="0.9.3,http://svn.cfeclipse.org/org.cfeclipse.cfml.docsharesupport35.feature/trunk,org.cfeclipse.cfml.docsharesupport35.feature"/>
 </provider>
 </psf>
