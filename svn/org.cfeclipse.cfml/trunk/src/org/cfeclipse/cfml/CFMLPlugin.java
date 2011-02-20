@@ -179,11 +179,11 @@ public class CFMLPlugin extends AbstractUIPlugin {
 				public IStatus runInWorkspace(IProgressMonitor monitor) {
 					StartupHandler = new StartupHandler();
 					StartupHandler.earlyStartup();
+					if (monitor.isCanceled()) return Status.CANCEL_STATUS;
 					return Status.OK_STATUS;
 				}
 			};
-			job.setPriority(Job.SHORT);
-			job.schedule();
+			job.schedule(3000);
 			// startup the image registry in job so doesn't slow down init
 			CFPluginImages.initCFPluginImages();
 
