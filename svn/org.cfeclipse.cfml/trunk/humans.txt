@@ -6,11 +6,14 @@
 	Lead Developer: Den Valliant
 	Developer: Mark Drew
 	
-	Developers: Spike Milligan
-	Developers: Rob Rohan
-	Developers: Simeon Bateman
-	
+	Developer: Spike Milligan
+	Developer: Rob Rohan
+	Developer: Simeon Bateman
+	Developer: Marc Esher
+	Developer: Richard Blackburn
 
 
 
 /* SITE */
+
+	Web Master: Jim Priest
