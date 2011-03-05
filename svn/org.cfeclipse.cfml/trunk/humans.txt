@@ -4,13 +4,21 @@
 */
 /* TEAM */
 	Lead Developer: Den Valliant
-	Developer: Mark Drew
+	Twitter: 	@denstar
+	
+	Developer: 	Mark Drew
+	Twitter:	@markdrew
 	
 	Developer: Spike Milligan
+	
 	Developer: Rob Rohan
+	
 	Developer: Simeon Bateman
+	
 	Developer: Marc Esher
+	
 	Developer: Richard Blackburn
+	
 
 
 
