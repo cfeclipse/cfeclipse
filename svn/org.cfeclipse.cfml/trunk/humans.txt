@@ -1,0 +1,16 @@
+/* This file describes the contributors to the project, it is not complete by any means but we shall add all the team members that 
+	have contributed in time. 
+	
+*/
+/* TEAM */
+	Lead Developer: Den Valliant
+	Developer: Mark Drew
+	
+	Developers: Spike Milligan
+	Developers: Rob Rohan
+	Developers: Simeon Bateman
+	
+
+
+
+/* SITE */
