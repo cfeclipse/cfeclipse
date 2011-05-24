@@ -35,15 +35,18 @@ import java.util.Set;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.preferences.BrowserPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
+import org.cfeclipse.cfml.views.snips.SnipVarParser;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.ui.IFileEditorInput;
 
 /**
  * This is a helper class to provide various useful methods that related to Eclipse
@@ -317,17 +320,46 @@ public class ResourceUtils {
     //Sets and gets persistent Properties
     
     public static String getURL(IResource resource){
+    	String baseConfigURL = findURLSettingForResource(resource);
+    	
+    	//If there is config URL AND there is a snippet there
+    	if(baseConfigURL.indexOf("$${") > 0){
+    		String newURL = SnipVarParser.parse(baseConfigURL, (IFile)resource, null);
+    		return newURL;
+    	}
+    	
+    	//Otherwise let's just work as normal 
     	
     	String string = findRootURL(resource, "");
     	if(string.matches("(?i).*/Test.*.cfc|(?i).*Test.cfc")){
     		string += CFMLPlugin.getDefault().getPluginPreferences().getString(BrowserPreferenceConstants.P_TESTCASE_QUERYSTRING);
     	}
+
     	return string;
     	
     }
     
     //TODO: Make this figure out the path properly!!!
+    /**
+     * This function simply returns the URL setting (if any) for a resource. should return null if no defined mapping is there. 
+     */
+    private static String findURLSettingForResource(IResource resource){
+    	System.out.println("Checking " + resource.getName());
+    	//Need to know when to stop
+    	
+    	
+    	//Let's make this simple. 
+    	if(hasProperty(resource, "", CFMLPreferenceConstants.P_PROJECT_URL)){
+			return getPersistentProperty(resource, "", CFMLPreferenceConstants.P_PROJECT_URL);
+		}
+		else {//Try and get the parent property
+			if(resource.getParent() instanceof IWorkspaceRoot){
+				return null;
+			}
+			return findURLSettingForResource(resource.getParent());
+		}
     
+    }
     
     private static String findRootURL(IResource resource, String offset){
     	if(resource instanceof IProject){
@@ -339,7 +371,7 @@ public class ResourceUtils {
     		}
     		return projectURL + offset;
     	}
-    	else {
+    	else { //This is if it is a folder or file
     		if(hasProperty(resource, "", CFMLPreferenceConstants.P_PROJECT_URL)){
     			 String folderURL = getPersistentProperty(resource, "", CFMLPreferenceConstants.P_PROJECT_URL);
     			return folderURL + offset;

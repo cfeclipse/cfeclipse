@@ -50,7 +50,7 @@ public class SnipVarParser {
 		String currentFolder = "";
 		String currentPath = "";
 		String currentProjectPath = "";
-		
+		String currentFileNoExt = "";
 		
 		/* not sure why this next block is needed, but it causes the snippet 
 		 * insert to fail on QA. Hope I am not misunderstanding something...
@@ -58,6 +58,7 @@ public class SnipVarParser {
 		 if (activeFile != null) {
 		 	try {
 			 currentFile = activeFile.getName();
+			 currentFileNoExt = activeFile.getName().substring(0, activeFile.getName().length() - (activeFile.getFileExtension().length() + 1));
 			 currentPath = activeFile.getRawLocation().toFile().getAbsolutePath();
 			 File fullPath = new File(currentPath);
 			 currentFolder = fullPath.getParent();
@@ -68,6 +69,14 @@ public class SnipVarParser {
 			 }
 			 // Get your laughing gear round this little lot :)
 			 currentFile = currentFile.replaceAll("\\\\","\\\\\\\\");
+			 String[] filesplit = currentFile.split(".");
+			 
+			 for (int i = 0; i < filesplit.length; i++) {
+				System.out.println(filesplit[i]);
+			}
+			 
+			 
+			 
 			 currentPath = currentPath.replaceAll("\\\\","\\\\\\\\");
 			 currentFolder = currentFolder.replaceAll("\\\\","\\\\\\\\");
 			 currentProjectPath = currentProjectPath.replaceAll("\\\\","\\\\\\\\");
@@ -93,7 +102,8 @@ public class SnipVarParser {
 		 * $${DAYOFWEEKNUMBER} - Day of week (the week starts on Sunday)
 		 * $${DATETIME24} - DateTime24 - a 24 hour clock version of datetime.
 		 * $${YEAR} - Current year.
-		 * $${YEAR2DIGIT} - Current two digit year. 
+		 * $${YEAR2DIGIT} - Current two digit year.
+		 * $${CURRENTFILENOEXT} - The name of the current file with no extension
 		 */
 		
 		Calendar calendar = new GregorianCalendar();
@@ -124,7 +134,7 @@ public class SnipVarParser {
 		newStr = newStr.replaceAll("\\$\\$\\{DAYOFWEEK\\}",formattedDayOfWeek);
 		
 		newStr = newStr.replaceAll("\\$\\$\\{CURRENTFILE\\}",currentFile);
-		
+		newStr = newStr.replaceAll("\\$\\$\\{CURRENTFILENOEXT\\}",currentFileNoExt);
 		newStr = newStr.replaceAll("\\$\\$\\{CURRENTFOLDER\\}",currentFolder);
 		
 		newStr = newStr.replaceAll("\\$\\$\\{CURRENTPATH\\}",currentPath);
