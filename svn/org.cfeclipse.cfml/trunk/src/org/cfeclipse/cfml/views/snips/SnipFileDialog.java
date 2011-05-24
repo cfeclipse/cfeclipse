@@ -134,7 +134,7 @@ public class SnipFileDialog extends Dialog {
 			label.setText(snippetNameLabel);
 			GridData data = new GridData(
 				GridData.GRAB_HORIZONTAL |
-				GridData.GRAB_VERTICAL |
+			//	GridData.GRAB_VERTICAL |
 				GridData.HORIZONTAL_ALIGN_FILL |
 				GridData.VERTICAL_ALIGN_CENTER);
 			data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
@@ -164,7 +164,7 @@ public class SnipFileDialog extends Dialog {
 			label.setText(snippetKeyComboLabel);
 			data = new GridData(
 				GridData.GRAB_HORIZONTAL |
-				GridData.GRAB_VERTICAL |
+			//	GridData.GRAB_VERTICAL |
 				GridData.HORIZONTAL_ALIGN_FILL |
 				GridData.VERTICAL_ALIGN_CENTER);
 			data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
@@ -196,7 +196,7 @@ public class SnipFileDialog extends Dialog {
 			label.setText(snippetDescriptionLabel);
 			data = new GridData(
 				GridData.GRAB_HORIZONTAL |
-				GridData.GRAB_VERTICAL |
+			//	GridData.GRAB_VERTICAL |
 				GridData.HORIZONTAL_ALIGN_FILL |
 				GridData.VERTICAL_ALIGN_CENTER);
 			data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
@@ -224,7 +224,7 @@ public class SnipFileDialog extends Dialog {
 		label.setText(snippetCodeStartLabel);
 		data = new GridData(
 			GridData.GRAB_HORIZONTAL |
-			GridData.GRAB_VERTICAL |
+		//	GridData.GRAB_VERTICAL |
 			GridData.HORIZONTAL_ALIGN_FILL |
 			GridData.VERTICAL_ALIGN_CENTER);
 		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
@@ -256,7 +256,7 @@ public class SnipFileDialog extends Dialog {
 		label.setText(snippetCodeEndLabel);
 		data = new GridData(
 			GridData.GRAB_HORIZONTAL |
-			GridData.GRAB_VERTICAL |
+		//	GridData.GRAB_VERTICAL |
 			GridData.HORIZONTAL_ALIGN_FILL |
 			GridData.VERTICAL_ALIGN_CENTER);
 		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
@@ -280,6 +280,7 @@ public class SnipFileDialog extends Dialog {
 			}
 		);
 		snippetEndText.setFont(parent.getFont());
+		
 		
 		// Checkbox for use snippet as template
 		useAsTemplateButton = new Button(composite, SWT.CHECK);
@@ -309,7 +310,7 @@ public class SnipFileDialog extends Dialog {
 			label.setText(templateExtensionLabel);
 			data = new GridData(
 				GridData.GRAB_HORIZONTAL |
-				GridData.GRAB_VERTICAL |
+			//	GridData.GRAB_VERTICAL |
 				GridData.HORIZONTAL_ALIGN_FILL |
 				GridData.VERTICAL_ALIGN_CENTER);
 			data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
@@ -337,7 +338,7 @@ public class SnipFileDialog extends Dialog {
 		errorMessageLabel = new Label(composite, SWT.WRAP);
 		data = new GridData(
 				GridData.GRAB_HORIZONTAL |
-				GridData.GRAB_VERTICAL |
+			//	GridData.GRAB_VERTICAL |
 				GridData.HORIZONTAL_ALIGN_FILL |
 				GridData.VERTICAL_ALIGN_CENTER);
 		data.heightHint = convertHeightInCharsToPixels(2);
@@ -440,17 +441,12 @@ public class SnipFileDialog extends Dialog {
 		return okButton;
 	}
 	
-	
-	
-	
-
+	protected boolean isResizable() {
+	    return true;
+	}
 	
 	protected void validateInput() {
-		
-
-		String errorMessage = null;
-		
-		String test = snippetNameText.getText();
+			String errorMessage = null;
 		if (!snippetNameText.getText().matches("[0-9a-zA-Z _-]+")) {
 		    errorMessage = "The snippet name can only contain numbers, alphabetic characters, space underscore and dash.";
 		}
