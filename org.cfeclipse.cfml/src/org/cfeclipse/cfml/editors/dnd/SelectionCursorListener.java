@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.OccurrencesFinder;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
@@ -164,7 +164,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 	private CfmlTagItem lastSelectedTag;
 	private CfmlTagItem selectedTag;
 	private boolean selectedTagWasSelected;
-	private CFMLEditor editor;
+	private CFMLEditorPart editor;
 	private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
 	private static String tagBeginEndAnnotation = "org.cfeclipse.cfml.tagbeginendmarker";
 	//private static String TYPE = "org.eclipse.core.resources.textmarker";
@@ -191,7 +191,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
      * This class listens to the mouse position relative to any selected text 
      * and keeps track of whether or not the mouse is currently over a selection.
      */
-    public SelectionCursorListener(CFMLEditor editor, ProjectionViewer viewer, String[] wordChars) {
+    public SelectionCursorListener(CFMLEditorPart editor, ProjectionViewer viewer, String[] wordChars) {
         this.editor = editor;
         this.fViewer = viewer;
         this.textWidget = viewer.getTextWidget();

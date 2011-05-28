@@ -49,7 +49,7 @@ public class JumpToMatchingTagAction implements IWorkbenchWindowActionDelegate,I
     public void setActiveEditor(IAction action, IEditorPart targetEditor) {
 		if(targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor)
 		{
-			this.editor = (ITextEditor)targetEditor;
+			this.editor = (ITextEditor)((CFMLEditor)targetEditor).getCFMLEditor();
 			IDocument doc = editor.getDocumentProvider().getDocument(
 					editor.getEditorInput());
 

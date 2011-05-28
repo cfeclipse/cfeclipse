@@ -17,6 +17,7 @@ import java.util.List;
 import org.cfeclipse.cfml.editors.CFConfiguration;
 import org.cfeclipse.cfml.editors.CFDocumentSetupParticipant;
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.ColorManager;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.formatters.CFMLFormatter;
@@ -42,7 +43,7 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 	
 	private SourceViewer fPreviewViewer;
 	private CFPreviewerUpdater fPreviewerUpdater;
-	private CFMLEditor fEditor;
+	private CFMLEditorPart fEditor;
 	
 	@SuppressWarnings("unchecked")
 	protected OverlayPreferenceStore createOverlayStore() {
@@ -168,7 +169,7 @@ public class CodeFormatterPreferencePage extends AbstractCFEditorPreferencePage 
 		
 	private Control createPreviewer(Composite parent) {
 		fPreviewViewer = new SourceViewer(parent, null, null, false, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-        fEditor = new CFMLEditor();
+        fEditor = new CFMLEditorPart();
         ColorManager colorMan = new ColorManager();
 		CFConfiguration configuration = new CFConfiguration(colorMan,fEditor);
 	

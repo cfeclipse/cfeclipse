@@ -21,7 +21,7 @@ import org.eclipse.jface.text.link.LinkedModeModel;
  */
 public class EditorSynchronizer implements ILinkedModeListener {
     
-    private final CFMLEditor fEditor;
+    private final CFMLEditorPart fEditor;
     private final boolean fWasOccurrencesOn;
     
     /**
@@ -30,7 +30,7 @@ public class EditorSynchronizer implements ILinkedModeListener {
      * @param editor the Ant editor that will be 
      *        synchonized with the linked mode
      */
-    public EditorSynchronizer(CFMLEditor editor) {
+    public EditorSynchronizer(CFMLEditorPart editor) {
         Assert.isLegal(editor != null);
         fEditor= editor;
         if(fEditor.getSelectionCursorListener() != null) {

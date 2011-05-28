@@ -24,6 +24,7 @@
  */
 package org.cfeclipse.cfml.editors.actions;
 
+import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -51,12 +52,26 @@ public class InsertColorAction extends WordManipulator implements IWorkbenchWind
 	 */
 	protected static ColorDialog colordialog = null;
 	
-	public void setActiveEditor(IAction action, IEditorPart targetEditor) 
-	{
-		if( targetEditor instanceof ITextEditor )
-		{
-			editor = (ITextEditor)targetEditor;
+
+	public void init(IWorkbenchWindow window) {
+		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
+		if(activeEditor instanceof ITextEditor){
+			editor = (ITextEditor) ((CFMLEditor)activeEditor).getCFMLEditor();
 		}
+		
+	}
+	
+	public void selectionChanged(IAction action, ISelection selection){
+		if(editor != null){
+			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
+		}
+	}
+	
+	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
+		System.out.println("setActiveEditor "  + targetEditor);
+			if (targetEditor instanceof ITextEditor) {
+				editor = (ITextEditor) ((CFMLEditor)targetEditor).getCFMLEditor();
+			}
 	}
 	
 	/**
@@ -64,8 +79,10 @@ public class InsertColorAction extends WordManipulator implements IWorkbenchWind
 	 */
 	public void run(IAction action) 
 	{
+		System.out.println("run"  + editor);
 		if(editor != null  && editor.isEditable())
 		{
+				
 			//get the document and selection and pass it to the word manipulator
 			//so it can extract and rewrite what we want (super class)
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
@@ -165,22 +182,11 @@ public class InsertColorAction extends WordManipulator implements IWorkbenchWind
 		}
 	}
 	
-	public void selectionChanged(IAction action, ISelection selection){
-		if(editor != null){
-			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
-		}
-	}
+	
 
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void init(IWorkbenchWindow window) {
-		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
-		if(activeEditor instanceof ITextEditor){
-			editor = (ITextEditor)activeEditor;
-		}
-		
-	}
 }

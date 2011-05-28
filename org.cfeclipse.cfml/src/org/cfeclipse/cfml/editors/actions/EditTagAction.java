@@ -35,23 +35,15 @@ import org.cfeclipse.cfml.dialogs.TagEditDialog;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
-import org.cfeclipse.cfml.editors.CFMLEditor;
-import org.cfeclipse.cfml.editors.EditableTags;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
-import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
-import org.cfeclipse.cfml.parser.docitems.AttributeItem;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
-import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.util.CFDocUtils;
 import org.cfeclipse.cfml.views.dictionary.TagFormatter;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -69,7 +61,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * @author mdrew
  *
  */
-public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate{
+public class EditTagAction extends BaseAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate{
 		protected Tag tag;
 		protected Shell shell;
 		protected IEditorPart ieditor;
@@ -121,12 +113,7 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 			
 		}
 		
-		
-		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-			
-			this.editor = (CFMLEditor)targetEditor;
 	
-		}
 		
 		
 		
@@ -148,8 +135,9 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 
 		// Get the editor, and the various bits we need such as the document,
 		// the selection and the shell
+		//TODO: these occurances will fail
 		IEditorPart activeEditor = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		CFMLEditor thisEdit = (CFMLEditor) activeEditor;
+		CFMLEditorPart thisEdit = (CFMLEditorPart) activeEditor;
 		IDocument doc = thisEdit.getDocumentProvider().getDocument(thisEdit.getEditorInput());
 		ISelection sel = thisEdit.getSelectionProvider().getSelection();
 		CfmlTagItem tagItem = thisEdit.getSelectionCursorListener().getSelectedTag();
@@ -404,7 +392,7 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 	public void selectionChanged(IAction action, ISelection selection){
 		// ugly hack that verifies we only try to work with a CF file.  Something is wrong upstream, we should not need this
 		if( editor != null) {
-			if(editor instanceof CFMLEditor){
+			if(editor instanceof CFMLEditorPart){
 				//setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
 			}
 		}
@@ -417,7 +405,7 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 
 	public void init(IWorkbenchWindow window) {
 		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
-		if(activeEditor instanceof CFMLEditor){
+		if(activeEditor instanceof CFMLEditorPart){
 			editor = (ITextEditor)activeEditor;
 		}
 		

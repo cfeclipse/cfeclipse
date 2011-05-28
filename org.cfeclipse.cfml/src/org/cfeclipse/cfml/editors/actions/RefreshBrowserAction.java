@@ -24,7 +24,7 @@
  */
 package org.cfeclipse.cfml.editors.actions;
 
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.views.browser.BrowserView;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -52,7 +52,7 @@ public class RefreshBrowserAction implements IWorkbenchWindowActionDelegate,IEdi
 	
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) 
 	{
-		if(targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor)
+		if(targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditorPart)
 		{
 			editor = (ITextEditor)targetEditor;
 		}

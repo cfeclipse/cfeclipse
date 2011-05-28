@@ -11,7 +11,7 @@ Contributors:
 **********************************************************************/
 package org.cfeclipse.cfml.editors.indentstrategies;
 
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.formatters.FormattingPreferences;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.eclipse.jface.text.BadLocationException;
@@ -29,7 +29,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 	/**
 	 * @param editor
 	 */
-	public CFScriptIndentStrategy(CFMLEditor editor) {
+	public CFScriptIndentStrategy(CFMLEditorPart editor) {
 		super(editor);
 	}
 	
@@ -467,12 +467,12 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 		try {
 			int p = (command.offset == docLength ? command.offset - 1 : command.offset);
 			int line = document.getLineOfOffset(p);
-			int lineOffset = document.getLineOffset(line);
-			int offset = p;
-			char prevPrevChar = document.getChar(offset - 2);
-			char prevChar = document.getChar(offset - 1);
-			char curChar = document.getChar(offset);
-			char nextChar = document.getChar(offset + 1);
+			//int lineOffset = document.getLineOffset(line);
+			//int offset = p;
+			//char prevPrevChar = document.getChar(offset - 2);
+			//char prevChar = document.getChar(offset - 1);
+			//char curChar = document.getChar(offset);
+			//char nextChar = document.getChar(offset + 1);
 
 			StringBuffer buf = new StringBuffer(command.text);
 

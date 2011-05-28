@@ -105,7 +105,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.filesystem;resolution:=optional,
  org.eclipse.ui.browser,
  org.eclipse.search,
- org.eclipse.ecf.docshare;bundle-version="2.0.0";resolution:=optional
+ org.eclipse.ecf.docshare;bundle-version="2.0.0";resolution:=optional,
+ org.junit
 Bundle-ActivationPolicy: lazy
 Import-Package: com.ibm.icu.text,
  org.eclipse.ui.console

@@ -26,6 +26,7 @@ package org.cfeclipse.cfml.editors.indentstrategies;
 
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.formatters.XmlDocumentFormatter;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
@@ -78,12 +79,12 @@ public class CFEIndentStrategy extends DefaultIndentLineAutoEditStrategy {
 	protected String indentString = "\t";
 	protected int indentSize = 4;
 
-	protected CFMLEditor editor;
+	protected CFMLEditorPart editor;
 	// private CFConfiguration configuration;
 
 	private int fAccumulatedChange = 0;
 
-	public CFEIndentStrategy(CFMLEditor editor) {
+	public CFEIndentStrategy(CFMLEditorPart editor) {
 		this.editor = editor;
 	}
 

@@ -42,7 +42,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  *
  * This class is invoked to create a new file
  */
-public class NewFileAction implements IEditorActionDelegate, IWorkbenchWindowActionDelegate{
+public class NewFileAction extends BaseAction implements IEditorActionDelegate, IWorkbenchWindowActionDelegate{
     	
     /* (non-Javadoc)
      * @see org.eclipse.ui.IWorkbenchWindowActionDelegate#dispose()
@@ -71,13 +71,7 @@ public class NewFileAction implements IEditorActionDelegate, IWorkbenchWindowAct
     	    
     	}
     	
-    	public void setActiveEditor(IAction action, IEditorPart targetEditor) 
-    	{
-    		if(targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor)
-    		{
-    			editor = (ITextEditor)targetEditor;
-    		}
-    	}
+    	
     	
     	public void run(IAction action) 
     	{

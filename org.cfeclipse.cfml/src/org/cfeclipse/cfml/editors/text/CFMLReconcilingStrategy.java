@@ -11,8 +11,7 @@
 
 package org.cfeclipse.cfml.editors.text;
 
-import org.cfeclipse.cfml.editors.CFMLEditor;
-import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
@@ -29,9 +28,9 @@ public class CFMLReconcilingStrategy implements IReconcilingStrategy, IReconcili
 	 */
 	public static final int DELAY= 500;
 
-	private CFMLEditor fEditor;
+	private CFMLEditorPart fEditor;
 
-	public CFMLReconcilingStrategy(CFMLEditor editor) {
+	public CFMLReconcilingStrategy(CFMLEditorPart editor) {
 		fEditor= editor;
 	}
 

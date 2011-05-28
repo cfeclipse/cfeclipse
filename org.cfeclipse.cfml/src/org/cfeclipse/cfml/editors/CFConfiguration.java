@@ -105,7 +105,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	private FormattingPreferences formattingPreferences = new FormattingPreferences();
 	private int tabWidth;
 	//private CFMLEditor editor;
-	private CFMLEditor editor;
+	private CFMLEditorPart editor;
 	
 	/**
 	 * Configure the tag indent strategy
@@ -145,7 +145,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	 * Need a color manager to get partition colors
 	 * @param colorManager that would be the color manager
 	 */
-	public CFConfiguration(ColorManager colorManager, CFMLEditor editor) 
+	public CFConfiguration(ColorManager colorManager, CFMLEditorPart editor) 
 	{
 		this.colorManager = colorManager;
 		this.editor = editor;

@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.EditorSynchronizer;
 import org.cfeclipse.cfml.editors.OccurrencesFinder;
 import org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard;
@@ -64,7 +65,7 @@ import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
  */
 public class WrapTagAction extends GenericEncloserAction implements IEditorActionDelegate, IWorkbenchWindowActionDelegate {
 
-	protected CFMLEditor editor = null;
+	protected CFMLEditorPart editor = null;
 
 	public WrapTagAction() {
 		super();
@@ -88,14 +89,19 @@ public class WrapTagAction extends GenericEncloserAction implements IEditorActio
 	 */
 	public void init(IWorkbenchWindow window) {
 		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
-		if (activeEditor instanceof CFMLEditor) {
-			editor = (CFMLEditor) activeEditor;
+		if (activeEditor instanceof CFMLEditorPart) {
+			editor = (CFMLEditorPart) activeEditor;
 		}
 
 	}
 
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		editor = (CFMLEditor) targetEditor;
+		if(targetEditor instanceof CFMLEditor){
+			editor = ((CFMLEditor)targetEditor).getCFMLEditor();
+		}
+		else if(targetEditor instanceof CFMLEditorPart){
+			editor = (CFMLEditorPart)targetEditor;
+		}
 	}
 
 	public void run(IAction action) {
@@ -140,7 +146,7 @@ public class WrapTagAction extends GenericEncloserAction implements IEditorActio
 	}
 	
 	public void selectionChanged(IAction action, ISelection selection) {
-		if (editor != null && editor instanceof CFMLEditor) {
+		if (editor != null && editor instanceof CFMLEditorPart) {
 			action.setEnabled(true);
 		} else {
 			action.setEnabled(false);

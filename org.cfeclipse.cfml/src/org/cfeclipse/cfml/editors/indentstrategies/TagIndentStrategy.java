@@ -29,7 +29,7 @@ package org.cfeclipse.cfml.editors.indentstrategies;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
@@ -74,7 +74,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	/**
 	 * @param editor
 	 */
-	public TagIndentStrategy(CFMLEditor editor) {
+	public TagIndentStrategy(CFMLEditorPart editor) {
 		super(editor);
 
 	}
@@ -874,7 +874,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @param docCommand
 	 * @return
 	 */
-	/* TODO: Evaluate whether this method is necessary or not */
+	/* TODO: Evaluate whether this method is necessary or not
 	private boolean isTagStartOnLine(IDocument doc, DocumentCommand command) {
 		int position = command.offset - 1;
 		String docData = doc.get();
@@ -900,7 +900,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 
 		return false;
 	}
-
+ */
 	/**
 	 * Finds the end of the tag. Really just looks until it hits non-whitespace.
 	 * 

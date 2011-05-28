@@ -55,7 +55,7 @@ public class ReloadDictionariesAction  implements IWorkbenchWindowActionDelegate
 		//System.err.println(targetEditor);
 		//System.out.println( "Changin (" + start + ")(" + end + ")" );
 		if( targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor ){
-			editor = (ITextEditor)targetEditor;
+			editor = (ITextEditor) ((CFMLEditor)targetEditor).getCFMLEditor();
 		}
 	}
 	

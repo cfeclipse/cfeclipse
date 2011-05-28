@@ -25,7 +25,7 @@
  */
 package org.cfeclipse.cfml.editors.actions;
 
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
@@ -45,7 +45,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  */
 public class FindBracketAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate
 {
-	private CFMLEditor editor;
+	private CFMLEditorPart editor;
 
 	public FindBracketAction()
 	{
@@ -61,9 +61,9 @@ public class FindBracketAction implements IWorkbenchWindowActionDelegate,IEditor
 	 */
 	public void setActiveEditor(IAction action, IEditorPart targetEditor)
 	{
-		if (targetEditor instanceof CFMLEditor)
+		if (targetEditor instanceof CFMLEditorPart)
 		{
-			editor = (CFMLEditor) targetEditor;
+			editor = (CFMLEditorPart) targetEditor;
 		}
 	}
 
@@ -153,8 +153,8 @@ public class FindBracketAction implements IWorkbenchWindowActionDelegate,IEditor
 
 	public void init(IWorkbenchWindow window) {
 		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
-		if(activeEditor instanceof CFMLEditor){
-			editor = (CFMLEditor)activeEditor;
+		if(activeEditor instanceof CFMLEditorPart){
+			editor = (CFMLEditorPart)activeEditor;
 		}
 		
 	}

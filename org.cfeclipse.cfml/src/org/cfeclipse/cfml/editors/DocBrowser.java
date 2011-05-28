@@ -15,7 +15,7 @@
  * http://phpeclipse.sf.net
  */
 
-package org.cfeclipse.cfml.views.browser;
+package org.cfeclipse.cfml.editors;
 
 import java.text.MessageFormat;
 import java.util.MissingResourceException;
@@ -66,7 +66,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.part.WorkbenchPart;
 
-public class CFBrowser{
+public class DocBrowser{
 	protected int index;
 	protected boolean busy;
 	//protected Image images[];
@@ -82,7 +82,7 @@ public class CFBrowser{
 	 * @param parent
 	 * the container of the example
 	 */
-	public CFBrowser(Composite parent,WorkbenchPart container) 
+	public DocBrowser(Composite parent,WorkbenchPart container) 
 	{
 		preferenceManager = new CFMLPreferenceManager();
 		this.container = container;

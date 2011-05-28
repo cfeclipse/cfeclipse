@@ -1,6 +1,7 @@
 package org.cfeclipse.cfml.editors.actions;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.custom.StyledText;
@@ -11,14 +12,11 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 
-public class WordWrapAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
+public class WordWrapAction extends BaseAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 
-	CFMLEditor editor;
+	CFMLEditorPart editor;
 	
 	
-	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		editor = (CFMLEditor)targetEditor;
-	}
 
 	public void run(IAction action) {
 		StyledText textWidget = null;
@@ -47,7 +45,7 @@ public class WordWrapAction implements IWorkbenchWindowActionDelegate,IEditorAct
 	public void init(IWorkbenchWindow window) {
 		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
 		if(activeEditor instanceof CFMLEditor){
-			editor = (CFMLEditor)activeEditor;
+			editor = ((CFMLEditor)activeEditor).getCFMLEditor();
 		}
 		
 	}

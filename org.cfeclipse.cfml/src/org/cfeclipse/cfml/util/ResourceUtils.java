@@ -33,6 +33,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.preferences.BrowserPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.views.snips.SnipVarParser;
@@ -46,7 +47,9 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * This is a helper class to provide various useful methods that related to Eclipse
@@ -191,6 +194,21 @@ public class ResourceUtils {
         }
         return false;
     }
+    
+    
+    /**
+     * @param workbench 
+     * @return CFMLEditorPart the actual editor we are using
+     */
+    public static CFMLEditorPart getCurrentEditor(IWorkbenchPart workbench){
+    	IEditorPart currEditor = workbench.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
+    	if(currEditor != null && currEditor instanceof CFMLEditorPart){
+    		return (CFMLEditorPart) currEditor;
+    	}
+    	
+    	return null;
+    }
+    
 
     /**
      * Applies the CFE nature to the supplied project.

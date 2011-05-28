@@ -71,7 +71,7 @@ public class GetHelpAction implements IWorkbenchWindowActionDelegate, IEditorAct
 
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
 		if (targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor) {
-			editor = (ITextEditor) targetEditor;
+			editor = (ITextEditor) ((CFMLEditor)targetEditor).getCFMLEditor();
 		}
 	}
 

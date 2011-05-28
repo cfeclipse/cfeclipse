@@ -26,7 +26,7 @@ package org.cfeclipse.cfml.editors.actions;
 
 import java.util.Iterator;
 
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
@@ -129,7 +129,7 @@ public class OpenAtMethodAction implements IWorkbenchWindowActionDelegate,IEdito
 		
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) 
 	{
-		if(targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor)
+		if(targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditorPart)
 		{
 			editor = (ITextEditor)targetEditor;
 		}
@@ -157,11 +157,11 @@ public class OpenAtMethodAction implements IWorkbenchWindowActionDelegate,IEdito
 		try
 		{
 			IEditorPart part =  IDE.openEditor(page, file, true);
-			if(!(part instanceof CFMLEditor))
+			if(!(part instanceof CFMLEditorPart))
 				return;
 			
 			//CFMLEditor cfEditor = (CFMLEditor)part;#
-			CFMLEditor cfEditor = (CFMLEditor)part.getSite().getPage().getActiveEditor();
+			CFMLEditorPart cfEditor = (CFMLEditorPart)part.getSite().getPage().getActiveEditor();
 			IEditorInput editorInput = cfEditor.getEditorInput();
 			IDocumentProvider docProvider = cfEditor.getDocumentProvider(); 
 			IDocument doc = docProvider.getDocument(editorInput);

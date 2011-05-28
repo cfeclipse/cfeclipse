@@ -1,94 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-   <extension
-         point="org.eclipse.core.expressions.definitions">
-      <definition
-            id="isActiveEditorAnInstanceOfCFMLEditor">
-         <with
-               variable="activeEditor">
-            <instanceof
-                  value="org.cfeclipse.cfml.editors.CFMLEditor">
-            </instanceof>
-         </with>
-      </definition>
-   </extension>
-
-	<extension point="org.eclipse.help.toc">
-	    <toc file="doc/toc_main.xml" primary="true" />
-	</extension>
-    <extension point="org.eclipse.help.toc">
-	    <toc file="doc/toc_general.xml" />
-    </extension>
-    
-   <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
-
-   <extension 
-	    point="org.eclipse.ui.decorators">
-		<decorator
-			adaptable="false"
-			label="CFEclipse CFC Decorator"
-			state="true"
-			lightweight="true"
-			icon="icons/icons/cfc_editor.gif"
-			id="org.cfeclipse.cfml.ui.decorators.cfcdecorator"
-			location="TOP_LEFT">
-			<description>Shows distinct icon for CFC files</description>	
-			<enablement>
-				<and>
-	      			<objectClass name="org.eclipse.core.resources.IFile" />
-    	  			<objectState name="extension" value="cfc" />    	  			
-    	  		</and>
-		    </enablement>
-		</decorator>
-		<decorator
-			adaptable="false"
-			label="CFEclipse Readonly Decorator"
-			state="true"
-			lightweight="true"
-			icon="icons/obj16/reddot.gif"
-			id="org.cfeclipse.cfml.ui.decorators.cfereadonlydecorator"
-			location="BOTTOM_LEFT">
-			<description>Shows readonly indicator</description>	
-			<enablement>
-				<and>
-	      			<objectClass name="org.eclipse.core.resources.IResource" />
-    	  			<objectState name="readOnly" value="true" />
-    	  		</and>
-		    </enablement>
-		</decorator>
-  <decorator
-        adaptable="true"
-        class="org.cfeclipse.cfml.editors.decoration.URLDecorator"
-        id="org.cfeclipse.cfml.editors.decoration.URLDecorator"
-        label="URL Link Decorator"
-        lightweight="true"
-        location="TOP_RIGHT"
-        state="true">
-        <description>
-        Provides decoration for resources that have a URL link used by the internal and external browsers
-        </description>
-        <enablement>
-           <and>
-              <objectClass name="org.eclipse.core.resources.IResource"/>
-           </and>
-        </enablement>
-   </decorator>
-	<!--
-	-->
-	</extension>
-	
-   <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            name="%perspective.name.CFEclipse"
-            icon="icons/icons/cfeclipse_16x16.png"
-            class="org.cfeclipse.cfml.perspective.CFPerspective"
-            id="org.cfeclipse.cfml.perspective.CFML">
-      </perspective>
-   </extension>
-   
-	<extension point="org.eclipse.core.runtime.contentTypes">
+ 
+ <!-- CFEclipse Editor -->
+ <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="%editor.name.CFML_Editor"
+            extensions="cfc,cfm,cfml,html,htm,xhtml"
+            icon="icons/icons/cf_editor.gif"
+            contributorClass="org.cfeclipse.cfml.editors.CFMLEditorActionContributor"
+            class="org.cfeclipse.cfml.editors.CFMLEditor"
+            id="org.cfeclipse.cfml.editors.CFMLEditor">
+            <contentTypeBinding contentTypeId="org.cfeclipse.cfml.cfsource" />
+      </editor>
+ </extension>
+ 
+ <extension point="org.eclipse.core.contenttype.contentTypes">
 		<content-type
 			id="org.cfeclipse.cfml.cfsource"
 			base-type="org.eclipse.core.runtime.text"
@@ -98,56 +26,737 @@
 		</content-type>
 	</extension>
 
-   	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- Editor -->
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            name="%editor.name.CFML_Editor"
-            extensions="cfc,cfm,cfml,html,htm,xhtml"
-            icon="icons/icons/cf_editor.gif"
-            contributorClass="org.cfeclipse.cfml.editors.CFMLEditorActionContributor"
-            class="org.cfeclipse.cfml.editors.CFMLEditor"
-            id="org.cfeclipse.cfml.editors.CFMLEditor">
-            
-			<contentTypeBinding contentTypeId="org.cfeclipse.cfml.cfsource">
-			</contentTypeBinding>            
-      </editor>
+	
+	
+ <!-- CFEclipse Perspective -->
+  <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="%perspective.name.CFEclipse"
+            icon="icons/icons/cfeclipse_16x16.png"
+            class="org.cfeclipse.cfml.perspective.CFPerspective"
+            id="org.cfeclipse.cfml.perspective.CFML">
+      
+      
+   
+      
+      </perspective>
 
-	<!-- CFC Editor
-      <editor
-            name="CFC Editor"
-            extensions="cfc"
-            icon="icons/icons/cfc_editor.gif"
-            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
-            class="org.cfeclipse.cfml.editors.CFCEditor"
-            id="org.cfeclipse.cfml.editors.CFCEditor">
-      </editor>
-   -->
+      
    </extension>
- 
-    <extension
-         id="org.cfeclipse.cfml.editors.CFDocumentSetupParticipant"
-         name="CFDocumentSetupParticipant"
-         point="org.eclipse.core.filebuffers.documentSetup">
-      <participant
-            extensions="cfml, macrodef"
-            contentTypeId="org.cfeclipse.cfml.cfsource"
-            class="org.cfeclipse.cfml.editors.CFDocumentSetupParticipant">
-      </participant>
+   
+  
+   
+ <extension point="org.eclipse.ui.perspectiveExtensions">
+        <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+            <perspectiveShortcut id="org.cfeclipse.cfml.perspective.CFML"/>
+        </perspectiveExtension>
+        
+       <perspectiveExtension targetID = "org.cfeclipse.cfml.perspective.CFML">
+     	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
+     	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
+     	 <showInPart id= "org.cfeclipse.cfml.views.explorer.vfs.view.VFSView" />
+     	 <showInPart id= "org.cfeclipse.cfml.views.snips.SnipTreeView" />
+     	 <showInPart id= "org.cfeclipse.cfml.images.imagesView" />     	 
+         <viewShortcut
+               id="org.eclipse.ui.navigator.ProjectExplorer">
+         </viewShortcut>
+              
+         <viewShortcut
+               id="org.eclipse.pde.runtime.LogView">
+         </viewShortcut>
+         <viewShortcut
+               id="org.cfeclipse.cfml.images.imagesView">
+         </viewShortcut>
+         <viewShortcut
+               id="org.cfeclipse.cfml.views.explorer.vfs.view.VFSView">
+         </viewShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+         <viewShortcut
+               id="org.cfeclipse.cfml.images.imagesView">
+         </viewShortcut>
+      </perspectiveExtension>
+      
+      
+		<perspectiveExtension targetID="org.cfeclipse.cfml.perspective.CFML">
+				<actionSet id="org.cfeclipse.cfml.actionset" />		
+		</perspectiveExtension>
+  </extension>	
+  
+  
+  <!-- Views -->
+  <!-- ////////////////////////////////////////////////////////////// -->
+	<!-- Views -->
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="%category.name.1"
+            id="org.cfeclipse.cfml">
+      </category>
+      <view
+            name="%view.name.0"
+            icon="icons/ctool16/library.gif"
+            category="org.cfeclipse.cfml"
+            class="org.cfeclipse.cfml.views.snips.SnipTreeView"
+             id="org.cfeclipse.cfml.views.snips.SnipTreeView" 
+           />
+      
+      <view
+            name="%view.name.1"
+            icon="icons/ctool16/globe.gif"
+            category="org.cfeclipse.cfml"
+            class="org.cfeclipse.cfml.views.browser.BrowserView"
+            id="org.cfeclipse.cfml.views.browser" />
+      
+      <view
+            name="%view.name.2"
+            icon="icons/obj16/bean.gif"
+            category="org.cfeclipse.cfml"
+            class="org.cfeclipse.cfml.views.cfcmethods.CFCMethodsView"
+            id="org.cfeclipse.cfml.views.cfcmethods.CFCMethodsView" />
+      
+      <view
+            name="%view.name.3"
+            class="org.cfeclipse.cfml.views.packageview.PackageView"
+            icon="icons/obj16/cfc.gif"
+            category="org.cfeclipse.cfml"
+            id="org.cfeclipse.cfml.views.packageview.PackageView"/>
+      <view
+            name="%view.name.4"
+            class="org.cfeclipse.cfml.views.dictionary.DictionaryView"
+            icon="icons/ctool16/dictionaries.gif"
+            category="org.cfeclipse.cfml"
+            id="org.cfeclipse.cfml.views.dictionary.DictionaryView"/>
+      <view
+            name="%view.name.5"
+            class="org.cfeclipse.cfml.views.explorer.FileExplorerView"
+            icon="icons/obj16/explorer.gif"
+            category="org.cfeclipse.cfml"
+            id="org.cfeclipse.cfml.views.explorer.FileExplorerView"/>
+      <view
+            name="%view.name.8"
+            class="org.cfeclipse.cfml.views.explorer.vfs.view.VFSView"
+            icon="icons/obj16/explorer.gif"
+            category="org.cfeclipse.cfml"
+            id="org.cfeclipse.cfml.views.explorer.vfs.view.VFSView"/>
+      <view
+            name="%view.name.7"
+            class="org.cfeclipse.cfml.views.images.ImagesView"
+            category="org.cfeclipse.cfml"
+            icon="icons/obj16/image_icon.png"
+            id="org.cfeclipse.cfml.images.imagesView" />
+            
+    
    </extension>
- 
- <extension point="org.eclipse.search.searchPages">
-  <page
-    class="org.cfeclipse.cfml.search.CFMLTagSearchPage"
-    id="org.cfeclipse.cfml.search.TagSearchPage"
-    label="CFML Search">
-  </page>
-</extension>
- 
-	<!-- ////////////////////////////////////////////////////////////// -->
+   
+   <!-- commands that are available -->
+   <extension
+		point="org.eclipse.ui.commands">
+		
+		<category
+			name="%category.name.0"
+			description="%category.description.0"
+			id="org.cfeclipse.cfml.commandCategory"/>
+		
+		<!-- cfcomment -->
+		<command
+			name="%command.name.0"
+			description="%command.description.0"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFComment" />
+		<!-- line comment -->
+		<command
+			name="%command.name.lineComment"
+			description="%command.description.lineComment"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.LineComment" />
+		
+		<!-- comment based on section (i.e. js comments in js blocks, etc) -->
+		<command
+			name="%command.name.1"
+			description="%command.description.1"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.AutoComment"/>
+			
+		<!-- comment lines based on section (i.e. js comments in js blocks, etc) -->
+		<command
+			name="%command.name.lineComment"
+			description="%command.name.lineComment"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.AutoCommentLines"/>
+			
+		<!-- enclose in pound ... er ... hash signs -->
+		<command
+			name="%command.name.2"
+			description="%command.description.2"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFVariable"/>
+		
+		<!-- enclose in single quotes -->
+		<command
+			name="%command.name.3"
+			description="%command.description.3"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFSingleQuote"/>
+		
+		<!-- enclose in double quotes -->
+		<command
+			name="%command.name.4"
+			description="%command.description.4"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"/>
+		
+		<!-- enclose in cfoutputs -->
+		<command
+			name="%command.name.5"
+			description="%command.description.5"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFOutput"/>
+		
+		<!-- enclose in cfdump -->
+		<command
+			name="%command.name.6"
+			description="%command.description.6"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFDump"/>
+		
+		<!-- enclose in cfscript -->
+		<command
+			name="%command.name.7"
+			description="%command.description.7"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.CFScript"/>
+		
+		<!-- to lower case -->
+		<command
+			name="%command.name.ToCFScript"
+			description="%command.description.toCFScript"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ToCFScript"/>
+
+		<!-- to lower case -->
+		<command
+			name="%command.name.8"
+			description="%command.description.8"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ToLowerCase"/>
+		
+		<!-- to upper case -->
+		<command
+			name="%command.name.9"
+			description="%command.description.9"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ToUpperCase"/>
+		
+		<!-- wrap tag -->
+		<command
+			name="%command.name.wrapTag"
+			description="%command.description.wrapTag"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.WrapTag"/>
+		
+		<!-- Insert Color -->
+		<command
+			name="%command.name.10"
+			description="%command.description.10"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertColor"/>
+		
+		<!-- insert date -->
+		<command
+			name="%command.name.11"
+			description="%command.description.11"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertDate"/>
+		
+		<!-- insert an html br action (for Brian Sadler) -->
+		<command
+			name="%command.name.12"
+			description="%command.description.12"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertBR"/>
+		
+		<!-- insert an html nbsp action (for Michael Wolfe) -->
+		<command
+			name="%command.name.13"
+			description="%command.description.13"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertNBSP"/>
+		
+		<!-- insert an html p action (for Michael Wolfe) -->
+		<command
+			name="%command.name.14"
+			description="%command.description.14"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.PTag"/>
+		
+		<!-- insert an html strong action (for Brian Sadler) -->
+		<command
+			name="%command.name.15"
+			description="%command.description.15"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.StrongTag"/>
+		
+		<!-- insert an html em action (for Brian Sadler) -->
+		<command
+			name="%command.name.16"
+			description="%command.description.16"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.EmTag"/>
+		
+		<!-- Reload the syntax dictionaries -->
+		<command
+			name="%command.name.17"
+			description="%command.description.17"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ReloadDictionaries"/>
+		
+		<!-- refresh the browser -->
+		<command
+			name="%command.name.18"
+			description="%command.description.18"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.RefreshBrowser"/>
+		
+		<!-- browse to project root URL -->
+		<command
+			name="%command.name.19"
+			description="%command.description.19"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"/>
+		
+		<!-- browse to current page -->
+		<command
+			name="%command.name.20"
+			description="%command.description.20"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"/>
+		
+		<!-- insert a snippet -->
+		<command
+			name="%command.name.21"
+			description="%command.description.21"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.InsertSnippet"/>
+		
+		<!-- repeat last tag -->
+		<command
+			name="%command.name.22"
+			description="%command.description.22"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.LastAction"/>
+		
+		<!-- jump to matching tag -->
+		<command
+			name="%command.name.23"
+			description="%command.description.23"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction"/>
+		
+		<!-- Go and Get Help -->
+		<command
+			name="%command.name.24"
+			description="%command.description.24"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.GetHelp"/>
+		
+		<!-- Fire up the scribble pad -->
+		<command
+			name="%command.name.25"
+			description="%command.description.25"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.LoadScribblePad"/>
+								
+		<!-- Open in external browser -->
+		<command
+			name="%command.name.29"
+			description="%command.description.29"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID"/>
+		
+		<!-- Open in secondary external browser -->
+		<command
+			name="Browse in secondary browser"
+			description="%command.description.29"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2"/>
+		
+		<command
+			name="%command.name.30"
+			description="%command.description.30"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.NewFileActionID"/>
+		
+		<!-- edit tag command -->
+		<command 
+			name="%command.name.EditTag"
+			description="%command.description.EditTag"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.EditTagAction"/>
+		
+		<command 
+			name="%command.name.GotoFile"
+			description="%command.description.GotoFile"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.GotoFileAction"/>
+		
+		<command
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			description="%command.description.31"
+			id="org.cfeclipse.cfml.editors.actions.CFAbort"
+			name="%command.name.31"/>
+		
+		<!-- enclose in link from clipboard -->
+		<command
+			name="%action.label.ClipboardLink"
+			description="%command.description.ClipboardLink"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.ClipboardLink" />
+
+	    <command 
+	    	id="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
+            name="%toggleMarkOccurrences.label"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+            description="%toggleMarkOccurrences.label" />
+
+	    <command 
+	    	id="org.cfeclipse.cfml.editors.actions.RenameInFileAction"
+            name="%renameInFile.label"
+            categoryId="org.cfeclipse.cfml.commandCategory"
+            description="%renameInFile.label" />
+        <command 
+        	name="%ContentFormat.label"
+        	description="Format Source" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.FormatAction"
+        	>
+      	</command>
+        <command 
+        	name="%ExpandTagSelectionUp.label"
+        	description="ExpandTagSelectionUp" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.commands.ExpandTagSelectionUp"
+        	>
+      	</command>
+        <command 
+        	name="%ExpandTagSelectionDown.label"
+        	description="ExpandTagSelectionDown" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.commands.ExpandTagSelectionDown"
+        	>
+      	</command>
+        <command 
+        	name="%action.label.ExpandAll"
+        	description="%action.tooltip.ExpandAll" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.eclipse.ui.edit.text.folding.expand_all"
+        	>
+      	</command>
+		
+		<!-- Find a matching bracket pair -->
+		<!--
+		<command
+			name="Highlight matching bracket pair"
+			description="Highlights the pair of characters for the character beside the cursor."
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.FindBracket"/>
+		-->
+	</extension>
+   
+   
+   <!-- Toolbar Defined Action Sets -->
+	<extension point="org.eclipse.ui.actionSets">
+	   <actionSet
+	            id="org.cfeclipse.cfml.actionset"
+	            label="CFEclipse"
+	            visible="false">
+	     
+	     <!-- Mark Occurences -->       
+		 <action
+               definitionId="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
+               id="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
+				icon="icons/obj16/mark_occurrence.gif"
+               label="%toggleMarkOccurrences.label"
+               state="true"
+               style="toggle"
+  				retarget="true" 
+              	toolbarPath="BasicCFEditorText"
+               tooltip="%toggleMarkOccurrences.tooltip"/>
+
+          <!-- Word Wrap -->
+        <action
+              class="org.cfeclipse.cfml.editors.actions.WordWrapAction"
+              icon="icons/ctool16/wordwrap.gif"
+              id="org.cfeclipse.cfml.editors.actions.wordWrapAction"
+              label="%action.label.WordWrap"
+              state="false"
+              style="toggle"
+              toolbarPath="BasicCFEditorText"
+              tooltip="%action.tooltip.WordWrap"/>
+		<!-- cfcomment -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFComment"
+               label="%action.label.Comment"
+               icon="icons/ctool16/comment.gif"
+               tooltip="%action.tooltip.Comment"
+               class="org.cfeclipse.cfml.editors.actions.CFCommentAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.CFCommentAction">
+         </action>
+		<!-- smart comment -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.AutoComment"
+               label="%action.label.AutoComment"
+               icon="icons/ctool16/smartcomment.gif"
+               tooltip="%action.tooltip.AutoComment"
+               class="org.cfeclipse.cfml.editors.actions.AutoCommentAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.AutoCommentAction">
+         </action>
+		<!-- Surround with #s -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFVariable"
+               label="%action.label.Variable"
+               icon="icons/ctool16/hash.gif"
+               tooltip="%action.tooltip.Variable"
+               class="org.cfeclipse.cfml.editors.actions.CFVariableAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.CFVariableAction">
+         </action>
+		<!-- Surround with single quotes -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFSingleQuote"
+               label="%action.label.SingleQuotes"
+               icon="icons/ctool16/squote.gif"
+               tooltip="%action.tooltip.SingleQuotes"
+               class="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction">
+         </action>
+		<!-- Surround with double quotes -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"
+               label="%action.label.DoubleQuotes"
+               icon="icons/ctool16/dquote.gif"
+               tooltip="%action.tooltip.DoubleQuotes"
+               class="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction">
+         </action>
+		<!-- Surround with simple cfoutputs -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFOutput"
+               label="%action.label.CFOutput"
+               icon="icons/ctool16/output.gif"
+               tooltip="%action.tooltip.CFOutput"
+               class="org.cfeclipse.cfml.editors.actions.CFOutputAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="org.cfeclipse.cfml.editors.actions.CFOutputAction">
+         </action>
+		<!-- Surround with a simple cfdump -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.CFDump"
+               label="%action.label.CFDump"
+               icon="icons/ctool16/dump.gif"
+               tooltip="%action.tooltip.CFDump"
+               class="org.cfeclipse.cfml.editors.actions.CFDumpAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="org.cfeclipse.cfml.editors.actions.CFDumpAction">
+         </action>
+		<!-- Surround with a cfscript -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.CFAbortAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CFAbort"
+               icon="icons/ctool16/stop.gif"
+               id="org.cfeclipse.cfml.editors.actions.CFAbortAction"
+               label="%action.label.CFAbort"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.CFAbort"/>
+         <action
+               class="org.cfeclipse.cfml.editors.actions.CFScriptAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.CFScript"
+               icon="icons/ctool16/script.gif"
+               id="org.cfeclipse.cfml.editors.actions.CFScriptAction"
+               label="%action.label.CFScript"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.CFScript">
+         </action>
+		<!-- to cfscript -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.ToCFScript"
+               label="%action.label.ToCFScript"
+               icon="icons/ctool16/tolower.gif"
+               tooltip="%action.tooltip.ToCFScript"
+               class="org.cfeclipse.cfml.editors.actions.ToCFScriptAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.ToCFScriptAction">
+         </action>
+		<!-- to lower case -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
+               label="%action.label.ToLower"
+               icon="icons/ctool16/tolower.gif"
+               tooltip="%action.tooltip.ToLower"
+               class="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction">
+         </action>
+		<!-- to upper case -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
+               label="%action.label.ToUpper"
+               icon="icons/ctool16/toupper.gif"
+               tooltip="%action.tooltip.ToUpper"
+               class="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction">
+         </action>
+		<!-- wrap tag -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.WrapTag"
+               label="%action.label.WrapTag"
+               icon="icons/ctool16/repeattag.gif"
+               tooltip="%action.tooltip.WrapTag"
+               class="org.cfeclipse.cfml.editors.actions.WrapTagAction"
+               toolbarPath="BasicCFEditorText"
+               id="org.cfeclipse.cfml.editors.actions.WrapTagAction">
+         </action>
+		<!-- insert date -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.InsertDateAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertDate"
+               icon="icons/ctool16/time.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertDateAction"
+               label="%action.label.InsertDate"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.InsertDate">
+         </action>
+         <!-- insert color -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.InsertColorAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertColor"
+               icon="icons/ctool16/palette.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertColorAction"
+               label="%action.label.InsertColor"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.InsertColor">
+         </action>
+          <!-- repeat last tag (for Brian Sadler) -->
+         <action
+               definitionId="org.cfeclipse.cfml.editors.actions.LastAction"
+               label="%action.label.RepeatLastTag"
+     		   icon="icons/ctool16/repeattag.gif"
+               tooltip="%action.tooltip.RepeatLastTag"
+               class="org.cfeclipse.cfml.editors.actions.LastActionAction"
+               toolbarPath="BasicCFEditorCommand"
+               id="org.cfeclipse.cfml.editors.actions.LastActionAction">
+         </action>
+         <!-- refresh the browser view action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.RefreshBrowser"
+               icon="icons/ctool16/refresh.gif"
+               id="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction"
+               label="%action.label.Refresh"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.Refresh">
+         </action>
+         <!-- insert snippet action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.InsertSnippet"
+               icon="icons/ctool16/insertsnip.gif"
+               id="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
+               label="%action.label.InsertSnippet"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.InsertSnippet">
+         </action>
+          <!-- Get Online Help by Mark Drew aged 30 -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.GetHelpAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.GetHelp"
+               icon="icons/ctool16/help.gif"
+               id="org.cfeclipse.cfml.editors.actions.GetHelpAction"
+               label="%action.label.GetTagHelp"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.GetTagHelp">
+         </action>
+          <!-- Launch Scribble Pad -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.LoadScribblePadAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.LoadScribblePad"
+               icon="icons/ctool16/scribble.gif"
+               id="org.cfeclipse.cfml.editors.actions.LoadScribbleAction"
+               label="%action.label.LoadScribble"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.LoadScribble">
+         </action>
+		<!-- external browser -->
+ 		<action
+               toolbarPath="BasicCFEditorCommand"
+               label="Browse in secondary browser"
+               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               tooltip="%action.tooltip.Browse"
+               icon="icons/ctool16/browser_secondary.gif"
+               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction2"
+               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
+         </action>
+         <action
+               toolbarPath="BasicCFEditorCommand"
+               label="%action.label.Browse"
+               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               tooltip="%action.tooltip.Browse"
+               icon="icons/ctool16/browser_primary.gif"
+               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID">
+         </action>
+		 <!-- browse to current page action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"
+               icon="icons/ctool16/globe.gif"
+               id="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction"
+               label="%action.label.BrowseToCurrent"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.BrowseToCurrent">
+         </action>
+			  <!-- browse to root project URL action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"
+               icon="icons/ctool16/home.gif"
+               id="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction"
+               label="%action.label.BrowsetoRoot"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.BrowsetoRoot">
+         </action>
+          <!-- Launch new file dialog -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.NewFileAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
+               icon="icons/obj16/new.gif"
+               id="org.cfeclipse.cfml.editors.actions.NewFileAction"
+               label="%action.label.CreateNewFile"
+               toolbarPath="CFEditorResourceCommand"
+               tooltip="%action.tooltip.CreateNewFile">
+         </action>
+		 <!-- Edit Tag Action -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.EditTagAction"
+               definitionId="org.cfeclipse.cfml.editors.actions.EditTagAction"
+               icon="icons/obj16/default.gif"
+               id="org.cfeclipse.cfml.editors.actions.EditTagAction"
+               label="%action.label.EditTagAction"
+               toolbarPath="CFEditorResourceCommand"
+               tooltip="%action.tooltip.EditTagAction">
+         </action>
+      
+	   </actionSet>
+   </extension>
 	
-	
+	<!-- Actions -->
 	<!-- Actions -->
    <extension
          point="org.eclipse.ui.editorActions">
@@ -723,2012 +1332,6 @@
          -->
       </editorContribution>
    </extension>
-   
-	<!-- ////////////////////////////////////////////////////////////// -->
 	
-	<extension point="org.eclipse.ui.menus">
-<!--
-		<menuContribution locationURI="popup:#TextEditorContext?after=group.edit">
-	        <command commandId="org.cfeclipse.cfml.editors.actions.RenameInFileAction"
-                mnemonic="Newmmmon2"
-                icon="$nl$/icons/full/eobj16/scramble.gif">
-				<visibleWhen checkEnabled="false">
-					<reference definitionId="isActiveEditorAnInstanceOfCFMLEditor" />
-				</visibleWhen>
-            </command>
-		</menuContribution>
--->
-
-		<menuContribution locationURI="popup:#CFMLEditorContext?before=group.open">
-	        <separator name="group.source"
-	                visible="true" />
-	        <menu id="org.cfeclipse.menues.source"
-	                label="Source">
-				<command commandId="org.cfeclipse.cfml.FormatAction" style="push">
-						<visibleWhen checkEnabled="false">
-							<reference definitionId="isActiveEditorAnInstanceOfCFMLEditor" />
-						</visibleWhen>
-				</command>
-		        <command commandId="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction" style="toggle" icon="icons/obj16/mark_occurrence.gif">
-					<visibleWhen checkEnabled="false">
-						<reference definitionId="isActiveEditorAnInstanceOfCFMLEditor" />
-					</visibleWhen>
-   	            </command>
-	        </menu>
-		</menuContribution>
-
-	</extension>
-
-	<!-- popup menu -->
-   <extension
-         point="org.eclipse.ui.popupMenus">
-      <viewerContribution
-            targetID="#CFMLEditorContext"
-            id="org.eclipse.ui.articles.action.contribution.popup.editor">
-         <action
-               label="%action.label.CFComment"
-               class="org.cfeclipse.cfml.editors.actions.CFCommentAction"
-               menubarPath="additions"
-               id="org.cfeclipse.cfml.editors.actions.CFComment">
-         </action>
-         <action
-               label="%action.label.RTrim"
-               class="org.cfeclipse.cfml.editors.actions.RTrimAction"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu"
-               id="org.cfeclipse.cfml.editors.actions.RTrim">
-         </action>
-         <menu
-               label="%menu.label.Selection"
-               path="additions"
-               id="org.cfeclipse.cfml.editors.contribution.subMenu">
-            <separator
-                  name="text">
-            </separator>
-            <separator
-                  name="text1">
-            </separator>
-            <separator
-                  name="text2">
-            </separator>
-         </menu>
-         <action
-               label="%action.label.ToCFScript"
-               class="org.cfeclipse.cfml.editors.actions.ToCFScriptAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.ToCFScript"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
-               id="org.cfeclipse.cfml.editors.actions.ToCFScript">
-         </action>
-         <action
-               label="%action.label.ToLower"
-               class="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
-               id="org.cfeclipse.cfml.editors.actions.ToLowerCase">
-         </action>
-         <action
-               label="%action.label.ToUpper"
-               class="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
-               id="org.cfeclipse.cfml.editors.actions.ToUpperCase">
-         </action>
-         <action
-               label="%action.label.WrapTag"
-               class="org.cfeclipse.cfml.editors.actions.WrapTagAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.WrapTag"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text"
-               id="org.cfeclipse.cfml.editors.actions.WrapTagAction">
-         </action>
-
-
-		<!-- ////// -->
-         <action
-               label="%action.label.45"
-               class="org.cfeclipse.cfml.editors.actions.CFVariableAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.CFVariable"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
-               id="org.cfeclipse.cfml.editors.actions.CFVariable">
-         </action>
-         <action
-               label="%action.label.46"
-               class="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.CFSingleQuote"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
-               id="org.cfeclipse.cfml.editors.actions.CFSingleQuote">
-         </action>
-         <action
-               label="%action.label.47"
-               class="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
-               id="org.cfeclipse.cfml.editors.actions.CFDoubleQuote">
-         </action>
-         <action
-               label="%action.label.ClipboardLink"
-               class="org.cfeclipse.cfml.editors.actions.ClipboardLinkAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.ClipboardLink"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
-               id="org.cfeclipse.cfml.editors.actions.ClipboardLinkAction">
-         </action>
-         <action
-               label="%action.label.48"
-               class="org.cfeclipse.cfml.editors.actions.LastActionAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.LastAction"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.subMenu/text1"
-               id="org.cfeclipse.cfml.editors.actions.LastTag">
-         </action>
-         <action
-               label="%action.label.51"
-               class="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelectionAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection">
-         </action>
-         <action
-               label="%action.label.52"
-               class="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelectionAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection">
-         </action>
-         <action
-               label="%action.label.53"
-               class="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkersAction"
-               definitionId="org.eclipse.ui.edit.text.folding.expand_all"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandAllMarkers">
-         </action>
-         <action
-               label="%action.label.54"
-               class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkersAction"
-               definitionId="org.eclipse.ui.edit.text.folding.collapse_all"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseAllMarkers">
-         </action>
-         <action
-               label="%action.label.55"
-               class="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkersAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers">
-         </action>
-         <action
-               label="%action.label.56"
-               class="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkersAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
-               menubarPath="org.cfeclipse.cfml.editors.contribution.folding"
-               id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers">
-         </action>
-      </viewerContribution>
-
-		<objectContribution
-				adaptable="true"
-				id="org.cfeclipse.cfml.applyNature"
-				nameFilter="*"
-				objectClass="org.eclipse.core.resources.IProject">
-			<action
-					class="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
-					enablesFor="+"
-					icon="icons/icons/16x16.gif"
-					id="org.cfeclipse.cfml.ui.actions.ApplyCFENatureAction"
-					label="%action.label.57"
-					menubarPath="org.eclipse.ui.projectConfigure/additions"
-					tooltip="%action.tooltip.40"/>
-		</objectContribution>      
-		
-		<objectContribution
-		        adaptable="true"
-		        id="org.cfeclipse.cfml.mappings.project"
-		        objectClass="org.eclipse.core.resources.IProject">
-			<menu
-					id="org.cfeclipse.cfml.projectMenu"
-					label="CFEclipse"
-					path="additions">
-				<separator name="group1"/>
-			</menu>
-			<filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
-			<action
-					class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
-					id="org.cfeclipse.cfml.setMapping.IProject"
-					label="Set CF Mapping"
-					menubarPath="org.cfeclipse.cfml.projectMenu/group1"/>
-			<action
-					class="org.cfeclipse.cfml.editors.actions.EditURLAction"
-					icon="icons/obj16/world_link.png"
-					id="org.cfeclipse.cfml.editURLAction"
-					label="Edit URL"
-					menubarPath="org.cfeclipse.cfml.projectMenu/group1"/>	           
-		</objectContribution>
-	  	      
-		<objectContribution
-				adaptable="true"
-				id="org.cfeclipse.cfml.mappings.folder"
-				objectClass="org.eclipse.core.resources.IFolder">
-			<menu
-					id="org.cfeclipse.cfml.folderMenu"
-					label="CFEclipse"
-					path="additions">
-				<separator name="group1"/>
-			</menu>
-			<filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
-			<action
-					class="org.cfeclipse.cfml.ui.actions.SetMappingAction"
-					id="org.cfeclipse.cfml.setMapping.IFolder"
-					label="Set CF Mapping" 
-					menubarPath="org.cfeclipse.cfml.folderMenu/group1"/>
-			<action
-				class="org.cfeclipse.cfml.editors.actions.EditURLAction"
-				icon="icons/obj16/world_link.png"
-				id="org.cfeclipse.cfml.editURLAction"
-				label="Edit URL"
-				menubarPath="org.cfeclipse.cfml.folderMenu/group1"/>				
-		</objectContribution>
-			
-		<objectContribution
-				adaptable="false"
-				id="org.cfeclipse.cfml.editFileURL"
-				objectClass="org.eclipse.core.resources.IFile">
-			<menu
-					id="org.cfeclipse.cfml.fileMenu"
-					label="CFEclipse"
-					path="additions">
-				<separator name="group1"/>
-			</menu>
-			<filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
-			<action
-					class="org.cfeclipse.cfml.editors.actions.EditURLAction"
-					icon="icons/obj16/world_link.png"
-					id="org.cfeclipse.cfml.editURLAction"
-					label="Edit URL"
-					menubarPath="org.cfeclipse.cfml.fileMenu/group1"/>
-		</objectContribution>
-		<objectContribution
-			adaptable="true"
-			id="org.cfeclipse.cfml.images.objectContribution1"
-			objectClass="org.eclipse.core.resources.IContainer">
-			<action
-				class="org.cfeclipse.cfml.images.PasteImageAction"
-				icon="icons/obj16/image_icon.png"
-				id="org.cfeclipse.cfml.images.action1"
-				label="Paste Image"
-				menubarPath="additions"
-				style="push">
-			</action>
-		</objectContribution>
-
-
-	</extension>
 	
-	<!-- Commands -->
-	<extension
-		point="org.eclipse.ui.commands">
-		
-		<category
-			name="%category.name.0"
-			description="%category.description.0"
-			id="org.cfeclipse.cfml.commandCategory"/>
-		
-		<!-- cfcomment -->
-		<command
-			name="%command.name.0"
-			description="%command.description.0"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.CFComment" />
-		<!-- line comment -->
-		<command
-			name="%command.name.lineComment"
-			description="%command.description.lineComment"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.LineComment" />
-		
-		<!-- comment based on section (i.e. js comments in js blocks, etc) -->
-		<command
-			name="%command.name.1"
-			description="%command.description.1"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.AutoComment"/>
-			
-		<!-- comment lines based on section (i.e. js comments in js blocks, etc) -->
-		<command
-			name="%command.name.lineComment"
-			description="%command.name.lineComment"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.AutoCommentLines"/>
-			
-		<!-- enclose in pound ... er ... hash signs -->
-		<command
-			name="%command.name.2"
-			description="%command.description.2"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.CFVariable"/>
-		
-		<!-- enclose in single quotes -->
-		<command
-			name="%command.name.3"
-			description="%command.description.3"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.CFSingleQuote"/>
-		
-		<!-- enclose in double quotes -->
-		<command
-			name="%command.name.4"
-			description="%command.description.4"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"/>
-		
-		<!-- enclose in cfoutputs -->
-		<command
-			name="%command.name.5"
-			description="%command.description.5"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.CFOutput"/>
-		
-		<!-- enclose in cfdump -->
-		<command
-			name="%command.name.6"
-			description="%command.description.6"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.CFDump"/>
-		
-		<!-- enclose in cfscript -->
-		<command
-			name="%command.name.7"
-			description="%command.description.7"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.CFScript"/>
-		
-		<!-- to lower case -->
-		<command
-			name="%command.name.ToCFScript"
-			description="%command.description.toCFScript"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.ToCFScript"/>
-
-		<!-- to lower case -->
-		<command
-			name="%command.name.8"
-			description="%command.description.8"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.ToLowerCase"/>
-		
-		<!-- to upper case -->
-		<command
-			name="%command.name.9"
-			description="%command.description.9"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.ToUpperCase"/>
-		
-		<!-- wrap tag -->
-		<command
-			name="%command.name.wrapTag"
-			description="%command.description.wrapTag"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.WrapTag"/>
-		
-		<!-- Insert Color -->
-		<command
-			name="%command.name.10"
-			description="%command.description.10"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.InsertColor"/>
-		
-		<!-- insert date -->
-		<command
-			name="%command.name.11"
-			description="%command.description.11"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.InsertDate"/>
-		
-		<!-- insert an html br action (for Brian Sadler) -->
-		<command
-			name="%command.name.12"
-			description="%command.description.12"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.InsertBR"/>
-		
-		<!-- insert an html nbsp action (for Michael Wolfe) -->
-		<command
-			name="%command.name.13"
-			description="%command.description.13"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.InsertNBSP"/>
-		
-		<!-- insert an html p action (for Michael Wolfe) -->
-		<command
-			name="%command.name.14"
-			description="%command.description.14"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.PTag"/>
-		
-		<!-- insert an html strong action (for Brian Sadler) -->
-		<command
-			name="%command.name.15"
-			description="%command.description.15"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.StrongTag"/>
-		
-		<!-- insert an html em action (for Brian Sadler) -->
-		<command
-			name="%command.name.16"
-			description="%command.description.16"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.EmTag"/>
-		
-		<!-- Reload the syntax dictionaries -->
-		<command
-			name="%command.name.17"
-			description="%command.description.17"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.ReloadDictionaries"/>
-		
-		<!-- refresh the browser -->
-		<command
-			name="%command.name.18"
-			description="%command.description.18"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.RefreshBrowser"/>
-		
-		<!-- browse to project root URL -->
-		<command
-			name="%command.name.19"
-			description="%command.description.19"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"/>
-		
-		<!-- browse to current page -->
-		<command
-			name="%command.name.20"
-			description="%command.description.20"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"/>
-		
-		<!-- insert a snippet -->
-		<command
-			name="%command.name.21"
-			description="%command.description.21"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.InsertSnippet"/>
-		
-		<!-- repeat last tag -->
-		<command
-			name="%command.name.22"
-			description="%command.description.22"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.LastAction"/>
-		
-		<!-- jump to matching tag -->
-		<command
-			name="%command.name.23"
-			description="%command.description.23"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction"/>
-		
-		<!-- Go and Get Help -->
-		<command
-			name="%command.name.24"
-			description="%command.description.24"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.GetHelp"/>
-		
-		<!-- Fire up the scribble pad -->
-		<command
-			name="%command.name.25"
-			description="%command.description.25"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.LoadScribblePad"/>
-								
-		<!-- Open in external browser -->
-		<command
-			name="%command.name.29"
-			description="%command.description.29"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID"/>
-		
-		<!-- Open in secondary external browser -->
-		<command
-			name="Browse in secondary browser"
-			description="%command.description.29"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2"/>
-		
-		<command
-			name="%command.name.30"
-			description="%command.description.30"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.NewFileActionID"/>
-		
-		<!-- edit tag command -->
-		<command 
-			name="%command.name.EditTag"
-			description="%command.description.EditTag"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.EditTagAction"/>
-		
-		<command 
-			name="%command.name.GotoFile"
-			description="%command.description.GotoFile"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.GotoFileAction"/>
-		
-		<command
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			description="%command.description.31"
-			id="org.cfeclipse.cfml.editors.actions.CFAbort"
-			name="%command.name.31"/>
-		
-		<!-- enclose in link from clipboard -->
-		<command
-			name="%action.label.ClipboardLink"
-			description="%command.description.ClipboardLink"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.ClipboardLink" />
-
-	    <command 
-	    	id="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
-            name="%toggleMarkOccurrences.label"
-			categoryId="org.cfeclipse.cfml.commandCategory"
-            description="%toggleMarkOccurrences.label" />
-
-	    <command 
-	    	id="org.cfeclipse.cfml.editors.actions.RenameInFileAction"
-            name="%renameInFile.label"
-            categoryId="org.cfeclipse.cfml.commandCategory"
-            description="%renameInFile.label" />
-        <command 
-        	name="%ContentFormat.label"
-        	description="Format Source" 
-        	categoryId="org.cfeclipse.cfml.commandCategory" 
-        	id="org.cfeclipse.cfml.FormatAction"
-        	>
-      	</command>
-        <command 
-        	name="%ExpandTagSelectionUp.label"
-        	description="ExpandTagSelectionUp" 
-        	categoryId="org.cfeclipse.cfml.commandCategory" 
-        	id="org.cfeclipse.cfml.commands.ExpandTagSelectionUp"
-        	>
-      	</command>
-        <command 
-        	name="%ExpandTagSelectionDown.label"
-        	description="ExpandTagSelectionDown" 
-        	categoryId="org.cfeclipse.cfml.commandCategory" 
-        	id="org.cfeclipse.cfml.commands.ExpandTagSelectionDown"
-        	>
-      	</command>
-        <command 
-        	name="%action.label.ExpandAll"
-        	description="%action.tooltip.ExpandAll" 
-        	categoryId="org.cfeclipse.cfml.commandCategory" 
-        	id="org.eclipse.ui.edit.text.folding.expand_all"
-        	>
-      	</command>
-		
-		<!-- Find a matching bracket pair -->
-		<!--
-		<command
-			name="Highlight matching bracket pair"
-			description="Highlights the pair of characters for the character beside the cursor."
-			categoryId="org.cfeclipse.cfml.commandCategory"
-			id="org.cfeclipse.cfml.editors.actions.FindBracket"/>
-		-->
-	</extension>
-	<extension point="org.eclipse.ui.bindings">
-		<!--
-			The "M" modifier keys are a platform-independent way of representing keys,
-			and these are generally preferred.
-			M1 is the COMMAND key on MacOS X, and the CTRL key on most other platforms.
-			M2 is the SHIFT key.
-			M3 is the Option key on MacOS X, and the ALT key on most other platforms.
-			M4 is the CTRL key on MacOS X, and is undefined on other platforms.
-			
-			See: http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/extension-points/org_eclipse_ui_bindings.html
-		-->
-		
-		<!-- line comment -->
-		<key sequence="M1+/"
-			commandId="org.cfeclipse.cfml.editors.actions.LineComment"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-
-		<!-- auto comment -->
-		<key sequence="M1+M2+C"
-			commandId="org.cfeclipse.cfml.editors.actions.AutoComment"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Browse to Current Page -->
-		<key sequence="M2+F5"
-			commandId="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Browse to Project Root -->
-		<key sequence="M1+M2+F5"
-			commandId="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- clipboard link -->
-		<key sequence="M1+M3+V"
-			commandId="org.cfeclipse.cfml.editors.actions.ClipboardLink"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- cfabort -->
-		<key sequence="M1+M2+A"
-			commandId="org.cfeclipse.cfml.editors.actions.CFAbort"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- cfdump -->
-		<key sequence="M1+M2+D"
-			commandId="org.cfeclipse.cfml.editors.actions.CFDump"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- cfoutput -->
-		<key sequence="M1+M2+O"
-			commandId="org.cfeclipse.cfml.editors.actions.CFOutput"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- cfscript -->
-		<key sequence="M1+M3+R"
-			commandId="org.cfeclipse.cfml.editors.actions.CFScript"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- CF comment -->
-		<key sequence="M1+M2+M"
-			commandId="org.cfeclipse.cfml.editors.actions.CFComment"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Collapse Cold Folding on Selection -->
-		<key sequence="M1+-"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			commandId="org.eclipse.ui.edit.text.folding.collapse"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Double Quote -->
-		<key sequence="M1+M2+&apos;"
-			commandId="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext" 
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Edit Tag -->
-		<key sequence="M1+T"
-			commandId="org.cfeclipse.cfml.editors.actions.EditTagAction"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Emphasis Tag -->
-		<key sequence="M1+I"
-			commandId="org.cfeclipse.cfml.editors.actions.EmTag"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-				
-		<!-- External Browser -->
-		<key sequence="F12"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- External Browser 2 -->
-		<key 
-			sequence="M2+F12"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			commandId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- GoTo File -->
-		<key sequence="M1+G"
-			commandId="org.cfeclipse.cfml.editors.actions.GotoFileAction"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Hash Variable -->
-		<key sequence="M1+M2+H"
-			commandId="org.cfeclipse.cfml.editors.actions.CFVariable"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Help -->
-		<key sequence="F1"
-			commandId="org.cfeclipse.cfml.editors.actions.GetHelp"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Insert Break -->
-		<key sequence="M1+Enter"
-			commandId="org.cfeclipse.cfml.editors.actions.InsertBR"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Insert Color -->
-		<key sequence="M1+M2+C C"
-			commandId="org.cfeclipse.cfml.editors.actions.InsertColor"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Insert Non-Breaking Space -->
-		<key sequence="M1+M2+Space"
-			commandId="org.cfeclipse.cfml.editors.actions.InsertNBSP"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Insert Snippet -->
-		<key sequence="M1+J"
-			commandId="org.cfeclipse.cfml.editors.actions.InsertSnippet"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Jump to Matching Tag -->
-		<key sequence="M1+M2+N"
-			commandId="org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Last Action -->
-		<key sequence="M1+Q"
-			commandId="org.cfeclipse.cfml.editors.actions.LastAction"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Load Scribble Pad -->
-		<key sequence="F8"
-			commandId="org.cfeclipse.cfml.editors.actions.LoadScribblePad"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Lower Case -->
-		<key sequence="M1+M2+L L"
-			commandId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
-			contextId="org.cfeclipse.cfml.cfmledif itorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-
-		<!-- Upper Case -->
-		<key sequence="M1+M2+U"
-			commandId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-
-		
-		<!-- Matching bracket pair -->
-		<!-- 
-		<key sequence="F6"
-			contextId="org.eclipse.ui.textEditorScope"
-			commandId="org.cfeclipse.cfml.editors.actions.FindBracket"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		-->
-		
-		<!-- Expand Tag Selection Up -->
-		<key sequence="M1+["
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			commandId="org.cfeclipse.cfml.commands.ExpandTagSelectionUp"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		<!-- Expand Tag Selection Down -->
-		<key sequence="M1+]"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			commandId="org.cfeclipse.cfml.commands.ExpandTagSelectionDown"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-
-		<!-- New File -->
-		<key sequence="M1+N"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			commandId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- P Tag -->
-		<key sequence="M1+M2+P"
-			commandId="org.cfeclipse.cfml.editors.actions.PTag"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Refresh Browser -->
-		<key sequence="F5"
-			commandId="org.cfeclipse.cfml.editors.actions.RefreshBrowser"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Reload Dictionaries -->
-		<key sequence="M1+F5"
-			commandId="org.cfeclipse.cfml.editors.actions.ReloadDictionaries"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Single Quote -->
-		<key sequence="M1+&apos;"
-			commandId="org.cfeclipse.cfml.editors.actions.CFSingleQuote"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-		
-		<!-- Strong Tag -->
-		<key sequence="M1+B"
-			commandId="org.cfeclipse.cfml.editors.actions.StrongTag"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-				
-		<!-- Wrap tag -->
-		<key sequence="M1+M2+W"
-			commandId="org.cfeclipse.cfml.editors.actions.WrapTag"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-
-		<!-- Rename in file -->
-		<key sequence="M1+2 R"
-			commandId="org.cfeclipse.cfml.editors.actions.RenameInFileAction"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	
-		<!-- Mark occurrences in file -->
-	      <key 
-	  	    	sequence="M2+M3+O"
-	  	    	contextId="org.cfeclipse.cfml.cfmleditorcontext"
-	  	    	commandId="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
-	  	    	schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" /> 
-	      <key 
-	      		platform="carbon" 
-	      		sequence="M1+M3+O" 
-				contextId="org.cfeclipse.cfml.cfmleditorcontext"
-				commandId="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
-				schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" /> 
-
-		<!-- Format Source -->
-		<key sequence="M1+M2+F"
-			commandId="org.cfeclipse.cfml.FormatAction"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-			
-		<key sequence="M1+= M1+="
-			commandId="org.eclipse.ui.edit.text.folding.expand_all"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-			
-		<key sequence="M1+- M1+-"
-			commandId="org.eclipse.ui.edit.text.folding.collapse_all"
-			contextId="org.cfeclipse.cfml.cfmleditorcontext"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-
-	</extension>
-	
-	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- Views -->
-   <extension
-         point="org.eclipse.ui.views">
-      <category
-            name="%category.name.1"
-            id="org.cfeclipse.cfml">
-      </category>
-      <view
-            name="%view.name.0"
-            icon="icons/ctool16/library.gif"
-            category="org.cfeclipse.cfml"
-            class="org.cfeclipse.cfml.views.snips.SnipTreeView"
-            id="org.cfeclipse.cfml.views.snips.sniptreeview">
-      </view>
-      <view
-            name="%view.name.1"
-            icon="icons/ctool16/globe.gif"
-            category="org.cfeclipse.cfml"
-            class="org.cfeclipse.cfml.views.browser.BrowserView"
-            id="org.cfeclipse.cfml.views.browser">
-      </view>
-      <view
-            name="%view.name.2"
-            icon="icons/obj16/bean.gif"
-            category="org.cfeclipse.cfml"
-            class="org.cfeclipse.cfml.views.cfcmethods.CFCMethodsView"
-            id="org.cfeclipse.cfml.views.cfcmethods.CFCMethodsView">
-      </view>
-      <view
-            class="org.cfeclipse.cfml.views.packageview.PackageView"
-            icon="icons/obj16/cfc.gif"
-            category="org.cfeclipse.cfml"
-            name="%view.name.3"
-            id="org.cfeclipse.cfml.views.packageview.PackageView"/>
-      <view
-            class="org.cfeclipse.cfml.views.dictionary.DictionaryView"
-            icon="icons/ctool16/dictionaries.gif"
-            category="org.cfeclipse.cfml"
-            name="%view.name.4"
-            id="org.cfeclipse.cfml.views.dictionary.DictionaryView"/>
-      <view
-            class="org.cfeclipse.cfml.views.explorer.FileExplorerView"
-            icon="icons/obj16/explorer.gif"
-            category="org.cfeclipse.cfml"
-            name="%view.name.5"
-            id="org.cfeclipse.cfml.views.explorer.FileExplorerView"/>
-      <view
-            class="org.cfeclipse.cfml.views.explorer.vfs.view.VFSView"
-            icon="icons/obj16/explorer.gif"
-            category="org.cfeclipse.cfml"
-            name="%view.name.8"
-            id="org.cfeclipse.cfml.views.explorer.vfs.view.VFSView"/>
-      <view
-            class="org.cfeclipse.cfml.views.images.ImagesView"
-            category="org.cfeclipse.cfml"
-            icon="icons/obj16/image_icon.png"
-            id="org.cfeclipse.cfml.images.imagesView"
-            name="%view.name.7">
-      </view>         
-      <!-- 
-      <view
-            icon="icons/obj16/document.gif"
-            class="org.cfeclipse.cfml.views.explorer.ftp.FtpLogView"
-            category="org.cfeclipse.cfml"
-            name="%view.name.6"
-            id="org.cfeclipse.cfml.views.explorer.ftp.FtpLogView"/>
-      
-      <view
-            category="org.cfeclipse.cfml"
-            class="org.cfeclipse.cfml.views.Toolbar"
-            icon="icons/obj16/tools.gif"
-            id="org.cfeclipse.cfml.views.Toolbar"
-            name="Toolbar"/>
-      
-     
-      <view
-            category="org.cfeclipse.cfml"
-            class="org.cfeclipse.cfml.views.snipex.SnipEx"
-            icon="icons/obj16/snip.gif"
-            id="org.cfeclipse.cfml.views.snipex.SnipEx"
-            name="SnipEx"/>
-           
-            
-        <view
-            category="org.cfeclipse.cfml"
-            class="org.cfeclipse.cfml.views.variables.VariablesView"
-            icon="icons/ctool16/set.gif"
-            id="org.cfeclipse.cfml.views.variables"
-            name="Variables"/>
-		-->
-
-   </extension>
-	<!-- ////////////////////////////////////////////////////////////// -->
-	<!-- help -->
-   
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            class="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            name="%page.name.0"
-            id="org.cfeclipse.cfml.preferences.CFMLPreferencePage">
-      </page>
-      <page
-            class="org.cfeclipse.cfml.preferences.CodeStylePreferencePage"
-            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            name="%page.name.codestyle"
-            id="org.cfeclipse.cfml.preferences.CodeStylePreferencePage"/>
-      <page
-            class="org.cfeclipse.cfml.preferences.CFMLColorsPreferencePage"
-            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            name="%page.name.1"
-            id="org.cfeclipse.cfml.preferences.CFMLColorsPreferencePage">
-      </page>
-      <page
-            class="org.cfeclipse.cfml.preferences.SQLColorsPreferencePage"
-            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            name="%page.name.2"
-            id="org.cfeclipse.cfml.preferences.SQLColorsPreferencePage">
-      </page>
-       <page
-            class="org.cfeclipse.cfml.preferences.HTMLColorsPreferencePage"
-            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            name="%page.name.3"
-            id="org.cfeclipse.cfml.preferences.HTMLColorsPreferencePage">
-      </page>
-      <page
-            class="org.cfeclipse.cfml.preferences.ParserPreferencePage"
-            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            name="%page.name.4"
-            id="org.cfeclipse.cfml.preferences.ParserPreferencePage"/>
-      <page
-            class="org.cfeclipse.cfml.preferences.AutoIndentPreferencePage"
-            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            name="%page.name.5"
-            id="org.cfeclipse.cfml.preferences.AutoIndentPreferencePage"/>
-      <page
-            class="org.cfeclipse.cfml.preferences.ScribblePadPreferencePage"
-            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            name="%page.name.6"
-            id="org.cfeclipse.cfml.preferences.ScribblePreferencePage"/>
-      <page
-            class="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            name="%page.name.7"
-            id="org.cfeclipse.cfml.preferences.EditorPreferencePage"/>
-      <page
-            class="org.cfeclipse.cfml.preferences.AnnotationPreferencePage"
-            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            name="%page.name.8"
-            id="org.cfeclipse.cfml.preferences.AnnotationPreferencePage"/>
-
-      <page
-            class="org.cfeclipse.cfml.preferences.TaskTagPreferencePage"
-            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            name="Task Tags"
-            id="org.cfeclipse.cfml.preferences.TaskTagPreferencePage"/>
-
-      <page
-            name="%page.name.textselection"
-            class="org.cfeclipse.cfml.preferences.TextSelectionPreferencePage"
-            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            id="org.cfeclipse.cfml.preferences.TextSelectionPreferencePage">
-         <keywordReference id="org.cfeclipse.cfml.ui.TextSelection"/>
-      </page>
-
-      <page
-            name="%page.CFCodeFormatterPreferences"
-            category="org.cfeclipse.cfml.preferences.CodeStylePreferencePage"
-            class="org.cfeclipse.cfml.preferences.CodeFormatterPreferencePage"
-            id="org.cfeclipse.cfml.preferences.FormattingPreferencePage">
-            <keywordReference id="org.cfeclipse.cfml.editors.formatters"/>
-      </page>
-
-      <page
-            name="%page.ConnectionPropertyPreferences"
-            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            class="org.cfeclipse.cfml.preferences.FtpConnectionDialog"
-            id="org.cfeclipse.cfml.preferences.FtpConnectionDialog">
-            <keywordReference id="org.cfeclipse.cfml.editors.connections"/>
-      </page>
-
-      <page
-            class="org.cfeclipse.cfml.preferences.FoldingPreferencePage"
-            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            name="%page.name.9"
-            id="org.cfeclipse.cfml.preferences.FoldingPreferencePage"/>
-      <page
-            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            class="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
-            id="org.cfeclipse.cfml.preferences.BrowserPreferencePage"
-            name="Browser"/>
-       
-      <page
-            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
-            class="org.cfeclipse.cfml.templates.preferences.TemplatesPreferencePage"
-            id="org.cfeclipse.cfml.preferences.Templates"
-            name="Templates"/>
-      <page
-            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            class="org.cfeclipse.cfml.preferences.SnipExPreferencePage"
-            id="org.cfeclipse.cfml.preferences.SnipExPreferencePage"
-            name="%page.name.11"/>
-       
-   </extension>
-   
-   <extension
-         point="org.eclipse.ui.propertyPages">
-      <page
-            class="org.cfeclipse.cfml.properties.ProjectPropertyPage"
-            id="org.cfeclipse.cfml.properties.samplePropertyPage"
-            name="%page.name.10"
-            nameFilter="*">
-         <filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
-         <enabledWhen>
-            <instanceof
-                  value="org.eclipse.core.resources.IProject">
-            </instanceof>
-         </enabledWhen>
-      </page>
-      <page
-            class="org.cfeclipse.cfml.properties.MappingsPropertyPage"
-            id="org.cfeclipse.cfml.properties.MappingsPropertyPage"
-            name="CFEMappings"
-            nameFilter="*">
-         <filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
-         <enabledWhen>
-            <instanceof
-                  value="org.eclipse.core.resources.IProject">
-            </instanceof>
-         </enabledWhen>
-      </page>
-            <!--
-      <page
-            class="org.cfeclipse.cfml.properties.ResourceURL"
-            icon="icons/icons/cfeclipse_16x16.png"
-            id="org.cfeclipse.cfml.properties.ResourceURL"
-            name="CFE URL"
-            nameFilter="*"
-            objectClass="org.eclipse.core.resources.IResource"/>
-            -->
-   </extension>
-   
-	<!-- Chris Queeners area -->
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <category
-            name="%category.name.2"
-            id="org.cfeclipse.cfml.category1">
-      </category>
-      <wizard
-            category="org.cfeclipse.cfml.category1"
-            class="org.cfeclipse.cfml.wizards.NewCFEclipseProject"
-            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            icon="icons/icons/cfeclipse_16x16.png"
-            id="org.cfeclipse.cfml.wizards.NewProject"
-            name="%wizard.name.0"
-            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-            project="true">
-			<description>%wizard.description.0</description>
-	 </wizard>
-      <wizard
-            name="%wizard.name.1"
-            icon="icons/obj16/default.gif"
-            category="org.cfeclipse.cfml.category1"
-            class="org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard"
-            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            project="false"
-            id="org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard">
-            <description>%wizard.description.1</description>
-      </wizard>
-      <wizard
-            name="%wizard.name.2"
-            icon="icons/obj16/class.gif"
-            category="org.cfeclipse.cfml.category1"
-            class="org.cfeclipse.cfml.wizards.cfcwizard.NewCFCWizard"
-            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            project="false"
-            id="org.cfeclipse.cfml.wizards.cfcwizard.NewCFCWizard">
-            <description>%wizard.description.2</description>
-      </wizard>
-      <wizard
-            name="%wizard.name.3"
-            icon="icons/ctool16/insertsnip.gif"
-            category="org.cfeclipse.cfml.category1"
-            class="org.cfeclipse.cfml.wizards.templatefilewizard.NewTemplateFileWizard"
-            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            project="false"
-            id="org.cfeclipse.cfml.wizards.cfmlwizard.NewTemplateFileWizard">
-            <description>%wizard.description.3</description>
-      </wizard>
-      
-      
-      
-      <!--
-     <wizard
-            name="New Project From Template"
-            icon="icons/obj16/default.gif"
-            category="org.cfeclipse.cfml.category1"
-            class="org.cfeclipse.cfml.wizards.projectfromtemplatewizard.ProjectFromTemplateWizard"
-            preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-            finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-            project="true"
-            id="org.cfeclipse.cfml.wizards.projectfromtemplatewizard.ProjecFromTemplateWizard">
-            <description>This wizard creates a new project using one of the templates defined</description>
-      </wizard>
-     TODO:  Add this back in
-     <wizard
-           canFinishEarly="false"
-           category="org.cfeclipse.cfml.category1"
-           class="org.cfeclipse.cfml.wizards.projectfromtemplate.ProjectFromTemplate"
-           finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-           hasPages="true"
-           icon="icons/ctool16/application.gif"
-           id="org.cfeclipse.cfml.ptemplate"
-           name="New Project From Template2"
-           preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-           project="true"/>
-           -->
-      <!--
-     <wizard
-           category="org.cfeclipse.cfml.category1"
-           class="org.cfeclipse.cfml.wizards.applicationcfcwizard.ApplicationCFCWizard"
-           finalPerspective="org.cfeclipse.cfml.perspective.CFML"
-           icon="icons/ctool16/application.gif"
-           id="org.cfeclipse.cfml.wizards.applicationcfc.ApplicationCFCWizard"
-           name="New Application.cfc"
-           preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
-           project="false">
-     </wizard>
-     -->
-   </extension>
-   <extension
-         id="CFENature"
-         name="CFE Nature"
-         point="org.eclipse.core.resources.natures">
-      <runtime>
-         <run class="org.cfeclipse.cfml.natures.CFENature"/>
-      </runtime>
-   </extension>
-   
-   <extension
-         point="org.eclipse.ui.ide.resourceFilters">
-      <filter pattern="*.bak">
-         <description>
-            %filter.description.0
-         </description>
-      </filter>
-      <filter pattern="*.cfc">
-         <description>
-            %filter.description.1
-         </description>
-      </filter>
-      <filter pattern="*.cfm">
-         <description>
-            %filter.description.2
-         </description>
-      </filter>
-      <filter pattern="*.cfml">
-         <description>
-            %filter.description.3
-         </description>
-      </filter>
-      <filter pattern="*.css">
-         <description>
-            %filter.description.4
-         </description>
-      </filter>
-      <filter pattern="*.gif">
-         <description>
-            %filter.description.5
-         </description>
-      </filter>
-      <filter pattern="*.htm">
-         <description>
-            %filter.description.6
-         </description>
-      </filter>
-      <filter pattern="*.html">
-         <description>
-            %filter.description.7
-         </description>
-      </filter>
-      <filter pattern="*.js">
-         <description>
-            %filter.description.8
-         </description>
-      </filter>
-      <filter pattern="*.lck">
-         <description>
-            %filter.description.9
-         </description>
-      </filter>
-      <filter pattern="*.log">
-         <description>
-            %filter.description.10
-         </description>
-      </filter>
-      <filter pattern="*.project">
-         <description>
-            %filter.description.11
-         </description>
-      </filter>
-      <filter pattern="*.properties">
-         <description>
-            %filter.description.12
-         </description>
-      </filter>
-      <filter pattern="*.swf">
-         <description>
-            %filter.description.13
-         </description>
-      </filter>
-      <filter pattern="*.txt">
-         <description>
-            %filter.description.14
-         </description>
-      </filter>
-      <filter pattern="*.xml">
-         <description>
-            %filter.description.15
-         </description>
-      </filter>
-   </extension>
-   <extension
-         point="org.eclipse.ui.ide.markerImageProviders">
-      <imageprovider
-            markertype="org.eclipse.core.resources.problemmarker"
-            icon="taskicon.gif"
-            id="org.cfeclipse.cfml.ui.ide.ProblemMarker"/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.ide.projectNatureImages">
-      <image
-            natureId="org.cfeclipse.cfml.CFENature"
-            icon="icons/obj16/project-overlay.png"
-            id="org.cfeclipse.cfml.CFENature_Image"/>
-   </extension>
-
-   <extension point="org.eclipse.core.resources.markers" 
-   			  id="todomarker" 
-   			  name="CFEclipse Task Tag">
-   	<super type="org.eclipse.core.resources.taskmarker"/>
-   	<persistent value="true"/>
-   	<attribute name="priority"/>
-   	<attribute name="message"/>
-   	<attribute name="done"/>
-
-   </extension>
-   
-   <extension point="org.eclipse.core.resources.markers"
-		id="parserProblemMarker"
-		name="CFEclipse Parser problem">
-		<super type="org.eclipse.core.resources.problemmarker"/>
-		<persistent value="true"/>
-	</extension>
-      
-   <extension point="org.eclipse.core.resources.markers"
-		id="parserWarningMarker"
-		name="CFEclipse parser warning">
-		<super type="org.eclipse.core.resources.problemmarker"/>
-		<persistent value="true"/>
-	</extension>
-
-	<extension point="org.eclipse.core.resources.markers"
-		id="org.cfeclipse.cfml.occurrencemarker"
-		name="%occurrencemarker.label">
-		<super type="org.eclipse.core.resources.textmarker"/>
-      <super type="org.eclipse.core.resources.bookmark"/>
-      <persistent value="true"/>
-      <attribute name="message"/>
-      <attribute name="location"/>
-	</extension>
-
-	<extension point="org.eclipse.core.resources.markers"
-		id="org.cfeclipse.cfml.tagbeginendmarker"
-		name="Mark Matching Tags">
-		<super type="org.eclipse.core.resources.textmarker"/>
-		<persistent value="true"/>
-	</extension>
-
-    <extension point="org.eclipse.ui.editors.annotationTypes">
-    	<type name="org.cfeclipse.cfml.parserProblemAnnotation"
-    		markerType="org.cfeclipse.cfml.parserProblemMarker"/>
-
-    	<type name="org.cfeclipse.cfml.parserWarningAnnotation"
-    		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
-
-    	<type id="org.cfeclipse.cfml.occurrenceAnnotation" name="Occurrence Marker"
-    		super="org.eclipse.ui.workbench.texteditor.info"
-    		markerType="org.cfeclipse.cfml.occurrencemarker"/>
- 
-
-    	<type name="org.cfeclipse.cfml.tagbeginendAnnotation"
-    		markerType="org.cfeclipse.cfml.tagbeginendmarker"
-    		super="org.eclipse.ui.workbench.texteditor.info"
-    		 markerSeverity="0" />
-
-    </extension>
-
-	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
-		<specification
-			annotationType="org.cfeclipse.cfml.parserProblemAnnotation"
-			verticalRulerPreferenceKey="parserproblem.rulers.vertical"
-			textPreferenceKey="parserproblem.text"
-			colorPreferenceKey="parserproblem.color"
-			highlightPreferenceKey="parserproblem.background"
-			textPreferenceValue="true"
-			textStylePreferenceKey="parserproblem.style"
-			textStylePreferenceValue="SQUIGGLES"
-			overviewRulerPreferenceKey="parserproblem.rulers.overview"
-			presentationLayer="4"
-			highlightPreferenceValue="false"
-			label="%specification.label.0"
-			colorPreferenceValue="255,0,128"
-			verticalRulerPreferenceValue="true"
-			overviewRulerPreferenceValue="true"
-			symbolicIcon="error"/>
-
-		<specification
-			annotationType="org.cfeclipse.cfml.parserWarningAnnotation"
-			verticalRulerPreferenceKey="parserwarning.rulers.vertical"
-			textPreferenceKey="parserwarning.text"
-			colorPreferenceKey="parserwarning.color"
-			textStylePreferenceKey="parsewarning.style"
-			textStylePreferenceValue="SQUIGGLES"
-			highlightPreferenceKey="parserwarning.background"
-			highlightPreferenceValue="false"
-			textPreferenceValue="true"
-			overviewRulerPreferenceKey="parserwarning.rulers.overview"
-			presentationLayer="4"
-			label="%specification.label.1"
-			colorPreferenceValue="244,200,45"
-			verticalRulerPreferenceValue="true"
-			overviewRulerPreferenceValue="true"
-			symbolicIcon="warning"/>
-
-	  <specification
-            annotationType="org.cfeclipse.cfml.occurrenceAnnotation"
-            label="%occurrencemarker.label"
-			icon="icons/obj16/mark_occurrence.gif"
-            textPreferenceKey="occurrenceAnnotation.text"
-            textPreferenceValue="true"
-            highlightPreferenceKey="occurrenceAnnotation.background"
-			highlightPreferenceValue="true"
-			textStylePreferenceKey="occurrenceAnnotation.style"
-			textStylePreferenceValue="DASHED_BOX"
-            overviewRulerPreferenceKey="occurrenceAnnotation.IndicationInOverviewRuler"
-			overviewRulerPreferenceValue="true"
-            verticalRulerPreferenceKey="occurrenceAnnotation.IndicationInVerticalRuler"
-			verticalRulerPreferenceValue="true"
-            symbolicIcon="info"
-            colorPreferenceKey="occurrenceAnnotation.color"
-            colorPreferenceValue="222,222,222"
-            presentationLayer="4"
-            showInNextPrevDropdownToolbarActionKey="showOccurrenceInNextPrevDropdownToolbarAction"
-            showInNextPrevDropdownToolbarAction="true"
-            isGoToNextNavigationTargetKey="isOccurrenceGoToNextNavigationTarget"
-	        isGoToNextNavigationTarget="true"
-            isGoToPreviousNavigationTargetKey="isOccurrenceGoToPreviousNavigationTarget"
-	        isGoToPreviousNavigationTarget="true">
-	  </specification>	
-
-
-	  <specification
-            annotationType="org.cfeclipse.cfml.tagbeginendAnnotation"
-            label="Begin End Tag Marker"
-			icon="icons/ctool16/show.gif"
-            textPreferenceKey="tagbeginendAnnotation.text"
-            textPreferenceValue="true"
-            highlightPreferenceKey="tagbeginendAnnotation.background"
-			highlightPreferenceValue="false"
-			textStylePreferenceKey="tagbeginendAnnotation.style"
-			textStylePreferenceValue="UNDERLINE"
-            overviewRulerPreferenceKey="tagbeginendAnnotation.IndicationInOverviewRuler"
-			overviewRulerPreferenceValue="true"
-            verticalRulerPreferenceKey="tagbeginendAnnotation.IndicationInVerticalRuler"
-			verticalRulerPreferenceValue="true"
-            symbolicIcon="info"
-            colorPreferenceKey="tagbeginendAnnotation.color"
-            colorPreferenceValue="212,212,212"
-            presentationLayer="4"
-            showInNextPrevDropdownToolbarActionKey="showOccurrenceInNextPrevDropdownToolbarAction"
-            showInNextPrevDropdownToolbarAction="true"
-            isGoToNextNavigationTargetKey="isTagbeginendGoToNextNavigationTarget"
-	        isGoToNextNavigationTarget="true"
-            isGoToPreviousNavigationTargetKey="isTagbeginendGoToPreviousNavigationTarget"
-	        isGoToPreviousNavigationTarget="true">
-	  </specification>		
-   </extension>
-   
-   
-   
-   <extension point="org.eclipse.ui.perspectiveExtensions">
-        <perspectiveExtension
-            targetID="org.eclipse.ui.resourcePerspective">
-            <perspectiveShortcut id="org.cfeclipse.cfml.perspective.CFML"/>
-        </perspectiveExtension>
-       <perspectiveExtension targetID = "org.cfeclipse.cfml.perspective.CFML">
-     	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
-     	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
-     	 <showInPart id= "org.cfeclipse.cfml.views.explorer.vfs.view.VFSView" />
-     	 <showInPart id= "org.cfeclipse.cfml.views.snips.sniptreeview" />
-     	 <showInPart id= "org.cfeclipse.cfml.images.imagesView" />     	 
-         <viewShortcut
-               id="org.eclipse.ui.navigator.ProjectExplorer">
-         </viewShortcut>
-         <!-- this view doesn't exist? Holdover?
-         <viewShortcut
-               id="org.eclipse.ui.navigator.CommonNavigator">
-         </viewShortcut>
-         -->
-         <viewShortcut
-               id="org.eclipse.pde.runtime.LogView">
-         </viewShortcut>
-         <viewShortcut
-               id="org.cfeclipse.cfml.images.imagesView">
-         </viewShortcut>
-         <viewShortcut
-               id="org.cfeclipse.cfml.views.explorer.vfs.view.VFSView">
-         </viewShortcut>
-      </perspectiveExtension>
-      <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
-         <viewShortcut
-               id="org.cfeclipse.cfml.images.imagesView">
-         </viewShortcut>
-      </perspectiveExtension>
-	  <perspectiveExtension targetID="org.cfeclipse.cfml.perspective.CFML">
-	  		<actionSet id="org.cfeclipse.cfml.actionset" />		
-	  </perspectiveExtension>
-
-
-  </extension>
-  
-  
-  
-  
-  
-   <extension
-         point="org.eclipse.ui.contexts">
-      <context
-            id="org.cfeclipse.cfml.cfmleditorcontext"
-            name="%context.name.0"
-            parentId="org.eclipse.ui.textEditorScope"/>
-   </extension>
-   
-   <extension
-         id="product"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="org.eclipse.ui.ide.workbench"
-            name="CFEclipse">
-         <property
-               name="windowImages"
-               value="icons/icons/16x16.gif,icons/icons/32x32.gif,icons/icons/48x48.gif,icons/icons/64x64.gif,icons/icons/128x128.gif"/>
-         <property
-               name="aboutImage"
-               value="icons/icons/about.gif"/>
-         <property
-               name="preferenceCustomization"
-               value="plugin_customization.ini"/>
-         <property
-               name="aboutText"
-               value="CFEclipse&#x0A;&#x0A;Version: 1.4.4&#x0A;&#x0A;(c)  Copyright (c) 2004-2011 The CFEclipse Project &#x0A;Visit http://www.cfeclipse.org"/>
-      </product>
-   </extension>
-   <extension
-         point="org.eclipse.ui.intro.configExtension">
-      <configExtension
-            configId="org.eclipse.ui.intro.universalConfig"
-            content="doc/intro/overviewExtensionContent.xml">
-      </configExtension>
-      <configExtension
-            configId="org.eclipse.ui.intro.universalConfig"
-            content="doc/intro/whatsNewExtensionContent.xml">
-      </configExtension>
-      <configExtension
-            configId="org.eclipse.ui.intro.universalConfig"
-            content="doc/intro/tutorialsExtensionContent.xml">
-      </configExtension>
-   </extension>
-   <extension
-         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
-      <category
-            id="org.cfeclipse.cfml.cheatsheets"
-            name="CFEclipse">
-      </category>
-      <cheatsheet
-            category="org.cfeclipse.cfml.cheatsheets"
-            contentFile="doc/cheatsheets/cheatsheet.xml"
-            id="org.cfeclipse.cfml.cheatsheets.cheatsheet"
-            name="Use Task-Focused UI">
-         <description>
-            Learn how to use Task-Focused UI
-         </description>
-      </cheatsheet>
-   </extension> 
-   <extension
-         id="org.cfeclipse.cfml.builders.componentbuilder"
-         name="CF Component Builder"
-         point="org.eclipse.core.resources.builders">
-      <builder hasNature="true">
-         <run class="org.cfeclipse.cfml.builders.CFComponentBuilder"/>
-      </builder>
-   </extension>
-
-   <extension
-         point="org.eclipse.ui.exportWizards">
-      <category
-            id="org.cfeclipse.cfml.snipex.category"
-            name="SnipEx"/>
-      <wizard
-            category="org.cfeclipse.cfml.snipex.category"
-            class="org.cfeclipse.cfml.wizards.snipex.ExportApplicationWizard"
-            id="org.cfeclipse.cfml.snipex.exportapplication"
-            name="Export Application to a SnipEx "/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.importWizards">
-      <category
-            id="org.cfeclipse.cfml.wizards.snipex.application.sampleCategory"
-            name="SnipEx"/>
-      <wizard
-            category="org.cfeclipse.cfml.wizards.snipex.application.sampleCategory"
-            class="org.cfeclipse.cfml.wizards.snipex.application.ImportApplicationWizard"
-            icon="icons/sample.gif"
-            id="org.cfeclipse.cfml.wizards.snipex.application.ImportApplicationWizard"
-            name="Import Application">
-         <description>
-            Import a file from the local file system into the workspace.
-         </description>
-      </wizard>
-   </extension>
-   <extension
-         point="org.eclipse.ui.elementFactories">
-      <factory
-            class="org.cfeclipse.cfml.editors.CFJavaFileEditorInputFactory"
-            id="org.cfeclipse.cfml.CFJavaFileEditorInputFactory"/>
-   </extension>
-   <!-- TODO: class is missing for this
-   <extension
-         point="org.eclipse.search.searchResultViewPages">
-      <viewPage
-            class="org.cfeclipse.cfml.search.SearchResultPage"
-            id="org.cfeclipse.cfml.search.search"
-            searchResultClass="org.cfeclipse.cfml.search.SearchResult">
-      </viewPage>
-   </extension>
-   -->
-   <!-- detachable toolbar -->
-   
-   <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="org.cfeclipse.cfml.actionset"
-            label="CFEclipse"
-            visible="false">
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
-               id="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
-				icon="icons/obj16/mark_occurrence.gif"
-               label="%toggleMarkOccurrences.label"
-               state="true"
-               style="toggle"
-  				retarget="true" 
-              	toolbarPath="BasicCFEditorText"
-               tooltip="%toggleMarkOccurrences.tooltip"/>
-
-          <!-- Word Wrap -->
-        <action
-              class="org.cfeclipse.cfml.editors.actions.WordWrapAction"
-              icon="icons/ctool16/wordwrap.gif"
-              id="org.cfeclipse.cfml.editors.actions.wordWrapAction"
-              label="%action.label.WordWrap"
-              state="false"
-              style="toggle"
-              toolbarPath="BasicCFEditorText"
-              tooltip="%action.tooltip.WordWrap"/>
-		<!-- cfcomment -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.CFComment"
-               label="%action.label.Comment"
-               icon="icons/ctool16/comment.gif"
-               tooltip="%action.tooltip.Comment"
-               class="org.cfeclipse.cfml.editors.actions.CFCommentAction"
-               toolbarPath="BasicCFEditorText"
-               id="org.cfeclipse.cfml.editors.actions.CFCommentAction">
-         </action>
-		<!-- smart comment -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.AutoComment"
-               label="%action.label.AutoComment"
-               icon="icons/ctool16/smartcomment.gif"
-               tooltip="%action.tooltip.AutoComment"
-               class="org.cfeclipse.cfml.editors.actions.AutoCommentAction"
-               toolbarPath="BasicCFEditorText"
-               id="org.cfeclipse.cfml.editors.actions.AutoCommentAction">
-         </action>
-		<!-- Surround with #s -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.CFVariable"
-               label="%action.label.Variable"
-               icon="icons/ctool16/hash.gif"
-               tooltip="%action.tooltip.Variable"
-               class="org.cfeclipse.cfml.editors.actions.CFVariableAction"
-               toolbarPath="BasicCFEditorText"
-               id="org.cfeclipse.cfml.editors.actions.CFVariableAction">
-         </action>
-		<!-- Surround with single quotes -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.CFSingleQuote"
-               label="%action.label.SingleQuotes"
-               icon="icons/ctool16/squote.gif"
-               tooltip="%action.tooltip.SingleQuotes"
-               class="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction"
-               toolbarPath="BasicCFEditorText"
-               id="org.cfeclipse.cfml.editors.actions.CFSingleQuoteAction">
-         </action>
-		<!-- Surround with double quotes -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.CFDoubleQuote"
-               label="%action.label.DoubleQuotes"
-               icon="icons/ctool16/dquote.gif"
-               tooltip="%action.tooltip.DoubleQuotes"
-               class="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction"
-               toolbarPath="BasicCFEditorText"
-               id="org.cfeclipse.cfml.editors.actions.CFDoubleQuoteAction">
-         </action>
-		<!-- Surround with simple cfoutputs -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.CFOutput"
-               label="%action.label.CFOutput"
-               icon="icons/ctool16/output.gif"
-               tooltip="%action.tooltip.CFOutput"
-               class="org.cfeclipse.cfml.editors.actions.CFOutputAction"
-               toolbarPath="BasicCFEditorCommand"
-               id="org.cfeclipse.cfml.editors.actions.CFOutputAction">
-         </action>
-		<!-- Surround with a simple cfdump -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.CFDump"
-               label="%action.label.CFDump"
-               icon="icons/ctool16/dump.gif"
-               tooltip="%action.tooltip.CFDump"
-               class="org.cfeclipse.cfml.editors.actions.CFDumpAction"
-               toolbarPath="BasicCFEditorCommand"
-               id="org.cfeclipse.cfml.editors.actions.CFDumpAction">
-         </action>
-		<!-- Surround with a cfscript -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.CFAbortAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.CFAbort"
-               icon="icons/ctool16/stop.gif"
-               id="org.cfeclipse.cfml.editors.actions.CFAbortAction"
-               label="%action.label.CFAbort"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.CFAbort"/>
-         <action
-               class="org.cfeclipse.cfml.editors.actions.CFScriptAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.CFScript"
-               icon="icons/ctool16/script.gif"
-               id="org.cfeclipse.cfml.editors.actions.CFScriptAction"
-               label="%action.label.CFScript"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.CFScript">
-         </action>
-		<!-- to cfscript -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.ToCFScript"
-               label="%action.label.ToCFScript"
-               icon="icons/ctool16/tolower.gif"
-               tooltip="%action.tooltip.ToCFScript"
-               class="org.cfeclipse.cfml.editors.actions.ToCFScriptAction"
-               toolbarPath="BasicCFEditorText"
-               id="org.cfeclipse.cfml.editors.actions.ToCFScriptAction">
-         </action>
-		<!-- to lower case -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
-               label="%action.label.ToLower"
-               icon="icons/ctool16/tolower.gif"
-               tooltip="%action.tooltip.ToLower"
-               class="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction"
-               toolbarPath="BasicCFEditorText"
-               id="org.cfeclipse.cfml.editors.actions.ToLowerCaseAction">
-         </action>
-		<!-- to upper case -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.ToUpperCase"
-               label="%action.label.ToUpper"
-               icon="icons/ctool16/toupper.gif"
-               tooltip="%action.tooltip.ToUpper"
-               class="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction"
-               toolbarPath="BasicCFEditorText"
-               id="org.cfeclipse.cfml.editors.actions.ToUpperCaseAction">
-         </action>
-		<!-- wrap tag -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.WrapTag"
-               label="%action.label.WrapTag"
-               icon="icons/ctool16/repeattag.gif"
-               tooltip="%action.tooltip.WrapTag"
-               class="org.cfeclipse.cfml.editors.actions.WrapTagAction"
-               toolbarPath="BasicCFEditorText"
-               id="org.cfeclipse.cfml.editors.actions.WrapTagAction">
-         </action>
-		<!-- insert date -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.InsertDateAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.InsertDate"
-               icon="icons/ctool16/time.gif"
-               id="org.cfeclipse.cfml.editors.actions.InsertDateAction"
-               label="%action.label.InsertDate"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.InsertDate">
-         </action>
-         <!-- insert color -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.InsertColorAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.InsertColor"
-               icon="icons/ctool16/palette.gif"
-               id="org.cfeclipse.cfml.editors.actions.InsertColorAction"
-               label="%action.label.InsertColor"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.InsertColor">
-         </action>
-          <!-- repeat last tag (for Brian Sadler) -->
-         <action
-               definitionId="org.cfeclipse.cfml.editors.actions.LastAction"
-               label="%action.label.RepeatLastTag"
-     		   icon="icons/ctool16/repeattag.gif"
-               tooltip="%action.tooltip.RepeatLastTag"
-               class="org.cfeclipse.cfml.editors.actions.LastActionAction"
-               toolbarPath="BasicCFEditorCommand"
-               id="org.cfeclipse.cfml.editors.actions.LastActionAction">
-         </action>
-         <!-- refresh the browser view action -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.RefreshBrowser"
-               icon="icons/ctool16/refresh.gif"
-               id="org.cfeclipse.cfml.editors.actions.RefreshBrowserAction"
-               label="%action.label.Refresh"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.Refresh">
-         </action>
-         <!-- insert snippet action -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.InsertSnippet"
-               icon="icons/ctool16/insertsnip.gif"
-               id="org.cfeclipse.cfml.editors.actions.InsertSnippetAction"
-               label="%action.label.InsertSnippet"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.InsertSnippet">
-         </action>
-          <!-- Get Online Help by Mark Drew aged 30 -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.GetHelpAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.GetHelp"
-               icon="icons/ctool16/help.gif"
-               id="org.cfeclipse.cfml.editors.actions.GetHelpAction"
-               label="%action.label.GetTagHelp"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.GetTagHelp">
-         </action>
-          <!-- Launch Scribble Pad -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.LoadScribblePadAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.LoadScribblePad"
-               icon="icons/ctool16/scribble.gif"
-               id="org.cfeclipse.cfml.editors.actions.LoadScribbleAction"
-               label="%action.label.LoadScribble"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.LoadScribble">
-         </action>
-		<!-- external browser -->
- 		<action
-               toolbarPath="BasicCFEditorCommand"
-               label="Browse in secondary browser"
-               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
-               tooltip="%action.tooltip.Browse"
-               icon="icons/ctool16/browser_secondary.gif"
-               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction2"
-               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID2">
-         </action>
-         <action
-               toolbarPath="BasicCFEditorCommand"
-               label="%action.label.Browse"
-               class="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
-               tooltip="%action.tooltip.Browse"
-               icon="icons/ctool16/browser_primary.gif"
-               id="org.cfeclipse.cfml.editors.actions.ExternalBrowserAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.ExternalBrowserActionID">
-         </action>
-		 <!-- browse to current page action -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPage"
-               icon="icons/ctool16/globe.gif"
-               id="org.cfeclipse.cfml.editors.actions.BrowseToCurrentPageAction"
-               label="%action.label.BrowseToCurrent"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.BrowseToCurrent">
-         </action>
-			  <!-- browse to root project URL action -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.BrowseToProjectRoot"
-               icon="icons/ctool16/home.gif"
-               id="org.cfeclipse.cfml.editors.actions.BrowseToProjectRootAction"
-               label="%action.label.BrowsetoRoot"
-               toolbarPath="BasicCFEditorCommand"
-               tooltip="%action.tooltip.BrowsetoRoot">
-         </action>
-          <!-- Launch new file dialog -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.NewFileAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.NewFileActionID"
-               icon="icons/obj16/new.gif"
-               id="org.cfeclipse.cfml.editors.actions.NewFileAction"
-               label="%action.label.CreateNewFile"
-               toolbarPath="CFEditorResourceCommand"
-               tooltip="%action.tooltip.CreateNewFile">
-         </action>
-		 <!-- Edit Tag Action -->
-         <action
-               class="org.cfeclipse.cfml.editors.actions.EditTagAction"
-               definitionId="org.cfeclipse.cfml.editors.actions.EditTagAction"
-               icon="icons/obj16/default.gif"
-               id="org.cfeclipse.cfml.editors.actions.EditTagAction"
-               label="%action.label.EditTagAction"
-               toolbarPath="CFEditorResourceCommand"
-               tooltip="%action.tooltip.EditTagAction">
-         </action>
-      </actionSet>
-   </extension>   
-
-  	<extension point="org.eclipse.ui.actionSetPartAssociations">
-	  	<actionSetPartAssociation
-	            targetID="org.cfeclipse.cfml.actionset">
-	         <part
-	               id="org.cfeclipse.cfml.editors.CFMLEditor">
-	         </part>
-	      </actionSetPartAssociation>
-      </extension>
-
-	<extension
-   		point="org.eclipse.ui.keywords">
-      <keyword
-            label="%preferenceKeywords.general"
-            id="org.cfeclipse.cfml.general"/>
-      <keyword
-            label="%preferenceKeywords.editor"
-            id="org.cfeclipse.cfml.editor"/>
-      <keyword
-            label="%preferenceKeywords.formatter"
-            id="org.cfeclipse.cfml.formatter"/>
-      <keyword
-            label="%preferenceKeywords.codeAssist"
-            id="org.cfeclipse.cfml.codeAssist"/>
-      <keyword
-            label="%preferenceKeywords.template"
-            id="org.cfeclipse.cfml.template"/>      
-	</extension>
-   
-   <extension
-         point="org.eclipse.ui.editors.templates">
-      <contextType
-            name="%template.contextType.name"
-            class="org.cfeclipse.cfml.templates.template.CFTemplateContextType"
-            id="org.cfeclipse.cfml.templateeditor.xml">
-      </contextType>
-      <contextType
-            name="%template.contextType.cfscript.name"
-            class="org.cfeclipse.cfml.templates.template.CFScriptTemplateContextType"
-            id="org.cfeclipse.cfml.templateeditor.cfscript">
-      </contextType>
-<!--
-      <template
-            name="%ant.tasks.copy.name"
-            icon="icons/obj16/snip.gif"
-            description="%ant.tasks.copy.description"
-            contextTypeId="org.cfeclipse.cfml.templateeditor.xml"
-            id="org.cfeclipse.cfml.templateeditor.ant.copy">
-         <pattern>&lt;copy todir=&quot;${dst}&quot;&gt;
-	&lt;fileset dir=&quot;${src}&quot;/&gt;
-&lt;/copy&gt;</pattern>
-      </template>
-      <resolver
-            name="%ant.resolvers.src"
-            type="src"
-            icon="icons/obj16/resolver.gif"
-            description="%ant.resolvers.src.description"
-            contextTypeId="org.cfeclipse.cfml.templateeditor.xml"
-            class="org.cfeclipse.cfml.templates.template.CFTemplateVariableResolver">
-      </resolver>
-  -->
-      <resolver
-            name="%template.resolver.dst"
-            type="dst"
-            icon="icons/obj16/resolver.gif"
-            description="%template.resolver.dst.description"
-            contextTypeId="org.cfeclipse.cfml.templateeditor.xml"
-            class="org.cfeclipse.cfml.templates.template.CFTemplateVariableResolver">
-      </resolver>
-      <include
-      		file="templates/cfml.xml"
-      		translations="$nl$/templates/cfml.properties">
-      </include>
-      <include
-      		file="templates/cfscript.xml"
-      		translations="$nl$/templates/cfscript.properties">
-      </include>
-   </extension>
-   <!--   
-   <extension
-         id="cfeDrop"
-         name="CFE Resource Drop"
-         point="org.eclipse.ui.dropActions">
-      <action
-            class="org.cfeclipse.cfml.dnd.CFMLPluginDropAdapter"
-            id="org.cfeclipse.ui.cfmlDrop">
-      </action>
-   </extension>   
-	-->
-<!-- this is all for image viewing / hovers etc. -->
-
-   <!--
-   <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="org.cfeclipse.cfml.images.StartupHandler"></startup>
-   </extension>
-   -->
-   
-</plugin>
+ </plugin>

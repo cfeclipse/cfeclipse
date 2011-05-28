@@ -40,13 +40,13 @@ import org.eclipse.ui.texteditor.MarkerUtilities;
 public class OccurrencesFinder {
     
 	private CFDocument fCFModel;
-	private CFMLEditor fEditor;
+	private CFMLEditorPart fEditor;
 	private int fOffset;
 	private IDocument fDocument;
 	private ISourceViewer fViewer;
 	private String[] fWordCharArray;
 	
-	public OccurrencesFinder(CFMLEditor editor, CFDocument model, IDocument document, int offset) {
+	public OccurrencesFinder(CFMLEditorPart editor, CFDocument model, IDocument document, int offset) {
 		fCFModel= model;
 		fEditor= editor;
 		fDocument= document;

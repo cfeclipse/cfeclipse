@@ -24,7 +24,7 @@
  */
 package org.cfeclipse.cfml.editors.actions.codefolding;
 
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -37,7 +37,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
  */
 public class ToggleSelectionAction  implements IEditorActionDelegate {
     
-    CFMLEditor editor = null;
+	CFMLEditorPart editor = null;
     CodeFoldingSetter foldingSetter = null;
     
     /**
@@ -50,7 +50,7 @@ public class ToggleSelectionAction  implements IEditorActionDelegate {
 	{
 		if( targetEditor instanceof ITextEditor )
 		{
-			editor = (CFMLEditor)targetEditor;
+			editor = (CFMLEditorPart)targetEditor;
 			foldingSetter = new CodeFoldingSetter(editor);
 			
 		}

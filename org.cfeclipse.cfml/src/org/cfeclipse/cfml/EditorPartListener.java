@@ -15,7 +15,7 @@ public class EditorPartListener implements IPartListener {
 		if(part instanceof CFMLEditor){
 			
 			CFMLEditor openEditor =(CFMLEditor)part;
-			openEditor.setStatusLine();
+			//openEditor.setStatusLine();
 		}
 	}
 
@@ -23,7 +23,7 @@ public class EditorPartListener implements IPartListener {
 		if(part instanceof CFMLEditor){
 			
 			CFMLEditor openEditor =(CFMLEditor)part;
-			openEditor.setStatusLine();
+			//openEditor.setStatusLine();
 		}
 		
 	}
@@ -40,7 +40,7 @@ public class EditorPartListener implements IPartListener {
 		if(part instanceof CFMLEditor){
 			
 			CFMLEditor openEditor =(CFMLEditor)part;
-			openEditor.setStatusLine();
+			//openEditor.setStatusLine();
 		}
 		
 		

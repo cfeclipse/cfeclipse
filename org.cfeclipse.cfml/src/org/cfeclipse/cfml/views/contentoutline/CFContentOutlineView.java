@@ -25,19 +25,18 @@
 package org.cfeclipse.cfml.views.contentoutline;
 
 //import org.eclipse.core.resources.IResource;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.actions.GenericOpenFileAction;
 import org.cfeclipse.cfml.editors.actions.GotoFileAction;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
-import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
+import org.cfeclipse.cfml.util.ResourceUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -45,17 +44,12 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -82,7 +76,7 @@ import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 public class CFContentOutlineView extends ContentOutlinePage implements IPartListener, IPropertyListener,
 		ISelectionListener {
 	public static final String ID_CONTENTOUTLINE = "org.cfeclipse.cfml.views.contentoutline.cfcontentoutlineview";
-	private static final int EXPAND_TO_LEVEL= 2;
+	//private static final int EXPAND_TO_LEVEL= 2;
 	protected Action jumpAction, selectAction, deleteItem, expandAction, collapseAction, filterOnAction, openAction,
 			removeFilters;
 	protected Action filters[];
@@ -153,7 +147,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 			iep.addPropertyListener(this);
 			getSite().getPage().addPartListener(this);
 
-			ITextEditor ite = (ITextEditor) iep;
+			ITextEditor ite = (ITextEditor) ((CFMLEditor)iep).getCFMLEditor();
 			ICFDocument icfd = null;
 			CFDocument cfd = null;
 			if (ite.getDocumentProvider().getDocument(iep.getEditorInput()) instanceof ICFDocument) {
@@ -590,9 +584,10 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 		// this fires when editor is changed (thanks to addPostSelection in
 		// createControl)
 		if (selection != null && selection instanceof ITextSelection) {
-			IEditorPart curEditor = workbench.getSite().getWorkbenchWindow().getActivePage().getActiveEditor();
-			if (curEditor != null && curEditor instanceof CFMLEditor) {
-				CFMLEditor curDoc = (CFMLEditor) curEditor;
+			
+			 CFMLEditorPart editorPart = ResourceUtils.getCurrentEditor(workbench);
+			if (editorPart != null && editorPart instanceof CFMLEditorPart) {
+				CFMLEditorPart curDoc = (CFMLEditorPart) editorPart;
 				DocItem tagItem = curDoc.getSelectionCursorListener().getSelectedTag();
 				if (tagItem != null) {
 					setSelectedDocItem(tagItem);

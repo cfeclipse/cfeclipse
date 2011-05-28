@@ -174,7 +174,7 @@ public class LoadScribblePadAction implements IWorkbenchWindowActionDelegate,IEd
 
 		if (targetEditor instanceof ITextEditor
 				|| targetEditor instanceof CFMLEditor) {
-			editor = (ITextEditor) targetEditor;
+			editor = (ITextEditor) ((CFMLEditor)targetEditor).getCFMLEditor();
 		}
 	}
 

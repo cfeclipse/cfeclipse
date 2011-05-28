@@ -25,7 +25,7 @@
 package org.cfeclipse.cfml.editors.actions;
 
 import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.jface.action.IAction;
@@ -43,7 +43,7 @@ import cfml.parsing.CFMLSource;
 import cfml.parsing.ParserTag;
 
 public class ExpandTagSelectionUp implements IWorkbenchWindowActionDelegate, IEditorActionDelegate {
-	private CFMLEditor editor;
+	private CFMLEditorPart editor;
 
 	public ExpandTagSelectionUp() {
 		editor = null;
@@ -55,8 +55,8 @@ public class ExpandTagSelectionUp implements IWorkbenchWindowActionDelegate, IEd
 	 * .action.IAction, org.eclipse.ui.IEditorPart)
 	 */
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		if (targetEditor instanceof CFMLEditor) {
-			editor = (CFMLEditor) targetEditor;
+		if (targetEditor instanceof CFMLEditorPart) {
+			editor = (CFMLEditorPart) targetEditor;
 		}
 	}
 
@@ -132,8 +132,8 @@ public class ExpandTagSelectionUp implements IWorkbenchWindowActionDelegate, IEd
 
 	public void init(IWorkbenchWindow window) {
 		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
-		if (activeEditor instanceof CFMLEditor) {
-			editor = (CFMLEditor) activeEditor;
+		if (activeEditor instanceof CFMLEditorPart) {
+			editor = (CFMLEditorPart) activeEditor;
 		}
 
 	}

@@ -12,7 +12,7 @@ package org.cfeclipse.cfml.editors.actions;
 
 
 import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
 import org.cfeclipse.cfml.preferences.TextSelectionPreferenceConstants;
 import org.eclipse.jface.action.IAction;
@@ -50,8 +50,8 @@ public class ToggleMarkOccurrencesAction extends TextEditorAction implements IPr
 	public void run() {
 		fStore.setValue(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES, isChecked());
 		ITextEditor editor= getTextEditor();
-		if (editor instanceof CFMLEditor) {
-			CFMLEditor cfe = (CFMLEditor) editor;
+		if (editor instanceof CFMLEditorPart) {
+			CFMLEditorPart cfe = (CFMLEditorPart) editor;
 			if(isChecked()) {				
 				(cfe).getSelectionCursorListener().updateOccurrenceAnnotations((ITextSelection) cfe.getSelectionProvider().getSelection(), cfe.getCFModel());
 			} else {
@@ -68,9 +68,9 @@ public class ToggleMarkOccurrencesAction extends TextEditorAction implements IPr
 		
 		boolean checked= false;
 		boolean enabled= false;
-		if (editor instanceof CFMLEditor) {
-			checked= ((CFMLEditor)editor).isMarkingOccurrences();
-			enabled= ((CFMLEditor)editor).getCFModel() != null;
+		if (editor instanceof CFMLEditorPart) {
+			checked= ((CFMLEditorPart)editor).isMarkingOccurrences();
+			enabled= ((CFMLEditorPart)editor).getCFModel() != null;
 		}
 			
 		setChecked(checked);

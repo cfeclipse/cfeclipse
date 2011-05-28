@@ -26,7 +26,6 @@ package org.cfeclipse.cfml.editors.actions;
 
 //import org.eclipse.core.resources.IResource;
 import org.cfeclipse.cfml.editors.CFMLEditor;
-import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.util.ResourceUtils;
 import org.cfeclipse.cfml.views.browser.BrowserView;
 import org.eclipse.jface.action.IAction;
@@ -42,27 +41,15 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 
 /**
- * @author Rob
+ * @author Rob Rohan
  *
  * Simple action to refresh the browser view
  */
-public class BrowseToProjectRootAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
+public class BrowseToProjectRootAction extends BaseAction implements IWorkbenchWindowActionDelegate,IEditorActionDelegate {
 	protected ITextEditor editor = null;
 
-	private CFMLPropertyManager propertyManager;
 
-    public BrowseToProjectRootAction()
-	{
-        propertyManager = new CFMLPropertyManager();
-	}
-	
-	public void setActiveEditor(IAction action, IEditorPart targetEditor) 
-	{
-		if(targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor)
-		{
-			editor = (ITextEditor)targetEditor;
-		}
-	}
+    public BrowseToProjectRootAction() {}
 	
 	public void run()
 	{

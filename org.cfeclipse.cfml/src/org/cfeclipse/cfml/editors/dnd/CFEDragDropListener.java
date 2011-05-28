@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.actions.InsertFileLink;
 import org.cfeclipse.cfml.util.RelativePath;
 import org.cfeclipse.cfml.util.ResourceUtils;
@@ -74,7 +75,7 @@ public class CFEDragDropListener implements DragSourceListener, DropTargetListen
     /**
      * The text editor on which the listener is installed.
      */
-    private CFMLEditor editor = null;
+    private CFMLEditorPart editor = null;
     /**
      * The text widget which belongs to the viewer
      */
@@ -120,7 +121,7 @@ public class CFEDragDropListener implements DragSourceListener, DropTargetListen
      * so that they are available to future method calls.
      * 
      */
-    public CFEDragDropListener(CFMLEditor editor, ProjectionViewer viewer, SelectionCursorListener cursorListener) {
+    public CFEDragDropListener(CFMLEditorPart editor, ProjectionViewer viewer, SelectionCursorListener cursorListener) {
         try {
 	        this.editor = editor;
 	        this.textWidget = viewer.getTextWidget();

@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.cfeclipse.cfml.editors.EditorSynchronizer;
 import org.cfeclipse.cfml.editors.OccurrencesFinder;
 import org.cfeclipse.cfml.wizards.cfmlwizard.NewCFMLWizard;
@@ -57,9 +58,9 @@ import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
  * 
  *         This class is invoked to rename occurrences
  */
-public class RenameInFileAction implements IEditorActionDelegate, IWorkbenchWindowActionDelegate {
+public class RenameInFileAction extends BaseAction implements IEditorActionDelegate, IWorkbenchWindowActionDelegate {
 
-	protected CFMLEditor editor = null;
+	protected CFMLEditorPart editor = null;
 
 	public RenameInFileAction() {
 		super();
@@ -83,14 +84,10 @@ public class RenameInFileAction implements IEditorActionDelegate, IWorkbenchWind
 	 */
 	public void init(IWorkbenchWindow window) {
 		IEditorPart activeEditor = window.getActivePage().getActiveEditor();
-		if (activeEditor instanceof CFMLEditor) {
-			editor = (CFMLEditor) activeEditor;
+		if (activeEditor instanceof CFMLEditorPart) {
+			editor = (CFMLEditorPart) activeEditor;
 		}
 
-	}
-
-	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		editor = (CFMLEditor) targetEditor;
 	}
 
 	public void run(IAction action) {
@@ -129,7 +126,7 @@ public class RenameInFileAction implements IEditorActionDelegate, IWorkbenchWind
 	}
 	
 	public void selectionChanged(IAction action, ISelection selection) {
-		if (editor != null && editor instanceof CFMLEditor) {
+		if (editor != null && editor instanceof CFMLEditorPart) {
 			action.setEnabled(true);
 		} else {
 			action.setEnabled(false);

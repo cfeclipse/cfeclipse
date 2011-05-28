@@ -25,7 +25,7 @@
 package org.cfeclipse.cfml.editors.actions;
 
 import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.editors.CFMLEditor;
+import org.cfeclipse.cfml.editors.CFMLEditorPart;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
@@ -70,7 +70,7 @@ public class GenericEncloserAction extends Encloser implements IWorkbenchWindowA
 	{
 		//System.err.println(targetEditor);
 		//System.out.println( "Changin (" + start + ")(" + end + ")" );
-		if( targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditor ){
+		if( targetEditor instanceof ITextEditor || targetEditor instanceof CFMLEditorPart ){
 			editor = (ITextEditor)targetEditor;
 		}
 	}

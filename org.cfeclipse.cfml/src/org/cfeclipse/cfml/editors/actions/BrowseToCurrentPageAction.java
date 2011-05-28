@@ -24,18 +24,13 @@
  */
 package org.cfeclipse.cfml.editors.actions;
 
-import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.util.ResourceUtils;
 import org.cfeclipse.cfml.views.browser.BrowserView;
-import org.cfeclipse.cfml.views.snips.SnipVarParser;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
@@ -48,8 +43,8 @@ import org.eclipse.ui.texteditor.ITextEditor;
  * 
  *         Simple action to refresh the browser view
  */
-public class BrowseToCurrentPageAction implements
-		IWorkbenchWindowActionDelegate, IEditorActionDelegate {
+public class BrowseToCurrentPageAction extends BaseAction implements
+		IWorkbenchWindowActionDelegate, IEditorActionDelegate  {
 	protected ITextEditor editor = null;
 
 	private CFMLPropertyManager propertyManager;
@@ -58,12 +53,7 @@ public class BrowseToCurrentPageAction implements
 		propertyManager = new CFMLPropertyManager();
 	}
 
-	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		if (targetEditor instanceof ITextEditor
-				|| targetEditor instanceof CFMLEditor) {
-			editor = (ITextEditor) targetEditor;
-		}
-	}
+
 
 	public void run() {
 		run(null);
