@@ -1,2 +1,15 @@
+org.cfeclipse.cfeclipsecall-plugin/bin/
+org.cfeclipse.cfeclipsecall/bin/
 org.cfeclipse.cfml/bin/
+org.cfeclipse.cfml.cfunit/bin/
+org.cfeclipse.cfml.docsharesupport34/bin/
+org.cfeclipse.cfml.docsharesupport35/bin/
+org.cfeclipse.cfml.frameworks.fusebox/bin/
+org.cfeclipse.cfml.frameworks/bin/
+org.cfeclipse.cfml.snippets/bin/
+org.cfeclipse.cfml.templates.fragment/bin/
+svn/experimental/com.aptana.ide.editor.cfml/bin/
+svn/experimental/org.cfeclipse.dltk.cfml/bin/
+svn/experimental/org.cfml.parser/bin/
+svn/org.cfeclipse.cfml.core/trunk/bin/
 .DS_Store
