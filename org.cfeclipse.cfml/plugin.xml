@@ -2197,14 +2197,16 @@
      	 <showInPart id = "org.eclipse.ui.views.ResourceNavigator"/>
      	 <showInPart id= "org.cfeclipse.cfml.views.explorer.FileExplorerView" />
      	 <showInPart id= "org.cfeclipse.cfml.views.explorer.vfs.view.VFSView" />
-     	 <showInPart id= "org.cfeclipse.cfml.views.snips.SnipTreeView" />
+     	 <showInPart id= "org.cfeclipse.cfml.views.snips.sniptreeview" />
      	 <showInPart id= "org.cfeclipse.cfml.images.imagesView" />     	 
          <viewShortcut
                id="org.eclipse.ui.navigator.ProjectExplorer">
          </viewShortcut>
+         <!-- this view doesn't exist? Holdover?
          <viewShortcut
                id="org.eclipse.ui.navigator.CommonNavigator">
          </viewShortcut>
+         -->
          <viewShortcut
                id="org.eclipse.pde.runtime.LogView">
          </viewShortcut>
@@ -2220,8 +2222,17 @@
                id="org.cfeclipse.cfml.images.imagesView">
          </viewShortcut>
       </perspectiveExtension>
+	  <perspectiveExtension targetID="org.cfeclipse.cfml.perspective.CFML">
+	  		<actionSet id="org.cfeclipse.cfml.actionset" />		
+	  </perspectiveExtension>
+
 
   </extension>
+  
+  
+  
+  
+  
    <extension
          point="org.eclipse.ui.contexts">
       <context
@@ -2258,7 +2269,7 @@
       </configExtension>
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
-            content="doc/intro/whatsnewExtensionContent.xml">
+            content="doc/intro/whatsNewExtensionContent.xml">
       </configExtension>
       <configExtension
             configId="org.eclipse.ui.intro.universalConfig"
@@ -2323,6 +2334,7 @@
             class="org.cfeclipse.cfml.editors.CFJavaFileEditorInputFactory"
             id="org.cfeclipse.cfml.CFJavaFileEditorInputFactory"/>
    </extension>
+   <!-- TODO: class is missing for this
    <extension
          point="org.eclipse.search.searchResultViewPages">
       <viewPage
@@ -2331,7 +2343,7 @@
             searchResultClass="org.cfeclipse.cfml.search.SearchResult">
       </viewPage>
    </extension>
-   
+   -->
    <!-- detachable toolbar -->
    
    <extension
@@ -2339,7 +2351,7 @@
       <actionSet
             id="org.cfeclipse.cfml.actionset"
             label="CFEclipse"
-            visible="true">
+            visible="false">
          <action
                definitionId="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
                id="org.cfeclipse.cfml.editors.actions.ToggleMarkOccurrencesAction"
