@@ -1,5 +1,0 @@
-<parameter name="onselected" type="Function" required="false">
-	<help>Event sent when this item is selected.</help>
-	<values />
-</parameter>
-&basevaluecomponent;

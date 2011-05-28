@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="getpagecontext" returns="Object">
-			<help><![CDATA[
-				Gets the current CFML MX PageContext object that
-				provides access to page attributes and configuration, request
-				and response objects.
-			]]></help>
-		</function>

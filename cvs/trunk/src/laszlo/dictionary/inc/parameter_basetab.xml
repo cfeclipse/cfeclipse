@@ -1,6 +1,0 @@
-<parameter name="tabpane" type="Any" required="false">
-	<help>The tabpane associated with this tab.</help>
-	<values />
-</parameter>
-<!-- base list item -->
-&baselistitem;

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tag xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="cfreturn" single="true" xmlstyle="false">
-			<help><![CDATA[
-				Returns result values from a component method. Contains an
-				expression returned as result of the function.
-				An expression; the result of the function from which this tag
-				is called.
-			]]></help>
-		</tag>

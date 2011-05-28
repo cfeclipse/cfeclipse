@@ -1,9 +1,0 @@
-<parameter name="text_x" type="Numeric" required="false">
-	<help>The x position of the displayed text.</help>
-	<values/>
-</parameter>
-<parameter name="text_y" type="Numeric" required="false">
-	<help>The y position of the displayed text.</help>
-	<values/>
-</parameter>
-&baselistitem;

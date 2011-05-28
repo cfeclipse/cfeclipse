@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<function xmlns="http://www.cfeclipse.org/version1/dictionary" creator="3" name="rand" returns="Numeric">
-			<help><![CDATA[
-				Generates a random number in the range 0 - 1.
-			]]></help>
-		</function>

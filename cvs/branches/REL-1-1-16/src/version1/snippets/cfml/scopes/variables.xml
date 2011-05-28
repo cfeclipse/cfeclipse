@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<snippet>
-<name>variables</name>
-<help>writes out variables(dot)</help>
-<starttext><![CDATA[variables.]]></starttext>
-<endtext><![CDATA[]]></endtext>
-</snippet>

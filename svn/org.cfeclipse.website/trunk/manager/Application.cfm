@@ -1,1 +1,0 @@
-<cfsilent><cfapplication name="cfeclipse_manager" sessionmanagement="true"/></cfsilent>
