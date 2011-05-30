@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This file is no longer generated - please report bugs to http://cfeclipse.tigris.org/ 
-	you can make changes to this file if you like, but it will be overwritten 
-	on the next version if you do not report the bug; since this file is not 
-	longer XSLT generated you can, if you wish, edit this file and submit it 
-	as a patch changing the creator will change the color coding in the editor 
-	possible values for creator are: 4 = w3c "normal" element 16 = form element 
-	32 = table element -->
+<!-- 
+	This file is no longer generated - please report bugs to http://cfeclipse.tigris.org/
+	you can make changes to this file if you like, but it will be overwritten
+	on the next version if you do not report the bug; since this file is not
+	longer XSLT generated you can, if you wish, edit this file and submit it
+	as a patch changing the creator will change the color coding in the editor
+	possible values for creator are:
+	
+	*  4 = w3c "normal" element
+	*  16 = form element
+	*  32 = table element
+-->
 <!DOCTYPE dictionary [
 	<!ENTITY value_boolean	SYSTEM "inc/value_boolean.ixml">
 	<!-- class, id, style, title -->
