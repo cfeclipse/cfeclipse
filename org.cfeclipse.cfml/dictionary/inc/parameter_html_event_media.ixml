@@ -1,0 +1,114 @@
+<parameter name="onabort" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run on an abort event]]></help>
+	<values/>
+</parameter>
+
+<parameter name="oncanplay" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media can start play, but might has to stop for buffering]]></help>
+	<values/>
+</parameter>
+
+<parameter name="oncanplaythrough" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media can be played to the end, without stopping for buffering]]></help>
+	<values/>
+</parameter>
+
+<parameter name="ondurationchange" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when the length of the media is changed]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onemptied" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when a media resource element suddenly becomes empty (network errors, errors on load etc.)]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onended" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media has reach the end]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onerror" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when an error occurs during the loading of an element]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onloadeddata" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media data is loaded]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onloadedmetadata" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when the duration and other media data of a media element is loaded]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onloadstart" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when the browser starts to load the media data]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onpause" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media data is paused]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onplay" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media data is going to start playing]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onplaying" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media data has start playing]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onprogress" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when the browser is fetching the media data]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onratechange" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when the media data's playing rate has changed]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onreadystatechange" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when the ready-state changes]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onseeked" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when a media element's seeking attribute is no longer true, and the seeking has ended]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onseeking" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when a media element's seeking attribute is true, and the seeking has begun]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onstalled" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when there is an error in fetching media data (stalled)]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onsuspend" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when the browser has been fetching media data, but stopped before the entire media file was fetched]]></help>
+	<values/>
+</parameter>
+
+<parameter name="ontimeupdate" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media changes its playing position</help>
+	<values/>
+</parameter>
+
+<parameter name="onvolumechange" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media changes the volume, also when volume is set to "mute"]]></help>
+	<values/>
+</parameter>
+
+<parameter name="onwaiting" type="Script" required="false" category="Events">
+	<help><![CDATA[Script to be run when media has stopped playing, but is expected to resume]]></help>
+	<values/>
+</parameter>
