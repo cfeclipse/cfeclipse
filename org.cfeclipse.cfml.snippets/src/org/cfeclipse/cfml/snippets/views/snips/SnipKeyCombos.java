@@ -80,6 +80,7 @@ public class SnipKeyCombos {
     
     public void setKeyCombo(String sequence, String snippetFile){
         this.keyCombos.setProperty(sequence,snippetFile);
+        System.out.println("Writing sequence " + sequence + " to snippetFile " + snippetFile + " at keyComboFilePath " + this.keyComboFilePath);
         try {
 	        FileOutputStream output = new FileOutputStream(this.keyComboFilePath);
 	        keyCombos.store(output,HEADER_TEXT);
