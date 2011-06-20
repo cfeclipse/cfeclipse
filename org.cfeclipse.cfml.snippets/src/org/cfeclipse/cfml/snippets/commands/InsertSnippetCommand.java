@@ -69,7 +69,6 @@ public class InsertSnippetCommand extends AbstractHandler {
 
 	// used from the toolbars
 	public InsertSnippetCommand(String triggerText, Shell shell) {
-
 		SnipKeyCombos keyCombos = new SnipKeyCombos();
 		ITextEditor editor = (ITextEditor) Workbench.getInstance().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
@@ -106,6 +105,7 @@ public class InsertSnippetCommand extends AbstractHandler {
 		ITextSelection sel = (ITextSelection)editor.getSelectionProvider().getSelection();		
 		IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
 		
+		
 		if (editor != null && editor.isEditable()) {
 			SnipKeyCombos keyCombos = new SnipKeyCombos();
 
@@ -133,7 +133,7 @@ public class InsertSnippetCommand extends AbstractHandler {
 					// ok, it could be valid, but we need to check what comes
 					// after the cursor.
 					if (cursorOffset != doc.getLength()) {
-						System.out.println("yep");
+						//System.out.println("yep");
 						IRegion nextSpace = finder
 								.find(cursorOffset - 1, "[^\\*0-9a-zA-Z_-]", true, false, false, true);
 						if (nextSpace != null && nextSpace.getOffset() == cursorOffset) {
