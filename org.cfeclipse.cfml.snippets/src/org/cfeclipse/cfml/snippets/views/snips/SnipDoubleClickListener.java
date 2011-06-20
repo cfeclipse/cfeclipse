@@ -44,7 +44,6 @@ implements IDoubleClickListener {
 	
 	public void doubleClick(DoubleClickEvent e) {
 		snipView.insertItem();
-		
 	}
 	
 }
