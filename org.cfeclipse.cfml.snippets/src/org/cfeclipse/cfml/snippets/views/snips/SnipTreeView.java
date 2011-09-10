@@ -37,6 +37,10 @@ import org.cfeclipse.cfml.snippets.preferences.SnipExPreferencePage;
 import org.cfeclipse.cfml.snippets.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.snippets.util.CFPluginImages;
 import org.cfeclipse.cfml.snippets.wizards.snipex.SnippetToSnipExWizard;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.internal.resources.Folder;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
@@ -54,6 +58,8 @@ import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -74,6 +80,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 import org.cfeclipse.snippet.snipex.Library;
 import org.cfeclipse.snippet.snipex.SnipEx;
@@ -359,6 +366,7 @@ public class SnipTreeView extends ViewPart
 		});
 		
 		treeViewer.addDoubleClickListener(new SnipDoubleClickListener(this));
+		
 		/*
 		try {
 			this.getViewSite().getShell().addMouseTrackListener(this);
