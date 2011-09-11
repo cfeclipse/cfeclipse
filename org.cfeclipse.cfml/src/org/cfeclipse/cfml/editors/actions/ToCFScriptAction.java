@@ -77,6 +77,11 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 				highlighted = m.replaceFirst(m.group(1)+";");
 				m.reset(highlighted);
 			}
+			m = Pattern.compile("(?is)<cfproperty\\s+(.*?)\\s?/?>").matcher("").reset(highlighted);
+			while (m.find()) {
+				highlighted = m.replaceFirst("property " + m.group(1) + ";");
+				m.reset(highlighted);
+			}
 			m = Pattern.compile("(?is)<cfif\\s+(.*?)\\s?>").matcher("").reset(highlighted);
 			while (m.find()) {
 				highlighted = m.replaceFirst("if ("+m.group(1)+") {");
@@ -181,6 +186,12 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 			while (m.find()) {
 				String args = tagArgsToFunctionArgs(m.group(1));
 				highlighted = m.replaceFirst("function "+args + "(\""+m.group(2).replace("\"", "\"\"")+"\");");
+				m.reset(highlighted);
+			}
+			m = Pattern.compile("(?is)<cfcomponent\\s+(.*?)>(.*?)</cfcomponent>").matcher("").reset(highlighted);
+			while (m.find()) {
+				String args = m.group(1);
+				highlighted = m.replaceFirst("component " + args + " {" + m.group(2) + "};");
 				m.reset(highlighted);
 			}
 			return highlighted;
