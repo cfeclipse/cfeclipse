@@ -65,6 +65,8 @@ import org.eclipse.ui.editors.text.templates.ContributionTemplateStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import cfml.parsing.CFMLParser;
+
 /**
  * 
  * The CFEclipse plugin itself.
@@ -304,6 +306,12 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public static IWorkspace getWorkspace() {
 		return ResourcesPlugin.getWorkspace();
+	}
+
+	public static CFMLParser newCFMLParser(String dict) {
+		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+		CFMLParser parser = new CFMLParser(propertyManager.getDictionaryDir(), dict);
+		return parser;
 	}
 
 	/**

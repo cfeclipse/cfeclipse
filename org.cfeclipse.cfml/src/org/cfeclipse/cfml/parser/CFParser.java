@@ -273,10 +273,9 @@ public class CFParser {
 
 	private void initOrgCFParser() {
 		if (parser == null) {
-			String location = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
 			String dict = propertyManager.getCurrentDictionary(res.getProject());
-			parser = new CFMLParser(location, dict);
+			parser = CFMLPlugin.newCFMLParser(dict);
 		}
 	}
 	

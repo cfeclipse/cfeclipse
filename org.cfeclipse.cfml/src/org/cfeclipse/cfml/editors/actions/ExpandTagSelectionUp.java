@@ -91,10 +91,9 @@ public class ExpandTagSelectionUp implements IWorkbenchWindowActionDelegate, IEd
 	}
 
 	public void expandTagSelection(IDocument doc, ITextSelection sel) {
-		String location = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
 		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
 		String dict = propertyManager.getCurrentDictionary(((IFileEditorInput) editor.getEditorInput()).getFile().getProject());
-		CFMLParser fCfmlParser = new CFMLParser(location, dict);
+		CFMLParser fCfmlParser = CFMLPlugin.newCFMLParser(dict);
 		ICFDocument cfd = (ICFDocument) doc;
 		CFMLSource cfmlSource = fCfmlParser.addCFMLSource(cfd.getCFDocument().getFilename(), cfd.get());
 		int offset = sel.getOffset();

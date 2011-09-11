@@ -486,10 +486,9 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 
 		if ((e.stateMask & SWT.MOD1) != 0) {
 
-			String location = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
 			String dict = propertyManager.getCurrentDictionary(((IFileEditorInput) editor.getEditorInput()).getFile().getProject());
-			CFMLParser fCfmlParser = new CFMLParser(location, dict);
+			CFMLParser fCfmlParser = CFMLPlugin.newCFMLParser(dict);
 			ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
 			CFMLSource cfmlSource = fCfmlParser.addCFMLSource(cfd.getCFDocument().getFilename(),cfd.get());
 			ParserTag tag = cfmlSource.getEnclosingTag(startpos);

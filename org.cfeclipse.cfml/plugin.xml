@@ -1745,6 +1745,13 @@
             id="org.cfeclipse.cfml.preferences.AnnotationPreferencePage"/>
 
       <page
+            class="org.cfeclipse.cfml.preferences.DictionariesPreferencePage"
+            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
+            name="Dictionaries"
+            id="org.cfeclipse.cfml.preferences.DictionariesPreferencePage">
+      </page>
+
+      <page
             class="org.cfeclipse.cfml.preferences.TaskTagPreferencePage"
             category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
             name="Task Tags"
@@ -2202,11 +2209,9 @@
          <viewShortcut
                id="org.eclipse.ui.navigator.ProjectExplorer">
          </viewShortcut>
-         <!-- this view doesn't exist? Holdover?
          <viewShortcut
                id="org.eclipse.ui.navigator.CommonNavigator">
          </viewShortcut>
-         -->
          <viewShortcut
                id="org.eclipse.pde.runtime.LogView">
          </viewShortcut>
@@ -2226,13 +2231,7 @@
 	  		<actionSet id="org.cfeclipse.cfml.actionset" />		
 	  </perspectiveExtension>
 
-
   </extension>
-  
-  
-  
-  
-  
    <extension
          point="org.eclipse.ui.contexts">
       <context
