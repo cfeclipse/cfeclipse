@@ -157,14 +157,6 @@ public class CFDocument {
 		docFilename = filename;
 	}
 
-	/**
-	 * Constructs the document based upon a IDocument.
-	 * @param eclipseDocument The document to base this on.
-	 * @deprecated Don't use at this does nothing!
-	 */
-	public CFDocument(IDocument eclipseDocument) {
-	}
-
 	public Set<Function> getFunctions() {
 		Matcher matcher;
 		Pattern pattern;
