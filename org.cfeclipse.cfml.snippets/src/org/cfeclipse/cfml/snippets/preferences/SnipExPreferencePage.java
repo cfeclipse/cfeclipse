@@ -41,7 +41,7 @@ public class SnipExPreferencePage extends FieldEditorPreferencePage implements I
 
     protected void performDefaults() {
         super.performDefaults();
-        snippetsPathField.setStringValue(preferenceManager.getPluginStateLocation());
+        snippetsPathField.setStringValue(preferenceManager.getPluginStateLocation().toString() + "/snippets");
     }
 	
 	public void init(IWorkbench workbench) {}

@@ -2,6 +2,6 @@
 <snippet filetemplate="false" extension="cfm">
 <name>test</name>
 <help>test</help>
-<starttext><![CDATA[tesdt	=]]></starttext>
+<starttext><![CDATA[Ÿ testit]]></starttext>
 <endtext><![CDATA[test]]></endtext>
 </snippet>

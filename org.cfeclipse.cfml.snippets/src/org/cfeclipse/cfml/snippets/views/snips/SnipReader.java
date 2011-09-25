@@ -25,15 +25,18 @@
 package org.cfeclipse.cfml.snippets.views.snips;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.snippets.properties.CFMLPropertyManager;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.internal.Workbench;
@@ -43,6 +46,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -106,30 +110,32 @@ public class SnipReader {
 		if (snippetFile.exists()) {
 
 			try {
-				FileInputStream fis = new FileInputStream(snippetFile);
-				BufferedInputStream bis = new BufferedInputStream(fis);
-
+		        
+		        FileInputStream fis = new FileInputStream(snippetFile);
+				InputStreamReader isr = new InputStreamReader(fis,ResourcesPlugin.getEncoding());
+				InputSource is = new InputSource(isr);
+				is.setEncoding(ResourcesPlugin.getEncoding());
+				
 				// Clear up to the first '<'
 				int t, p, q;
-				bis.mark(0);
-				if (((char) bis.read()) != '<') {
-					bis.reset();
-					t = bis.read();
-					p = bis.read();
-					q = bis.read();
+				if (((char) isr.read()) != '<') {
+					p = isr.read();
+					q = isr.read();
 				} else {
-					bis.reset();
+			        fis = new FileInputStream(snippetFile);
+					isr = new InputStreamReader(fis,ResourcesPlugin.getEncoding());
+					is = new InputSource(isr);
+					is.setEncoding(ResourcesPlugin.getEncoding());
 				}
 
-				bis.mark(0);
 				try {
-					document = builder.parse(bis);
+					document = builder.parse(is);
 					parseDocument();
 				} catch (SAXException saxx) {
 					saxx.printStackTrace(System.err);
 					this.snipDescription = saxx.getMessage();
 				}
-				bis.close();
+				isr.close();
 			} catch (IOException iox) {
 				iox.printStackTrace(System.err);
 				this.snipDescription = iox.getMessage();

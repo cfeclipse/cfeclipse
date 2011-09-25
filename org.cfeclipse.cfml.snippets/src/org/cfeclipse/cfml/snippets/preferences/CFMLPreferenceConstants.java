@@ -25,9 +25,7 @@ public class CFMLPreferenceConstants {
 	public static void setDefaults(IPreferenceStore store) { 
 		Workbench.getInstance().getPreferenceStore();
 		store.setDefault(P_SNIPPETS_PATH,SnippetPlugin.getDefault().getStateLocation().toString()+"/snippets");
-		System.err.println(store.getString(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH)+"weee");
 		store.setDefault(P_TAB_WIDTH,Workbench.getInstance().getPreferenceStore().getInt(P_TAB_WIDTH));
-		System.err.println(store.getBoolean(P_INSERT_SPACES_FOR_TABS));
 		store.setDefault(P_INSERT_SPACES_FOR_TABS,Workbench.getInstance().getPreferenceStore().getBoolean(P_INSERT_SPACES_FOR_TABS));		
 	}
 	

@@ -24,16 +24,21 @@
  */
 package org.cfeclipse.cfml.snippets.commands;
 
+import org.eclipse.jface.text.contentassist.ContentAssistant;
 import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.util.Encloser;
 import org.cfeclipse.cfml.snippets.views.snips.SnipKeyCombos;
 import org.cfeclipse.cfml.snippets.views.snips.SnipReader;
+import org.cfeclipse.cfml.snippets.views.snips.SnipTreeView;
 import org.cfeclipse.cfml.snippets.views.snips.SnipVarParser;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
@@ -43,11 +48,14 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.part.MultiPageEditor;
@@ -176,9 +184,35 @@ public class InsertSnippetCommand extends AbstractHandler {
 				}
 				if(fileName == null) {
 					// nasty nasty hack to tell the user no snippet found
-		    		MessageBox dialog = new MessageBox(shell,SWT.ICON_ERROR);
-		    		dialog.setMessage("No snippet found for : "+sequence);
-		    		dialog.open();
+//					InputDialog d = new InputDialog(editor.getSite().getShell(),
+//			                   "your title",
+//			                   "Please give me input ...",
+//			                   "Default",
+//			                   null);
+//					Text t = new Text(parent, SWT.BORDER); // your SWT text field
+//					ContentProposalAdapter adapter = new ContentProposalAdapter(
+//						t, 
+//						new TextContentAdapter(), 
+//						new JavaCompletionProcessor(),
+//						null, 
+//						null);
+//					
+//			String result = d.getValue();
+			
+//					ContentAssistant cast = new ContentAssistant();
+//					cast.setContentAssistProcessor(new JavaCompletionProcessor(), "");
+//					cast.showPossibleCompletions();
+
+//					MessageBox dialog = new MessageBox(shell,SWT.ICON_ERROR);
+//		    		dialog.setMessage("No snippet found for : "+sequence);
+//		    		dialog.open();
+		    		try {
+						SnipTreeView snipTreeView = (SnipTreeView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(SnipTreeView.ID_SNIPVIEWTREE);
+						snipTreeView.setSnipFilter(sequence);
+					} catch (PartInitException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 		    		return null;
 				}
 

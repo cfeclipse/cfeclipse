@@ -41,6 +41,8 @@ import java.io.FileFilter;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.cfeclipse.cfml.snippets.SnippetPlugin;
+import org.cfeclipse.cfml.snippets.properties.CFMLPropertyManager;
 import org.cfeclipse.snippet.snipex.Library;
 import org.cfeclipse.snippet.snipex.SnipEx;
 import org.cfeclipse.snippet.snipex.Snippet;
@@ -75,9 +77,14 @@ public class SnipTreeViewContentProvider implements ITreeContentProvider { // ,
 	protected static FileFilter snippetfilter = new SnippetFileFilter();
 	protected TreeViewer viewer;
 	protected File rootdir;
+	private CFMLPropertyManager propertyManager;
+	private static SnipReader snipReader;
 
 	public SnipTreeViewContentProvider(File root) {
+		propertyManager = SnippetPlugin.getDefault().getPropertyManager();
 		rootdir = root;
+		if(snipReader == null)
+			snipReader = new SnipReader();
 	}
 
 	/**
@@ -115,14 +122,14 @@ public class SnipTreeViewContentProvider implements ITreeContentProvider { // ,
 	public Object[] getChildren(Object parentElement) {
 		if (parentElement instanceof File) {
 			if (((File) parentElement).isDirectory()) {
-				if (parentElement.equals(rootdir)) {
+				if (parentElement.toString().equals(propertyManager.getSnippetsPath().toString())) {
 					Object[] files = ((File) parentElement).listFiles(snippetfilter);
 					Object[] snipex = SnipTreeView.getSnipExURLs();
+					//SnippetObject[] snippets = new SnippetObject[files.length];
 					if(files.length == 0 && snipex.length == 0) {
 						System.out.println("Found " + files.length + " snippets in " + rootdir);
 					}
 					System.out.println("Found " + files.length + " snippets in root");
-
 					return SnipTreeView.appendArrays(files, snipex);
 
 				} else {

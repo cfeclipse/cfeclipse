@@ -66,6 +66,7 @@ public class SnippetPlugin extends AbstractUIPlugin {
 			e.printStackTrace();
 			System.out.println(e);
 		}
+		getWorkbench().getActiveWorkbenchWindow().getSelectionService().addSelectionListener(fPropertyManager.getListener());
 
 		String defaultSnippetPath = SnippetPlugin.getDefault().getStateLocation().toString() + "/snippets";
 		File f = new File(defaultSnippetPath);
@@ -83,6 +84,7 @@ public class SnippetPlugin extends AbstractUIPlugin {
 	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
+		getWorkbench().getActiveWorkbenchWindow().getSelectionService().removeSelectionListener(fPropertyManager.getListener());
 		plugin = null;
 		super.stop(context);
 	}

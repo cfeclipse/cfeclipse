@@ -440,6 +440,9 @@ public class SnipFileDialog extends Dialog {
 		return okButton;
 	}
 	
+	protected boolean isResizable() {
+	    return true;
+	}
 	
 	
 	

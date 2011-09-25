@@ -24,10 +24,14 @@
  */
 package org.cfeclipse.cfml.snippets.views.snips;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 /**
  * @author Stephen Milligan
@@ -63,17 +67,15 @@ public class SnipWriter {
 	
 	public void writeSnippet(String snippetName, String snippetKeyCombo, String snippetDescription, String startText, String endText, boolean useAsTemplate, String templateExtension) {
 		
-		
-		File snippetFile = new File(parentFolder.toString() + File.separator + snippetName + fileExtension);
+		String filePath = parentFolder.toString() + File.separator + snippetName + fileExtension;
+		snippetFile = new File(parentFolder.toString() + File.separator + snippetName + fileExtension);
 		String snippetContents = createFormattedSnip(snippetName,snippetDescription, startText,endText,useAsTemplate,templateExtension);
 		try {
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter
+					(new FileOutputStream(filePath),ResourcesPlugin.getEncoding()));
 		    
-			if (!snippetFile.isFile()) {
-				snippetFile.createNewFile();
-			}
-			FileWriter writer = new FileWriter(snippetFile);
-			writer.write(snippetContents);
-			writer.close();
+			out.write(snippetContents);
+			out.close();
 			if (snippetKeyCombo.length() > 0) {
 			    SnipKeyCombos snipKeyCombos = new SnipKeyCombos();
 

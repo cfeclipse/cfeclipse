@@ -32,6 +32,7 @@ import java.util.Set;
 import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceManager;
+import org.cfeclipse.cfml.snippets.views.snips.SnipTreeView;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -43,6 +44,9 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.ui.internal.Workbench;
@@ -61,6 +65,7 @@ public class CFMLPropertyManager {
 	private CFMLPreferenceManager preferenceManager;
 	/** The list of items that are listenening for property changes */
 	private ArrayList listeners;
+	private String currentSnippetsPath = "";
 
 	public CFMLPropertyManager() {
 		super();
@@ -73,6 +78,7 @@ public class CFMLPropertyManager {
 			// e.printStackTrace();
 		}
 		this.preferenceManager = SnippetPlugin.getDefault().getPreferenceManager();
+		this.currentSnippetsPath = preferenceManager.snippetsPath();
 		this.listeners = new ArrayList();
 	}
 
@@ -98,7 +104,39 @@ public class CFMLPropertyManager {
 	}
 
 	public String defaultSnippetsPath() {
-		return preferenceManager.getPluginStateLocation();
+		return preferenceManager.getPluginStateLocation()+"/snippets";
+	}
+
+	private ISelectionListener listener = new ISelectionListener() {
+		public void selectionChanged(IWorkbenchPart sourcepart, ISelection selection) {
+			String lastSnippetPath = currentSnippetsPath;
+			IStructuredSelection currentSelection =  getSelection();
+			if(currentSelection == null) {
+				currentSnippetsPath = defaultSnippetsPath();
+			}
+			IResource[] currentResource = getSelectedResources(currentSelection);
+			if(currentResource.length == 0) {
+				currentSnippetsPath = defaultSnippetsPath();
+			} else {				
+				currentSnippetsPath = snippetsPath(currentResource[0].getProject());
+			}
+			if(lastSnippetPath!=currentSnippetsPath || lastSnippetPath.length() == 0) {
+				String id = SnipTreeView.ID_SNIPVIEWTREE;
+				IViewReference viewReferences[] = sourcepart.getSite().getWorkbenchWindow().getActivePage().getViewReferences();
+				for (int i = 0; i < viewReferences.length; i++) {
+					if (id.equals(viewReferences[i].getId())) {
+						SnipTreeView snipTreeView = (SnipTreeView) (viewReferences[i].getView(false));
+						if(snipTreeView!= null)snipTreeView.reloadSnippets(false);
+					}
+				}
+			}
+		}
+	};
+	
+	
+	
+	public ISelectionListener getListener() {
+		return listener;
 	}
 
 	/**
@@ -130,15 +168,7 @@ public class CFMLPropertyManager {
 	}
 	
 	public String getSnippetsPath() {
-		IStructuredSelection currentSelection =  getSelection();
-		if(currentSelection == null) {
-			return defaultSnippetsPath();
-		}
-		IResource[] currentResource = getSelectedResources(currentSelection);
-		if(currentResource.length == 0) {
-			return defaultSnippetsPath();
-		}
-		return snippetsPath(currentResource[0].getProject());
+		return currentSnippetsPath;
 	}
 
 	public void setSnippetsPath(String path, IProject project) {

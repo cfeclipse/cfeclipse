@@ -116,4 +116,17 @@ public class SnipKeyCombos {
         return null;
     }
     
+    public String[] containgSequence(String sequence) {
+           Enumeration e = this.keyCombos.propertyNames();
+           String containing = "";
+           String trigger = "";
+           while (e.hasMoreElements()){
+               trigger = e.nextElement().toString();
+               if (trigger.matches(sequence)) {
+                   containing += this.keyCombos.getProperty(trigger) + ",";
+               }
+           }
+        return containing.split(",");
+    }
+    
 }
