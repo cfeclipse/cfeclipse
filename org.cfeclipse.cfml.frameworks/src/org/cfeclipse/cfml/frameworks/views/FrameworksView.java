@@ -24,10 +24,15 @@
  */
 package org.cfeclipse.cfml.frameworks.views;
 
+import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,10 +44,13 @@ import org.cfeclipse.cfml.frameworks.dialogs.CSAddBeanDialog;
 import org.cfeclipse.cfml.frameworks.dialogs.ViewXMLDialog;
 import org.cfeclipse.cfml.frameworks.preferences.ActionsPreferencePage;
 import org.cfeclipse.cfml.frameworks.util.FWXImages;
+import org.cfeclipse.cfml.frameworks.views.FrameworksView.TreeFilter;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.ui.part.*;
@@ -54,6 +62,12 @@ import org.eclipse.jface.preference.PreferenceNode;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
@@ -70,6 +84,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
+import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -125,6 +140,7 @@ public class FrameworksView extends ViewPart {
 	
 	private EditorEventListener eelistener;
 	
+
 	private IPartListener2 partListener2 = new IPartListener2() {
 		private Log listenerlogger = LogFactory.getLog(IPartListener2.class);
 		
@@ -163,6 +179,9 @@ public class FrameworksView extends ViewPart {
             public void partInputChanged(IWorkbenchPartReference ref) {}
 
     };
+	private Text text;
+	private TreeFilter treeFilter;
+	protected static String fDefaultSearchText = "Type to search";
 	
 	
     
@@ -179,7 +198,10 @@ public class FrameworksView extends ViewPart {
         		
         
         }
-    	
+        BufferedInputStream bit = null;
+        JarInputStream bi = null;
+        JarEntry je = null;
+        
     }
 
     private void editorActivated(IEditorPart editor) {
@@ -223,11 +245,80 @@ public class FrameworksView extends ViewPart {
 		
 	}
 	
-	//Startup and shutdown methods
-	   public void dispose() {
-	        getSite().getPage().removePartListener(partListener2);
-	   }
-	/**
+	public void setTreeFilter(String string){
+		if(!string.equals(text.getText())) {			
+			text.setText(string);
+			text.setFocus();
+		}
+		treeFilter.setSearchText(string);
+		viewer.refresh();
+		if(string.length() == 0 || string.equals(fDefaultSearchText)){
+			text.setText(fDefaultSearchText);
+			text.selectAll();
+			viewer.collapseAll();
+			viewer.expandToLevel(2);
+		} else {
+			viewer.expandAll();
+		}
+	}
+	
+	// Startup and shutdown methods
+	public void dispose() {
+		getSite().getPage().removePartListener(partListener2);
+	}
+
+	private Boolean childrenContainString(TreeParentNode item, String searchStringRegex) {
+		if(item.getName().matches(searchStringRegex)) {
+			return true;
+		}
+		if(item.getElement() != null && item.getElement().getAttributes() != null) {			
+			Iterator attrs = item.getElement().getAttributes().iterator();
+			while(attrs.hasNext()) {
+				Attribute attr = (Attribute) attrs.next();
+				if(attr.getName().matches(searchStringRegex)) {
+					return true;
+				}
+				if(attr.getValue().matches(searchStringRegex)) {
+					return true;
+				}
+			}
+		}
+		if(item.hasChildren()) {
+			for(TreeParentNode child : item.getChildren()) {
+				if(childrenContainString(child,searchStringRegex)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public class TreeFilter extends ViewerFilter {
+
+		private String searchStringRegex;
+		private String searchString;
+
+		public void setSearchText(String s) {
+			// Search must be a substring of the existing value
+			this.searchStringRegex = "(?i)" + s + ".*";
+			this.searchString=s;
+		}
+
+		@Override
+		public boolean select(Viewer viewer, Object parentElement, Object element) {
+			if (searchStringRegex == null || searchStringRegex.length() == 0 || searchStringRegex.equals(".*.*")) {
+				return true;
+			}
+			if(element instanceof TreeParentNode) {
+				return childrenContainString((TreeParentNode) element, searchStringRegex);
+			} else {
+				System.err.println("wee");
+			}
+			return false;
+		}
+	}
+	   
+	 /**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
 	 */
@@ -242,9 +333,18 @@ public class FrameworksView extends ViewPart {
 		
 		//add a label here:
 		
-		
-		
+		//Create a "label" to display information in. I'm
+		//using a text field instead of a lable so you can
+		//copy-paste out of it.
+		text = new Text(parent, SWT.SEARCH | SWT.ICON_CANCEL);
+		// layout the text field above the treeviewer
 		GridData layoutData = new GridData();
+		layoutData.grabExcessHorizontalSpace = true;
+		layoutData.horizontalAlignment = GridData.FILL;
+		text.setLayoutData(layoutData);
+		text.setText(fDefaultSearchText);
+		
+		layoutData = new GridData();
 		layoutData.grabExcessHorizontalSpace = true;
 		layoutData.horizontalAlignment = GridData.FILL;
 //		layout the tree viewer below the text field
@@ -259,6 +359,7 @@ public class FrameworksView extends ViewPart {
 		layoutData.verticalAlignment = GridData.FILL;		
 		
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+
 		drillDownAdapter = new DrillDownAdapter(viewer);
 		viewer.setContentProvider(new FrameworksContentProvider(getViewSite(), currentProject, viewer));
 		
@@ -269,6 +370,42 @@ public class FrameworksView extends ViewPart {
 		viewer.getControl().setLayoutData(layoutData);
 		viewer.expandToLevel(2);
 		
+		treeFilter = new TreeFilter(); 
+		viewer.addFilter(treeFilter);
+		text.addSelectionListener(new SelectionAdapter() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				if (e.detail == SWT.CANCEL) {
+					text.setText(fDefaultSearchText);
+					setTreeFilter("");
+				}
+			}
+		});
+
+		text.addFocusListener(new FocusListener(){
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(text.getText().equals(fDefaultSearchText)){
+					text.setText("");
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(text.getText().length() == 0){
+					text.setText(fDefaultSearchText);
+				}
+			}
+			});
+
+		text.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent ke) {
+				if(ke.keyCode == SWT.ARROW_DOWN) {
+					viewer.getTree().setFocus();
+				}
+				setTreeFilter(text.getText());
+			}
+		});
+
 		//Add drop capabilities
 		//http://www.eclipse.org/articles/Article-Workbench-DND/drag_drop.html
 		
@@ -484,12 +621,8 @@ public class FrameworksView extends ViewPart {
 					   dialog.create();
 					   dialog.setMessage(page.getTitle());
 					   dialog.open();
-					
-					
 				}
-				
-				
-				
+
 			}
 		};
 		action2.setText("Configure...");
