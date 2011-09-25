@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Templates Fragment
 Bundle-SymbolicName: org.cfeclipse.cfml.templates.fragment;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.0.3
 Fragment-Host: org.cfeclipse.cfml
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.cfeclipse.cfml;bundle-version="1.0.0"
