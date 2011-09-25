@@ -14,6 +14,8 @@
 
 package org.cfeclipse.cfeclipsecall;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,6 +25,14 @@ import java.lang.reflect.Method;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * This is a Mac OS helper class to assist with handling of MAC OS events using
@@ -82,6 +92,43 @@ public class MacOsHandler {
 
 }
 
+final class SimpleAboutDialog extends JDialog {
+	  public SimpleAboutDialog() {
+	    super(new JFrame(), "About Dialog", true);
+
+	    Box b = Box.createVerticalBox();
+	    b.add(Box.createGlue());
+	    String labelText =
+	        "<html>CFEclipseCall is a program for opening cfml files " +
+	        "from the operating system into eclipse." +
+	        "<P>" +
+	        "<DL>" +
+	        "  <DT>port</DT><DD>this port should matche the cfeclipse cfeclipsecall preference port<br/></DD>" +
+	        "  <DT>eclipse</DT><DD>this is the path to eclipse.  It should be eclipse, and NOT eclipse.app!</DD>" +
+	        "</DL> see: http://cfeclipse.org/wiki/CFEclipseCall";
+	      JLabel fancyLabel =
+	        new JLabel(labelText,JLabel.CENTER);
+	      fancyLabel.setBorder
+	        (BorderFactory.createTitledBorder("About CFEclipseCall"));   
+	    b.add(fancyLabel);
+	    b.add(Box.createGlue());
+	    getContentPane().add(b, "Center");
+
+	    JPanel p2 = new JPanel();
+	    JButton ok = new JButton("Ok");
+	    p2.add(ok);
+	    getContentPane().add(p2, "South");
+
+	    ok.addActionListener(new ActionListener() {
+	      public void actionPerformed(ActionEvent evt) {
+	        setVisible(false);
+	      }
+	    });
+
+	    setSize(460, 270);
+	  }
+	}
+
 /**
  * Class to assist with intercepting calls to the handleAbout() and handleQuit()
  * methods of the <code>com.apple.eawt.ApplicationAdapter</code> class and
@@ -91,7 +138,8 @@ class ListenerProxy implements InvocationHandler {
 
 	/** Private class logger. */
 	private static Logger log = Logger.getLogger(MacOsHandler.class.toString());
-
+	private static String appBundleRoot = getBundleRoot();
+	private static String propertiesFile = appBundleRoot + "/properties.cfeclipsecall";
 	/** Reference to the proxied object. */
 	private Object object;
 
@@ -117,7 +165,7 @@ class ListenerProxy implements InvocationHandler {
 		this.object = obj;
 	}
 
-	private String getBundleRoot() {
+	private static String getBundleRoot() {
 		String bundleRoot = "";
 		try {
 			Class<?> fileManagerC = Class.forName("com.apple.eio.FileManager");
@@ -131,11 +179,10 @@ class ListenerProxy implements InvocationHandler {
 
 	private void importProperties(String filename) {
 		Properties properties = new Properties();
-		String bundleRoot = getBundleRoot();
 			try {
 				properties.load(new FileInputStream(filename));
-		        properties.store(new FileOutputStream(bundleRoot + "/eclipsecall.properties"), "Imported");
-				System.out.println("Imported properties to: " + bundleRoot + "/eclipsecall.properties");
+		        properties.store(new FileOutputStream(propertiesFile), "Imported");
+				System.out.println("Imported properties to: " + propertiesFile);
 			} catch (Exception e) {
 				System.out.println(e);
 				e.printStackTrace();
@@ -143,25 +190,21 @@ class ListenerProxy implements InvocationHandler {
 		}
 
 	private void setProperties() {
-	String appBundleRoot = getBundleRoot();
 	Properties properties = new Properties();
 		try {
-			File propFile = new File(appBundleRoot + "/eclipsecall.properties");
+			File propFile = new File(propertiesFile);
 			if(!propFile.exists()) {
-				properties.setProperty(CallClient.ENV_SOCKET, Integer.toString(CallClient.DEFAULT_SOCKET));
-				properties.setProperty(CallClient.ENV_CALL, "denstest");
-				System.out.println("New properties: " + appBundleRoot + "/eclipsecall.properties");
-				System.out.println(properties.toString());
-		        properties.store(new FileOutputStream(appBundleRoot + "/eclipsecall.properties"), null);
+				System.out.println("No existing property file, opening editor!");
+				System.setProperty(CallClient.ENV_SOCKET,String.valueOf(CallClient.DEFAULT_SOCKET));
+				System.setProperty(CallClient.ENV_CALL,"eclipse");
+				CFEclipseCallPropertyEditor editor = new CFEclipseCallPropertyEditor(propFile.getPath());
+				editor.setVisible(true);
 			} else {				
-				properties.load(new FileInputStream(appBundleRoot + "/eclipsecall.properties"));
+				System.out.println("Using property file: " + propertiesFile);
+				properties.load(new FileInputStream(propertiesFile));
+				System.setProperty(CallClient.ENV_SOCKET,properties.getProperty(CallClient.ENV_SOCKET));
+				System.setProperty(CallClient.ENV_CALL,properties.getProperty(CallClient.ENV_CALL));
 			}
-			System.setProperty(CallClient.ENV_SOCKET,properties.getProperty(CallClient.ENV_SOCKET));
-			System.setProperty(CallClient.ENV_CALL,properties.getProperty(CallClient.ENV_CALL));
-			System.out.println("Loaded properties: " + appBundleRoot + "/eclipsecall.properties");
-			System.out.println(properties.toString());
-			System.out.println(System.getProperty(CallClient.ENV_CALL));
-			System.out.println(System.getProperty(CallClient.ENV_SOCKET));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}				
@@ -181,6 +224,8 @@ class ListenerProxy implements InvocationHandler {
 				// handling about action
 				log.fine("Processing handleAbout() method...");
 				// PrefCountRegistry.getInstance().getMainWindow().showAboutInfo();
+				SimpleAboutDialog about = new SimpleAboutDialog();
+				about.setVisible(true);
 				Object event = args[0];
 				Method eventSetter = Class.forName("com.apple.eawt.ApplicationEvent").getDeclaredMethod("setHandled",
 						new Class[] { Boolean.TYPE });
@@ -197,17 +242,23 @@ class ListenerProxy implements InvocationHandler {
 				if(fileName.indexOf("properties.cfeclipsecall") != -1) {
 					System.out.println(appBundleRoot+"FSCK " + fileName);
 					importProperties(fileName);
+					CFEclipseCallPropertyEditor editor = new CFEclipseCallPropertyEditor(propertiesFile);
+					editor.setVisible(true);
 				} else {
 					setProperties();
 					if(System.getProperty(CallClient.ENV_CALL).length() != 0){
 						eclipse = System.getProperty(CallClient.ENV_CALL);
 					}
-					System.out.println();
-					CallClient.doOpen("properties.cfeclipsecall",null, eclipse, fileName);					
+					CallClient.doOpen(null, eclipse, fileName);					
 				}
 
+			} else if ("handleOpenApplication".equals(m.getName())) {
+				// gets called every time file is opened, so we have to ignore
+			} else if ("handleQuit".equals(m.getName())) {
+				System.exit(0);
 			} else {
 				// for now, we don't care about other methods
+				System.out.println("handling:"+ m.getName());
 				result = m.invoke(object, args);
 			}
 		} catch (Exception e) {
