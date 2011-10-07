@@ -416,7 +416,7 @@
         port = "port_number"
         protocol = "protocol"
 -->
-        <tag endtagrequired="false" name="cfcache" single="false"
+        <tag endtagrequired="false" hybrid="true" name="cfcache" single="false"
              xmlstyle="false">
             <help><![CDATA[
         Stores a copy of a page on the server and/or client computer,
