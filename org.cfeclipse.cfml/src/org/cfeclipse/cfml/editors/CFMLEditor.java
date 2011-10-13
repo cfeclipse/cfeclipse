@@ -267,7 +267,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
         if (doc instanceof ISynchronizable) {
             lock= ((ISynchronizable) doc).getLockObject();
         } else {
-            lock= getCFModel();
+			lock = getCFModel();
         }
         return lock;
     }

@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.CFMLEditor;
@@ -52,6 +53,7 @@ import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.ISelectionValidator;
+import org.eclipse.jface.text.ISynchronizable;
 import org.eclipse.jface.text.ITextInputListener;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITextViewer;
@@ -648,23 +650,24 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		
 	protected void markBeginEndTags(CfmlTagItem tagItem) {
 		if(tagItem.getMatchingItem() != null) {			
-			Map tagOpen = new HashMap();
-			Map tagClose = new HashMap();
+			Map<String, String> tagOpen = new HashMap<String, String>();
+			Map<String, String> tagClose = new HashMap<String, String>();
 			MarkerUtilities.setMessage(tagOpen, "Open " + tagItem.getName());
 			MarkerUtilities.setLineNumber(tagOpen, tagItem.getLineNumber());
 			tagOpen.put(IMarker.LOCATION, "line " + tagItem.getLineNumber() + ", Chars " + tagItem.getStartPosition() + "-" + tagItem.getEndPosition());
-			tagOpen.put(IMarker.CHAR_START, tagItem.getStartPosition());
-			tagOpen.put(IMarker.CHAR_END, tagItem.getEndPosition());
+			tagOpen.put(IMarker.CHAR_START, Integer.toString(tagItem.getStartPosition()));
+			tagOpen.put(IMarker.CHAR_END, Integer.toString(tagItem.getEndPosition()));
 
 			MarkerUtilities.setMessage(tagClose, "Close " + tagItem.getName());
 			MarkerUtilities.setLineNumber(tagClose, tagItem.getMatchingItem().getLineNumber());
 			tagClose.put(IMarker.LOCATION, "line " + tagItem.getMatchingItem().getLineNumber() + ", Chars " + tagItem.getMatchingItem().getStartPosition() + "-" + tagItem.getMatchingItem().getEndPosition());
-			tagClose.put(IMarker.CHAR_START, tagItem.getMatchingItem().getStartPosition());
-			tagClose.put(IMarker.CHAR_END, tagItem.getMatchingItem().getEndPosition());
+			tagClose.put(IMarker.CHAR_START, Integer.toString(tagItem.getMatchingItem().getStartPosition()));
+			tagClose.put(IMarker.CHAR_END, Integer.toString(tagItem.getMatchingItem().getEndPosition()));
 			
 			try {
-				MarkerUtilities.createMarker(((ICFDocument)this.fViewer.getDocument()).getResource(), tagOpen, this.tagBeginEndAnnotation);
-				MarkerUtilities.createMarker(((ICFDocument)this.fViewer.getDocument()).getResource(), tagClose, this.tagBeginEndAnnotation);
+				ICFDocument doc = ((ICFDocument) this.fViewer.getDocument());
+				MarkerUtilities.createMarker(doc.getResource(), tagOpen, SelectionCursorListener.tagBeginEndAnnotation);
+				MarkerUtilities.createMarker(doc.getResource(), tagClose, SelectionCursorListener.tagBeginEndAnnotation);
 			} catch (CoreException excep) {
 				excep.printStackTrace();
 			} catch (Exception anyExcep) {
@@ -758,7 +761,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 			
 			// Add occurrence annotations
 			int length= fPositions.size();
-			Map annotationMap= new HashMap(length);
+			Map<Annotation, Position> annotationMap = new ConcurrentHashMap<Annotation, Position>(length);
 			for (int i= 0; i < length; i++) {
 				
 				if (isCanceled())
@@ -771,6 +774,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 				try {
 					message= document.get(position.offset, position.length);
 				} catch (BadLocationException ex) {
+					fPositions.remove(i);
 					// Skip this match
 					continue;
 				}
@@ -783,21 +787,21 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 				return Status.CANCEL_STATUS;
             }
 			
-            Object lock= editor.getLockObject(document);
-            if (lock == null) {
-                updateAnnotations(annotationModel, annotationMap);
-            } else {
-                synchronized (lock) {
-                    updateAnnotations(annotationModel, annotationMap);
-                }
-            }
+			Object lock = ((ISynchronizable) annotationModel).getLockObject();
+			if (lock == null) {
+				updateAnnotations(annotationModel, annotationMap);
+			} else {
+				synchronized (lock) {
+					updateAnnotations(annotationModel, annotationMap);
+				}
+			}
 
 			return Status.OK_STATUS;
 		}
 
         private void updateAnnotations(IAnnotationModel annotationModel, Map annotationMap) {
             if (annotationModel instanceof IAnnotationModelExtension) {
-            	if(fOccurrenceAnnotations != null && fOccurrenceAnnotations.length > 0) {            		
+				if (fOccurrenceAnnotations != null && fOccurrenceAnnotations.length > 0) {
             		((IAnnotationModelExtension)annotationModel).replaceAnnotations(fOccurrenceAnnotations, annotationMap);
             	}
             } else {
