@@ -56,7 +56,17 @@
 		</copy>
 	</target>
 
-	<target name="update-dev" depends="init">
+	<target name="createArchivedUpdateSite">
+		<property file="publish.properties" />
+		<delete file="cfeupdatesite.zip" />
+		<zip destfile="cfeupdatesite.zip">
+			<zipfileset dir="./features" prefix="features" />
+			<zipfileset dir="./plugins" prefix="plugins" />
+			<zipfileset dir="." includes="site.xml" />
+		</zip>
+	</target>
+
+	<target name="update-dev" depends="init,createArchivedUpdateSite">
 		<input message="Do you want to tweet that this build is available?" validargs="y,n" addproperty="do.delete" />
 		<antcall target="clean-site" />
 		<condition property="do.tweet">
@@ -113,7 +123,7 @@
 			<!-- I have no idea why i needed to do this. when i had all of them 
 			in a single scp call, it kept hanging.-->
 			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}" trust="true" verbose="true">
-				<fileset dir="." includes="site.xml,associateSites.xml,index.html,artifacts.jar,content.jar,logs.zip,removePreviousBuilds.sh" />
+				<fileset dir="." includes="site.xml,cfeupdatesite.zip,associateSites.xml,index.html,artifacts.jar,content.jar,logs.zip,removePreviousBuilds.sh" />
 			</scp>
 			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/web" trust="true" verbose="true">
 				<fileset dir="web">
