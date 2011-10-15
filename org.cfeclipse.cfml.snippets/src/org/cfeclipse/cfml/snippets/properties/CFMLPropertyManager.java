@@ -196,7 +196,10 @@ public class CFMLPropertyManager {
 				} else if (partSelection instanceof ITextSelection) {
 					IResource resource = ResourceUtil.getResource(site.getWorkbenchWindow().getActivePage()
 							.getActiveEditor().getEditorInput());
-					return new StructuredSelection(resource);
+					if(resource != null) {
+						return new StructuredSelection(resource);
+					}
+					else return new StructuredSelection();
 				}
 			}
 		}
