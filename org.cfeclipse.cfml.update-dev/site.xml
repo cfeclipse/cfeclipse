@@ -4,7 +4,7 @@
    <description name="CFEclipse Development Update Site" url="http://cfeclipse.org/update-dev">
       CFEclipse Dev Build Update site
    </description>
-   <feature url="features/org.cfeclipse.cfml.feature_1.4.5.aualifier.jar" id="org.cfeclipse.cfml.feature" version="1.4.5.qualifier">
+   <feature url="features/org.cfeclipse.cfml.feature_1.4.5.201109282040.jar" id="org.cfeclipse.cfml.feature" version="1.4.5.201109282040">
       <category name="[Dev] CFEclipse CFML Editor (Required)"/>
    </feature>
    <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.200906240701.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.200906240701">
