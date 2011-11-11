@@ -2,7 +2,7 @@
 	<property name="buildtype" value="update"/>
 
 	<taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar" />
-	<taskdef name="twitter" classname="de.ecw.ant.twitter.AntTwitterTask" classpathref="build.lib.path" />
+	<taskdef name="twitter" classname="den.ant.twitter.AntTwitterTask" classpathref="build.lib.path" />
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build.lib.path" />
 
 	<classloader loader="project">
@@ -36,10 +36,6 @@
 			<format pattern="MM/dd/yyyy hh:mm aa" offset="-1" unit="day" property="daybefore" />
 		</tstamp>
 		<property file="publish.properties" />
-		 <sshexec host="${site.url}"
-			username="${site.username}"
-			password="${site.password}"
-			command="/bin/sh ${site.htmlroot}${buildtype}/removePreviousBuilds.sh"/>
 	</target>
 
 
@@ -55,11 +51,7 @@
 	</target>
 
 	<target name="update" depends="init">
-		  <input
-		    message="Do you want to tweet that this build is available?"
-		    validargs="y,n"
-		    addproperty="do.delete"
-		  />
+		<input message="Do you want to tweet that this build is available?" validargs="y,n" addproperty="do.delete" />
 		  <condition property="do.tweet">
 		    <equals arg1="y" arg2="${do.delete}"/>
 		  </condition>
@@ -71,8 +63,10 @@
 
 	<target name="twitter-test" depends="init">
 		<twitter message="${info.smaller}" 
-			username="${twitter.username}" 
-			password="${twitter.password}" 
+			consumerKey="${twitter.consumer.key}" 
+			consumerSecret="${twitter.consumer.secret}" 
+			token="${twitter.token}" 
+			tokenSecret="${twitter.token.secret}" 
 			bitlyUsername="bitly-username" 
 			bitlyApiKey="bitly-key" 
 			enableBitly="false" />
@@ -89,11 +83,14 @@
 		<propertyregex property="info.smaller"
 			input="${last.revision.info}"
 			regexp="(?s)-+.(r\d+ \| \w+)\s?\|\s?.+(\(.*?).\|\s\d+\slines?(.*?).-{3}"
-			select=" #ColdFusion \2 \1 > \3"
+			select=" #CFML \2 \1 > \3"
 			casesensitive="false" />
-		<twitter message="${info.smaller} ${buildtype}" 
-			username="${twitter.username}" 
-			password="${twitter.password}" 
+		<input message="Tweet:" defaultvalue="${info.smaller} [${buildtype}]" addproperty="tweet" />		
+		<twitter message="${tweet}" 
+			consumerKey="${twitter.consumer.key}" 
+			consumerSecret="${twitter.consumer.secret}" 
+			token="${twitter.token}" 
+			tokenSecret="${twitter.token.secret}" 
 			bitlyUsername="bitly-username" 
 			bitlyApiKey="bitly-key" 
 			enableBitly="false" />
