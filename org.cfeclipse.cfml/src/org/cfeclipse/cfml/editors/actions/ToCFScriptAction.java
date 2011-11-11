@@ -93,10 +93,22 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 				highlighted = m.replaceFirst("location("+args+");");
 				m.reset(highlighted);
 			}
+			m = Pattern.compile("(?is)<cfreturn\\s+(.*?)\\s?/?>").matcher("").reset(highlighted);
+			while (m.find()) {
+				String args = tagArgsToFunctionArgs(m.group(1));
+				highlighted = m.replaceFirst("return " + args + ";");
+				m.reset(highlighted);
+			}
 			m = Pattern.compile("(?is)<cfdump\\s+(.*?)\\s?/?>").matcher("").reset(highlighted);
 			while (m.find()) {
 				String args = tagArgsToFunctionArgs(m.group(1));
 				highlighted = m.replaceFirst("dump("+args+");");
+				m.reset(highlighted);
+			}
+			m = Pattern.compile("(?is)<cftransaction\\s+(.*?)>(.*?)</cftransaction>").matcher("").reset(highlighted);
+			while (m.find()) {
+				String args = tagArgsToFunctionArgs(m.group(1));
+				highlighted = m.replaceFirst("transaction " + args + "{" + m.group(2) + "}");
 				m.reset(highlighted);
 			}
 			m = Pattern.compile("(?is)<cfabort\\s*?/?>").matcher("").reset(highlighted);
