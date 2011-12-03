@@ -88,7 +88,7 @@ public class NewCFCWizardArguments extends WizardPage {
 	/** this is all the functions, the last page should have set these up else they
 	 * are null and we should error
 	 */
-	private static LinkedHashMap functionBeans;
+	static LinkedHashMap functionBeans;
 	
 	/** the currently loaded (editing function bean) */
 	private static CFCFunctionBean currentFunctionBean;

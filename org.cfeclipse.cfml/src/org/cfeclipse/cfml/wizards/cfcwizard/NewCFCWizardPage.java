@@ -39,9 +39,11 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -61,11 +63,13 @@ public class NewCFCWizardPage extends WizardPage {
 	private Text cfcPath;
 	private Text cfcHint;
 	private Text cfcDisplayName;
-	private Text cfcOutput;
+	private Button cfcOutput;
 	
 	private ISelection selection;
 	
 	private CFCBean cfcBean;
+	private Combo cfcStyle;
+	private Button cfcPersistent;
 
 	/**
 	 * Constructor for SampleNewWizardPage.
@@ -97,6 +101,23 @@ public class NewCFCWizardPage extends WizardPage {
 		gd.horizontalSpan = 2;
 		this.cfcName.setLayoutData(gd);
 		this.cfcName.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				dialogChanged();
+			}
+		});
+
+		label = new Label(container, SWT.NULL);
+		label.setText("&Style:");
+
+		this.cfcStyle = new Combo(container, SWT.BORDER | SWT.SINGLE);
+		gd = new GridData(GridData.BEGINNING);
+		gd.widthHint = 150;
+		gd.horizontalSpan = 2;
+		this.cfcStyle.setLayoutData(gd);
+		String items[] = { "tag", "cfscript" };
+		this.cfcStyle.setItems(items);
+		this.cfcStyle.select(0);
+		this.cfcStyle.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
@@ -171,18 +192,32 @@ public class NewCFCWizardPage extends WizardPage {
 		});
 		
 		label = new Label(container, SWT.NULL);
-		label.setText("&Output:");
-		this.cfcOutput = new Text(container, SWT.BORDER | SWT.SINGLE);
+		label.setText("&Output");
+		this.cfcOutput = new Button(container, SWT.CHECK);
 		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
 		this.cfcOutput.setLayoutData(gd);
-		this.cfcOutput.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+		this.cfcOutput.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
 				dialogChanged();
 			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
 		});
-		
+
+		label = new Label(container, SWT.NULL);
+		label.setText("&Persistent");
+		this.cfcPersistent = new Button(container, SWT.CHECK);
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan = 2;
+		this.cfcPersistent.setLayoutData(gd);
+		this.cfcPersistent.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				dialogChanged();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
 		initialize();
 		dialogChanged();
 		setControl(container);
@@ -218,8 +253,6 @@ public class NewCFCWizardPage extends WizardPage {
 		this.cfcBean.setName("NewCFComponent");
 		this.cfcName.setText(this.cfcBean.getName());
 		
-		this.cfcBean.setOutput("false");
-		this.cfcOutput.setText(this.cfcBean.getOutput());
 	}
 	
 	/**
@@ -284,17 +317,21 @@ public class NewCFCWizardPage extends WizardPage {
 	private void dialogChanged() {
 		
 		String containerName = this.cfcPath.getText();
+		String style = this.cfcStyle.getText();
 		String fileName = this.cfcName.getText();
 		String extend = this.cfcExtends.getText();
 		String hint = this.cfcHint.getText();
 		String displayName = this.cfcDisplayName.getText();
-		String output = this.cfcOutput.getText();
+		String output = Boolean.toString(this.cfcOutput.getSelection());
+		String persistent = Boolean.toString(this.cfcPersistent.getSelection());
 		
 		this.cfcBean.setDisplayName(displayName);
+		this.cfcBean.setStyle(style);
 		this.cfcBean.setExtendCFC(extend);
 		this.cfcBean.setHint(hint);
 		this.cfcBean.setName(fileName);
 		this.cfcBean.setOutput(output);
+		this.cfcBean.setPersistent(persistent);
 		this.cfcBean.setPath(containerName);
 
 		if(containerName.length() == 0) {
@@ -324,7 +361,7 @@ public class NewCFCWizardPage extends WizardPage {
 		
 		if(dotLoc > 0){
 			String ext = fileName.substring(dotLoc + 1);
-			if(ext.equalsIgnoreCase("cfc") == false) {
+			if (ext.equalsIgnoreCase("cfc")) {
 				updateStatus("File extension will be added automatically \"cfc\"");
 				return;
 			}

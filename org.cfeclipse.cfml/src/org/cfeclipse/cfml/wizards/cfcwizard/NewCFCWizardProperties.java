@@ -81,7 +81,7 @@ public class NewCFCWizardProperties extends WizardPage {
 	private List propertyNames;
 	
 	/** this is the hash table of all the beans */
-	private LinkedHashMap propertyBeans;
+	LinkedHashMap propertyBeans;
 
 	private ISelection selection;
 	

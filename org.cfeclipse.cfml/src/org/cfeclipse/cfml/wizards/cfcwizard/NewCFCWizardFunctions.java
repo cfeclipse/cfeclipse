@@ -79,7 +79,7 @@ public class NewCFCWizardFunctions extends WizardPage {
 	private static CFCFunctionBean currentbean;
 	
 	/** all the function beans */
-	private LinkedHashMap functionBeans;
+	LinkedHashMap functionBeans;
 
 	private ISelection selection;
 	
