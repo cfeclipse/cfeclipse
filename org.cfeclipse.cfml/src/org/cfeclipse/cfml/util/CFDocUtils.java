@@ -33,6 +33,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.cfeclipse.cfml.dictionary.Parameter;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
 
 /**
  * This is a helper class provides methods to manipulate, modify and generally
@@ -187,6 +191,38 @@ public class CFDocUtils {
 		return attribs;
 		
 	}
+
+	public static ITextSelection selectWord(IDocument doc, int offset) {
+		try {
+			int length = doc.getLength();
+			int pos = offset;
+			char c;
+			while (pos < length) {
+				c = doc.getChar(pos);
+				if (!Character.isJavaIdentifierPart(c))
+					break;
+				++pos;
+			}
+			int endPos = pos;
+			pos = offset;
+			;
+			while (pos >= 0) {
+				c = doc.getChar(pos);
+				if (!Character.isJavaIdentifierPart(c))
+					break;
+				--pos;
+			}
+			int startPos = pos;
+			if (startPos != endPos) {
+				ITextSelection newSel = new TextSelection(doc, startPos + 1, endPos - startPos - 1);
+				return newSel;
+			}
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	/**
 	 * Checks a attribute value string to make sure it's valid.
 	 * Rules for value attribute are:
