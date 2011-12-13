@@ -553,6 +553,16 @@
                menubarPath="org.cfeclipse.cfml.menus.source/output"
                tooltip="%action.tooltip.GetTagHelp">
          </action>
+          <!-- Lame-ass jump to function by Denny aged 33 -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               definitionId="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               icon="icons/ctool16/help.gif"
+               id="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               label="%action.label.JumpToFunction"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
+               tooltip="%action.tooltip.JumpToFunction">
+         </action>
           <!-- Launch Scribble Pad -->
          <action
                class="org.cfeclipse.cfml.editors.actions.LoadScribblePadAction"
@@ -1210,6 +1220,13 @@
 			categoryId="org.cfeclipse.cfml.commandCategory"
 			id="org.cfeclipse.cfml.editors.actions.GetHelp"/>
 		
+		<!-- Jump to function (only within same page ATM) -->
+		<command
+			name="%command.name.JumpToFunction"
+			description="%command.description.JumpToFunction"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.JumpToFunction"/>
+		
 		<!-- Fire up the scribble pad -->
 		<command
 			name="%command.name.25"
@@ -1436,6 +1453,12 @@
 		<!-- Help -->
 		<key sequence="F1"
 			commandId="org.cfeclipse.cfml.editors.actions.GetHelp"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
+		<!-- Jump to function -->
+		<key sequence="F3"
+			commandId="org.cfeclipse.cfml.editors.actions.JumpToFunction"
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		
@@ -2559,6 +2582,16 @@
                label="%action.label.GetTagHelp"
                toolbarPath="BasicCFEditorCommand"
                tooltip="%action.tooltip.GetTagHelp">
+         </action>
+          <!-- Lame-ass jump to function by Denny Valliant age 33 -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               definitionId="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               icon="icons/ctool16/help.gif"
+               id="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               label="%action.label.JumpToFunction"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.JumpToFunction">
          </action>
           <!-- Launch Scribble Pad -->
          <action
