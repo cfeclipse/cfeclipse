@@ -43,6 +43,7 @@ import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ISynchronizable;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
 /** 
  * CFDocument basically is the main element for getting information about the 
  * ColdFusion document. It will contain the entire tree for the document, 
@@ -289,4 +290,14 @@ public class CFDocument {
         return this;
     }
 
+    public Function getFunctionByName(String functionName) {
+        Set<Function> funcs = this.getFunctions();
+        for (Function fn : funcs) {
+                if (fn.getName().equalsIgnoreCase(functionName)) {
+                        return fn;
+                }
+        }
+        return null;
+    }
+   
 }

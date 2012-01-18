@@ -27,11 +27,14 @@ package org.cfeclipse.cfml.editors.contentassist;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.Trigger;
 import org.cfeclipse.cfml.dictionary.Value;
@@ -39,8 +42,8 @@ import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
 import org.cfeclipse.cfml.parser.CFParser;
-import org.cfeclipse.cfml.parser.docitems.DocItem;
-import org.cfeclipse.cfml.parser.docitems.TagItem;
+import org.cfeclipse.cfml.parser.cfmltagitems.CfmlComment;
+import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.cfeclipse.cfml.util.ResourceUtils;
 import org.eclipse.core.resources.IFile;
@@ -63,7 +66,7 @@ public class CFMLComponentAssist extends AssistContributor
 {
     
     /**
-     * The name of the function we're trying to provide context insight for.
+     * The name of the component we're trying to provide context insight for.
      */
     private String cfcname = null;
     
@@ -96,6 +99,10 @@ public class CFMLComponentAssist extends AssistContributor
     //private HashMap paramPositions = new HashMap();
     
     /**
+     * Regular expression for matching @cfmlvariable declarations
+     */
+    private static final String cfmlVarRE = "[\\s]*<!---[\\s]+@cfmlvariable[\\s]+name=\"([A-Za-z0-9_-]+)\"[\\s]+type=\"([A-Za-z0-9\\._-]+)\"[\\s]+--->";
+    /**
      * 
      */
     public CFMLComponentAssist() {
@@ -122,7 +129,7 @@ public class CFMLComponentAssist extends AssistContributor
         		allData = allData.substring(0, allData.length()-1);
         	}
 
-        	String CFCName = "";
+        	String variableName = "";
         	
         	StringBuffer buf = new StringBuffer();
         	for (int i=allData.length()-1;i>=0;i--) {
@@ -131,38 +138,137 @@ public class CFMLComponentAssist extends AssistContributor
         		}
         		buf.insert(0,allData.charAt(i));
         	}
-    		CFCName = buf.toString();
+    		variableName = buf.toString();
     			
+    		String CFCName = this.getCFCName(variableName, state); 
     		
     		//All going well, we have something!
     		
-    		System.out.println("CFC = " + CFCName);
+    		//System.out.println("CFC = " + CFCName);
     	
     		
-    		IFile foundCFC = findCFC(CFCName + ".cfc", project);
+    		IFile foundCFC = findCFC(CFCName, project);
     	
         	ICompletionProposal[] result = new ICompletionProposal[1];
-        	
-        	
-        	result = getFunctions(foundCFC, state.getOffset());
-        	
+        	        	
+        	Set<Function> functions = getFunctions(foundCFC, state.getOffset());        	
+        	result = prepareProposals(state, functions);
         	
         	return result;
         }
     }
     
     
-    /**
+    private String getCFCName(String variableName, IAssistState state) {
+    	CFDocument doc = ((ICFDocument) state.getIDocument()).getCFDocument();
+    	
+		CFNodeList nodelist =  doc.getDocumentRoot().getChildNodes();
+		String cfcName = null;
+				
+        Iterator iter = nodelist.iterator();
+        
+        while(iter.hasNext()){        	
+        	Object cfItem = iter.next();
+        	
+        	if(cfItem instanceof CfmlComment){
+        		CfmlComment comment = (CfmlComment) cfItem;
+    			String commentText = ((CfmlComment) cfItem).getItemData();
+    			
+    			// Now get the type from the comment text    			
+    			Pattern p = Pattern.compile(cfmlVarRE);
+    			Matcher m = p.matcher(commentText);
+    			
+    			if (m.find() && m.group(1).equalsIgnoreCase(variableName)) {
+    				cfcName = m.group(2);
+    				break;
+    			}    		
+        	} else if (cfItem instanceof CfmlTagItem) {
+        			CfmlTagItem cfsetTag = (CfmlTagItem) cfItem;
+        			if (!((CfmlTagItem) cfItem).getName().equalsIgnoreCase("cfset")) {
+        				continue;
+        			}
+        			String tagText = ((CfmlTagItem) cfItem).getItemData();
+        			Map<String, String> varMap = parseCfSetText(tagText);
+        			if (varMap == null) {
+        				continue;
+        			} else {
+        				if (varMap.get("variableName").equalsIgnoreCase(variableName)) {
+        					cfcName = varMap.get("variableType");
+        					break; 
+        				}
+        			}
+        		}
+        	}
+        
+    
+		return cfcName;
+    }
+	
+    private Map<String, String> parseCfSetText(String tagText) {
+		/* 
+		 * Two cases we need to handle:
+		 * 
+		 * <cfset var foo = "bar">
+		 * <cfset foo = "bar">
+		 * 
+		 */
+    	Map<String, String> resultMap = new HashMap<String, String>();
+    	String withVarKeywordRE = "<cfset[\\s]+var[\\s]+([A-Za-z0-9\\._-]+)[\\s]+=(.*)>";
+    	String withoutVarKeywordRE = "<cfset[\\s]+([A-Za-z0-9\\._-]+)[\\s]+=(.*)>";
+
+    	// Now get the type from the comment text    			
+    	Pattern p = Pattern.compile(withVarKeywordRE);
+    	Matcher m = p.matcher(tagText);
+
+    	if (m.find()) {	
+    		resultMap.put("variableName", m.group(1));
+    		resultMap.put("variableType", parseCreateObjectType(m.group(2)));
+    	} else {
+    		p = Pattern.compile(withoutVarKeywordRE);
+    		m = p.matcher(tagText);
+    		if (m.find()) {
+        		resultMap.put("variableName", m.group(1));
+        		resultMap.put("variableType", parseCreateObjectType(m.group(2)));
+    		}
+    	}
+    	
+    	if (resultMap.size() != 2) {
+    		return null;
+    	} else {
+    		return resultMap;
+    	}
+	}
+
+    private String parseCreateObjectType(String tagText) {
+    	/*
+    	 * tagText should be a string in the form createObject("component","componentName")
+    	 */
+    	
+    	String result = null;
+    	String trimmedTagText = tagText.replaceAll("[\\s]+", "");
+    	Pattern p = Pattern.compile("createObject\\([\"']component[\"'],[\"']([A-Za-z0-9\\._-]+)[\"']\\)", Pattern.CASE_INSENSITIVE);
+    	Matcher m = p.matcher(trimmedTagText);
+    	
+    	if (m.find()) {
+    		result = m.group(1);
+    	}
+    	return result;
+    }
+    
+	/**
      * This function loops through a project finding references to the CFC we seek.
      * This can be done in 2 ways, break at the first, or return a whole bunch of proposals
      * 
      * 	Initally breaks at the first one
      * @param cfcname
      */
-    private IFile findCFC(String cfcname, IProject project){
+    private IFile findCFC(String fullyQualifiedCfc, IProject project){
     	//Will need recursive function
     	IFile foundCFC = null;
-   
+
+ 		// Using the . as a separator, get the CFC name from the last token
+ 	
+ 		String cfcname = splitFullyQualifiedName(fullyQualifiedCfc) + ".cfc";    	
     	
     	try {
     	 	IResource firstChildren[] = project.members();
@@ -203,17 +309,16 @@ public class CFMLComponentAssist extends AssistContributor
     private IFile reFindCFC(String cfcname, IFolder folder){
  	IFile foundCFC = null;
    
-    	
     	try {
     	 	IResource firstChildren[] = folder.members();
 		
 		
 				// To make this function quicker, doing two loops. The first is through the files, 
-				// Then, we go into the directory, why? becuase I dont want to loop through the whole directory 
+				// Then, we go into the directory, why? because I don't want to loop through the whole directory 
 				// tree if the file is in the first directory!
 				
 		
-				//Now loop through directories if we didnt find the file.
+				// Now loop through directories if we didn't find the file.
 				if(foundCFC == null){
 					for (int i = 0; i < firstChildren.length; i++)
 			        {
@@ -240,9 +345,19 @@ public class CFMLComponentAssist extends AssistContributor
     	return foundCFC;
    }
 
+	private String splitFullyQualifiedName(String fullyQualifiedCfc) {
+		
+		String result = null;
+		if (fullyQualifiedCfc != null && fullyQualifiedCfc.length() > 0) {
+			String[] tokens = fullyQualifiedCfc.split("\\.");
+			result = tokens[tokens.length-1];
+		}
+		return result;
+	}
+
    
     
-    private ICompletionProposal[]  getFunctions(IFile cfcresource, int offset){
+    private Set<Function> getFunctions(IFile cfcresource, int offset){
     	if(cfcresource == null){
     		System.out.println("Resource not found");
     		return null;
@@ -269,32 +384,7 @@ public class CFMLComponentAssist extends AssistContributor
     	
     	 CFParser parser = new CFParser();
          CFDocument doc = parser.parseDoc(inputString);
-
-         // Now we just want to add the nodes!
-         DocItem docroot = doc.getDocumentRoot();
-         CFNodeList nodes;
-         nodes = docroot.selectNodes("//cffunction");
-         Iterator iter = nodes.iterator();
-         ICompletionProposal[] result = new ICompletionProposal[nodes.size()];
-         int iterAdder = 0;
-         
-         while (iter.hasNext())
-         {
-        	 
-        	TagItem thisTag = (TagItem) iter.next();
-        	String funcName = thisTag.getAttributeValue("name", "unnamed");
-        	String funcReturn = thisTag.getAttributeValue("returntype", "any");
-
-        	 String proposalName = funcName + "()" + " - " + funcReturn;
-             
-        	 CompletionProposal proposal = new CompletionProposal(proposalName, offset, 1, 1);
-             
-             result[iterAdder] = proposal;
-             
-             iterAdder++;
-             
-         }
-    	return result;
+         return doc.getFunctions();
     }
      
     private Parameter[] getFilteredParams(Set params) {
@@ -720,6 +810,36 @@ public class CFMLComponentAssist extends AssistContributor
             return false;
     }
 
+	private ICompletionProposal[] prepareProposals(IAssistState state,
+			Set<Function> functions) {
+			
+			if (functions == null) {
+				return null;
+			}
+		
+			Set<CompletionProposal> proposals = new HashSet<CompletionProposal>();
+			String prefix = determinePrefix(state);			  
+			
+			for (Function func: functions) {
+				String replacementString = func.getName().replace(prefix, "");
+				CompletionProposal proposal = new CompletionProposal(func.getName() + "()", state.getOffset() - prefix.length(), prefix.length(),
+					prefix.length() + replacementString.length()+1);
+				if (func.getName().toLowerCase().startsWith(prefix.toLowerCase())) {
+					proposals.add(proposal);
+				}
+			}
+			
+			return (ICompletionProposal[]) proposals.toArray(new ICompletionProposal[]{});		
+	}    
+
+	// TODO: duplicated from CFMLArgumentAssist - should be refactored
+	private String determinePrefix(IAssistState state) {
+		
+		int lastIndexOfDot = state.getDataSoFar().lastIndexOf(".");
+		return state.getDataSoFar().substring(lastIndexOfDot+1);
+	}
+	
+	
 	public void sessionEnded() {
 		// TODO Auto-generated method stub
 		
