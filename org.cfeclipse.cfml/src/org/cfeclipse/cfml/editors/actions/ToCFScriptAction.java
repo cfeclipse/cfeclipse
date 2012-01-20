@@ -140,7 +140,12 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 					if(argsMap.get("step")!=null) {
 						step = argsMap.get("step").toString();
 					}
-					if(Integer.parseInt(from) > Integer.parseInt(to)) {
+					try {
+						if (Integer.parseInt(from) > Integer.parseInt(to)) {
+							comparator = ">=";
+							opperator = "";
+						}
+					} catch (Exception e) {
 						comparator = ">=";
 						opperator = "";
 					}
@@ -228,6 +233,8 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 			}
 			argsString += required + type + name + defaultValue + ",";
 		}
+		if (argsString.length() == 0)
+			return "";
 		return argsString.substring(0, argsString.length() - 1).trim();
 	}
 
