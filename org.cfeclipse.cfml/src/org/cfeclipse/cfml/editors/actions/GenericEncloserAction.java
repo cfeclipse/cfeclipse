@@ -29,6 +29,7 @@ import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
@@ -96,25 +97,17 @@ public class GenericEncloserAction extends Encloser implements IWorkbenchWindowA
 			 *System.out.println("you may edit this? But I shouldnt be able to 
 			 * save you: " + editor.isEditable());
 			 */
-			
-			
-			
-			
 //			EFS.getStore(null);
 			
 			IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput());
 			ISelection sel = editor.getSelectionProvider().getSelection();
 			this.enclose(doc,(ITextSelection)sel,start,end);			
 			
-			//move the cursor to before the end of the new insert			
+			// adjust selection
 			int offset = ((ITextSelection)sel).getOffset();
-			offset += ((ITextSelection)sel).getLength();
 			offset += start.length();
-
-			editor.setHighlightRange(offset,0,true);
-			// Once we've moved the cursor we need to reset the highlight range 
-			// otherwise on the next insert, the cursor won't move. Paul V.
-			editor.resetHighlightRange();
+			int length = ((ITextSelection)sel).getLength();
+			editor.getSelectionProvider().setSelection(new TextSelection(offset, length));
 
 			// Tell the plugin's Last Encloser Manager that this was the last one used for this editor
 			CFMLPlugin.getDefault().getLastActionManager().setLastAction(editor, this);		
