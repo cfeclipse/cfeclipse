@@ -133,11 +133,13 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	{
 		if(docParser != null)
 		{
-			
 		    IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
 			docParser.setCFScriptParsing(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_DOCFSCRIPT));
 			docParser.setReportErrors(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS));
-			docStructure = docParser.parseDoc();
+			CFDocument parsed = docParser.parseDoc();
+			if (parsed != null) {
+				docStructure = parsed;
+			}
 			
 			commentParser.ParseDocument(this,lastRes);
 			commentParser.setTaskMarkers();
