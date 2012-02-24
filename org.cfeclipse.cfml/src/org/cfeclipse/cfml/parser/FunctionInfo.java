@@ -1,7 +1,8 @@
 package org.cfeclipse.cfml.parser;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.antlr.runtime.CommonToken;
 import org.antlr.runtime.tree.CommonTree;
@@ -14,31 +15,29 @@ public class FunctionInfo extends ScriptItem {
 	private String functionname;
 	private String returnType = "any";
 	private String access = "public";
-	private Map parameters;
+	private List parameters;
 	private Boolean atLeastOneParam = false;
 
 	public FunctionInfo(CommonTree tree) {
 		super(tree.getLine(), tree.getTokenStartIndex(), tree.getTokenStopIndex(), "ASTFunctionDeclaration");
 		StringBuilder functionText = new StringBuilder();
-		parameters = new LinkedHashMap();
+		parameters = new ArrayList();
 		for (Object kidTree : tree.getChildren()) {
 			CommonTree kid = (CommonTree) kidTree;
 			CommonToken token = (CommonToken) kid.getToken();
 			switch (kid.getType()) {
-			case CFScriptParser.PUBLIC:
-			case CFScriptParser.PRIVATE:
-			case CFScriptParser.PACKAGE:
+			case CFScriptParser.FUNCTION_ACCESS:
 				setStartPosition(token.getStartIndex());
-				setAccess(kid.getText());
-				functionText.append(kid.getText() + " ");
+				setAccess(kid.getChild(0).getText());
+				functionText.append(kid.getChild(0).getText() + " ");
 				break;
 			case CFScriptParser.FUNCTION_RETURNTYPE:
 				setReturnType(kid.getChild(0).getText());
 				break;
-			case CFScriptParser.IDENTIFIER:
+			case CFScriptParser.FUNCTION_NAME:
 				setStartPosition(kid.getTokenStartIndex());
-				setFunctionName(kid.getText());
-				functionText.append(kid.getText());
+				setFunctionName(kid.getChild(0).getText());
+				functionText.append(kid.getChild(0).getText());
 				break;
 			case CFScriptParser.FUNCTION_PARAMETER:
 				if (!atLeastOneParam) {
@@ -63,11 +62,11 @@ public class FunctionInfo extends ScriptItem {
 
 	private void addParameter(StringBuilder functionText, CommonTree tree) {
 		LinkedHashMap<String, String> paramaterAttributes = new LinkedHashMap<String, String>();
+		paramaterAttributes.put("required", "false");
+		paramaterAttributes.put("type", "any");
+		paramaterAttributes.put("default", "");
 		for (Object kidTree : tree.getChildren()) {
 			CommonTree kid = (CommonTree) kidTree;
-			paramaterAttributes.put("required", "false");
-			paramaterAttributes.put("type", "any");
-			paramaterAttributes.put("default", "");
 			switch (kid.getType()) {
 			case CFScriptParser.REQUIRED:
 				functionText.append(kid.getText() + " ");
@@ -75,21 +74,22 @@ public class FunctionInfo extends ScriptItem {
 				break;
 			case CFScriptParser.IDENTIFIER:
 				functionText.append(kid.getText() + " ");
-				parameters.put(kid.getText(), paramaterAttributes);
+				paramaterAttributes.put("name", kid.getText());
+				if (tree.getChildCount() == 3 && kid.childIndex == 1
+						&& tree.getChild(kid.childIndex + 1).getType() == CFScriptParser.EQUALSOP) {
+					paramaterAttributes.put("default", tree.getChild(kid.childIndex + 2).getText());
+				}
+				functionText.append(kid.getText() + " " + kid.getType());
 				break;
 			case CFScriptParser.PARAMETER_TYPE:
 				functionText.append(kid.getChild(0).getText() + " ");
 				paramaterAttributes.put("type", kid.getChild(0).getText().toLowerCase());
 				break;
-			case CFScriptParser.EQUALSOP:
-				trimStringBuilder(functionText);
-				functionText.append(kid.getText());
-				paramaterAttributes.put("default", kid.getText());
-				break;
 			default:
 				functionText.append(kid.getText() + " " + kid.getType());
 			}
 		}
+		parameters.add(paramaterAttributes);
 		trimStringBuilder(functionText);
 	}
 
@@ -97,7 +97,7 @@ public class FunctionInfo extends ScriptItem {
 		this.access = text;
 	}
 
-	public String getAccess(String text) {
+	public String getAccess() {
 		return this.access;
 	}
 
@@ -125,7 +125,7 @@ public class FunctionInfo extends ScriptItem {
 		return this.lineNumber;
 	}
 
-	public Map getParameters() {
+	public List getParameters() {
 		return this.parameters;
 	}
 

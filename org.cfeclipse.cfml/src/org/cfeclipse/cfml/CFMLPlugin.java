@@ -35,6 +35,8 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.actions.LastActionManager;
 import org.cfeclipse.cfml.editors.contentassist.CFContentAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFEContentAssistManager;
+import org.cfeclipse.cfml.editors.contentassist.CFMLArgumentAssist;
+import org.cfeclipse.cfml.editors.contentassist.CFMLComponentAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionCompletionProcessor;
 import org.cfeclipse.cfml.editors.contentassist.CFMLFunctionParamAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLScopeAssist;
@@ -237,11 +239,12 @@ public class CFMLPlugin extends AbstractUIPlugin {
 
 		camInstance.registerRootAssist(new CFContentAssist());
 		camInstance.registerRootAssist(new CFMLScopeAssist());
+		camInstance.registerRootAssist(new CFMLArgumentAssist());
 		CFMLFunctionCompletionProcessor cfscp = new CFMLFunctionCompletionProcessor();
 		camInstance.registerRootAssist(cfscp);
 		camInstance.registerRootAssist(new CFMLFunctionParamAssist());
 
-		// camInstance.registerRootAssist(new CFMLComponentAssist());
+		camInstance.registerRootAssist(new CFMLComponentAssist());
 		// //finds the components in a project, removed as we might use a new
 		// CFML Varscope parser
 		// finds the arguments in a cfc that you are talking about

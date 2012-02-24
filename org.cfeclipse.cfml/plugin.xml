@@ -69,9 +69,7 @@
         Provides decoration for resources that have a URL link used by the internal and external browsers
         </description>
         <enablement>
-           <and>
               <objectClass name="org.eclipse.core.resources.IResource"/>
-           </and>
         </enablement>
    </decorator>
 	<!--
@@ -88,7 +86,7 @@
       </perspective>
    </extension>
    
-	<extension point="org.eclipse.core.runtime.contentTypes">
+	<extension point="org.eclipse.core.contenttype.contentTypes">
 		<content-type
 			id="org.cfeclipse.cfml.cfsource"
 			base-type="org.eclipse.core.runtime.text"
@@ -1319,6 +1317,49 @@
         	id="org.eclipse.ui.edit.text.folding.expand_all"
         	>
       	</command>
+      	<!-- added to get rid of warnings in plugin.xml -->
+        <command 
+        	name="Fold Selection"
+        	description="Folds selected text" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection"
+        	>
+      	</command>
+        <command 
+        	name="Unfold Selection"
+        	description="Folds selected text" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection"
+        	>
+      	</command>
+        <command 
+        	name="Expand Matching Markers"
+        	description="Expand Matching Markers" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
+        	>
+      	</command>
+        <command 
+        	name="Collapse Matching Markers"
+        	description="Collapse Matching Markers" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
+        	>
+      	</command>
+        <command 
+        	name="Locate in Filesystem"
+        	description="Locate in filesystem" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction"
+        	>
+      	</command>
+        <command 
+        	name="Locate in Tree"
+        	description="Locate in Tree" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.LocateInTreeAction"
+        	>
+      	</command>
 		
 		<!-- Find a matching bracket pair -->
 		<!--
@@ -1507,7 +1548,7 @@
 		<!-- Lower Case -->
 		<key sequence="M1+M2+L L"
 			commandId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
-			contextId="org.cfeclipse.cfml.cfmledif itorcontext"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 
 		<!-- Upper Case -->
@@ -1793,7 +1834,7 @@
             category="org.cfeclipse.cfml.preferences.CodeStylePreferencePage"
             class="org.cfeclipse.cfml.preferences.CodeFormatterPreferencePage"
             id="org.cfeclipse.cfml.preferences.FormattingPreferencePage">
-            <keywordReference id="org.cfeclipse.cfml.editors.formatters"/>
+            <keywordReference id="org.cfeclipse.cfml.formatter"/>
       </page>
 
       <page
@@ -1801,7 +1842,7 @@
             category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
             class="org.cfeclipse.cfml.preferences.FtpConnectionDialog"
             id="org.cfeclipse.cfml.preferences.FtpConnectionDialog">
-            <keywordReference id="org.cfeclipse.cfml.editors.connections"/>
+            <keywordReference id="org.cfeclipse.cfml.connections"/>
       </page>
 
       <page
@@ -2076,21 +2117,21 @@
    </extension>
    
    <extension point="org.eclipse.core.resources.markers"
-		id="parserProblemMarker"
-		name="CFEclipse Parser problem">
-		<super type="org.eclipse.core.resources.problemmarker"/>
-		<persistent value="true"/>
+   		id="parserProblemMarker"
+   		name="CFEclipse parser problem">
+		<super type="org.eclipse.core.resources.problemmarker"/> 
+      	<super type="org.eclipse.core.resources.textmarker"/> 
+      <persistent value="true"/>
 	</extension>
       
    <extension point="org.eclipse.core.resources.markers"
 		id="parserWarningMarker"
 		name="CFEclipse parser warning">
 		<super type="org.eclipse.core.resources.problemmarker"/>
-		<persistent value="true"/>
 	</extension>
 
 	<extension point="org.eclipse.core.resources.markers"
-		id="org.cfeclipse.cfml.occurrencemarker"
+		id="occurrencemarker"
 		name="%occurrencemarker.label">
 		<super type="org.eclipse.core.resources.textmarker"/>
       <super type="org.eclipse.core.resources.bookmark"/>
@@ -2100,20 +2141,22 @@
 	</extension>
 
 	<extension point="org.eclipse.core.resources.markers"
-		id="org.cfeclipse.cfml.tagbeginendmarker"
+		id="tagbeginendmarker"
 		name="Mark Matching Tags">
 		<super type="org.eclipse.core.resources.textmarker"/>
 		<persistent value="true"/>
 	</extension>
 
     <extension point="org.eclipse.ui.editors.annotationTypes">
-    	<type name="org.cfeclipse.cfml.parserProblemAnnotation"
-    		markerType="org.cfeclipse.cfml.parserProblemMarker"/>
-
+		<type
+         name="org.cfeclipse.cfml.parserProblemMarkerAnnotation"
+         markerType="org.cfeclipse.cfml.parserProblemMarker"
+         markerSeverity="2" />
+         
     	<type name="org.cfeclipse.cfml.parserWarningAnnotation"
     		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
 
-    	<type id="org.cfeclipse.cfml.occurrenceAnnotation" name="Occurrence Marker"
+    	<type name="org.cfeclipse.cfml.occurrenceAnnotation"
     		super="org.eclipse.ui.workbench.texteditor.info"
     		markerType="org.cfeclipse.cfml.occurrencemarker"/>
  
@@ -2127,7 +2170,7 @@
 
 	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
 		<specification
-			annotationType="org.cfeclipse.cfml.parserProblemAnnotation"
+			annotationType="org.cfeclipse.cfml.parserProblemMarkerAnnotation"
 			verticalRulerPreferenceKey="parserproblem.rulers.vertical"
 			textPreferenceKey="parserproblem.text"
 			colorPreferenceKey="parserproblem.color"
@@ -2232,9 +2275,11 @@
          <viewShortcut
                id="org.eclipse.ui.navigator.ProjectExplorer">
          </viewShortcut>
+         <!--
          <viewShortcut
                id="org.eclipse.ui.navigator.CommonNavigator">
          </viewShortcut>
+         -->
          <viewShortcut
                id="org.eclipse.pde.runtime.LogView">
          </viewShortcut>
@@ -2691,6 +2736,12 @@
       <keyword
             label="%preferenceKeywords.template"
             id="org.cfeclipse.cfml.template"/>      
+      <keyword
+            label="Connections"
+            id="org.cfeclipse.cfml.connections"/>      
+      <keyword
+            label="Text Selection"
+            id="org.cfeclipse.cfml.ui.TextSelection"/>      
 	</extension>
    
    <extension

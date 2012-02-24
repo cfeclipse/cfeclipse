@@ -527,8 +527,26 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		// WARNING order is important here - the document will be painted
 		// with the rules in this order - it seems anyway
 		
+		// CF script
+		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getCFScriptScanner());
+
+		reconciler.setDamager(dr, CFPartitionScanner.CF_SCRIPT);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_SCRIPT);
+
+		// cfset tag contents.
+		reconciler.setDamager(dr, CFPartitionScanner.CF_SET_STATEMENT);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_SET_STATEMENT);
+
+		// cfif and cfelseif tag contents.
+		reconciler.setDamager(dr, CFPartitionScanner.CF_BOOLEAN_STATEMENT);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_BOOLEAN_STATEMENT);
+
+		// cfreturn tag contents.
+		reconciler.setDamager(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
+		reconciler.setRepairer(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
+
 		//HTML part
-		DefaultDamagerRepairer dr =	new DefaultDamagerRepairer(getHTMTagScanner());
+		dr = new DefaultDamagerRepairer(getHTMTagScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.HTM_END_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.HTM_END_TAG);
 		
@@ -559,24 +577,6 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		reconciler.setDamager(dr, CFPartitionScanner.SQL);
 		reconciler.setRepairer(dr, CFPartitionScanner.SQL);
 		
-		//CF script (if this is put before the cfscript stuff
-		//you'll get jacked up keyword highlighting
-		dr = new DefaultDamagerRepairer(getCFScriptScanner());
-
-		reconciler.setDamager(dr, CFPartitionScanner.CF_SCRIPT);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_SCRIPT);
-
-		// cfset tag contents.
-		reconciler.setDamager(dr, CFPartitionScanner.CF_SET_STATEMENT);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_SET_STATEMENT);
-		
-		// cfif and cfelseif tag contents.
-		reconciler.setDamager(dr, CFPartitionScanner.CF_BOOLEAN_STATEMENT);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_BOOLEAN_STATEMENT);
-		
-		// cfreturn tag contents.
-		reconciler.setDamager(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
 
 		//general CF
 		dr = new DefaultDamagerRepairer(getCFTagScanner());

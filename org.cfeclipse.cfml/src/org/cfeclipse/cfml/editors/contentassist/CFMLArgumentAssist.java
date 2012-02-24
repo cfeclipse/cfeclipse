@@ -24,12 +24,20 @@
  */
 package org.cfeclipse.cfml.editors.contentassist;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
+import org.cfeclipse.cfml.dictionary.Function;
+import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.parser.CFDocument;
-import org.cfeclipse.cfml.parser.CFParser;
+import org.cfeclipse.cfml.parser.CFNodeList;
+import org.cfeclipse.cfml.parser.FunctionInfo;
+import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
+import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
@@ -53,126 +61,122 @@ public class CFMLArgumentAssist extends AssistContributor
     /* (non-Javadoc)
      * @see org.cfeclipse.cfml.editors.contentassist.IAssistContributor#getTagProposals(org.cfeclipse.cfml.editors.contentassist.IAssistState)
      */
-    public ICompletionProposal[] getTagProposals(IAssistState state) {
-    	ICFDocument doc = (ICFDocument)state.getIDocument();
-    	String extension = doc.getResource().getFileExtension();
+	public ICompletionProposal[] getTagProposals(IAssistState state) {
 
-    	System.out.println("The data so far is..." + state.getDataSoFar());
-    	
-    	/*
-         * Only show content assist if the trigger was .
-         */
-        if (state.getTriggerData() != '.') {
-            return null;
-        }
-        //Also check we are in a CFC
-        else if(!extension.equalsIgnoreCase("cfc")){
-        	System.out.println("Extension isnt cfc");
-        	return null;
-        }
-        else {
-        	String allData = state.getDataSoFar();
-        	
-        	if(allData.endsWith(".")){
-        		allData = allData.substring(0, allData.length()-1);
-        	}
-        	
-        	String VarName = "";
-        	
-        	StringBuffer buf = new StringBuffer();
-        	for (int i=allData.length()-1;i>=0;i--) {
-        		if (!Character.isJavaIdentifierPart(allData.charAt(i))){
-        			break; 
-        		}
-        		buf.insert(0,allData.charAt(i));
-        	}
-        	VarName = buf.toString();
-        	
-        	if(!VarName.equalsIgnoreCase("arguments")){
-        		return null;
-        	}
-        	
-        	//Here we find out where we are in the document.
-        	ICompletionProposal[] result = getArguments(state, doc);
-        	
-        	return result;
-        }
-    }
-    /**
-     * This function finds the function you are in, then finds the arguments for that function.
-     * @param state
-     * @param doc
-     * @return
-     */
-    public ICompletionProposal[] getArguments(IAssistState state, ICFDocument doc){
-
-    	
-        
-        
-//		TODO: Somehow scan back across the paritions, to find the first cfargument.
-//		TODO: Make sure we are IN a cffunction
-		/*
-		 * What I could do, strip down the document up to the state.getOffeset. Then find the LAST 
-		 * cffunction. Parse that last CFfunction for items, and get it. I am sure the partitioner would be better but need to speak to Spike about how it works, 
-		 * Backwards looping over partitions would be very handy since we will be doing this a lot
-		 * 
-		 * 
-		 * Forgetting to parse!
-		 */
-		
-    	CFParser parser = new CFParser();
-    	
-    	String docSoFar = doc.get().substring(0, state.getOffset());
-        CFDocument cfdoc = parser.parseDoc(state.getIDocument().get());
-        
-        //Get the variables:
-        HashMap varMap = cfdoc.getVariableMap();
-        ICompletionProposal[] proposals = new ICompletionProposal[varMap.size()];
-        
-        //Find arguments (just for show really
-        
-        Iterator iter = varMap.keySet().iterator();
-        int counter = 0;
-        while(iter.hasNext()){
-        	 Object key = iter.next();
-             Object  value= varMap.get(key);
-        	
-             CompletionProposal proposal = new CompletionProposal(key.toString(), 1, 1, 1);
-             proposals[counter] = proposal;
-        	
-        	  counter++;
-        }
-        
-        
-    	/*DocItem docroot = cfdoc.getDocumentRoot();
-        CFNodeList nodes = docroot.selectNodes("//cffunction");
-        
-        Iterator iter = nodes.iterator();
-        TagItem lasttag = null;
-        while(iter.hasNext()){
-        	
-        	lasttag = (TagItem)iter.next();
-        	
-        	System.out.println("found a function "+ lasttag.getAttributeValue("name"));
-        }*/
-        
-        //now we have set the lasttag to the "nearest" cffunction, lets see whats the deal
-       /* if(lasttag != null){
-        	System.out.println("The last cffunction is + " + lasttag.getAttributeValue("name"));
-        }*/
-        
-    	return proposals;
-    }
-
-	public void sessionEnded() {
-		// TODO Auto-generated method stub
-		
+		Set<Parameter> params = null; 
+    	if (state.getDataSoFar().toLowerCase().matches(".*?arguments\\.[\\w]*$")) {
+			CFDocument doc = ((ICFDocument) state.getIDocument()).getCFDocument();
+			// get a reference to the containing function
+			CfmlTagItem cti = getPreviousFunctionTag(state);
+			Function func = doc.getFunctionByName(cti.getAttributeValue("name"));
+			if (func != null) {
+				params =  func.getParameters();			
+				return prepareProposals(state, params);
+			} else {
+				return null;
+			}
+    	} else {
+			try {
+				if (state.getIDocument().getPartition(state.getOffset()).getType().equals(CFPartitionScanner.CF_SCRIPT)) {
+					CFDocument doc = ((ICFDocument) state.getIDocument()).getCFDocument();
+					CFNodeList funknodes = doc.getDocumentRoot().selectNodes(
+							"//ASTFunctionDeclaration[#startpos<" + state.getOffset() + "]");
+					if (funknodes.size() > 0) {
+						FunctionInfo funknode = (FunctionInfo) funknodes.get(funknodes.size() - 1);
+						Function func = doc.getFunctionByName(funknode.getFunctionName());
+						if (func != null) {
+							params = func.getParameters();
+							return prepareProposals(state, params);
+						} else {
+							return null;
+						}
+					}
+					return null;
+				}
+			} catch (BadLocationException e) {
+				e.printStackTrace();
+			}
+    		return null;
+    	}
+				    	
 	}
 
-	public void sessionStarted() {
-		// TODO Auto-generated method stub
+	private ICompletionProposal[] prepareProposals(IAssistState state,
+			Set<Parameter> params) {
+			
+			if (params == null) {
+				return null;
+			}
 		
+			Set<CompletionProposal> proposals = new HashSet<CompletionProposal>();
+			String prefix = determinePrefix(state);			  
+			
+			for (Parameter parameter : params) {
+				String replacementString = parameter.getName().replace(prefix, "");
+				CompletionProposal proposal = new CompletionProposal(parameter.getName(), state.getOffset() - prefix.length(), prefix.length(),
+					prefix.length() + replacementString.length());
+				if (parameter.getName().toLowerCase().startsWith(prefix.toLowerCase())) {
+					proposals.add(proposal);
+				}
+			}
+			
+			return (ICompletionProposal[]) proposals.toArray(new ICompletionProposal[]{});		
 	}
+	
+	private String determinePrefix(IAssistState state) {
+		
+		int lastIndexOfDot = state.getDataSoFar().lastIndexOf(".");
+		return state.getDataSoFar().substring(lastIndexOfDot+1);
+	}
+
+	/**
+	 * Gets the tag object prior to specified position
+	 * @param startpos
+	 * @param endpos
+	 * @param includeClosingTags
+	 * @return
+	 */
+	private CfmlTagItem getPreviousFunctionTag(IAssistState state) {
+
+		CFDocument doc = ((ICFDocument) state.getIDocument()).getCFDocument();		
+		CfmlTagItem closestItem = null;
+		
+		// there might be a parse error with the document itself, which nullifies this
+		if(doc == null) {
+			return null;
+		}
+		
+		try {
+			CFNodeList matchingNodes = doc.getDocumentRoot().selectNodes(
+				"//cffunction"
+			);
+			int lineFound = 0;
+
+			Iterator i = matchingNodes.iterator();
+			while (i.hasNext()) {
+				DocItem node = (DocItem) i.next();
+				if (node instanceof CfmlTagItem) {
+					CfmlTagItem currItem = (CfmlTagItem) node;
+					if (lineFound == 0 ||
+							(currItem.getEndPosition() < state.getOffset() && currItem.getLineNumber() > lineFound)) {
+						lineFound = currItem.getLineNumber();
+						closestItem = (CfmlTagItem) node;
+					}
+				}
+			}
+					
+		}
+		catch (Exception e) {
+			closestItem = null;
+		    e.printStackTrace();
+		}
+		if (closestItem != null) {
+			// this looks odd, but without this call, we don't get the parentage
+			return closestItem;  
+		} else {
+			return null;
+		}
+	}			
 
 	public String getId() {
 		return "argument.proposals";

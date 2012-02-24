@@ -172,7 +172,7 @@ public abstract class DocItem implements Comparable {
 	
 	public DocItem getLastChild()
 	{
-		return (DocItem)docNodes.get(docNodes.size());
+		return (DocItem) docNodes.get(docNodes.size() - 1);
 	}
 	
 	/**

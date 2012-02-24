@@ -39,6 +39,7 @@ import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
@@ -164,7 +165,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 	private String partOfWordCharsShift;
 	private String breakWordCharsShift;
 	private CfmlTagItem lastSelectedTag;
-	private CfmlTagItem selectedTag;
+	private DocItem selectedTag;
 	private boolean selectedTagWasSelected;
 	private CFMLEditor editor;
 	private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
@@ -184,7 +185,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 	private ITextSelection fForcedMarkOccurrencesSelection;
 	private boolean fMarkOccurrenceAnnotations = true;
 	private boolean fStickyOccurrenceAnnotations = false;
-	private CfmlTagItem currentDocItem;
+	private DocItem currentDocItem;
 	private MouseEvent lastMouseEvent;
 	private String[] wordCharArray;
 
@@ -246,7 +247,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		TextSelection sel = (TextSelection) this.fViewer.getSelection();
 		int startPos = sel.getOffset();
 		ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
-		CfmlTagItem cti = cfd.getTagAt(startPos, startPos, true);
+		DocItem cti = cfd.getTagAt(startPos, startPos, true);
 		if(cti != null && this.selectedTag != null) {
 			if(cti.getStartPosition() == this.selectedTag.getStartPosition()){				
 				this.selectedTagWasSelected = true;
@@ -262,10 +263,12 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 			// cfcomponent returns ASTVarDeclaration -- syntax is null for whatever reason (ASTVar's from cfscript?!)
 			if(cti != null 
 				&& !cti.getName().equals("CfmlComment") && !cti.getName().equals("cfscript")
-				&& !cti.getName().startsWith("AST")) {
- 			if(cti.getName().equals("CfmlCustomTag") || cti.hasClosingTag() ) {
-					markBeginEndTags(cti);	
-			}
+					&& !cti.getName().startsWith("AST") && !cti.getName().equals("ScriptItem")) {
+				if (cti instanceof CfmlTagItem) {
+					if (cti.getName().equals("CfmlCustomTag") || ((TagItem) cti).hasClosingTag()) {
+						markBeginEndTags((CfmlTagItem) cti);
+					}
+				}
 		} 
 		} catch (Exception e) {
 			System.err.println(cti.getName());
@@ -290,7 +293,8 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 			this.selectedTag = this.currentDocItem;
 		}
 	}
-	public CfmlTagItem getSelectedTag() {
+
+	public DocItem getSelectedTag() {
 		return this.selectedTag;
 	}
 	public DocItem getCurrentDocItem() {

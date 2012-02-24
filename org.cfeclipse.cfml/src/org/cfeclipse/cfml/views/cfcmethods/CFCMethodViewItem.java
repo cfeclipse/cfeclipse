@@ -34,7 +34,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 /**
  * @author Stephen Milligan
  */
-public class CFCMethodViewItem  {
+public class CFCMethodViewItem extends MethodViewItem {
 
 	TagItem functionTag;
 	

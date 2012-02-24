@@ -55,6 +55,7 @@ import org.cfeclipse.cfml.editors.text.IReconcilingParticipant;
 import org.cfeclipse.cfml.editors.ui.CFMLEditorToolbar;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
+import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
@@ -221,7 +222,10 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 						}
 						ICFDocument document = (ICFDocument) getDocumentProvider().getDocument(getEditorInput());
 						document.clearAllMarkers();
-						(document).parseDocument();
+						if (document.docParser == null) {
+							document.setParserResource(document.getResource());
+						}
+						document.parseDocument();
 					}
 				});
 			}
@@ -1011,7 +1015,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		
 		   
 		    
-			CfmlTagItem cti = null; 
+			DocItem cti = null;
 		    try {
 		        cti = cfd.getTagAt(startpos, startpos);
 		    }
@@ -1021,9 +1025,9 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 			if (cti != null) {
 
-				if (cti.matchingItem != null) {
+				if (cti instanceof CfmlTagItem && ((CfmlTagItem) cti).matchingItem != null) {
 
-					this.jumpAction.setDocPos(cti.matchingItem.getEndPosition());
+					this.jumpAction.setDocPos(((CfmlTagItem) cti).matchingItem.getEndPosition());
 					this.jumpAction.setActiveEditor(null, getSite().getPage()
 							.getActiveEditor());
 					Action jumpNow = new Action("Jump to end tag", CFPluginImages

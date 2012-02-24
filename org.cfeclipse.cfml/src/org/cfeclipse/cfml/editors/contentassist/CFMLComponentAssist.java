@@ -24,30 +24,22 @@
  */
 package org.cfeclipse.cfml.editors.contentassist;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.Trigger;
 import org.cfeclipse.cfml.dictionary.Value;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.parser.CFDocument;
-import org.cfeclipse.cfml.parser.CFNodeList;
-import org.cfeclipse.cfml.parser.CFParser;
-import org.cfeclipse.cfml.parser.docitems.DocItem;
-import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
-import org.cfeclipse.cfml.util.ResourceUtils;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
@@ -63,7 +55,7 @@ public class CFMLComponentAssist extends AssistContributor
 {
     
     /**
-     * The name of the function we're trying to provide context insight for.
+     * The name of the component we're trying to provide context insight for.
      */
     private String cfcname = null;
     
@@ -94,7 +86,6 @@ public class CFMLComponentAssist extends AssistContributor
      *
      */
     //private HashMap paramPositions = new HashMap();
-    
     /**
      * 
      */
@@ -122,7 +113,7 @@ public class CFMLComponentAssist extends AssistContributor
         		allData = allData.substring(0, allData.length()-1);
         	}
 
-        	String CFCName = "";
+        	String variableName = "";
         	
         	StringBuffer buf = new StringBuffer();
         	for (int i=allData.length()-1;i>=0;i--) {
@@ -131,170 +122,22 @@ public class CFMLComponentAssist extends AssistContributor
         		}
         		buf.insert(0,allData.charAt(i));
         	}
-    		CFCName = buf.toString();
+    		variableName = buf.toString();
     			
+			String CFCName = AssistUtils.getCFCName(variableName, state);
     		
     		//All going well, we have something!
+    		//System.out.println("CFC = " + CFCName);
     		
-    		System.out.println("CFC = " + CFCName);
-    	
-    		
-    		IFile foundCFC = findCFC(CFCName + ".cfc", project);
+			IFile foundCFC = AssistUtils.findCFC(CFCName);
     	
         	ICompletionProposal[] result = new ICompletionProposal[1];
-        	
-        	
-        	result = getFunctions(foundCFC, state.getOffset());
-        	
+        	        	
+			Set<Function> functions = AssistUtils.getFunctions(foundCFC, state.getOffset());
+        	result = prepareProposals(state, functions);
         	
         	return result;
         }
-    }
-    
-    
-    /**
-     * This function loops through a project finding references to the CFC we seek.
-     * This can be done in 2 ways, break at the first, or return a whole bunch of proposals
-     * 
-     * 	Initally breaks at the first one
-     * @param cfcname
-     */
-    private IFile findCFC(String cfcname, IProject project){
-    	//Will need recursive function
-    	IFile foundCFC = null;
-   
-    	
-    	try {
-    	 	IResource firstChildren[] = project.members();
-		
-		
-				// To make this function quicker, doing two loops. The first is through the files, 
-				// Then, we go into the directory, why? becuase I dont want to loop through the whole directory 
-				// tree if the file is in the first directory!
-				
-		
-				//Now loop through directories if we didnt find the file.
-				if(foundCFC == null){
-					for (int i = 0; i < firstChildren.length; i++)
-			        {
-						Object item = firstChildren[i];
-			        	if(item instanceof IFolder){
-			        		foundCFC = reFindCFC(cfcname, (IFolder)item);
-			        		if(foundCFC != null){
-			        			return foundCFC;
-			        		}
-			        	}
-			        	else{  //Its a file
-			        		IFile theFile = (IFile)item;
-			        		if(theFile.getName().equalsIgnoreCase(cfcname)){
-			        			return theFile;
-			        		}
-			        		
-			        	}
-			        }
-				}
-    	} catch (CoreException e) {
-			e.printStackTrace();
-		}
-		
-    	return foundCFC;
-    }
-    
-    private IFile reFindCFC(String cfcname, IFolder folder){
- 	IFile foundCFC = null;
-   
-    	
-    	try {
-    	 	IResource firstChildren[] = folder.members();
-		
-		
-				// To make this function quicker, doing two loops. The first is through the files, 
-				// Then, we go into the directory, why? becuase I dont want to loop through the whole directory 
-				// tree if the file is in the first directory!
-				
-		
-				//Now loop through directories if we didnt find the file.
-				if(foundCFC == null){
-					for (int i = 0; i < firstChildren.length; i++)
-			        {
-						Object item = firstChildren[i];
-			        	if(item instanceof IFolder){
-			        		foundCFC = reFindCFC(cfcname, (IFolder)item);
-			        		if(foundCFC != null){
-			        			return foundCFC;
-			        		}
-			        	}
-			        	else{  //Its a file
-			        		IFile theFile = (IFile)item;
-			        		if(theFile.getName().equalsIgnoreCase(cfcname)){
-			        			return theFile;
-			        		}
-			        		
-			        	}
-			        }
-				}
-    	} catch (CoreException e) {
-			e.printStackTrace();
-		}
-		
-    	return foundCFC;
-   }
-
-   
-    
-    private ICompletionProposal[]  getFunctions(IFile cfcresource, int offset){
-    	if(cfcresource == null){
-    		System.out.println("Resource not found");
-    		return null;
-    	}
-    	
-    	//
-    	//Now that we have the resource, convert it to a string
-    	  String inputString = "";
-          try
-          {
-              inputString = ResourceUtils.getStringFromInputStream(cfcresource.getContents());
-          }
-          catch (IOException e)
-          {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-          }
-          catch (CoreException e)
-          {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
-          }
-    	
-    	
-    	 CFParser parser = new CFParser();
-         CFDocument doc = parser.parseDoc(inputString);
-
-         // Now we just want to add the nodes!
-         DocItem docroot = doc.getDocumentRoot();
-         CFNodeList nodes;
-         nodes = docroot.selectNodes("//cffunction");
-         Iterator iter = nodes.iterator();
-         ICompletionProposal[] result = new ICompletionProposal[nodes.size()];
-         int iterAdder = 0;
-         
-         while (iter.hasNext())
-         {
-        	 
-        	TagItem thisTag = (TagItem) iter.next();
-        	String funcName = thisTag.getAttributeValue("name", "unnamed");
-        	String funcReturn = thisTag.getAttributeValue("returntype", "any");
-
-        	 String proposalName = funcName + "()" + " - " + funcReturn;
-             
-        	 CompletionProposal proposal = new CompletionProposal(proposalName, offset, 1, 1);
-             
-             result[iterAdder] = proposal;
-             
-             iterAdder++;
-             
-         }
-    	return result;
     }
      
     private Parameter[] getFilteredParams(Set params) {
@@ -535,11 +378,6 @@ public class CFMLComponentAssist extends AssistContributor
 	return result;
   }
   
-  
-    
-    
-    
-    
     /**
      * Checks to see if the cursor is at a position in the document where 
      * function parameter info should be displayed.
@@ -720,6 +558,37 @@ public class CFMLComponentAssist extends AssistContributor
             return false;
     }
 
+	private ICompletionProposal[] prepareProposals(IAssistState state,
+			Set<Function> functions) {
+			
+			if (functions == null) {
+				return null;
+			}
+		
+			Set<CompletionProposal> proposals = new HashSet<CompletionProposal>();
+			String prefix = determinePrefix(state);			  
+			
+			for (Function func: functions) {
+				String replacementString = func.getName().replace(prefix, "");
+				if (func.getName().toLowerCase().startsWith(prefix.toLowerCase())) {
+				CompletionProposal proposal = new CompletionProposal(func.getName() + "()", state.getOffset() - prefix.length(),
+						prefix.length(), prefix.length() + replacementString.length() + 1, CFPluginImages.get(CFPluginImages.ICON_FUNC),
+						func.toString(), null, "");
+					proposals.add(proposal);
+				}
+			}
+			
+			return (ICompletionProposal[]) proposals.toArray(new ICompletionProposal[]{});		
+	}    
+
+	// TODO: duplicated from CFMLArgumentAssist - should be refactored
+	private String determinePrefix(IAssistState state) {
+		
+		int lastIndexOfDot = state.getDataSoFar().lastIndexOf(".");
+		return state.getDataSoFar().substring(lastIndexOfDot+1);
+	}
+	
+	
 	public void sessionEnded() {
 		// TODO Auto-generated method stub
 		
@@ -731,16 +600,11 @@ public class CFMLComponentAssist extends AssistContributor
 	}
 
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return "component.assist";
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Component Proposals";
 	}
-    
-    
-    
     
 }

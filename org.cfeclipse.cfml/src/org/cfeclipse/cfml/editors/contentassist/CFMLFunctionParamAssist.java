@@ -43,6 +43,7 @@ import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
 import org.cfeclipse.cfml.util.CFPluginImages;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
@@ -88,6 +89,9 @@ public class CFMLFunctionParamAssist extends AssistContributor
      * The list of parameters that have already been specified for the function
      *
      */
+
+	private static String varNameFuncRegex = "(\\w+)[\\s]=[\\s](new)?[\\s]([\\.\\w]+)\\($";
+
     private ArrayList paramList = new ArrayList();
     
 	CFNodeList nodes;
@@ -98,6 +102,8 @@ public class CFMLFunctionParamAssist extends AssistContributor
     //private HashMap paramPositions = new HashMap();
 
 	private IAssistState fState;
+
+	private String variableName;
     
     /**
      * 
@@ -129,21 +135,58 @@ public class CFMLFunctionParamAssist extends AssistContributor
     		Set params = ((ISyntaxDictionary)this.sourceDict).getFunctionParams(this.functionName);
     		String helpText = ((ISyntaxDictionary)this.sourceDict).getFunctionHelp(this.functionName);
     		if (params == null) {
+				Set functions;
     			params = new LinkedHashSet();
     			CFDocument doc = ((ICFDocument) state.getIDocument()).getCFDocument();
-				Set functions = doc.getFunctions();
+				functions = doc.getFunctions();
 				Iterator it = functions.iterator();
 				while (it.hasNext()) {
 					Function function = (Function) it.next();
-					if (function.getParameters() != null) {
+					System.out.println(function.getName().split("\\(")[0]);
+					if (function.getName().split("\\(")[0].equals(this.functionName) && function.getParameters() != null) {
 						Iterator funkParams = function.getParameters().iterator();
 						while (funkParams.hasNext()) {
 							params.add((Parameter) funkParams.next());
 						}
 					}
     			}
-    			if(params == null) {
-    				return null;    				
+				if (params.size() == 0) {
+					String allData = state.getDataSoFar();
+					if (allData.endsWith(".") || allData.endsWith("(")) {
+						allData = allData.substring(0, allData.length() - 1);
+					}
+					variableName = "";
+
+					StringBuffer buf = new StringBuffer();
+					for (int i = allData.length() - 1; i >= 0; i--) {
+						if (!Character.isJavaIdentifierPart(allData.charAt(i))) {
+							for (int j = i - 1; j >= 0; j--) {
+								if (!Character.isJavaIdentifierPart(allData.charAt(j))) {
+									break;
+								}
+								buf.insert(0, allData.charAt(j));
+							}
+							break;
+						}
+					}
+					variableName = buf.toString();
+					String CFCName = AssistUtils.getCFCName(this.variableName, state);
+					IFile foundCFC = AssistUtils.findCFC(CFCName);
+					functions = AssistUtils.getFunctions(foundCFC, state.getOffset());
+					if (functions != null) {
+						it = functions.iterator();
+						while (it.hasNext()) {
+							Function function = (Function) it.next();
+							if (function.getName().split("\\(")[0].equals(this.functionName) && function.getParameters() != null) {
+								Iterator funkParams = function.getParameters().iterator();
+								while (funkParams.hasNext()) {
+									params.add((Parameter) funkParams.next());
+								}
+							}
+						}
+					} else {
+						System.err.println("Function for " + CFCName + " are null!");
+					}
     			}
     		}
     		
@@ -523,15 +566,25 @@ public class CFMLFunctionParamAssist extends AssistContributor
             
             // Check if we're at the start of a function.
             if (trigger.equals("(")) {
-               
-                Pattern p = Pattern.compile("\\b\\w+\\($");
-                Matcher m = p.matcher(docText.substring(0,newOffset));
-                if(m.find()) {
-                    this.functionName = m.group().substring(0,m.group().length()-1);
-                    this.paramsSoFar = 0;
-                    
-                    return true;
-                }
+
+				Pattern p = Pattern.compile("\\b\\w+\\($");
+				Matcher m = p.matcher(docText.substring(0, newOffset));
+				if (m.find()) {
+					this.functionName = m.group().substring(0, m.group().length() - 1);
+					this.paramsSoFar = 0;
+
+					return true;
+				}
+				/*
+				                Matcher m = p.matcher(docText.substring(0,newOffset));
+				                if(m.find()) {
+									this.variableName = m.group(1);
+									this.functionName = m.group(2);
+				                    this.paramsSoFar = 0;
+				                    
+				                    return true;
+				                }
+				 */
             }
             else if (trigger.equals(",")) {
                 //System.out.println("Yep");
@@ -608,7 +661,7 @@ public class CFMLFunctionParamAssist extends AssistContributor
                     if (functionStart) {
                         offset = i+1;
                         //System.out.println("Looking in " + docText.substring(0,offset));
-                        Pattern p = Pattern.compile("\\b\\w+\\($");
+						Pattern p = Pattern.compile("[\\.\\w]+\\($");
                         Matcher m = p.matcher(docText.substring(0,offset));
                         if(m.find()) {
                             //System.out.println("Found " + m.group());
