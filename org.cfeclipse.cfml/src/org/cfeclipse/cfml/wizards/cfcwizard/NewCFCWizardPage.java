@@ -114,7 +114,7 @@ public class NewCFCWizardPage extends WizardPage {
 		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
 		this.cfcStyle.setLayoutData(gd);
-		String items[] = { "tag", "cfscript" };
+		String items[] = { "cfscript", "tag" };
 		this.cfcStyle.setItems(items);
 		this.cfcStyle.select(0);
 		this.cfcStyle.addModifyListener(new ModifyListener() {
