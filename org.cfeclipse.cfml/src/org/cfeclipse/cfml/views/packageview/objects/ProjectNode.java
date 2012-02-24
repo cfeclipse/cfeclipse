@@ -116,7 +116,7 @@ public class ProjectNode extends TreeParent
                 else if (children[i] instanceof IFile)
                 {
                     IFile file = (IFile) children[i];
-                    if (file.getFileExtension().equalsIgnoreCase("cfc"))
+					if (file.getFileExtension() != null && file.getFileExtension().equalsIgnoreCase("cfc"))
                     {
                         ComponentNode component = new ComponentNode(file);
                         component.setParent(this);
