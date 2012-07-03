@@ -413,8 +413,6 @@ public class CFParser {
 						marker.setAttributes(attrs);
 						marker.setAttribute(IMarker.MESSAGE,message);
 						MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
-						
-
 					}catch(CoreException excep) {
 						userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
 						}
@@ -893,10 +891,16 @@ public class CFParser {
 				if (tree.getParent().getChild(0).getText().toLowerCase().equals("createobject")) {
 					childNode = new ScriptItem(startLine, startPos, endPos, "ASTComponent");
 					childNode.setItemData("createobject " + tree.getText() + "()");
+				} else if (tree.getParent().getChild(0).getText().toLowerCase().equals("entitynew")) {
+					childNode = new ScriptItem(startLine, startPos, endPos, "ASTComponent");
+					childNode.setItemData("entitynew " + tree.getText() + "()");
 				} else {
-					childNode = new ScriptItem(startLine, startPos, endPos, "ASTIdentifier");
+					childNode = new ScriptItem(startLine, startPos, endPos, "FunctionCall");
 					childNode.setItemData(tree.getText());
 				}
+			} else if (tree.getParent().getType() == CFScriptParser.JAVAMETHODCALL) {
+				childNode = new ScriptItem(startLine, startPos, endPos, "FunctionCall");
+				childNode.setItemData(tree.getText());
 			} else {
 				childNode = new ScriptItem(startLine, startPos, endPos, "ASTIdentifier");
 				childNode.setItemData(tree.getText());
@@ -1272,7 +1276,7 @@ public class CFParser {
 		matchStack.push(rootItem);
 		ParseItemMatch lastMatch = null;
 		// little hackish way to detect cfscript based cfcs TODO: something better
-		if (matches.size() == 0 || matches.size() == 0 && inData.split("(?i).*component[^>]+\\{").length > 1) {
+		if (inData.split("(?i).*component[^>]+\\{").length > 1) {
 			parseCFScript(inData);
 			newDoc.setDocumentRoot(rootItem);
 			return newDoc;

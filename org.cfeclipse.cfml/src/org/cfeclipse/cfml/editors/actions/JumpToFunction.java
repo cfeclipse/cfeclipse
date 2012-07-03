@@ -27,7 +27,6 @@ package org.cfeclipse.cfml.editors.actions;
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.contentassist.AssistUtils;
-import org.cfeclipse.cfml.mappings.MappingManager;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.util.CFDocUtils;
@@ -112,8 +111,23 @@ public class JumpToFunction implements IWorkbenchWindowActionDelegate,IEditorAct
 						assignmentPos = search.find(sel.getOffset() + cfcInstance.length(), cfcInstance + "[\\s]?=[\\s]?createObject",
 								false, false, false, true);
 					}
+					if (assignmentPos == null) {
+						assignmentPos = search.find(sel.getOffset() + cfcInstance.length(), cfcInstance + "[\\s]?=[\\s]?entityNew", false,
+								false, false, true);
+					}
 					if (assignmentPos != null) {
-						MappingManager mappingManager = new MappingManager();
+						//MappingManager mappingManager = new MappingManager();
+						CFDocument cfdoc = ((ICFDocument) doc).getCFDocument();
+						String CFCName = AssistUtils.getCFCName(cfcInstance, cfdoc);
+						IFile foundCFC = AssistUtils.findCFC(CFCName);
+						if (foundCFC == null) {
+							foundCFC = AssistUtils.findCFC(functionName);
+						}
+						if (foundCFC != null) {
+							OpenAtMethodAction openAction = new OpenAtMethodAction(foundCFC, "");
+							openAction.run();
+						}
+
 					}
 
 				}
@@ -125,7 +139,7 @@ public class JumpToFunction implements IWorkbenchWindowActionDelegate,IEditorAct
 			}
 			if (startPos == null || sel.getOffset() == startPos.getOffset()) {
 				DocItem st = ((CFMLEditor) editor).getSelectionCursorListener().getSelectedTag();
-				if (st.getName().equals("ASTComponent")) {
+				if (st.getName().equals("ASTComponent") || st.getName().equals("FunctionCall")) {
 					CFDocument cfdoc = ((ICFDocument) doc).getCFDocument();
 					String CFCName = AssistUtils.getCFCName(functionName, cfdoc);
 					IFile foundCFC = AssistUtils.findCFC(CFCName);
