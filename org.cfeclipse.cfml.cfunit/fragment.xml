@@ -9,10 +9,10 @@
             class="org.cfeclipse.cfml.cfunit.wizards.NewCFUnitWizard"
             finalPerspective="org.cfeclipse.cfml.perspective.CFML"
             hasPages="true"
-            helpHref="http://cfunit.sourceforge.net/docs.php"
-            icon="icons/obj16/cfunit.png"
+            helpHref="http://mxunit.org"
+            icon="icons/obj16/mxunit.png"
             id="org.cfeclipse.cfml.cfunit.wizards.NewCFUnitWizard"
-            name="CFUnit Test"
+            name="MXUnit Test"
             preferredPerspectives="org.cfeclipse.cfml.perspective.CFML"
             project="false"/>
    </extension>
@@ -22,7 +22,7 @@
             allowMultiple="false"
             category="org.cfeclipse.cfml"
             class="org.cfeclipse.cfml.cfunit.views.CFUnitView"
-            icon="icons/obj16/cfunit.png"
+            icon="icons/obj16/mxunit.png"
             id="org.cfeclipse.cfml.cfunit.views.CFUnitTest"
             name="CFUnit"/>
    </extension>
