@@ -93,7 +93,9 @@ public class MacOsHandler {
 }
 
 final class SimpleAboutDialog extends JDialog {
-	  public SimpleAboutDialog() {
+	private static final long serialVersionUID = -2397156282450447293L;
+
+	public SimpleAboutDialog() {
 	    super(new JFrame(), "About Dialog", true);
 
 	    Box b = Box.createVerticalBox();

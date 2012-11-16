@@ -64,7 +64,11 @@ public class CFEclipseCallPropertyEditor extends JFrame {
 	
 	// This action creates and shows a modal open-file dialog.
 	public class OpenFileAction extends AbstractAction {
-	    JFrame frame;
+	    /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		JFrame frame;
 	    JFileChooser chooser;
 
 	    OpenFileAction(JFrame frame, JFileChooser chooser) {
@@ -84,7 +88,11 @@ public class CFEclipseCallPropertyEditor extends JFrame {
 	
 	// This action creates and shows a modal save-file dialog.
 	public class QuitAction extends AbstractAction {
-	    JFrame frame;
+	    /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		JFrame frame;
 
 	    QuitAction(JFrame fc) {
 	        super("Save & Close");
