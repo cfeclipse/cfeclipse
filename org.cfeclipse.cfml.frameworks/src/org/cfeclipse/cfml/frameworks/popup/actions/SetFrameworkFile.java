@@ -28,7 +28,6 @@ import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cfeclipse.cfml.editors.decoration.URLDecorator;
 import org.cfeclipse.cfml.frameworks.decorators.ConfigFileDecorator;
 import org.cfeclipse.cfml.frameworks.dialogs.SetResourceAsFramework;
 import org.cfeclipse.cfml.frameworks.views.FrameworksView;
@@ -47,7 +46,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.ide.IDE;
 
 public class SetFrameworkFile implements IObjectActionDelegate {
 	
@@ -119,7 +117,7 @@ public class SetFrameworkFile implements IObjectActionDelegate {
 	 * @see IActionDelegate#selectionChanged(IAction, ISelection)
 	 */
 	public void selectionChanged(IAction action, ISelection selection) {
-		 Iterator selectionIter = ((StructuredSelection)selection).iterator();
+		 Iterator<?> selectionIter = ((StructuredSelection)selection).iterator();
 		 while(selectionIter.hasNext()){
 			 this.resource = (IResource)selectionIter.next();
 		 }

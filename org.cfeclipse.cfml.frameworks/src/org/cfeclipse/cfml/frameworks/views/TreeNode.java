@@ -27,7 +27,6 @@ package org.cfeclipse.cfml.frameworks.views;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
 import org.jdom.Element;
-import org.jdom.contrib.input.LineNumberElement;
 
 /**
  * This is the base tree object we want
@@ -155,6 +154,7 @@ public class TreeNode implements IAdaptable{
 		return frameworkType + "_" + this.getName();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public Object getAdapter(Class key) {
 		return null;
 	}

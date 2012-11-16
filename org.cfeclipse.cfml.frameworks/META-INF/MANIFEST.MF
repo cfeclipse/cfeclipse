@@ -12,7 +12,6 @@ Bundle-ClassPath: lib/saxpath.jar,
  library.jar
 Bundle-Activator: org.cfeclipse.cfml.frameworks.Activator
 Bundle-Vendor: CFEclipse Project
-Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
@@ -21,4 +20,5 @@ Require-Bundle: org.eclipse.ui,
  org.cfeclipse.cfml,
  org.eclipse.jface.text,
  org.eclipse.ui.workbench.texteditor
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

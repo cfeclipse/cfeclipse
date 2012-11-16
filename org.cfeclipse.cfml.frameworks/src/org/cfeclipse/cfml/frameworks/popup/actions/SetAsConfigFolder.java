@@ -142,7 +142,7 @@ public class SetAsConfigFolder implements IObjectActionDelegate {
 	public void selectionChanged(IAction action, ISelection selection) {
 		
 		
-			 Iterator selectionIter = ((StructuredSelection)selection).iterator();
+			 Iterator<?> selectionIter = ((StructuredSelection)selection).iterator();
 			 while(selectionIter.hasNext()){
 				 this.resource = (IResource)selectionIter.next();
 			 }

@@ -1,13 +1,9 @@
 package org.cfeclipse.cfml.frameworks.dialogs;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cfeclipse.cfml.frameworks.FrameworkType;
 import org.cfeclipse.cfml.frameworks.FrameworkManager;
-import org.cfeclipse.cfml.frameworks.popup.actions.SetFrameworkFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;

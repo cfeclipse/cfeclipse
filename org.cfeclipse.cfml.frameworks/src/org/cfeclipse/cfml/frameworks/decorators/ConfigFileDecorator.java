@@ -6,29 +6,23 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.editors.decoration.URLDecorator;
 import org.cfeclipse.cfml.frameworks.Activator;
 import org.cfeclipse.cfml.frameworks.util.FWXImages;
-import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
-import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
-import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IDecoratorManager;
 
 public class ConfigFileDecorator extends LabelProvider implements
 ILightweightLabelDecorator {
 	
-	private final List listeners = new ArrayList();
+	private final List<ILabelProviderListener> listeners = new ArrayList<ILabelProviderListener>();
 	public final static String ID = "org.cfeclipse.cfml.frameworks.decorator";
 	
 	private Log logger = LogFactory.getLog(ConfigFileDecorator.class);
@@ -91,7 +85,7 @@ ILightweightLabelDecorator {
 	public void refresh() {
 		logger.debug("Being called to refrehs, I shall do my duty!");
 		ConfigFileDecorator decorator = getConfigFileDecorator();
-		Iterator iterator = listeners.iterator();
+		Iterator<ILabelProviderListener> iterator = listeners.iterator();
 		while (iterator.hasNext()) {
 			ILabelProviderListener listener = (ILabelProviderListener) iterator.next();
 			listener.labelProviderChanged(new LabelProviderChangedEvent(decorator));

@@ -22,9 +22,9 @@ import org.eclipse.core.runtime.QualifiedName;
 public class ProjectParser {
 
 	private IProject project;
-	private ArrayList filesToParse;
-	private ArrayList foldersToParse;
-	private ArrayList foldersToScan; //these are the folders we are going to check for items to add.
+	private ArrayList<FrameworkFile> filesToParse;
+	private ArrayList<IResource> foldersToParse;
+	private ArrayList<?> foldersToScan; //these are the folders we are going to check for items to add.
 
 	private Log logger = LogFactory.getLog(ProjectParser.class);
 
@@ -44,9 +44,9 @@ public class ProjectParser {
 		frameworkManager = new FrameworkManager();
 		
 		this.project = project;
-		this.filesToParse = new ArrayList();
-		this.foldersToParse = new ArrayList();
-		this.foldersToScan = new ArrayList();
+		this.filesToParse = new ArrayList<FrameworkFile>();
+		this.foldersToParse = new ArrayList<IResource>();
+		this.foldersToScan = new ArrayList<Object>();
 		
 		//STAGE 1
 		logger.debug("Stage 1 file parser" );
@@ -184,8 +184,8 @@ public class ProjectParser {
 	 */
 	private void folderChecker() {
 			
-		ArrayList folderConsiderations = this.foldersToParse;
-		for (Iterator iter = folderConsiderations.iterator(); iter.hasNext();) {
+		ArrayList<IResource> folderConsiderations = this.foldersToParse;
+		for (Iterator<IResource> iter = folderConsiderations.iterator(); iter.hasNext();) {
 			IResource element = (IResource) iter.next();
 			
 			IResource[] resources = new IResource[]{};
@@ -217,7 +217,7 @@ public class ProjectParser {
 							if(!fileisMarked(fileConsideration)  && frameworkType2 != null){
 								//we *should* add it here, but we need to check first
 								boolean found = false;
-								for (Iterator iterator = this.filesToParse
+								for (Iterator<FrameworkFile> iterator = this.filesToParse
 										.iterator(); iterator.hasNext();) {
 									FrameworkFile fwFile = (FrameworkFile) iterator.next();
 									if(fwFile.getFile().equals(fileConsideration)){
@@ -389,7 +389,7 @@ public class ProjectParser {
 		return null;
 	}
 
-	public ArrayList getFrameworkFiles() {
+	public ArrayList<FrameworkFile> getFrameworkFiles() {
 
 			//markd: when this method is called we should have already parsed the project and got all the
 		//IFiles in an array, now we create a new array that we return with FrameworkFiles
@@ -473,11 +473,11 @@ public class ProjectParser {
 	}
 	
 
-	public ArrayList getFilesToParse() {
+	public ArrayList<FrameworkFile> getFilesToParse() {
 		return filesToParse;
 	}
 
-	public void setFilesToParse(ArrayList filesToParse) {
+	public void setFilesToParse(ArrayList<FrameworkFile> filesToParse) {
 		this.filesToParse = filesToParse;
 	}
 
@@ -492,7 +492,7 @@ public class ProjectParser {
 	/**
 	 * @return
 	 */
-	public ArrayList getFoldersToParse() {
+	public ArrayList<IResource> getFoldersToParse() {
 		return this.foldersToParse;
 	}
 	

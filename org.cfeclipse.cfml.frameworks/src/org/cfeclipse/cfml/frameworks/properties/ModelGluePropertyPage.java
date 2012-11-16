@@ -24,12 +24,9 @@
  */
 package org.cfeclipse.cfml.frameworks.properties;
 
-import org.eclipse.core.internal.resources.Container;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -46,6 +43,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 import org.eclipse.ui.dialogs.PropertyPage;
 
+@SuppressWarnings("restriction")
 public class ModelGluePropertyPage extends PropertyPage {
 
 	private static final String PATH_TITLE = "Path:";

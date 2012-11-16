@@ -32,7 +32,7 @@ import org.jdom.Element;
 public class TreeParentNode extends TreeNode {
 	
 	
-	private ArrayList children;
+	private ArrayList<TreeParentNode> children;
 	private Document document;
 	private String CFCPath;
 	private Document virtualDocument;
@@ -40,12 +40,12 @@ public class TreeParentNode extends TreeNode {
 	
 	public TreeParentNode(String name) {
 		super(name);
-		children = new ArrayList();
+		children = new ArrayList<TreeParentNode>();
 	}
 	
 	public TreeParentNode(Element element, String type) {
 		super(element, type);
-		children = new ArrayList();
+		children = new ArrayList<TreeParentNode>();
 	}
 	public void addChild(TreeParentNode child) {
 		children.add(child);

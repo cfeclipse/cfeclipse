@@ -25,18 +25,13 @@
 package org.cfeclipse.cfml.frameworks.views;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cfeclipse.cfml.frameworks.Activator;
 import org.cfeclipse.cfml.frameworks.FrameworkManager;
 import org.cfeclipse.cfml.frameworks.actions.ActionManager;
 import org.cfeclipse.cfml.frameworks.actions.IBaseAction;
@@ -44,18 +39,12 @@ import org.cfeclipse.cfml.frameworks.dialogs.CSAddBeanDialog;
 import org.cfeclipse.cfml.frameworks.dialogs.ViewXMLDialog;
 import org.cfeclipse.cfml.frameworks.preferences.ActionsPreferencePage;
 import org.cfeclipse.cfml.frameworks.util.FWXImages;
-import org.cfeclipse.cfml.frameworks.views.FrameworksView.TreeFilter;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.ui.part.*;
 import org.eclipse.jface.preference.IPreferenceNode;
-import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
@@ -68,8 +57,6 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.jface.action.*;
@@ -78,11 +65,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
-import org.eclipse.core.internal.resources.Project;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -272,7 +256,7 @@ public class FrameworksView extends ViewPart {
 			return true;
 		}
 		if(item.getElement() != null && item.getElement().getAttributes() != null) {			
-			Iterator attrs = item.getElement().getAttributes().iterator();
+			Iterator<?> attrs = item.getElement().getAttributes().iterator();
 			while(attrs.hasNext()) {
 				Attribute attr = (Attribute) attrs.next();
 				if(attr.getName().matches(searchStringRegex)) {
@@ -649,7 +633,7 @@ public class FrameworksView extends ViewPart {
 				
 				//loop through selections maybe?
 				
-				Iterator nodeIterator = sel.iterator();
+				Iterator<?> nodeIterator = sel.iterator();
 				while (nodeIterator.hasNext()) {
 					Object element = (Object) nodeIterator.next();
 					if (element instanceof TreeParentNode) {

@@ -168,10 +168,8 @@
       		  Provides decoration for resources that are used as CF Framework configuration files or folders
        	 	</description>
              <enablement>
-	           <and>
     	          <objectClass name="org.eclipse.core.resources.IResource"/>
-    	       </and>
-        </enablement>
+        	</enablement>
       </decorator>
    </extension>
 </plugin>
