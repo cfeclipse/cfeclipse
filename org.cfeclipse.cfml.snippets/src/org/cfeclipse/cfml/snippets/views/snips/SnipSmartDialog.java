@@ -10,7 +10,6 @@ package org.cfeclipse.cfml.snippets.views.snips;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.widgets.Shell;
 /**
  * @author Administrator

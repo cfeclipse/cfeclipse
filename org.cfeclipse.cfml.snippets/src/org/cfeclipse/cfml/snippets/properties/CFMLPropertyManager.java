@@ -33,7 +33,6 @@ import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.snippets.views.snips.SnipTreeView;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
@@ -50,7 +49,6 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.ui.internal.Workbench;
-import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author Stephen Milligan

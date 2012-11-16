@@ -1,21 +1,12 @@
 package org.cfeclipse.snippet.snipex;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.net.URL;
 import java.net.MalformedURLException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cfeclipse.cfml.snippets.net.ClientHttpRequest;
-import org.cfeclipse.cfml.snippets.util.ResourceUtils;
 
 /**
  * Library model object - used to store library properties.

@@ -32,7 +32,6 @@ import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceConstants;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;

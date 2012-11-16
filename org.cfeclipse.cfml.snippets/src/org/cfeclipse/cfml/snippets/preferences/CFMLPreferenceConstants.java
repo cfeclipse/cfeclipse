@@ -4,7 +4,6 @@ import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
-import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 
 public class CFMLPreferenceConstants {
 

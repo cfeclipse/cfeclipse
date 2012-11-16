@@ -16,7 +16,6 @@ import org.cfeclipse.cfml.snippets.util.ResourceUtils;
 import org.cfeclipse.cfml.snippets.views.snips.SnipReader;
 import org.cfeclipse.cfml.snippets.views.snips.SnippetObject;
 import org.cfeclipse.snippet.snipex.Library;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.wizard.Wizard;

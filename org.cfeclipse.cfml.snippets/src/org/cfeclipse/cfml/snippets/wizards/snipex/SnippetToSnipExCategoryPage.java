@@ -3,12 +3,7 @@
  */
 package org.cfeclipse.cfml.snippets.wizards.snipex;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Vector;
-
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;

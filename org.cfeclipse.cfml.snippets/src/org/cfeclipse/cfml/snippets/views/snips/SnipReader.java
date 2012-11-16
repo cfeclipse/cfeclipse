@@ -24,8 +24,6 @@
  */
 package org.cfeclipse.cfml.snippets.views.snips;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,9 +35,6 @@ import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.snippets.properties.CFMLPropertyManager;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.ui.internal.Workbench;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;

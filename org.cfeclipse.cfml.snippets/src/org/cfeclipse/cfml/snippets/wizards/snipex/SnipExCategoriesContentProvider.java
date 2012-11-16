@@ -6,8 +6,6 @@ package org.cfeclipse.cfml.snippets.wizards.snipex;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Vector;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cfeclipse.snippet.snipex.Library;

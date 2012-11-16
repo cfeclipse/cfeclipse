@@ -38,9 +38,6 @@ package org.cfeclipse.cfml.snippets.views.snips;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.properties.CFMLPropertyManager;
 import org.cfeclipse.snippet.snipex.Library;
@@ -51,8 +48,6 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.MessageBox;
 
 class SnippetFileFilter implements FileFilter {
 	public boolean accept(File f) {
