@@ -88,7 +88,7 @@ public final class SaveStateAction implements IWorkbenchWindowActionDelegate {
 		for (int nX = 0; nX < windows.length; nX++) {
 			WorkbenchWindow window = (WorkbenchWindow) windows[nX];
 			IMemento childMem = memento.createChild(IWorkbenchConstants.TAG_WINDOW);
-			result.merge(window.saveState(childMem));
+			//result.merge(window.saveState(childMem));  // not sure when saveState was removed.  TODO: still needed?
 		}
 		result.add(((Workbench) workbench).getEditorHistory().saveState(
 				memento.createChild(IWorkbenchConstants.TAG_MRU_LIST)));
