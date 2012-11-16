@@ -67,7 +67,7 @@ public class SnippetToSnipExWizard extends Wizard implements IExportWizard{
 	 * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench, org.eclipse.jface.viewers.IStructuredSelection)
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		Object firstElement = selection.getFirstElement();
+//		Object firstElement = selection.getFirstElement();
 		
 	}
 	
@@ -83,7 +83,7 @@ public class SnippetToSnipExWizard extends Wizard implements IExportWizard{
 		
 		Object firstElement = selection.getFirstElement();
 		if (firstElement instanceof Library) {
-			Library library = (Library) firstElement;
+			//Library library = (Library) firstElement;
 			
 			//Get all the values
 			String username = descriptionPage.getUserName();
@@ -97,7 +97,7 @@ public class SnippetToSnipExWizard extends Wizard implements IExportWizard{
 			
 				
 				//create the post map
-				Map postMap = new HashMap();
+				Map<String, String> postMap = new HashMap<String, String>();
 				postMap.put("username", username);
 				postMap.put("useremail", useremail);
 				postMap.put("snippetname", snippetName);

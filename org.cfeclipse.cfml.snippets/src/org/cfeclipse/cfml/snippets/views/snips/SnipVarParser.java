@@ -168,7 +168,6 @@ public class SnipVarParser {
 		newStr = newStr.replaceAll("\\$\\$\\{YEAR2DIGIT\\}",formattedYear2Digit);
 		
 		//send the snip string to the smart dialog
-		SnipSmartDialog ssd = new SnipSmartDialog();
 		//newStr = ssd.parse(newStr,activeFile, shell);
 		newStr = SnipSmartDialog.parse(newStr, shell);
 		

@@ -103,7 +103,7 @@ public class SnipKeyCombos {
     
     public String getSequence(String fileName) {
         if (this.keyCombos.containsValue(fileName)) {
-           Enumeration e = this.keyCombos.propertyNames();
+           Enumeration<?> e = this.keyCombos.propertyNames();
            String sequence;
            while (e.hasMoreElements()){
                sequence = e.nextElement().toString();
@@ -117,7 +117,7 @@ public class SnipKeyCombos {
     }
     
     public String[] containgSequence(String sequence) {
-           Enumeration e = this.keyCombos.propertyNames();
+           Enumeration<?> e = this.keyCombos.propertyNames();
            String containing = "";
            String trigger = "";
            while (e.hasMoreElements()){

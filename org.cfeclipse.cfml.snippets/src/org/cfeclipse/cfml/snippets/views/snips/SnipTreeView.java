@@ -557,7 +557,7 @@ public class SnipTreeView extends ViewPart
 				   SnippetToSnipExWizard wizard = new SnippetToSnipExWizard(selectedfile); //TODO: pass in the object we have selected
 				   
 				   WizardDialog dialog = new WizardDialog(shell, wizard);
-				   int result = dialog.open();
+				   dialog.open();
 				
 				//Run the wizard
 				

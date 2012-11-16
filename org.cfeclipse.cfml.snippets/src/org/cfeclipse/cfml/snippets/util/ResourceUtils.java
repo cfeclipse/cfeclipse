@@ -65,7 +65,7 @@ public class ResourceUtils {
 	 * @return The list of suggestions based upon the resource & pathSoFar
 	 *         supplied
 	 */
-	public static Set getIResourceSurroundingResources(IResource res,
+	public static Set<IResource> getIResourceSurroundingResources(IResource res,
 			String pathSoFar) {
 		//
 		// How this works:
@@ -100,7 +100,7 @@ public class ResourceUtils {
 				.append(pathSoFar);
 		IFolder folderRes = res.getWorkspace().getRoot().getFolder(folder);
 
-		HashSet suggestions = new HashSet();
+		HashSet<IResource> suggestions = new HashSet<IResource>();
 		if (folderRes == null) {
 		} else {
 			try {

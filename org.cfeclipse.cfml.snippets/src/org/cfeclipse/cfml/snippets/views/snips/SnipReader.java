@@ -112,10 +112,9 @@ public class SnipReader {
 				is.setEncoding(ResourcesPlugin.getEncoding());
 				
 				// Clear up to the first '<'
-				int t, p, q;
 				if (((char) isr.read()) != '<') {
-					p = isr.read();
-					q = isr.read();
+					isr.read();
+					isr.read();
 				} else {
 			        fis = new FileInputStream(snippetFile);
 					isr = new InputStreamReader(fis,ResourcesPlugin.getEncoding());

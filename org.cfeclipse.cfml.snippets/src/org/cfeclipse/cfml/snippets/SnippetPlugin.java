@@ -26,8 +26,6 @@ public class SnippetPlugin extends AbstractUIPlugin {
 	private static SnippetPlugin plugin;
 	/** The preferences for the plugin. */
 	private PreferenceStore propertyStore;
-	/** The bundle of resources for the plugin */
-	private ResourceBundle resourceBundle;
 
 	private CFMLPropertyManager fPropertyManager;
 
@@ -39,12 +37,6 @@ public class SnippetPlugin extends AbstractUIPlugin {
 	public SnippetPlugin() {
 		super();
 		plugin = this;
-		try {
-			this.resourceBundle = ResourceBundle.getBundle("plugin");
-		} catch (MissingResourceException x) {
-			x.printStackTrace(System.err);
-			this.resourceBundle = null;
-		}
 	}
 
 	/*

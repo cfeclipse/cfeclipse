@@ -219,7 +219,8 @@ public class SelectAppPage extends WizardPage {
 		 return serverList.getText();
 	 }
 	 
-	 private boolean isValidState(){
+	 @SuppressWarnings("unused")
+	private boolean isValidState(){
 		 if(applicationList.getText() == null || applicationList.getText().equals("")){
 			 setErrorMessage("Please select the project to export");
 			 return false;

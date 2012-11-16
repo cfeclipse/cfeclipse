@@ -62,7 +62,7 @@ public class CFMLPropertyManager {
 	// private PreferenceStore store;
 	private CFMLPreferenceManager preferenceManager;
 	/** The list of items that are listenening for property changes */
-	private ArrayList listeners;
+	private ArrayList<IPropertyChangeListener> listeners;
 	private String currentSnippetsPath = "";
 
 	public CFMLPropertyManager() {
@@ -77,7 +77,7 @@ public class CFMLPropertyManager {
 		}
 		this.preferenceManager = SnippetPlugin.getDefault().getPreferenceManager();
 		this.currentSnippetsPath = preferenceManager.snippetsPath();
-		this.listeners = new ArrayList();
+		this.listeners = new ArrayList<IPropertyChangeListener>();
 	}
 
 	public IPreferenceStore getStore(IProject project) {
@@ -151,7 +151,7 @@ public class CFMLPropertyManager {
 		return result.toArray(new IResource[result.size()]);
 	}
 
-	private Object getAdapter(Object adaptable, Class c) {
+	private Object getAdapter(Object adaptable, Class<IResource> c) {
 		if (c.isInstance(adaptable)) {
 			return adaptable;
 		}
@@ -223,7 +223,7 @@ public class CFMLPropertyManager {
 	 * (java.lang.String, java.lang.Object, java.lang.Object)
 	 */
 	public void firePropertyChangeEvent(Object srcObj, String name, Object oldValue, Object newValue) {
-		Iterator listenerIter = this.listeners.iterator();
+		Iterator<IPropertyChangeListener> listenerIter = this.listeners.iterator();
 		PropertyChangeEvent event = new PropertyChangeEvent(srcObj, name, oldValue, newValue);
 
 		while (listenerIter.hasNext()) {

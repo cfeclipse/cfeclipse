@@ -82,7 +82,7 @@ public class SelectFilesPage extends WizardPage {
 		
 		  //create the input element, which has the root resource
         //as its only child
-        ArrayList input = new ArrayList();
+        ArrayList<IAdaptable> input = new ArrayList<IAdaptable>();
        input.add(root);
 
       //  createMessageArea(composite);
@@ -129,7 +129,7 @@ public class SelectFilesPage extends WizardPage {
 	                    }
 
 	                    //filter out the desired resource types
-	                    ArrayList results = new ArrayList();
+	                    ArrayList<IResource> results = new ArrayList<IResource>();
 	                    for (int i = 0; i < members.length; i++) {
 	                        //And the test bits with the resource types to see if they are what we want
 	                        if ((members[i].getType() & resourceType) > 0) {
@@ -140,7 +140,7 @@ public class SelectFilesPage extends WizardPage {
 	                }
 	                //input element case
 	                if (o instanceof ArrayList) {
-	                    return ((ArrayList) o).toArray();
+	                    return ((ArrayList<?>) o).toArray();
 	                } 
 	                return new Object[0];
 	            }

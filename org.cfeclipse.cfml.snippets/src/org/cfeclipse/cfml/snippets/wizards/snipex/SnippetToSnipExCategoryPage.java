@@ -16,8 +16,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Tree;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.cfeclipse.cfml.snippets.views.snips.SnipTreeViewLabelProvider;
 import org.cfeclipse.cfml.snippets.wizards.snipex.SnippetToSnipExWizard;
 import org.cfeclipse.snippet.snipex.Library;
@@ -32,14 +30,12 @@ public class SnippetToSnipExCategoryPage extends WizardPage {
 	
 	
 	//The snipEx server to submit this to
-	private String snipexserver;
 	private TreeViewer categoryTree;
 	
 	private boolean isPageComplete = false;
-	private boolean canFinish = false;
 	
 	//logger for this class
-	private Log logger = LogFactory.getLog(SnippetToSnipExCategoryPage.class);
+	//private Log logger = LogFactory.getLog(SnippetToSnipExCategoryPage.class);
 	
 	public SnippetToSnipExCategoryPage(String pageName) {
 		super(pageName);
@@ -120,7 +116,6 @@ public class SnippetToSnipExCategoryPage extends WizardPage {
 		
 		if(categoryTree.getSelection().isEmpty()){
 			setErrorMessage("Select a category to export this snippet to");
-			canFinish = false;
 			isPageComplete = false;
 			getWizard().getContainer().updateButtons();
 				
@@ -128,7 +123,6 @@ public class SnippetToSnipExCategoryPage extends WizardPage {
 		}
 		
 		getWizard().getContainer().updateButtons();
-		canFinish = true;
 		isPageComplete = true;
 		setErrorMessage(null);
 		return true;
