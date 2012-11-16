@@ -16,7 +16,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -33,7 +32,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 public class EclipseCallPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
-	private Link fCompliance;
 	private Hyperlink fHyperlink;
 
 	public EclipseCallPreferencePage() {
@@ -96,7 +94,7 @@ public class EclipseCallPreferencePage extends FieldEditorPreferencePage impleme
 		return ret;
 	}
 
-	protected static List preferenceChangeListeners = new ArrayList();
+	protected static List<IPreferencesChangeListener> preferenceChangeListeners = new ArrayList<IPreferencesChangeListener>();
 
 	public static void addPreferencesChangeListener(IPreferencesChangeListener listener) {
 		preferenceChangeListeners.add(listener);
