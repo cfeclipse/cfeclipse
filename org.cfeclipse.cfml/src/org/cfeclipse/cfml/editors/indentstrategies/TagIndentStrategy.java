@@ -604,7 +604,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 					return;
 				}
 				else {
-					handleOpenBracket(docCommand);
+					handleOpenBracket(doc, docCommand);
 				}
 				return;
 			case ']':
@@ -618,7 +618,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 					return;
 				}
 				else {
-					handleOpenParen(docCommand);
+					handleOpenParen(doc, docCommand);
 				}
 				return;
 			case ')':
@@ -1084,7 +1084,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		} catch (BadLocationException bex) {
 			// do nothing
 		}
-		if (nextChar == '#') {
+		if (nextChar == '#' && isLineBalanced(doc, docCommand, '#')) {
 			docCommand.text = "";
 			docCommand.shiftsCaret = false;
 			docCommand.caretOffset = docCommand.offset + 1;
@@ -1104,10 +1104,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @param docCommand -
 	 *            the command to modify
 	 */
-	private void handleOpenBracket(DocumentCommand docCommand) {
-		docCommand.text += "]";
-		docCommand.shiftsCaret = false;
-		docCommand.caretOffset = docCommand.offset + 1;
+	private void handleOpenBracket(IDocument doc, DocumentCommand docCommand) {
+		if (isLineBalanced(doc, docCommand, ']')) {
+			docCommand.text += "]";
+			docCommand.shiftsCaret = false;
+			docCommand.caretOffset = docCommand.offset + 1;
+		}
 	}
 
 	/**
@@ -1124,7 +1126,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 			// do nothing
 		}
 
-		if (nextChar == ']') {
+		if (nextChar == ']' && isLineBalanced(doc, docCommand, ']')) {
 			docCommand.text = "";
 			docCommand.shiftsCaret = false;
 			docCommand.caretOffset = docCommand.offset + 1;
@@ -1138,10 +1140,12 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 	 * @param docCommand -
 	 *            the command to modify
 	 */
-	private void handleOpenParen(DocumentCommand docCommand) {
-		docCommand.text += ")";
-		docCommand.shiftsCaret = false;
-		docCommand.caretOffset = docCommand.offset + 1;
+	private void handleOpenParen(IDocument doc, DocumentCommand docCommand) {
+		if (isLineBalanced(doc, docCommand, ')')) {
+			docCommand.text += ")";
+			docCommand.shiftsCaret = false;
+			docCommand.caretOffset = docCommand.offset + 1;
+		}
 	}
 
 	/**
@@ -1155,14 +1159,33 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		try {
 			nextChar = doc.getChar(docCommand.offset);
 		} catch (BadLocationException bex) {
-			// do nothing
 		}
-
-		if (nextChar == ')') {
+		if (nextChar == ')' && isLineBalanced(doc, docCommand, ')')) {
 			docCommand.text = "";
 			docCommand.shiftsCaret = false;
 			docCommand.caretOffset = docCommand.offset + 1;
 		}
+	}
+
+	/**
+	 * Checks to see if the current line has an open bracket,paren,etc..
+	 * 
+	 * @param docCommand
+	 */
+	private boolean isLineBalanced(IDocument doc, DocumentCommand docCommand, char delim) {
+		int lineParenCount = 0;
+		try {
+			int offset = doc.getLineOffset(doc.getLineOfOffset(docCommand.offset));
+			while (doc.getChar(offset) != '\n' && offset < doc.getLength()) {
+				if (doc.getChar(offset) == delim) {
+					lineParenCount++;
+				}
+				offset++;
+			}
+		} catch (BadLocationException bex) {
+			return false;
+		}
+		return (lineParenCount % 2 != 0);
 	}
 
 	/**
