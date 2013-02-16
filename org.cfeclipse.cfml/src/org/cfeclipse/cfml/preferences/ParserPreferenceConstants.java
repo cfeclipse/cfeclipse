@@ -44,8 +44,8 @@ public class ParserPreferenceConstants extends AbstractPreferenceConstants {
 	 */
 	
 	public static void setDefaults(IPreferenceStore store) { 
-		store.setDefault(P_PARSE_DOCFSCRIPT,false); 
-		store.setDefault(P_PARSE_DOCFML,true); 
+		store.setDefault(P_PARSE_DOCFSCRIPT, true);
+		store.setDefault(P_PARSE_DOCFML, true);
 		store.setDefault(P_PARSE_REPORT_ERRORS,true); 
 		store.setDefault(P_PARSE_VARIABLES, true);
 		store.setDefault(P_AUTO_RECONCILE, true);
