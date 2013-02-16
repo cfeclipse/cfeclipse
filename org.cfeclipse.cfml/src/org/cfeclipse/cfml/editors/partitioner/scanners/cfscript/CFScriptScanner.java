@@ -124,15 +124,16 @@ public class CFScriptScanner extends RuleBasedScanner {
 				
 		List rules = new ArrayList();
 		
+		// rules.add(new HashExpressionRule(cfnumber));
+		rules.add(new MultiLineRule("\"", "\"", string));
+		rules.add(new MultiLineRule("'", "'", string));
+
 		//so the script tags look correct
 		rules.add(new SingleLineRule("<cfscript", ">", cftag));
 		rules.add(new SingleLineRule("</cfscript", ">", cftag));
 		rules.add(new SingleLineRule("<CFSCRIPT", ">", cftag));
 		rules.add(new SingleLineRule("</CFSCRIPT", ">", cftag));
 		
-		// rules.add(new HashExpressionRule(cfnumber));
-		rules.add(new MultiLineRule("\"", "\"", string));
-		rules.add(new MultiLineRule("'", "'", string));
 		
 		rules.add(new MultiLineRule("/**", "*/", javadoc, (char) 0, true));
 		rules.add(new MultiLineRule("/*", "*/", cfcommentBlock, (char) 0, true));

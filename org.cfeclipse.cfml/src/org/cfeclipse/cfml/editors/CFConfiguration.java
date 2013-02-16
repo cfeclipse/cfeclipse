@@ -585,10 +585,10 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 
 		reconciler.setDamager(dr, CFPartitionScanner.CF_START_TAG_END);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_START_TAG_END);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.CF_TAG_ATTRIBS);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_TAG_ATTRIBS);
-		
+
 		//general end cftag
 		//dr = new DefaultDamagerRepairer(getCFTagScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.CF_END_TAG);
