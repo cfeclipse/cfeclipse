@@ -564,8 +564,8 @@ public class CFMLFunctionCompletionProcessor extends AssistContributor implement
 	
 		try {
 			String invoker = viewer.getDocument().get(documentOffset-1,1);
-			IDocument document = viewer.getDocument();
-			CFDocument doc = ((ICFDocument) document).getCFDocument();
+			ICFDocument document = (ICFDocument) viewer.getDocument();
+			CFDocument doc = document.getCFDocument();
 			int start = document.getPartition(documentOffset).getOffset();
 			String scanData =	document.get(start, documentOffset - start);
 			scanData = scanData.replace('\n',' ');	// Eliminate any non-character characters
@@ -595,7 +595,7 @@ public class CFMLFunctionCompletionProcessor extends AssistContributor implement
 			//String originalData = scanData;	// This should never be changed.
 
 			
-			char lastChar = scanData.charAt(scanData.length()-1);
+			char lastChar = (scanData.length() > 0) ? scanData.charAt(scanData.length() - 1) : scanData.charAt(0);
 						
 			// Gonna allow debug by entering the tilde character. Entering this will cause
 			// my debug function to run...

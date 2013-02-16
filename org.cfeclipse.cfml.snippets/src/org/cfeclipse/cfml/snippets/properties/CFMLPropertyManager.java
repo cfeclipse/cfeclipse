@@ -32,7 +32,7 @@ import java.util.Set;
 import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceManager;
-import org.eclipse.core.resources.IFile;
+import org.cfeclipse.cfml.snippets.views.snips.SnipTreeView;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
@@ -43,10 +43,12 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.ui.internal.Workbench;
-import org.eclipse.ui.texteditor.ITextEditor;
 
 /**
  * @author Stephen Milligan
@@ -60,7 +62,8 @@ public class CFMLPropertyManager {
 	// private PreferenceStore store;
 	private CFMLPreferenceManager preferenceManager;
 	/** The list of items that are listenening for property changes */
-	private ArrayList listeners;
+	private ArrayList<IPropertyChangeListener> listeners;
+	private String currentSnippetsPath = "";
 
 	public CFMLPropertyManager() {
 		super();
@@ -73,7 +76,8 @@ public class CFMLPropertyManager {
 			// e.printStackTrace();
 		}
 		this.preferenceManager = SnippetPlugin.getDefault().getPreferenceManager();
-		this.listeners = new ArrayList();
+		this.currentSnippetsPath = preferenceManager.snippetsPath();
+		this.listeners = new ArrayList<IPropertyChangeListener>();
 	}
 
 	public IPreferenceStore getStore(IProject project) {
@@ -98,7 +102,39 @@ public class CFMLPropertyManager {
 	}
 
 	public String defaultSnippetsPath() {
-		return preferenceManager.getPluginStateLocation();
+		return preferenceManager.getPluginStateLocation()+"/snippets";
+	}
+
+	private ISelectionListener listener = new ISelectionListener() {
+		public void selectionChanged(IWorkbenchPart sourcepart, ISelection selection) {
+			String lastSnippetPath = currentSnippetsPath;
+			IStructuredSelection currentSelection =  getSelection();
+			if(currentSelection == null) {
+				currentSnippetsPath = defaultSnippetsPath();
+			}
+			IResource[] currentResource = getSelectedResources(currentSelection);
+			if(currentResource.length == 0) {
+				currentSnippetsPath = defaultSnippetsPath();
+			} else {				
+				currentSnippetsPath = snippetsPath(currentResource[0].getProject());
+			}
+			if(lastSnippetPath!=currentSnippetsPath || lastSnippetPath.length() == 0) {
+				String id = SnipTreeView.ID_SNIPVIEWTREE;
+				IViewReference viewReferences[] = sourcepart.getSite().getWorkbenchWindow().getActivePage().getViewReferences();
+				for (int i = 0; i < viewReferences.length; i++) {
+					if (id.equals(viewReferences[i].getId())) {
+						SnipTreeView snipTreeView = (SnipTreeView) (viewReferences[i].getView(false));
+						if(snipTreeView!= null)snipTreeView.reloadSnippets(false);
+					}
+				}
+			}
+		}
+	};
+	
+	
+	
+	public ISelectionListener getListener() {
+		return listener;
 	}
 
 	/**
@@ -115,7 +151,7 @@ public class CFMLPropertyManager {
 		return result.toArray(new IResource[result.size()]);
 	}
 
-	private Object getAdapter(Object adaptable, Class c) {
+	private Object getAdapter(Object adaptable, Class<IResource> c) {
 		if (c.isInstance(adaptable)) {
 			return adaptable;
 		}
@@ -130,15 +166,7 @@ public class CFMLPropertyManager {
 	}
 	
 	public String getSnippetsPath() {
-		IStructuredSelection currentSelection =  getSelection();
-		if(currentSelection == null) {
-			return defaultSnippetsPath();
-		}
-		IResource[] currentResource = getSelectedResources(currentSelection);
-		if(currentResource.length == 0) {
-			return defaultSnippetsPath();
-		}
-		return snippetsPath(currentResource[0].getProject());
+		return currentSnippetsPath;
 	}
 
 	public void setSnippetsPath(String path, IProject project) {
@@ -166,7 +194,10 @@ public class CFMLPropertyManager {
 				} else if (partSelection instanceof ITextSelection) {
 					IResource resource = ResourceUtil.getResource(site.getWorkbenchWindow().getActivePage()
 							.getActiveEditor().getEditorInput());
-					return new StructuredSelection(resource);
+					if(resource != null) {
+						return new StructuredSelection(resource);
+					}
+					else return new StructuredSelection();
 				}
 			}
 		}
@@ -192,7 +223,7 @@ public class CFMLPropertyManager {
 	 * (java.lang.String, java.lang.Object, java.lang.Object)
 	 */
 	public void firePropertyChangeEvent(Object srcObj, String name, Object oldValue, Object newValue) {
-		Iterator listenerIter = this.listeners.iterator();
+		Iterator<IPropertyChangeListener> listenerIter = this.listeners.iterator();
 		PropertyChangeEvent event = new PropertyChangeEvent(srcObj, name, oldValue, newValue);
 
 		while (listenerIter.hasNext()) {

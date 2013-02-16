@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -158,19 +160,12 @@ public class CFDocument {
 		docFilename = filename;
 	}
 
-	/**
-	 * Constructs the document based upon a IDocument.
-	 * @param eclipseDocument The document to base this on.
-	 * @deprecated Don't use at this does nothing!
-	 */
-	public CFDocument(IDocument eclipseDocument) {
-	}
-
 	public Set<Function> getFunctions() {
 		Matcher matcher;
 		Pattern pattern;
 		String name = "", type = "", required = "", defaultvalue = "";
 		CFNodeList nodes = getDocumentRoot().selectNodes("//cffunction");
+		CFNodeList scriptNodes = getDocumentRoot().selectNodes("//ASTFunctionDeclaration");
 		Iterator i = nodes.iterator();
 		Set<Function> functions = new HashSet<Function>();
 		pattern = Pattern.compile("(\\w+)[\\s=]+(((\\x22|\\x27)((?!\\4).|\\4{2})*\\4))", Pattern.CASE_INSENSITIVE);
@@ -209,6 +204,27 @@ public class CFDocument {
 					}
 
 				}
+			}
+			functions.add(function);
+		}
+		i = scriptNodes.iterator();
+		while (i.hasNext()) {
+			FunctionInfo currItem = (FunctionInfo) i.next();
+			String funcName = currItem.getFunctionName();
+			String funcReturn = currItem.getReturnType();
+			Function function = new Function(funcName, funcReturn, Byte.parseByte("8"));
+			// System.out.println(currItem.getItemData());
+			List args = currItem.getParameters();
+			Iterator j = args.iterator();
+			while (j.hasNext()) {
+				Map<String, String> parameterAttribs = (Map) j.next();
+				name = parameterAttribs.get("name");
+				type = parameterAttribs.get("type");
+				required = parameterAttribs.get("required");
+				defaultvalue = parameterAttribs.get("default");
+				Parameter newParam = new Parameter(name, type, Boolean.valueOf(required), defaultvalue);
+				name = type = required = defaultvalue = "";
+				function.addParameter(newParam);
 			}
 			functions.add(function);
 		}

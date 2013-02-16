@@ -35,10 +35,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cfeclipse.cfml.frameworks.Activator;
 import org.cfeclipse.cfml.frameworks.views.TreeNode;
-import org.cfeclipse.cfml.util.FileLocator;
 import org.eclipse.core.internal.resources.Project;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.jface.action.Action;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -49,6 +47,7 @@ import org.jdom.xpath.XPath;
  * @author markdrew
  * Gets the actions for an Tree element
  */
+@SuppressWarnings("restriction")
 public class ActionManager {
 	
 	private Document actionDefinitions;
@@ -112,14 +111,14 @@ public class ActionManager {
 	private Object[] getActionsForNode(TreeNode node, IProject currentProject, String action, Document virtualDocument) {
 		this.project = (Project) currentProject;
 		
-		ArrayList actions = new ArrayList(); 
+		ArrayList<IBaseAction> actions = new ArrayList<IBaseAction>(); 
 		
 		XPath x;
 		try {
 			x = XPath.newInstance("/actions/action[@framework='" + node.getFrameworkType() + "' and @node='"+ node.getName().toLowerCase() +"' and @type='"+ action + "']");
-			List list = x.selectNodes(actionDefinitions);
+			List<?> list = x.selectNodes(actionDefinitions);
 			
-			for (Iterator iter = list.iterator(); iter.hasNext();) {
+			for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 				Element element = (Element) iter.next();
 				
 				String insertSnippet = element.getText().trim();
@@ -155,7 +154,7 @@ public class ActionManager {
 	private Object createAction(Element element, TreeNode node){
 		try {
 				ClassLoader classLoader = this.getClass().getClassLoader();
-				Class name = classLoader.loadClass(element.getAttributeValue("class"));
+				Class<?> name = classLoader.loadClass(element.getAttributeValue("class"));
 				logger.debug("created: " + name);
 				Object object = name.newInstance();
 				//Method setNode = name.getMethod("setNode", TreeNode.class);
@@ -176,12 +175,12 @@ public class ActionManager {
 		return actionDefinitions;
 	}
 	
-	public List getActionNodes(){
+	public List<?> getActionNodes(){
 		XPath x;
 		
 		try {
 			x = XPath.newInstance("/actions/action");
-			List list = x.selectNodes(actionDefinitions);
+			List<?> list = x.selectNodes(actionDefinitions);
 			return list;
 			
 		} catch (JDOMException e) {

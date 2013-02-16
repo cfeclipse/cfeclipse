@@ -161,9 +161,9 @@ public class FrameworksPreferencePage extends PreferencePage implements
 		
 		try {
 			XPath x = XPath.newInstance("//framework");
-			List list = x.selectNodes(document);
+			List<?> list = x.selectNodes(document);
 			
-			for (Iterator iter = list.iterator(); iter.hasNext();) {
+			for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 				Object element = (Object) iter.next();
 				if (element instanceof Element) {
 					Element frameworkElement = (Element) element;

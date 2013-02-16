@@ -11,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cfeclipse.cfml.snippets.SnippetPlugin;
 import org.cfeclipse.cfml.snippets.preferences.SnipExPreferenceConstants;
-import org.cfeclipse.snippet.snipex.SnipEx;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -220,7 +219,8 @@ public class SelectAppPage extends WizardPage {
 		 return serverList.getText();
 	 }
 	 
-	 private boolean isValidState(){
+	 @SuppressWarnings("unused")
+	private boolean isValidState(){
 		 if(applicationList.getText() == null || applicationList.getText().equals("")){
 			 setErrorMessage("Please select the project to export");
 			 return false;

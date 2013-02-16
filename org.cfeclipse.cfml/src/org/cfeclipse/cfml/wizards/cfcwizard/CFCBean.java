@@ -17,6 +17,7 @@ public class CFCBean {
 	
 	// component properties
 	private String name;
+	private String style;
 	private String path;
 	private String extendCfc;
 	private String hint;
@@ -28,6 +29,7 @@ public class CFCBean {
 	
 	// Function Tags
 	private List functionBeans;
+	private String persistent;
 	
 	// Constructors
 	public CFCBean(){
@@ -176,9 +178,31 @@ public class CFCBean {
 		return propertyBeans;
 	}
 	
-	
 	/**
-	 * @param propertyBeans The propertyBeans to set.
+	 * @return Returns the style type (cfscript or tags).
+	 */
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
+	/**
+	 * @return Returns the persistence setting.
+	 */
+	public String getPersistent() {
+		return persistent;
+	}
+
+	public void setPersistent(String persistent) {
+		this.persistent = persistent;
+	}
+
+	/**
+	 * @param propertyBeans
+	 *            The propertyBeans to set.
 	 */
 	public void setPropertyBeans(List propertyBeans) {
 		this.propertyBeans = propertyBeans;
@@ -191,4 +215,5 @@ public class CFCBean {
 	public boolean hasFunctions() {
 		return !functionBeans.isEmpty();
 	}
+
 }

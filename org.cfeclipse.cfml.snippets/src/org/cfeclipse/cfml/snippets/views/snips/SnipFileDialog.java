@@ -440,6 +440,9 @@ public class SnipFileDialog extends Dialog {
 		return okButton;
 	}
 	
+	protected boolean isResizable() {
+	    return true;
+	}
 	
 	
 	
@@ -450,7 +453,6 @@ public class SnipFileDialog extends Dialog {
 
 		String errorMessage = null;
 		
-		String test = snippetNameText.getText();
 		if (!snippetNameText.getText().matches("[0-9a-zA-Z _-]+")) {
 		    errorMessage = "The snippet name can only contain numbers, alphabetic characters, space underscore and dash.";
 		}

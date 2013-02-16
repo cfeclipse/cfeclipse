@@ -61,10 +61,10 @@ public class ProjectPropertyStore implements IPreferenceStore
     private IProject project;
     
     /** The list of items that are listenening for property changes */
-    private ArrayList listeners;
+    private ArrayList<?> listeners;
 
     /** Temporary list of properties (that have been changed) */
-    private HashMap props;
+    private HashMap<String, String> props;
     
     /** Stores the default values for various items */
     //private HashMap defaults;
@@ -84,8 +84,8 @@ public class ProjectPropertyStore implements IPreferenceStore
         		throw new IllegalArgumentException("ProjectPropertyStore::ProjectPropertyStore()");
         
         this.project = srcProject;
-        this.listeners = new ArrayList();
-        this.props = new HashMap();
+        this.listeners = new ArrayList<Object>();
+        this.props = new HashMap<String, String>();
         //this.defaults = new HashMap();
         //this.defaults.put(ICFMLPreferenceConstants.P_CFML_DICTIONARY, CFMLPreferenceManager.)
         this.globalPrefs = SnippetPlugin.getDefault().getPreferenceStore();
@@ -100,8 +100,8 @@ public class ProjectPropertyStore implements IPreferenceStore
     {
         super();
         this.project = null;
-        this.listeners = new ArrayList();
-        this.props = new HashMap();
+        this.listeners = new ArrayList<Object>();
+        this.props = new HashMap<String, String>();
     }
 
     /**
@@ -127,7 +127,7 @@ public class ProjectPropertyStore implements IPreferenceStore
         
         this.project = srcProject;
         
-        Iterator propIter = this.props.keySet().iterator();
+        Iterator<String> propIter = this.props.keySet().iterator();
         while(propIter.hasNext())
         {
             String propName = (String)propIter.next();
@@ -174,7 +174,7 @@ public class ProjectPropertyStore implements IPreferenceStore
         Object srcObj = (this.project != null) ? (Object)project : (Object)this.props;
         PropertyChangeEvent event = new PropertyChangeEvent(srcObj, name, oldValue, newValue);
         
-        Iterator listenerIter = this.listeners.iterator();
+        Iterator<?> listenerIter = this.listeners.iterator();
         
         while(listenerIter.hasNext())
         {

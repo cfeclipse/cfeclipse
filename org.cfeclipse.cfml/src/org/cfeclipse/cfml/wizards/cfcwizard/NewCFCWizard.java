@@ -28,6 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -101,9 +102,23 @@ public class NewCFCWizard extends Wizard implements INewWizard {
 		
 		final String containerName = page.getCFCBean().getPath();
 		final String fileName = page.getCFCBean().getName();
-		
+		final StringBuffer sb;
 		//call the helper function to make the cfc text
-		final StringBuffer sb = createStringBuffer();
+		for (Iterator iter = pageTwo.propertyBeans.values().iterator(); iter.hasNext();) {
+			CFCPropertyBean bean = (CFCPropertyBean) iter.next();
+			page.getCFCBean().addPropertyBean(bean);
+		}
+		for (Iterator iter = pageThree.functionBeans.values().iterator(); iter.hasNext();) {
+			CFCFunctionBean bean = (CFCFunctionBean) iter.next();
+			page.getCFCBean().addFunctionBean(bean);
+		}
+
+		if (page.getCFCBean().getStyle().equals("tag")) {
+
+			sb = CFCFileFactory.getString(page.getCFCBean());
+		} else {
+			sb = CFCFileFactory.getScriptString(page.getCFCBean());
+		}
 		
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
@@ -180,45 +195,6 @@ public class NewCFCWizard extends Wizard implements INewWizard {
 		monitor.worked(1);
 	}
 	
-	/**
-	 * creates tthe cfml code to add to the new file
-	 * @return
-	 */
-	private StringBuffer createStringBuffer() {
-		StringBuffer sb = new StringBuffer();
-		
-		sb.append("<cfcomponent");
-		
-		if(page.getCFCBean().getDisplayName().trim().length() > 0)
-		sb.append(" displayname=\"" + page.getCFCBean().getDisplayName().trim() + "\"");
-		
-		if(page.getCFCBean().getHint().trim().length() > 0)
-		sb.append(" hint=\"" + page.getCFCBean().getHint().trim() + "\"");
-		
-		if(page.getCFCBean().getExtendCFC().trim().length() > 0)
-			sb.append(" extends=\"" + page.getCFCBean().getExtendCFC().trim() + "\"");
-			
-		if(page.getCFCBean().getOutput().trim().length() > 0)
-			sb.append(" output=\"" + page.getCFCBean().getOutput().trim() + "\"");
-			
-		sb.append(">");
-		
-		sb.append("\n\n");
-		
-		//do any properties and getters/setters
-		if(pageTwo.hasProperties()) {
-			sb.append(pageTwo.getPropertiesAsTags());
-			sb.append(pageTwo.getPropertyGettersAndSetters());
-		}
-		
-		//do any functions
-		if(pageThree.hasFunctions())
-			sb.append(pageThree.getFunctionTags());
-		
-		sb.append("</cfcomponent>");
-		return sb;
-	}
-
 	private void throwCoreException(String message) throws CoreException {
 		IStatus status =	new Status(
 			IStatus.ERROR, "org.cfeclipse.cfml", IStatus.OK, message, null

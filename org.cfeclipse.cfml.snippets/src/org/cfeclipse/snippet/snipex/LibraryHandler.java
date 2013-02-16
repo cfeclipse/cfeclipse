@@ -20,7 +20,7 @@ public class LibraryHandler extends DefaultHandler {
 	private boolean isStackReadyForText = false;
 	
 	private Library library;
-	private Vector libraries;
+	private Vector<?> libraries;
 	private Library currentLibrary;
 	private Snippet currentSnippet;
 	private StringBuffer currentString;
@@ -30,8 +30,8 @@ public class LibraryHandler extends DefaultHandler {
     	super();
     	
     	library = l;
-		library.setLibraries( new Vector() );
-		library.setSnippets( new Vector() );
+		library.setLibraries( new Vector<Library>() );
+		library.setSnippets( new Vector<Snippet>() );
 		
 		try {
 			//TODO Change where the libraries are stored...
@@ -183,7 +183,7 @@ public class LibraryHandler extends DefaultHandler {
     	} else {}
 	}
 	
-	public Vector getLibraries() {
+	public Vector<?> getLibraries() {
 		return libraries;
 	}
 	

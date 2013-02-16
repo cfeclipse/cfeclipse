@@ -7,8 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -137,8 +135,8 @@ public class ViewXMLDialog extends Dialog {
 			
 			try {
 				XPath x = XPath.newInstance(xpathExpression);
-				List l = x.selectNodes(this.dspXML);
-				for (Iterator iter = l.iterator(); iter.hasNext();) {
+				List<?> l = x.selectNodes(this.dspXML);
+				for (Iterator<?> iter = l.iterator(); iter.hasNext();) {
 					Object element = (Object) iter.next();
 					
 					buff.append(element.toString() + "\n");

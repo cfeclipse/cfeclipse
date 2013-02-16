@@ -32,6 +32,7 @@ import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
+import org.cfeclipse.cfml.parser.FunctionInfo;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -89,65 +90,69 @@ public class CFCMethodsContentProvider implements IStructuredContentProvider {
 
 			//nodes = rootItem.selectNodes("//function[#startpos>=0 and #endpos < 200]");
 			nodes = rootItem.selectNodes("//cffunction");
-			
-			
-			if (sortItems) {
-			    CFCMethodsComparator comparator = new CFCMethodsComparator();
-				Collections.sort(nodes,comparator);
+			if (nodes.size() == 0) {
+				nodes = rootItem.selectNodes("//ASTFunctionDeclaration");
 			}
-			Iterator i = nodes.iterator();
-			CFCMethodViewItem[] methods = new CFCMethodViewItem[nodes.size()];
-			int index = 0;
-			while(i.hasNext())
-			{
-				try {
-					TagItem thisTag = (TagItem)i.next();
-					
-					CFCMethodViewItem item = new CFCMethodViewItem(thisTag);
-					
-					boolean addItem = true;
-					
-					if (item.getAccess().toLowerCase().equals("remote")
-					        && !this.showRemote) {
-					    addItem = false;
-					}
-
-					if (item.getAccess().toLowerCase().equals("public")
-					        && !this.showPublic) {
-					    addItem = false;
-					}
-
-					if (item.getAccess().toLowerCase().equals("package")
-					        && !this.showPackage) {
-					    addItem = false;
-					}
-
-					if (item.getAccess().toLowerCase().equals("private")
-					        && !this.showPrivate) {
-					    addItem = false;
-					}
-					
-					if (addItem) {
-						methods[index] = item;
-						index++;
-					}
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			
-			CFCMethodViewItem[] finalMethods = new CFCMethodViewItem[index];
-			
-			for (int x=0;x<finalMethods.length;x++) {
-			 finalMethods[x] = methods[x];   
-			}
-		return finalMethods;
+			return getMethods(nodes);
 		}
 		catch (Exception e){
 			System.err.println("CFCMethodsContentProvider has no elements");
 			e.printStackTrace();
 			return EMPTY_ARRAY;
 		}
+	}
+
+	private MethodViewItem[] getMethods(CFNodeList nodes) {
+		if (sortItems) {
+			CFCMethodsComparator comparator = new CFCMethodsComparator();
+			Collections.sort(nodes, comparator);
+		}
+		Iterator i = nodes.iterator();
+		MethodViewItem[] methods = new MethodViewItem[nodes.size()];
+		int index = 0;
+		while (i.hasNext()) {
+			try {
+				Object itemThing = i.next();
+				DocItem thisTag = (DocItem) itemThing;
+				MethodViewItem item;
+				if (itemThing instanceof FunctionInfo) {
+					item = new CFCMethodViewScriptItem((FunctionInfo) itemThing);
+
+				} else {
+					item = new CFCMethodViewItem((TagItem) thisTag);
+				}
+
+				boolean addItem = true;
+
+				if (item.getAccess().toLowerCase().equals("remote") && !this.showRemote) {
+					addItem = false;
+				}
+
+				if (item.getAccess().toLowerCase().equals("public") && !this.showPublic) {
+					addItem = false;
+				}
+
+				if (item.getAccess().toLowerCase().equals("package") && !this.showPackage) {
+					addItem = false;
+				}
+
+				if (item.getAccess().toLowerCase().equals("private") && !this.showPrivate) {
+					addItem = false;
+				}
+
+				if (addItem) {
+					methods[index] = item;
+					index++;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		MethodViewItem[] finalMethods = new MethodViewItem[index];
+
+		for (int x = 0; x < finalMethods.length; x++) {
+			finalMethods[x] = methods[x];
+		}
+		return finalMethods;
 	}
 }

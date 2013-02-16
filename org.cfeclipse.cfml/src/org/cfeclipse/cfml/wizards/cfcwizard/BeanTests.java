@@ -68,14 +68,11 @@ public class BeanTests {
 		
 		CFCFileFactory cfcFactory = new CFCFileFactory();
 		
-		
 		StringBuffer string = cfcFactory.getString(appCFCBean);
-		
-		
-		
 		System.out.println(string.toString());
-		
-		
+
+		string = cfcFactory.getScriptString(appCFCBean);
+		System.out.println(string.toString());
 		
 	/*	
 		<cfcomponent displayname="Controller" extends="ModelGlue.unity.controller.Controller" output="false">

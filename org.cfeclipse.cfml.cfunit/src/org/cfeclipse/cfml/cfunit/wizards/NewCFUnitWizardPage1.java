@@ -173,7 +173,7 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 				dialogChanged();
 			}
 		});
-		frameworkExtendsPath.setText("net.sourceforge.cfunit.framework");
+		frameworkExtendsPath.setText("mxunit.framework");
 
 		Button button2 = new Button(parent, SWT.PUSH);
 		button2.setText("  Browse...  ");
@@ -202,14 +202,25 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 		gd = new GridData();
 		gd.horizontalIndent = 5;
 		
+		fwMxUnit = new Button(panel, SWT.RADIO);
+		fwMxUnit.setText("New MXUnit Test");
+		fwMxUnit.setLayoutData(gd);
+		fwMxUnit.setSelection( true );
+		fwMxUnit.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				dialogChanged();
+				frameworkChanged(TestFrameworkType.MXUNIT);
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {}
+		});
+		
 		fwCFUnit = new Button(panel, SWT.RADIO);
 		fwCFUnit.setText("New CFUnit Test");
 		fwCFUnit.setLayoutData(gd);
-		fwCFUnit.setSelection( true );
 		fwCFUnit.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
-				dialogChanged();
 				frameworkChanged(TestFrameworkType.CFUNIT);
+				dialogChanged();
 			}
 			public void widgetDefaultSelected(SelectionEvent e) {}
 		});
@@ -220,17 +231,6 @@ public class NewCFUnitWizardPage1 extends WizardPage {
 		fwCfcUnit.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				frameworkChanged(TestFrameworkType.CFCUNIT);
-				dialogChanged();
-			}
-			public void widgetDefaultSelected(SelectionEvent e) {}
-		});
-		
-		fwMxUnit = new Button(panel, SWT.RADIO);
-		fwMxUnit.setText("New MXUnit Test");
-		fwMxUnit.setLayoutData(gd);
-		fwMxUnit.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
-				frameworkChanged(TestFrameworkType.MXUNIT);
 				dialogChanged();
 			}
 			public void widgetDefaultSelected(SelectionEvent e) {}

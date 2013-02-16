@@ -1,26 +1,6 @@
 /*
- * Created on Feb 26, 2004
- *
- * The MIT License
- * Copyright (c) 2004 Rob Rohan
- *
- * Permission is hereby granted, free of charge, to any person obtaining a 
- * copy of this software and associated documentation files (the "Software"), 
- * to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to whom the Software 
- * is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in 
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
- * SOFTWARE.
+ * So this is a pretty crappy implementation of tags-to-cfscript, and really a parser 
+ * is what we need, and really really we shouldn't be using strings the way we are, but what the hell.
  */
 package org.cfeclipse.cfml.editors.actions;
 
@@ -74,23 +54,28 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 		if (editor != null && editor.isEditable()) {
 			Matcher m = Pattern.compile("(?is)<cfset\\s+(.*?)\\s?/?>").matcher("").reset(highlighted);
 			while (m.find()) {
-				highlighted = m.replaceFirst(m.group(1)+";");
+				highlighted = m.replaceFirst(safe(m.group(1)) + ";");
+				m.reset(safe(highlighted));
+			}
+			m = Pattern.compile("(?is)<cfproperty\\s+(.*?)\\s?/?>").matcher("").reset(highlighted);
+			while (m.find()) {
+				highlighted = m.replaceFirst("property " + safe(m.group(1)) + ";");
 				m.reset(highlighted);
 			}
 			m = Pattern.compile("(?is)<cfif\\s+(.*?)\\s?>").matcher("").reset(highlighted);
 			while (m.find()) {
-				highlighted = m.replaceFirst("if ("+m.group(1)+") {");
+				highlighted = m.replaceFirst("if (" + safe(m.group(1)) + ") {");
 				m.reset(highlighted);
 			}
 			m = Pattern.compile("(?is)<cfelseif\\s+(.*?)\\s?>").matcher("").reset(highlighted);
 			while (m.find()) {
-				highlighted = m.replaceFirst("elseif ("+m.group(1)+") {");
+				highlighted = m.replaceFirst("elseif (" + safe(m.group(1)) + ") {");
 				m.reset(highlighted);
 			}
 			m = Pattern.compile("(?is)<cfelse\\s?>").matcher("").reset(highlighted);
 			while (m.find()) {
 				highlighted = m.replaceFirst("} else {");
-				m.reset(highlighted);
+				m.reset(safe(highlighted));
 			}
 			m = Pattern.compile("(?is)</cfif\\s?>").matcher("").reset(highlighted);
 			while (m.find()) {
@@ -99,19 +84,31 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 			}
 			m = Pattern.compile("(?is)<!---(.*?)--->").matcher("").reset(highlighted);
 			while (m.find()) {
-				highlighted = m.replaceFirst("/*"+m.group(1)+"*/");
-				m.reset(highlighted);
+				highlighted = m.replaceFirst("/*" + safe(m.group(1)) + "*/");
+				m.reset(safe(highlighted));
 			}
 			m = Pattern.compile("(?is)<cflocation\\s+(.*?)\\s?/?>").matcher("").reset(highlighted);
 			while (m.find()) {
-				String args = tagArgsToFunctionArgs(m.group(1));
+				String args = tagArgsToFunctionArgs(safe(m.group(1)));
 				highlighted = m.replaceFirst("location("+args+");");
 				m.reset(highlighted);
 			}
+			m = Pattern.compile("(?is)<cfreturn\\s+(.*?)\\s?/?>").matcher("").reset(highlighted);
+			while (m.find()) {
+				// String args = tagArgsToFunctionArgs(safe(m.group(1)));
+				highlighted = m.replaceFirst("return " + safe(m.group(1)) + ";");
+				m.reset(safe(highlighted));
+			}
 			m = Pattern.compile("(?is)<cfdump\\s+(.*?)\\s?/?>").matcher("").reset(highlighted);
 			while (m.find()) {
-				String args = tagArgsToFunctionArgs(m.group(1));
+				String args = tagArgsToFunctionArgs(safe(m.group(1)));
 				highlighted = m.replaceFirst("dump("+args+");");
+				m.reset(safe(highlighted));
+			}
+			m = Pattern.compile("(?is)<cftransaction\\s+(.*?)>(.*?)</cftransaction>").matcher("").reset(highlighted);
+			while (m.find()) {
+				String args = tagArgsToFunctionArgs(safe(m.group(1)));
+				highlighted = m.replaceFirst("transaction " + args + "{" + m.group(2) + "}");
 				m.reset(highlighted);
 			}
 			m = Pattern.compile("(?is)<cfabort\\s*?/?>").matcher("").reset(highlighted);
@@ -143,7 +140,12 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 					if(argsMap.get("step")!=null) {
 						step = argsMap.get("step").toString();
 					}
-					if(Integer.parseInt(from) > Integer.parseInt(to)) {
+					try {
+						if (Integer.parseInt(from) > Integer.parseInt(to)) {
+							comparator = ">=";
+							opperator = "";
+						}
+					} catch (Exception e) {
 						comparator = ">=";
 						opperator = "";
 					}
@@ -162,7 +164,7 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 					String query = argsMap.get("query").toString();
 					highlighted = m.replaceFirst("for(i=1; i lte "+query+".recordcount; i=i+1) {");
 				}
-				m.reset(highlighted);
+				m.reset(safe(highlighted));
 				if(highlighted.equals(origText)) {
 					break;
 				}
@@ -174,13 +176,31 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 			}
 			m = Pattern.compile("(?is)<cfoutput>(.*?)</cfoutput>").matcher("").reset(highlighted);
 			while (m.find()) {
-				highlighted = m.replaceFirst("writeOutput(\""+m.group(1).replace("\"", "\"\"")+"\");");
+				highlighted = m.replaceFirst("writeOutput(\"" + safe(m.group(1)).replace("\"", "\"\"") + "\");");
+				m.reset(highlighted);
+			}
+			m = Pattern.compile("(?is)[\\s]+?<cfscript>(.*?)[\\s]+?</cfscript>").matcher("").reset(highlighted);
+			while (m.find()) {
+				highlighted = safe(m.replaceFirst(safe(m.group(1))));
 				m.reset(highlighted);
 			}
 			m = Pattern.compile("(?is)<cffunction\\s+(.*?)>(.*?)</cffunction>").matcher("").reset(highlighted);
 			while (m.find()) {
-				String args = tagArgsToFunctionArgs(m.group(1));
-				highlighted = m.replaceFirst("function "+args + "(\""+m.group(2).replace("\"", "\"\"")+"\");");
+				HashMap args = tagArgsToMap(safe(m.group(1)));
+				String name = getLowerCaseKeyValue(args, "name", "");
+				String access = getLowerCaseKeyValue(args, "access", "");
+				String returnType = getLowerCaseKeyValue(args, "returntype", "");
+				String functionArgs = tagArgumentToScriptArgument(safe(m.group(2)));
+				highlighted = safe(m.replaceFirst(access + returnType + "function " + name.trim() + "(" + functionArgs + ") "
+						+ tagArgsToFunctionArgs(safe(m.group(1))).trim() + " {"
+ + m.group(2).replaceAll("(?is)[\\s]+?<cfargument\\s+(.*?)>", "")
+ + "}"));
+				m.reset(highlighted);
+			}
+			m = Pattern.compile("(?is)<cfcomponent\\s+(.*?)>(.*?)</cfcomponent>").matcher("").reset(highlighted);
+			while (m.find()) {
+				String args = safe(m.group(1));
+				highlighted = safe(m.replaceFirst("component " + args + " {" + safe(m.group(2)) + "}"));
 				m.reset(highlighted);
 			}
 			return highlighted;
@@ -189,21 +209,68 @@ public class ToCFScriptAction extends WordManipulator implements IWorkbenchWindo
 		}
 	}
 
-	private String tagArgsToFunctionArgs(String args) {
-		Matcher m = Pattern.compile("(?si)(\\w+)[\\s=]+(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4))").matcher("").reset(args);
-		String ret ="";
+	private String safe(String str) {
+		return Matcher.quoteReplacement(str);
+	}
+
+	private String tagArgumentToScriptArgument(String string) {
+		Matcher m = Pattern.compile("(?is)<cfargument\\s+(.*?)>").matcher("").reset(safe(string));
+		String argsString = "";
 		while (m.find()) {
-			ret+= (m.group(1)+"="+m.group(2)) + ", ";
+			HashMap args = tagArgsToMap(m.group(1));
+			String name = getLowerCaseKeyValue(args, "name", "");
+			String defaultValue = getLowerCaseKeyValue(args, "default", "");
+			String displayname = getLowerCaseKeyValue(args, "displayname", "");
+			String hint = getLowerCaseKeyValue(args, "hint", "");
+			String required = getLowerCaseKeyValue(args, "required", "");
+			String type = getLowerCaseKeyValue(args, "type", "");
+			// String functionArgs = tagArgumentToScriptArgument(m.group(1));
+			if (Boolean.parseBoolean(required.trim())) {
+				required = "required ";
+			}
+			if (!defaultValue.equals("")) {
+				defaultValue = "=\"" + defaultValue + "\"";
+			}
+			argsString += required + type + name + defaultValue + ",";
 		}
-		return ret.substring(0,ret.length()-2);
+		if (argsString.length() == 0)
+			return "";
+		return argsString.substring(0, argsString.length() - 1).trim();
+	}
+
+	private String getLowerCaseKeyValue(HashMap inMap, String key, String defaultValue) {
+		String value = (String) inMap.get(key.toLowerCase());
+		if (value == null) {
+			return defaultValue;
+		}
+		return value + " ";
+	}
+
+	private String tagArgsToFunctionArgs(String args) {
+		HashMap argMap = tagArgsToMap(args);
+		String ret = "";
+		String name = "";
+		String access = "";
+		String returnType = "";
+		for (Object k : argMap.keySet()) {
+			String keyName = k.toString();
+			if (keyName.equals("name")) {
+			} else if (keyName.equals("access")) {
+			} else if (keyName.equals("output")) {
+			} else if (keyName.equals("returntype")) {
+			} else {
+				ret += (keyName + "=\"" + argMap.get(keyName)) + "\" ";
+			}
+		}
+		return ret;
 	}
 
 	private HashMap tagArgsToMap(String args) {
 		HashMap argMap = new HashMap();
-		Matcher m = Pattern.compile("(?si)(\\w+)[\\s=]+(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4))").matcher("").reset(args);
+		Matcher m = Pattern.compile("(?si)(\\w+)[\\s=]+(((\\x22|\\x27|#)((?!\\4).|\\4{2})*\\4))").matcher("").reset(safe(args));
 		String ret ="";
 		while (m.find()) {
-			argMap.put(m.group(1), m.group(2).substring(1, m.group(2).length()-1));
+			argMap.put(m.group(1).toLowerCase(), m.group(2).substring(1, m.group(2).length() - 1));
 		}
 		return argMap;
 	}

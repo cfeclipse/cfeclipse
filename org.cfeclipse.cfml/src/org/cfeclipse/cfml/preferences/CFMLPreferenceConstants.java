@@ -22,6 +22,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	
 	/** Preference key identifier for path to the directory that contains your snippets */
 	public static final String P_SNIPPETS_PATH 			= "snippetPath";
+	public static final String P_DICTIONARIES_PATH = "dictionariesPath";
 	
 	/** Preference key identifier for the project to use to store TemplateProkects */
 	public static final String P_TEMPLATE_PROJECT_PATH 	= "templateProjectsPath";
@@ -48,7 +49,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
     /**
 	 * this is public because the browser uses it on errors 
 	 */
-	public static final String DEFAULT_PROJECT_URL = "http://www.cfeclipse.org";
+	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
 	
 	/** Preference key identifier for the help url. */
 	public static final String P_DEFAULT_HELP_URL 				= "_helpURL";
@@ -75,12 +76,14 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	
 	public static void setDefaults(IPreferenceStore store) { 
 		store.setDefault(P_SNIPPETS_PATH,CFMLPlugin.getDefault().getStateLocation().toString()+"/snippets");
+		String dicts = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
+		store.setDefault(P_DICTIONARIES_PATH, dicts);
 		store.setDefault(P_PROJECT_URL,DEFAULT_PROJECT_URL);
 		store.setDefault(P_DEFAULT_HELP_URL,DEFAULT_HELP_URL);
 		store.setDefault(P_HELP_URL_USE_EXTERNAL_BROWSER,false);
 		store.setDefault(P_TABBED_BROWSER,false);
 		store.setDefault(P_IMAGE_TOOLTIPS,true);
-		store.setDefault(P_CFML_DICTIONARY,"cfml.xml");
+		store.setDefault(P_CFML_DICTIONARY, P_CFML_DICTIONARY_DEFAULT);
 		store.setDefault(P_TEMPLATE_PROJECT_PATH, "");
 		
 	}

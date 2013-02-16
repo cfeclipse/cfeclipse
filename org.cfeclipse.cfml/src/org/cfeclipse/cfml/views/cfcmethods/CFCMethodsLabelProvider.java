@@ -33,7 +33,7 @@ import org.eclipse.swt.graphics.Image;
  */
 public class CFCMethodsLabelProvider  extends LabelProvider implements ITableLabelProvider {
 	public String getColumnText(Object obj, int index) {
-	    CFCMethodViewItem item = (CFCMethodViewItem)obj;
+		MethodViewItem item = (MethodViewItem) obj;
 		return item.toString();
 
 	}
@@ -42,7 +42,7 @@ public class CFCMethodsLabelProvider  extends LabelProvider implements ITableLab
 	}
 	public Image getImage(Object obj) {
 	    try {
-		    CFCMethodViewItem item = (CFCMethodViewItem)obj;
+			MethodViewItem item = (MethodViewItem) obj;
 		    
 		    if (item.getAccess().toLowerCase().equals("remote")) {
 		        return CFPluginImages.get(CFPluginImages.ICON_METHOD_REMOTE);

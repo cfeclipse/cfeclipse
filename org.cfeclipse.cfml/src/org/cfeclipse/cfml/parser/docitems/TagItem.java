@@ -186,7 +186,10 @@ public class TagItem extends DocItem {
 	 * @throws NullPointerException
 	 */
 	public boolean hasClosingTag() throws NullPointerException 
-	{
+ {
+		if (itemName.equals("ScriptItem") || itemName.equals("FunctionInfo")) {
+			return false;
+		}
 		Tag tag = syntax.getTag(itemName);
 		if(tag == null)
 		{
@@ -208,6 +211,9 @@ public class TagItem extends DocItem {
 	 * Indicates whether this tag can be either single or closed
 	 */
 	public boolean isHybrid() {
+		if (itemName.equals("ScriptItem")) {
+			return false;
+		}
 	    Tag tag = syntax.getTag(itemName);
 		if(tag == null)
 		{

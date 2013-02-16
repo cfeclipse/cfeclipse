@@ -32,7 +32,6 @@ import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.cfeclipse.cfml.snippets.preferences.CFMLPreferenceConstants;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -66,7 +65,7 @@ public class ResourceUtils {
 	 * @return The list of suggestions based upon the resource & pathSoFar
 	 *         supplied
 	 */
-	public static Set getIResourceSurroundingResources(IResource res,
+	public static Set<IResource> getIResourceSurroundingResources(IResource res,
 			String pathSoFar) {
 		//
 		// How this works:
@@ -101,7 +100,7 @@ public class ResourceUtils {
 				.append(pathSoFar);
 		IFolder folderRes = res.getWorkspace().getRoot().getFolder(folder);
 
-		HashSet suggestions = new HashSet();
+		HashSet<IResource> suggestions = new HashSet<IResource>();
 		if (folderRes == null) {
 		} else {
 			try {

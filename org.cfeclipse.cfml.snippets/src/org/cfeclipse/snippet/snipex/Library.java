@@ -1,21 +1,12 @@
 package org.cfeclipse.snippet.snipex;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.net.URL;
 import java.net.MalformedURLException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cfeclipse.cfml.snippets.net.ClientHttpRequest;
-import org.cfeclipse.cfml.snippets.util.ResourceUtils;
 
 /**
  * Library model object - used to store library properties.
@@ -26,8 +17,8 @@ import org.cfeclipse.cfml.snippets.util.ResourceUtils;
 public class Library {
 	private String id;
 	private String name;
-	private Vector snippets;
-	private Vector libraries;
+	private Vector<Snippet> snippets;
+	private Vector<Library> libraries;
 	private Date createdAt;
 	private String description;
 	private URL source;
@@ -52,13 +43,13 @@ public class Library {
 	public URL getSource() { return source; }
 	public URL getDetailsAddress() { return detailsAddress; }
 	public URL getProposalAddress() { return proposalAddress; }
-	public Vector getSnippets() { 
+	public Vector<Snippet> getSnippets() { 
 		if(snippets == null) {
 			 load(true);
 		}
 		return snippets; 
 	}
-	public Vector getLibraries() {
+	public Vector<Library> getLibraries() {
 		if(libraries == null) {
 			 load(true);
 		}
@@ -68,8 +59,8 @@ public class Library {
 	/** Mutator Methods **/
 	public void setID(String i) { id = i; }
 	public void setName(String n) { name = n; }
-	public void setSnippets(Vector s) { snippets = s; }
-	public void setLibraries(Vector l) { libraries = l; }
+	public void setSnippets(Vector<Snippet> s) { snippets = s; }
+	public void setLibraries(Vector<Library> l) { libraries = l; }
 	public void setCreatedAt(Date d) { createdAt = d; }
 	public void setDescription(String d) { description = d; }
 	public void setSource(URL url) { source = url; }
@@ -92,8 +83,8 @@ public class Library {
 	
 	/** Specialized Methods **/
 	private void load(boolean fullReload) {
-		setSnippets( new Vector() );
-		setLibraries( new Vector() );
+		setSnippets( new Vector<Snippet>() );
+		setLibraries( new Vector<Library>() );
 		new LibraryHandler( this, fullReload );
 	}
 

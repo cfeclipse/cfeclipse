@@ -69,9 +69,7 @@
         Provides decoration for resources that have a URL link used by the internal and external browsers
         </description>
         <enablement>
-           <and>
               <objectClass name="org.eclipse.core.resources.IResource"/>
-           </and>
         </enablement>
    </decorator>
 	<!--
@@ -88,7 +86,7 @@
       </perspective>
    </extension>
    
-	<extension point="org.eclipse.core.runtime.contentTypes">
+	<extension point="org.eclipse.core.contenttype.contentTypes">
 		<content-type
 			id="org.cfeclipse.cfml.cfsource"
 			base-type="org.eclipse.core.runtime.text"
@@ -552,6 +550,16 @@
                label="%action.label.GetTagHelp"
                menubarPath="org.cfeclipse.cfml.menus.source/output"
                tooltip="%action.tooltip.GetTagHelp">
+         </action>
+          <!-- Lame-ass jump to function by Denny aged 33 -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               definitionId="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               icon="icons/ctool16/help.gif"
+               id="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               label="%action.label.JumpToFunction"
+               menubarPath="org.cfeclipse.cfml.menus.source/output"
+               tooltip="%action.tooltip.JumpToFunction">
          </action>
           <!-- Launch Scribble Pad -->
          <action
@@ -1210,6 +1218,13 @@
 			categoryId="org.cfeclipse.cfml.commandCategory"
 			id="org.cfeclipse.cfml.editors.actions.GetHelp"/>
 		
+		<!-- Jump to function (only within same page ATM) -->
+		<command
+			name="%command.name.JumpToFunction"
+			description="%command.description.JumpToFunction"
+			categoryId="org.cfeclipse.cfml.commandCategory"
+			id="org.cfeclipse.cfml.editors.actions.JumpToFunction"/>
+		
 		<!-- Fire up the scribble pad -->
 		<command
 			name="%command.name.25"
@@ -1300,6 +1315,49 @@
         	description="%action.tooltip.ExpandAll" 
         	categoryId="org.cfeclipse.cfml.commandCategory" 
         	id="org.eclipse.ui.edit.text.folding.expand_all"
+        	>
+      	</command>
+      	<!-- added to get rid of warnings in plugin.xml -->
+        <command 
+        	name="Fold Selection"
+        	description="Folds selected text" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.codefolding.FoldSelection"
+        	>
+      	</command>
+        <command 
+        	name="Unfold Selection"
+        	description="Folds selected text" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.codefolding.UnFoldSelection"
+        	>
+      	</command>
+        <command 
+        	name="Expand Matching Markers"
+        	description="Expand Matching Markers" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.codefolding.ExpandMatchingMarkers"
+        	>
+      	</command>
+        <command 
+        	name="Collapse Matching Markers"
+        	description="Collapse Matching Markers" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.codefolding.CollapseMatchingMarkers"
+        	>
+      	</command>
+        <command 
+        	name="Locate in Filesystem"
+        	description="Locate in filesystem" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction"
+        	>
+      	</command>
+        <command 
+        	name="Locate in Tree"
+        	description="Locate in Tree" 
+        	categoryId="org.cfeclipse.cfml.commandCategory" 
+        	id="org.cfeclipse.cfml.editors.actions.LocateInTreeAction"
         	>
       	</command>
 		
@@ -1439,6 +1497,12 @@
 			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		
+		<!-- Jump to function -->
+		<key sequence="F3"
+			commandId="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		
 		<!-- Insert Break -->
 		<key sequence="M1+Enter"
 			commandId="org.cfeclipse.cfml.editors.actions.InsertBR"
@@ -1484,7 +1548,7 @@
 		<!-- Lower Case -->
 		<key sequence="M1+M2+L L"
 			commandId="org.cfeclipse.cfml.editors.actions.ToLowerCase"
-			contextId="org.cfeclipse.cfml.cfmledif itorcontext"
+			contextId="org.cfeclipse.cfml.cfmleditorcontext"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 
 		<!-- Upper Case -->
@@ -1745,6 +1809,13 @@
             id="org.cfeclipse.cfml.preferences.AnnotationPreferencePage"/>
 
       <page
+            class="org.cfeclipse.cfml.preferences.DictionariesPreferencePage"
+            category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
+            name="Dictionaries"
+            id="org.cfeclipse.cfml.preferences.DictionariesPreferencePage">
+      </page>
+
+      <page
             class="org.cfeclipse.cfml.preferences.TaskTagPreferencePage"
             category="org.cfeclipse.cfml.preferences.EditorPreferencePage"
             name="Task Tags"
@@ -1763,7 +1834,7 @@
             category="org.cfeclipse.cfml.preferences.CodeStylePreferencePage"
             class="org.cfeclipse.cfml.preferences.CodeFormatterPreferencePage"
             id="org.cfeclipse.cfml.preferences.FormattingPreferencePage">
-            <keywordReference id="org.cfeclipse.cfml.editors.formatters"/>
+            <keywordReference id="org.cfeclipse.cfml.formatter"/>
       </page>
 
       <page
@@ -1771,7 +1842,7 @@
             category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
             class="org.cfeclipse.cfml.preferences.FtpConnectionDialog"
             id="org.cfeclipse.cfml.preferences.FtpConnectionDialog">
-            <keywordReference id="org.cfeclipse.cfml.editors.connections"/>
+            <keywordReference id="org.cfeclipse.cfml.connections"/>
       </page>
 
       <page
@@ -2046,21 +2117,21 @@
    </extension>
    
    <extension point="org.eclipse.core.resources.markers"
-		id="parserProblemMarker"
-		name="CFEclipse Parser problem">
-		<super type="org.eclipse.core.resources.problemmarker"/>
-		<persistent value="true"/>
+   		id="parserProblemMarker"
+   		name="CFEclipse parser problem">
+		<super type="org.eclipse.core.resources.problemmarker"/> 
+      	<super type="org.eclipse.core.resources.textmarker"/> 
+      <persistent value="true"/>
 	</extension>
       
    <extension point="org.eclipse.core.resources.markers"
 		id="parserWarningMarker"
 		name="CFEclipse parser warning">
 		<super type="org.eclipse.core.resources.problemmarker"/>
-		<persistent value="true"/>
 	</extension>
 
 	<extension point="org.eclipse.core.resources.markers"
-		id="org.cfeclipse.cfml.occurrencemarker"
+		id="occurrencemarker"
 		name="%occurrencemarker.label">
 		<super type="org.eclipse.core.resources.textmarker"/>
       <super type="org.eclipse.core.resources.bookmark"/>
@@ -2070,20 +2141,22 @@
 	</extension>
 
 	<extension point="org.eclipse.core.resources.markers"
-		id="org.cfeclipse.cfml.tagbeginendmarker"
+		id="tagbeginendmarker"
 		name="Mark Matching Tags">
 		<super type="org.eclipse.core.resources.textmarker"/>
 		<persistent value="true"/>
 	</extension>
 
     <extension point="org.eclipse.ui.editors.annotationTypes">
-    	<type name="org.cfeclipse.cfml.parserProblemAnnotation"
-    		markerType="org.cfeclipse.cfml.parserProblemMarker"/>
-
+		<type
+         name="org.cfeclipse.cfml.parserProblemMarkerAnnotation"
+         markerType="org.cfeclipse.cfml.parserProblemMarker"
+         markerSeverity="2" />
+         
     	<type name="org.cfeclipse.cfml.parserWarningAnnotation"
     		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
 
-    	<type id="org.cfeclipse.cfml.occurrenceAnnotation" name="Occurrence Marker"
+    	<type name="org.cfeclipse.cfml.occurrenceAnnotation"
     		super="org.eclipse.ui.workbench.texteditor.info"
     		markerType="org.cfeclipse.cfml.occurrencemarker"/>
  
@@ -2097,7 +2170,7 @@
 
 	<extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
 		<specification
-			annotationType="org.cfeclipse.cfml.parserProblemAnnotation"
+			annotationType="org.cfeclipse.cfml.parserProblemMarkerAnnotation"
 			verticalRulerPreferenceKey="parserproblem.rulers.vertical"
 			textPreferenceKey="parserproblem.text"
 			colorPreferenceKey="parserproblem.color"
@@ -2202,7 +2275,7 @@
          <viewShortcut
                id="org.eclipse.ui.navigator.ProjectExplorer">
          </viewShortcut>
-         <!-- this view doesn't exist? Holdover?
+         <!--
          <viewShortcut
                id="org.eclipse.ui.navigator.CommonNavigator">
          </viewShortcut>
@@ -2226,13 +2299,7 @@
 	  		<actionSet id="org.cfeclipse.cfml.actionset" />		
 	  </perspectiveExtension>
 
-
   </extension>
-  
-  
-  
-  
-  
    <extension
          point="org.eclipse.ui.contexts">
       <context
@@ -2258,7 +2325,23 @@
                value="plugin_customization.ini"/>
          <property
                name="aboutText"
-               value="CFEclipse&#x0A;&#x0A;Version: 1.4.4&#x0A;&#x0A;(c)  Copyright (c) 2004-2011 The CFEclipse Project &#x0A;Visit http://www.cfeclipse.org"/>
+               value="CFEclipse&#x0A;&#x0A;&#x0A;(c)  Copyright (c) 2004-2012 The CFEclipse Project &#x0A;Visit http://www.cfeclipse.org"/>
+         <property
+               name="appName"
+               value="CFEclipse">
+         </property>
+		  <property
+				name="applicationXMI"
+				value="org.eclipse.platform/LegacyIDE.e4xmi">
+		  </property>
+		  <property
+				name="cssTheme"
+				value="org.eclipse.e4.ui.css.theme.e4_default">
+		  </property>
+		  <property
+				name="applicationCSSResources"
+          		value="platform:/plugin/org.eclipse.platform/images/">
+		  </property>
       </product>
    </extension>
    <extension
@@ -2561,6 +2644,16 @@
                toolbarPath="BasicCFEditorCommand"
                tooltip="%action.tooltip.GetTagHelp">
          </action>
+          <!-- Lame-ass jump to function by Denny Valliant age 33 -->
+         <action
+               class="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               definitionId="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               icon="icons/ctool16/help.gif"
+               id="org.cfeclipse.cfml.editors.actions.JumpToFunction"
+               label="%action.label.JumpToFunction"
+               toolbarPath="BasicCFEditorCommand"
+               tooltip="%action.tooltip.JumpToFunction">
+         </action>
           <!-- Launch Scribble Pad -->
          <action
                class="org.cfeclipse.cfml.editors.actions.LoadScribblePadAction"
@@ -2659,6 +2752,12 @@
       <keyword
             label="%preferenceKeywords.template"
             id="org.cfeclipse.cfml.template"/>      
+      <keyword
+            label="Connections"
+            id="org.cfeclipse.cfml.connections"/>      
+      <keyword
+            label="Text Selection"
+            id="org.cfeclipse.cfml.ui.TextSelection"/>      
 	</extension>
    
    <extension

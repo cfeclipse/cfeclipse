@@ -24,7 +24,6 @@
  */
 package org.cfeclipse.cfml.frameworks;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -112,11 +111,11 @@ public class FrameworkManager {
 	
 	
 	public FrameworkType[] getAllFrameworks(){
-		ArrayList aFrameworks = new ArrayList();
+		ArrayList<FrameworkType> aFrameworks = new ArrayList<FrameworkType>();
 		
 		Element rootElement = this.frameworksDoc.getRootElement();
-		List frameworkNodes = rootElement.getChildren();
-		for (Iterator iter = frameworkNodes.iterator(); iter.hasNext();) {
+		List<?> frameworkNodes = rootElement.getChildren();
+		for (Iterator<?> iter = frameworkNodes.iterator(); iter.hasNext();) {
 			Element element = (Element) iter.next();
 			if(element.getName().equalsIgnoreCase("framework")){
 				FrameworkType type = new FrameworkType(element.getAttributeValue("id"), element.getAttributeValue("name"));
@@ -183,9 +182,9 @@ public class FrameworkManager {
 		
 		try {
 			x = XPath.newInstance("//framework/files/file");
-			List list = x.selectNodes(frameworksDoc);
+			List<?> list = x.selectNodes(frameworksDoc);
 			
-			for (Iterator iter = list.iterator(); iter.hasNext();) {
+			for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 				Element element = (Element) iter.next();
 				if(resource.getName().equalsIgnoreCase(element.getText())){
 					//Get the id of the parent
@@ -225,13 +224,13 @@ public class FrameworkManager {
 
 	
 	public IResource[] getDefaultFrameworkDirectories(IProject project){
-		ArrayList resources = new ArrayList();
+		ArrayList<IResource> resources = new ArrayList<IResource>();
 		
 		try {
 			XPath x = XPath.newInstance("/frameworks/config/folders/folder");
-			List list = x.selectNodes(frameworksDoc);
+			List<?> list = x.selectNodes(frameworksDoc);
 
-			for (Iterator iter = list.iterator(); iter.hasNext();) {
+			for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 				Element configFolder = (Element) iter.next();
 				
 				IResource resource = project.findMember(configFolder.getText());

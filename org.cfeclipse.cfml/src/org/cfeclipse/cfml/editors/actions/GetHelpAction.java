@@ -31,16 +31,13 @@ import org.cfeclipse.cfml.editors.partitioner.PartitionHelper;
 import org.cfeclipse.cfml.preferences.BrowserPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
+import org.cfeclipse.cfml.util.CFDocUtils;
 import org.cfeclipse.cfml.views.browser.BrowserView;
-import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorActionDelegate;
@@ -111,6 +108,11 @@ public class GetHelpAction implements IWorkbenchWindowActionDelegate, IEditorAct
 			} else {
 				PartitionHelper ph = new PartitionHelper((ICFDocument) doc, sel.getOffset());
 				query = ph.getTagName();
+			}
+			if (query == null) {
+				editor.getSelectionProvider().setSelection(CFDocUtils.selectWord(doc, sel.getOffset()));
+				sel = (ITextSelection) editor.getSelectionProvider().getSelection();
+				query = sel.getText();
 			}
 
 			String theFullURL = urldest + query;

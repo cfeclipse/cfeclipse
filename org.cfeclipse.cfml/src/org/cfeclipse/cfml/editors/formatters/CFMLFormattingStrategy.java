@@ -11,9 +11,9 @@ import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 import net.htmlparser.jericho.Tag;
 
-import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.formatter.ContextBasedFormattingStrategy;
@@ -202,7 +202,8 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		formatprefs.setFormatSQL(prefs.formatSQL());
 		formatprefs.setIgnoredTags(ignoredTags);
 		formatprefs.setCloseTagsList(prefs.getCloseTagsList());
-		formatprefs.setDictionaryDir(CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary");
+		CFMLPropertyManager props = new CFMLPropertyManager();
+		formatprefs.setDictionaryDir(props.getDictionaryDir());
 		formatprefs.setCFDictionary("ColdFusion9");
 
 		fFormatter = new Formatter(formatprefs);

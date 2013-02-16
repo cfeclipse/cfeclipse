@@ -29,32 +29,22 @@ import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cfeclipse.cfml.frameworks.Activator;
-import org.cfeclipse.cfml.frameworks.views.TreeNode;
 import org.cfeclipse.cfml.mappings.MappedPathException;
 import org.cfeclipse.cfml.mappings.MappingManager;
-import org.cfeclipse.cfml.util.ResourceUtils;
-import org.eclipse.core.internal.resources.Project;
 import org.eclipse.core.internal.resources.Resource;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.ide.ResourceUtil;
-import org.eclipse.ui.part.FileEditorInput;
 import org.jdom.Element;
 
 
+@SuppressWarnings("restriction")
 public class GoToFile extends BaseAction implements IBaseAction{
 	
 	private Log logger = LogFactory.getLog(GoToFile.class);
@@ -103,6 +93,7 @@ public class GoToFile extends BaseAction implements IBaseAction{
 	/**
 	 * 
 	 */
+	@SuppressWarnings("rawtypes")
 	private void openFile(IFile file, int lineNumber) {
 		IWorkbench wb = PlatformUI.getWorkbench();
 		IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
@@ -110,7 +101,7 @@ public class GoToFile extends BaseAction implements IBaseAction{
 		
 		  
 		try {
-			HashMap map = new HashMap();
+			HashMap<String, Comparable> map = new HashMap<String, Comparable>();
 			   map.put(IMarker.LINE_NUMBER, new Integer(lineNumber));
 			   map.put(IDE.EDITOR_ID_ATTR, IDE.getDefaultEditor(file).getId());  
 			 IMarker marker = file.createMarker(IMarker.TEXT);

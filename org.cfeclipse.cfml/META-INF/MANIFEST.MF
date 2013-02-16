@@ -6,7 +6,6 @@ Bundle-Version: 1.4.5.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ClassPath: cfml.jar,
- lib/antlr-runtime-3.1.3.jar,
  lib/log4j-1.2.9.jar,
  lib/jdom.jar,
  lib/jaxen-core.jar,
@@ -29,7 +28,8 @@ Bundle-ClassPath: cfml.jar,
  lib/commons-collections-3.2.jar,
  lib/commons-vfs-2.0-SNAPSHOT.jar,
  lib/org.eclipse.nebula.widgets.gallery.jar,
- lib/org.eclipse.nebula.widgets.pshelf.jar
+ lib/org.eclipse.nebula.widgets.pshelf.jar,
+ lib/antlr-3.4-complete.jar
 Bundle-Activator: org.cfeclipse.cfml.CFMLPlugin
 Bundle-Vendor: CFEclipse Project
 Bundle-Localization: plugin

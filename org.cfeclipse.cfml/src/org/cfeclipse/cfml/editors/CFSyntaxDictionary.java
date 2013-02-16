@@ -80,6 +80,7 @@ public class CFSyntaxDictionary extends SyntaxDictionary implements ISyntaxDicti
 		scriptkeywords.add("component");
 		scriptkeywords.add("persistent");
 		scriptkeywords.add("property");
+		scriptkeywords.add("new");
 		scriptkeywords.add("for");
 		scriptkeywords.add("if");
 		scriptkeywords.add("else");

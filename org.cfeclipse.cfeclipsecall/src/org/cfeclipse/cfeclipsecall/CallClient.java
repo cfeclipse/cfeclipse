@@ -1,7 +1,6 @@
 package org.cfeclipse.cfeclipsecall;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -49,18 +48,21 @@ public class CallClient {
 		return properties;
 	}
 
-	public static void doOpen(String propertyFile, String socketNumber, String eclipse, String call) {
+	public static void doOpen(String socketNumber, String eclipse, String call) {
 		Socket server = null;
 		int sockno = DEFAULT_SOCKET;
-		File props = new File(propertyFile);
+		File props = new File("properties.cfeclipsecall");
 		System.out.println("Trying to open: " + call);
+		if(!props.exists()) {
+			props = new File("CFEclipseCall.app/properties.cfeclipsecall");
+		}
 		if (props.exists()) {
 			Properties properties = getProperties(props.getPath());
-			eclipse = properties.getProperty("cfeclipsecall.call");
-			socketNumber = properties.getProperty("cfeclipsecall.socket");
-			System.out.println("loaded properties");
+			eclipse = properties.getProperty(ENV_CALL);
+			socketNumber = properties.getProperty(ENV_SOCKET);
+			System.out.println("loaded properties from:" +props.getPath());
 		} else {
-			System.out.println("No properties.cfeclipsecall found!");
+			System.out.println("No properties.cfeclipsecall found! (" +props.getPath() + ")");
 		}
 		if (socketNumber != null) {
 			sockno = Integer.parseInt(socketNumber);
@@ -201,14 +203,19 @@ public class CallClient {
 	}
 
 	public static void main(String[] args) {
-		String propertyFile;
+
 		if (System.getProperty("os.name").indexOf("Mac") != -1) {
 			MacOsHandler.initializeMacOsHandler();
 		}
 
 		if (args.length == 0) {
-			System.out.println("use -usage argument for cfeclipsecall options");
+			System.out.println("use -usage argument for cfeclipsecall options, or -config to create configuration file");
+		} else if (args.length == 1 && args[0].equals("-config")) {
+			CFEclipseCallPropertyEditor editor = new CFEclipseCallPropertyEditor("properties.cfeclipsecall");
+			editor.setVisible(true);
 		} else if (args.length == 1 && args[0].equals("-usage")) {
+			System.out.println("Open property editor with:");
+			System.out.println("cfeclipsecall -config");
 			System.out.println("usage: ");
 			System.out.println("cfeclipsecall <filename> [-G<lineno>[,<col>-<col>]] [-S<socketno>] [-E<eclipse.exe>]");
 			System.out.println("example:");
@@ -217,16 +224,8 @@ public class CallClient {
 			System.out.println("only show myfile without marking: ");
 			System.out.println("> cfeclipsecall D:\\mydir\\myfile");
 		} else {
-			if (args[0].equals("-propertyfile")) {
-				System.out.println("using property file: " + args[1]);
-				String[] parsedArgs = parseArgs(args);
-				propertyFile = args[1];
-				doOpen(parsedArgs[0], parsedArgs[1], parsedArgs[2], parsedArgs[3]);
-			} else {
-				propertyFile = "properties.cfeclipsecall";
-				String[] parsedArgs = parseArgs(args);
-				doOpen(propertyFile, parsedArgs[0], parsedArgs[1], parsedArgs[2]);
-			}
+			String[] parsedArgs = parseArgs(args);
+			doOpen(parsedArgs[0], parsedArgs[1], parsedArgs[2]);
 		}
 	}
 }

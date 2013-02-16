@@ -152,26 +152,33 @@ public class OutlineLabelProvider extends LabelProvider {
 			//TODO this icon should be something else at some point
 			return CFPluginImages.get(CFPluginImages.ICON_TOOLS);
 		}
-		else if(element instanceof SimpleNode)
+ else if (element instanceof ScriptItem)
 		{
-		    if(element instanceof ASTFunctionDeclaration)
+			if (((ScriptItem) element).getName().endsWith("ASTFunctionDeclaration"))
 		    {
 		        return CFPluginImages.get(CFPluginImages.ICON_FUNC);
 		    }
-			return CFPluginImages.get(CFPluginImages.ICON_TOOLS);
-		}
-		else if(element instanceof ScriptItem)
-		{
-		    if(((ScriptItem) element).getName().endsWith("ASTFunctionDeclaration"))
+			if (((ScriptItem) element).getName().endsWith("ASTFunctionParameter"))
 		    {
-		        return CFPluginImages.get(CFPluginImages.ICON_FUNC);
+				return CFPluginImages.get(CFPluginImages.ICON_PARAM);
 		    }
+			if (((ScriptItem) element).getName().endsWith("ASTVarDeclaration")) {
+				return CFPluginImages.get(CFPluginImages.ICON_ADD);
+			}
+			if (((ScriptItem) element).getName().endsWith("ASTAssignment")) {
+				return CFPluginImages.get(CFPluginImages.ICON_ADD);
+			}
+			if (((ScriptItem) element).getName().endsWith("ASTPropertyStatement")) {
+				return CFPluginImages.get(CFPluginImages.ICON_METHOD_PUBLIC);
+			}
+			if (((ScriptItem) element).getName().endsWith("cfcomponent")) {
+				return CFPluginImages.get(CFPluginImages.ICON_CLASS);
+			}
 	        return CFPluginImages.get(CFPluginImages.ICON_TOOLS);
 		}
 		
 		return CFPluginImages.get(CFPluginImages.ICON_ALERT);
 	}
-
 	
 	/**
 	 * Get the text display for element

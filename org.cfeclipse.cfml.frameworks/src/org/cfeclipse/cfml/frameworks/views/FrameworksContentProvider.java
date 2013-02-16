@@ -58,7 +58,7 @@ public class FrameworksContentProvider implements IStructuredContentProvider,
 		ITreeContentProvider {
 
 	private MGCoreFilesListener savelistener = new MGCoreFilesListener();
-	private HashMap xmlDocments = new HashMap();
+	private HashMap<String, Document> xmlDocments = new HashMap<String, Document>();
 	private Log logger = LogFactory.getLog(FrameworksContentProvider.class);
 	private IViewSite viewSite;
 	private IProject project;
@@ -165,12 +165,12 @@ public class FrameworksContentProvider implements IStructuredContentProvider,
 		return false;
 	}
 
-	private void clearProblemMarkers(ArrayList frameworkFiles) {
-		final ArrayList ffiles = frameworkFiles;
+	private void clearProblemMarkers(ArrayList<?> frameworkFiles) {
+		final ArrayList<?> ffiles = frameworkFiles;
 		Job job = new Job("Make Files") {
 			public IStatus run(IProgressMonitor monitor) {
 				try {
-					for (Iterator iter = ffiles.iterator(); iter.hasNext();) {
+					for (Iterator<?> iter = ffiles.iterator(); iter.hasNext();) {
 						FrameworkFile ffile = (FrameworkFile) iter.next();
 						monitor.beginTask("Create some files", 100);
 						ffile.getFile()
@@ -210,7 +210,7 @@ public class FrameworksContentProvider implements IStructuredContentProvider,
 		// logger.debug("Starting the parse of the project");
 		ProjectParser pp = new ProjectParser(project);
 
-		ArrayList frameworkFiles = pp.getFrameworkFiles();
+		ArrayList<?> frameworkFiles = pp.getFrameworkFiles();
 		clearProblemMarkers(frameworkFiles);
 		// Quickly check if there are no folders or files to parse
 
@@ -234,7 +234,7 @@ public class FrameworksContentProvider implements IStructuredContentProvider,
 		// loop through the files that need to be parsed, we shall create a root
 		// node for each and then parse the actual document
 
-		for (Iterator iter = frameworkFiles.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = frameworkFiles.iterator(); iter.hasNext();) {
 			FrameworkFile ffile = (FrameworkFile) iter.next();
 
 			TreeParentNode ffNode = new TreeParentNode(ffile.getFile()

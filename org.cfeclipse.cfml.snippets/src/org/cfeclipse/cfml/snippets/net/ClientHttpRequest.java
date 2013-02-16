@@ -23,7 +23,7 @@ import java.util.Iterator;
 public class ClientHttpRequest {
   URLConnection connection;
   OutputStream os = null;
-  Map cookies = new HashMap();
+  Map<String, String> cookies = new HashMap<String, String>();
 
   protected void connect() throws IOException {
     if (os == null) os = connection.getOutputStream();
@@ -100,7 +100,7 @@ public class ClientHttpRequest {
   private void postCookies() {
     StringBuffer cookieList = new StringBuffer();
 
-    for (Iterator i = cookies.entrySet().iterator(); i.hasNext();) {
+    for (Iterator<?> i = cookies.entrySet().iterator(); i.hasNext();) {
       Map.Entry entry = (Map.Entry)(i.next());
       cookieList.append(entry.getKey().toString() + "=" + entry.getValue());
 
@@ -128,7 +128,7 @@ public class ClientHttpRequest {
    * @param cookies the cookie "name-to-value" map
    * @throws IOException
    */
-  public void setCookies(Map cookies) throws IOException {
+  public void setCookies(Map<? extends String, ? extends String> cookies) throws IOException {
     if (cookies == null) return;
     this.cookies.putAll(cookies);
   }
@@ -168,7 +168,6 @@ public class ClientHttpRequest {
   private static void pipe(InputStream in, OutputStream out) throws IOException {
     byte[] buf = new byte[500000];
     int nread;
-    int navailable;
     int total = 0;
     synchronized (in) {
       while((nread = in.read(buf, 0, buf.length)) >= 0) {
@@ -195,7 +194,7 @@ public class ClientHttpRequest {
     write('"');
     newline();
     write("Content-Type: ");
-    String type = connection.guessContentTypeFromName(filename);
+    String type = URLConnection.guessContentTypeFromName(filename);
     if (type == null) type = "application/octet-stream";
     writeln(type);
     newline();
@@ -232,9 +231,9 @@ public class ClientHttpRequest {
    * @param parameters "name-to-value" map of parameters; if a value is a file, the file is uploaded, otherwise it is stringified and sent in the request
    * @throws IOException
    */
-  public void setParameters(Map parameters) throws IOException {
+  public void setParameters(Map<?, ?> parameters) throws IOException {
     if (parameters == null) return;
-    for (Iterator i = parameters.entrySet().iterator(); i.hasNext();) {
+    for (Iterator<?> i = parameters.entrySet().iterator(); i.hasNext();) {
       Map.Entry entry = (Map.Entry)i.next();
       setParameter(entry.getKey().toString(), entry.getValue());
     }
@@ -271,7 +270,7 @@ public class ClientHttpRequest {
    * @throws IOException
    * @see setParameters
    */
-  public InputStream post(Map parameters) throws IOException {
+  public InputStream post(Map<?, ?> parameters) throws IOException {
     setParameters(parameters);
     return post();
   }
@@ -297,7 +296,7 @@ public class ClientHttpRequest {
    * @see setParameters
    * @see setCookies
    */
-  public InputStream post(Map cookies, Map parameters) throws IOException {
+  public InputStream post(Map<? extends String, ? extends String> cookies, Map<?, ?> parameters) throws IOException {
     setCookies(cookies);
     setParameters(parameters);
     return post();
@@ -389,7 +388,7 @@ public class ClientHttpRequest {
    * @throws IOException
    * @see setParameters
    */
-  public static InputStream post(URL url, Map parameters) throws IOException {
+  public static InputStream post(URL url, Map<?, ?> parameters) throws IOException {
     return new ClientHttpRequest(url).post(parameters);
   }
 
@@ -413,7 +412,7 @@ public class ClientHttpRequest {
    * @see setCookies
    * @see setParameters
    */
-  public static InputStream post(URL url, Map cookies, Map parameters) throws IOException {
+  public static InputStream post(URL url, Map<? extends String, ? extends String> cookies, Map<?, ?> parameters) throws IOException {
     return new ClientHttpRequest(url).post(cookies, parameters);
   }
 

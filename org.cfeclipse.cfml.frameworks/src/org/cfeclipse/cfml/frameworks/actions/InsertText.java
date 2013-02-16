@@ -1,6 +1,5 @@
 package org.cfeclipse.cfml.frameworks.actions;
 
-import org.cfeclipse.cfml.frameworks.util.SnippetParser;
 import org.cfeclipse.cfml.frameworks.views.TreeNode;
 import org.cfeclipse.cfml.views.snips.SnipSmartDialog;
 import org.eclipse.jface.action.IAction;

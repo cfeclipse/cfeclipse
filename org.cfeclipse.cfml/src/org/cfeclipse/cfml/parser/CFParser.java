@@ -25,8 +25,11 @@
 
 package org.cfeclipse.cfml.parser;
 
+import java.io.CharArrayReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,6 +38,13 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.antlr.runtime.BitSet;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.IntStream;
+import org.antlr.runtime.ParserRuleReturnScope;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.Token;
+import org.antlr.runtime.tree.CommonTree;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlComment;
@@ -49,12 +59,11 @@ import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagInvokeArgument;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagProperty;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagQueryParam;
 import org.cfeclipse.cfml.parser.cfmltagitems.CfmlTagSet;
-import org.cfeclipse.cfml.parser.cfscript.Node;
-import org.cfeclipse.cfml.parser.cfscript.SimpleNode;
 import org.cfeclipse.cfml.parser.docitems.AttributeItem;
 import org.cfeclipse.cfml.parser.docitems.CfmlCustomTag;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.cfeclipse.cfml.parser.docitems.ScriptItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
@@ -64,12 +73,17 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.MarkerUtilities;
 
 import cfml.parsing.CFMLParser;
-import cfml.parsing.cfscript.ParseException;
+import cfml.parsing.cfscript.ANTLRNoCaseReaderStream;
+import cfml.parsing.cfscript.CFScriptLexer;
+import cfml.parsing.cfscript.CFScriptParser;
+import cfml.parsing.cfscript.IErrorReporter;
+import cfml.parsing.cfscript.poundSignFilterStream;
 import cfml.parsing.cfscript.script.CFScriptStatement;
 
 
@@ -273,10 +287,15 @@ public class CFParser {
 
 	private void initOrgCFParser() {
 		if (parser == null) {
-			String location = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
-			String dict = propertyManager.getCurrentDictionary(res.getProject());
-			parser = new CFMLParser(location, dict);
+			if (res == null) {
+				IEditorPart editor = CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+				String dict = propertyManager.getCurrentDictionary(((IFileEditorInput) editor.getEditorInput()).getFile().getProject());
+				parser = CFMLPlugin.newCFMLParser(dict);
+			} else {
+				String dict = propertyManager.getCurrentDictionary(res.getProject());
+				parser = CFMLPlugin.newCFMLParser(dict);
+			}
 		}
 	}
 	
@@ -372,13 +391,14 @@ public class CFParser {
 				break;
 			case USRMSG_ERROR:
 				if(this.reportErrors && this.res != null) {
-					IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
-					
-/*						parserState.addMessage(new ParseError(
-								getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
-								message
-							));
-*/					
+
+				/*
+									IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
+				  						parserState.addMessage(new ParseError(
+												getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
+												message
+											));
+				*/
 					try {					
 						//
 						// Not sure what the start & end positions are good for!
@@ -392,8 +412,7 @@ public class CFParser {
 						MarkerUtilities.setCharEnd(attrs, match.endPos);
 						marker.setAttributes(attrs);
 						marker.setAttribute(IMarker.MESSAGE,message);
-						
-
+						MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
 					}catch(CoreException excep) {
 						userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
 						}
@@ -597,17 +616,6 @@ public class CFParser {
 							"handleClosingTag", "Closing tag \'" + match.match + 
 							"\' does not match the current parent item: \'" + topItem.getName() + "\'", 
 							USRMSG_ERROR, tempMatch);
-/*
-				while(matchStack.size() > 0)
-				{
-					
-					TagMatch currMatch = (TagMatch)matchStack.pop();
-					userMessage(matchStack.size(),
-								"handleClosingTag", "Tag trace: \'" + 
-								currMatch.match + "\' at line " + 
-								getLineNumber(currMatch.startPos), USRMSG_ERROR, currMatch); 
-				}
-*/
 				return false;
 				// 
 				// So we just push the top item back onto the stack, ready to be matched again.
@@ -619,55 +627,92 @@ public class CFParser {
 	}
 	
 	private CFMLParser parser;
+	private Stack<DocItem> matchStack;
+	private CommonTokenStream tokenStream;
 
-	/**
-	 * <code>addScriptItems</code> - handles a cfscript document items (at the moment it does nothing)
-	 */
-
-	private void addScriptItems(CFScriptStatement rootElement, ParseItemMatch match, Stack matchStack) {
-		if(rootElement.getClass().getName() == "wee") {
+	private void addParseError(int lineNumber, int startPos, int endPos, String message) {
+		IMarker marker;
+		try {
+			if (this.res != null) {
+				marker = this.res.createMarker("org.cfeclipse.cfml.parserProblemMarker");
+				Map attrs = new HashMap();
+				MarkerUtilities.setLineNumber(attrs, lineNumber);
+				MarkerUtilities.setMessage(attrs, message);
+				MarkerUtilities.setCharStart(attrs, startPos);
+				MarkerUtilities.setCharEnd(attrs, endPos);
+				marker.setAttributes(attrs);
+				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+				marker.setAttribute(IMarker.MESSAGE, message);
+			}
+			// MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-			
-//		for(int childIndex = 0; childIndex < childs.size(); childIndex++){
-//			SimpleNode child = (SimpleNode) childs.get(childIndex);
-//			addDocItemToTree(match, matchStack, child);
-//			if(child.children != null) {				
-//				//addScriptItems(child.getChildNodes(), child, match, matchStack);		
-//			}		
-//		}
+
 	}
 
-	/**
-	 * <code>pruneEmptyNodes</code> - deletes cfscript AST nodes without visual representation
-	 */
+	public class StdErrReporter implements IErrorReporter {
 
-	private void pruneEmptyNodes(DocItem parent, ParseItemMatch match, Stack matchStack) {
-		Node[] childs = ((SimpleNode)parent).children;
-		int curNode = 0;
-		boolean somethingChanged = false;
-		if(childs !=null) {			
-			for(Node node:childs) {
-				if(node.jjtGetNumChildren() != 0) {
-					pruneEmptyNodes((SimpleNode)node, match, matchStack);		
-				}		
-				String curNodeType = node.getClass().getSimpleName(); 
-				if(curNodeType.endsWith("ASTBlock") || curNodeType.endsWith("ASTParameterList") || curNodeType.endsWith("ASTStrEQNode")
-						|| curNodeType.endsWith("ASTId") || curNodeType.endsWith("ASTAssignment") || curNodeType.endsWith("Literal")){
-					if(((SimpleNode)node).children != null){						
-						for(Node child:((SimpleNode)node).children) {
-							((SimpleNode)child).setParent(((SimpleNode)node).getParent());
-							node.jjtGetParent().jjtAddChild(child, node.jjtGetParent().jjtGetNumChildren());
-						}
-					}
-					((SimpleNode)node.jjtGetParent()).jjtRemoveChild(curNode);
-					pruneEmptyNodes(parent, match, matchStack);
-				}
-				curNode++;
-			}
-
+		private String getTokenName(int i) {
+			Class<CFScriptParser> c = CFScriptParser.class;
+			  for (Field f : c.getDeclaredFields()) {
+			    int mod = f.getModifiers();
+			    if (Modifier.isStatic(mod) && Modifier.isPublic(mod) && Modifier.isFinal(mod)) {
+			      try {
+			        System.out.printf("%s = %d%n", f.getName(), f.get(null));
+						if ((Integer) f.get(null) == i)
+			        return f.getName();
+			      } catch (IllegalAccessException e) {
+			        e.printStackTrace();
+			      }
+			    }
+			  }
+			  return "";
 		}
-	}	
-//	private SPLParser parser = new SPLParser(new StringReader(""));
+
+		public void reportError(String error) {
+			addParseError(0, 0, 0, "(no stracktrace): " + error);
+		}
+
+		public void reportError(RecognitionException re) {
+			int offset = getLineOffset(re.line) + re.charPositionInLine;
+			int endoffset = offset + 1;
+			String tokenText = "";
+			if (re.token != null) {
+				endoffset += re.token.getText().length();
+				if (re.token.getText() != null) {
+					tokenText = re.token.getText();
+				}
+			}
+			addParseError(re.line, offset, endoffset, re.getMessage() + " " + tokenText + " " + re.getUnexpectedType()
+					+ re.getClass().getName());
+			//re.printStackTrace();
+			// System.out.println(re.getMessage() + " line:" + re.line);
+		}
+
+		public void reportError(String[] tokenNames, RecognitionException re) {
+			System.err.println(tokenNames);
+			int offset = getLineOffset(re.line) + re.charPositionInLine;
+			int endoffset = offset + 1;
+			if (re.token != null) {
+				endoffset += +re.token.getText().length();
+			}
+			addParseError(re.line, offset, endoffset, re.getMessage());
+			// System.err.println(re.getMessage());
+		}
+
+		public void reportError(IntStream input, RecognitionException re, BitSet follow) {
+			int offset = getLineOffset(re.line) + re.charPositionInLine;
+			int endoffset = offset + 1;
+			if (re.token != null) {
+				endoffset += +re.token.getText().length();
+			}
+			addParseError(re.line, offset, endoffset, re.getMessage());
+			System.err.println(re.getMessage());
+		}
+	}
+
 	/**
 	 * <code>handleCFScriptBlock</code> - handles a CFScript'd block (at the moment it does nothing)
 	 * @param match - the match
@@ -676,14 +721,7 @@ public class CFParser {
 	
 	protected void handleCFScriptBlock(ParseItemMatch match, Stack matchStack)
 	{
-		//
-		// CFScript parsing is broken completely at the moment, so the following line
-		// just nicely quits out for us without any "unreachable code" errors or warnings.
-		//System.out..println("handleCFScriptBlock - ");
-		//if(true) return;
-		////System.out..println("CFParser::handleCFScriptBlock() - " + Util.GetTabs(matchStack) + "Parser: found a cfscript block. Ignoring for the moment");
 		String mainData = match.match;
-		//SPIKE: Added the toLowerCase() bit.
 		mainData = mainData.toLowerCase().substring("<cfscript>".length());
 		StringReader tempRdr =new StringReader(mainData);
 		CFScriptStatement rootElement = null;
@@ -691,63 +729,304 @@ public class CFParser {
 		if(!this.parseCFScript) {
 			return;
 		}
+		parseCFScript(mainData, match.getLineNumber(), match.startPos);
+		return;
+
+	}
+
+	protected void parseCFScript(String mainData) {
+		if(mainData.length() > 9) {
+			parseCFScript(mainData, 0, 0);
+		}
+	}
+
+	protected void parseCFScript(String mainData, int addLines, int addOffset) {
+		mainData = mainData.replaceFirst("<cfscript>", "");
+		CFScriptStatement rootElement = null;
+
+		if (!this.parseCFScript) {
+			return;
+		}
 		if (parser == null) {
 			initOrgCFParser();
+		} else {
+			parser.getMessages().removeAll(parser.getMessages());
+			parserState.getMessages().removeAll(parserState.getMessages());
 		}
 		
 		try {
-			rootElement = parser.parseScript(mainData);
-			if (parser.getMessages().size() > 0) {
-				Iterator i = parser.getMessages().iterator();
-				while (i.hasNext()) {
-					cfml.parsing.ParseError parseErr = (cfml.parsing.ParseError) i.next();
-					int lineNo = getLineNumber(match.getStartPos()) + parseErr.getLineNumber();
-					int startOffset = match.getStartPos() + parseErr.getDocStartOffset();
-					try {
-						startOffset = parseDoc.getLineOffset(lineNo - 1);
-					} catch (BadLocationException e) {
-					}
-					int docEnd = startOffset + parseErr.getDocEndOffset();
-					parserState.addMessage(new ParseError(lineNo, startOffset, docEnd, " ", parseErr.getMessage()));
-
+			char[] scriptWithEndTag = mainData.toCharArray();
+			poundSignFilterStream psfstream = new poundSignFilterStream(new CharArrayReader(scriptWithEndTag));
+			ANTLRNoCaseReaderStream input = new ANTLRNoCaseReaderStream(psfstream); // +
+			//ANTLRNoCaseReaderStream input = new ANTLRNoCaseReaderStream(new CharArrayReader(scriptWithEndTag)); // +
+			CFScriptLexer lexer = new CFScriptLexer(input);
+			tokenStream = new CommonTokenStream(lexer);
+			CFScriptParser parser = new CFScriptParser(tokenStream);
+			StdErrReporter errorReporter = new StdErrReporter();
+			lexer.setErrorReporter(errorReporter);
+			parser.setErrorReporter(errorReporter);
+			try {
+				// "</CFSCRIPT>")
+				// )
+				// );
+				ParserRuleReturnScope r = parser.scriptBlock();
+				CommonTree tree = (CommonTree) r.getTree();
+				// first item is EOF, so get kids to get kids
+				if (tree == null) {
+					ScriptItem errorNode = new ScriptItem(0, 0, 0, "error");
+					errorNode.setItemData("Error creating outline: " + parserState.getMessages().toString());
+					addDocItemToTree(errorNode);
+				} else {
+					scriptItemTree(tree, matchStack.peek(), addLines, addOffset, true);
 				}
-			} else {
-				addScriptItems(rootElement, match, matchStack);
+			} catch (RecognitionException e) {
+				e.printStackTrace();
 			}
-/*			rootElement = (SimpleNode) parser.parseScript(mainData);
-			pruneEmptyNodes(rootElement, match, matchStack);
-			//
-			if(rootElement != null) {
-				CFNodeList childs = rootElement.getChildNodes();
-				for(int childIndex = 0; childIndex < childs.size(); childIndex++){
-					SimpleNode child = (SimpleNode) childs.get(childIndex);
-					if(child.scriptItem != null && 1 != 1) {
-						addDocItemToTree(match, matchStack, child.scriptItem);				
-					} else {
-						addDocItemToTree(match, matchStack, child);	
-					}
-				}
-
-				//addScriptItems(rootElement.getChildNodes(), rootElement, match, matchStack);
-				//rootElement.setParent(rootElement.getParent().getParent());				
-				//addDocItemToTree(match, matchStack, rootElement);
-			}
-*/						
-		} catch (ParseException e) {
-			parserState.addMessage(new ParseError(
-					getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
-					e.getMessage()
-				));
+		} catch (cfml.parsing.cfscript.ParseException e) {
+			parserState.addMessage(new ParseError(e.getLine() + addLines, e.getCol() + addOffset, e.getCol() + addOffset, e.getMessage()
+					+ e.getLine(), e
+					.getMessage() + e.getLine() + ":" + e.getCol()));
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
+
 		return;
 		
 	}
 	
+	private Map<String, Integer> getTreeLineAndOffset(CommonTree tree, Boolean recurse) {
+		HashMap<String, Integer> lineAndOffset = new HashMap<String, Integer>();
+		while (tree.getTokenStartIndex() < 0) {
+			tree = (CommonTree) tree.getChild(0);
+		}
+		Token startToken = tokenStream.get(tree.getTokenStartIndex());
+		Token stopToken = tokenStream.get(tree.getTokenStopIndex());
+		int length = 0;
+		int endOffset = getLineOffset(stopToken.getLine()) + stopToken.getCharPositionInLine();
+		int offset = getLineOffset(startToken.getLine()) + startToken.getCharPositionInLine();
+		if (offset == -1) {
+			offset = 0;
+			endOffset = 0;
+		} else if (endOffset == offset) {
+			endOffset = endOffset + startToken.getText().length() - 1;
+		} else {
+			length = startToken.getText().length();
+		}
+		lineAndOffset.put("line", startToken.getLine());
+		lineAndOffset.put("offset", offset);
+		lineAndOffset.put("length", length);
+		lineAndOffset.put("endoffset", endOffset);
+		return lineAndOffset;
+	}
+
+	private void scriptItemTree(CommonTree tree, DocItem rootNode, int addLines, int addOffset, boolean root) {
+		Map<String, Integer> lineAndOffset = getTreeLineAndOffset(tree, true);
+		int startLine = lineAndOffset.get("line");
+		int offset = lineAndOffset.get("offset");
+		int startPos = offset;
+		int endPos = lineAndOffset.get("endoffset");
+		ScriptItem node = getScriptNode(tree, startLine, startPos, endPos);
+		if (node == null) {
+			// hidden nodes like function bodies ("{", etc.)
+			node = (ScriptItem) rootNode;
+		} else {
+//			node.setItemData(node.getItemData() + " line:" + startLine + " length:" + lineAndOffset.get("length") + " offset:" + startPos
+//					+ " endoffset:" + endPos);
+//			node.setItemData(node.getItemData() + " line:" + node.getLineNumber() + " length:" + lineAndOffset.get("length") + " offset:"
+//					+ node.getStartPosition() + " endoffset:" + node.getEndPosition());
+			rootNode.addChild(node);
+			node.setParent(rootNode);
+		}
+		if (tree.getChildCount() != 0) {
+			for (Object kid : tree.getChildren()) {
+				CommonTree leaf = (CommonTree) kid;
+				scriptItemTree(leaf, node, startLine, endPos, root);
+			}
+		}
+	}
+
+	private int getLineOffset(int line) {
+		if(line == 0) return 0;
+		if (line == 1)
+			return 0;
+		return lineOffsets[line - 2];
+	}
+
+	private ScriptItem getScriptNode(CommonTree tree, int startLine, int startPos, int endPos) {
+		ScriptItem childNode = null;
+		switch (tree.getType()) {
+		case CFScriptParser.FUNCTION_NAME:
+		case CFScriptParser.FUNCTION_RETURNTYPE:
+		case CFScriptParser.SLASH:
+		case CFScriptParser.EMPTYARGS:
+		case CFScriptParser.RIGHTCURLYBRACKET:
+		case CFScriptParser.DOT:
+		case CFScriptParser.EOF:
+			break;
+		case CFScriptParser.FUNCDECL:
+		case CFScriptParser.FUNCTION:
+			FunctionInfo funkInfo = new FunctionInfo(tree);
+			funkInfo.setLineNumber(startLine);
+			funkInfo.setStartPosition(startPos);
+			// funkInfo.setStartPosition(startPos + funkInfo.getStartPosition());
+			// funkInfo.setEndPosition(funkInfo.getEndPosition() + endPos);
+			funkInfo.setEndPosition(endPos);
+			childNode = funkInfo;
+			break;
+		case CFScriptParser.FUNCTION_PARAMETER:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTFunctionParameter");
+			childNode.setItemData(getChildrenText(tree, ' '));
+			break;
+		case CFScriptParser.NEW:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTNewOperator");
+			childNode.setItemData(getChildrenText(tree, '.'));
+			break;
+		case CFScriptParser.IDENTIFIER:
+			if (tree.getParent().getType() == CFScriptParser.NEW) {
+				childNode = new ScriptItem(startLine, startPos, endPos, "ASTComponent");
+				childNode.setItemData("new " + tree.getText() + "()");
+			} else if (tree.getParent().getType() == CFScriptParser.FUNCTIONCALL) {
+				if (tree.getParent().getChild(0).getText().toLowerCase().equals("createobject")) {
+					childNode = new ScriptItem(startLine, startPos, endPos, "ASTComponent");
+					childNode.setItemData("createobject " + tree.getText() + "()");
+				} else if (tree.getParent().getChild(0).getText().toLowerCase().equals("entitynew")) {
+					childNode = new ScriptItem(startLine, startPos, endPos, "ASTComponent");
+					childNode.setItemData("entitynew " + tree.getText() + "()");
+				} else {
+					childNode = new ScriptItem(startLine, startPos, endPos, "FunctionCall");
+					childNode.setItemData(tree.getText());
+				}
+			} else if (tree.getParent().getType() == CFScriptParser.JAVAMETHODCALL) {
+				childNode = new ScriptItem(startLine, startPos, endPos, "FunctionCall");
+				childNode.setItemData(tree.getText());
+			} else {
+				childNode = new ScriptItem(startLine, startPos, endPos, "ASTIdentifier");
+				childNode.setItemData(tree.getText());
+			}
+			break;
+		case CFScriptParser.IMPLICITARRAY:
+		case CFScriptParser.IMPLICITSTRUCT:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTUnassigned");
+			childNode.setItemData(tree.getText());
+			break;
+		case CFScriptParser.INTEGER_LITERAL:
+		case CFScriptParser.STRING_LITERAL:
+			if (tree.getParent().getType() == CFScriptParser.FUNCTIONCALL) {
+				if (tree.getParent().getChild(0).getText().toLowerCase().equals("createobject")) {
+					childNode = new ScriptItem(startLine, startPos, endPos, "ASTComponent");
+					childNode.setItemData(tree.getText());
+				} else {
+					childNode = new ScriptItem(startLine, startPos, endPos, "Literal");
+					childNode.setItemData(tree.getText());
+				}
+			} else {
+				childNode = new ScriptItem(startLine, startPos, endPos, "Literal");
+				childNode.setItemData(tree.getText());
+			}
+			break;
+		case CFScriptParser.FUNCTIONCALL:
+		case CFScriptParser.JAVAMETHODCALL:
+			childNode = new ScriptItem(startLine, startPos, endPos, "Call");
+			childNode.setItemData("call");
+			break;
+		case CFScriptParser.RETURN:
+			childNode = new ScriptItem(startLine, startPos, endPos, "return");
+			childNode.setItemData(tree.getText());
+			break;
+		case CFScriptParser.VARLOCAL:
+			// endPos += ((CommonToken) ((CommonTree) tree.getChild(2)).getToken()).getStopIndex() - 2;
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTVarDeclaration");
+			childNode.setItemData("var " + tree.getChild(0).getText() + tree.getChild(1).getText() + tree.getChild(2).getText());
+			break;
+		case CFScriptParser.COMPDECL:
+		case CFScriptParser.COMPONENT:
+			// endPos += ((CommonToken) ((CommonTree) tree.getChild(0)).getToken()).getStopIndex() - 2;
+			childNode = new ScriptItem(startLine, startPos, endPos, "cfcomponent");
+			childNode.setItemData("component");
+			break;
+		case CFScriptParser.LEFTCURLYBRACKET:
+			break;
+		case CFScriptParser.FUNCTION_ATTRIBUTE:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTFunctionAttribute");
+			childNode.setItemData(tree.getChild(0).getText() + "=" + tree.getChild(1).getText());
+			break;
+		case CFScriptParser.COMPONENT_ATTRIBUTE:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTComponentAttribute");
+			childNode.setItemData(tree.getChild(0).getText() + "=" + tree.getChild(1).getText());
+			break;
+		case CFScriptParser.PROPERTYSTATEMENT:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTPropertyStatement");
+			childNode.setItemData(getChildrenText(tree, ' '));
+			break;
+		case CFScriptParser.ANDOPERATOR:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTAndOperator");
+			childNode.setItemData(getChildrenText(tree, ' '));
+			break;
+		case CFScriptParser.CFMLFUNCTIONSTATEMENT:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTCFMLFunctionStatement");
+			childNode.setItemData(getChildrenText(tree, ' '));
+			break;
+		case CFScriptParser.COLON:
+			if (tree.getParent().getType() == CFScriptParser.COMPONENT_ATTRIBUTE) {
+				childNode = new ScriptItem(startLine, startPos, endPos, "ASTComponentAttribute");
+				childNode.setItemData(getChildrenText((CommonTree) tree.getParent(), ' '));
+			} else if (tree.getParent().getType() == CFScriptParser.CASE) {
+				childNode = new ScriptItem(startLine, startPos, endPos, "ASTSwitchStatement");
+				childNode.setItemData(getChildrenText((CommonTree) tree.getParent(), ' '));
+			} else if (tree.getParent().getType() == CFScriptParser.DEFAULT) {
+				childNode = new ScriptItem(startLine, startPos, endPos, "ASTSwitchStatement");
+				childNode.setItemData(getChildrenText((CommonTree) tree.getParent(), ' '));
+			} else {
+				childNode = new ScriptItem(startLine, startPos, endPos, "ASTAssignment");
+				childNode.setItemData(tree.getChild(0).getText() + ":" + tree.getChild(1).getText());
+			}
+			break;
+		case CFScriptParser.SWITCH:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTSwitchStatement");
+			childNode.setItemData(tree.getText());
+			break;
+		case CFScriptParser.EQUALSOP:
+			// unscoped assignment registers as EQUALSOP currently
+			if (tree.getChildren() != null) {
+				// startPos -= (tree.getChild(0).getText().length() + 1);
+				// endPos += ((CommonToken) ((CommonTree) tree.getChild(1)).getToken()).getStopIndex();
+				childNode = new ScriptItem(startLine, startPos, endPos, "ASTAssignment");
+				if (tree.getChild(1).getText().toLowerCase().equals("new")) {
+					childNode.setItemData(tree.getChild(0).getText() + '=' + getChildrenText((CommonTree) tree.getChild(1), '.'));
+				} else {
+					childNode.setItemData(tree.getChild(0).getText() + '=' + tree.getChild(1).getText());
+				}
+			}
+			break;
+		default:
+			childNode = new ScriptItem(startLine, startPos, endPos, "ASTUnassigned");
+			childNode.setItemData(tree.getText() + ":" + tree.getType());
+			break;
+		}
+		return childNode;
+	}
+
+	private String getChildrenText(CommonTree tree, char delimiter) {
+		StringBuffer sb = new StringBuffer();
+		if (tree.getChildCount() != 0) {
+			for (Object childOb : tree.getChildren()) {
+				CommonTree child = (CommonTree) childOb;
+				String text = ((CommonTree) child).getText();
+				if (text.equals("EMPTYARGS"))
+					text = ")";
+				if (text.equals("=") && child.getChildCount() > 0)
+					text = child.getChild(0).getText() + '=' + child.getChild(1).getText() + " ";
+				if (text.length() != 0) {
+					sb.append(text);
+				}
+			}
+		} else {
+			System.out.println("No children for " + tree.getText() + "!");
+		}
+		return sb.toString().trim();
+	}
 
 	/**
 	 * <code>handleHTMLTag</code> - Handles an HTML tag (does nothing at the moment.)<br/>
@@ -865,7 +1144,7 @@ public class CFParser {
 
 			newItem = new CfmlCustomTag(getLineNumber(match.startPos), match.startPos, match.endPos, tagName);
 			newItem.setItemData(match.match);
-			
+
 		}
 		else
 		{
@@ -873,21 +1152,25 @@ public class CFParser {
 			newItem.initDictionary(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
 			newItem.setItemData(match.match);
 		}
-		
+
 		newItem.addAttributes(attrList);
 		addTagItemToTree(match, matchStack, isACloser, newItem);
 	}
-	
-	private void addDocItemToTree(ParseItemMatch match, Stack matchStack, DocItem newItem)
+
+	private void addDocItemToTree(DocItem item) {
+		DocItem topItem = (DocItem) matchStack.pop();
+		topItem.addChild(item);
+		matchStack.push(topItem);
+	}
+
+	private void addDocItemToTree(ParseItemMatch match, DocItem newItem)
 	{
 		if(newItem instanceof TagItem) {
 			addTagItemToTree(match, matchStack, false, (TagItem)newItem);
 			System.err.println("CFParser::addDocItemToTree() - A tag item has been passed. This is wrong but I\'ve passed it to addTagItemToTree as a non-closer");
 			return;
 		}
-		DocItem topItem = (DocItem)matchStack.pop();
-		topItem.addChild(newItem);
-		matchStack.push(topItem);
+		addDocItemToTree(newItem);
 	}
 	
 	/**
@@ -945,11 +1228,14 @@ public class CFParser {
 		}
 		return isACloser;
 	}
-	
+
 	/**
 	 * <code>createDocTree</code> - Creates the document tree from the TagMatches made
 	 * 
-	 * @param matches - the matches found previously
+	 * @param inData
+	 * 
+	 * @param matches
+	 *            - the matches found previously
 	 * @return a document tree.
 	 * 
 	 */
@@ -975,17 +1261,26 @@ public class CFParser {
 	 * TODO: somehow implement tag variable grabbing (i.e. from <cfquery>'s 'name' attribute) Should the tag object do it, or the parser?
 	 * 
 	 */
-	public CFDocument createDocTree(ArrayList matches)
+	public CFDocument createDocTree(String inData)
 	{
+		ArrayList matches = parserState.getMatches();
+		// System.out.println("=============> Beginning match dump" );
+		// Util.dumpMatches(matches);
+		// System.out.println("=============> Finishing match dump");
 		CFDocument newDoc = new CFDocument();
-		Stack matchStack = new Stack();
+		matchStack = new Stack();
 		ArrayList rootElements = new ArrayList();
 		TagItem rootItem = new TagItem(0, 0, 0, "Doc Root");
 		int matchPos = 0;
 		StringBuffer nonParsedTextBuffer = new StringBuffer();
-
 		matchStack.push(rootItem);
 		ParseItemMatch lastMatch = null;
+		// little hackish way to detect cfscript based cfcs TODO: something better
+		if (inData.split("(?i).*component[^>]+\\{").length > 1) {
+			parseCFScript(inData);
+			newDoc.setDocumentRoot(rootItem);
+			return newDoc;
+		}
 		try {
 			
 			for(; matchPos < matches.size(); matchPos++)
@@ -1077,7 +1372,7 @@ public class CFParser {
 								);
 								
 								newComment.setItemData(match.getMatch());
-								addDocItemToTree(match, matchStack, newComment);
+							addDocItemToTree(match, newComment);
 								
 								break;
 							case MATCHER_CFSCRIPT:
@@ -1087,7 +1382,7 @@ public class CFParser {
 								newItem.initDictionary(DictionaryManager.getDictionary(DictionaryManager.CFDIC));
 								newItem.setItemData("");
 								addTagItemToTree(match, matchStack, isACloser, newItem);
-								handleCFScriptBlock(match, matchStack);								
+								handleCFScriptBlock(match, matchStack);
 								break;
 							default:
 								break;
@@ -1550,44 +1845,40 @@ public class CFParser {
 		for(int i = 0; i < messages.size(); i++)
 		{
 			ParseMessage currMsg = (ParseMessage)messages.get(i);
-			
 			Map attrs = new HashMap();
-			MarkerUtilities.setLineNumber(attrs, currMsg.getLineNumber()+1);
+			MarkerUtilities.setLineNumber(attrs, currMsg.getLineNumber() + 1);
 			MarkerUtilities.setMessage(attrs, currMsg.getMessage());
-			attrs.put(IMarker.CHAR_START,new Integer(currMsg.docStartOffset));
+			// attrs.put(IMarker.CHAR_START, new Integer(currMsg.docStartOffset));
 			int endOffset = 0;
 			if (currMsg.docEndOffset > currMsg.docStartOffset) {
 				endOffset = currMsg.docEndOffset;
-				//System.out.println("End offset is: " + endOffset + " start is " + currMsg.docStartOffset);
+				// System.out.println("End offset is: " + endOffset + " start is " + currMsg.docStartOffset);
+			} else {
+				endOffset = currMsg.docStartOffset + currMsg.docData.length();
 			}
-			else {
-				endOffset = currMsg.docStartOffset+currMsg.docData.length();
-			}
-			attrs.put(IMarker.CHAR_END,new Integer(endOffset));
-			
+
 			//
 			// Not sure what the start & end positions are good for!
-			//MarkerUtilities.setCharStart(attrs, currMsg.getDocStartOffset());
-			//MarkerUtilities.setCharEnd(attrs, currMsg.getDocEndOffset());
+			// MarkerUtilities.setCharStart(attrs, currMsg.getDocStartOffset());
+			// MarkerUtilities.setCharEnd(attrs, currMsg.getDocEndOffset());
 			//
 			// Not sure right now how to set the problem to be a warning or an error.
-			// There is IMarker.SEVERITY_ERROR & IMarker.SEVERITY_WARNING but I'm 
+			// There is IMarker.SEVERITY_ERROR & IMarker.SEVERITY_WARNING but I'm
 			// not sure how I set them.
 			String type = "org.cfeclipse.cfml.parserProblemMarker";
-			if(currMsg instanceof ParseError)
-			{
+			if (currMsg instanceof ParseError) {
 				type = "org.cfeclipse.cfml.parserProblemMarker";
-			}
-			else if(currMsg instanceof ParseWarning)
-			{
+			} else if (currMsg instanceof ParseWarning) {
 				type = "org.cfeclipse.cfml.parserWarningMarker";
-			}			
-			
+			}
+
 			try {
 				MarkerUtilities.createMarker(this.res, attrs, type);
-			}catch(CoreException excep) {
-				userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
-			}catch(Exception anyExcep) {
+				// MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+			} catch (CoreException excep) {
+				userMessage(0, "userMessage",
+						"ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
+			} catch (Exception anyExcep) {
 				userMessage(0, "processParseResultMessage", "ERROR: Caught exception " + anyExcep.getMessage());
 			}
 
@@ -1644,12 +1935,7 @@ public class CFParser {
 			ArrayList codeFoldingMatches = tagMatchingAttempts(inData);
 			
 			//parserState.getMatches() was called twice in succession, this should speed it up a bit.
-			ArrayList matches = parserState.getMatches();
-			//System.out.println("=============> Beginning match dump" );			
-			//Util.dumpMatches(matches);
-			//System.out.println("=============> Finishing match dump");
-			docTree = createDocTree(matches);
-			
+			docTree = createDocTree(inData);
 			DocItem documentRoot = docTree.getDocumentRoot();
 			ArrayList list = finalDocTreeTraversal(documentRoot);
 			parserState.addMessages(list);
@@ -1665,15 +1951,11 @@ public class CFParser {
 				VariablesParser vParser = new VariablesParser(docTree,inData);
 				docTree.setVariableMap(vParser.getVariableMap());
 			}
-			
-			
 		} catch(Exception excep) 
 		{
 			System.err.println("CFParser::parseDoc() - Exception: " + excep.getMessage());
 			excep.printStackTrace();
 		}
-		
-		
 		
 		return docTree;		
 	}

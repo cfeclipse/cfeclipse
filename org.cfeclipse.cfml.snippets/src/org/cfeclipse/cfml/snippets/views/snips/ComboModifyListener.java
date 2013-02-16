@@ -55,7 +55,7 @@ public class ComboModifyListener implements ModifyListener, KeyListener {
             
             
         String[] items = combo.getItems();
-        Point p = combo.getSize();
+        //Point p = combo.getSize();
         int x = combo.getSelection().x;
         int y = combo.getSize().y;
        

@@ -19,12 +19,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.internal.util.Util;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cfeclipse.cfml.frameworks.Activator;
 import org.cfeclipse.cfml.frameworks.actions.ActionManager;
 import org.cfeclipse.cfml.frameworks.dialogs.EditActionDialog;
 import org.cfeclipse.cfml.frameworks.views.TreeParentNode;
@@ -173,9 +171,9 @@ IWorkbenchPreferencePage {
 	 */
 	private void updateActionList() {
 		//Load the XML
-		List actionNodes = actionManager.getActionNodes();
+		List<?> actionNodes = actionManager.getActionNodes();
 
-		for (Iterator iter = actionNodes.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = actionNodes.iterator(); iter.hasNext();) {
 			Element actionElement = (Element) iter.next();
 			if(filterElement != null && filterElement.getElement() != null && 
 				actionElement.getAttributeValue("node").equalsIgnoreCase(filterElement.getElement().getName())

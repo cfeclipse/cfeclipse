@@ -35,9 +35,6 @@ import java.io.OutputStream;
 import org.apache.commons.vfs.FileSystemException;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
-import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
-import org.cfeclipse.cfml.editors.partitioner.PartitionTypes;
-import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.external.ExternalFile;
 import org.cfeclipse.cfml.external.ExternalMarkerAnnotationModel;
 import org.cfeclipse.cfml.net.RemoteFileEditorInput;
@@ -53,24 +50,13 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentExtension3;
-import org.eclipse.jface.text.IDocumentPartitioner;
-import org.eclipse.jface.text.rules.FastPartitioner;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPathEditorInput;
-import org.eclipse.ui.IPersistableEditor;
-import org.eclipse.ui.XMLMemento;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
-import org.eclipse.ui.editors.text.StorageDocumentProvider;
-import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.ide.FileStoreEditorInput;
-import org.eclipse.ui.internal.IWorkbenchConstants;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.part.FileEditorInputFactory;
-import org.eclipse.ui.texteditor.AbstractMarkerAnnotationModel;
-import org.eclipse.ui.texteditor.IDocumentProvider;
 
 
 /**
@@ -93,11 +79,17 @@ public class CFDocumentProvider extends FileDocumentProvider
 		ICFDocument document = null;
 		
 		document = new ICFDocument();
+		try {
 		if(setDocumentContent(document, (IEditorInput) element, getEncoding(element))) 
 		{
 			setupDocument(element, document);
 		}
-		
+		} catch (Exception e) {
+			// "read only file" error vs. ugly editor error.
+			if (e instanceof java.io.FileNotFoundException) {
+				document = null;
+			}
+		}
 		if(document != null) 
 		{
 			if (document.getDocumentPartitioner(CFDocumentSetupParticipant.CFML_PARTITIONING) == null)

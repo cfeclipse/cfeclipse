@@ -4,27 +4,19 @@
 package org.cfeclipse.cfml.frameworks.parsers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cfeclipse.cfml.frameworks.Activator;
 import org.cfeclipse.cfml.frameworks.ConfigLoader;
 import org.cfeclipse.cfml.frameworks.views.FrameworkFile;
 import org.cfeclipse.cfml.frameworks.views.TreeParentNode;
-import org.cfeclipse.cfml.properties.MappingsPropertyPage;
 import org.cfeclipse.cfml.util.CFMappings;
-import org.cfeclipse.cfml.util.ResourceUtils;
-import org.cfeclipse.cfml.util.WorkspaceUtils;
-import org.eclipse.core.internal.resources.Resource;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IPathVariableManager;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -34,11 +26,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.ide.ResourceUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -62,7 +52,7 @@ public class GenericFrameworkParser  {
 	
 	//Mappings assigned to this project (to figure out paths)
 	private CFMappings projectMappings;
-	private HashMap problemMarkerMap = new HashMap();
+	private HashMap<String, Long> problemMarkerMap = new HashMap<String, Long>();
 	
 	private Log logger = LogFactory.getLog(GenericFrameworkParser.class);
 	
@@ -192,8 +182,8 @@ public class GenericFrameworkParser  {
 		}
 		
 		//recurse
-		List children = element.getChildren();
-		for (Iterator iter = children.iterator(); iter.hasNext();) {
+		List<?> children = element.getChildren();
+		for (Iterator<?> iter = children.iterator(); iter.hasNext();) {
 			Element childElement = (Element) iter.next();
 			if(isIgnore(element) && doIgnores){
 				parse2(childElement,parentNode, fworkFile, doIncludes, doIgnores);
@@ -295,12 +285,12 @@ public class GenericFrameworkParser  {
 			if(resource!=null && resource.exists() && resource instanceof IFolder){
 				IFolder childFolder = (IFolder)resource;
 				IResource[] itemSuggestsions = childFolder.members();
-				List includeFileNames = includeDef.getChildren("file");
+				List<?> includeFileNames = includeDef.getChildren("file");
 
 				for (int i = 0; i < itemSuggestsions.length; i++) {
 					if (itemSuggestsions[i] instanceof IFile) {
 						IFile suggFile = (IFile) itemSuggestsions[i];
-						for (Iterator iter = includeFileNames.iterator(); iter.hasNext();) {
+						for (Iterator<?> iter = includeFileNames.iterator(); iter.hasNext();) {
 							Element incFileNameNode = (Element) iter.next();
 						
 							if(suggFile.getName().equalsIgnoreCase(incFileNameNode.getText()))
@@ -369,8 +359,8 @@ public class GenericFrameworkParser  {
 		//Check the items name and parent
 		try {
 			XPath x = XPath.newInstance("//framework[@id='"+ this.fwfile.getFrameworkType()+"']/include");
-			List list = x.selectNodes(this.frameworkDefinitionDocument);
-			for (Iterator iter = list.iterator(); iter.hasNext();) {
+			List<?> list = x.selectNodes(this.frameworkDefinitionDocument);
+			for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 				Element includeElement = (Element) iter.next();
 				
 				//Definition variables;
@@ -404,9 +394,9 @@ public class GenericFrameworkParser  {
 		
 		try {
 			XPath x = XPath.newInstance("//framework[@id='"+ this.fwfile.getFrameworkType()+"']/ignore");
-			List list = x.selectNodes(this.frameworkDefinitionDocument);
+			List<?> list = x.selectNodes(this.frameworkDefinitionDocument);
 			
-			for (Iterator iter = list.iterator(); iter.hasNext();) {
+			for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 				Element ignoreElement = (Element) iter.next();
 				if(ignoreElement.getAttributeValue("node").equalsIgnoreCase(element.getName())){
 					return true;

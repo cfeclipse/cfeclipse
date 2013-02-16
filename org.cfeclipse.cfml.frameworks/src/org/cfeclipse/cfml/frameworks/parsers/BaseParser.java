@@ -66,7 +66,7 @@ public class BaseParser implements IParser {
 		try {
 			Document document = builder.build(path);
 			Element rootElement = document.getRootElement();
-			List elemList = rootElement.getChildren();
+			List<?> elemList = rootElement.getChildren();
 			
 			parse2(elemList, parentnode);
 			
@@ -82,11 +82,11 @@ public class BaseParser implements IParser {
 	}
 	
 	
-	private void parse2(List elements, TreeParentNode parentnode){
+	private void parse2(List<?> elements, TreeParentNode parentnode){
 	
 			
 	
-			for (Iterator iter = elements.iterator(); iter.hasNext();) {
+			for (Iterator<?> iter = elements.iterator(); iter.hasNext();) {
 				Object iterElement = iter.next();
 				if (iterElement instanceof LineNumberElement) {
 	

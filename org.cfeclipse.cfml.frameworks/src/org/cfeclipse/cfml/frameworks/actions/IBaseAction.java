@@ -5,6 +5,7 @@ import org.eclipse.core.internal.resources.Project;
 import org.jdom.Document;
 import org.jdom.Element;
 
+@SuppressWarnings("restriction")
 public interface IBaseAction {
 
 	public abstract void setElement(Element actionElement);

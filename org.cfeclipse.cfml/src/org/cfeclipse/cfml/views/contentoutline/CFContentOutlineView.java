@@ -25,17 +25,15 @@
 package org.cfeclipse.cfml.views.contentoutline;
 
 //import org.eclipse.core.resources.IResource;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.cfeclipse.cfml.editors.CFMLEditor;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.actions.GenericOpenFileAction;
 import org.cfeclipse.cfml.editors.actions.GotoFileAction;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
-import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.cfeclipse.cfml.parser.docitems.ScriptItem;
 import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.jface.action.Action;
@@ -45,17 +43,12 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -279,18 +272,24 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 				editor.selectAndReveal(firstItem.getStartPosition(), firstItem.getEndPosition() - firstItem.getStartPosition() + 1);
 				return;
 			}
-			TagItem cti = (TagItem) firstItem;
-			if (cti.matchingItem != null) {
-				if (cti.matchingItem.getStartPosition() < cti.getStartPosition()) {
-					startPos = cti.matchingItem.getStartPosition();
-					endPos = cti.getEndPosition();
+			if (firstItem instanceof TagItem) {
+				TagItem cti = (TagItem) firstItem;
+				if (cti.matchingItem != null) {
+					if (cti.matchingItem.getStartPosition() < cti.getStartPosition()) {
+						startPos = cti.matchingItem.getStartPosition();
+						endPos = cti.getEndPosition();
+					} else {
+						startPos = cti.getStartPosition();
+						endPos = cti.matchingItem.getEndPosition();
+					}
 				} else {
 					startPos = cti.getStartPosition();
-					endPos = cti.matchingItem.getEndPosition();
+					endPos = cti.getEndPosition();
 				}
 			} else {
-				startPos = cti.getStartPosition();
-				endPos = cti.getEndPosition();
+				ScriptItem csi = (ScriptItem) firstItem;
+				startPos = csi.getStartPosition();
+				endPos = csi.getEndPosition();
 			}
 		} else {
 			// otherwise select selected items

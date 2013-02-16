@@ -133,11 +133,13 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	{
 		if(docParser != null)
 		{
-			
 		    IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
 			docParser.setCFScriptParsing(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_DOCFSCRIPT));
 			docParser.setReportErrors(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_REPORT_ERRORS));
-			docStructure = docParser.parseDoc();
+			CFDocument parsed = docParser.parseDoc();
+			if (parsed != null) {
+				docStructure = parsed;
+			}
 			
 			commentParser.ParseDocument(this,lastRes);
 			commentParser.setTaskMarkers();
@@ -155,7 +157,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	 * @param endpos
 	 * @return
 	 */
-	public CfmlTagItem getTagAt(int startpos, int endpos)
+	public DocItem getTagAt(int startpos, int endpos)
 	{
 
 	    return getTagAt(startpos,endpos,false);
@@ -186,7 +188,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	 * @param includeClosingTags
 	 * @return
 	 */
-	public CfmlTagItem getTagAt(int startpos, int endpos, boolean includeClosingTags)
+	public DocItem getTagAt(int startpos, int endpos, boolean includeClosingTags)
 	{
 		//build the xpath
 		String attrString = "[#startpos<=" + startpos + " and #endpos>=" + endpos + "]";
@@ -213,8 +215,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 					return (CfmlTagItem)node;
 				} else {
 					// probably a comment, but we could use this for udder stuff too?
-					CfmlTagItem adaptedTag = new CfmlTagItem(node.getLineNumber(), node.getStartPosition(), node.getEndPosition(), node.getClass().getSimpleName());
-					return adaptedTag;
+					return node;
 					
 				}
 			}
@@ -239,7 +240,7 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	public String getTagNameAt(int startpos, int endpos)
 	{
 		//String str = null;
-		CfmlTagItem cti = getTagAt(startpos,endpos);
+		DocItem cti = getTagAt(startpos, endpos);
 		
 		if(cti != null)
 		{

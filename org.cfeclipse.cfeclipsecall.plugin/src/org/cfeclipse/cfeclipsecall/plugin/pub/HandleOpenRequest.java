@@ -31,12 +31,12 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.UIPlugin;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+@SuppressWarnings("restriction")
 public class HandleOpenRequest implements IHandleOpenRequest {
 
 	public HandleOpenRequest() {
@@ -183,7 +183,7 @@ public class HandleOpenRequest implements IHandleOpenRequest {
 			return null;
 
 		int length = files.length;
-		ArrayList existentFiles = new ArrayList(length);
+		ArrayList<IFile> existentFiles = new ArrayList<IFile>(length);
 		for (int i = 0; i < length; i++) {
 			if (files[i].exists())
 				existentFiles.add(files[i]);
@@ -206,7 +206,7 @@ public class HandleOpenRequest implements IHandleOpenRequest {
 		IFile workspaceFile = getWorkspaceFile(fileStore);
 		if (workspaceFile != null)
 			return new FileEditorInput(workspaceFile);
-		Class c = null;
+		Class<?> c = null;
 		try {
 			// Eclipse 3.3 or later
 			c = Class.forName("org.eclipse.ui.ide.FileStoreEditorInput");

@@ -27,20 +27,15 @@ package org.cfeclipse.cfml.frameworks.views;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.frameworks.Activator;
 import org.cfeclipse.cfml.frameworks.util.FWXImages;
-import org.cfeclipse.cfml.util.FileLocator;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -49,8 +44,6 @@ import org.eclipse.ui.PlatformUI;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.Parent;
-import org.jdom.contrib.input.LineNumberSAXBuilder;
 import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
 
@@ -120,7 +113,7 @@ public class ViewLabelProvider extends LabelProvider {
 		try {
 			
 			XPath	x = XPath.newInstance("//framework[@id='" + node.getFrameworkType() + "']/node[@name='"+ node.getName().toLowerCase() +"']");
-			List list = x.selectNodes(labelDocument);
+			List<?> list = x.selectNodes(labelDocument);
 			
 			
 			//If there is no element, just return something
@@ -169,7 +162,7 @@ public class ViewLabelProvider extends LabelProvider {
 			else{
 				//we have more than one node
 				logger.debug("we need to check all the nodes");*/
-				for (Iterator iter = list.iterator(); iter.hasNext();) {
+				for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 					Element labelDefElement = (Element) iter.next();
 					//the variables we are checking
 					String labelDefParent = labelDefElement.getAttributeValue("parent");
@@ -248,7 +241,7 @@ public class ViewLabelProvider extends LabelProvider {
 		//Use XPATH to find the right node
 		try {
 			XPath	 x = XPath.newInstance("//framework[@id='" +  node.getFrameworkType().toLowerCase() + "']/node[@name='"+ node.getName().toLowerCase() +"']");
-			 List list = x.selectNodes(labelDocument);
+			 List<?> list = x.selectNodes(labelDocument);
 			 
 			 if(list.size() == 1){
 				 Element label = (Element)list.get(0);
@@ -260,7 +253,7 @@ public class ViewLabelProvider extends LabelProvider {
 				 
 			 }
 			 else if(list.size() > 1){	
-				 for (Iterator iter = list.iterator(); iter.hasNext();) {
+				 for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 						Element labelDefElement = (Element) iter.next();
 						//the variables we are checking
 						String labelDefParent = labelDefElement.getAttributeValue("parent");

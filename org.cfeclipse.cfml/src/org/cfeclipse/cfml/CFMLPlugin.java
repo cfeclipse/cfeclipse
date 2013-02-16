@@ -67,6 +67,8 @@ import org.eclipse.ui.editors.text.templates.ContributionTemplateStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import cfml.parsing.CFMLParser;
+
 /**
  * 
  * The CFEclipse plugin itself.
@@ -237,7 +239,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 
 		camInstance.registerRootAssist(new CFContentAssist());
 		camInstance.registerRootAssist(new CFMLScopeAssist());
-		camInstance.registerRootAssist(new CFMLArgumentAssist());		
+		camInstance.registerRootAssist(new CFMLArgumentAssist());
 		CFMLFunctionCompletionProcessor cfscp = new CFMLFunctionCompletionProcessor();
 		camInstance.registerRootAssist(cfscp);
 		camInstance.registerRootAssist(new CFMLFunctionParamAssist());
@@ -259,7 +261,6 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		camInstance.registerValueAssist(htmlAssistor);
 
 		camInstance.registerTagAssist(new CFMLScopeAssist());
-		camInstance.registerTagAssist(new CFMLArgumentAssist());
 		return camInstance;
 	}
 
@@ -308,6 +309,12 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	 */
 	public static IWorkspace getWorkspace() {
 		return ResourcesPlugin.getWorkspace();
+	}
+
+	public static CFMLParser newCFMLParser(String dict) {
+		CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+		CFMLParser parser = new CFMLParser(propertyManager.getDictionaryDir(), dict);
+		return parser;
 	}
 
 	/**

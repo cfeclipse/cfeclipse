@@ -31,10 +31,13 @@ import java.util.Set;
 import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.editors.ICFDocument;
+import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.CFNodeList;
+import org.cfeclipse.cfml.parser.FunctionInfo;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
@@ -63,9 +66,7 @@ public class CFMLArgumentAssist extends AssistContributor
 		Set<Parameter> params = null; 
     	if (state.getDataSoFar().toLowerCase().matches(".*?arguments\\.[\\w]*$")) {
 			CFDocument doc = ((ICFDocument) state.getIDocument()).getCFDocument();
-			
 			// get a reference to the containing function
-			
 			CfmlTagItem cti = getPreviousFunctionTag(state);
 			Function func = doc.getFunctionByName(cti.getAttributeValue("name"));
 			if (func != null) {
@@ -75,6 +76,26 @@ public class CFMLArgumentAssist extends AssistContributor
 				return null;
 			}
     	} else {
+			try {
+				if (state.getIDocument().getPartition(state.getOffset()).getType().equals(CFPartitionScanner.CF_SCRIPT)) {
+					CFDocument doc = ((ICFDocument) state.getIDocument()).getCFDocument();
+					CFNodeList funknodes = doc.getDocumentRoot().selectNodes(
+							"//ASTFunctionDeclaration[#startpos<" + state.getOffset() + "]");
+					if (funknodes.size() > 0) {
+						FunctionInfo funknode = (FunctionInfo) funknodes.get(funknodes.size() - 1);
+						Function func = doc.getFunctionByName(funknode.getFunctionName());
+						if (func != null) {
+							params = func.getParameters();
+							return prepareProposals(state, params);
+						} else {
+							return null;
+						}
+					}
+					return null;
+				}
+			} catch (BadLocationException e) {
+				e.printStackTrace();
+			}
     		return null;
     	}
 				    	

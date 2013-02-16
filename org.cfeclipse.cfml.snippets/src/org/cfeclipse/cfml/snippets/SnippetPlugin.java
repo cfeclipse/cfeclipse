@@ -26,8 +26,6 @@ public class SnippetPlugin extends AbstractUIPlugin {
 	private static SnippetPlugin plugin;
 	/** The preferences for the plugin. */
 	private PreferenceStore propertyStore;
-	/** The bundle of resources for the plugin */
-	private ResourceBundle resourceBundle;
 
 	private CFMLPropertyManager fPropertyManager;
 
@@ -39,12 +37,6 @@ public class SnippetPlugin extends AbstractUIPlugin {
 	public SnippetPlugin() {
 		super();
 		plugin = this;
-		try {
-			this.resourceBundle = ResourceBundle.getBundle("plugin");
-		} catch (MissingResourceException x) {
-			x.printStackTrace(System.err);
-			this.resourceBundle = null;
-		}
 	}
 
 	/*
@@ -66,6 +58,7 @@ public class SnippetPlugin extends AbstractUIPlugin {
 			e.printStackTrace();
 			System.out.println(e);
 		}
+		getWorkbench().getActiveWorkbenchWindow().getSelectionService().addSelectionListener(fPropertyManager.getListener());
 
 		String defaultSnippetPath = SnippetPlugin.getDefault().getStateLocation().toString() + "/snippets";
 		File f = new File(defaultSnippetPath);
@@ -83,6 +76,7 @@ public class SnippetPlugin extends AbstractUIPlugin {
 	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
+		getWorkbench().getActiveWorkbenchWindow().getSelectionService().removeSelectionListener(fPropertyManager.getListener());
 		plugin = null;
 		super.stop(context);
 	}

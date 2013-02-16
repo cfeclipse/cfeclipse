@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cfeclipse.cfml.frameworks.views.TreeNode;
-import org.cfeclipse.cfml.views.snips.SnipSmartDialog;
 import org.eclipse.core.internal.resources.Project;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.action.Action;
@@ -43,12 +42,12 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Text;
 import org.jdom.xpath.XPath;
-import sun.misc.Regexp;
 
 /**
  * @author markdrew
  *
  */
+@SuppressWarnings("restriction")
 public class BaseAction extends Action implements IBaseAction{
 	
 	private String insertSnippet;
@@ -221,8 +220,8 @@ public class BaseAction extends Action implements IBaseAction{
 		
 		try {
 			XPath x = XPath.newInstance(xpath);
-			List list = x.selectNodes(this.virtualDocument.getRootElement());
-			for (Iterator iter = list.iterator(); iter.hasNext();) {
+			List<?> list = x.selectNodes(this.virtualDocument.getRootElement());
+			for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 				Object listItem = (Object)iter.next();
 				if (listItem instanceof Attribute) {
 					Attribute attrib = (Attribute) listItem;

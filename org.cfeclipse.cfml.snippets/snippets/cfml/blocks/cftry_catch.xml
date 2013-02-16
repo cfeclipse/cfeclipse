@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<snippet>
+<snippet filetemplate="false" extension="cfm">
 <name>cftry_catch</name>
 <help>simple try/catch block</help>
 <starttext><![CDATA[<cftry>

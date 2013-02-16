@@ -4,7 +4,6 @@ import org.cfeclipse.cfml.snippets.commands.InsertSnippetCommand;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.ui.IEditorActionDelegate;
 
 public class SnippetActionHandler extends AbstractHandler {
 

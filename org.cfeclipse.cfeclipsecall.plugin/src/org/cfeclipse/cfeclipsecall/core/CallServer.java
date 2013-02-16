@@ -196,7 +196,7 @@ public class CallServer {
 		}
 	}
 
-	private List openHandlers = null;
+	private List<IHandleOpenRequest> openHandlers = null;
 	protected IEclipseCallPreferences preferences = null;
 
 	private void initOpenHandler() {
@@ -204,7 +204,7 @@ public class CallServer {
 			boolean addNew = false;
 			synchronized (this) {
 				if (this.openHandlers == null) {
-					this.openHandlers = new ArrayList();
+					this.openHandlers = new ArrayList<IHandleOpenRequest>();
 					addNew = true;
 				}
 			}

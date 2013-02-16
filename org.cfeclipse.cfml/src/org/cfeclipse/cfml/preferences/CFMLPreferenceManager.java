@@ -25,6 +25,8 @@
 package org.cfeclipse.cfml.preferences;
 
 //import java.net.URL;
+import java.io.File;
+
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.StringConverter;
@@ -212,6 +214,24 @@ public class CFMLPreferenceManager {
 		return store.getDefaultString(CFMLPreferenceConstants.P_PROJECT_URL);
 	}
 	
+	public String defaultDictionaryDir() {
+		String dictDir = store.getDefaultString(CFMLPreferenceConstants.P_DICTIONARIES_PATH);
+		File dictConfig = new File(dictDir + "/dictionaryconfig.xml");
+		if (!dictConfig.exists()) {
+			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml (" + dictConfig.getPath() + ")");
+		}
+		return dictDir;
+	}
+
+	public String dictionaryDir() {
+		String dictDir = store.getString(CFMLPreferenceConstants.P_DICTIONARIES_PATH);
+		File dictConfig = new File(dictDir + "/dictionaryconfig.xml");
+		if (!dictConfig.exists()) {
+			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml (" + dictConfig.getPath() + ")");
+		}
+		return dictDir;
+	}
+
 	public String defaultHelpURL() {
 		return store.getString(CFMLPreferenceConstants.P_DEFAULT_HELP_URL);
 	}

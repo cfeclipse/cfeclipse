@@ -6,7 +6,6 @@ import java.util.Calendar;
 
 import org.cfeclipse.cfeclipsecall.core.CallServer;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -155,7 +154,7 @@ public class CFECallPlugin extends AbstractUIPlugin implements IStartup  {
 		}
 		try {
 			// compatibility to Eclipse 3.2...
-			Class c = Class.forName("org.eclipse.core.runtime.Status");
+			Class<?> c = Class.forName("org.eclipse.core.runtime.Status");
 			Object status = c.getConstructor(new Class[] { int.class, String.class, String.class }).newInstance(
 					new Object[] { new Integer(severity), PLUGIN_ID, message });
 			Object log = plugin.getClass().getMethod("getLog", (Class[]) null).invoke(plugin, (Object[]) null);

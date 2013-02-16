@@ -69,6 +69,7 @@ public class CFMLPropertyManager {
         store.setDefault(CFMLPreferenceConstants.P_SNIPPETS_PATH, preferenceManager.snippetsPath());
         store.setDefault(CFMLPreferenceConstants.P_PROJECT_URL, preferenceManager.defaultProjectURL());
         store.setDefault(CFMLPreferenceConstants.P_DEFAULT_HELP_URL, preferenceManager.defaultHelpURL());
+		store.setDefault(CFMLPreferenceConstants.P_DICTIONARIES_PATH, preferenceManager.defaultDictionaryDir());
 	}
 	
 	public String getCurrentDictionary(IFile file){
@@ -80,11 +81,20 @@ public class CFMLPropertyManager {
 		return dict;
 	}
 	
+	public String getDictionaryDir() {
+		return preferenceManager.dictionaryDir();
+	}
+
 	public String getCurrentDictionary(IProject project)
 	{
+		String dict;
 		IPreferenceStore store = new ProjectPropertyStore(project);
-		String dict = store.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY);
-		if (dict.length() < 1) {
+		if (project.isAccessible()) {
+			dict = store.getString(CFMLPreferenceConstants.P_CFML_DICTIONARY);
+			if (dict.length() < 1) {
+				dict = CFMLPreferenceConstants.P_CFML_DICTIONARY_DEFAULT;
+			}
+		} else {
 			dict = CFMLPreferenceConstants.P_CFML_DICTIONARY_DEFAULT;
 		}
 		return dict;

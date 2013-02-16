@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.CFMLEditor;
@@ -38,6 +39,7 @@ import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
 import org.cfeclipse.cfml.parser.CFDocument;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+import org.cfeclipse.cfml.parser.docitems.TagItem;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
@@ -52,6 +54,7 @@ import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.ISelectionValidator;
+import org.eclipse.jface.text.ISynchronizable;
 import org.eclipse.jface.text.ITextInputListener;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITextViewer;
@@ -162,7 +165,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 	private String partOfWordCharsShift;
 	private String breakWordCharsShift;
 	private CfmlTagItem lastSelectedTag;
-	private CfmlTagItem selectedTag;
+	private DocItem selectedTag;
 	private boolean selectedTagWasSelected;
 	private CFMLEditor editor;
 	private static String TYPE = "org.cfeclipse.cfml.occurrencemarker";
@@ -182,7 +185,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 	private ITextSelection fForcedMarkOccurrencesSelection;
 	private boolean fMarkOccurrenceAnnotations = true;
 	private boolean fStickyOccurrenceAnnotations = false;
-	private CfmlTagItem currentDocItem;
+	private DocItem currentDocItem;
 	private MouseEvent lastMouseEvent;
 	private String[] wordCharArray;
 
@@ -244,7 +247,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		TextSelection sel = (TextSelection) this.fViewer.getSelection();
 		int startPos = sel.getOffset();
 		ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
-		CfmlTagItem cti = cfd.getTagAt(startPos, startPos, true);
+		DocItem cti = cfd.getTagAt(startPos, startPos, true);
 		if(cti != null && this.selectedTag != null) {
 			if(cti.getStartPosition() == this.selectedTag.getStartPosition()){				
 				this.selectedTagWasSelected = true;
@@ -260,10 +263,12 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 			// cfcomponent returns ASTVarDeclaration -- syntax is null for whatever reason (ASTVar's from cfscript?!)
 			if(cti != null 
 				&& !cti.getName().equals("CfmlComment") && !cti.getName().equals("cfscript")
-				&& !cti.getName().startsWith("AST")) {
- 			if(cti.getName().equals("CfmlCustomTag") || cti.hasClosingTag() ) {
-					markBeginEndTags(cti);	
-			}
+					&& !cti.getName().startsWith("AST") && !cti.getName().equals("ScriptItem")) {
+				if (cti instanceof CfmlTagItem) {
+					if (cti.getName().equals("CfmlCustomTag") || ((TagItem) cti).hasClosingTag()) {
+						markBeginEndTags((CfmlTagItem) cti);
+					}
+				}
 		} 
 		} catch (Exception e) {
 			System.err.println(cti.getName());
@@ -288,7 +293,8 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 			this.selectedTag = this.currentDocItem;
 		}
 	}
-	public CfmlTagItem getSelectedTag() {
+
+	public DocItem getSelectedTag() {
 		return this.selectedTag;
 	}
 	public DocItem getCurrentDocItem() {
@@ -486,10 +492,9 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 
 		if ((e.stateMask & SWT.MOD1) != 0) {
 
-			String location = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
 			String dict = propertyManager.getCurrentDictionary(((IFileEditorInput) editor.getEditorInput()).getFile().getProject());
-			CFMLParser fCfmlParser = new CFMLParser(location, dict);
+			CFMLParser fCfmlParser = CFMLPlugin.newCFMLParser(dict);
 			ICFDocument cfd = (ICFDocument) this.fViewer.getDocument();
 			CFMLSource cfmlSource = fCfmlParser.addCFMLSource(cfd.getCFDocument().getFilename(),cfd.get());
 			ParserTag tag = cfmlSource.getEnclosingTag(startpos);
@@ -649,23 +654,24 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		
 	protected void markBeginEndTags(CfmlTagItem tagItem) {
 		if(tagItem.getMatchingItem() != null) {			
-			Map tagOpen = new HashMap();
-			Map tagClose = new HashMap();
+			Map<String, String> tagOpen = new HashMap<String, String>();
+			Map<String, String> tagClose = new HashMap<String, String>();
 			MarkerUtilities.setMessage(tagOpen, "Open " + tagItem.getName());
 			MarkerUtilities.setLineNumber(tagOpen, tagItem.getLineNumber());
 			tagOpen.put(IMarker.LOCATION, "line " + tagItem.getLineNumber() + ", Chars " + tagItem.getStartPosition() + "-" + tagItem.getEndPosition());
-			tagOpen.put(IMarker.CHAR_START, tagItem.getStartPosition());
-			tagOpen.put(IMarker.CHAR_END, tagItem.getEndPosition());
+			tagOpen.put(IMarker.CHAR_START, Integer.toString(tagItem.getStartPosition()));
+			tagOpen.put(IMarker.CHAR_END, Integer.toString(tagItem.getEndPosition()));
 
 			MarkerUtilities.setMessage(tagClose, "Close " + tagItem.getName());
 			MarkerUtilities.setLineNumber(tagClose, tagItem.getMatchingItem().getLineNumber());
 			tagClose.put(IMarker.LOCATION, "line " + tagItem.getMatchingItem().getLineNumber() + ", Chars " + tagItem.getMatchingItem().getStartPosition() + "-" + tagItem.getMatchingItem().getEndPosition());
-			tagClose.put(IMarker.CHAR_START, tagItem.getMatchingItem().getStartPosition());
-			tagClose.put(IMarker.CHAR_END, tagItem.getMatchingItem().getEndPosition());
+			tagClose.put(IMarker.CHAR_START, Integer.toString(tagItem.getMatchingItem().getStartPosition()));
+			tagClose.put(IMarker.CHAR_END, Integer.toString(tagItem.getMatchingItem().getEndPosition()));
 			
 			try {
-				MarkerUtilities.createMarker(((ICFDocument)this.fViewer.getDocument()).getResource(), tagOpen, this.tagBeginEndAnnotation);
-				MarkerUtilities.createMarker(((ICFDocument)this.fViewer.getDocument()).getResource(), tagClose, this.tagBeginEndAnnotation);
+				ICFDocument doc = ((ICFDocument) this.fViewer.getDocument());
+				MarkerUtilities.createMarker(doc.getResource(), tagOpen, SelectionCursorListener.tagBeginEndAnnotation);
+				MarkerUtilities.createMarker(doc.getResource(), tagClose, SelectionCursorListener.tagBeginEndAnnotation);
 			} catch (CoreException excep) {
 				excep.printStackTrace();
 			} catch (Exception anyExcep) {
@@ -759,7 +765,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 			
 			// Add occurrence annotations
 			int length= fPositions.size();
-			Map annotationMap= new HashMap(length);
+			Map<Annotation, Position> annotationMap = new ConcurrentHashMap<Annotation, Position>(length);
 			for (int i= 0; i < length; i++) {
 				
 				if (isCanceled())
@@ -772,6 +778,7 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 				try {
 					message= document.get(position.offset, position.length);
 				} catch (BadLocationException ex) {
+					fPositions.remove(i);
 					// Skip this match
 					continue;
 				}
@@ -784,21 +791,21 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 				return Status.CANCEL_STATUS;
             }
 			
-            Object lock= editor.getLockObject(document);
-            if (lock == null) {
-                updateAnnotations(annotationModel, annotationMap);
-            } else {
-                synchronized (lock) {
-                    updateAnnotations(annotationModel, annotationMap);
-                }
-            }
+			Object lock = ((ISynchronizable) annotationModel).getLockObject();
+			if (lock == null) {
+				updateAnnotations(annotationModel, annotationMap);
+			} else {
+				synchronized (lock) {
+					updateAnnotations(annotationModel, annotationMap);
+				}
+			}
 
 			return Status.OK_STATUS;
 		}
 
         private void updateAnnotations(IAnnotationModel annotationModel, Map annotationMap) {
             if (annotationModel instanceof IAnnotationModelExtension) {
-            	if(fOccurrenceAnnotations != null && fOccurrenceAnnotations.length > 0) {            		
+				if (fOccurrenceAnnotations != null && fOccurrenceAnnotations.length > 0) {
             		((IAnnotationModelExtension)annotationModel).replaceAnnotations(fOccurrenceAnnotations, annotationMap);
             	}
             } else {

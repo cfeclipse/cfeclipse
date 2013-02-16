@@ -10,7 +10,6 @@ package org.cfeclipse.cfml.snippets.views.snips;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.widgets.Shell;
 /**
  * @author Administrator
@@ -27,7 +26,7 @@ public class SnipSmartDialog {
     
     public static String parse(String str, Shell shell ) {
         String newStr = str;
-        ArrayList list = new ArrayList();
+        ArrayList<SnipVarItem> list = new ArrayList<SnipVarItem>();
         int position = 0;
         
         while(newStr.indexOf("$${",position) >= 0) {
@@ -44,7 +43,7 @@ public class SnipSmartDialog {
 			
 			SnipVarItem item = new SnipVarItem(variable,optionValArray,expression);
 			
-			Iterator i = list.iterator();
+			Iterator<SnipVarItem> i = list.iterator();
 			
 			boolean duplicateItem = false;
 			while(i.hasNext()) {
@@ -67,7 +66,7 @@ public class SnipSmartDialog {
 		    dia.setTitle("Replace  variables");
 		    if(dia.open() == org.eclipse.jface.window.Window.OK){
 		        try {
-			        Iterator i = list.iterator();
+			        Iterator<SnipVarItem> i = list.iterator();
 			        while (i.hasNext()) {
 			            SnipVarItem item = (SnipVarItem)i.next();
 			            String original = "$${" + item.getOriginal() + "}";

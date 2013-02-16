@@ -531,7 +531,10 @@ public abstract class SyntaxDictionary {
 						"The passed set must have only Strings, Procedures, or Parameters"
 					);
 				}
-				
+				// sometimes a bad parse leaves possible null
+				if (possible == null) {
+					possible = "";
+				}
 				// Strip out unnecessary entries if we are inside a function.
 				if (start.endsWith("(") && possible.equalsIgnoreCase(start.substring(0,start.length()-1))) {
 					filterset.add(item);

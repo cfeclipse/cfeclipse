@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?pde version="3.1"?>
+<?pde version="3.5"?>
 
-<product name="CFEclipse" id="org.cfeclipse.cfml.product" application="org.eclipse.ui.ide.workbench" useFeatures="false">
+<product name="CFEclipse" uid="org.cfeclipse.cfml.product" id="org.cfeclipse.cfml.product" application="org.eclipse.ui.ide.workbench" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/org.cfeclipse.cfml/icons/icons/about.gif"/>
@@ -15,7 +15,8 @@ Visit http://www.cfeclipse.org
       </text>
    </aboutInfo>
 
-   <configIni use="default"/>
+   <configIni use="default">
+   </configIni>
 
    <launcherArgs>
    </launcherArgs>
@@ -40,99 +41,44 @@ Visit http://www.cfeclipse.org
       </win>
    </launcher>
 
+   <vm>
+   </vm>
+
    <plugins>
-      <plugin id="com.ibm.icu"/>
-      <plugin id="com.jcraft.jsch"/>
-      <plugin id="org.apache.ant"/>
-      <plugin id="org.apache.lucene"/>
-      <plugin id="org.cfeclipse.cfml"/>
-      <plugin id="org.eclipse.ant.core"/>
-      <plugin id="org.eclipse.ant.ui"/>
-      <plugin id="org.eclipse.compare"/>
-      <plugin id="org.eclipse.core.commands"/>
-      <plugin id="org.eclipse.core.contenttype"/>
-      <plugin id="org.eclipse.core.expressions"/>
-      <plugin id="org.eclipse.core.filebuffers"/>
-      <plugin id="org.eclipse.core.filesystem"/>
-      <plugin id="org.eclipse.core.filesystem.hpux.PA_RISC" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.linux.x86" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.linux.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.macosx" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.win32.x86" fragment="true"/>
-      <plugin id="org.eclipse.core.jobs"/>
-      <plugin id="org.eclipse.core.resources"/>
-      <plugin id="org.eclipse.core.resources.compatibility" fragment="true"/>
-      <plugin id="org.eclipse.core.resources.win32" fragment="true"/>
-      <plugin id="org.eclipse.core.runtime"/>
-      <plugin id="org.eclipse.core.runtime.compatibility"/>
-      <plugin id="org.eclipse.core.runtime.compatibility.auth"/>
-      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
-      <plugin id="org.eclipse.core.variables"/>
-      <plugin id="org.eclipse.debug.core"/>
-      <plugin id="org.eclipse.debug.ui"/>
-      <plugin id="org.eclipse.equinox.common"/>
-      <plugin id="org.eclipse.equinox.preferences"/>
-      <plugin id="org.eclipse.equinox.registry"/>
-      <plugin id="org.eclipse.help"/>
-      <plugin id="org.eclipse.help.appserver"/>
-      <plugin id="org.eclipse.help.base"/>
-      <plugin id="org.eclipse.help.ui"/>
-      <plugin id="org.eclipse.jdt.core"/>
-      <plugin id="org.eclipse.jdt.core.manipulation"/>
-      <plugin id="org.eclipse.jdt.debug"/>
-      <plugin id="org.eclipse.jdt.debug.ui"/>
-      <plugin id="org.eclipse.jdt.launching"/>
-      <plugin id="org.eclipse.jdt.ui"/>
-      <plugin id="org.eclipse.jface"/>
-      <plugin id="org.eclipse.jface.text"/>
-      <plugin id="org.eclipse.ltk.core.refactoring"/>
-      <plugin id="org.eclipse.ltk.ui.refactoring"/>
-      <plugin id="org.eclipse.osgi"/>
-      <plugin id="org.eclipse.platform"/>
-      <plugin id="org.eclipse.search"/>
-      <plugin id="org.eclipse.swt"/>
-      <plugin id="org.eclipse.swt.carbon.macosx" fragment="true"/>
-      <plugin id="org.eclipse.swt.gtk.linux.ppc" fragment="true"/>
-      <plugin id="org.eclipse.swt.gtk.linux.x86" fragment="true"/>
-      <plugin id="org.eclipse.swt.gtk.linux.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.swt.gtk.solaris.sparc" fragment="true"/>
-      <plugin id="org.eclipse.swt.motif.aix.ppc" fragment="true"/>
-      <plugin id="org.eclipse.swt.motif.hpux.PA_RISC" fragment="true"/>
-      <plugin id="org.eclipse.swt.motif.linux.x86" fragment="true"/>
-      <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
-      <plugin id="org.eclipse.team.core"/>
-      <plugin id="org.eclipse.team.cvs.core"/>
-      <plugin id="org.eclipse.team.cvs.ssh"/>
-      <plugin id="org.eclipse.team.cvs.ssh2"/>
-      <plugin id="org.eclipse.team.cvs.ui"/>
-      <plugin id="org.eclipse.team.ui"/>
-      <plugin id="org.eclipse.text"/>
-      <plugin id="org.eclipse.ui"/>
-      <plugin id="org.eclipse.ui.browser"/>
-      <plugin id="org.eclipse.ui.carbon" fragment="true"/>
-      <plugin id="org.eclipse.ui.cheatsheets"/>
-      <plugin id="org.eclipse.ui.console"/>
-      <plugin id="org.eclipse.ui.editors"/>
-      <plugin id="org.eclipse.ui.externaltools"/>
-      <plugin id="org.eclipse.ui.forms"/>
-      <plugin id="org.eclipse.ui.ide"/>
-      <plugin id="org.eclipse.ui.intro"/>
-      <plugin id="org.eclipse.ui.intro.universal"/>
-      <plugin id="org.eclipse.ui.navigator"/>
-      <plugin id="org.eclipse.ui.navigator.resources"/>
-      <plugin id="org.eclipse.ui.views"/>
-      <plugin id="org.eclipse.ui.views.properties.tabbed"/>
-      <plugin id="org.eclipse.ui.win32" fragment="true"/>
-      <plugin id="org.eclipse.ui.workbench"/>
-      <plugin id="org.eclipse.ui.workbench.texteditor"/>
-      <plugin id="org.eclipse.update.configurator"/>
-      <plugin id="org.eclipse.update.core"/>
-      <plugin id="org.eclipse.update.core.linux" fragment="true"/>
-      <plugin id="org.eclipse.update.core.win32" fragment="true"/>
-      <plugin id="org.eclipse.update.ui"/>
-      <plugin id="org.tigris.subversion.subclipse.core"/>
-      <plugin id="org.tigris.subversion.subclipse.doc"/>
-      <plugin id="org.tigris.subversion.subclipse.ui"/>
    </plugins>
+
+   <features>
+      <feature id="org.eclipse.platform"/>
+      <feature id="org.cfeclipse.cfml.feature"/>
+      <feature id="org.cfeclipse.cfml.snippets.feature"/>
+      <feature id="org.mxunit.eclipseplugin.feature"/>
+      <feature id="org.eclipse.equinox.p2.core.feature"/>
+      <feature id="org.eclipse.rcp"/>
+      <feature id="org.eclipse.help"/>
+      <feature id="org.eclipse.equinox.p2.rcp.feature"/>
+      <feature id="org.eclipse.equinox.p2.user.ui"/>
+      <feature id="org.eclipse.equinox.p2.extras.feature"/>
+      <feature id="org.eclipse.emf.ecore"/>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.emf.common"/>
+      <feature id="org.eclipse.egit"/>
+      <feature id="org.eclipse.egit.mylyn"/>
+      <feature id="org.eclipse.mylyn_feature"/>
+      
+      <feature id="org.eclipse.mylyn.bugzilla_feature"/>
+      <feature id="org.eclipse.mylyn.commons" />
+      <feature id="org.eclipse.mylyn.commons.identity"/>
+      <!--
+      <feature id="org.eclipse.mylyn.commons.notifications"/>
+      -->
+      <feature id="org.eclipse.mylyn.commons.repositories"/>
+      <feature id="org.eclipse.mylyn.discovery" />
+      <feature id="org.eclipse.mylyn.monitor" />
+      <feature id="org.eclipse.mylyn.tasks.ide" />
+      <feature id="org.eclipse.mylyn.team_feature" />
+      <feature id="org.eclipse.mylyn.trac_feature" />
+      <feature id="org.eclipse.mylyn.wikitext_feature" />
+   </features>
+
 
 </product>

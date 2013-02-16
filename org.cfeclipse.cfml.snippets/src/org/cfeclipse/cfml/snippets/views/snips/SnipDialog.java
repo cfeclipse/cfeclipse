@@ -34,13 +34,10 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -59,7 +56,7 @@ import org.eclipse.swt.widgets.Text;
 public class SnipDialog extends Dialog{
     protected String title;
     
-    private ArrayList itemList;
+    private ArrayList<?> itemList;
 
     private Combo combo;
     private Text text;
@@ -78,10 +75,6 @@ public class SnipDialog extends Dialog{
     
     protected Control createDialogArea(Composite parent) {
         Composite container = (Composite) super.createDialogArea(parent);
-        
-        
-        
-        String options[];
 
         GridLayout gl = new GridLayout();
         gl.numColumns = 3;
@@ -89,10 +82,9 @@ public class SnipDialog extends Dialog{
         container.setLayout(gl);
         FontData labelFontData = new FontData();
         labelFontData.setStyle(SWT.BOLD);
-        FontData[] containerFontData = container.getFont().getFontData();
         Font labelFont = new Font(parent.getDisplay(), labelFontData);
         
-        Iterator i = itemList.iterator();
+        Iterator<?> i = itemList.iterator();
         SnipVarItem item;
         while (i.hasNext()) {
             item = (SnipVarItem)i.next();
@@ -201,7 +193,7 @@ public class SnipDialog extends Dialog{
    }
    protected void buttonPressed(int buttonId) {
        if (buttonId == IDialogConstants.OK_ID) {
-           Iterator i = itemList.iterator();
+           Iterator<?> i = itemList.iterator();
           
            while (i.hasNext()) {
                ((SnipVarItem)i.next()).setReplacement();
@@ -216,7 +208,7 @@ public class SnipDialog extends Dialog{
     
     
     
-    public void setItemList(ArrayList itemList) {
+    public void setItemList(ArrayList<?> itemList) {
         this.itemList = itemList;
     }
     

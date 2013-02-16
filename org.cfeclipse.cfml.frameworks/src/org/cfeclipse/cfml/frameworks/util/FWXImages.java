@@ -35,8 +35,6 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 
-import sun.java2d.pipe.DrawImage;
-
 public class FWXImages {
 	protected static URL iconBaseURL;
 	protected static final ImageRegistry IMAGE_REGISTRY = Activator.getDefault().getImageRegistry();

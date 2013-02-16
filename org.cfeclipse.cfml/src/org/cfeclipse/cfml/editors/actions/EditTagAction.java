@@ -36,22 +36,15 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.dictionary.Tag;
 import org.cfeclipse.cfml.editors.CFMLEditor;
-import org.cfeclipse.cfml.editors.EditableTags;
 import org.cfeclipse.cfml.editors.ICFDocument;
-import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
-import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
-import org.cfeclipse.cfml.parser.docitems.AttributeItem;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.util.CFDocUtils;
 import org.cfeclipse.cfml.views.dictionary.TagFormatter;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -152,8 +145,9 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 		CFMLEditor thisEdit = (CFMLEditor) activeEditor;
 		IDocument doc = thisEdit.getDocumentProvider().getDocument(thisEdit.getEditorInput());
 		ISelection sel = thisEdit.getSelectionProvider().getSelection();
-		CfmlTagItem tagItem = thisEdit.getSelectionCursorListener().getSelectedTag();
-		if (tagItem != null) {
+		DocItem docItem = thisEdit.getSelectionCursorListener().getSelectedTag();
+		if (docItem != null && docItem instanceof CfmlTagItem) {
+			CfmlTagItem tagItem = (CfmlTagItem) docItem;
 
 			int tagStart = tagItem.getStartPosition();
 			int tagEnd = tagItem.getEndPosition();

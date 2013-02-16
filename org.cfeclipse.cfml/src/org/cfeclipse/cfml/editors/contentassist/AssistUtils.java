@@ -24,12 +24,39 @@
  */
 package org.cfeclipse.cfml.editors.contentassist;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.dictionary.Function;
+import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartition;
 import org.cfeclipse.cfml.editors.partitioner.CFEPartitioner;
+import org.cfeclipse.cfml.parser.CFDocument;
+import org.cfeclipse.cfml.parser.CFNodeList;
+import org.cfeclipse.cfml.parser.CFParser;
+import org.cfeclipse.cfml.parser.cfmltagitems.CfmlComment;
+import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
+import org.cfeclipse.cfml.parser.docitems.ScriptItem;
+import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
+import org.cfeclipse.cfml.util.ResourceUtils;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
 
 
 /**
@@ -39,6 +66,11 @@ import org.eclipse.jface.text.ITypedRegion;
  * @author Oliver Tupman
  */
 public class AssistUtils {
+
+	/**
+	 * Regular expression for matching @cfmlvariable declarations
+	 */
+	private static final String cfmlVarRE = "[\\s]*<!---[\\s]+@cfmlvariable[\\s]+name=\"([A-Za-z0-9_-]+)\"[\\s]+type=\"([A-Za-z0-9\\._-]+)\"[\\s]+--->";
 
     public static boolean isInCorrectPartitionTypes(IAssistState state, String partitionTypes[])
     {
@@ -165,4 +197,249 @@ public class AssistUtils {
 		
 		return currState;
 	}
+
+	public static String getCFCName(String variableName, IAssistState state) {
+		CFDocument doc = ((ICFDocument) state.getIDocument()).getCFDocument();
+		return getCFCName(variableName, doc);
+	}
+
+	public static String getCFCName(String variableName, CFDocument doc) {
+		CFNodeList nodelist = doc.getDocumentRoot().getChildNodes();
+		String cfcName = null;
+
+		Iterator iter = nodelist.iterator();
+
+		while (iter.hasNext()) {
+			Object cfItem = iter.next();
+
+			if (cfItem instanceof CfmlComment) {
+				CfmlComment comment = (CfmlComment) cfItem;
+				String commentText = ((CfmlComment) cfItem).getItemData();
+
+				// Now get the type from the comment text    			
+				Pattern p = Pattern.compile(cfmlVarRE);
+				Matcher m = p.matcher(commentText);
+
+				if (m.find() && m.group(1).equalsIgnoreCase(variableName)) {
+					cfcName = m.group(2);
+					break;
+				}
+			} else if (cfItem instanceof CfmlTagItem) {
+				CfmlTagItem cfsetTag = (CfmlTagItem) cfItem;
+				if (!((CfmlTagItem) cfItem).getName().equalsIgnoreCase("cfset")) {
+					continue;
+				}
+				String tagText = ((CfmlTagItem) cfItem).getItemData();
+				Map<String, String> varMap = parseCfSetText(tagText);
+				if (varMap == null) {
+					continue;
+				} else {
+					if (varMap.get("variableName").equalsIgnoreCase(variableName)) {
+						cfcName = varMap.get("variableType");
+						break;
+					}
+				}
+			}
+		}
+		CFNodeList scriptNodes = doc.getDocumentRoot().selectNodes("//ASTAssignment");
+		Iterator i = scriptNodes.iterator();
+		while (i.hasNext()) {
+			ScriptItem assignment = (ScriptItem) i.next();
+			if (assignment.getFirstChild().getItemData().equals(variableName)) {
+				return assignment.getLastChild().getItemData().replaceAll("\\(.*", "");
+			}
+		}
+		scriptNodes = doc.getDocumentRoot().selectNodes("//ASTVarDeclaration");
+		i = scriptNodes.iterator();
+		while (i.hasNext()) {
+			ScriptItem assignment = (ScriptItem) i.next();
+			Iterator id = assignment.selectNodes("//ASTIdentifier").iterator();
+			while (id.hasNext()) {
+				ScriptItem identifier = (ScriptItem) id.next();
+				if (identifier.getItemData().equals(variableName)) {
+					return identifier.getParent().getLastChild().getItemData().replaceAll("\\(.*", "");
+				}
+			}
+		}
+		return cfcName;
+	}
+
+	private static Map<String, String> parseCfSetText(String tagText) {
+		/* 
+		 * Two cases we need to handle:
+		 * 
+		 * <cfset var foo = "bar">
+		 * <cfset foo = "bar">
+		 * 
+		 */
+		Map<String, String> resultMap = new HashMap<String, String>();
+		String withVarKeywordRE = "<cfset[\\s]+var[\\s]+([A-Za-z0-9\\._-]+)[\\s]+=(.*)>";
+		String withoutVarKeywordRE = "<cfset[\\s]+([A-Za-z0-9\\._-]+)[\\s]+=(.*)>";
+
+		// Now get the type from the comment text    			
+		Pattern p = Pattern.compile(withVarKeywordRE);
+		Matcher m = p.matcher(tagText);
+
+		if (m.find()) {
+			resultMap.put("variableName", m.group(1));
+			resultMap.put("variableType", parseCreateObjectType(m.group(2)));
+		} else {
+			p = Pattern.compile(withoutVarKeywordRE);
+			m = p.matcher(tagText);
+			if (m.find()) {
+				resultMap.put("variableName", m.group(1));
+				resultMap.put("variableType", parseCreateObjectType(m.group(2)));
+			}
+		}
+
+		if (resultMap.size() != 2) {
+			return null;
+		} else {
+			return resultMap;
+		}
+	}
+
+	private static String parseCreateObjectType(String tagText) {
+		/*
+		 * tagText should be a string in the form createObject("component","componentName")
+		 */
+
+		String result = null;
+		String trimmedTagText = tagText.replaceAll("[\\s]+", "");
+		Pattern p = Pattern.compile("createObject\\([\"']component[\"'],[\"']([A-Za-z0-9\\._-]+)[\"']\\)", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(trimmedTagText);
+
+		if (m.find()) {
+			result = m.group(1);
+		}
+		return result;
+	}
+
+	/**
+	 * This function loops through a project finding references to the CFC we seek. This can be done in 2 ways, break at
+	 * the first, or return a whole bunch of proposals
+	 * 
+	 * Initally breaks at the first one
+	 * 
+	 * @param cfcname
+	 */
+	public static IFile findCFC(String fullyQualifiedCfc) {
+		if (fullyQualifiedCfc == null)
+			return null;
+		IEditorPart editor = CFMLPlugin.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		IProject project = ((IFileEditorInput) editor.getEditorInput()).getFile().getProject();
+
+		//Will need recursive function
+		IFile foundCFC = null;
+
+		// Using the . as a separator, get the CFC name from the last token
+
+		String cfcname = splitFullyQualifiedName(fullyQualifiedCfc) + ".cfc";
+
+		try {
+			IResource firstChildren[] = project.members();
+
+			// To make this function quicker, doing two loops. The first is through the files, 
+			// Then, we go into the directory, why? becuase I dont want to loop through the whole directory 
+			// tree if the file is in the first directory!
+
+			//Now loop through directories if we didnt find the file.
+			if (foundCFC == null) {
+				for (int i = 0; i < firstChildren.length; i++) {
+					Object item = firstChildren[i];
+					if (item instanceof IFolder) {
+						foundCFC = reFindCFC(cfcname, (IFolder) item);
+						if (foundCFC != null) {
+							return foundCFC;
+						}
+					} else { //Its a file
+						IFile theFile = (IFile) item;
+						if (theFile.getName().equalsIgnoreCase(cfcname)) {
+							return theFile;
+						}
+
+					}
+				}
+			}
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+
+		return foundCFC;
+	}
+
+	private static IFile reFindCFC(String cfcname, IFolder folder) {
+		IFile foundCFC = null;
+
+		try {
+			IResource firstChildren[] = folder.members();
+
+			// To make this function quicker, doing two loops. The first is through the files, 
+			// Then, we go into the directory, why? because I don't want to loop through the whole directory 
+			// tree if the file is in the first directory!
+
+			// Now loop through directories if we didn't find the file.
+			if (foundCFC == null) {
+				for (int i = 0; i < firstChildren.length; i++) {
+					Object item = firstChildren[i];
+					if (item instanceof IFolder) {
+						foundCFC = reFindCFC(cfcname, (IFolder) item);
+						if (foundCFC != null) {
+							return foundCFC;
+						}
+					} else { //Its a file
+						IFile theFile = (IFile) item;
+						if (theFile.getName().equalsIgnoreCase(cfcname)) {
+							return theFile;
+						}
+
+					}
+				}
+			}
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+
+		return foundCFC;
+	}
+
+	public static String splitFullyQualifiedName(String fullyQualifiedCfc) {
+
+		String result = null;
+		if (fullyQualifiedCfc != null && fullyQualifiedCfc.length() > 0) {
+			String[] tokens = fullyQualifiedCfc.split("\\.");
+			result = tokens[tokens.length - 1];
+		}
+		return result;
+	}
+
+	public static Set<Function> getFunctions(IFile cfcresource, int offset) {
+		if (cfcresource == null) {
+			System.out.println("Resource not found");
+			return null;
+		}
+
+		//
+		//Now that we have the resource, convert it to a string
+		String inputString = "";
+		try {
+			inputString = ResourceUtils.getStringFromInputStream(cfcresource.getContents());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		CFParser parser = new CFParser();
+		IPreferenceStore prefStore = CFMLPlugin.getDefault().getPreferenceStore();
+		parser.setCFScriptParsing(prefStore.getBoolean(ParserPreferenceConstants.P_PARSE_DOCFSCRIPT));
+		CFDocument doc = parser.parseDoc(inputString);
+		if (doc == null) {
+			return null;
+		}
+		return doc.getFunctions();
+	}
+
 }

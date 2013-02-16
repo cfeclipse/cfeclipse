@@ -2,9 +2,6 @@
 	<property name="buildtype" value="update-dev"/>
 
 	<taskdef resource="net/jtools/classloadertask/antlib.xml" classpath="lib/ant-classloadertask.jar" />
-	<taskdef name="twitter" classname="den.ant.twitter.AntTwitterTask" classpathref="build.lib.path" />
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build.lib.path" />
-
 	<classloader loader="project">
 		<classpath>
 			<fileset dir="lib/" includes="*.jar" excludes="ant-classloadertask.jar" />
@@ -15,6 +12,9 @@
 			<include name="*.jar" />
 		</fileset>
 	</path>
+	<taskdef name="twitter" classname="den.ant.twitter.AntTwitterTask" classpathref="build.lib.path" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build.lib.path" />
+
 
 	<target name="cleanup">
 		<delete>
@@ -56,7 +56,17 @@
 		</copy>
 	</target>
 
-	<target name="update-dev" depends="init">
+	<target name="createArchivedUpdateSite">
+		<property file="publish.properties" />
+		<delete file="cfeupdatesite.zip" />
+		<zip destfile="cfeupdatesite.zip">
+			<zipfileset dir="./features" prefix="features" />
+			<zipfileset dir="./plugins" prefix="plugins" />
+			<zipfileset dir="." includes="site.xml" />
+		</zip>
+	</target>
+
+	<target name="update-dev" depends="init,createArchivedUpdateSite">
 		<input message="Do you want to tweet that this build is available?" validargs="y,n" addproperty="do.delete" />
 		<antcall target="clean-site" />
 		<condition property="do.tweet">
@@ -102,7 +112,55 @@
 			bitlyApiKey="bitly-key" 
 			enableBitly="false" />
 	</target>
+	
+	<!-- squish update site files -->
 
+	  <target name="optimize" description="Site Optimizer">
+	    <!-- CUSTOM -->
+	    <property name="ECLIPSE_HOME" location="/Users/valliant/programs/eclipse-inst/eclipse3.6.64B/" />
+	    <property name="jar.name" value="org.ucdetector_1.9.0.jar" />
+	    <!-- LAUNCHER -->
+	    <pathconvert property="LAUNCHER">
+	      <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.equinox.launcher_*.jar" />
+	    </pathconvert>
+	    <echo>LAUNCHER = '${LAUNCHER}' - when LAUNCHER is empty, create new property 'LAUNCHER'</echo>
+
+	    <echo>Running build</echo>
+	    <java jar="${LAUNCHER}" fork="true" failonerror="true">
+	      <arg line="-debug -consolelog" />
+	      <arg line="-application org.eclipse.equinox.p2.publisher.UpdateSitePublisher" />
+	      <arg line="-source ./" />
+	      <arg line="-metadataRepository file://tmp/repository" />
+	      <arg line="-artifactRepository file://tmp/repository" />
+	      <arg line="-compress" />
+	      <arg line="-publishArtifacts" />
+	    </java>
+	  	
+	  	<!-- Step 4 and 5 -->
+
+	    <!-- 1. Part -->
+	    <echo>1. For each JAR file in question, "condition" or "repack" the JAR file to prepare it for the second part.</echo>
+	    <java jar="${LAUNCHER}" fork="true" failonerror="true">
+	      <arg line="-debug -consolelog" />
+	      <arg line="-application org.eclipse.update.core.siteOptimizer" />
+	      <arg line="-jarProcessor -verbose -processAll -repack -outputDir ${basedir}/plugins" />
+		      <arg line="${basedir}/plugins/${jar.name}" />
+	      <arg line="file://tmp/repository/plugins/org.cfeclipse.cfml_1.4.5.201202261042.jar" />
+	    </java>
+
+	    <!-- 2. Part -->
+	    <echo>2. Generate .jar.pack.gz files from a set of conditioned JAR files. Also generate digest.zip</echo>
+	    <java jar="${LAUNCHER}" fork="true" failonerror="true">
+	      <arg line="-debug -consolelog" />
+	      <arg line="-application org.eclipse.update.core.siteOptimizer" />
+	      <arg line="-digestBuilder" />
+	      <arg line="-digestOutputDir=${basedir}" />
+	      <arg line="-siteXML=${basedir}/site.xml" />
+	      <arg line="-jarProcessor -verbose -pack -outputDir ${basedir} ${basedir}" />
+	    </java>
+	  </target>	
+
+	
 	<macrodef name="push">
 		<attribute name="remotedir" />
 		<sequential>
@@ -113,7 +171,7 @@
 			<!-- I have no idea why i needed to do this. when i had all of them 
 			in a single scp call, it kept hanging.-->
 			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}" trust="true" verbose="true">
-				<fileset dir="." includes="site.xml,associateSites.xml,index.html,artifacts.jar,content.jar,logs.zip,removePreviousBuilds.sh" />
+				<fileset dir="." includes="site.xml,cfeupdatesite.zip,associateSites.xml,index.html,artifacts.jar,content.jar,content.xml,category.xml,changelog.xml,logs.zip,removePreviousBuilds.sh" />
 			</scp>
 			<scp port="${site.ssh.port}" todir="${site.username}:${site.password}@${site.url}:${site.htmlroot}/@{remotedir}/web" trust="true" verbose="true">
 				<fileset dir="web">
