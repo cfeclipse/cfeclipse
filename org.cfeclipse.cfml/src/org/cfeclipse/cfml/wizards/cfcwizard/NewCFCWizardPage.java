@@ -63,13 +63,14 @@ public class NewCFCWizardPage extends WizardPage {
 	private Text cfcPath;
 	private Text cfcHint;
 	private Text cfcDisplayName;
+	private Button cfcAccessors;
 	private Button cfcOutput;
+	private Button cfcPersistent;
 	
 	private ISelection selection;
 	
 	private CFCBean cfcBean;
 	private Combo cfcStyle;
-	private Button cfcPersistent;
 
 	/**
 	 * Constructor for SampleNewWizardPage.
@@ -81,7 +82,7 @@ public class NewCFCWizardPage extends WizardPage {
 		setDescription("New CF Component wizard.");
 		this.selection = selection;
 		
-		this.cfcBean = new CFCBean("", "", "", "", "", "");
+		this.cfcBean = new CFCBean();
 	}
 
 	/**
@@ -190,7 +191,23 @@ public class NewCFCWizardPage extends WizardPage {
 				dialogChanged();
 			}
 		});
-		
+
+		label = new Label(container, SWT.NULL);
+		label.setText("&Accessors");
+		this.cfcAccessors = new Button(container, SWT.CHECK);
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan = 2;
+		this.cfcAccessors.setLayoutData(gd);
+		this.cfcAccessors.setSelection(true);
+		this.cfcAccessors.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				dialogChanged();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+
 		label = new Label(container, SWT.NULL);
 		label.setText("&Output");
 		this.cfcOutput = new Button(container, SWT.CHECK);
@@ -218,6 +235,7 @@ public class NewCFCWizardPage extends WizardPage {
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
+
 		initialize();
 		dialogChanged();
 		setControl(container);
@@ -251,8 +269,11 @@ public class NewCFCWizardPage extends WizardPage {
 		}
 		
 		this.cfcBean.setName("NewCFComponent");
+		this.cfcBean.setAccessors(true);
+
 		this.cfcName.setText(this.cfcBean.getName());
-		
+		this.cfcName.setSelection(0, this.cfcBean.getName().length());
+
 	}
 	
 	/**
@@ -322,6 +343,7 @@ public class NewCFCWizardPage extends WizardPage {
 		String extend = this.cfcExtends.getText();
 		String hint = this.cfcHint.getText();
 		String displayName = this.cfcDisplayName.getText();
+		String accessors = Boolean.toString(this.cfcAccessors.getSelection());
 		String output = Boolean.toString(this.cfcOutput.getSelection());
 		String persistent = Boolean.toString(this.cfcPersistent.getSelection());
 		
@@ -331,6 +353,7 @@ public class NewCFCWizardPage extends WizardPage {
 		this.cfcBean.setHint(hint);
 		this.cfcBean.setName(fileName);
 		this.cfcBean.setOutput(output);
+		this.cfcBean.setAccessors(accessors);
 		this.cfcBean.setPersistent(persistent);
 		this.cfcBean.setPath(containerName);
 

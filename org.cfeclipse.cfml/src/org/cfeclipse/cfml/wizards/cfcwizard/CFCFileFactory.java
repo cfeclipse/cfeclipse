@@ -1,14 +1,27 @@
 package org.cfeclipse.cfml.wizards.cfcwizard;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 public class CFCFileFactory {
+
+	private static DateFormat dateformat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
 
 	public static StringBuffer getString(CFCBean appCFCBean) {
 	
 		StringBuffer sb = new StringBuffer();
 		
+		sb	.append("<!---\n")
+			.append("  --- ").append(appCFCBean.getName()).append("\n")
+			.append("  --- \n")
+			.append("  --- author: ").append(System.getProperty("user.name")).append("\n")
+			.append("  --- date:   ").append(dateformat.format(new Date())).append("\n")
+			.append("  --->\n")
+			;
+	
 		sb.append("<cfcomponent");
 		
 		if(appCFCBean.getDisplayName().trim().length() > 0)
@@ -20,6 +33,9 @@ public class CFCFileFactory {
 		if(appCFCBean.getExtendCFC().trim().length() > 0)
 			sb.append(" extends=\"" + appCFCBean.getExtendCFC().trim() + "\"");
 			
+		if (appCFCBean.getAccessors().trim().length() > 0)
+			sb.append(" accessors=\"" + appCFCBean.getAccessors().trim() + "\"");
+
 		if(appCFCBean.getOutput().trim().length() > 0)
 			sb.append(" output=\"" + appCFCBean.getOutput().trim() + "\"");
 			
@@ -47,7 +63,15 @@ public class CFCFileFactory {
 	public static StringBuffer getScriptString(CFCBean appCFCBean) {
 
 		StringBuffer sb = new StringBuffer();
-
+		
+		sb	.append("/**\n")
+			.append(" * ").append(appCFCBean.getName()).append("\n")
+			.append(" * \n")
+			.append(" * @author ").append(System.getProperty("user.name")).append("\n")
+			.append(" * @date ").append(dateformat.format(new Date())).append("\n")
+			.append(" **/\n")
+			;
+		
 		sb.append("component");
 
 		if (appCFCBean.getDisplayName().trim().length() > 0)
@@ -59,11 +83,14 @@ public class CFCFileFactory {
 		if (appCFCBean.getExtendCFC().trim().length() > 0)
 			sb.append(" extends=\"" + appCFCBean.getExtendCFC().trim() + "\"");
 
+		if (appCFCBean.getAccessors().trim().length() > 0)
+			sb.append(" accessors=" + appCFCBean.getAccessors().trim());
+
 		if (appCFCBean.getOutput().trim().length() > 0)
-			sb.append(" output=\"" + appCFCBean.getOutput().trim() + "\"");
+			sb.append(" output=" + appCFCBean.getOutput().trim());
 
 		if (appCFCBean.getPersistent().trim().length() > 0)
-			sb.append(" persistent=\"" + appCFCBean.getPersistent().trim() + "\"");
+			sb.append(" persistent=" + appCFCBean.getPersistent().trim());
 
 		sb.append(" {");
 
@@ -87,7 +114,7 @@ public class CFCFileFactory {
 	{
 		StringBuffer sb = new StringBuffer();
 			
-		for(Iterator iter = propertyBeans.iterator(); iter.hasNext();)
+		for (Iterator iter = propertyBeans.iterator(); iter.hasNext();)
 		{
 			CFCPropertyBean bean = (CFCPropertyBean)iter.next();
 			
@@ -147,7 +174,7 @@ public class CFCFileFactory {
 	{
 		StringBuffer sb = new StringBuffer();
 			
-		for(Iterator iter = propertyBeans.iterator(); iter.hasNext();)
+		for (Iterator iter = propertyBeans.iterator(); iter.hasNext();)
 		{
 			CFCPropertyBean bean = (CFCPropertyBean)iter.next();
 			

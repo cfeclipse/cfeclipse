@@ -23,36 +23,52 @@ public class CFCBean {
 	private String hint;
 	private String displayName;
 	private String output;
+	private String persistent;
+	private String accessors;
 	
 	// cfc property tags
-	private List propertyBeans;
+	private List<CFCPropertyBean> propertyBeans;
 	
 	// Function Tags
-	private List functionBeans;
-	private String persistent;
+	private List<CFCFunctionBean> functionBeans;
 	
 	// Constructors
 	public CFCBean(){
-		propertyBeans = new ArrayList();
-		functionBeans = new ArrayList();
-		this.name = "";
-		this.path = "";
-		this.extendCfc = "";
-		this.hint = "";
-		this.displayName = "";
-		this.output = "";
+		this("", "", "", "", "", "", "", "");
 	}
 	
-	public CFCBean(String name, String path, String extendCfc, String hint, String displayName, String output)
+	/**
+	 * 
+	 * @param name
+	 * @param path
+	 */
+	public CFCBean(String name, String path) {
+		this(name, path, "", "", "", "", "", "");
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @param path
+	 * @param extendCfc
+	 * @param hint
+	 * @param displayName
+	 * @param output
+	 * @param accessors
+	 */
+	public CFCBean(String name, String path, String extendCfc, String hint, String displayName, String output, String persistent,
+			String accessors)
 	{
-		this();
+		propertyBeans = new ArrayList<CFCPropertyBean>();
+		functionBeans = new ArrayList<CFCFunctionBean>();
 		
-		this.name = name;
-		this.path = path;
-		this.extendCfc = extendCfc;
-		this.hint = hint;
-		this.displayName = displayName;
-		this.output = output;
+		this.name			= name;
+		this.path			= path;
+		this.extendCfc		= extendCfc;
+		this.hint			= hint;
+		this.displayName	= displayName;
+		this.output			= output;
+		this.accessors		= accessors;
 	}
 		
 	/**
@@ -104,14 +120,14 @@ public class CFCBean {
 	/**
 	 * @return Returns the functionBeans.
 	 */
-	public List getFunctionBeans() {
+	public List<CFCFunctionBean> getFunctionBeans() {
 		return functionBeans;
 	}
 	
 	/**
 	 * @param functionBeans The functionBeans to set.
 	 */
-	public void setFunctionBeans(List functionBeans) {
+	public void setFunctionBeans(List<CFCFunctionBean> functionBeans) {
 		this.functionBeans = functionBeans;
 	}
 	
@@ -174,7 +190,7 @@ public class CFCBean {
 	/**
 	 * @return Returns the propertyBeans.
 	 */
-	public List getPropertyBeans() {
+	public List<CFCPropertyBean> getPropertyBeans() {
 		return propertyBeans;
 	}
 	
@@ -185,6 +201,10 @@ public class CFCBean {
 		return style;
 	}
 
+	/**
+	 * Set the style type (cfscript or tags).
+	 * @param style
+	 */
 	public void setStyle(String style) {
 		this.style = style;
 	}
@@ -196,15 +216,54 @@ public class CFCBean {
 		return persistent;
 	}
 
+	/**
+	 * Set persistence (string "true" or "false")
+	 * 
+	 * @param persistent
+	 */
 	public void setPersistent(String persistent) {
 		this.persistent = persistent;
+	}
+
+	/**
+	 * Set persistence (boolean)
+	 * 
+	 * @param persistent
+	 */
+	public void setPersistent(boolean persistent) {
+		this.persistent = Boolean.toString(persistent);
+	}
+
+	/**
+	 * @return Returns the accessors setting.
+	 */
+	public String getAccessors() {
+		return accessors;
+	}
+
+	/**
+	 * Set accessors (string "true" or "false")
+	 * 
+	 * @param accessors
+	 */
+	public void setAccessors(String accessors) {
+		this.accessors = accessors;
+	}
+
+	/**
+	 * Set accessors (boolean)
+	 * 
+	 * @param accessors
+	 */
+	public void setAccessors(boolean accessors) {
+		this.accessors = Boolean.toString(accessors);
 	}
 
 	/**
 	 * @param propertyBeans
 	 *            The propertyBeans to set.
 	 */
-	public void setPropertyBeans(List propertyBeans) {
+	public void setPropertyBeans(List<CFCPropertyBean> propertyBeans) {
 		this.propertyBeans = propertyBeans;
 	}
 
