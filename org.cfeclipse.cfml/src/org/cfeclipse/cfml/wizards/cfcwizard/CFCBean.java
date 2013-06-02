@@ -25,6 +25,7 @@ public class CFCBean {
 	private String output;
 	private String persistent;
 	private String accessors;
+	private boolean autodoc;
 	
 	// cfc property tags
 	private List propertyBeans;
@@ -69,6 +70,7 @@ public class CFCBean {
 		this.displayName	= displayName;
 		this.output			= output;
 		this.accessors		= accessors;
+		this.autodoc = true;
 	}
 		
 	/**
@@ -257,6 +259,22 @@ public class CFCBean {
 	 */
 	public void setAccessors(boolean accessors) {
 		this.accessors = Boolean.toString(accessors);
+	}
+
+	/**
+	 * @return Returns the autodoc setting.
+	 */
+	public boolean getAutodoc() {
+		return autodoc;
+	}
+
+	/**
+	 * Set accessors (boolean)
+	 * 
+	 * @param autodoc
+	 */
+	public void setAutodoc(boolean autodoc) {
+		this.autodoc = autodoc;
 	}
 
 	/**
