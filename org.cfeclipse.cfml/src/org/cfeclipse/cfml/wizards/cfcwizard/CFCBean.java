@@ -27,10 +27,10 @@ public class CFCBean {
 	private String accessors;
 	
 	// cfc property tags
-	private List<CFCPropertyBean> propertyBeans;
+	private List propertyBeans;
 	
 	// Function Tags
-	private List<CFCFunctionBean> functionBeans;
+	private List functionBeans;
 	
 	// Constructors
 	public CFCBean(){
@@ -59,8 +59,8 @@ public class CFCBean {
 	public CFCBean(String name, String path, String extendCfc, String hint, String displayName, String output, String persistent,
 			String accessors)
 	{
-		propertyBeans = new ArrayList<CFCPropertyBean>();
-		functionBeans = new ArrayList<CFCFunctionBean>();
+		propertyBeans = new ArrayList();
+		functionBeans = new ArrayList();
 		
 		this.name			= name;
 		this.path			= path;
@@ -120,14 +120,14 @@ public class CFCBean {
 	/**
 	 * @return Returns the functionBeans.
 	 */
-	public List<CFCFunctionBean> getFunctionBeans() {
+	public List getFunctionBeans() {
 		return functionBeans;
 	}
 	
 	/**
 	 * @param functionBeans The functionBeans to set.
 	 */
-	public void setFunctionBeans(List<CFCFunctionBean> functionBeans) {
+	public void setFunctionBeans(List functionBeans) {
 		this.functionBeans = functionBeans;
 	}
 	
@@ -190,7 +190,7 @@ public class CFCBean {
 	/**
 	 * @return Returns the propertyBeans.
 	 */
-	public List<CFCPropertyBean> getPropertyBeans() {
+	public List getPropertyBeans() {
 		return propertyBeans;
 	}
 	
@@ -263,7 +263,7 @@ public class CFCBean {
 	 * @param propertyBeans
 	 *            The propertyBeans to set.
 	 */
-	public void setPropertyBeans(List<CFCPropertyBean> propertyBeans) {
+	public void setPropertyBeans(List propertyBeans) {
 		this.propertyBeans = propertyBeans;
 	}
 
