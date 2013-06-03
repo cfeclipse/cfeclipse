@@ -35,6 +35,8 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -58,18 +60,25 @@ import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
  * with the extension that matches the expected one (cfm).
  */
 public class NewCFCWizardPage extends WizardPage {
+	private static String DEFAULT_CFC_NAME = "NewCFComponent";
+
+	private static String STYLE_CFSCRIPT = "cfscript";
+	private static String STYLE_TAG = "tag";
+
 	private Text cfcName;
 	private Text cfcExtends;
 	private Text cfcPath;
 	private Text cfcHint;
 	private Text cfcDisplayName;
+	private Button cfcAccessors;
 	private Button cfcOutput;
+	private Button cfcPersistent;
+	private Button cfcAutodoc;
 	
 	private ISelection selection;
 	
 	private CFCBean cfcBean;
 	private Combo cfcStyle;
-	private Button cfcPersistent;
 
 	/**
 	 * Constructor for SampleNewWizardPage.
@@ -81,7 +90,7 @@ public class NewCFCWizardPage extends WizardPage {
 		setDescription("New CF Component wizard.");
 		this.selection = selection;
 		
-		this.cfcBean = new CFCBean("", "", "", "", "", "");
+		this.cfcBean = new CFCBean();
 	}
 
 	/**
@@ -93,17 +102,28 @@ public class NewCFCWizardPage extends WizardPage {
 		layout.makeColumnsEqualWidth = false;
 		container.setLayout(layout);
 		layout.numColumns = 3;
+
 		Label label = new Label(container, SWT.NULL);
 		label.setText("&Component Name:");
+
 		this.cfcName = new Text(container, SWT.BORDER | SWT.SINGLE);
 		GridData gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcName.setLayoutData(gd);
 		this.cfcName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
+		});
+		this.cfcName.addFocusListener(new FocusListener() {
+			
+			public void focusLost(FocusEvent e) {
+				cfcName.setSelection(cfcName.getText().length());
+			}
+			
+			public void focusGained(FocusEvent e) {}
 		});
 
 		label = new Label(container, SWT.NULL);
@@ -111,10 +131,11 @@ public class NewCFCWizardPage extends WizardPage {
 
 		this.cfcStyle = new Combo(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
+		gd.widthHint = 150;
+		gd.horizontalAlignment = SWT.BEGINNING;
 		this.cfcStyle.setLayoutData(gd);
-		String items[] = { "cfscript", "tag" };
+		String items[] = { STYLE_CFSCRIPT, STYLE_TAG };
 		this.cfcStyle.setItems(items);
 		this.cfcStyle.select(0);
 		this.cfcStyle.addModifyListener(new ModifyListener() {
@@ -128,7 +149,8 @@ public class NewCFCWizardPage extends WizardPage {
 
 		this.cfcPath = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcPath.setLayoutData(gd);
 		this.cfcPath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -149,7 +171,8 @@ public class NewCFCWizardPage extends WizardPage {
 		label.setText("&Extends:");
 		this.cfcExtends = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcExtends.setLayoutData(gd);
 		this.cfcExtends.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -167,10 +190,12 @@ public class NewCFCWizardPage extends WizardPage {
 				
 		label = new Label(container, SWT.NULL);
 		label.setText("&Hint:");
-		this.cfcHint = new Text(container, SWT.BORDER | SWT.SINGLE);
-		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
+		this.cfcHint = new Text(container, SWT.BORDER | SWT.MULTI);
+		gd = new GridData(GridData.CENTER);
+		gd.heightHint = 75;
 		gd.horizontalSpan = 2;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcHint.setLayoutData(gd);
 		this.cfcHint.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -182,15 +207,48 @@ public class NewCFCWizardPage extends WizardPage {
 		label.setText("&Display Name:");
 		this.cfcDisplayName = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
 		gd.horizontalSpan = 2;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcDisplayName.setLayoutData(gd);
 		this.cfcDisplayName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				dialogChanged();
 			}
 		});
-		
+
+		label = new Label(container, SWT.NULL);
+		label.setText("&Auto Document");
+		this.cfcAutodoc = new Button(container, SWT.CHECK);
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan = 2;
+		this.cfcAutodoc.setLayoutData(gd);
+		this.cfcAutodoc.setSelection(true);
+		this.cfcAutodoc.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				dialogChanged();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+
+		label = new Label(container, SWT.NULL);
+		label.setText("&Accessors");
+		this.cfcAccessors = new Button(container, SWT.CHECK);
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan = 2;
+		this.cfcAccessors.setLayoutData(gd);
+		this.cfcAccessors.setSelection(true);
+		this.cfcAccessors.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				dialogChanged();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+
 		label = new Label(container, SWT.NULL);
 		label.setText("&Output");
 		this.cfcOutput = new Button(container, SWT.CHECK);
@@ -218,6 +276,7 @@ public class NewCFCWizardPage extends WizardPage {
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
+
 		initialize();
 		dialogChanged();
 		setControl(container);
@@ -250,9 +309,12 @@ public class NewCFCWizardPage extends WizardPage {
 			}
 		}
 		
-		this.cfcBean.setName("NewCFComponent");
+		this.cfcBean.setName(DEFAULT_CFC_NAME);
+		this.cfcBean.setAccessors(true);
+
 		this.cfcName.setText(this.cfcBean.getName());
-		
+		this.cfcName.setSelection(0, this.cfcBean.getName().length());
+
 	}
 	
 	/**
@@ -315,13 +377,13 @@ public class NewCFCWizardPage extends WizardPage {
 	 * Ensures that both text fields are set.
 	 */
 	private void dialogChanged() {
-		
 		String containerName = this.cfcPath.getText();
 		String style = this.cfcStyle.getText();
 		String fileName = this.cfcName.getText();
 		String extend = this.cfcExtends.getText();
 		String hint = this.cfcHint.getText();
 		String displayName = this.cfcDisplayName.getText();
+		String accessors = Boolean.toString(this.cfcAccessors.getSelection());
 		String output = Boolean.toString(this.cfcOutput.getSelection());
 		String persistent = Boolean.toString(this.cfcPersistent.getSelection());
 		
@@ -331,8 +393,10 @@ public class NewCFCWizardPage extends WizardPage {
 		this.cfcBean.setHint(hint);
 		this.cfcBean.setName(fileName);
 		this.cfcBean.setOutput(output);
+		this.cfcBean.setAccessors(accessors);
 		this.cfcBean.setPersistent(persistent);
 		this.cfcBean.setPath(containerName);
+		this.cfcBean.setAutodoc(this.cfcAutodoc.getSelection());
 
 		if(containerName.length() == 0) {
 			updateStatus("File container must be specified");
