@@ -108,8 +108,9 @@ public class NewCFCWizardPage extends WizardPage {
 
 		this.cfcName = new Text(container, SWT.BORDER | SWT.SINGLE);
 		GridData gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 232;
 		gd.horizontalSpan = 2;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcName.setLayoutData(gd);
 		this.cfcName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -130,8 +131,9 @@ public class NewCFCWizardPage extends WizardPage {
 
 		this.cfcStyle = new Combo(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 240;
 		gd.horizontalSpan = 2;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcStyle.setLayoutData(gd);
 		String items[] = { STYLE_CFSCRIPT, STYLE_TAG };
 		this.cfcStyle.setItems(items);
@@ -147,7 +149,8 @@ public class NewCFCWizardPage extends WizardPage {
 
 		this.cfcPath = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcPath.setLayoutData(gd);
 		this.cfcPath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -168,7 +171,8 @@ public class NewCFCWizardPage extends WizardPage {
 		label.setText("&Extends:");
 		this.cfcExtends = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 150;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcExtends.setLayoutData(gd);
 		this.cfcExtends.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -188,9 +192,10 @@ public class NewCFCWizardPage extends WizardPage {
 		label.setText("&Hint:");
 		this.cfcHint = new Text(container, SWT.BORDER | SWT.MULTI);
 		gd = new GridData(GridData.CENTER);
-		gd.widthHint = 236;
 		gd.heightHint = 75;
 		gd.horizontalSpan = 2;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcHint.setLayoutData(gd);
 		this.cfcHint.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -202,8 +207,9 @@ public class NewCFCWizardPage extends WizardPage {
 		label.setText("&Display Name:");
 		this.cfcDisplayName = new Text(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
-		gd.widthHint = 232;
 		gd.horizontalSpan = 2;
+		gd.grabExcessHorizontalSpace = true;
+		gd.horizontalAlignment = SWT.FILL;
 		this.cfcDisplayName.setLayoutData(gd);
 		this.cfcDisplayName.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
