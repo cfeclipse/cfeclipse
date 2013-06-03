@@ -132,8 +132,8 @@ public class NewCFCWizardPage extends WizardPage {
 		this.cfcStyle = new Combo(container, SWT.BORDER | SWT.SINGLE);
 		gd = new GridData(GridData.BEGINNING);
 		gd.horizontalSpan = 2;
-		gd.grabExcessHorizontalSpace = true;
-		gd.horizontalAlignment = SWT.FILL;
+		gd.widthHint = 150;
+		gd.horizontalAlignment = SWT.BEGINNING;
 		this.cfcStyle.setLayoutData(gd);
 		String items[] = { STYLE_CFSCRIPT, STYLE_TAG };
 		this.cfcStyle.setItems(items);
