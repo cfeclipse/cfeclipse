@@ -26,7 +26,6 @@ package org.cfeclipse.cfml.editors.actions;
 
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.ITypedRegion;
@@ -73,7 +72,7 @@ public class CFDumpAction extends GenericEncloserAction implements IWorkbenchWin
 				
 				ITextSelection selectioner = (ITextSelection)sel;
 				if(partition.getType().equals(CFPartitionScanner.CF_SCRIPT)){
-					startDump = "dump(";
+					startDump = "writedump(";
 					endDump = ");\n";
 					
 					
