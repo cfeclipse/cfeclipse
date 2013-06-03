@@ -33,6 +33,7 @@ import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 
@@ -69,8 +70,10 @@ public class GenericEncloserAction extends Encloser implements IWorkbenchWindowA
 	{
 		//System.err.println(targetEditor);
 		//System.out.println( "Changin (" + start + ")(" + end + ")" );
-		if( targetEditor instanceof ITextEditor){
+		if(targetEditor instanceof ITextEditor){
 			editor = (ITextEditor)targetEditor;
+		}else if( targetEditor instanceof MultiPageEditorPart){
+			editor = (ITextEditor)targetEditor.getAdapter(ITextEditor.class);
 		}
 	}
 	
