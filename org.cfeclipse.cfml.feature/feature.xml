@@ -2,7 +2,7 @@
 <feature
       id="org.cfeclipse.cfml.feature"
       label="CFEclipse (including MXUnit and Frameworks)"
-      version="1.4.5.qualifier"
+      version="1.4.6.qualifier"
       provider-name="CFEclipse Project"
       plugin="org.cfeclipse.cfml">
 
@@ -80,6 +80,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          id="org.mxunit.eclipseplugin.feature"
          version="0.0.0"
          search-location="both"/>
+
    <includes
          id="org.cfeclipse.cfml.snippets.feature"
          version="0.0.0"
