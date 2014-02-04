@@ -20,3 +20,56 @@ a#cfeclipse-noteworthy:hover img {
 	background-image: url(../images/moon_new.png);
 	background-repeat: no-repeat;
 }
+
+
+td { border-top: solid thin black;}
+img[alt] {background-color: #ffdddd;}
+tr {vertical-align: top;}
+
+
+body
+{
+	background: #EEE;
+	color:white;
+	margin:1em;
+}
+
+h1,h1 img
+{
+	vertical-align: middle;
+	background:black;
+	color:white;
+	padding: 0.1em;
+}
+
+article:first-child h1 { font-size:2.2em; }
+article h1 { font-size:1.6em; }
+
+article
+{
+	margin-bottom:2em;
+	background:white;
+	color:black;
+	min-width: 680px;
+	
+	box-shadow : 0 0 40px rgba(0,0,0,0.25);
+}
+
+section
+{
+	border-bottom: solid 2px black;
+	border-width: 2px 0;
+	
+	padding: 0 1em 0.5em;
+}
+
+section:last-child
+{
+	border-bottom: none;
+}
+
+h2
+{
+	font-size: 1.8em;
+}
+

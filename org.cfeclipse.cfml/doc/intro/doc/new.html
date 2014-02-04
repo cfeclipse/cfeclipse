@@ -1,148 +1,184 @@
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="Content-Language" content="en-us">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="STYLESHEET" href="../css/whatsnew.css" charset="ISO-8859-1"
-	type="text/css">
-<style>
-td {
-	border-top: solid thin black;
-}
-
-img[alt] {
-	background-color: #ffdddd;
-}
-
-s
-
-tr {
-	vertical-align: top;
-}
-</style>
-<title>What's New in CFEclipse 1.4.5</title>
-<script language="JavaScript"
-	src="PLUGINS_ROOT/org.eclipse.help/livehelp.js">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	
-</script>
+	<title>What's New in CFEclipse 1.4.6</title>
+	
+	<link rel="STYLESHEET" href="../css/whatsnew.css" charset="ISO-8859-1" type="text/css" />
+	
+	<script src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+
 </head>
 <body>
 
-<table cellpadding="5" cellspacing="0" width="600">
-	<colgroup>
-		<col width="20%">
-		<col width="80%">
-	</colgroup>
-	<tbody>
-		<tr>
-			<td valign="top"><img src="../images/moon_new.png" align="right" /></td>
-			<td>
-			<h2>What's New in CFEclipse 1.4.5</h2>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2"><a name="script1.4.5"></a>
-			<div style="font-size: 20px; font-weight: bold;">CFScript Parsing</div>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>CFScript Parsing</b></p>
-			</td>
-			<td valign="top">The cfscript parser actually seems to be useful now!  There is a lot
-			of extraneous data at this point (the whole parse tree is exposed, basically), but lots
-			is better than none in this case.  Enable script paring via <br/> 
-			Preferences > CFEclipse > File Parser : Parse CFScript
-			<br>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>CFScript Outline</b></p>
-			</td>
-			<td valign="top">Thanks to the now useful script parsing, there is also a useful outline view, as hinted at above. 
-			 Lots of nodes, but pretty useful.
-			<br>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>CFScript Method View</b></p>
-			</td>
-			<td valign="top">I don't know if these really warrant their own sections, as they're all basically 
-			"cfscript parsing", but what the hey.  The method view is kind of ugly sill but you can see methods, in a view-like fashion.
-			<br>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Jump to function/Jump to assignment</b></p>
-			</td>
-			<td valign="top">You can now push F3 on a function or variable to jump to the function declaration or variable assignment.
-			It is still rather rough, to say the least, but if you're lucky, it will even work for functions defined in other cfs. <-reword this 
-			<br>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>New CFC wizard</b></p>
-			</td>
-			<td valign="top">There is now an option to choose what kind of cfc you want to create in the new CFC wizard.
-			Tag or cfscript. 
-			<br>
-			</td>
-		</tr>
+<article>
+	<h1>
+		<img src="../images/moon_full.b120.png" />
+		What's New in CFEclipse 1.4.6
+	</h1>
+	
+	<section class="news">
+		<h2>Alive and Kicking!</h2>
 		
-		<tr>
-			<td colspan="2"><a name="links1.4.5"></a>
-				<div style="font-size: 20px; font-weight: bold;">Links</div>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Edit URL and Snippets</b></p>
-			</td>
-			<td valign="top">
-				There is now the ability to assign a url to a folder, and use snippets to change how it works, this alows for custom URLS in frameworks for example. 
-				<a href="http://trac.cfeclipse.org/ticket/649">#649</a>
-			<br>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top">
-			<p align="right"><b>Tickets</b></p>
-			</td>
-			<td valign="top"><em>Here is the list of tickets closed
-			with this release.</em> 
-			<!-- closedtickets --><table cellspacing="0" cellpadding="0"><tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>
-		<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/627">#627</a></td><td valign="top" style="padding:5px">eclipse hangs on  file edit.</td></tr>
-				<tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>
-				<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/614">#614</a></td><td valign="top" style="padding:5px">syntax highlighting for scopes is too greedy (eg all of variables.error is colored)</td></tr>
-				<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/651">#651</a></td><td valign="top" style="padding:5px">Toolbar is visible in all Perspectives</td></tr>
-				<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/456">#456</a></td><td valign="top" style="padding:5px">Window for editing snippets should be resizable</td></tr>
-				<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/649">#649</a></td><td valign="top" style="padding:5px">Enable Snippets in URL Path for resources</td></tr>
+		<p>The CFEclipse project has been quiet for a while but v1.4.6 marks
+		a ramping up of activity and hopefully some good fixes and improvements
+		over the coming year!
+		
+		<p>If you have any thoughts, feel free to 
+		<a href="https://github.com/cfeclipse/cfeclipse/issues/">raise issues</a> 
+		or tell us on the mailing list:
+		<a href="http://groups.google.com/group/cfeclipse-users">http://groups.google.com/group/cfeclipse-users</a>
+		
+		<p>If you want to help keep the project going, join the dev mailing list:
+		<a href="http://groups.google.com/group/cfeclipse-dev">http://groups.google.com/group/cfeclipse-dev</a>
+		
+	</section>
+	
+	<section class="news">
+		<h2>CFEclipse is on GitHub</h2>
+		
+		<p>CFEclipse has actually been on GitHub for over two and a half years,
+		but there was no formal announcement - well here it is: CFEclipse is officially on GitHub!
+		
+		<p>The code is at: <a href="https://github.com/cfeclipse/cfeclipse">https://github.com/cfeclipse/cfeclipse</a>
+		<br/>The issue tracker is: <a href="https://github.com/cfeclipse/cfeclipse/issues/">https://github.com/cfeclipse/cfeclipse<strong>/issues</strong></a>
+		<br/>The wiki is: <a href="https://github.com/cfeclipse/cfeclipse/wiki">https://github.com/cfeclipse/cfeclipse<strong>/wiki</strong></a>
+	
+		<p>Pull requests are of course welcome!
+		
+		<p><i>(p.s. If you had any outstanding issues in Trac, please
+		feel free to re-open them on the GitHub issue tracker.)</i> 
+	
+	</section>
+	
+	<section class="features">
+		<h2>New Features</h2>
 
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/614">#614</a></td><td valign="top" style="padding:5px">syntax highlighting for scopes is too greedy (eg all of variables.error is colored)</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/618">#618</a></td><td valign="top" style="padding:5px">'Suggest templates' listed twice on Auto-insertion and closing menu</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/620">#620</a></td><td valign="top" style="padding:5px">cfc wizard - make component name first field</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/623">#623</a></td><td valign="top" style="padding:5px">expand tag selection up and down is broken</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/624">#624</a></td><td valign="top" style="padding:5px">The attribute 'name' is not valid for the <cfdirectory></td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/625">#625</a></td><td valign="top" style="padding:5px">pasting text containing auto-close chars like quotes causes double insertion</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/631">#631</a></td><td valign="top" style="padding:5px">RTrim action sometimes throws a null that can get in the way when "trim on save" is used</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/632">#632</a></td><td valign="top" style="padding:5px">code folding doesn't respect a closed project</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/633">#633</a></td><td valign="top" style="padding:5px">add more scopes to the "built in" scopes</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/634">#634</a></td><td valign="top" style="padding:5px">keybinding conflicts (To Lower Case, Insert Color)</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/635">#635</a></td><td valign="top" style="padding:5px">have the default CFML dictionary be CF9</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/636">#636</a></td><td valign="top" style="padding:5px">team project set needs some serious updating</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/637">#637</a></td><td valign="top" style="padding:5px">file explorer has wrong id when opening cfe perspective</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/639">#639</a></td><td valign="top" style="padding:5px">Thread timeout error on startup</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/640">#640</a></td><td valign="top" style="padding:5px">tags that are only one letter in length handled incorrectly</td></tr>
-<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/641">#641</a></td><td valign="top" style="padding:5px">in rare situations the editor would hang on input</td></tr>
-</table><!-- /closedtickets -->
-			</td>
-		</tr>
+		<table cellpadding="5" cellspacing="0" width="600">
+			<colgroup>
+				<col width="20%">
+				<col width="80%">
+			</colgroup>
+			<tbody>
+				<tr>
+					<td valign="top">
+					<p align="right"><b>CFScript Parsing</b></p>
+					</td>
+					<td valign="top">The cfscript parser actually seems to be useful now!  There is a lot
+					of extraneous data at this point (the whole parse tree is exposed, basically), but lots
+					is better than none in this case.  Enable script paring via <br/> 
+					Preferences > CFEclipse > File Parser : Parse CFScript
+					<br>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+					<p align="right"><b>CFScript Outline</b></p>
+					</td>
+					<td valign="top">Thanks to the now useful script parsing, there is also a useful outline view, as hinted at above. 
+					 Lots of nodes, but pretty useful.
+					<br>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+					<p align="right"><b>CFScript Method View</b></p>
+					</td>
+					<td valign="top">I don't know if these really warrant their own sections, as they're all basically 
+					"cfscript parsing", but what the hey.  The method view is kind of ugly sill but you can see methods, in a view-like fashion.
+					<br>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+					<p align="right"><b>Jump to function/Jump to assignment</b></p>
+					</td>
+					<td valign="top">You can now push F3 on a function or variable to jump to the function declaration or variable assignment.
+					It is still rather rough, to say the least, but if you're lucky, it will even work for functions defined in other cfs. <-reword this 
+					<br>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+					<p align="right"><b>New CFC wizard</b></p>
+					</td>
+					<td valign="top">There is now an option to choose what kind of cfc you want to create in the new CFC wizard.
+					Tag or cfscript. 
+					<br>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+					<p align="right"><b>Edit URL and Snippets</b></p>
+					</td>
+					<td valign="top">
+						There is now the ability to assign a url to a folder, and use snippets to change how it works, this allows for custom URLS in frameworks for example. 
+						
+					<br>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	
+	</section>
+	
+	<section class="issues">
+		<h2>Resolved Issues</h2>
 
-	</tbody>
-</table>
+		<ul>
+			<li><a href="https://github.com/cfeclipse/cfeclipse/issues/16">#16</a> - Do not enforce required attributes if attributecollection is supplied.
+			<li><a href="https://github.com/cfeclipse/cfeclipse/issues/13">#13</a> - Incorrectly showing an error for cfcookie tag with attributecollection
+			<li><a href="https://github.com/cfeclipse/cfeclipse/issues/11">#11</a> - Wizard/action updates
+			<li><a href="https://github.com/cfeclipse/cfeclipse/issues/9">#9</a> - Add missing property for JumpToFunction
+			<li><a href="https://github.com/cfeclipse/cfeclipse/issues/4">#4</a> - Add completion for arguments within a function
+			<li><a href="http://trac.cfeclipse.org/ticket/649">#649</a> (trac) - Enable Snippets in URL Path for resources
+			<li><a href="http://trac.cfeclipse.org/ticket/651">#651</a> (trac) - Toolbar is visible in all Perspectives
+			<li><a href="http://trac.cfeclipse.org/ticket/456">#456</a> (trac) - Window for editing snippets should be resizable
+		</ul>
+	</section>
+	
+</article>
+
+<article class="old">
+	<h1>
+		<img src="../images/moon_new.b48.png" />
+		What's New in CFEclipse 1.4.5
+	</h1>
+	
+	<section class="issues">
+	
+		<p>Here is the list of tickets closed with this release.
+
+		<table cellspacing="0" cellpadding="0"><tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/627">#627</a></td><td valign="top" style="padding:5px">eclipse hangs on  file edit.</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/614">#614</a></td><td valign="top" style="padding:5px">syntax highlighting for scopes is too greedy (eg all of variables.error is colored)</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/618">#618</a></td><td valign="top" style="padding:5px">'Suggest templates' listed twice on Auto-insertion and closing menu</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/620">#620</a></td><td valign="top" style="padding:5px">cfc wizard - make component name first field</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/623">#623</a></td><td valign="top" style="padding:5px">expand tag selection up and down is broken</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/624">#624</a></td><td valign="top" style="padding:5px">The attribute 'name' is not valid for the <cfdirectory></td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/625">#625</a></td><td valign="top" style="padding:5px">pasting text containing auto-close chars like quotes causes double insertion</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/631">#631</a></td><td valign="top" style="padding:5px">RTrim action sometimes throws a null that can get in the way when "trim on save" is used</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/632">#632</a></td><td valign="top" style="padding:5px">code folding doesn't respect a closed project</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/633">#633</a></td><td valign="top" style="padding:5px">add more scopes to the "built in" scopes</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/634">#634</a></td><td valign="top" style="padding:5px">keybinding conflicts (To Lower Case, Insert Color)</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/635">#635</a></td><td valign="top" style="padding:5px">have the default CFML dictionary be CF9</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/636">#636</a></td><td valign="top" style="padding:5px">team project set needs some serious updating</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/637">#637</a></td><td valign="top" style="padding:5px">file explorer has wrong id when opening cfe perspective</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/639">#639</a></td><td valign="top" style="padding:5px">Thread timeout error on startup</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/640">#640</a></td><td valign="top" style="padding:5px">tags that are only one letter in length handled incorrectly</td></tr>
+			<tr><td valign="top" style="padding:5px"><a href="http://trac.cfeclipse.org/ticket/641">#641</a></td><td valign="top" style="padding:5px">in rare situations the editor would hang on input</td></tr>
+			</table>
+	</section>
+
+</article>
+
+<article class="old">
+	<h1>
+		<img src="../images/moon_crescent.b48.png" />
+		What's New in CFEclipse 1.4.4
+	</h1>
 
 <table cellpadding="5" cellspacing="0" width="600">
 	<colgroup>
@@ -151,10 +187,6 @@ tr {
 	</colgroup>
 	<tbody>
 		<tr>
-			<td valign="top"><img src="../images/moon_crescent.png"
-				align="right" /></td>
-			<td>
-			<h2>What's New in CFEclipse 1.4.4</h2>
 			<p><span style="color: green;">Color!</span> There is now some
 			color for cfscript-based components! Also, several wonky color issues
 			have been addressed. Things are far from perfect, but they're much
@@ -576,45 +608,40 @@ tr {
 	</tbody>
 </table>
 
-<table cellpadding="5" cellspacing="0" width="600">
-	<colgroup>
-		<col width="20%">
-		<col width="80%">
-	</colgroup>
-	<tbody>
-		<tr>
-			<td valign="top"><img src="../images/moon_full.png"
-				align="right" /></td>
-			<td>
-			<h2>What's New in CFEclipse 1.4.3</h2>
-			<p>Not much!</p>
-			<p>A couple of SFTP related bugs have been fixed, and there was a
-			major change to the way we build the less modified plugins, which
-			should cut down a lot on what gets downloaded with each update.</p>
+</article>
 
+<article class="old">
+	<h1>
+		<img src="../images/moon_full.b48.png" />
+		What's New in CFEclipse 1.4.3
+	</h1>
 
-			</td>
-		</tr>
-	</tbody>
-</table>
+	<section>
+		<p>Not much!</p>
+		<p>A couple of SFTP related bugs have been fixed, and there was a
+		major change to the way we build the less modified plugins, which
+		should cut down a lot on what gets downloaded with each update.</p>
+	</section>
 
-<table cellpadding="5" cellspacing="0" width="600">
-	<colgroup>
-		<col width="20%">
-		<col width="80%">
-	</colgroup>
-	<tbody>
-		<tr>
-			<td valign="top"><img src="../images/moon_full.png"
-				align="right" /></td>
-			<td>
-			<h2>What's New in CFEclipse 1.4.2</h2>
+</article>
+
+<article class="old">
+	<h1>
+		<img src="../images/moon_full.b48.png" />
+		What's New in CFEclipse 1.4.2
+	</h1>
+
+	<section>
 			<p>Drag and Drop is back! You can once again drag files into the
 			editor and have the correct type of link/img/cfimport code inserted.</p>
 
 			<p>A new file explorer has been added. Allows drag and drop
 			between connections. Also allows weird stuff like editing CFML files
 			within zip archives and jar files.</p>
+			
+</section>
+<section>
+
 			<p>The following tickets have been closed</p>
 			<table class="listing tickets">
 				<thead>
@@ -734,29 +761,25 @@ tr {
 					</tr>
 				</tbody>
 			</table>
-			</td>
-		</tr>
-	</tbody>
-</table>
+			
+	</section>
 
-<table cellpadding="5" cellspacing="0" width="600">
-	<colgroup>
-		<col width="20%">
-		<col width="80%">
-	</colgroup>
-	<tbody>
-		<tr>
-			<td><img src="../images/moon_full.png" align="right" /></td>
-			<td>
-			<h2>What's New in CFEclipse 1.4.1</h2>
+</article>
+
+<article class="old">
+	<h1>
+		<img src="../images/moon_full.b48.png" />
+		What's New in CFEclipse 1.4.1
+	</h1>
+
+	<section>
 			<p><i>Task Tags</i> some documentation has been added</p>
 			<p><i>QFQuickDocs</i> added customizable URL</p>
 			<p><i>Wrap with tag</i> updated to use space as exit character</p>
 			<p><i>Image tooltips</i> you can now disable image tooltips</p>
-			</td>
-		</tr>
-	</tbody>
-</table>
+</section>
+<section>
+
 <table cellpadding="10" cellspacing="0" width="600">
 	<colgroup>
 		<col width="20%">
@@ -816,34 +839,33 @@ tr {
 			(restart required).</td>
 		</tr>
 </table>
-<br />
-<br />
-<table cellpadding="5" cellspacing="0" width="600">
-	<colgroup>
-		<col width="20%">
-		<col width="80%">
-	</colgroup>
-	<tbody>
-		<tr>
-			<td><img src="../images/moon_full.png" align="right" /></td>
-			<td>
-			<h2>What's New in CFEclipse 1.4.0</h2>
-			<p><i>Task Tags</i> have been added. This expands on the "TODO"
-			task tag, adding the ability to add custom task types and priorities</p>
-			<p>A new preference has been added to set the <i>auto-activation
-			characters</i>. These are the characters that, when entered,
-			automatically activate content proposals.</p>
-			<p>A bug that caused 1.3.7 to not work in Eclipse versions below
-			3.5 has been fixed.</p>
-			<p>Expand tag selection up has been added</p>
-			<p>Expand tag selection down has been added</p>
-			<p>Tooltips for images have been added</p>
-			<p>Initial CFML search interface has been added. Currently
-			doesn't work.</p>
-			</td>
-		</tr>
-	</tbody>
-</table>
+
+	</section>
+
+</article>
+
+<article class="old">
+	<h1>
+		<img src="../images/moon_full.b48.png" />
+		What's New in CFEclipse 1.4.0
+	</h1>
+
+	<section>
+	
+		<p><i>Task Tags</i> have been added. This expands on the "TODO"
+		task tag, adding the ability to add custom task types and priorities</p>
+		<p>A new preference has been added to set the <i>auto-activation
+		characters</i>. These are the characters that, when entered,
+		automatically activate content proposals.</p>
+		<p>A bug that caused 1.3.7 to not work in Eclipse versions below
+		3.5 has been fixed.</p>
+		<p>Expand tag selection up has been added</p>
+		<p>Expand tag selection down has been added</p>
+		<p>Tooltips for images have been added</p>
+		<p>Initial CFML search interface has been added. Currently
+		doesn't work.</p>
+</section>
+<section>
 
 <table cellpadding="10" cellspacing="0" width="600">
 	<colgroup>
@@ -976,11 +998,22 @@ tr {
 	href="http://trac.cfeclipse.org/query?status=closed&group=resolution&milestone=1.4.0">the
 list on trac</a></p>
 
-<h2>What's New in CFEclipse 1.3.7</h2>
+</section>
+
+</article>
+
+<article class="old">
+	<h1>
+		What's New in CFEclipse 1.3.7
+	</h1>
+
+	<section>
 <p>Several annoying bugs have been fixed, like the missing scope
 proposals (CGI, CFHTTP, etc.) and preferences have been added for
 enabling and disabling the various proposal categories. MXUnit replaces
 CFUnit.</p>
+</section>
+<section>
 
 <table cellpadding="10" cellspacing="0" width="600">
 	<colgroup>
@@ -1102,11 +1135,24 @@ CFUnit.</p>
 	href="http://trac.cfeclipse.org/query?status=closed&group=resolution&milestone=1.3.7">the
 list on trac</a></p>
 
-<h2>What's New in CFEclipse 1.3.6</h2>
+	</section>
+
+</article>
+
+<article class="old">
+	<h1>
+		What's New in CFEclipse 1.3.6
+	</h1>
+
+	<section>
+
 <p>CFEclipse 1.3.6 is a maintenance release. No new features to
 speak of. We are happy to announce the creation of some initial unit
 tests, in an effort to prevent regressions. They're pretty weak tests,
 but they'll get better as we progress.</p>
+
+</section>
+<section>
 <p>[Theoretically] Fixed in this release:</p>
 <pre>
 #509	Errors with implicit structure/array creation
@@ -1130,7 +1176,18 @@ but they'll get better as we progress.</p>
 <p>For full descriptions, see <a
 	href="http://trac.cfeclipse.org/query?status=closed&group=resolution&milestone=1.3.6">the
 list on trac</a></p>
-<h2>What's New in CFEclipse 1.3.5</h2>
+
+	</section>
+
+</article>
+
+<article class="old">
+	<h1>
+		What's New in CFEclipse 1.3.5
+	</h1>
+
+<section>
+
 <p>Here are descriptions of some of the more interesting or
 significant changes made to CFEclipse. They are grouped into:</p>
 <ul>
@@ -1141,7 +1198,10 @@ significant changes made to CFEclipse. They are grouped into:</p>
 	<li><a href="#UpdatedDictionaries">Updated Dictionaries</a></li>
 	<li><a href="#OutlineView">Outline View</a></li>
 </ul>
-<br>
+
+</section>
+<section>
+
 <table cellpadding="10" cellspacing="0" width="600">
 	<colgroup>
 		<col width="20%">
@@ -1365,6 +1425,10 @@ significant changes made to CFEclipse. They are grouped into:</p>
 		</tr>
 	</tbody>
 </table>
-<p>&nbsp;</p>
+
+</section>
+
+</article>
+
 </body>
 </html>
