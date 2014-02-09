@@ -78,7 +78,10 @@ public class BrowserPreferencePage extends FieldEditorPreferencePage implements 
 		}
 
 		public boolean isValid() {
-			if (new File(getStringValue()).exists()) {
+
+			if (getStringValue().length() == 0) {
+				return true;
+			} else if (new File(getStringValue()).exists()) {
 				clearErrorMessage();
 				return true;
 			}

@@ -6,23 +6,14 @@
  */
 package org.cfeclipse.cfml.preferences;
 
-import java.io.File;
 import java.util.Arrays;
 
-import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.net.FTPConnectionProperties;
 import org.cfeclipse.cfml.net.ftp.FTPConnection;
-import org.cfeclipse.cfml.views.explorer.vfs.view.VFSView;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -42,7 +33,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
@@ -240,7 +230,7 @@ public class FtpConnectionDialog extends AbstractCFEditorPreferencePage  impleme
 	
 	@Override
 	public boolean isValid() {
-		if(connectionProperties.getConnectionid() == "") {
+		if (connectionProperties.getConnectionid() != "") {
 			validateInput();
 			if(errorMessageLabel.getText().length() > 0)
 				return false;
