@@ -1,25 +1,54 @@
 package org.cfeclipse.cfml.wizards.cfcwizard;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 public class CFCFileFactory {
+
+	private static DateFormat dateformat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
 
 	public static StringBuffer getString(CFCBean appCFCBean) {
 	
 		StringBuffer sb = new StringBuffer();
-		
+
+		if (appCFCBean.getAutodoc()) {
+			sb	.append("<!---\n")
+				.append("  --- ").append(appCFCBean.getName()).append("\n  --- ")
+				;
+			
+			for (int r = 0; r < appCFCBean.getName().length(); r++)
+				sb.append("-");
+			
+			sb.append("\n");
+	
+			if (appCFCBean.getHint().trim().length() > 0)
+				sb.append("  --- \n  --- ").append(appCFCBean.getHint().trim().replaceAll("(\n|\r)+", "\n  --- ")).append("\n  --- \n");
+			else
+				sb.append("  --- \n");
+				
+			sb	.append("  --- author: ").append(System.getProperty("user.name")).append("\n")
+				.append("  --- date:   ").append(dateformat.format(new Date())).append("\n")
+				.append("  --->\n")
+				;
+		}
+	
 		sb.append("<cfcomponent");
 		
 		if(appCFCBean.getDisplayName().trim().length() > 0)
 		sb.append(" displayname=\"" + appCFCBean.getDisplayName().trim() + "\"");
 		
 		if(appCFCBean.getHint().trim().length() > 0)
-		sb.append(" hint=\"" + appCFCBean.getHint().trim() + "\"");
+			sb.append(" hint=\"" + appCFCBean.getHint().trim().replaceAll("(\n|\r)+", " ") + "\"");
 		
 		if(appCFCBean.getExtendCFC().trim().length() > 0)
 			sb.append(" extends=\"" + appCFCBean.getExtendCFC().trim() + "\"");
 			
+		if (appCFCBean.getAccessors().trim().length() > 0)
+			sb.append(" accessors=\"" + appCFCBean.getAccessors().trim() + "\"");
+
 		if(appCFCBean.getOutput().trim().length() > 0)
 			sb.append(" output=\"" + appCFCBean.getOutput().trim() + "\"");
 			
@@ -47,23 +76,59 @@ public class CFCFileFactory {
 	public static StringBuffer getScriptString(CFCBean appCFCBean) {
 
 		StringBuffer sb = new StringBuffer();
-
+		
+		/* 06/01/2013 jesse.shaffer Added doc comment block to all CFCs. Moved hint to the doc comment. */
+		if (appCFCBean.getAutodoc()) {
+			sb	.append("/**\n")
+				.append(" * ")
+				;
+			
+			if (appCFCBean.getHint().trim().length() > 0) {
+				String[] lines = appCFCBean.getHint().split("\n");
+				for (int l = 0; l < lines.length; l++) {
+					if (!lines[l].startsWith("@") && lines[l].trim().length() > 0) {
+						sb.append(lines[l]).append("\n * ");
+					}
+				}
+				sb.append("\n").append(" * ");
+				for (int l = 0; l < lines.length; l++) {
+					if (lines[l].startsWith("@")) {
+						sb.append(lines[l]).append("\n").append(" * ");
+					}
+				}
+				//sb.append(appCFCBean.getHint().replaceAll("\n", "\n * ")).append("\n");
+			} else if (appCFCBean.getDisplayName().trim().length() > 0)
+				sb.append(appCFCBean.getDisplayName()).append("\n").append(" * \n * ");
+			else
+				sb.append(appCFCBean.getName()).append("\n").append(" * \n * ");
+			
+			if (!appCFCBean.getHint().contains("@author "))
+				sb.append("@author ").append(System.getProperty("user.name")).append("\n * ");
+			
+			sb	.append("@date ").append(dateformat.format(new Date())).append("\n")
+				.append(" **/\n")
+				;
+		}
+		
 		sb.append("component");
 
 		if (appCFCBean.getDisplayName().trim().length() > 0)
 			sb.append(" displayname=\"" + appCFCBean.getDisplayName().trim() + "\"");
 
-		if (appCFCBean.getHint().trim().length() > 0)
-			sb.append(" hint=\"" + appCFCBean.getHint().trim() + "\"");
+		if (!appCFCBean.getAutodoc() && appCFCBean.getHint().trim().length() > 0)
+			sb.append(" hint=\"" + appCFCBean.getHint().trim().replaceAll("(\r|\n)+", " ") + "\"");
 
 		if (appCFCBean.getExtendCFC().trim().length() > 0)
 			sb.append(" extends=\"" + appCFCBean.getExtendCFC().trim() + "\"");
 
+		if (appCFCBean.getAccessors().trim().length() > 0)
+			sb.append(" accessors=" + appCFCBean.getAccessors().trim());
+
 		if (appCFCBean.getOutput().trim().length() > 0)
-			sb.append(" output=\"" + appCFCBean.getOutput().trim() + "\"");
+			sb.append(" output=" + appCFCBean.getOutput().trim());
 
 		if (appCFCBean.getPersistent().trim().length() > 0)
-			sb.append(" persistent=\"" + appCFCBean.getPersistent().trim() + "\"");
+			sb.append(" persistent=" + appCFCBean.getPersistent().trim());
 
 		sb.append(" {");
 
@@ -87,7 +152,7 @@ public class CFCFileFactory {
 	{
 		StringBuffer sb = new StringBuffer();
 			
-		for(Iterator iter = propertyBeans.iterator(); iter.hasNext();)
+		for (Iterator iter = propertyBeans.iterator(); iter.hasNext();)
 		{
 			CFCPropertyBean bean = (CFCPropertyBean)iter.next();
 			
@@ -147,7 +212,7 @@ public class CFCFileFactory {
 	{
 		StringBuffer sb = new StringBuffer();
 			
-		for(Iterator iter = propertyBeans.iterator(); iter.hasNext();)
+		for (Iterator iter = propertyBeans.iterator(); iter.hasNext();)
 		{
 			CFCPropertyBean bean = (CFCPropertyBean)iter.next();
 			

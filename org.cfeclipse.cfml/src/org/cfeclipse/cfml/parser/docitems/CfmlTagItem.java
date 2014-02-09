@@ -77,7 +77,9 @@ public class CfmlTagItem extends TagItem {
 		for(int i = 0; i < params.length; i++) {
 			Parameter currParam = (Parameter)params[i];
 			
-			if(currParam.isRequired() && !(itemAttributes.containsKey(currParam.getName().toLowerCase()) || itemAttributes.containsKey(currParam.getName().toUpperCase()))) {
+			if (currParam.isRequired()
+					&& !(itemAttributes.containsKey(currParam.getName().toLowerCase()) || itemAttributes.containsKey(currParam.getName()
+							.toUpperCase())) && !itemAttributes.containsKey("attributecollection")) {
 				this.parseMessages.addMessage(new ParseError(lineNumber, startPosition, endPosition, itemData,
 					"The attribute \'" + currParam.getName() + "\' is compulsory for the <" + this.itemName + "> tag." + attributesFound));
 			}

@@ -24,16 +24,62 @@
  */
 package org.cfeclipse.cfml.editors.actions;
 
+import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.ITypedRegion;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.texteditor.ITextEditor;
+
 /**
  * @author Rob
  *
+ * 05/31/2013 jesse.shaffer Updated to match the CFDumpAction
  * Encloses highlighted text in cfoutput tags
  */
 public class CFOutputAction extends GenericEncloserAction {
+	protected ITextEditor editor = null;
 	
-	public CFOutputAction()
-	{
-		super("<cfoutput>","</cfoutput>");
+	
+	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
+		if(targetEditor instanceof ITextEditor){
+			editor = (ITextEditor)targetEditor;
+		}
 	}
-
+	
+	public void run(IAction action){
+		String startDump = "<cfoutput>";
+		String endDump = "</cfoutput>";
+		
+		try {
+			if(editor != null && editor.isEditable()){
+				// Get the document
+				IDocument doc =  editor.getDocumentProvider().getDocument(editor.getEditorInput()); 
+				
+				// Get the selection 
+				ISelection sel = editor.getSelectionProvider().getSelection();
+				
+				// Get the partition
+				ITypedRegion partition = doc.getPartition(((ITextSelection)sel).getOffset());
+				
+				ITextSelection selectioner = (ITextSelection)sel;
+				if(partition.getType().equals(CFPartitionScanner.CF_SCRIPT)){
+					startDump = "writeoutput(";
+					endDump = ");";
+					
+					
+				}
+				this.enclose(doc,(ITextSelection)sel, startDump, endDump);
+				// move the caret into the right place
+				if(selectioner.getLength() == 0){
+					editor.setHighlightRange(selectioner.getOffset() + startDump.length(), 1, true);
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
 }
