@@ -144,7 +144,7 @@ public class CFDocUtils {
 			String cleanAttributeValue = dirtyAttributeValue.trim();
 
 			//	remove starting " and ending "
-			if (cleanAttributeValue.startsWith("\"") && cleanAttributeValue.endsWith("\"")) {
+			if (cleanAttributeValue.startsWith("\"") && cleanAttributeValue.endsWith("\"") && cleanAttributeValue.length() > 1) {
 				cleanAttributeValue = cleanAttributeValue.substring(1, cleanAttributeValue.length()-1);
 			}
 			
