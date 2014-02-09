@@ -781,6 +781,10 @@ public class CFParser {
 				}
 			} catch (RecognitionException e) {
 				e.printStackTrace();
+			} catch (org.antlr.runtime.tree.RewriteEmptyStreamException e) {
+				ScriptItem errorNode = new ScriptItem(0, 0, 0, "error");
+				errorNode.setItemData("Error parsing: " + parserState.getMessages().toString());
+				addDocItemToTree(errorNode);
 			}
 		} catch (cfml.parsing.cfscript.ParseException e) {
 			parserState.addMessage(new ParseError(e.getLine() + addLines, e.getCol() + addOffset, e.getCol() + addOffset, e.getMessage()
