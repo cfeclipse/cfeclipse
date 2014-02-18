@@ -10,7 +10,7 @@
    <feature url="features/org.cfeclipse.cfml.docsharesupport34.feature_1.0.1.200906240701.jar" id="org.cfeclipse.cfml.docsharesupport34.feature" version="1.0.1.200906240701">
       <category name="CFEclipse DocShare Support (Optional)"/>
    </feature>
-   <feature url="features/org.cfeclipse.cfml.docsharesupport35.feature_1.0.0.200906240705.jar" id="org.cfeclipse.cfml.docsharesupport35.feature" version="1.0.0.200906240705">
+   <feature url="features/org.cfeclipse.cfml.docsharesupport35.feature_1.0.0.200906240705.jar" id="org.cfeclipse.cfml.docsharesupport.feature" version="1.0.0.200906240705">
       <category name="CFEclipse DocShare Support (Optional)"/>
    </feature>
    <category-def name="CFEclipse CFML Editor (Required)" label="CFEclipse CFML Editor (Required)"/>

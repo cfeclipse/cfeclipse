@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.cfeclipse.cfml.docsharesupport34.feature"
-      label="CFEclipse DocShare for 3.4"
-      version="1.0.1.qualifier"
-      provider-name="CFEclipse">
+      id="org.cfeclipse.cfml.docsharesupport.feature"
+      label="CFEclipse DocShare for 3.5+"
+      version="1.0.0.qualifier">
 
    <description>
-      This contributes DocShare support for Eclipse 3.4
+      This contributes DocShare support
    </description>
 
    <copyright>
@@ -19,13 +18,13 @@
 
    <requires>
       <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="equivalent"/>
-      <import plugin="org.eclipse.ecf.docshare" version="2.0.0" match="compatible"/>
+      <import plugin="org.eclipse.core.runtime" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.cfeclipse.cfml" version="1.3.4" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ecf.docshare" version="2.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
-         id="org.cfeclipse.cfml.docsharesupport34"
+         id="org.cfeclipse.cfml.docsharesupport"
          download-size="0"
          install-size="0"
          version="0.0.0"

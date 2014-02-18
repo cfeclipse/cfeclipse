@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CFEclipse Docsharesupport35 Plug-in
-Bundle-SymbolicName: org.cfeclipse.cfml.docsharesupport35;singleton:=true
+Bundle-SymbolicName: org.cfeclipse.cfml.docsharesupport;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.cfeclipse.cfml.docsharesupport35.Activator
+Bundle-Activator: org.cfeclipse.cfml.docsharesupport.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime;bundle-version="3.5.0",
  org.cfeclipse.cfml;bundle-version="1.3.4",
