@@ -2,8 +2,7 @@ org.cfeclipse.cfeclipsecall-plugin/bin/
 org.cfeclipse.cfeclipsecall/bin/
 org.cfeclipse.cfml/bin/
 org.cfeclipse.cfml.cfunit/bin/
-org.cfeclipse.cfml.docsharesupport34/bin/
-org.cfeclipse.cfml.docsharesupport35/bin/
+org.cfeclipse.cfml.docsharesupport/bin/
 org.cfeclipse.cfml.frameworks.fusebox/bin/
 org.cfeclipse.cfml.frameworks/bin/
 org.cfeclipse.cfml.snippets/bin/
