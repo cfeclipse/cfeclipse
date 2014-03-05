@@ -47,4 +47,4 @@ or: cfeclipse-releng build build.type=dev
 
 to build the develop branch.
 
-
+See the wiki to find out how the guts of it work
