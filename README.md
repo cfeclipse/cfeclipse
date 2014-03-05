@@ -12,7 +12,6 @@ Projects included in this repository
 ------------------------------------
 
 
-
 * org.cfeclipse.cfeclipsecall
 * org.cfeclipse.cfeclipsecall-plugin
 * org.cfeclipse.cfml : Main CFEclipse Plugin
@@ -40,7 +39,7 @@ Checkout the cfeclipse-releng project from
 
 https://github.com/cfeclipse/cfeclipse-releng.git
 
-run: cfeclipse-releng build
+run: `cfeclipse-releng build`
 
 to build the master branch
 
