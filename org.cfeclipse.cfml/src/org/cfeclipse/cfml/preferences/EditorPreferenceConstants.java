@@ -187,7 +187,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 	 * <li>P_MAX_UNDO_STEPS - 25</li>
 	 * <li>P_BRACKET_MATCHING_COLOR - "255,0,0"</li>
 	 * <li>P_TAB_INDENTS_CURRENT_LINE - true</li>
-	 * <li>P_RTRIM_ON_SAVE - false</li>
+	 * <li>P_RTRIM_ON_SAVE - true</li>
 	 * <li>P_LINE_NUMBER_COLOR - "0,0,0"</li>
 	 * <li>P_CURRENT_LINE_COLOR - "232,242,254"</li>
 	 * <li>P_PRINT_MARGIN_COLOR - "176,180,185"</li>
@@ -216,7 +216,7 @@ public class EditorPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_BRACKET_MATCHING_COLOR,"255,0,0");
 		store.setDefault(P_BRACKET_MATCHING_ENABLED,true);
 		store.setDefault(P_TAB_INDENTS_CURRENT_LINE,true);
-		store.setDefault(P_RTRIM_ON_SAVE,false);
+		store.setDefault(P_RTRIM_ON_SAVE,true);
 		store.setDefault(P_LINE_NUMBER_COLOR,"0,0,0");
 		store.setDefault(P_CURRENT_LINE_COLOR,"232,242,254");
 		store.setDefault(P_SHOW_PRINT_MARGIN,false);
