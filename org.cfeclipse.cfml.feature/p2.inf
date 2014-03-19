@@ -1,3 +1,8 @@
+instructions.configure=org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//mxunit.org/update/,type:0,name:MXUnit,enabled:true); \
+   org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//mxunit.org/update/,type:1,name:MXUnit,enabled:true); \
+   org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/mxunit-update/,type:0,name:MXUnit CFE,enabled:true); \
+   org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/mxunit-update/,type:1,name:MXUnit CFE,enabled:true);
+
 requires.1.namespace = org.eclipse.equinox.p2.iu
 requires.1.name = org.mxunit.eclipseplugin
 requires.1.range = [1.0.0, 9.9.9)
