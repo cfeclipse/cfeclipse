@@ -35,7 +35,8 @@ public class CFCFileFactory {
 				;
 		}
 	
-		sb.append("<cfcomponent");
+		sb.append("<cf");
+		sb.append(appCFCBean.getType().toString());
 		
 		if(appCFCBean.getDisplayName().trim().length() > 0)
 		sb.append(" displayname=\"" + appCFCBean.getDisplayName().trim() + "\"");
@@ -66,7 +67,7 @@ public class CFCFileFactory {
 		
 		//do any functions
 		if(appCFCBean.hasFunctions()){
-			sb.append(getFunctionTags(appCFCBean.getFunctionBeans()));
+			sb.append(getFunctionTags(appCFCBean.getFunctionBeans(),appCFCBean.getType()));
 		}
 		sb.append("</cfcomponent>");
 		
@@ -110,7 +111,7 @@ public class CFCFileFactory {
 				;
 		}
 		
-		sb.append("component");
+		sb.append(appCFCBean.getType().toString());
 
 		if (appCFCBean.getDisplayName().trim().length() > 0)
 			sb.append(" displayname=\"" + appCFCBean.getDisplayName().trim() + "\"");
@@ -134,14 +135,14 @@ public class CFCFileFactory {
 
 		sb.append("\n\n");
 
-		if (appCFCBean.hasProperties()) {
+		if (appCFCBean.getType() != CFCBean.Type.INTERFACE && appCFCBean.hasProperties()) {
 			sb.append(getPropertiesAsCFScript(appCFCBean.getPropertyBeans()));
 			sb.append(getPropertyGettersAndSettersAsCFScript(appCFCBean.getPropertyBeans()));
 		}
 
 		// do any functions
 		if (appCFCBean.hasFunctions()) {
-			sb.append(getFunctionsAsCFScript(appCFCBean.getFunctionBeans()));
+			sb.append(getFunctionsAsCFScript(appCFCBean.getFunctionBeans(), appCFCBean.getType()));
 		}
 		sb.append("}");
 
@@ -360,7 +361,7 @@ public class CFCFileFactory {
 		return sb.toString();
 	}
 
-	private static String getFunctionTags(List functionBeans)
+	private static String getFunctionTags(List functionBeans, CFCBean.Type cfctype)
 	{
 		StringBuffer sb = new StringBuffer();
 		
@@ -368,7 +369,7 @@ public class CFCFileFactory {
 		{
 			CFCFunctionBean bean = (CFCFunctionBean)iter.next();
 			
-			sb.append("\n\t");
+			sb.append("\t");
 			sb.append("<cffunction name=\"" + bean.getName() + "\"");
 			
 			if(bean.getDisplayName().length() > 0)
@@ -380,17 +381,18 @@ public class CFCFileFactory {
 			if(bean.getAccess().length() > 0)
 			sb.append(" access=\"" + bean.getAccess() + "\"");
 			
+			if (cfctype == CFCBean.Type.COMPONENT) {
+				if (bean.isOutput())
+					sb.append(" output=\"true\"");
+				else
+					sb.append(" output=\"false\"");
+			}
 			
-			if(bean.isOutput())
-				sb.append(" output=\"true\"");
-			else
-				sb.append(" output=\"false\"");
-			
-			if(bean.getReturnType().length() > 0)
-			sb.append(" returntype=\"" + bean.getReturnType() + "\"");
+			if(bean.getReturnType().length() > 0 && !bean.getReturnType().startsWith("("))
+				sb.append(" returntype=\"" + bean.getReturnType() + "\"");
 			
 			if(bean.getRoles().length() > 0)
-			sb.append(" roles=\"" + bean.getRoles() + "\"");
+				sb.append(" roles=\"" + bean.getRoles() + "\"");
 			
 			sb.append(">");
 			
@@ -437,32 +439,35 @@ public class CFCFileFactory {
 					sb.append(" />");
 				}
 			}
+			
+			if (cfctype == CFCBean.Type.COMPONENT) {
+				sb.append("\n\t\t");
+				sb.append("<!--- TODO: Implement Method --->");
+				sb.append("\n\t\t");
 				
-			
-			sb.append("\n\t\t");
-			sb.append("<!--- TODO: Implement Method --->");
-			sb.append("\n\t\t");
-			
-			sb.append("<cfreturn />");
+				sb.append("<cfreturn />");
+			}
 			
 			sb.append("\n");
 			sb.append("\t</cffunction>\n");
+			
+			sb.append("\n");
 		}
 		
 		return sb.toString();
 	}
 	
-	private static String getFunctionsAsCFScript(List functionBeans) {
+	private static String getFunctionsAsCFScript(List functionBeans, CFCBean.Type cfctype) {
 		StringBuffer sb = new StringBuffer();
 
 		for (Iterator iter = functionBeans.iterator(); iter.hasNext();) {
 			CFCFunctionBean bean = (CFCFunctionBean) iter.next();
 
-			sb.append("\n\t");
+			sb.append("\t");
 			if (bean.getAccess().length() > 0)
 				sb.append(bean.getAccess() + " ");
 
-			if (bean.getReturnType().length() > 0)
+			if (bean.getReturnType().length() > 0 && !bean.getReturnType().startsWith("("))
 				sb.append(bean.getReturnType() + " ");
 
 			sb.append("function " + bean.getName() + "(");
@@ -510,21 +515,29 @@ public class CFCFileFactory {
 			if (bean.getHint().length() > 0)
 				sb.append(" hint=\"" + bean.getHint() + "\"");
 
-			if (bean.isOutput())
-				sb.append(" output=\"true\"");
-			else
-				sb.append(" output=\"false\"");
+			if (cfctype == CFCBean.Type.COMPONENT) {
+				if (bean.isOutput())
+					sb.append(" output=\"true\"");
+				else
+					sb.append(" output=\"false\"");
+			}
 
 			if (bean.getRoles().length() > 0)
 				sb.append(" roles=\"" + bean.getRoles() + "\"");
 
-			sb.append(" {");
-			sb.append("\n\t\t");
-			sb.append("/* TODO: Implement Method */");
-			sb.append("\n\t\t");
-			sb.append("return \"\";");
+			if (cfctype == CFCBean.Type.COMPONENT) {
+				sb.append(" {");
+				sb.append("\n\t\t");
+				sb.append("/* TODO: Implement Method */");
+				sb.append("\n\t\t");
+				sb.append("return \"\";");
+				sb.append("\n");
+				sb.append("\t}\n");
+			} else {
+				sb.append(";\n");
+			}
+
 			sb.append("\n");
-			sb.append("\t}\n");
 		}
 
 		return sb.toString();
