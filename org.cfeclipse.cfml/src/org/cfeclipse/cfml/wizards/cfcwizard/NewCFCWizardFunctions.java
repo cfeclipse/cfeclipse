@@ -307,15 +307,15 @@ public class NewCFCWizardFunctions extends WizardPage {
 			);
 		TreeSet accessTypes = new TreeSet(cfmldic.getFilteredAttributeValues("cffunction", "access", ""));
 		Iterator i = accessTypes.iterator();
-		String[] str = new String[accessTypes.size()];
+		String[] comboItems = new String[accessTypes.size()];
 		int q=0;
 		while(i.hasNext()){
-			str[q++] = ((Value)i.next()).getValue();
+			comboItems[q++] = ((Value) i.next()).getValue();
 		}
 		
 
 		this.functionAccess = new Combo(container, SWT.BORDER);
-		this.functionAccess.setItems(str);
+		this.functionAccess.setItems(comboItems);
 		data = new GridData ();
 		data.horizontalIndent = 5;
 		data.horizontalAlignment = GridData.BEGINNING;
@@ -333,7 +333,6 @@ public class NewCFCWizardFunctions extends WizardPage {
 			}
 			public void widgetDefaultSelected(SelectionEvent e){;}
 		});
-		
 		functionAccess.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent e){	;}
 			public void focusLost(FocusEvent e){
@@ -357,12 +356,12 @@ public class NewCFCWizardFunctions extends WizardPage {
 			cfmldic.getFilteredAttributeValues("cffunction", "returntype", "")
 		);
 		i = cfitems.iterator();
-		str = new String[cfitems.size()];
+		comboItems = new String[cfitems.size()];
 		q=0;
 		while(i.hasNext()){
-			str[q++] = ((Value)i.next()).getValue();
+			comboItems[q++] = ((Value) i.next()).getValue();
 		}
-		functionReturnType.setItems(str);
+		functionReturnType.setItems(comboItems);
 		/* functionReturnType.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				propertyChanged();
@@ -676,13 +675,15 @@ public class NewCFCWizardFunctions extends WizardPage {
 	private int getAccessIndex(String s)
 	{
 		int fac = functionAccess.getItemCount();
-		
+		int publicIdx = 0;
 		for(int i = 0; i < fac; i++)
 		{		
 			if(functionAccess.getItem(i).equalsIgnoreCase(s))
 				return i;
+			else if (functionAccess.getItem(i).equalsIgnoreCase("public"))
+				publicIdx = i;
 		}
-		return 0;
+		return publicIdx;
 	}
 	
 	/**
@@ -710,105 +711,105 @@ public class NewCFCWizardFunctions extends WizardPage {
 		return false;
 	}
 	
-	/**
-	 * Gets the CFML code version of the function
-	 * NOTE: this requires the user to have gone to the next page to add function
-	 * arguments it seems...
-	 * 
-	 * @return
-	 */
-	public String getFunctionTags()
-	{
-		StringBuffer sb = new StringBuffer();
-		
-		for(Iterator iter = functionBeans.values().iterator(); iter.hasNext();)
-		{
-			CFCFunctionBean bean = (CFCFunctionBean)iter.next();
-			
-			sb.append("\n\t");
-			sb.append("<cffunction name=\"" + bean.getName() + "\"");
-			
-			if(bean.getDisplayName().length() > 0)
-			sb.append(" displayname=\"" + bean.getDisplayName() + "\"");
-			
-			if(bean.getHint().length() > 0)
-			sb.append(" hint=\"" + bean.getHint() + "\"");
-			
-			if(bean.getAccess().length() > 0)
-			sb.append(" access=\"" + bean.getAccess() + "\"");
-			
-			
-			if(bean.isOutput())
-				sb.append(" output=\"true\"");
-			else
-				sb.append(" output=\"false\"");
-			
-			if(bean.getReturnType().length() > 0)
-			sb.append(" returntype=\"" + bean.getReturnType() + "\"");
-			
-			if(bean.getRoles().length() > 0)
-			sb.append(" roles=\"" + bean.getRoles() + "\"");
-			
-			sb.append(">");
-			
-			//now see if there are arguments to this function and write them out
-			//if need be
-			
-			if(bean.getArgumentBeans().size() > 0)
-			{
-				for(Iterator iterator = bean.getArgumentBeans().keySet().iterator(); iterator.hasNext();)
-				{	
-					CFCArgumentBean argBean = (CFCArgumentBean)bean.getArgumentBeans().get(iterator.next());
-					//CFCArgumentBean argBean = (CFCArgumentBean)iterator.next();
-					
-					sb.append("\n\t\t");
-					sb.append("<cfargument name=\"");
-					sb.append(argBean.getName() + "\"");
-					
-					if(argBean.getDisplayName().length() > 0) {
-						sb.append(" displayName=\"");
-						sb.append(argBean.getDisplayName() + "\"");
-					}
-					
-					if(argBean.getType().length() > 0){
-						sb.append(" type=\"");
-						sb.append(argBean.getType() + "\"");
-					}
-					
-					if(argBean.getHint().length() > 0){
-						sb.append(" hint=\"");
-						sb.append(argBean.getHint() + "\"");
-					}
-					
-					if(argBean.getDefaultVal().length() > 0){
-						sb.append(" default=\"");
-						sb.append(argBean.getDefaultVal() + "\"");
-					}
-					
-					sb.append(" required=\"");
-					if(argBean.isRequired())
-						sb.append("true" + "\"");
-					else
-						sb.append("false" + "\"");
-					
-					sb.append(" />");
-				}
-			}
-				
-			
-			sb.append("\n\t\t");
-			sb.append("<!--- TODO: Implement Method --->");
-			sb.append("\n\t\t");
-			
-			sb.append("<cfreturn />");
-			
-			sb.append("\n");
-			sb.append("\t</cffunction>\n");
-		}
-		
-		return sb.toString();
-	}
-	
+//	/**
+//	 * Gets the CFML code version of the function
+//	 * NOTE: this requires the user to have gone to the next page to add function
+//	 * arguments it seems...
+//	 * 
+//	 * @return
+//	 */
+//	public String getFunctionTags()
+//	{
+//		StringBuffer sb = new StringBuffer();
+//		
+//		for(Iterator iter = functionBeans.values().iterator(); iter.hasNext();)
+//		{
+//			CFCFunctionBean bean = (CFCFunctionBean)iter.next();
+//			
+//			sb.append("\n\t");
+//			sb.append("<cffunction name=\"" + bean.getName() + "\"");
+//			
+//			if(bean.getDisplayName().length() > 0)
+//			sb.append(" displayname=\"" + bean.getDisplayName() + "\"");
+//			
+//			if(bean.getHint().length() > 0)
+//			sb.append(" hint=\"" + bean.getHint() + "\"");
+//			
+//			if(bean.getAccess().length() > 0)
+//			sb.append(" access=\"" + bean.getAccess() + "\"");
+//			
+//			
+//			if(bean.isOutput())
+//				sb.append(" output=\"true\"");
+//			else
+//				sb.append(" output=\"false\"");
+//			
+//			if(bean.getReturnType().length() > 0)
+//			sb.append(" returntype=\"" + bean.getReturnType() + "\"");
+//			
+//			if(bean.getRoles().length() > 0)
+//			sb.append(" roles=\"" + bean.getRoles() + "\"");
+//			
+//			sb.append(">");
+//			
+//			//now see if there are arguments to this function and write them out
+//			//if need be
+//			
+//			if(bean.getArgumentBeans().size() > 0)
+//			{
+//				for(Iterator iterator = bean.getArgumentBeans().keySet().iterator(); iterator.hasNext();)
+//				{	
+//					CFCArgumentBean argBean = (CFCArgumentBean)bean.getArgumentBeans().get(iterator.next());
+//					//CFCArgumentBean argBean = (CFCArgumentBean)iterator.next();
+//					
+//					sb.append("\n\t\t");
+//					sb.append("<cfargument name=\"");
+//					sb.append(argBean.getName() + "\"");
+//					
+//					if(argBean.getDisplayName().length() > 0) {
+//						sb.append(" displayName=\"");
+//						sb.append(argBean.getDisplayName() + "\"");
+//					}
+//					
+//					if(argBean.getType().length() > 0){
+//						sb.append(" type=\"");
+//						sb.append(argBean.getType() + "\"");
+//					}
+//					
+//					if(argBean.getHint().length() > 0){
+//						sb.append(" hint=\"");
+//						sb.append(argBean.getHint() + "\"");
+//					}
+//					
+//					if(argBean.getDefaultVal().length() > 0){
+//						sb.append(" default=\"");
+//						sb.append(argBean.getDefaultVal() + "\"");
+//					}
+//					
+//					sb.append(" required=\"");
+//					if(argBean.isRequired())
+//						sb.append("true" + "\"");
+//					else
+//						sb.append("false" + "\"");
+//					
+//					sb.append(" />");
+//				}
+//			}
+//				
+//			
+//			sb.append("\n\t\t");
+//			sb.append("<!--- TODO: Implement Method --->");
+//			sb.append("\n\t\t");
+//			
+//			sb.append("<cfreturn />");
+//			
+//			sb.append("\n");
+//			sb.append("\t</cffunction>\n");
+//		}
+//		
+//		return sb.toString();
+//	}
+//	
 	/**
 	 * Gets all the functions names, mostly to set the next pages dropdown with the
 	 * functions so they can be selected

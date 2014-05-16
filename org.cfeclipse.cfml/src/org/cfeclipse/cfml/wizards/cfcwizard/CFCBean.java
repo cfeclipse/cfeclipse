@@ -15,8 +15,27 @@ import java.util.List;
  */
 public class CFCBean {
 	
+	/**
+	 * The type enum specifies the types that can be used
+	 * @author jesse.shaffer
+	 */
+	public enum Type {
+		  COMPONENT ("component")
+		 ,INTERFACE("interface");
+		
+		private String type;
+		Type(String type) {
+			this.type = type;
+		}
+
+		public String toString() {
+			return type;
+		}
+	}
+
 	// component properties
 	private String name;
+	private Type type;
 	private String style;
 	private String path;
 	private String extendCfc;
@@ -70,9 +89,10 @@ public class CFCBean {
 		this.displayName	= displayName;
 		this.output			= output;
 		this.accessors		= accessors;
-		this.autodoc = true;
+		this.autodoc		= true;
+		this.type			= Type.COMPONENT;
 	}
-		
+	
 	/**
 	 * Adds a new PropertyBean to the PropertyBean Array
 	 * @param CfcPropertyBean
@@ -291,6 +311,14 @@ public class CFCBean {
 
 	public boolean hasFunctions() {
 		return !functionBeans.isEmpty();
+	}
+	
+	public void setType(Type newType) {
+		type = newType;
+	}
+	
+	public Type getType() {
+		return type;
 	}
 
 }
