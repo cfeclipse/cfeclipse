@@ -3,11 +3,11 @@
 <head>
 	<meta http-equiv="Content-Language" content="en-us">
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	
-	<title>What's New in CFEclipse 1.4.7</title>
-	
+
+	<title>What's New in CFEclipse 1.5.0</title>
+
 	<link rel="STYLESHEET" href="../css/whatsnew.css" charset="ISO-8859-1" type="text/css" />
-	
+
 	<script src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
 
 </head>
@@ -16,12 +16,45 @@
 <article>
 	<h1>
 		<img src="../images/moon_full.b120.png" />
-		What's New in CFEclipse 1.4.7
+		What's New in CFEclipse 1.5.0
 	</h1>
-	
+
 	<section class="news">
+    <h2>Still Alive and Kicking!</h2>
+
+    <p>This update brings support for Eclipse Mars (4.5) and syncs up the develpment branch with the master branch,
+    many changes that had been just sorta chill'n and only avialable from the dev update provider.</p>
 	</section>
-	
+  <section class="features">
+    <h2>New Features</h2>
+
+    <table cellpadding="5" cellspacing="0" width="600">
+      <colgroup>
+        <col width="20%">
+        <col width="80%">
+      </colgroup>
+      <tbody>
+        <tr>
+          <td valign="top">
+          <p align="right"><b>Interface Wizard</b></p>
+          </td>
+          <td valign="top">A wizard for creating interface components has been added.
+          <br>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+          <p align="right"><b>Other stuff</b></p>
+          </td>
+          <td valign="top">A couple minor bugs with parsing have been fixed.
+          <br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </section>
+
 	<section class="issues">
 		<h2>Resolved Issues</h2>
 <!-- closedtickets -->
@@ -35,20 +68,20 @@
 		<img src="../images/moon_full.b48.png" />
 		What's New in CFEclipse 1.4.6
 	</h1>
-	
+
 	<section class="news">
 		<h2>Alive and Kicking!</h2>
-		
+
 		<p>The CFEclipse project has been quiet for a while but v1.4.6 marks
 		a ramping up of activity and hopefully some good fixes and improvements
 		over the coming year!</p>
-		
-		<p>If you have any thoughts, feel free to 
-		<a href="https://github.com/cfeclipse/cfeclipse/issues/">raise issues</a> 
+
+		<p>If you have any thoughts, feel free to
+		<a href="https://github.com/cfeclipse/cfeclipse/issues/">raise issues</a>
 		or tell us on the mailing list:
 		<a href="http://groups.google.com/group/cfeclipse-users">http://groups.google.com/group/cfeclipse-users</a>
 		</p>
-		
+
 		<p>If you want to help keep the project going, join the dev mailing list:
 		<a href="http://groups.google.com/group/cfeclipse-dev">http://groups.google.com/group/cfeclipse-dev</a>
 		</p>
@@ -58,26 +91,26 @@
 
 		<h2>Removed Eclipse 3.4 DocShare support</h2>
 		<p>DocShare support for Eclipse 3.4 has been removed, and the old 3.5 plugin refactored.</p>
-		
+
 	</section>
-	
+
 	<section class="news">
 		<h2>CFEclipse is on GitHub</h2>
-		
+
 		<p>CFEclipse has actually been on GitHub for over two and a half years,
 		but there was no formal announcement - well here it is: CFEclipse is officially on GitHub!
-		
+
 		<p>The code is at: <a href="https://github.com/cfeclipse/cfeclipse">https://github.com/cfeclipse/cfeclipse</a>
 		<br/>The issue tracker is: <a href="https://github.com/cfeclipse/cfeclipse/issues/">https://github.com/cfeclipse/cfeclipse<strong>/issues</strong></a>
 		<br/>The wiki is: <a href="https://github.com/cfeclipse/cfeclipse/wiki">https://github.com/cfeclipse/cfeclipse<strong>/wiki</strong></a>
-	
+
 		<p>Pull requests are of course welcome!
-		
+
 		<p><i>(p.s. If you had any outstanding issues in Trac, please
-		feel free to re-open them on the GitHub issue tracker.)</i> 
-	
+		feel free to re-open them on the GitHub issue tracker.)</i>
+
 	</section>
-	
+
 	<section class="features">
 		<h2>New Features</h2>
 
@@ -93,7 +126,7 @@
 					</td>
 					<td valign="top">The cfscript parser actually seems to be useful now!  There is a lot
 					of extraneous data at this point (the whole parse tree is exposed, basically), but lots
-					is better than none in this case.  Enable script paring via <br/> 
+					is better than none in this case.  Enable script paring via <br/>
 					Preferences > CFEclipse > File Parser : Parse CFScript
 					<br>
 					</td>
@@ -102,7 +135,7 @@
 					<td valign="top">
 					<p align="right"><b>CFScript Outline</b></p>
 					</td>
-					<td valign="top">Thanks to the now useful script parsing, there is also a useful outline view, as hinted at above. 
+					<td valign="top">Thanks to the now useful script parsing, there is also a useful outline view, as hinted at above.
 					 Lots of nodes, but pretty useful.
 					<br>
 					</td>
@@ -111,7 +144,7 @@
 					<td valign="top">
 					<p align="right"><b>CFScript Method View</b></p>
 					</td>
-					<td valign="top">I don't know if these really warrant their own sections, as they're all basically 
+					<td valign="top">I don't know if these really warrant their own sections, as they're all basically
 					"cfscript parsing", but what the hey.  The method view is kind of ugly sill but you can see methods, in a view-like fashion.
 					<br>
 					</td>
@@ -121,7 +154,7 @@
 					<p align="right"><b>Jump to function/Jump to assignment</b></p>
 					</td>
 					<td valign="top">You can now push F3 on a function or variable to jump to the function declaration or variable assignment.
-					It is still rather rough, to say the least, but if you're lucky, it will even work for functions defined in other cfs. <-reword this 
+					It is still rather rough, to say the least, but if you're lucky, it will even work for functions defined in other cfs. <-reword this
 					<br>
 					</td>
 				</tr>
@@ -130,7 +163,7 @@
 					<p align="right"><b>New CFC wizard</b></p>
 					</td>
 					<td valign="top">There is now an option to choose what kind of cfc you want to create in the new CFC wizard.
-					Tag or cfscript. 
+					Tag or cfscript.
 					<br>
 					</td>
 				</tr>
@@ -139,16 +172,16 @@
 					<p align="right"><b>Edit URL and Snippets</b></p>
 					</td>
 					<td valign="top">
-						There is now the ability to assign a url to a folder, and use snippets to change how it works, this allows for custom URLS in frameworks for example. 
-						
+						There is now the ability to assign a url to a folder, and use snippets to change how it works, this allows for custom URLS in frameworks for example.
+
 					<br>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-	
+
 	</section>
-	
+
 	<section class="issues">
 		<h2>Resolved Issues</h2>
 <table cellspacing="0" cellpadding="0"><tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>
@@ -167,7 +200,7 @@
 <tr><td valign="top" style="padding:5px"><a href="https://github.com/cfeclipse/cfeclipse/pull/1">1</a></td><td valign="top" style="padding:5px">HTML5 Tag Support</td></tr>
 </table>
 	</section>
-	
+
 </article>
 
 <article class="old">
@@ -175,9 +208,9 @@
 		<img src="../images/moon_new.b48.png" />
 		What's New in CFEclipse 1.4.5
 	</h1>
-	
+
 	<section class="issues">
-	
+
 		<p>Here is the list of tickets closed with this release.
 
 		<table cellspacing="0" cellpadding="0"><tr><td colspan="2" style="border-top:0px; padding-top:3px;padding-left:8px;"><em>Closed Tickets</em></td></tr>
@@ -626,7 +659,7 @@
 			<p>A new file explorer has been added. Allows drag and drop
 			between connections. Also allows weird stuff like editing CFML files
 			within zip archives and jar files.</p>
-			
+
 </section>
 <section>
 
@@ -749,7 +782,7 @@
 					</tr>
 				</tbody>
 			</table>
-			
+
 	</section>
 
 </article>
@@ -839,7 +872,7 @@
 	</h1>
 
 	<section>
-	
+
 		<p><i>Task Tags</i> have been added. This expands on the "TODO"
 		task tag, adding the ability to add custom task types and priorities</p>
 		<p>A new preference has been added to set the <i>auto-activation
@@ -1126,18 +1159,18 @@ but they'll get better as we progress.</p>
 <p>[Theoretically] Fixed in this release:</p>
 <pre>
 #509	Errors with implicit structure/array creation
-#106 	mishandling of multiline strings   	 
-#478 	attribute validation with spaces 	
+#106 	mishandling of multiline strings
+#478 	attribute validation with spaces
 #486 	asking for content assist when you have a broken parse tree throws error
-#496 	word wrap throws null pointer exception 	
-#510 	insert cfabort action, doesn't 
-#512 	useSmartPaste preference default is not initialized 
+#496 	word wrap throws null pointer exception
+#510 	insert cfabort action, doesn't
+#512 	useSmartPaste preference default is not initialized
 #513 	context menu added with each file opened
-#515 	smartpaste preference doesn't seem to take 
-#516 	Code Formatting splits regex onto 2 lines 	
-#520 	syntax errors inside comments 
-#521 	space at the end of strings/single quotes inside double quotes 	
-#523 	Code Parsing error with cfinterface/cffunction 
+#515 	smartpaste preference doesn't seem to take
+#516 	Code Formatting splits regex onto 2 lines
+#520 	syntax errors inside comments
+#521 	space at the end of strings/single quotes inside double quotes
+#523 	Code Parsing error with cfinterface/cffunction
 #504 	cfdump and cfabort tags should print out their respective dump() and abort() functions in cfscript
 #517 	Content Format menu option incorrect display
 #518 	Code Parsing and formatting

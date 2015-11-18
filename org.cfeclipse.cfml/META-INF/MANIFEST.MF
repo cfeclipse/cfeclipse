@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CFML Plug-in
 Bundle-SymbolicName: org.cfeclipse.cfml; singleton:=true
-Bundle-Version: 1.4.7.qualifier
+Bundle-Version: 1.5.0.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ClassPath: cfml.jar,
@@ -105,7 +105,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.filesystem;resolution:=optional,
  org.eclipse.ui.browser,
  org.eclipse.search,
- org.eclipse.ecf.docshare;bundle-version="2.0.0";resolution:=optional
+ org.eclipse.ecf.docshare;bundle-version="2.0.0";resolution:=optional,
+ org.eclipse.e4.ui.workbench;bundle-version="1.0.2"
 Bundle-ActivationPolicy: lazy
 Import-Package: com.ibm.icu.text,
  org.eclipse.ui.console
