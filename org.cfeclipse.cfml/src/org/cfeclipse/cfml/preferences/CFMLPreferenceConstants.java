@@ -57,7 +57,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
     /**
 	 * the default help url 
 	 */
-	public static final String DEFAULT_HELP_URL = "http://www.cfeclipse.org/cfdocs/?query=";
+	public static final String DEFAULT_HELP_URL = "http://cfdocs.org/";
 	
     /**
 	 * the default help url 

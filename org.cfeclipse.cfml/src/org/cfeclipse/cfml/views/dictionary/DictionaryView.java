@@ -569,7 +569,7 @@ public class DictionaryView extends ViewPart {
 					keyword = "";
 
 				}
-				String urldest = "http://www.cfeclipse.org/cfdocs/?query="; //TODO: Change this help url out.
+				String urldest = "http://cfdocs.org/"; //TODO: Change this help url out.
 				
 				
 				String theFullURL = urldest + keyword;
