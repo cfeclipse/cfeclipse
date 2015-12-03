@@ -2326,18 +2326,6 @@
             application="org.eclipse.ui.ide.workbench"
             name="CFEclipse">
          <property
-               name="windowImages"
-               value="icons/icons/16x16.gif,icons/icons/32x32.gif,icons/icons/48x48.gif,icons/icons/64x64.gif,icons/icons/128x128.gif"/>
-         <property
-               name="aboutImage"
-               value="icons/icons/about.gif"/>
-         <property
-               name="preferenceCustomization"
-               value="plugin_customization.ini"/>
-         <property
-               name="aboutText"
-               value="CFEclipse&#x0A;&#x0A;&#x0A;(c)  Copyright (c) 2004-2012 The CFEclipse Project &#x0A;Visit http://www.cfeclipse.org"/>
-         <property
                name="appName"
                value="CFEclipse">
          </property>

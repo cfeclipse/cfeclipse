@@ -27,13 +27,21 @@
  */
 package org.cfeclipse.cfml.builders;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
+import org.cfeclipse.cfml.parser.CFLintPlugin;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
+
+import com.cflint.CFLint;
+import com.cflint.config.CFLintConfig;
+import com.cflint.plugins.CFLintScanner;
+import com.cflint.tools.CFLintFilter;
 
 /**
  * @author Administrator
@@ -48,7 +56,25 @@ public class CFEBuilder extends IncrementalProjectBuilder {
      */
     protected IProject[] build(int kind, Map args, IProgressMonitor monitor)
             throws CoreException {
-        return null;
+		CFLintConfig config = null;
+		CFLint cflint;
+		try {
+			cflint = new CFLint(config);
+			cflint.setVerbose(true);
+			cflint.setLogError(true);
+			cflint.setQuiet(false);
+			cflint.setShowProgress(false);
+			cflint.setProgressUsesThread(true);
+			CFLintFilter filter = CFLintFilter.createFilter(true);
+			cflint.getBugs().setFilter(filter);
+			List<CFLintScanner> scanners = cflint.getScanners();
+			cflint.addScanner(new CFLintPlugin());
+			cflint.process("", "source.cfc");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return null;
     }
     /* (non-Javadoc)
      * @see org.eclipse.core.internal.events.InternalBuilder#clean(org.eclipse.core.runtime.IProgressMonitor)

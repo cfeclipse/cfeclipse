@@ -82,7 +82,8 @@ public class CFMLPropertyManager {
 	}
 	
 	public String getDictionaryDir() {
-		return preferenceManager.dictionaryDir();
+		String dictDir = preferenceManager.dictionaryDir();
+		return dictDir;
 	}
 
 	public String getCurrentDictionary(IProject project)

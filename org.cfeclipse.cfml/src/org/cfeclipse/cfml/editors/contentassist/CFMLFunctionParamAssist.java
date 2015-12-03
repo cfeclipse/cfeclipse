@@ -506,7 +506,7 @@ public class CFMLFunctionParamAssist extends AssistContributor
         int newOffset = offset;
         
         try {
-            String trigger = docText.substring(offset-1,offset);
+            String trigger = offset == 0 ? "" : docText.substring(offset-1,offset);
             //System.out.println("Triggered by ["+trigger+"]");
             if (trigger.equals("#")) {
             	newOffset = offset -1;

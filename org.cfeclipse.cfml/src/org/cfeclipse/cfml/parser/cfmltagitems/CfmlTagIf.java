@@ -24,9 +24,10 @@
  */
 package org.cfeclipse.cfml.parser.cfmltagitems;
 
-import org.cfeclipse.cfml.parser.ParseMessage;
 import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
+
+import cfml.parsing.ParseMessage;
 
 public class CfmlTagIf extends CfmlTagItem {
 	/**

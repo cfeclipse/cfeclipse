@@ -28,14 +28,14 @@ import java.util.ArrayList;
 
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
 import org.cfeclipse.cfml.parser.CFNodeList;
-import org.cfeclipse.cfml.parser.ParseError;
-import org.cfeclipse.cfml.parser.ParseMessage;
 import org.cfeclipse.cfml.parser.State;
 import org.cfeclipse.cfml.parser.exception.InvalidChildItemException;
 import org.cfeclipse.cfml.parser.exception.NodeNotFound;
 import org.cfeclipse.cfml.parser.xpath.XPathSearch;
 import org.cfeclipse.cfml.parser.xpath.expressions.ComparisonType;
 
+import cfml.parsing.ParseError;
+import cfml.parsing.ParseMessage;
 
 /** 
  * The DocItem class is intended to be the abstract base class for parsing and representing 

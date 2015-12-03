@@ -29,8 +29,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.cfeclipse.cfml.dictionary.Tag;
-import org.cfeclipse.cfml.parser.ParseError;
-import org.cfeclipse.cfml.parser.ParseWarning;
+
+import cfml.parsing.ParseError;
+import cfml.parsing.ParseWarning;
 
 
 /**

@@ -28,11 +28,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -43,6 +39,8 @@ import org.cfeclipse.cfml.editors.SQLSyntaxDictionary;
 import org.cfeclipse.cfml.editors.partitioner.scanners.jscript.JSSyntaxDictionary;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.util.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -57,10 +55,10 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
+import org.osgi.framework.Bundle;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 
 /**
  * @author Rob
@@ -102,9 +100,12 @@ public class DictionaryManager
 		URL dictionaryConfigURL = null;
 		try 
 		{
+			Bundle yourBundle = Platform.getBundle(CFMLPlugin.PLUGIN_ID);
+			Path relativePathToBundle = new Path("/relativePath");
+			String bundleDir = "file:"+ org.eclipse.core.runtime.FileLocator.getBundleFile(yourBundle).getAbsolutePath() + "/dictionary/"; 
+			
 			dictionaryConfigURL = new URL(
-				CFMLPlugin.getDefault().getBundle().getEntry("/"),
-				"dictionary/"
+					bundleDir
 			);
 			
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -116,6 +117,17 @@ public class DictionaryManager
 			URL configurl = FileLocator.LocateURL(dictionaryConfigURL, "dictionaryconfig.xml");
 						
 			dictionaryConfig = builder.parse(configurl.getFile());
+			if(dictionaryConfig == null) {
+				try {
+					dictionaryConfig = builder.parse("jar:"
+							+ DictionaryManager.class.getClassLoader()
+									.getResource("org.cfeclipse.cfml/dictionary/dictionaryconfig.xml").getFile()
+									.replace("dictionaryconfig.xml", ""));
+				} catch (Exception e) {
+					dictionaryConfig = builder.parse("jar:file:" + DictionaryManager.class.getResource("/dictionaries.zip").getFile()
+							+ "!/org.cfeclipse.cfml/dictionary/");
+				}
+			}
 		} 
 		catch (Exception e) 
 		{

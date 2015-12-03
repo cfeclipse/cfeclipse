@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import cfml.parsing.ParseError;
+import cfml.parsing.ParseMessage;
+
 /**
  * Represents the current state of the parser.
  * 

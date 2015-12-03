@@ -1,96 +1,62 @@
 package org.cfeclipse.cfml.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.antlr.runtime.CommonToken;
-import org.antlr.runtime.tree.CommonTree;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.cfeclipse.cfml.parser.docitems.ScriptItem;
 
-import cfml.parsing.cfscript.CFScriptParser;
+import cfml.CFSCRIPTParser;
+import cfml.CFSCRIPTParser.ParameterAttributeContext;
+import cfml.CFSCRIPTParser.ParameterListContext;
+import cfml.CFSCRIPTParser.ReturnStatementContext;
+import cfml.CFSCRIPTParserBaseListener;
 
 public class FunctionInfo extends ScriptItem {
 
 	private String functionname;
 	private String returnType = "any";
 	private String access = "public";
-	private List parameters;
+	private List<LinkedHashMap<String, String>> parameters;
+	private String[] ruleNames = CFSCRIPTParser.ruleNames;
 	private Boolean atLeastOneParam = false;
 
-	public FunctionInfo(CommonTree tree) {
-		super(tree.getLine(), tree.getTokenStartIndex(), tree.getTokenStopIndex(), "ASTFunctionDeclaration");
-		StringBuilder functionText = new StringBuilder();
-		parameters = new ArrayList();
-		for (Object kidTree : tree.getChildren()) {
-			CommonTree kid = (CommonTree) kidTree;
-			CommonToken token = (CommonToken) kid.getToken();
-			switch (kid.getType()) {
-			case CFScriptParser.FUNCTION_ACCESS:
-				setStartPosition(token.getStartIndex());
-				setAccess(kid.getChild(0).getText());
-				functionText.append(kid.getChild(0).getText() + " ");
-				break;
-			case CFScriptParser.FUNCTION_RETURNTYPE:
-				setReturnType(kid.getChild(0).getText());
-				break;
-			case CFScriptParser.FUNCTION_NAME:
-				setStartPosition(kid.getTokenStartIndex());
-				setFunctionName(kid.getChild(0).getText());
-				functionText.append(kid.getChild(0).getText());
-				break;
-			case CFScriptParser.FUNCTION_PARAMETER:
-				if (!atLeastOneParam) {
-					functionText.append(" (");
-					atLeastOneParam = true;
-				} else {
-					functionText.append(", ");
-				}
-				addParameter(functionText, kid);
-				trimStringBuilder(functionText);
-				break;
+	public void dumpTree(ParseTree tree, String[] strings) {
+		System.out.println("");
+		System.out.println("Kids:");
+		for (int i = 0; i < tree.getChildCount(); i++) {
+			ParseTree kid = (ParseTree) tree.getChild(i);
+			System.out.println("Child: " + i);
+			if (kid.getPayload() instanceof RuleContext) {
+				RuleContext rule = (RuleContext) kid.getPayload();
+				System.out.println("Rule: "+strings[rule.getRuleIndex()] + " " + rule.getRuleIndex());
+			} else {
+				System.out.println("Token");
 			}
+			System.out.println(kid.getText());
+			System.out.println("Kids kids");
+			for (int j = 0; j < kid.getChildCount(); j++) {
+				dumpTree(kid,strings);
+			}
+			System.out.println();
+			System.out.println();
 		}
-		if (!atLeastOneParam)
-			functionText.append("(");
-		functionText.append(')');
-		if (this.returnType != null) {
-			functionText.append(" : " + this.returnType);
-		}
-		this.setItemData(functionText.toString());
+		
 	}
-
-	private void addParameter(StringBuilder functionText, CommonTree tree) {
-		LinkedHashMap<String, String> paramaterAttributes = new LinkedHashMap<String, String>();
-		paramaterAttributes.put("required", "false");
-		paramaterAttributes.put("type", "any");
-		paramaterAttributes.put("default", "");
-		for (Object kidTree : tree.getChildren()) {
-			CommonTree kid = (CommonTree) kidTree;
-			switch (kid.getType()) {
-			case CFScriptParser.REQUIRED:
-				functionText.append(kid.getText() + " ");
-				paramaterAttributes.put("required", "true");
-				break;
-			case CFScriptParser.IDENTIFIER:
-				functionText.append(kid.getText() + " ");
-				paramaterAttributes.put("name", kid.getText());
-				if (tree.getChildCount() == 3 && kid.childIndex == 1
-						&& tree.getChild(kid.childIndex + 1).getType() == CFScriptParser.EQUALSOP) {
-					paramaterAttributes.put("default", tree.getChild(kid.childIndex + 2).getText());
-				}
-				functionText.append(kid.getText() + " " + kid.getType());
-				break;
-			case CFScriptParser.PARAMETER_TYPE:
-				functionText.append(kid.getChild(0).getText() + " ");
-				paramaterAttributes.put("type", kid.getChild(0).getText().toLowerCase());
-				break;
-			default:
-				functionText.append(kid.getText() + " " + kid.getType());
-			}
-		}
-		parameters.add(paramaterAttributes);
-		trimStringBuilder(functionText);
+	
+	public FunctionInfo(ParserRuleContext tree) {
+		super(tree, "ASTFunctionDeclaration");
+		parameters = new ArrayList<LinkedHashMap<String, String>>();
+		final TreeParameterListener listener = new TreeParameterListener();
+		ParseTreeWalker.DEFAULT.walk(listener, tree);
 	}
 
 	private void setAccess(String text) {
@@ -125,7 +91,7 @@ public class FunctionInfo extends ScriptItem {
 		return this.lineNumber;
 	}
 
-	public List getParameters() {
+	public List<LinkedHashMap<String, String>> getParameters() {
 		return this.parameters;
 	}
 
@@ -161,4 +127,102 @@ public class FunctionInfo extends ScriptItem {
 		return sb;
 	}
 
+	private class TreeParameterListener extends CFSCRIPTParserBaseListener {
+	    private final List<String> ruleNames;
+	    Map<RuleContext,ArrayList<String>> stack = new HashMap<RuleContext,ArrayList<String>>();
+		StringBuilder functionText = new StringBuilder();
+
+	    public TreeParameterListener() {
+	    	this.ruleNames = Arrays.asList(CFSCRIPTParser.ruleNames);
+	    }
+	    
+	    private String valueOrDefault(ParserRuleContext rule, String defaultValue) {
+	    	if(rule != null)
+	    		return rule.getText();
+	    	return defaultValue;
+	    }
+	    
+	    /**
+	     * {@inheritDoc}
+	     *
+	     * <p>The default implementation does nothing.</p>
+	     */
+	    @Override public void enterFunctionDeclaration(cfml.CFSCRIPTParser.FunctionDeclarationContext ctx) {
+	    	super.exitFunctionDeclaration(ctx);
+	    	String name = valueOrDefault(ctx.identifier(),"unknown");
+	    	String access = valueOrDefault(ctx.accessType(),"public");
+	    	String type = valueOrDefault(ctx.typeSpec(),"any");
+	    	setFunctionName(name);
+	    	setAccess(access);
+	    	setReturnType(type);
+	    	functionText.append(name);;
+	    };
+
+	    /**
+		 * {@inheritDoc}
+		 *
+		 * <p>The default implementation does nothing.</p>
+		 */
+		@Override public void exitFunctionDeclaration(cfml.CFSCRIPTParser.FunctionDeclarationContext ctx) {
+			super.exitFunctionDeclaration(ctx);
+			trimStringBuilder(functionText);
+			setItemData(functionText.toString());
+		};
+		
+		@Override
+		public void enterParameterList(ParameterListContext ctx) {
+			super.enterParameterList(ctx);
+			functionText.append("(");
+		}
+		@Override
+		public void exitParameterList(ParameterListContext ctx) {
+			super.exitParameterList(ctx);
+			for( LinkedHashMap<String, String> param : parameters) {
+				functionText.append(param.get("type") + " ");
+				functionText.append(param.get("name") + " ");
+				functionText.append(", ");
+			}
+			functionText.delete(functionText.length()-2, functionText.length());
+			functionText.append(")");
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * <p>The default implementation does nothing.</p>
+		 */
+		@Override public void exitParameter(cfml.CFSCRIPTParser.ParameterContext ctx) {
+			List<ParameterAttributeContext> attribs = ctx.parameterAttribute();
+			LinkedHashMap<String, String> paramaterAttributes = new LinkedHashMap<String, String>();
+			String name = ctx.identifier().getText();
+			boolean required = ctx.REQUIRED() != null;
+			TerminalNode equals = ctx.EQUALSOP();
+			String type = ctx.parameterType() == null ? "Any" : ctx.parameterType().getText();
+			paramaterAttributes.put("required", required ? "true" : "false");
+			paramaterAttributes.put("type", type);
+			paramaterAttributes.put("name", name);
+			if(ctx.EQUALSOP() != null) {
+				cfml.CFSCRIPTParser.ParameterContext parent = (cfml.CFSCRIPTParser.ParameterContext) ctx.EQUALSOP().getParent();
+				paramaterAttributes.put("default", parent.getStop().getText());
+			}
+			ScriptItem childNode = new ScriptItem(ctx, "ASTFunctionParameter");
+			childNode.setItemData(ctx.getText());
+			addChild(childNode);
+			parameters.add(paramaterAttributes);
+		};
+		
+		@Override
+		public void enterReturnStatement(ReturnStatementContext ctx) {
+			super.exitReturnStatement(ctx);
+			ScriptItem childNode = new ScriptItem(ctx, "return");
+			childNode.setItemData(ctx.getText());
+			addChild(childNode);
+		}
+
+	    @Override
+	    public String toString() {
+	        return functionText.toString();
+	    }
+	    
+	}
 }

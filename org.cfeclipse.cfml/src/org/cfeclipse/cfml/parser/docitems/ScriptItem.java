@@ -24,6 +24,8 @@
  */
 package org.cfeclipse.cfml.parser.docitems;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class ScriptItem extends DocItem 
 {
@@ -31,6 +33,11 @@ public class ScriptItem extends DocItem
 	public ScriptItem(int line, int startDocPos, int endDocPos, String name)
 	{
 		super(line, startDocPos, endDocPos, name);
+	}
+
+	public ScriptItem(ParserRuleContext ctx, String name) {
+		super(ctx.getStart().getLine(),ctx.getStart().getStartIndex(),ctx.getStop().getStopIndex(),name);
+		// TODO Auto-generated constructor stub
 	}
 
 	public boolean validChildAddition(DocItem parentItem)

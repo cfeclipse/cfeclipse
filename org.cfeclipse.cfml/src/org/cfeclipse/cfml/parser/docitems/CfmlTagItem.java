@@ -35,9 +35,10 @@ import java.util.Set;
 
 import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.Tag;
-import org.cfeclipse.cfml.parser.ParseError;
 import org.cfeclipse.cfml.parser.exception.DuplicateAttributeException;
 import org.cfeclipse.cfml.parser.exception.InvalidAttributeException;
+
+import cfml.parsing.ParseError;
 /**
  * @author Oliver Tupman
  *
