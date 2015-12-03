@@ -7,10 +7,9 @@ Bundle-Activator: org.cfeclipse.cfml.snippets.SnippetPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ org.eclipse.ui.editors;bundle-version="3.9.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5,
- JavaSE-1.6
 Import-Package: org.apache.commons.logging,
  org.eclipse.core.resources,
  org.eclipse.jface.text,

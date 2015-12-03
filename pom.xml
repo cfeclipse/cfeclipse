@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.cfeclipse.ide</groupId>
+	<artifactId>cfeclipse</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tycho.version>0.23.0</tycho.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
+		<mxunit-repo.url>http://cfeclipse.org/mxunit-update</mxunit-repo.url>
+		<ecf-repo.url>http://download.eclipse.org/rt/ecf/3.11.0/site.p2</ecf-repo.url>
+		<mylyn-repo.url>http://download.eclipse.org/mylyn/releases/latest</mylyn-repo.url>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>mars</id>
+			<url>${mars-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>mxunit</id>
+			<url>${mxunit-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>ecf</id>
+			<url>${ecf-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>mylyn</id>
+			<url>${mylyn-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
+
+	<modules>
+		<module>org.cfeclipse.cfeclipsecall.plugin</module>
+		<module>org.cfeclipse.cfml</module>
+		<module>org.cfeclipse.cfml.cfunit</module>
+		<module>org.cfeclipse.cfml.docsharesupport</module>
+		<module>org.cfeclipse.cfml.docsharesupport.feature</module>
+		<module>org.cfeclipse.cfml.feature</module>
+		<module>org.cfeclipse.cfml.frameworks</module>
+		<module>org.cfeclipse.cfml.platform.feature</module>
+		<module>org.cfeclipse.cfml.product</module>
+		<module>org.cfeclipse.cfml.snippets</module>
+		<module>org.cfeclipse.cfml.snippets.feature</module>
+		<module>org.cfeclipse.cfml.snippets.update</module>
+		<module>org.cfeclipse.cfml.templates.fragment</module>
+		<!-- <module>org.cfeclipse.cfml.update</module> <module>org.cfeclipse.cfml.update-dev</module> 
+			<module>org.cfeclipse.cfml.update-nightly</module> -->
+	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
