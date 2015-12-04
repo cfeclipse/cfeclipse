@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.cfeclipse.cfml.docsharesupport.feature"
-      label="CFEclipse DocShare for 3.5+"
-      version="1.0.0.qualifier">
+      label="CFEclipse DocShare"
+      version="1.5.0">
 
    <description>
       This contributes DocShare support
