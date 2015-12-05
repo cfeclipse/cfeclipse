@@ -11,19 +11,33 @@
 	<groupId>org.cfeclipse.ide</groupId>
 	<artifactId>org.cfeclipse.cfml.update-dev</artifactId>
 	<version>1.5.0</version>
-	<packaging>eclipse-update-site</packaging>
+	<packaging>eclipse-repository</packaging>
 	<properties>
 		<site.suffix>-dev</site.suffix>
+		<plugin.p2.dir>target/repository2</plugin.p2.dir>
 	</properties>
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-packaging-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<configuration>
-					<target>${plugin.p2.dir}</target>
-				</configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>copy-webdocs-and-whatnot</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<copy todir="${plugin.p2.dir}">
+									<fileset dir="${project.basedir}" includes="web/**,cfeclipsecall/**,index.html" />
+								</copy>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
@@ -38,6 +52,9 @@
 						</goals>
 						<configuration>
 							<source>
+								<repository>
+									<url>file://${project.build.directory}/repository</url>
+								</repository>
 								<repository>
 									<url>http://cfeclipse.org/update${site.suffix}</url>
 								</repository>
