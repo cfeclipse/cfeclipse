@@ -43,23 +43,62 @@
 	</repositories>
 
 	<modules>
-		<module>org.cfeclipse.cfeclipsecall.plugin</module>
 		<module>org.cfeclipse.cfml</module>
+		<module>org.cfeclipse.cfeclipsecall.plugin</module>
 		<module>org.cfeclipse.cfml.cfunit</module>
 		<module>org.cfeclipse.cfml.docsharesupport</module>
 		<module>org.cfeclipse.cfml.docsharesupport.feature</module>
 		<module>org.cfeclipse.cfml.feature</module>
 		<module>org.cfeclipse.cfml.frameworks</module>
-		<module>org.cfeclipse.cfml.platform.feature</module>
-		<module>org.cfeclipse.cfml.product</module>
 		<module>org.cfeclipse.cfml.snippets</module>
 		<module>org.cfeclipse.cfml.snippets.feature</module>
-		<module>org.cfeclipse.cfml.snippets.update</module>
 		<module>org.cfeclipse.cfml.templates.fragment</module>
-		<module>org.cfeclipse.cfml.update-dev</module>
-		<!-- <module>org.cfeclipse.cfml.update</module> 
-			<module>org.cfeclipse.cfml.update-nightly</module> -->
 	</modules>
+
+	<profiles>
+		<profile>
+			<id>update-dev</id>
+			<activation>
+				<property>
+					<name>build.type</name>
+					<value>update-dev</value>
+				</property>
+			</activation>
+			<modules>
+				<module>org.cfeclipse.cfml.snippets.update</module>
+				<module>org.cfeclipse.cfml.update-dev</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>update</id>
+			<activation>
+				<property>
+					<name>build.type</name>
+					<value>update</value>
+				</property>
+			</activation>
+			<modules>
+				<module>org.cfeclipse.cfml.snippets.update</module>
+				<module>org.cfeclipse.cfml.update</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>standalone</id>
+			<activation>
+				<property>
+					<name>build.type</name>
+					<value>standalone</value>
+				</property>
+			</activation>
+			<modules>
+				<module>org.cfeclipse.cfml.snippets.update</module>
+				<module>org.cfeclipse.cfml.update</module>
+				<module>org.cfeclipse.cfml.platform.feature</module>
+				<module>org.cfeclipse.cfml.product</module>
+			</modules>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
