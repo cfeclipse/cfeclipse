@@ -57,11 +57,11 @@
 
 	<profiles>
 		<profile>
-			<id>update-dev</id>
+			<id>dev</id>
 			<activation>
 				<property>
 					<name>build.type</name>
-					<value>update-dev</value>
+					<value>dev</value>
 				</property>
 			</activation>
 			<modules>
@@ -70,11 +70,11 @@
 			</modules>
 		</profile>
 		<profile>
-			<id>update</id>
+			<id>release</id>
 			<activation>
 				<property>
 					<name>build.type</name>
-					<value>update</value>
+					<value>release</value>
 				</property>
 			</activation>
 			<modules>
