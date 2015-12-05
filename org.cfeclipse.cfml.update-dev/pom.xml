@@ -25,7 +25,7 @@
 				<executions>
 					<execution>
 						<id>copy-webdocs-and-whatnot</id>
-						<phase>process-resources</phase>
+						<phase>verify</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
@@ -33,6 +33,7 @@
 							<target>
 								<copy todir="${plugin.p2.dir}">
 									<fileset dir="${project.basedir}" includes="web/**,cfeclipsecall/**,index.html" />
+									<fileset dir="${project.build.directory}/repository" includes="*/**" />
 								</copy>
 							</target>
 						</configuration>
@@ -46,20 +47,17 @@
 				<executions>
 					<execution>
 						<id>add-to-update-site</id>
-						<phase>verify</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>mirror</goal>
 						</goals>
 						<configuration>
 							<source>
 								<repository>
-									<url>file://${project.build.directory}/repository</url>
-								</repository>
-								<repository>
 									<url>http://cfeclipse.org/update${site.suffix}</url>
 								</repository>
 							</source>
-							<destination>${plugin.p2.dir}</destination>
+							<destination>${project.build.directory}/repository</destination>
 							<append>true</append>
 						</configuration>
 					</execution>
