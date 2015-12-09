@@ -1,6 +1,7 @@
 org.cfeclipse.cfeclipsecall-plugin/bin/
 org.cfeclipse.cfeclipsecall/bin/
 org.cfeclipse.cfml/bin/
+org.cfeclipse.cfml/cfml.jar
 org.cfeclipse.cfml.cfunit/bin/
 org.cfeclipse.cfml.docsharesupport/bin/
 org.cfeclipse.cfml.frameworks.fusebox/bin/
