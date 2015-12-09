@@ -100,13 +100,9 @@ public class DictionaryManager
 		URL dictionaryConfigURL = null;
 		try 
 		{
-			Bundle yourBundle = Platform.getBundle(CFMLPlugin.PLUGIN_ID);
-			Path relativePathToBundle = new Path("/relativePath");
-			String bundleDir = "file:"+ org.eclipse.core.runtime.FileLocator.getBundleFile(yourBundle).getAbsolutePath() + "/dictionary/"; 
-			
-			dictionaryConfigURL = new URL(
-					bundleDir
-			);
+			Bundle cfmlBundle = Platform.getBundle(CFMLPlugin.PLUGIN_ID);
+			dictionaryConfigURL = org.eclipse.core.runtime.FileLocator.find(CFMLPlugin.getDefault().getBundle(),
+                    new Path("dictionary"), null);
 			
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			factory.setIgnoringComments(true);
