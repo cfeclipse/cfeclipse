@@ -14,8 +14,47 @@
 	<packaging>eclipse-repository</packaging>
 	<properties>
 		<site.suffix>-dev</site.suffix>
-		<plugin.p2.dir>target/repository2</plugin.p2.dir>
+		<plugin.p2.dir>target/repository-merged</plugin.p2.dir>
+		<merge.updates>false</merge.updates>
 	</properties>
+	<profiles>
+		<profile>
+			<id>merge-updates</id>
+			<activation>
+				<property>
+					<name>merge.updates</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-p2-extras-plugin</artifactId>
+						<version>${tycho-extras.version}</version>
+						<executions>
+							<execution>
+								<id>add-to-update-site</id>
+								<phase>package</phase>
+								<goals>
+									<goal>mirror</goal>
+								</goals>
+								<configuration>
+									<source>
+										<repository>
+											<url>http://cfeclipse.org/update${site.suffix}</url>
+										</repository>
+									</source>
+									<destination>${project.build.directory}/repository</destination>
+									<append>true</append>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -33,36 +72,15 @@
 							<target>
 								<copy todir="${plugin.p2.dir}">
 									<fileset dir="${project.basedir}" includes="web/**,cfeclipsecall/**,index.html" />
-									<fileset dir="${project.build.directory}/repository" includes="*/**" />
+									<fileset dir="${project.build.directory}/repository"
+										includes="*/**" />
 								</copy>
 							</target>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-p2-extras-plugin</artifactId>
-				<version>${tycho-extras.version}</version>
-				<executions>
-					<execution>
-						<id>add-to-update-site</id>
-						<phase>package</phase>
-						<goals>
-							<goal>mirror</goal>
-						</goals>
-						<configuration>
-							<source>
-								<repository>
-									<url>http://cfeclipse.org/update${site.suffix}</url>
-								</repository>
-							</source>
-							<destination>${project.build.directory}/repository</destination>
-							<append>true</append>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+
 		</plugins>
 	</build>
 

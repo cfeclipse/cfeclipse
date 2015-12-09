@@ -6,14 +6,14 @@
    <feature id="org.cfeclipse.cfml.docsharesupport.feature" version="0.0.0">
       <category name="cfeclipse.optional.category.id"/>
    </feature>
-   <category-def name="cfeclipse.category.id" label="[Dev] CFEclipse CFML IDE (Required)">
+   <category-def name="cfeclipse.category.id" label="[Dev] CFEclipse CFML Editor (Required)">
       <description>
-         CFEclipse CFML IDE
+         [Dev] CFEclipse CFML Editor (Required)
       </description>
    </category-def>
    <category-def name="cfeclipse.optional.category.id" label="[Dev] CFEclipse DocShare Support (Optional)">
       <description>
-         Optional CFEclipse DocShare Support
+         [Dev] CFEclipse DocShare Support (Optional)
       </description>
    </category-def>
 </site>
