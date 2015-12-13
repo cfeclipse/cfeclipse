@@ -1117,7 +1117,7 @@ public class CFParser {
 		matchStack.push(rootItem);
 		ParseItemMatch lastMatch = null;
 		// little hackish way to detect cfscript based cfcs TODO: something better
-		if (inData.split("(?i).*component[^>]+\\{").length > 1) {
+		if (!inData.contains("cfcomponent") && inData.split("(?i).*component[^>]+\\{").length > 1) {
 			parseCFScript(inData);
 			newDoc.setDocumentRoot(rootItem);
 			return newDoc;

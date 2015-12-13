@@ -70,6 +70,7 @@ public class CFMLPropertyManager {
         store.setDefault(CFMLPreferenceConstants.P_PROJECT_URL, preferenceManager.defaultProjectURL());
         store.setDefault(CFMLPreferenceConstants.P_DEFAULT_HELP_URL, preferenceManager.defaultHelpURL());
 		store.setDefault(CFMLPreferenceConstants.P_DICTIONARIES_PATH, preferenceManager.defaultDictionaryDir());
+		store.setDefault(CFMLPreferenceConstants.P_CFLINT_ENABLED_PROJECT, preferenceManager.CFLintEnabled());
 	}
 	
 	public String getCurrentDictionary(IFile file){
@@ -153,6 +154,17 @@ public class CFMLPropertyManager {
 		IPreferenceStore store = new ProjectPropertyStore(project);
 		store.setValue("componentRoot", root);
 	
+	}
+	
+	public void setCFLintEnabledProject(Boolean enabled, IProject project){
+		IPreferenceStore store = new ProjectPropertyStore(project);
+		store.setValue(CFMLPreferenceConstants.P_CFLINT_ENABLED_PROJECT, enabled);
+		
+	}
+	
+	public boolean getCFLintEnabledProject(IProject project){
+		IPreferenceStore store = new ProjectPropertyStore(project);
+		return store.getBoolean(CFMLPreferenceConstants.P_CFLINT_ENABLED_PROJECT);
 	}
 	
 	

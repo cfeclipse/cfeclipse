@@ -2,12 +2,14 @@ package org.cfeclipse.cfml.properties;
 
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
+import org.cfeclipse.cfml.preferences.CFLintPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.preference.RadioGroupFieldEditor;
@@ -49,6 +51,7 @@ public class ProjectPropertyPage extends PropertyPage {
 	private RadioGroupFieldEditor cfmlSyntaxField;
 
 	private ProjectPropertyStore propStore;
+	private BooleanFieldEditor cflintEnabledField;
 	
 	/**
 	 * Constructor for SamplePropertyPage.
@@ -188,6 +191,19 @@ public class ProjectPropertyPage extends PropertyPage {
 	    this.cfmlSyntaxField.load();
 	}
 	
+	
+	/**
+	 * The project CFLint properties
+	 * @param parent
+	 */
+	private void addCFLintSection(Composite parent)
+	{
+		Composite composite = createDefaultComposite(parent);
+		this.cflintEnabledField = new BooleanFieldEditor(CFMLPreferenceConstants.P_CFLINT_ENABLED_PROJECT, "Enable CFLint for this project", composite);
+		this.cflintEnabledField.setPreferenceStore(propertyManager.getStore((IProject)getElement()));
+		this.cflintEnabledField.load();
+	}
+	
 	/**
 	 * @see PreferencePage#createContents(Composite)
 	 */
@@ -203,9 +219,10 @@ public class ProjectPropertyPage extends PropertyPage {
 		addSeparator(composite);
 		addSnippetsSection(composite);
 		addHelpSection(composite);
-		//addURLSection(composite);
+		addURLSection(composite);
 		//addComponentRootSection(composite);
 		addCFMLSyntaxSection(composite);
+		addCFLintSection(composite);
 		return composite;
 	}
 
@@ -228,6 +245,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		// Populate the owner text field with the default value
 		snippetsPathField.setStringValue(DEFAULT_SNIPPETS_PATH);
 		projectURLField.setStringValue(DEFAULT_PROJECT_URL);
+		cflintEnabledField.loadDefault();
 		projectComponentRootField.setStringValue(((IResource) getElement()).getName());
 		this.cfmlSyntaxField.loadDefault();
 	}
@@ -246,6 +264,7 @@ public class ProjectPropertyPage extends PropertyPage {
 				);
 			propertyManager.setHelpURL(projectHelpURLField.getStringValue(),(IProject)getElement());
 			propertyManager.setSnippetsPath(snippetsPathField.getStringValue(),(IProject)getElement());
+			propertyManager.setCFLintEnabledProject(cflintEnabledField.getBooleanValue(),(IProject)getElement());
 		} 
 		catch (CoreException e) 
 		{

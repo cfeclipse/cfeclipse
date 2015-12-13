@@ -59,7 +59,6 @@ public class CFMLPreferenceManager {
 	
 	public void initializeDefaultValues() {
 		
-		CFMLPreferenceConstants.setDefaults(store);
 		EditorPreferenceConstants.setDefaults(store);
 		AutoIndentPreferenceConstants.setDefaults(store);
 		FoldingPreferenceConstants.setDefaults(store);
@@ -71,6 +70,8 @@ public class CFMLPreferenceManager {
 		ApplicationTemplatesPreferenceConstants.setDefaults(store);
 		SnipExPreferenceConstants.setDefaults(store);
 		TextSelectionPreferenceConstants.setDefaults(store);
+		CFLintPreferenceConstants.setDefaults(store);
+		CFMLPreferenceConstants.setDefaults(store);
 	}
 	
 	/**
@@ -361,6 +362,10 @@ public class CFMLPreferenceManager {
 
 	public boolean persistFoldState() {
 		return store.getBoolean(FoldingPreferenceConstants.P_PERSIST_FOLD_STATE);
+	}
+
+	public Boolean CFLintEnabled() {
+		return store.getBoolean(CFLintPreferenceConstants.P_CFLINT_ENABLED);
 	}
 		
 	

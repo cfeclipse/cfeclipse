@@ -65,6 +65,11 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	public static final String P_HELP_URL_USE_EXTERNAL_BROWSER = "_helpURLUseExternalBrowser";
 	
 	/**
+	 * the default help url 
+	 */
+	public static final String P_CFLINT_ENABLED_PROJECT = "_cflint_enabled_project";
+	
+	/**
 	 * Sets up the default values for preferences managed by {@link CFMLPreferencesPage} .
 	 * <ul>
 	 * <li>P_SNIPPETS_PATH - CFMLPlugin.getDefault().getStateLocation().toString()</li>
@@ -85,7 +90,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_IMAGE_TOOLTIPS,true);
 		store.setDefault(P_CFML_DICTIONARY, P_CFML_DICTIONARY_DEFAULT);
 		store.setDefault(P_TEMPLATE_PROJECT_PATH, "");
-		
+		store.setDefault(P_CFLINT_ENABLED_PROJECT, store.getBoolean(CFLintPreferenceConstants.P_CFLINT_ENABLED));
 	}
 	
 }

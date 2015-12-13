@@ -1783,6 +1783,11 @@
             id="org.cfeclipse.cfml.preferences.HTMLColorsPreferencePage">
       </page>
       <page
+            class="org.cfeclipse.cfml.preferences.CFLintPreferencePage"
+            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
+            name="%cflint.preference.page"
+            id="org.cfeclipse.cfml.preferences.CFlintPreferencePage"/>
+      <page
             class="org.cfeclipse.cfml.preferences.ParserPreferencePage"
             category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
             name="%page.name.4"
@@ -2016,6 +2021,7 @@
       <runtime>
          <run class="org.cfeclipse.cfml.natures.CFENature"/>
       </runtime>
+	  <builder id="org.cfeclipse.cfml.Builder"/>
    </extension>
    
    <extension
@@ -2127,6 +2133,14 @@
 
    </extension>
    
+   <extension point="org.eclipse.core.resources.markers"
+   		id="cflintmarker"
+   		name="CFLint Marker">
+		<super type="org.eclipse.core.resources.problemmarker"/> 
+      	<super type="org.eclipse.core.resources.textmarker"/> 
+      <persistent value="true"/>
+	</extension>
+      
    <extension point="org.eclipse.core.resources.markers"
    		id="parserProblemMarker"
    		name="CFEclipse parser problem">
@@ -2375,11 +2389,14 @@
       </cheatsheet>
    </extension> 
    <extension
-         id="org.cfeclipse.cfml.builders.componentbuilder"
+         id="Builder"
          name="CF Component Builder"
          point="org.eclipse.core.resources.builders">
       <builder hasNature="true">
-         <run class="org.cfeclipse.cfml.builders.CFComponentBuilder"/>
+         <run class="org.cfeclipse.cfml.builders.CFEBuilder">
+         	<parameter name="optimize" value="true" />
+            <parameter name="comment" value="Builder comment" />
+         </run>
       </builder>
    </extension>
 

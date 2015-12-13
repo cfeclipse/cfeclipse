@@ -90,7 +90,11 @@ public class RenameInFileAction implements IEditorActionDelegate, IWorkbenchWind
 	}
 
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		editor = (CFMLEditor) targetEditor;
+		if (targetEditor instanceof CFMLEditor) {
+			editor = (CFMLEditor) targetEditor;
+		} else {
+			editor = null;
+		}
 	}
 
 	public void run(IAction action) {
