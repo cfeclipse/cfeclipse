@@ -1,0 +1,1428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary>
+
+<!--  ********** GLOBAL ATTRIBUTES ************************ -->   
+	<global_attributes>
+	
+<!-- Animation Properties -->	
+   		<parameter name="animation" type="String">
+            <help><![CDATA[animation: name duration timing-function delay iteration-count direction;]]></help>
+            <values>
+            	<value option="alternate"/>
+            	<value option="cubic-bezier(x1,y1,x2,y2)"/>
+            	<value option="ease"/>
+            	<value option="ease-in"/>
+            	<value option="ease-out"/>
+            	<value option="ease-in-out"/>
+            	<value option="infinite"/>
+            	<value option="linear"/>
+            	<value option="none"/>
+            	<value option="normal"/>
+            	<value option="pause"/>
+            	<value option="running"/>
+            </values>
+   		</parameter>
+   		<parameter name="animation-name" type="String">
+	        <help><![CDATA[]]></help>
+	        <values>
+	        	<value option="none" type="color"/>
+			</values>
+		</parameter>	
+   		<parameter name="animation-duration" type="String">
+	        <help><![CDATA[]]></help>
+	        <values>
+			</values>
+		</parameter>	
+   		<parameter name="animation-timing-function" type="String">
+	        <help><![CDATA[]]></help>
+	        <values>
+            	<value option="ease"/>
+            	<value option="ease-in"/>
+            	<value option="ease-out"/>
+            	<value option="ease-in-out"/>
+            	<value option="infinite"/>
+            	<value option="linear"/>
+			</values>
+		</parameter>	
+   		<parameter name="animation-delay" type="String">
+	        <help><![CDATA[]]></help>
+	        <values>
+			</values>
+		</parameter>	
+   		<parameter name="animation-iteration-count" type="String">
+	        <help><![CDATA[]]></help>
+	        <values>
+	        	<value option="infinite"/>
+			</values>
+		</parameter>	
+   		<parameter name="animation-direction" type="String">
+	        <help><![CDATA[]]></help>
+	        <values>
+	        	<value option="alternate"/>
+	        	<value option="normal"/>
+			</values>
+		</parameter>	
+   		<parameter name="animation-play-state" type="String">
+	        <help><![CDATA[]]></help>
+	        <values>
+	        	<value option="paused"/>
+	        	<value option="running"/>
+			</values>
+		</parameter>	
+<!-- ***********************************************************************************-->		
+<!-- Background Properties -->   		
+   		<parameter name="background" type="String">
+	        <help><![CDATA[background: color position size repeat origin clip attachment image;]]></help>
+	        <values>
+	        	<value option="color" type="color"/>
+	        	<value option="url" type="file_url"/>
+	        	<value option="bottom"/>
+	        	<value option="center"/>
+	        	<value option="left"/>
+	        	<value option="inherit"/>
+	        	<value option="repeat"/>
+	        	<value option="repeat-x"/>
+	        	<value option="repeat-y"/>
+	        	<value option="no-repeat"/>
+	        	<value option="right"/>
+	        	<value option="right"/>
+	        </values>
+   		</parameter>
+   		<parameter name="background-attachment" type="String">
+            <help><![CDATA[]]></help>
+            <values>
+            	<value option="scroll"/>
+            	<value option="fixed"/>
+            	<value option="local"/>
+            </values>
+   		</parameter>
+   		<parameter name="background-color" type="String">
+	       	<value option="color" type="color"/>
+	       	<value option="red"/>
+	       	<value option="green"/>
+	       	<value option="blue"/>
+	       	<value option="yellow"/>
+	       	<value option="black"/>
+	       	<value option="white"/>
+	       	<value option="transparent"/>
+	       	<value option="inherit"/>
+   		 </parameter>
+   		 <parameter name="background-image" type="String">
+          	<value option="url" type="file_url"/>
+          	<value option="none"/>
+          	<value option="inherit"/>
+		</parameter>   		
+   		 <parameter name="background-position" type="String">
+           	<value option="top"/>
+           	<value option="left"/>
+           	<value option="bottom"/>
+           	<value option="center"/>
+           	<value option="right"/>
+           	<value option="inherit"/>
+		</parameter> 
+		<parameter name="background-repeat"  type="String">
+        	<value option="repeat"/>
+        	<value option="repeat-x"/>
+        	<value option="repeat-y"/>
+        	<value option="no-repeat"/>
+           	<value option="inherit"/>
+		</parameter>		
+		<parameter name="background-clip"  type="String">
+        	<value option="border-box"/>
+        	<value option="padding-box"/>
+        	<value option="content-box"/>
+		</parameter>		
+		<parameter name="background-origin"  type="String">
+        	<value option="padding-box"/>
+        	<value option="border-box"/>
+        	<value option="ccontent-box"/>
+		</parameter>		
+		<parameter name="background-size"  type="String">
+        	<value option="auto"/>
+        	<value option="contain"/>
+        	<value option="cover"/>
+		</parameter>	
+<!-- ***********************************************************************************-->		
+<!-- Border Properties -->   		
+		<parameter name="border"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-bottom"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-left"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-right"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-top"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-bottom-color"  type="String">
+        	<value option="color" type="color"/>
+		</parameter>		
+		<parameter name="border-left-color"  type="String">
+        	<value option="color" type="color"/>
+		</parameter>		
+		<parameter name="border-right-color"  type="String">
+        	<value option="color" type="color"/>
+		</parameter>		
+		<parameter name="border-top-color"  type="String">
+        	<value option="color" type="color"/>
+		</parameter>		
+		<parameter name="border-style"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-bottom-style"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-left-style"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-right-style"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-top-style"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="border-width"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+		</parameter>			
+		<parameter name="border-bottom-width"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+		</parameter>			
+		<parameter name="border-left-width"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+		</parameter>			
+		<parameter name="border-right-width"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+		</parameter>			
+		<parameter name="border-top-width"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+		</parameter>			
+		<parameter name="border-color"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="inherit"/>
+        	<value option="transparent"/>
+		</parameter>		
+		<parameter name="outline"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="invert" type="color"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="outline-color"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="inherit"/>
+        	<value option="invert"/>
+		</parameter>		
+		<parameter name="outline-style"  type="String">
+        	<value option="auto"/>
+        	<value option="dashed"/>
+        	<value option="dotted"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="hidden"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+        	<value option="outset"/>
+        	<value option="ridge"/>
+        	<value option="solid"/>
+        	<value option="inherit"/>
+		</parameter>	
+		<parameter name="outline-width"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="inherit"/>
+		</parameter>			
+		<parameter name="outline-width"  type="String">
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="thin"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="border-radius"  type="String">
+		</parameter>			
+		<parameter name="border-bottom-left-radius"  type="String">
+		</parameter>			
+		<parameter name="border-bottom-right-radius"  type="String">
+		</parameter>			
+		<parameter name="border-top-left-radius"  type="String">
+		</parameter>			
+		<parameter name="border-top-right-radius"  type="String">
+		</parameter>			
+		<parameter name="border-image"  type="String">
+        	<value option="url" type="file_url"/>
+        	<value option="auto"/>
+        	<value option="fill"/>
+        	<value option="none"/>
+        	<value option="repeat"/>
+        	<value option="round"/>
+        	<value option="space"/>
+        	<value option="stretch"/>
+		</parameter>			
+		<parameter name="border-image-outset"  type="String">
+		</parameter>			
+		<parameter name="border-image-repeat"  type="String">
+        	<value option="repeat"/>
+        	<value option="round"/>
+        	<value option="space"/>
+        	<value option="stretch"/>
+		</parameter>			
+		<parameter name="border-image-slice"  type="String">
+        	<value option="fill"/>
+		</parameter>			
+		<parameter name="border-image-source"  type="String">
+        	<value option="url" type="file_url"/>
+        	<value option="none"/>
+		</parameter>			
+		<parameter name="border-image-width"  type="String">
+        	<value option="auto"/>
+		</parameter>
+		<parameter name="box-decoration-break"  type="String">
+        	<value option="clone"/>
+        	<value option="slice"/>
+		</parameter>
+		<parameter name="box-shadow"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="inset"/>
+        	<value option="none"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Box Properties -->   		
+		<parameter name="overflow-x"  type="String">
+        	<value option="visible"/>
+        	<value option="hidden"/>
+        	<value option="scroll"/>
+        	<value option="auto"/>
+        	<value option="no-display"/>
+        	<value option="no-content"/>
+		</parameter>
+		<parameter name="overflow-y"  type="String">
+        	<value option="visible"/>
+        	<value option="hidden"/>
+        	<value option="scroll"/>
+        	<value option="auto"/>
+        	<value option="no-display"/>
+        	<value option="no-content"/>
+		</parameter>
+		<parameter name="overflow-style"  type="String">
+        	<value option="auto"/>
+        	<value option="marquee-block"/>
+        	<value option="marquee-line"/>
+		</parameter>
+		<parameter name="rotation"  type="String">
+        	<value option="0deg"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Color Properties -->   		
+		<parameter name="opacity"  type="String">
+        	<value option="1.0"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Content for Dimension Properties -->   		
+		<parameter name="height"  type="String">
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="max-height"  type="String">
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="max-width"  type="String">
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="min-height"  type="String">
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="min-width"  type="String">
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="width"  type="String">
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Content for Flexible Box Properties -->   		
+		<parameter name="box-align"  type="String">
+        	<value option="start"/>
+        	<value option="end"/>
+        	<value option="center"/>
+        	<value option="baseline"/>
+        	<value option="stretch"/>
+		</parameter>
+		<parameter name="box-direction"  type="String">
+        	<value option="normal"/>
+        	<value option="reverse"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="box-flex"  type="String">
+		</parameter>	
+		<parameter name="box-orient"  type="String">
+        	<value option="horizontal"/>
+        	<value option="vertical"/>
+        	<value option="inline-axis"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="box-ordinal-group"  type="String">
+		</parameter>	
+<!-- ***********************************************************************************-->		
+<!-- Content for Font Properties -->   		
+		<parameter name="font"  type="String">
+        	<value option="bold"/>
+        	<value option="bolder"/>
+        	<value option="lighter"/>
+        	<value option="italic"/>
+        	<value option="oblique"/>
+        	<value option="bolder"/>
+        	<value option="normal"/>
+        	<value option="small-caps"/>
+        	<value option="xx-small"/>
+        	<value option="x-small"/>
+        	<value option="small"/>
+        	<value option="medium"/>
+        	<value option="large"/>
+        	<value option="x-large"/>
+        	<value option="xx-large"/>
+        	<value option="smaller"/>
+        	<value option="larger"/>
+        	
+        	<value option="button"/>
+        	<value option="caption"/>
+        	<value option="icon"/>
+        	<value option="menu"/>
+        	<value option="message-box"/>
+        	<value option="small-caption"/>
+        	<value option="status-bar"/>
+
+        	<value option="Times New Roman"/>
+        	<value option="Courier New"/>
+        	<value option="Arial"/>
+        	<value option="serif"/>
+        	<value option="sans-serif"/>
+        	<value option="cursive"/>
+        	<value option="fantacy"/>
+        	<value option="monospace"/>
+        	
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="font-style"  type="String">
+        	<value option="normal"/>
+        	<value option="italic"/>
+        	<value option="oblique"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="font-variant"  type="String">
+        	<value option="normal"/>
+        	<value option="small-caps"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="font-weight"  type="String">
+        	<value option="normal"/>
+        	<value option="bold"/>
+        	<value option="bolder"/>
+        	<value option="lighter"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="font-size"  type="String">
+        	<value option="xx-small"/>
+        	<value option="x-small"/>
+        	<value option="small"/>
+        	<value option="medium"/>
+        	<value option="large"/>
+        	<value option="x-large"/>
+        	<value option="xx-large"/>
+        	<value option="larger"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="line-height"  type="String">
+            <help><![CDATA[Can also specify length in px,pt,cm or % of current font]]></help>
+        	<value option="normal"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="font-family"  type="String">
+            <help><![CDATA[Font-family-name,genetic-family]]></help>
+        	<value option="Times New Roman"/>
+        	<value option="Courier New"/>
+        	<value option="Arial"/>
+        	<value option="serif"/>
+        	<value option="sans-serif"/>
+        	<value option="cursive"/>
+        	<value option="fantacy"/>
+        	<value option="monospace"/>
+        	<value option="inherit"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Content for Generated Content Properties -->   		
+		<parameter name="content"  type="String">
+        	<value option="attr(x)"/>
+        	<value option="close-quote"/>
+        	<value option="counter(name)"/>
+        	<value option="counter(name,style)"/>
+        	<value option="counters(name,string)"/>
+        	<value option="counters(name,string,style)"/>
+        	<value option="icon"/>
+        	<value option="no-close-quote"/>
+        	<value option="no-open-quote"/>
+        	<value option="normal"/>
+        	<value option="open-quote"/>
+        	<value option="url" type="file_url"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="counter-increment"  type="String">
+        	<value option="none"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="counter-reset"  type="String">
+        	<value option="none"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="quotes"  type="String">
+        	<value option="none"/>
+        	<value option="inherit"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Content for Grid Properties -->   		
+		<parameter name="grid-columns"  type="String">
+        	<value option="none"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="grid-rows"  type="String">
+        	<value option="none"/>
+        	<value option="inherit"/>
+		</parameter>		
+<!-- ***********************************************************************************-->		
+<!-- Content for Linebox Properties -->   		
+		<parameter name="alignment-adjust"  type="String">
+        	<value option="after-edge"/>
+        	<value option="alphabetic"/>
+        	<value option="auto"/>
+        	<value option="basline"/>
+        	<value option="before-edge"/>
+        	<value option="central"/>
+        	<value option="hanging"/>
+        	<value option="ideographic"/>
+        	<value option="mathematical"/>
+        	<value option="middle"/>
+        	<value option="text-after-edge"/>
+        	<value option="text-before-edge"/>
+		</parameter>		
+		<parameter name="alignment-baseline"  type="String">
+        	<value option="after-edge"/>
+        	<value option="alphabetic"/>
+        	<value option="basline"/>
+        	<value option="before-edge"/>
+        	<value option="central"/>
+        	<value option="hanging"/>
+        	<value option="ideographic"/>
+        	<value option="mathematical"/>
+        	<value option="middle"/>
+        	<value option="text-after-edge"/>
+        	<value option="text-before-edge"/>
+        	<value option="use-script"/>
+		</parameter>		
+		<parameter name="baseline-shift"  type="String">
+        	<value option="baseline"/>
+        	<value option="sub"/>
+        	<value option="super"/>
+		</parameter>		
+		<parameter name="dominant-baseline"  type="String">
+        	<value option="alphabetic"/>
+        	<value option="auto"/>
+        	<value option="central"/>
+        	<value option="hanging"/>
+        	<value option="ideographic"/>
+        	<value option="mathematical"/>
+        	<value option="middle"/>
+        	<value option="no-change"/>
+        	<value option="reset-size"/>
+        	<value option="text-after-edge"/>
+        	<value option="text-before-edge"/>
+        	<value option="use-script"/>
+		</parameter>		
+		<parameter name="drop-initial-after-adjust"  type="String">
+        	<value option="after-edge"/>
+        	<value option="alphabetic"/>
+        	<value option="central"/>
+        	<value option="hanging"/>
+        	<value option="ideographic"/>
+        	<value option="mathematical"/>
+        	<value option="middle"/>
+        	<value option="text-after-edge"/>
+		</parameter>		
+		<parameter name="drop-initial-after-align"  type="String">
+        	<value option="after-edge"/>
+        	<value option="alphabetic"/>
+        	<value option="baseline"/>
+        	<value option="before-edge"/>
+        	<value option="central"/>
+        	<value option="hanging"/>
+        	<value option="ideographic"/>
+        	<value option="mathematical"/>
+        	<value option="middle"/>
+        	<value option="text-after-edge"/>
+        	<value option="text-before-edge"/>
+        	<value option="use-script"/>
+		</parameter>		
+		<parameter name="drop-initial-before-adjust"  type="String">
+        	<value option="after-edge"/>
+        	<value option="before-edge"/>
+        	<value option="central"/>
+        	<value option="hanging"/>
+        	<value option="ideographic"/>
+        	<value option="mathematical"/>
+        	<value option="middle"/>
+        	<value option="text-after-edge"/>
+        	<value option="text-before-edge"/>
+		</parameter>		
+		<parameter name="drop-initial-before-align"  type="String">
+        	<value option="after-edge"/>
+        	<value option="alphabetic"/>
+        	<value option="baseline"/>
+        	<value option="before-edge"/>
+        	<value option="caps-height"/>
+        	<value option="central"/>
+        	<value option="hanging"/>
+        	<value option="ideographic"/>
+        	<value option="mathematical"/>
+        	<value option="middle"/>
+        	<value option="text-after-edge"/>
+        	<value option="text-before-edge"/>
+        	<value option="use-script"/>
+		</parameter>		
+		<parameter name="drop-initial-size"  type="String">
+        	<value option="auto"/>
+		</parameter>		
+		<parameter name="drop-initial-value"  type="String">
+        	<value option="initial"/>
+		</parameter>		
+		<parameter name="inline-box-align"  type="String">
+        	<value option="initial"/>
+        	<value option="last"/>
+		</parameter>		
+		<parameter name="line-stacking"  type="String">
+        	<value option="block-line-height"/>
+        	<value option="consider-shifts"/>
+        	<value option="disregard-shifts"/>
+        	<value option="exclude-ruby"/>
+        	<value option="grid-height"/>
+        	<value option="inline-line-height"/>
+        	<value option="include-ruby"/>
+        	<value option="max-height"/>
+		</parameter>		
+		<parameter name="line-stacking-ruby"  type="String">
+        	<value option="exclude-ruby"/>
+        	<value option="include-ruby"/>
+		</parameter>		
+		<parameter name="line-stacking-shift"  type="String">
+        	<value option="consider-shifts"/>
+        	<value option="disregard-shifts"/>
+		</parameter>		
+		<parameter name="line-stacking-strategy"  type="String">
+        	<value option="block-line-height"/>
+        	<value option="grid-height"/>
+        	<value option="inline-line-height"/>
+        	<value option="max-height"/>
+		</parameter>		
+		<parameter name="text-height"  type="String">
+        	<value option="auto"/>
+        	<value option="font-size"/>
+        	<value option="max-size"/>
+        	<value option="text-size"/>
+		</parameter>		
+<!-- ***********************************************************************************-->		
+<!-- Content for List Properties -->   		
+		<parameter name="list-style"  type="String">
+        	<value option="url" type="file_url"/>
+        	<value option="inside"/>
+        	<value option="outside"/>
+        	<value option="armenian"/>
+        	<value option="circle"/>
+        	<value option="cjk-ideographic"/>
+        	<value option="decimal"/>
+        	<value option="decimal-leadin-zero"/>
+        	<value option="disc"/>
+        	<value option="georgian"/>
+        	<value option="hebrew"/>
+        	<value option="hirgana"/>
+        	<value option="hirgana-iroha"/>
+        	<value option="katakana"/>
+        	<value option="katakana-iroha"/>
+        	<value option="lower-alpha"/>
+        	<value option="lower-greek"/>
+        	<value option="lower-latin "/>
+        	<value option="lower-roman"/>
+        	<value option="none"/>
+        	<value option="square"/>
+        	<value option="upper-greek"/>
+        	<value option="upper-latin "/>
+        	<value option="upper-roman"/>
+        	<value option="inherit "/>
+        	<value option="none"/>
+		</parameter>		
+		<parameter name="list-style-image"  type="String">
+        	<value option="url" type="file_url"/>
+        	<value option="inherit"/>
+        	<value option="none"/>
+		</parameter>
+		<parameter name="list-style-position"  type="String">
+        	<value option="inherit"/>
+        	<value option="inside"/>
+        	<value option="outside"/>
+		</parameter>
+		<parameter name="list-style-type"  type="String">
+        	<value option="armenian"/>
+        	<value option="circle"/>
+        	<value option="cjk-ideographic"/>
+        	<value option="decimal"/>
+        	<value option="decimal-leadin-zero"/>
+        	<value option="disc"/>
+        	<value option="georgian"/>
+        	<value option="hebrew"/>
+        	<value option="hirgana"/>
+        	<value option="hirgana-iroha"/>
+        	<value option="inherit"/>
+        	<value option="katakana"/>
+        	<value option="katakana-iroha"/>
+        	<value option="lower-alpha"/>
+        	<value option="lower-greek"/>
+        	<value option="lower-latin "/>
+        	<value option="lower-roman"/>
+        	<value option="none"/>
+        	<value option="square"/>
+        	<value option="upper-greek"/>
+        	<value option="upper-latin "/>
+        	<value option="upper-roman"/>
+		</parameter>		
+<!-- ***********************************************************************************-->		
+<!-- Content for Margin Properties -->   		
+		<parameter name="margin"  type="String">
+        	<value option="auto"/>
+        	<value option="0px"/>
+        	<value option="0pt"/>
+        	<value option="0%"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="margin-bottom"  type="String">
+        	<value option="auto"/>
+        	<value option="0px"/>
+        	<value option="0pt"/>
+        	<value option="0%"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="margin-left"  type="String">
+        	<value option="auto"/>
+        	<value option="0px"/>
+        	<value option="0pt"/>
+        	<value option="0%"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="margin-right"  type="String">
+        	<value option="auto"/>
+        	<value option="0px"/>
+        	<value option="0pt"/>
+        	<value option="0%"/>
+        	<value option="inherit"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Content for Multi-column Properties -->   		
+		<parameter name="column-count"  type="String">
+        	<value option="1"/>
+        	<value option="auto"/>
+		</parameter>
+		<parameter name="column-gap"  type="String">
+        	<value option="1px"/>
+        	<value option="normal"/>
+		</parameter>
+		<parameter name="column-rule-color"  type="String">
+        	<value option="color" type="color"/>
+		</parameter>
+		<parameter name="column-rule-style"  type="String">
+        	<value option="none"/>
+        	<value option="hidden"/>
+        	<value option="dotted"/>
+        	<value option="dashed"/>
+        	<value option="solid"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="ridge"/>
+        	<value option="inset"/>
+        	<value option="outset"/>
+		</parameter>
+		<parameter name="column-rule-width"  type="String">
+        	<value option="thin"/>
+        	<value option="medium"/>
+        	<value option="thick"/>
+        	<value option="length"/>
+		</parameter>
+		<parameter name="column-span"  type="String">
+        	<value option="1"/>
+        	<value option="all"/>
+		</parameter>
+		<parameter name="column-width"  type="String">
+        	<value option="1px"/>
+        	<value option="auto"/>
+		</parameter>
+		<parameter name="columns"  type="String">
+        	<value option="1px"/>
+        	<value option="1"/>
+        	<value option="auto"/>
+		</parameter>
+		<parameter name="column-rule"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="1px"/>
+        	<value option="1"/>
+        	<value option="auto"/>
+        	<value option="none"/>
+        	<value option="hidden"/>
+        	<value option="dotted"/>
+        	<value option="dashed"/>
+        	<value option="solid"/>
+        	<value option="double"/>
+        	<value option="groove"/>
+        	<value option="ridge"/>
+        	<value option="inset"/>
+        	<value option="outset"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Content for Padding Properties -->   		
+		<parameter name="padding"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="1%"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="padding-bottom"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="1%"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="padding-left"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="1%"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="padding-right"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="1%"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="padding-top"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="1%"/>
+        	<value option="inherit"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Content for Positioning Properties -->   		
+		<parameter name="bottom"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="1%"/>
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="clear"  type="String">
+        	<value option="left"/>
+        	<value option="right"/>
+        	<value option="both"/>
+        	<value option="none"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="clip"  type="String">
+        	<value option="rect(top-px,right-px,bottom-px,left-px)"/>
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="cursor"  type="String">
+        	<value option="auto"/>
+        	<value option="crosshair"/>
+        	<value option="default"/>
+        	<value option="e-resize"/>
+        	<value option="help"/>
+        	<value option="move"/>
+        	<value option="n-resize"/>
+        	<value option="ne-resize"/>
+        	<value option="nw-resize"/>
+        	<value option="pointer"/>
+        	<value option="progress"/>
+        	<value option="s-resize"/>
+        	<value option="se-resize"/>
+        	<value option="sw-resize"/>
+        	<value option="text"/>
+        	<value option="w-resize"/>
+        	<value option="wait"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="display"  type="String">
+        	<value option="none"/>
+        	<value option="box"/>
+        	<value option="block"/>
+        	<value option="flex"/>
+        	<value option="inline"/>
+        	<value option="inline-block"/>
+        	<value option="inline-flex"/>
+        	<value option="inline-table"/>
+        	<value option="list-item"/>
+        	<value option="table"/>
+        	<value option="table-caption"/>
+        	<value option="table-cell"/>
+        	<value option="table-column"/>
+        	<value option="table-column-group"/>
+        	<value option="table-footer-group"/>
+        	<value option="table-header-group"/>
+        	<value option="table-row"/>
+        	<value option="table-row-group"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="float"  type="String">
+        	<value option="left"/>
+        	<value option="right"/>
+        	<value option="none"/>
+        	<value option="inline"/>
+		</parameter>		
+		<parameter name="left"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="1%"/>
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="overflow"  type="String">
+        	<value option="visible"/>
+        	<value option="hidden"/>
+        	<value option="scroll"/>
+        	<value option="auto"/>
+        	<value option="inline"/>
+		</parameter>		
+		<parameter name="position"  type="String">
+        	<value option="static"/>
+        	<value option="absolute"/>
+        	<value option="fixed"/>
+        	<value option="relative"/>
+        	<value option="inline"/>
+		</parameter>		
+		<parameter name="right"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="1%"/>
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="top"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="1%"/>
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="visibility"  type="String">
+        	<value option="visible"/>
+        	<value option="hidden"/>
+        	<value option="collapse"/>
+        	<value option="inline"/>
+		</parameter>		
+		<parameter name="z-index"  type="String">
+        	<value option="auto"/>
+        	<value option="1"/>
+        	<value option="-1"/>
+        	<value option="inherit"/>
+		</parameter>		
+<!-- ***********************************************************************************-->		
+<!-- Content for Print Properties -->   		
+		<parameter name="page-break-after"  type="String">
+        	<value option="auto"/>
+        	<value option="always"/>
+        	<value option="avoid"/>
+        	<value option="left"/>
+        	<value option="right"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="page-break-before"  type="String">
+        	<value option="auto"/>
+        	<value option="always"/>
+        	<value option="avoid"/>
+        	<value option="left"/>
+        	<value option="right"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="page-break-inside"  type="String">
+        	<value option="auto"/>
+        	<value option="avoid"/>
+        	<value option="inherit"/>
+		</parameter>		
+<!-- ***********************************************************************************-->		
+<!-- Content for Table Properties -->   		
+		<parameter name="border-collapse"  type="String">
+        	<value option="collapse"/>
+        	<value option="separate"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="border-spacing"  type="String">
+        	<value option="1px"/>
+        	<value option="1pt"/>
+        	<value option="1cm"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="caption-side"  type="String">
+        	<value option="top"/>
+        	<value option="bottom"/>
+        	<value option="inherit"/>
+		</parameter>
+		<parameter name="empty-cells"  type="String">
+        	<value option="hide"/>
+        	<value option="slow"/>
+        	<value option="inherit"/>
+		</parameter>
+<!-- ***********************************************************************************-->		
+<!-- Content for Text Properties -->   		
+		<parameter name="color"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="direction"  type="String">
+        	<value option="ltr"/>
+        	<value option="rtl"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="letter-spacing"  type="String">
+        	<value option="normal"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="line-height"  type="String">
+        	<value option="none"/>
+        	<value option="normal"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="text-align"  type="String">
+        	<value option="center"/>
+        	<value option="end"/>
+        	<value option="inherit"/>
+        	<value option="justify"/>
+        	<value option="left"/>
+        	<value option="right"/>
+        	<value option="start"/>
+		</parameter>		
+		<parameter name="text-decoration"  type="String">
+        	<value option="blink"/>
+        	<value option="inherit"/>
+        	<value option="line-through"/>
+        	<value option="none"/>
+        	<value option="overline"/>
+        	<value option="underline"/>
+		</parameter>		
+		<parameter name="text-indent"  type="String">
+        	<value option="henging"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="text-transform"  type="String">
+        	<value option="capitalize"/>
+        	<value option="inherit"/>
+        	<value option="lowercase"/>
+        	<value option="none"/>
+        	<value option="uppercase"/>
+		</parameter>		
+		<parameter name="vertical-align"  type="String">
+        	<value option="auto"/>
+        	<value option="basline"/>
+        	<value option="bottom"/>
+        	<value option="central"/>
+        	<value option="inherit"/>
+        	<value option="middle"/>
+        	<value option="sub"/>
+        	<value option="super"/>
+        	<value option="text-bottom"/>
+        	<value option="text-top"/>
+        	<value option="top"/>
+        	<value option="use-script"/>
+		</parameter>		
+		<parameter name="white-space"  type="String">
+        	<value option="inherit"/>
+        	<value option="normal"/>
+        	<value option="nowrap"/>
+        	<value option="pre"/>
+        	<value option="pre-line"/>
+        	<value option="pre-wrap"/>
+		</parameter>		
+		<parameter name="word-spacing"  type="String">
+        	<value option="inherit"/>
+        	<value option="normal"/>
+		</parameter>		
+		<parameter name="hanging-punctuation"  type="String">
+        	<value option="end"/>
+        	<value option="end-edge"/>
+        	<value option="none"/>
+        	<value option="start"/>
+		</parameter>		
+		<parameter name="punctuation-trim"  type="String">
+        	<value option="adjacent"/>
+        	<value option="end"/>
+        	<value option="none"/>
+        	<value option="start"/>
+		</parameter>		
+		<parameter name="punctuation-trim"  type="String">
+        	<value option="auto"/>
+        	<value option="distribute"/>
+        	<value option="inter-cluster"/>
+        	<value option="inter-ideograph"/>
+        	<value option="inter-word"/>
+        	<value option="kashida"/>
+        	<value option="tibetan"/>
+		</parameter>		
+		<parameter name="text-outline"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="none"/>
+		</parameter>		
+		<parameter name="text-overflow"  type="String">
+        	<value option="clip"/>
+        	<value option="ellipsis"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="text-shadow"  type="String">
+        	<value option="color" type="color"/>
+        	<value option="inherit"/>
+        	<value option="none"/>
+		</parameter>		
+		<parameter name="text-wrap"  type="String">
+        	<value option="none"/>
+        	<value option="normal"/>
+        	<value option="supress"/>
+        	<value option="unrestricted"/>
+		</parameter>		
+		<parameter name="word-break"  type="String">
+        	<value option="break-all"/>
+        	<value option="break-strict"/>
+        	<value option="keep-all"/>
+        	<value option="loose"/>
+        	<value option="normal"/>
+		</parameter>		
+		<parameter name="word-wrap"  type="String">
+        	<value option="break-word"/>
+        	<value option="normal"/>
+		</parameter>		
+<!-- ***********************************************************************************-->		
+<!-- Content for 2D/3D Transform Properties -->   		
+		<parameter name="transform"  type="String">
+        	<value option="matrix"/>
+        	<value option="none"/>
+        	<value option="rotate()"/>
+        	<value option="scale(,)"/>
+        	<value option="scaleX()"/>
+        	<value option="scaleY()"/>
+        	<value option="skew(,)"/>
+        	<value option="skewX()"/>
+        	<value option="skewY()"/>
+        	<value option="translate(,)"/>
+        	<value option="translateX()"/>
+        	<value option="translateY()"/>
+		</parameter>		
+		<parameter name="transform-origin"  type="String">
+        	<value option="bottom"/>
+        	<value option="center"/>
+        	<value option="left"/>
+        	<value option="right"/>
+        	<value option="top"/>
+		</parameter>		
+		<parameter name="transform-style"  type="String">
+        	<value option="flat"/>
+        	<value option="preserve-3D"/>
+		</parameter>		
+		<parameter name="perspective"  type="String">
+        	<value option="none"/>
+		</parameter>		
+		<parameter name="perspective-origin"  type="String">
+        	<value option="bottom"/>
+        	<value option="center"/>
+        	<value option="left"/>
+        	<value option="right"/>
+        	<value option="top"/>
+		</parameter>		
+		<parameter name="backface-visibility"  type="String">
+        	<value option="hidden"/>
+        	<value option="visible"/>
+		</parameter>		
+<!-- ***********************************************************************************-->		
+<!-- Content for Transition Properties -->   		
+		<parameter name="transition"  type="String">
+        	<value option="all"/>
+        	<value option="cubic-bezier(x1,y1,x2,y2)"/>
+        	<value option="ease"/>
+        	<value option="ease-in"/>
+        	<value option="ease-out"/>
+        	<value option="ease-in-out"/>
+        	<value option="linear"/>
+        	<value option="none"/>
+		</parameter>		
+		<parameter name="transition-property"  type="String">
+        	<value option="all"/>
+        	<value option="none"/>
+		</parameter>		
+		<parameter name="transition-duration"  type="String">
+		</parameter>		
+		<parameter name="transition-timing-function"  type="String">
+        	<value option="cubic-bezier(x1,y1,x2,y2)"/>
+        	<value option="ease"/>
+        	<value option="ease-in"/>
+        	<value option="ease-out"/>
+        	<value option="ease-in-out"/>
+        	<value option="linear"/>
+		</parameter>		
+		<parameter name="transition-delay"  type="String">
+		</parameter>		
+<!-- ***********************************************************************************-->		
+<!-- Content for Transition Properties -->   		
+		<parameter name="appearance"  type="String">
+        	<value option="button"/>
+        	<value option="checkbox"/>
+        	<value option="checkbox-group"/>
+        	<value option="combo-box"/>
+        	<value option="desktop"/>
+        	<value option="dialog"/>
+        	<value option="document"/>
+        	<value option="field"/>
+        	<value option="hyperlink"/>
+        	<value option="icon"/>
+        	<value option="inherit"/>
+        	<value option="menu"/>
+        	<value option="list-menu"/>
+        	<value option="menubar"/>
+        	<value option="menu-item"/>
+        	<value option="normal"/>
+        	<value option="outline-tree"/>
+        	<value option="password"/>
+        	<value option="pop-up-menu"/>
+        	<value option="pull-down-menu"/>
+        	<value option="push-button"/>
+        	<value option="range"/>
+        	<value option="radio-button"/>
+        	<value option="radio-group"/>
+        	<value option="signature"/>
+        	<value option="tab"/>
+        	<value option="tooltip"/>
+        	<value option="window"/>
+        	<value option="workspace"/>
+		</parameter>		
+		<parameter name="box-sizing"  type="String">
+        	<value option="border-box"/>
+        	<value option="content-box"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="icon"  type="String">
+        	<value option="url" type="file_url"/>
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="nav-down"  type="String">
+        	<value option="auto"/>
+        	<value option="current"/>
+        	<value option="inherit"/>
+        	<value option="root"/>
+		</parameter>		
+		<parameter name="nav-index"  type="String">
+        	<value option="auto"/>
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="nav-left"  type="String">
+        	<value option="auto"/>
+        	<value option="current"/>
+        	<value option="inherit"/>
+        	<value option="root"/>
+		</parameter>		
+		<parameter name="nav-right"  type="String">
+        	<value option="auto"/>
+        	<value option="current"/>
+        	<value option="inherit"/>
+        	<value option="root"/>
+		</parameter>		
+		<parameter name="nav-up"  type="String">
+        	<value option="auto"/>
+        	<value option="current"/>
+        	<value option="inherit"/>
+        	<value option="root"/>
+		</parameter>		
+		<parameter name="outline-offset"  type="String">
+        	<value option="inherit"/>
+		</parameter>		
+		<parameter name="resize"  type="String">
+        	<value option="both"/>
+        	<value option="horizontal"/>
+        	<value option="inherit"/>
+        	<value option="none"/>
+        	<value option="vertical"/>
+		</parameter>		
+</global_attributes>		
+</dictionary>

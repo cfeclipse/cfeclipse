@@ -1,0 +1,1721 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dictionary>
+    <tags>
+    	<tag endtagrequired="true" name="html" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Represents the root of an HTML document]]></help>
+            <parameter name="manifest" required="false" type="String">
+                <help><![CDATA[
+            Specifies URL of the document's cache manifest for offline browsing
+        ]]></help>
+                <values/>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="body" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Contains body elements of the document]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="a" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Anchor tag to declare hyperlink]]></help>
+            <parameter name="href" required="true" type="String">
+                <help><![CDATA[
+URL of the page to hyperlink to
+		        ]]></help>
+            </parameter>
+            <parameter name="hreflang" required="false" type="String">
+                <help><![CDATA[
+Language of the document that is hyper-linked
+        ]]></help>
+            </parameter>
+            <parameter name="media" required="false" type="String">
+                <help><![CDATA[
+Media for which the document is optimized for
+		        ]]></help>
+            </parameter>
+            <parameter name="rel" required="false" type="String">
+                <help><![CDATA[
+Relationship between current document and the hyper-linked document
+		        ]]></help>
+                <values>
+                    <value option="alternate"/>
+                    <value option="author"/>
+                    <value option="bookmark"/>
+                    <value option="help"/>
+                    <value option="license"/>
+                    <value option="next"/>
+                    <value option="nofollow"/>
+                    <value option="noreferrer"/>
+                    <value option="prefetch"/>
+                    <value option="prev"/>
+                    <value option="search"/>
+                    <value option="tag"/>
+                </values>
+            </parameter>
+            <parameter name="target" required="false" type="String">
+                <help><![CDATA[
+Where to open the huyper-linked document 
+		        ]]></help>
+                <values>
+                    <value option="_blank"/>
+                    <value option="_parent"/>
+                    <value option="_self"/>
+                    <value option="_top"/>
+                </values>
+            </parameter>
+            <parameter name="type" required="false" type="String">
+                <help><![CDATA[
+Mime-type of the document
+		        ]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="abbr" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Tag to indicate abbrivation or acronym, e.g. WWW]]></help>
+            <parameter name="title" required="false" type="String">
+                <help><![CDATA[
+Title of the abbrivation e.g. World Wide Web for acronym WWW
+		        ]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="address" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Address or contact information of the owner or author of the document]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="area" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Defined a clickable area in an image map]]></help>
+            <parameter name="alt" required="true" type="String">
+                <help><![CDATA[
+Alternate text for the clickable area. This attribute is required if href is specified
+		        ]]></help>
+            </parameter>
+            <parameter name="coords" required="false" type="String">
+                <help><![CDATA[
+Co-ordinates of this clickable area. Specified as x,y,width,height in a string.
+        ]]></help>
+            </parameter>
+            <parameter name="href" required="false" type="String">
+                <help><![CDATA[
+Hyperlink URL of the clickable area
+		        ]]></help>
+            </parameter>
+            <parameter name="hreflang" required="false" type="String">
+                <help><![CDATA[
+Language of the target URL
+        ]]></help>
+            </parameter>
+            <parameter name="media" required="false" type="String">
+                <help><![CDATA[
+Media for which the document of the target URL is optimized for
+		        ]]></help>
+            </parameter>
+            <parameter name="rel" required="false" type="String">
+                <help><![CDATA[
+Relationship between current document and the hyper-linked URL
+		        ]]></help>
+                <values>
+                    <value option="alternate"/>
+                    <value option="author"/>
+                    <value option="bookmark"/>
+                    <value option="help"/>
+                    <value option="license"/>
+                    <value option="next"/>
+                    <value option="nofollow"/>
+                    <value option="noreferrer"/>
+                    <value option="prefetch"/>
+                    <value option="prev"/>
+                    <value option="search"/>
+                    <value option="tag"/>
+                </values>
+            </parameter>
+            <parameter name="target" required="false" type="String">
+                <help><![CDATA[
+Where to open the huyper-linked document 
+		        ]]></help>
+                <values>
+                    <value option="_blank"/>
+                    <value option="_parent"/>
+                    <value option="_self"/>
+                    <value option="_top"/>
+                </values>
+            </parameter>
+            <parameter name="type" required="false" type="String">
+                <help><![CDATA[
+Mime-type of the document
+		        ]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="article" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Indicates and articel or content that is independent of the document]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="aside" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Defines content that is aside from the content in which it is placed. The content in aside is still related to surrounding content.]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="audio" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies audio content in the document]]></help>
+            <parameter name="autoplay" required="false" type="Boolean">
+                <help><![CDATA[
+Indicates that the audio content will play as soon as it is loaded
+		        ]]></help>
+                <values>
+                    <value option="autoplay"/>
+                </values>
+            </parameter>
+            <parameter name="controls" required="false" type="String">
+                <help><![CDATA[
+Indicates that audio controls like play, stop etc. to be displayed
+		        ]]></help>
+                <values>
+                    <value option="controls"/>
+                </values>
+            </parameter>
+            <parameter name="loop" required="false" type="String">
+                <help><![CDATA[
+Indicates that audio to be played in a loop
+		        ]]></help>
+                <values>
+                    <value option="loop"/>
+                </values>
+            </parameter>
+            <parameter name="muted" required="false" type="String">
+                <help><![CDATA[
+Indicates that audio is to be muted
+		        ]]></help>
+                <values>
+                    <value option="muted"/>
+                </values>
+            </parameter>
+            <parameter name="preload" required="false" type="String">
+                <help><![CDATA[
+Indicates how audio should be preloaded 
+		        ]]></help>
+                <values>
+                    <value option="auto"/>
+                    <value option="metadata"/>
+                    <value option="none"/>
+                </values>
+            </parameter>
+            <parameter name="src" required="true" type="String">
+                <help><![CDATA[
+URL of the audio file
+		        ]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="b" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies text in bold]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="base" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies base URL for all relative URLs inthe document]]></help>
+            <parameter name="href" required="false" type="String">
+                <help><![CDATA[
+Hyperlink URL of the clickable area
+		        ]]></help>
+            </parameter>
+            <parameter name="target" required="false" type="String">
+                <help><![CDATA[
+Where to open the huyper-linked document 
+		        ]]></help>
+                <values>
+                    <value option="_blank"/>
+                    <value option="_parent"/>
+                    <value option="_self"/>
+                    <value option="_top"/>
+                </values>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="bdi" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies bi-directional text support. Can be used to specify text direction
+            	that is different from surounding text direction.
+            ]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="bdo" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Overrides current text direction within this tag
+            ]]></help>
+            <parameter name="dir" required="true" type="String">
+                <help><![CDATA[
+Direction of the text 
+		        ]]></help>
+                <values>
+                    <value option="ltr"/>
+                    <value option="rtl"/>
+                </values>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="false" name="br" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies single line break
+            ]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="button" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Creates a button control]]></help>
+            <parameter name="autofocus" required="false" type="String">
+                <help><![CDATA[
+Specifies that button should get the focus when page is loaded
+		        ]]></help>
+                 <values>
+                    <value option="autofocus"/>
+                 </values>
+            </parameter>
+            <parameter name="disabled" required="false" type="String">
+                <help><![CDATA[
+Disables the button
+        ]]></help>
+                 <values>
+                    <value option="disabled"/>
+                 </values>
+            </parameter>
+            <parameter name="form" required="false" type="String">
+                <help><![CDATA[
+Specifies form ids that this button belongs to. Button can be outside forms. Ids are space seperated.
+		        ]]></help>
+            </parameter>
+            <parameter name="formaction" required="false" type="String">
+                <help><![CDATA[
+Specifies URL to which the form data to be submitted. Button must be of the type Submit. 
+		        ]]></help>
+            </parameter>
+            <parameter name="formenctype" required="false" type="String">
+                <help><![CDATA[
+Specifies data encoding type of the form data before submitting it. Button must be of the type Submit.
+		        ]]></help>
+                <values>
+                    <value option="application/x-www-form-urlencoded"/>
+                    <value option="multipart/form-data"/>
+                    <value option="text/plain"/>
+                </values>
+            </parameter>
+            <parameter name="formmethod" required="false" type="String">
+                <help><![CDATA[
+Specifies how to submit form data. Button must be of the type Submit. 
+		        ]]></help>
+                <values>
+                    <value option="get"/>
+                    <value option="post"/>
+                </values>
+            </parameter>
+            <parameter name="formnovalidate" required="false" type="String">
+                <help><![CDATA[
+Specifies that form data should not be validated before submiting. Button must be of the type Submit. 
+        ]]></help>
+                 <values>
+                    <value option="formnovalidate"/>
+                 </values>
+            </parameter>
+            <parameter name="formtarget" required="false" type="String">
+                <help><![CDATA[
+Specifies where to display the response after submiting the form. Button must be of the type Submit.
+		        ]]></help>
+                <values>
+                    <value option="_blank"/>
+                    <value option="_parent"/>
+                    <value option="_self"/>
+                    <value option="_top"/>
+                </values>
+            </parameter>
+            <parameter name="name" required="false" type="String">
+                <help><![CDATA[
+Specifies name of the button
+		        ]]></help>
+            </parameter>
+            <parameter name="type" required="false" type="String">
+                <help><![CDATA[
+Specifies type of the button
+		        ]]></help>
+                <values>
+                    <value option="button"/>
+                    <value option="reset"/>
+                    <value option="submit"/>
+                </values>
+            </parameter>
+            <parameter name="value" required="false" type="String">
+                <help><![CDATA[
+Specifies value of the button
+		        ]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="canvas" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Canvas tag for prerforming drawing operations]]></help>
+            <parameter name="height" required="false" type="Number">
+                <help><![CDATA[Specifies height of the canvas in pixels]]></help>
+            </parameter>
+            <parameter name="width" required="false" type="Number">
+                <help><![CDATA[Specifies width of the canvas in pixels]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="caption" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies caption of the table. Must follow table start tag]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="cite" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies citation]]></help>
+            <parameter name="title" required="false" type="Number">
+                <help><![CDATA[Title of the citation]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="code" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Contains code]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="false" name="col" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies column properties of within a colgroup]]></help>
+            <parameter name="span" required="false" type="Number">
+                <help><![CDATA[Number of columns to span]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="false" name="colgroup" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies a group of columns in a table. Used for formatting]]></help>
+            <parameter name="span" required="false" type="Number">
+                <help><![CDATA[Number of columns to span]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="command" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies a command that user can invoke]]></help>
+            <parameter name="checked" required="false" type="String">
+                <help><![CDATA[
+Specifies that command should be checked when page is loaded. Valid when command type is radio or checkbox
+		        ]]></help>
+		        <values><value option="checked"/></values>
+            </parameter>
+            <parameter name="disabled" required="false" type="String">
+                <help><![CDATA[
+Specifies that the command should be disabled
+		        ]]></help>
+		        <values><value option="disabled"/></values>
+            </parameter>
+            <parameter name="icon" required="false" type="String">
+                <help><![CDATA[
+Specifies image URL for the command icon
+		        ]]></help>
+            </parameter>
+            <parameter name="label" required="true" type="String">
+                <help><![CDATA[
+Specifies label of the command
+		        ]]></help>
+            </parameter>
+            <parameter name="radiogroup" required="false" type="String">
+                <help><![CDATA[
+Specifies name of the radio group (of commands) that is toggled when this group is toggled. 
+		        ]]></help>
+            </parameter>
+            <parameter name="type" required="false" type="String">
+                <help><![CDATA[
+Specifies type of the command
+		        ]]></help>
+                <values>
+                    <value option="checkbox"/>
+                    <value option="command"/>
+                    <value option="radio"/>
+                </values>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="datalist" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Specifies predefined options for an input field. Use option tag to specify options]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="del" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Indicates that specified text is deleted]]></help>
+            <parameter name="cite" required="false" type="String">
+                <help><![CDATA[
+Specifies URL of the document that explains reason for deletion
+		        ]]></help>
+            </parameter>
+            <parameter name="datetime" required="false" type="String">
+                <help><![CDATA[
+Specifies date and time when text was deleted. Should be in YYYY-MM-DDThh:mm:ssTZD format
+		        ]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="details" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Creates an interactive widget, that can be opened or closed to reveal detail content]]></help>
+            <parameter name="open" required="false" type="String">
+                <help><![CDATA[
+Specifies detail content should be visible
+		        ]]></help>
+		        <values>
+		        	<value option="open"/>
+		        </values>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="dfn" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Indicates definition]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="dialog" single="true" xmlstyle="false">
+            <help><![CDATA[Defines a Dialog box]]></help>
+            <parameter name="open" required="false" type="String">
+                <help><![CDATA[Specifies that the dialog box should be visible]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="div" single="true" xmlstyle="false">
+            <help><![CDATA[Defines a division in the document]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="dl" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies definition list. Tag dt and dd are used to specify term and description]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="dl" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies term in the definition list. Used inside dl tag]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="em" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies emphasized text]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="embed" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies a plugin for non-HTML content]]></help>
+            <parameter name="height" required="false" type="String">
+                <help><![CDATA[Height in pixels]]></help>
+            </parameter>
+            <parameter name="src" required="false" type="String">
+                <help><![CDATA[URL of the content to be embedded]]></help>
+            </parameter>
+            <parameter name="type" required="false" type="String">
+                <help><![CDATA[Mime-type of the embedded content]]></help>
+            </parameter>
+            <parameter name="width" required="false" type="String">
+                <help><![CDATA[Width in pixels]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="fieldset" single="true" xmlstyle="false">
+            <help><![CDATA[Groups related elements in a form]]></help>
+            <parameter name="disabled" required="false" type="String">
+                <help><![CDATA[Specifies if the group is disabled]]></help>
+                <values><value option="disabled"></value></values>
+            </parameter>
+            <parameter name="form" required="false" type="String">
+                <help><![CDATA[Specifies Ids of forms that this fieldset belongs to]]></help>
+            </parameter>
+            <parameter name="name" required="false" type="String">
+                <help><![CDATA[Name of the fieldset]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="figcaption" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies caption for the figure tag]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="figure" single="true" xmlstyle="false">
+            <help><![CDATA[Embeds content like image, illustration etc. Use figcaption tag to specify caption for the figure]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="footer" single="true" xmlstyle="false">
+            <help><![CDATA[Contains footer of the document or a section]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="form" single="true" xmlstyle="false">
+            <help><![CDATA[Creates HTML form]]></help>
+            <parameter name="accept-charset" required="false" type="String">
+                <help><![CDATA[Specifies character encoding to be used when submitting the form]]></help>
+            </parameter>
+            <parameter name="action" required="false" type="String">
+                <help><![CDATA[Specifies URL where form data is to be submitted]]></help>
+            </parameter>
+            <parameter name="autocomplete" required="false" type="String">
+                <help><![CDATA[Specifies if auto complete to be enabled for input fields]]></help>
+                <values><value option="on"/><value option="off"/></values>
+            </parameter>
+            <parameter name="enctype" required="false" type="String">
+                <help><![CDATA[Specifies method of encoding form data before submitting. Valid for 'post' method only]]></help>
+                <values>
+                    <value option="application/x-www-form-urlencoded"/>
+                    <value option="multipart/form-data"/>
+                    <value option="text/plain"/>
+                </values>
+            </parameter>
+            <parameter name="method" required="false" type="String">
+                <help><![CDATA[
+Specifies method for posting form data
+		        ]]></help>
+                <values>
+                    <value option="get"/>
+                    <value option="post"/>
+                </values>
+            </parameter>
+            <parameter name="name" required="false" type="String">
+                <help><![CDATA[Specifies name of the form]]></help>
+            </parameter>
+            <parameter name="novalidate" required="false" type="String">
+                <help><![CDATA[Specifies that form should not be validated before submitting]]></help>
+                <values><value option="novalidate"/></values>
+            </parameter>
+            <parameter name="target" required="false" type="String">
+                <help><![CDATA[
+Specifies where to open response after submitting the form 
+		        ]]></help>
+                <values>
+                    <value option="_blank"/>
+                    <value option="_parent"/>
+                    <value option="_self"/>
+                    <value option="_top"/>
+                </values>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="h1" single="true" xmlstyle="false">
+            <help><![CDATA[Header tag 1]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="h2" single="true" xmlstyle="false">
+            <help><![CDATA[Header tag 2]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="h3" single="true" xmlstyle="false">
+            <help><![CDATA[Header tag 3]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="h4" single="true" xmlstyle="false">
+            <help><![CDATA[Header tag 4]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="h5" single="true" xmlstyle="false">
+            <help><![CDATA[Header tag 5]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="h6" single="true" xmlstyle="false">
+            <help><![CDATA[Header tag 6]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="head" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies head section of the document. Can contain tags like title, meta, script and style]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="header" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies header for the document or a section]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="hgroup" single="true" xmlstyle="false">
+            <help><![CDATA[Groups header elements like h1 to h6]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="hr" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies a horizontal rule in the document]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="i" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies text in an alternate voice or mood]]></help>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="iframe" single="true"
+             xmlstyle="false">
+            <help><![CDATA[Creates and inline frame to embed another document]]></help>
+            <parameter name="sandbox" required="false" type="String">
+                <help><![CDATA[Specifies restrictions for the content in the iframe]]></help>
+                <values>
+                    <value option="allow-forms"/>
+                    <value option="allow-same-origin"/>
+                    <value option="allow-scripts"/>
+                    <value option="allow-top-navigation"/>
+                </values>
+            </parameter>
+            <parameter name="seamless" required="false" type="String">
+                <help><![CDATA[Specifies that the content of the iframe should look like a part of the containing document]]></help>
+            </parameter>
+            <parameter name="src" required="false" type="String">
+                <help><![CDATA[URL to load in the iframe]]></help>
+            </parameter>
+            <parameter name="srcdoc" required="false" type="String">
+                <help><![CDATA[Specifies HTML content for the iframe]]></help>
+            </parameter>
+            <parameter name="height" required="false" type="String">
+                <help><![CDATA[Height in pixels]]></help>
+            </parameter>
+            <parameter name="width" required="false" type="String">
+                <help><![CDATA[Width in pixels]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="false" name="img" single="true" xmlstyle="false">
+            <help><![CDATA[Image tag. Specifies an image in the document]]></help>
+            <parameter name="alt" required="false" type="String">
+                <help><![CDATA[Specifies alternate text for the image]]></help>
+            </parameter>
+            <parameter name="crossorigin" required="false" type="String">
+                <help><![CDATA[Specifies that images from another site that allows cross-origin access can be used with Canvas]]></help>
+            </parameter>
+            <parameter name="height" required="false" type="String">
+                <help><![CDATA[Height of the image in pixels]]></help>
+            </parameter>
+            <parameter name="ismap" required="false" type="String">
+                <help><![CDATA[Specifies that image is a server-side image-map]]></help>
+                <values><value option="ismap"/></values>
+            </parameter>
+            <parameter name="src" required="false" type="String">
+                <help><![CDATA[URL of the image]]></help>
+            </parameter>
+            <parameter name="usemap" required="false" type="String">
+                <help><![CDATA[Specifies that image is a client-side image-map]]></help>
+                <values><value option="usemap"/></values>
+            </parameter>
+            <parameter name="width" required="false" type="String">
+                <help><![CDATA[Width of the image in pixels]]></help>
+            </parameter>
+        </tag>
+    	<tag endtagrequired="false" name="input" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies an input field]]></help>
+            <parameter name="accept" required="false" type="String">
+                <help><![CDATA[Specifies type of the files that server can accept]]></help>
+                <values>
+                	<value option="audio/*"/>
+                	<value option="video/*"/>
+                	<value option="image/*"/>
+                </values>
+            </parameter>
+            <parameter name="alt" required="false" type="String">
+                <help><![CDATA[Specifies alternate text for image type field]]></help>
+            </parameter>
+            <parameter name="autocomplete" required="false" type="String">
+                <help><![CDATA[Specifies if autocompletion is enabled for this field]]></help>
+                <values><value opption="on"/><value option="off"/></values>
+            </parameter>
+            <parameter name="autofocus" required="false" type="String">
+                <help><![CDATA[Specifies if the input field should get focus when the page is loaded]]></help>
+                <values><value option="autofocus"/></values>
+            </parameter>
+            <parameter name="checked" required="false" type="String">
+                <help><![CDATA[Specifies if the check-box or radio button be selected on page load]]></help>
+                <values><value option="checked"/></values>
+            </parameter>
+            <parameter name="disabled" required="false" type="String">
+                <help><![CDATA[Specifies if the input field be disabled on page load]]></help>
+                <values><value option="disabled"/></values>
+            </parameter>
+            <parameter name="form" required="false" type="String">
+                <help><![CDATA[Specifies Ids of forms that this field belongs to]]></help>
+            </parameter>
+            <parameter name="formaction" required="false" type="String">
+                <help><![CDATA[URL that will process data in the input field when form is submitted. Valid for type 'submit' and 'image']]></help>
+            </parameter>
+            <parameter name="formenctype" required="false" type="String">
+                <help><![CDATA[Specifies type of the files that server can accept]]></help>
+                <values>
+                	<value option="audio/*"/>
+                	<value option="video/*"/>
+                	<value option="image/*"/>
+                </values>
+            </parameter>
+            <parameter name="formmethod" required="false" type="String">
+                <help><![CDATA[Specifies method to be used to post form data]]></help>
+                <values>
+                	<value option="get"/>
+                	<value option="post"/>
+                </values>
+            </parameter>
+            <parameter name="formnovalidate" required="false" type="String">
+                <help><![CDATA[Specifies the input field should not be validated before posting form data]]></help>
+                <values>
+                	<value option="formnovalidate"/>
+                </values>
+            </parameter>
+            <parameter name="formtarget" required="false" type="String">
+                <help><![CDATA[Specifies where to display reponse data. Valid when type of 'submit' or 'image']]></help>
+                <values>
+                	<value option="_blank"/>
+                	<value option="_self"/>
+                	<value option="_parent"/>
+                	<value option="_top"/>
+                </values>
+            </parameter>
+            <parameter name="height" required="false" type="String">
+                <help><![CDATA[Height in pixels. Valid for type 'image']]></help>
+            </parameter>
+            <parameter name="list" required="false" type="String">
+                <help><![CDATA[Id of the datalist element that contains options for this input element]]></help>
+            </parameter>
+            <parameter name="max" required="false" type="Number">
+                <help><![CDATA[Specifies maximun value for the input field]]></help>
+            </parameter>
+            <parameter name="maxlength" required="false" type="Number">
+                <help><![CDATA[Specifies maximun number of characters allowed in the input field]]></help>
+            </parameter>
+            <parameter name="min" required="false" type="Number">
+                <help><![CDATA[Specifies minimum value for the input field]]></help>
+            </parameter>
+            <parameter name="multiple" required="false" type="String">
+                <help><![CDATA[Specifies that more than one values can be entered in the input field]]></help>
+            </parameter>
+            <parameter name="name" required="false" type="String">
+                <help><![CDATA[Name of the input field]]></help>
+            </parameter>
+            <parameter name="pattern" required="false" type="String">
+                <help><![CDATA[Specifies regular expression to validate the field value]]></help>
+            </parameter>
+            <parameter name="placeholder" required="false" type="String">
+                <help><![CDATA[Specifies hint about expected value in the input field]]></help>
+            </parameter>
+            <parameter name="readonly" required="false" type="String">
+                <help><![CDATA[Specifies that the input field is read-only]]></help>
+            </parameter>
+            <parameter name="required" required="false" type="String">
+                <help><![CDATA[Specifies that the input field is required]]></help>
+            </parameter>
+            <parameter name="size" required="false" type="Number">
+                <help><![CDATA[Specifies number of characters allowed in the input field]]></help>
+            </parameter>
+            <parameter name="src" required="false" type="Number">
+                <help><![CDATA[Valid for type 'image'. Specifies URL of the image to be used for submit button]]></help>
+            </parameter>
+            <parameter name="step" required="false" type="Number">
+                <help><![CDATA[Specifies step interval for the input field value]]></help>
+            </parameter>
+            <parameter name="type" required="false" type="String">
+                <help><![CDATA[Specifies type of input field]]></help>
+                <values>
+                	<value option="button"/>
+                	<value option="checkbox"/>
+                	<value option="color"/>
+                	<value option="date"/>
+                	<value option="datetime"/>
+                	<value option="datetime-local"/>
+                	<value option="email"/>
+                	<value option="file"/>
+                	<value option="hidden"/>
+                	<value option="image"/>
+                	<value option="month"/>
+                	<value option="number"/>
+                	<value option="password"/>
+                	<value option="radio"/>
+                	<value option="range"/>
+                	<value option="reset"/>
+                	<value option="search"/>
+                	<value option="submit"/>
+                	<value option="tel"/>
+                	<value option="text"/>
+                	<value option="time"/>
+                	<value option="url"/>
+                	<value option="week"/>
+                </values>
+            </parameter>
+            <parameter name="value" required="false" type="String">
+                <help><![CDATA[Specifies value of the text field]]></help>
+            </parameter>
+            <parameter name="width" required="false" type="Number">
+                <help><![CDATA[Width of the input field in pixels]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="ins" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies inserted text in the document. Usually accompanied with del tag]]></help>
+            <parameter name="cite" required="false" type="String">
+                <help><![CDATA[
+Specifies URL of the document that explains reason for insertion of the text
+		        ]]></help>
+            </parameter>
+            <parameter name="datetime" required="false" type="String">
+                <help><![CDATA[
+Specifies date and time when text was inserted. Should be in YYYY-MM-DDThh:mm:ssTZD format
+		        ]]></help>
+            </parameter>
+		</tag>        
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="kbd" single="true" xmlstyle="false">
+            <help><![CDATA[Indicates input text to be entered by users]]></help>
+		</tag>        
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="false" name="keygen" single="true" xmlstyle="false">
+            <help><![CDATA[Used for generating key pair when form is submitted. Private key is saved in the local keystore and public key is sent to the server]]></help>
+            <parameter name="autofocus" required="false" type="String">
+                <help><![CDATA[
+Specifies that the field should get focus when page is loaded
+		        ]]></help>
+            </parameter>
+            <parameter name="challenge" required="false" type="String">
+                <help><![CDATA[
+Specifies that value of the keygen field should be challenged when submitted
+		        ]]></help>
+		        <values><value option="challenge"/></values>
+            </parameter>
+            <parameter name="disabled" required="false" type="String">
+                <help><![CDATA[
+Specifies tha the field should be disabled when page is loaded
+		        ]]></help>
+		        <values><value option="disabled"/></values>
+            </parameter>
+            <parameter name="form" required="false" type="String">
+                <help><![CDATA[
+Specifies space separated form ids to which this field belongs
+		        ]]></help>
+            </parameter>
+            <parameter name="keytype" required="false" type="String">
+                <help><![CDATA[
+Specifies security algorithm of the key
+		        ]]></help>
+		        <values><value option="rsa"/><value option="dsa"/></values>
+            </parameter>
+            <parameter name="name" required="false" type="String">
+                <help><![CDATA[
+Specifies name of the field		        
+				]]></help>
+            </parameter>
+		</tag>        
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="label" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies label for an input field]]></help>
+             <parameter name="for" required="false" type="String">
+                <help><![CDATA[Id of an input element for which this label is specified]]></help>
+            </parameter>
+             <parameter name="form" required="false" type="String">
+                <help><![CDATA[Space separated list of form ids to which this label belongs]]></help>
+            </parameter>
+		</tag>        
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="legend" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies caption for a fieldset element]]></help>
+		</tag>        
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="li" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies list item in an ordered (ol) or unordered (ul) list]]></help>
+             <parameter name="value" required="false" type="Number">
+                <help><![CDATA[Specifies starting value for a numbered list]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="link" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies link to an external style sheet]]></help>
+            <parameter name="href" required="true" type="String">
+                <help><![CDATA[URL of an external style sheet to be linked in this document]]></help>
+            </parameter>
+            <parameter name="hreflang" required="false" type="String">
+                <help><![CDATA[Language of the linked document]]></help>
+            </parameter>
+            <parameter name="media" required="false" type="String">
+                <help><![CDATA[Media for which the linked document is optimized for]]></help>
+            </parameter>
+            <parameter name="rel" required="true" type="String">
+                <help><![CDATA[
+Relationship between current document and the linked document
+		        ]]></help>
+                <values>
+                    <value option="alternate"/>
+                    <value option="archives"/>
+                    <value option="author"/>
+                    <value option="bookmark"/>
+                    <value option="external"/>
+                    <value option="first"/>
+                    <value option="help"/>
+                    <value option="icon"/>
+                    <value option="last"/>
+                    <value option="license"/>
+                    <value option="next"/>
+                    <value option="nofollow"/>
+                    <value option="noreferrer"/>
+                    <value option="pingback"/>
+                    <value option="prefetch"/>
+                    <value option="prev"/>
+                    <value option="search"/>
+                    <value option="sidebar"/>
+                    <value option="stylesheet"/>
+                    <value option="tag"/>
+                    <value option="up"/>
+                </values>
+            </parameter>
+            <parameter name="sizes" required="false" type="String">
+                <help><![CDATA[Specifies size of the linked resource. Valid for rel=icon. ]]></help>
+            </parameter>
+            <parameter name="target" required="false" type="String">
+                <help><![CDATA[
+Where to open the linked document 
+		        ]]></help>
+                <values>
+                    <value option="_blank"/>
+                    <value option="_parent"/>
+                    <value option="_self"/>
+                    <value option="_top"/>
+                </values>
+            </parameter>
+            <parameter name="type" required="false" type="String">
+                <help><![CDATA[
+Mime-type of the linked document
+		        ]]></help>
+            </parameter>
+        </tag>
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="map" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies image map]]></help>
+             <parameter name="name" required="true" type="Number">
+                <help><![CDATA[Specifies name of the image map]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="meta" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies metadata about the document]]></help>
+             <parameter name="charset" required="false" type="String">
+                <help><![CDATA[Specifies character encoding of the document]]></help>
+            </parameter>
+             <parameter name="content" required="false" type="String">
+                <help><![CDATA[Specifies value associated with http-equiv or name attribute]]></help>
+            </parameter>
+             <parameter name="http-equiv" required="false" type="String">
+                <help><![CDATA[Used for specifying http reponse header. Specify value in the 'content' attribute]]></help>
+                <values>
+                	<value option="content-language"/>
+                	<value option="content-type"/>
+                	<value option="default-style"/>
+                	<value option="refresh"/>
+                </values>
+            </parameter>
+             <parameter name="name" required="false" type="String">
+                <help><![CDATA[Specifies name of the metadata]]></help>
+                <values>
+                	<value option="application-name"/>
+                	<value option="author"/>
+                	<value option="description"/>
+                	<value option="generator"/>
+                	<value option="keywords"/>
+                </values>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="meter" single="true" xmlstyle="false">
+            <help><![CDATA[Indicates value within a range]]></help>
+             <parameter name="value" required="true" type="Number">
+                <help><![CDATA[Specifies current value]]></help>
+            </parameter>
+             <parameter name="min" required="false" type="Number">
+                <help><![CDATA[Specifies minimum value. Default is zero]]></help>
+            </parameter>
+             <parameter name="low" required="false" type="Number">
+                <help><![CDATA[Specifies value that is considered low in the given range]]></help>
+            </parameter>
+             <parameter name="high" required="false" type="Number">
+                <help><![CDATA[Specifies value that is considered high in the given range]]></help>
+            </parameter>
+             <parameter name="max" required="false" type="Number">
+                <help><![CDATA[Specifies maximum value. Default is 1]]></help>
+            </parameter>
+             <parameter name="optimum" required="false" type="Number">
+                <help><![CDATA[Specifies optimum value]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="nav" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies a set of navigation links]]></help>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="noscript" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies alternate text when script is disabled]]></help>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="object" single="true" xmlstyle="false">
+            <help><![CDATA[Embeds external object in the document]]></help>
+             <parameter name="data" required="false" type="String">
+                <help><![CDATA[Specifies URL of the Object]]></help>
+            </parameter>
+             <parameter name="form" required="false" type="String">
+                <help><![CDATA[Space seperated list of form Ids this element belongs to]]></help>
+            </parameter>
+             <parameter name="height" required="false" type="Number">
+                <help><![CDATA[Height in pixels]]></help>
+            </parameter>
+             <parameter name="name" required="false" type="String">
+                <help><![CDATA[Specifies name of this element]]></help>
+            </parameter>
+             <parameter name="type" required="false" type="String">
+                <help><![CDATA[Mime-type of the data represented by the Object]]></help>
+            </parameter>
+             <parameter name="usemap" required="false" type="String">
+                <help><![CDATA[Name of the client-side image map]]></help>
+            </parameter>
+             <parameter name="width" required="false" type="Number">
+                <help><![CDATA[Width in pixels]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="ol" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies ordered list]]></help>
+             <parameter name="reversed" required="false" type="String">
+                <help><![CDATA[Specifies that the list is in reverse order]]></help>
+            </parameter>
+             <parameter name="start" required="false" type="Number">
+                <help><![CDATA[Specifies starting number for the list]]></help>
+            </parameter>
+             <parameter name="type" required="false" type="Number">
+                <help><![CDATA[Specifies type of the list]]></help>
+                <values>
+                	<value option="1"/>
+                	<value option="A"/>
+                	<value option="a"/>
+                	<value option="I"/>
+                	<value option="i"/>
+                </values>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="optgroup" single="true" xmlstyle="false">
+            <help><![CDATA[Groups related options in a drop down list]]></help>
+             <parameter name="disabled" required="false" type="String">
+                <help><![CDATA[Specifies that group should be disabled]]></help>
+                <values><value option="disabled"/></values>
+            </parameter>
+             <parameter name="label" required="false" type="String">
+                <help><![CDATA[Specifies name of this element]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="option" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies option for a select list]]></help>
+             <parameter name="disabled" required="false" type="String">
+                <help><![CDATA[Specifies that the element should be disabled]]></help>
+                <values><value option="disabled"/></values>
+            </parameter>
+             <parameter name="label" required="false" type="String">
+                <help><![CDATA[Specifies name of this element]]></help>
+            </parameter>
+             <parameter name="selected" required="false" type="String">
+                <help><![CDATA[Specifies that the option should be selected]]></help>
+                <values><value option="selected"/></values>
+            </parameter>
+             <parameter name="value" required="false" type="String">
+                <help><![CDATA[Specifies value of this element]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="output" single="true" xmlstyle="false">
+            <help><![CDATA[Represents result of a calculation]]></help>
+             <parameter name="form" required="false" type="String">
+                <help><![CDATA[Space seperated list of form Ids this element belongs to]]></help>
+            </parameter>
+             <parameter name="for" required="false" type="String">
+                <help><![CDATA[Id of the element for which this calculation belongs]]></help>
+            </parameter>
+             <parameter name="name" required="false" type="String">
+                <help><![CDATA[Specifies name of this element]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="p" single="true" xmlstyle="false">
+            <help><![CDATA[Defines a paragraph]]></help>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="false" name="param" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies parameter for Object tag]]></help>
+             <parameter name="name" required="false" type="String">
+                <help><![CDATA[Specifies name of this element]]></help>
+            </parameter>
+             <parameter name="value" required="false" type="String">
+                <help><![CDATA[Value of the element]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="false" name="pre" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies preformatted text]]></help>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="progress" single="true" xmlstyle="false">
+            <help><![CDATA[Represents progress of a task]]></help>
+             <parameter name="max" required="false" type="Number">
+                <help><![CDATA[Represents total amount of task]]></help>
+            </parameter>
+             <parameter name="value" required="false" type="Number">
+                <help><![CDATA[Represents amount of task completed]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="q" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies a quotation]]></help>
+             <parameter name="cite" required="false" type="String">
+                <help><![CDATA[URL of source of quotation]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="script" single="true" xmlstyle="false">
+            <help><![CDATA[Defines client side Javascript]]></help>
+             <parameter name="async" required="false" type="String">
+                <help><![CDATA[Specifies that the script should be executed asynchronously. Valid only for external scripts]]></help>
+            </parameter>
+             <parameter name="charset" required="false" type="String">
+                <help><![CDATA[Specifies charset encoding to be used for external script files]]></help>
+            </parameter>
+             <parameter name="defer" required="false" type="String">
+                <help><![CDATA[Specifies that the script should be executed after parsing the page. Valid for external script files]]></help>
+            </parameter>
+             <parameter name="src" required="false" type="String">
+                <help><![CDATA[URL of the script file]]></help>
+            </parameter>
+             <parameter name="type" required="false" type="String">
+                <help><![CDATA[Specifies mime-type of the script]]></help>
+                <values><value option="text/javascript"/></values>
+                <values><value option="text/ecmascript"/></values>
+                <values><value option="application/ecmascript"/></values>
+                <values><value option="application/javascript"/></values>
+                <values><value option="text/vbscript"/></values>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="section" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies section in the document]]></help>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="select" single="true" xmlstyle="false">
+            <help><![CDATA[Creates a drop-down list]]></help>
+             <parameter name="autofocus" required="false" type="String">
+                <help><![CDATA[Specifies if the element should get focus when the page is loaded]]></help>
+                <values><value option="autofocus"/></values>
+            </parameter>
+             <parameter name="disabled" required="false" type="String">
+                <help><![CDATA[Specifies if the element should be disabled]]></help>
+                <values><value option="disabled"/></values>
+            </parameter>
+             <parameter name="multiple" required="false" type="String">
+                <help><![CDATA[Specifies if multiple options can be selected]]></help>
+                <values><value option="multiple"/></values>
+            </parameter>
+             <parameter name="required" required="false" type="String">
+                <help><![CDATA[Specifies if user must selected a value]]></help>
+                <values><value option="required"/></values>
+            </parameter>
+             <parameter name="form" required="false" type="String">
+                <help><![CDATA[Space separated form Idsto which this element belongs]]></help>
+            </parameter>
+             <parameter name="name" required="false" type="String">
+                <help><![CDATA[Specifies name of the element]]></help>
+            </parameter>
+             <parameter name="size" required="false" type="Number">
+                <help><![CDATA[Specifies number of visible options in the drop-down list]]></help>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="small" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies smaller text]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="source" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies source for audio and video tags]]></help>
+             <parameter name="src" required="false" type="String">
+                <help><![CDATA[URL of the source]]></help>
+            </parameter>
+             <parameter name="type" required="false" type="String">
+                <help><![CDATA[Specifies mime-type of the script]]></help>
+            </parameter>
+             <parameter name="media" required="false" type="String">
+                <help><![CDATA[Specifies the type of media. Value must be a media-query]]></help>
+            </parameter>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="span" single="true" xmlstyle="false">
+            <help><![CDATA[Used for grouping and applying styles to inline elements]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="strong" single="true" xmlstyle="false">
+            <help><![CDATA[Defines important text]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="style" single="true" xmlstyle="false">
+            <help><![CDATA[Used for defininf style of the document]]></help>
+             <parameter name="media" required="false" type="String">
+                <help><![CDATA[Specifies the type of media. Value must be a media-query]]></help>
+            </parameter>
+             <parameter name="scoped" required="false" type="String">
+                <help><![CDATA[Indicated that style applies to parent element and its children]]></help>
+                <values><value option="scoped"/></values>
+            </parameter>
+             <parameter name="type" required="false" type="String">
+                <help><![CDATA[Specifies mime-type of the style-sheet]]></help>
+            </parameter>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="sub" single="true" xmlstyle="false">
+            <help><![CDATA[Defines superscripted text]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="summary" single="true" xmlstyle="false">
+            <help><![CDATA[Used in conjuction with details tag]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="sup" single="true" xmlstyle="false">
+            <help><![CDATA[Defines superscripted text]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="table" single="true" xmlstyle="false">
+            <help><![CDATA[Defines an HTML table]]></help>
+             <parameter name="border" required="false" type="String">
+                <help><![CDATA[Specifies if table should have borders]]></help>
+                <values><value option="1"/></values>
+            </parameter>
+             <parameter name="align" required="false" type="String">
+                <help><![CDATA[Specifies alignment of a table in the page]]></help>
+                <values>
+                	<value option="left"/>
+                	<value option="right"/>
+                	<value option="center"/>
+                </values>
+            </parameter>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="tbody" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies body of the table. It groups table rows]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="td" single="true" xmlstyle="false">
+            <help><![CDATA[Defines a cell of the table]]></help>
+             <parameter name="colspan" required="false" type="Number">
+                <help><![CDATA[Specifies number of columns that this cell should span]]></help>
+            </parameter>
+             <parameter name="headers" required="false" type="String">
+                <help><![CDATA[Specifies a space-separated Ids of header cells that contain information about this cell]]></help>
+            </parameter>
+             <parameter name="rowspan" required="false" type="Number">
+                <help><![CDATA[Specifies number of rows that this cell should span]]></help>
+            </parameter>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="textarea" single="true" xmlstyle="false">
+            <help><![CDATA[Creates a multi-line text input field]]></help>
+             <parameter name="autofocus" required="false" type="String">
+                <help><![CDATA[Specifies if the element should get focus when the page is loaded]]></help>
+                <values><value option="autofocus"/></values>
+            </parameter>
+             <parameter name="disabled" required="false" type="String">
+                <help><![CDATA[Specifies if the element should be disabled]]></help>
+                <values><value option="disabled"/></values>
+            </parameter>
+             <parameter name="form" required="false" type="String">
+                <help><![CDATA[Space separated form Idsto which this element belongs]]></help>
+            </parameter>
+             <parameter name="name" required="false" type="String">
+                <help><![CDATA[Specifies name of the element]]></help>
+            </parameter>
+             <parameter name="required" required="false" type="String">
+                <help><![CDATA[Specifies if user must selected a value]]></help>
+                <values><value option="required"/></values>
+            </parameter>
+             <parameter name="readonly" required="false" type="String">
+                <help><![CDATA[Specifies if this element should be read-only]]></help>
+                <values><value option="required"/></values>
+            </parameter>
+            
+             <parameter name="cols" required="false" type="Number">
+                <help><![CDATA[Specifies number of visible characters]]></help>
+                <values><value option="multiple"/></values>
+            </parameter>
+             <parameter name="rows" required="false" type="Number">
+                <help><![CDATA[Specifies number of visible lines]]></help>
+            </parameter>
+             <parameter name="maxlength" required="false" type="Number">
+                <help><![CDATA[Specifies maximum number of characters allowed in this field]]></help>
+            </parameter>
+             <parameter name="placeholder" required="false" type="String">
+                <help><![CDATA[Specifies hint the expected value]]></help>
+            </parameter>
+             <parameter name="wrap" required="false" type="String">
+                <help><![CDATA[Specifies how the text in a text area is to be wrapped ]]></help>
+                <values>
+                	<value option="hard"/>
+                	<value option="soft"/>
+                </values>
+            </parameter>
+		</tag> 
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="tfoot" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies footer of the table]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="th" single="true" xmlstyle="false">
+            <help><![CDATA[Defines a header cell in an HTML table]]></help>
+             <parameter name="colspan" required="false" type="Number">
+                <help><![CDATA[Specifies number of columns that this cell should span]]></help>
+            </parameter>
+             <parameter name="headers" required="false" type="Number">
+                <help><![CDATA[Specifies Ids of header cells that contain information about this cell]]></help>
+            </parameter>
+             <parameter name="rowspan" required="false" type="Number">
+                <help><![CDATA[Specifies the number of rows this cell spans]]></help>
+            </parameter>
+             <parameter name="scope" required="false" type="Number">
+                <help><![CDATA[Specifies if this header cell is a header for a column, row, or group of columns or rows]]></help>
+                <values>
+                	<value option="col"/>
+                	<value option="colgroup"/>
+                	<value option="row"/>
+                	<value option="rowgroup"/>
+                </values>
+            </parameter>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="thead" single="true" xmlstyle="false">
+            <help><![CDATA[Groups table header elements]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="time" single="true" xmlstyle="false">
+            <help><![CDATA[Defines a time and a date]]></help>
+             <parameter name="datetime" required="false" type="String">
+                <help><![CDATA[A valid date-time string]]></help>
+            </parameter>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="title" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies title of the document]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="tr" single="true" xmlstyle="false">
+            <help><![CDATA[Defines row in a HTML table]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="u" single="true" xmlstyle="false">
+            <help><![CDATA[Underlines the content]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="ul" single="true" xmlstyle="false">
+            <help><![CDATA[Creates an unordered list]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="var" single="true" xmlstyle="false">
+            <help><![CDATA[Formats the text as variable]]></help>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="video" single="true" xmlstyle="false">
+            <help><![CDATA[Defines a video]]></help>
+             <parameter name="src" required="false" type="String">
+                <help><![CDATA[Specifies URL of the video file]]></help>
+            </parameter>
+             <parameter name="crossorigin" required="false" type="String">
+                <help><![CDATA[Specifies how to configure Cross-Origin Resource Sharing ]]></help>
+                <values>
+                	<value option="anonymous"/>
+                	<value option="use-credentials"/>
+                </values>
+            </parameter>
+             <parameter name="poster" required="false" type="String">
+                <help><![CDATA[Specifies URL of the image file to be used as a poster for this video]]></help>
+            </parameter>
+             <parameter name="preload" required="false" type="String">
+                <help><![CDATA[Specifies if and how video should be preloaded]]></help>
+                <values>
+                	<value option="none"/>
+                	<value option="metadata"/>
+                	<value option="auto"/>
+                </values>
+            </parameter>
+             <parameter name="autoplay" required="false" type="String">
+                <help><![CDATA[Specifies if video should start playing after the page is loaded]]></help>
+                <values><value option="autoplay"/></values>
+            </parameter>
+             <parameter name="mediagroup" required="false" type="String">
+                <help><![CDATA[Specifies media elements to link together]]></help>
+            </parameter>
+             <parameter name="loop" required="false" type="String">
+                <help><![CDATA[Specifies if video should play in a loop]]></help>
+                <values><value option="loop"/></values>
+            </parameter>
+            <parameter name="muted" required="false" type="String">
+                <help><![CDATA[Specifies if video should be muted]]></help>
+                <values><value option="muted"/></values>
+            </parameter>
+            <parameter name="controls" required="false" type="String">
+                <help><![CDATA[Specifies if video controls to be displayed]]></help>
+                <values><value option="controls"/></values>
+            </parameter>
+             <parameter name="width" required="false" type="Number">
+                <help><![CDATA[Specifies width in pixels]]></help>
+            </parameter>
+             <parameter name="height" required="false" type="Number">
+                <help><![CDATA[Specifies height in pixels]]></help>
+            </parameter>
+		</tag>		       
+<!-- ############################################################################ -->        
+    	<tag endtagrequired="true" name="wbr" single="true" xmlstyle="false">
+            <help><![CDATA[Specifies where line break can be added in a text. Stands for Word Break Opportunity]]></help>
+		</tag>		       
+   </tags>
+   
+<!--  ********** GLOBAL ATTRIBUTES ************************ -->   
+	<global_attributes>
+   		<parameter name="accesskey" type="String">
+                <help><![CDATA[
+Specifies shortcut key to access the element                
+		        ]]></help>
+   		</parameter>
+   		<parameter name="class" type="String">
+                <help><![CDATA[
+Space separated CSS style classes              
+		        ]]></help>
+   		</parameter>
+   		<parameter name="contenteditable" type="Boolean">
+                <help><![CDATA[
+Specifies if the content is editable                
+		        ]]></help>
+		        <values>
+		        	<value option="true"/>
+		        	<value option="false"/>
+		        </values>
+   		</parameter>
+   		<parameter name="contextmenu" type="String">
+                <help><![CDATA[
+Specifies ID of the context menu item in the DOM                
+		        ]]></help>
+   		</parameter>
+   		<parameter name="dir" type="String">
+                <help><![CDATA[
+Specifies direction of the text                 
+		        ]]></help>
+		        <values>
+		        	<value option="ltr"/>
+		        	<value option="rtl"/>
+		        	<value option="auto"/>
+		        </values>
+   		</parameter>
+   		<parameter name="draggable" type="String">
+                <help><![CDATA[
+Specifies if the element is draggable                
+		        ]]></help>
+		        <values>
+		        	<value option="true"/>
+		        	<value option="false"/>
+		        	<value option="auto"/>
+		        </values>
+   		</parameter>
+   		<parameter name="dropzone" type="String">
+                <help><![CDATA[
+Specifies action after an element is dropped on this element                
+		        ]]></help>
+		        <values>
+		        	<value option="copy"/>
+		        	<value option="move"/>
+		        	<value option="link"/>
+		        </values>
+   		</parameter>
+   		<parameter name="hidden" type="String">
+                <help><![CDATA[
+Hides the element                
+		        ]]></help>
+		        <values><value option="hidden"/></values>
+   		</parameter>
+   		<parameter name="id" type="String">
+                <help><![CDATA[
+Specifies ID of the element                
+		        ]]></help>
+   		</parameter>
+   		<parameter name="inert" type="String">
+                <help><![CDATA[
+Specifies that element to be made inert. Even if element is visible in the document, browser ignores it for actions like find.                
+		        ]]></help>
+		        <values><value option="inert"/></values>
+   		</parameter>
+   		<parameter name="lang" type="String">
+                <help><![CDATA[
+Specifies language of the content in the element                
+		        ]]></help>
+   		</parameter>
+   		<parameter name="spellcheck" type="String">
+                <help><![CDATA[
+Specifies if spellcheck to be done on the content in the element.                
+		        ]]></help>
+		        <values>
+		        	<value option="true"/>
+		        	<value option="false"/>
+		        </values>
+   		</parameter>
+   		<parameter name="style" type="String">
+                <help><![CDATA[
+Specifies inline CSS style                
+		        ]]></help>
+   		</parameter>
+   		<parameter name="tabindex" type="Number">
+                <help><![CDATA[
+Specifies tabbing order of the element                
+		        ]]></help>
+   		</parameter>
+   		<parameter name="title" type="String">
+                <help><![CDATA[
+Specifies title of the element. Some browsers display this information when cursor is hovered over the element.                
+		        ]]></help>
+   		</parameter>
+   		<parameter name="translate" type="String">
+                <help><![CDATA[
+Specifies if the content of the element to be translated when the page is localized.                
+		        ]]></help>
+   		</parameter>
+   	</global_attributes>
+
+
+<!--  ********** GLOBAL EVENTS ************************ -->   
+   	<global_events>
+   		<parameter name="onafterprint" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run after the document is printed]]></help>
+   		</parameter>
+   		<parameter name="onbeforeprint" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run before the document is printed]]></help>                
+   		</parameter>
+   		<parameter name="onbeforeunload" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run before the document is uploaded]]></help>                
+   		</parameter>
+   		<parameter name="onerror" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when error occurs in the document]]></help>                
+   		</parameter>
+   		<parameter name="onhaschange" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the document is changed]]></help>                
+   		</parameter>
+   		<parameter name="onload" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the document is loaded]]></help>                
+   		</parameter>
+   		<parameter name="onmessage" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the message is triggered]]></help>                
+   		</parameter>
+   		<parameter name="onoffline" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the document goes offline]]></help>                
+   		</parameter>
+   		<parameter name="ononline" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the document comes online again]]></help>                
+   		</parameter>
+   		<parameter name="onpagehide" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the window is hidden]]></help>                
+   		</parameter>
+   		<parameter name="onpageshow" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the window is displayed]]></help>               
+   		</parameter>
+   		<parameter name="onpageshow" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the window is displayed]]></help>                
+   		</parameter>
+   		<parameter name="onpopstate" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the window history is changed]]></help>                
+   		</parameter>
+   		<parameter name="onredo" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the redo action is performed]]></help>                
+   		</parameter>
+   		<parameter name="onresize" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the window is resized]]></help>                
+   		</parameter>
+   		<parameter name="onstorage" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when browser storage is updated]]></help>                
+   		</parameter>
+   		<parameter name="onundo" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when undo action is performed]]></help>                
+   		</parameter>
+   		<parameter name="onunload" type="String" validfor="body">
+                <help><![CDATA[Specifies script to be run when the page is unloaded]]></help>                
+   		</parameter>
+   	
+
+   		<parameter name="onblur" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the element loses focus]]></help>                
+   		</parameter>
+   		<parameter name="onchange" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the value of the element is changed]]></help>                
+   		</parameter>
+   		<parameter name="oncontextmenu" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the context menu is invoked]]></help>                
+   		</parameter>
+   		<parameter name="onfocus" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the element gets focus]]></help>                
+   		</parameter>
+   		<parameter name="onformchange" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when a form changes]]></help>                
+   		</parameter>
+   		<parameter name="onforminput" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when a form gets user input]]></help>                
+   		</parameter>
+   		<parameter name="oninput" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the element gets user input]]></help>                
+   		</parameter>
+   		<parameter name="oninvalid" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the element value is invalid]]></help>                
+   		</parameter>
+   		<parameter name="onselect" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the text in an element is selected]]></help>                
+   		</parameter>
+   		<parameter name="onsubmit" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when a form is submitted]]></help>                
+   		</parameter>
+
+   		<parameter name="onkeydown" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run a key is down]]></help>                
+   		</parameter>
+   		<parameter name="onkeypress" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run a key is pressed]]></help>                
+   		</parameter>
+   		<parameter name="onkeyup" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run a key is up]]></help>                
+   		</parameter>
+
+   		<parameter name="onclick" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run mouse is clicked on the element]]></help>                
+   		</parameter>
+   		<parameter name="ondblclick" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run mouse is clicked on the element]]></help>                
+   		</parameter>
+   		<parameter name="ondrag" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the element is dragged]]></help>                
+   		</parameter>
+   		<parameter name="ondragend" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run at the end of drag operation]]></help>                
+   		</parameter>
+   		<parameter name="ondragenter" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the element is dragged to a valid drop location]]></help>                
+   		</parameter>
+   		<parameter name="ondragleave" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the element leaves a valid drop location]]></help>                
+   		</parameter>
+   		<parameter name="ondragover" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the element is being dragged over a valid drop location]]></help>                
+   		</parameter>
+   		<parameter name="ondragstart" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run at the start of drag operation on the element]]></help>                
+   		</parameter>
+   		<parameter name="ondrop" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the dragged element is being dropped]]></help>                
+   		</parameter>
+   		<parameter name="onmousedown" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when a moouse button is pressed on the element]]></help>                
+   		</parameter>
+   		<parameter name="onmousemove" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the mouse pointer is moved over the element]]></help>                
+   		</parameter>
+   		<parameter name="onmouseover" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the mouse pointer moves over the element]]></help>                
+   		</parameter>
+   		<parameter name="onmouseup" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when a mouse button is released on the element]]></help>                
+   		</parameter>
+   		<parameter name="onmousewheel" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when the mouse wheel is being turned]]></help>                
+   		</parameter>
+   		<parameter name="onscroll" type="String" validfor="all">
+                <help><![CDATA[Specifies script to be run when content of the element is being scrolled]]></help>                
+   		</parameter>
+   	
+   	</global_events>
+</dictionary>

@@ -32,6 +32,26 @@
 ]>
 <dictionary_config>
 	<dictionary id="CF_DICTIONARY">
+		<version key="lucee4" label="Lucee 4.5">
+			<grammar location="lucee4.5.xml" />
+			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
+		</version>
+		<version key="lucee5" label="Lucee 5">
+			<grammar location="lucee5.xml" />
+			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
+		</version>
+		<version key="cf11" label="ColdFusion 11">
+			<grammar location="cf11.xml" />
+			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
+		</version>
+		<version key="cf10" label="ColdFusion 10">
+			<grammar location="cf10.xml" />
+			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
+		</version>
 		<version key="ColdFusion9" label="ColdFusion 9">
             <grammar location="cf9.xml" />
 			<grammar location="user.xml" />
@@ -39,6 +59,11 @@
         </version>
 		<version key="cf8" label="ColdFusion MX 8">
 			<grammar location="cf8.xml" />
+			<grammar location="user.xml" />
+			<grammar location="mxunit.xml" />
+		</version>
+		<version key="railo4" label="Railo 4">
+			<grammar location="railo4.xml" />
 			<grammar location="user.xml" />
 			<grammar location="mxunit.xml" />
 		</version>
