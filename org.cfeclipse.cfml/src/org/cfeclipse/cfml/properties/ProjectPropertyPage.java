@@ -12,7 +12,7 @@ import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.jface.preference.RadioGroupFieldEditor;
+import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -48,7 +48,7 @@ public class ProjectPropertyPage extends PropertyPage {
 	private StringFieldEditor projectHelpURLField;
 	private StringFieldEditor projectComponentRootField;
 	private CFMLPropertyManager propertyManager;
-	private RadioGroupFieldEditor cfmlSyntaxField;
+	private ComboFieldEditor cfmlSyntaxField;
 
 	private ProjectPropertyStore propStore;
 	private BooleanFieldEditor cflintEnabledField;
@@ -176,16 +176,13 @@ public class ProjectPropertyPage extends PropertyPage {
 	    //get the supported types from the dictionary manager
 	    String [][] options = DictionaryManager.getConfiguredDictionaries();
 	    
-	    this.cfmlSyntaxField = new RadioGroupFieldEditor(
+	    this.cfmlSyntaxField = new ComboFieldEditor(
 	    		CFMLPreferenceConstants.P_CFML_DICTIONARY, 
 	    		CFML_DICTIONARY_TITLE, 
-	    		1,
 	    		options, 
-	    		composite,
-	    		true
+	    		composite
 	    );
 	    //this.cfmlSyntaxField.setPreferencePage(this);
-	    this.cfmlSyntaxField.setEnabled(true, parent);
 	    //this.cfmlSyntaxField.setPreferenceStore(this.propStore);
 	    this.cfmlSyntaxField.setPreferenceStore(propertyManager.getStore((IProject)getElement()));
 	    this.cfmlSyntaxField.load();

@@ -87,8 +87,12 @@ public class CFEBuilder extends IncrementalProjectBuilder {
 			return;
 		if (res.getRawLocation() == null || res.getRawLocation().toFile().isDirectory())
 			return;
+		if (!res.getRawLocation().toFile().getAbsolutePath().endsWith(".cfm")
+				&& !res.getRawLocation().toFile().getAbsolutePath().endsWith(".cfc"))
+			return;
 		try {
 			res.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
+			res.deleteMarkers(null, true, IResource.DEPTH_ONE);
 			if (cflint == null) {
 				cflint = new CFLint(config);
 				cflint.setVerbose(true);
@@ -101,7 +105,9 @@ public class CFEBuilder extends IncrementalProjectBuilder {
 				// List<CFLintScanner> scanners = cflint.getScanners();
 				// cflint.addScanner(new CFLintPlugin());
 			}
+			cflint.getBugs().getBugList().clear();
 			File wee = res.getRawLocation().makeAbsolute().toFile();
+			System.out.println("Scanning " + wee.getAbsolutePath());
 			cflint.scan(wee);
 			BugList bugList = cflint.getBugs();
 			for (BugInfo bugInfo : bugList) {
