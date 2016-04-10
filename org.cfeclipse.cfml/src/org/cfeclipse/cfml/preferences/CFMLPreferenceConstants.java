@@ -4,8 +4,13 @@
  */
 package org.cfeclipse.cfml.preferences;
 
+import java.io.IOException;
+
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 
@@ -81,7 +86,13 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	
 	public static void setDefaults(IPreferenceStore store) { 
 		store.setDefault(P_SNIPPETS_PATH,CFMLPlugin.getDefault().getStateLocation().toString()+"/snippets");
-		String dicts = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
+		String dicts;
+		try {
+			dicts = FileLocator.toFileURL(FileLocator.find(Platform.getBundle(CFMLPlugin.PLUGIN_ID), new Path("dictionary"), null)).toString().replace("file:", "");
+		} catch (IOException e) {
+			dicts = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
+			e.printStackTrace();
+		}
 		store.setDefault(P_DICTIONARIES_PATH, dicts);
 		store.setDefault(P_PROJECT_URL,DEFAULT_PROJECT_URL);
 		store.setDefault(P_DEFAULT_HELP_URL,DEFAULT_HELP_URL);

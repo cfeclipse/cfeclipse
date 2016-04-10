@@ -26,8 +26,13 @@ package org.cfeclipse.cfml.preferences;
 
 //import java.net.URL;
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.StringConverter;
 import org.eclipse.swt.graphics.RGB;
@@ -220,7 +225,12 @@ public class CFMLPreferenceManager {
 		File dictConfig = new File(dictDir + "/dictionaryconfig.xml");
 		if (!dictConfig.exists()) {
 			CFMLPlugin.logError("Configured preference for dictionary directory does not exist:" + dictDir);
-			dictDir = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
+			try {
+				dictDir = FileLocator.toFileURL(FileLocator.find(Platform.getBundle(CFMLPlugin.PLUGIN_ID), new Path("dictionary"), null)).toString().replace("file:", "");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			CFMLPlugin.logError("Setting dictionary dir to default:" + dictDir);
 			store.setValue(CFMLPreferenceConstants.P_DICTIONARIES_PATH, dictDir);
 //			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml (" + dictConfig.getPath() + ")");
