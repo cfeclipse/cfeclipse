@@ -219,7 +219,11 @@ public class CFMLPreferenceManager {
 		String dictDir = store.getDefaultString(CFMLPreferenceConstants.P_DICTIONARIES_PATH);
 		File dictConfig = new File(dictDir + "/dictionaryconfig.xml");
 		if (!dictConfig.exists()) {
-			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml (" + dictConfig.getPath() + ")");
+			CFMLPlugin.logError("Configured preference for dictionary directory does not exist:" + dictDir);
+			dictDir = CFMLPlugin.getDefault().getBundle().getLocation().replace("reference:file:", "") + "dictionary";
+			CFMLPlugin.logError("Setting dictionary dir to default:" + dictDir);
+			store.setValue(CFMLPreferenceConstants.P_DICTIONARIES_PATH, dictDir);
+//			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml (" + dictConfig.getPath() + ")");
 		}
 		return dictDir;
 	}
@@ -228,10 +232,7 @@ public class CFMLPreferenceManager {
 		String dictDir = store.getString(CFMLPreferenceConstants.P_DICTIONARIES_PATH);
 		File dictConfig = new File(dictDir + "/dictionaryconfig.xml");
 		if (!dictConfig.exists()) {
-			CFMLPlugin.logError("Configured preference for dictionary directory does not exist:" + dictDir);
-			dictDir = store.getDefaultString(CFMLPreferenceConstants.P_DICTIONARIES_PATH);
-			CFMLPlugin.logError("Setting dictionary dir to default:" + dictDir);
-			store.setValue(CFMLPreferenceConstants.P_DICTIONARIES_PATH, dictDir);
+			dictDir = defaultDictionaryDir();
 		}
 		return dictDir;
 	}
