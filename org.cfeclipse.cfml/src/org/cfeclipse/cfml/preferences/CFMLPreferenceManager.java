@@ -228,7 +228,8 @@ public class CFMLPreferenceManager {
 		String dictDir = store.getString(CFMLPreferenceConstants.P_DICTIONARIES_PATH);
 		File dictConfig = new File(dictDir + "/dictionaryconfig.xml");
 		if (!dictConfig.exists()) {
-			throw new IllegalArgumentException("Problem loading dictionaryconfig.xml (" + dictConfig.getPath() + ")");
+			CFMLPlugin.logError("Configured preference for dictionary directory does not exist:" + dictConfig.getPath());
+			return defaultDictionaryDir();
 		}
 		return dictDir;
 	}
