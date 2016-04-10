@@ -228,8 +228,10 @@ public class CFMLPreferenceManager {
 		String dictDir = store.getString(CFMLPreferenceConstants.P_DICTIONARIES_PATH);
 		File dictConfig = new File(dictDir + "/dictionaryconfig.xml");
 		if (!dictConfig.exists()) {
-			CFMLPlugin.logError("Configured preference for dictionary directory does not exist:" + dictConfig.getPath());
-			return defaultDictionaryDir();
+			CFMLPlugin.logError("Configured preference for dictionary directory does not exist:" + dictDir);
+			dictDir = store.getDefaultString(CFMLPreferenceConstants.P_DICTIONARIES_PATH);
+			CFMLPlugin.logError("Setting dictionary dir to default:" + dictDir);
+			store.setValue(CFMLPreferenceConstants.P_DICTIONARIES_PATH, dictDir);
 		}
 		return dictDir;
 	}
