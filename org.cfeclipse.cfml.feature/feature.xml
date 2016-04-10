@@ -73,16 +73,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    </url>
 
    <includes
-         id="org.mxunit.eclipseplugin.feature"
-         version="0.0.0"
-         search-location="both"/>
-
-   <includes
          id="org.cfeclipse.cfml.snippets.feature"
          version="0.0.0"
          search-location="both"/>
 
    <requires>
+      <import feature="org.mxunit.eclipseplugin.feature" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.jface.text"/>
