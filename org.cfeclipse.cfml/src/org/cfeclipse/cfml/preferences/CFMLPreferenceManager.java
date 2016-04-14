@@ -228,7 +228,6 @@ public class CFMLPreferenceManager {
 			try {
 				dictDir = FileLocator.toFileURL(FileLocator.find(Platform.getBundle(CFMLPlugin.PLUGIN_ID), new Path("dictionary"), null)).toString().replace("file:", "");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			CFMLPlugin.logError("Setting dictionary dir to default:" + dictDir);
