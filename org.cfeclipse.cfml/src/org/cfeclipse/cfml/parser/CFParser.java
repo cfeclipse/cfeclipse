@@ -807,10 +807,8 @@ public class CFParser {
 		}
 		
 		try {
-			char[] scriptWithEndTag = mainData.toCharArray();
 			List<String> errors = new ArrayList<String>();
-			PoundSignFilterStream psfstream = new PoundSignFilterStream(new CharArrayReader(scriptWithEndTag));
-			ANTLRInputStream input = new ANTLRInputStream(psfstream);
+			ANTLRInputStream input = new ANTLRInputStream(mainData);
 			lexer = new CFSCRIPTLexer(input);
 			tokenStream = new CommonTokenStream(lexer);
 			vocabulary = lexer.getVocabulary();
@@ -847,9 +845,6 @@ public class CFParser {
 					+ e.getLine(), e
 					.getMessage() + e.getLine() + ":" + e.getCol()));
 			e.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		} 
 
 		return;

@@ -138,7 +138,7 @@ public class CFEBuilder extends IncrementalProjectBuilder {
 			if (bug.getSeverity().equals("WARNING")) {
 				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
 			}
-			if (bug.getSeverity().equals("INFO")) {
+			else if (bug.getSeverity().equals("INFO")) {
 				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
 			} else {
 				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
