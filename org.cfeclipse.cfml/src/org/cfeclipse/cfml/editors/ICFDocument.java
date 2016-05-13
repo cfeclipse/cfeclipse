@@ -296,29 +296,16 @@ public class ICFDocument extends Document implements ICFEFileDocument {
 	 *
 	 */
 	
-	public void clearAllMarkers()
-	{
-	    
-		try
-		{
-		    
-			lastRes.deleteMarkers(
-					IMarker.PROBLEM, true, IResource.DEPTH_ONE
-				);
-			
-
-			lastRes.deleteMarkers(
-			        "org.cfeclipse.cfml.todomarker", true, IResource.DEPTH_ONE
-				);
-			
-
-		}
-		catch(CoreException ce)
-		{
+	public void clearAllMarkers() {
+		try {
+			lastRes.deleteMarkers("org.cfeclipse.cfml.ui.ide.ProblemMarker", true, IResource.DEPTH_ONE);
+			lastRes.deleteMarkers("org.cfeclipse.cfml.parserProblemMarker", true, IResource.DEPTH_ONE);
+			lastRes.deleteMarkers("org.cfeclipse.cfml.parserWarningMarker", true, IResource.DEPTH_ONE);
+			lastRes.deleteMarkers("org.cfeclipse.cfml.todomarker", true, IResource.DEPTH_ONE);
+		} catch (CoreException ce) {
 			ce.printStackTrace(System.err);
-		}
-		catch (Exception e) {
-		    //e.printStackTrace();
+		} catch (Exception e) {
+			// e.printStackTrace();
 		}
 	}
 	

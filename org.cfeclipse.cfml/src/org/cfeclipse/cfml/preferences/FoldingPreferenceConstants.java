@@ -99,7 +99,7 @@ public class FoldingPreferenceConstants extends AbstractPreferenceConstants {
 	
 	public static void setDefaults(IPreferenceStore store) { 
 		store.setDefault(P_ENABLE_CODE_FOLDING,true);
-		store.setDefault(P_PERSIST_FOLD_STATE,false);
+		store.setDefault(P_PERSIST_FOLD_STATE,true);
 		store.setDefault(P_MINIMUM_CODE_FOLDING_LINES,3);
 		store.setDefault(P_FOLDING_CFMLCOMMENTS_FOLD,true);
 		store.setDefault(P_FOLDING_CFMLCOMMENTS_COLLAPSE,true);

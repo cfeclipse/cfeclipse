@@ -239,7 +239,7 @@ public class CFDocumentProvider extends FileDocumentProvider
 	{		
 		if(document instanceof ICFDocument) 
 		{
-			((ICFDocument) document).clearAllMarkers();
+//			((ICFDocument) document).clearAllMarkers();
 			((ICFDocument) document).parseDocument();
 		}
 		

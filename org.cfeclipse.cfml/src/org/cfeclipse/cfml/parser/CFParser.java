@@ -767,10 +767,10 @@ public class CFParser {
 		
 		public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine,
 				String msg, RecognitionException re) {
-			int offset = addOffset + charPositionInLine;
+			int offset = getLineOffset(line) + charPositionInLine;
 			int endoffset = offset + 1;
 			if (re != null && re.getOffendingToken() != null) {
-				endoffset += re.getOffendingToken().getStartIndex() - re.getOffendingToken().getStopIndex();
+				endoffset += re.getOffendingToken().getStopIndex() - re.getOffendingToken().getStartIndex();
 			}
 			if(recognizer instanceof Parser && ((Parser)recognizer).isExpectedToken(CFSCRIPTParser.SEMICOLON)){
 				msg = "There seems to be a missing semicolon; here bud";

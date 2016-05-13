@@ -44,6 +44,12 @@ public class CFEBuilder extends IncrementalProjectBuilder {
 
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) {
 		if (!propertyManager.getCFLintEnabledProject(getProject())) {
+			try {
+				IResourceDelta delta = getDelta(getProject());
+				delta.getResource().deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
 			return null;
 		}
 
@@ -65,7 +71,6 @@ public class CFEBuilder extends IncrementalProjectBuilder {
 		try {
 			delta.accept(new IResourceDeltaVisitor() {
 				public boolean visit(IResourceDelta delta) {
-					System.out.println("changed: " + delta.getResource().getRawLocation());
 					getResourceBuildMarkers(delta.getResource());
 					return true; // visit children too
 				}
@@ -92,7 +97,7 @@ public class CFEBuilder extends IncrementalProjectBuilder {
 			return;
 		try {
 			res.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
-			res.deleteMarkers(null, true, IResource.DEPTH_ONE);
+//			res.deleteMarkers(null, true, IResource.DEPTH_ONE);
 			if (cflint == null) {
 				cflint = new CFLint(config);
 				cflint.setVerbose(true);
