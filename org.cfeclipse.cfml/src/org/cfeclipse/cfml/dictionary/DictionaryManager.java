@@ -210,7 +210,8 @@ public class DictionaryManager
 	 */
 	public static String getFirstVersion(String forDictionary)
 	{
-		return dictionaryConfig.getElementById(forDictionary).getFirstChild().getAttributes().getNamedItem("key").getNodeValue();
+		String dictName = dictionaryConfig.getElementById(forDictionary).getFirstChild().getAttributes().getNamedItem("key").getNodeValue();
+		return dictName;
 	}
 	
 	/**

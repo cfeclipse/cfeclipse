@@ -60,6 +60,7 @@ import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.atn.PredictionMode;
 import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.misc.IntervalSet;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.cfeclipse.cfml.CFMLPlugin;
@@ -460,9 +461,9 @@ public class CFParser {
 	 * @param match 
 	 * @return array list of the attributes found. May contain duplicates
 	 */
-	protected ArrayList stripAttributes(String inData, int lineNum, int offset, ParseItemMatch match)
+	protected ArrayList<AttributeItem> stripAttributes(String inData, int lineNum, int offset, ParseItemMatch match)
 	{
-		ArrayList attributes = new ArrayList();
+		ArrayList<AttributeItem> attributes = new ArrayList<AttributeItem>();
 		Matcher matcher;
 		Pattern pattern;
 		String attributeName,attributeValue;
@@ -507,7 +508,7 @@ public class CFParser {
 	 * @param match the match that's a closer
 	 * @param matchStack - the stack of matched items
 	 */
-	protected boolean handleClosingTag(ParseItemMatch match, Stack matchStack)
+	protected boolean handleClosingTag(ParseItemMatch match, Stack<DocItem> matchStack)
 	{
 	/*
  	 * Quite simply it works out what the item is. Then it grabs the top-most item
@@ -529,7 +530,7 @@ public class CFParser {
 		    closerName = closerName.substring(2, closerName.length()-1);
 			
 		    
-		    DocItem topItem = (DocItem)matchStack.peek();
+		    DocItem topItem = matchStack.peek();
 		    
 			//System.out.println("Top item on stack is " + topItem.getName());
 			
@@ -539,7 +540,7 @@ public class CFParser {
 			    // and remove them if there is an opener below them.
 			    try {
 				boolean foundCloser = false;
-			    ArrayList removals = new ArrayList();
+			    ArrayList<TagItem> removals = new ArrayList<TagItem>();
 			    Object[] items = matchStack.toArray();
 			    //System.out.println("Looking on stack for opening " + closerName + ". Closer found on line: " + this.getLineNumber(match.getStartPos()));
 			    for (int i=items.length-1;i>0;i--) {
@@ -560,7 +561,7 @@ public class CFParser {
 			    if (foundCloser) {
 			
 			        items = removals.toArray();
-		            DocItem parent = (DocItem)matchStack.get(items.length);
+		            DocItem parent = matchStack.get(items.length);
 			        for (int i=0;i<items.length;i++) {
 			            TagItem item = (TagItem)items[i];
 			            //System.out.println(item.getChildNodes().size() + " children need to be moved to " + parent.getName());
@@ -580,9 +581,9 @@ public class CFParser {
 			            matchStack.remove(items[i]);
 			        }
 			        
-			        Iterator iter = parent.getChildNodes().iterator();
+			        Iterator<DocItem> iter = parent.getChildNodes().iterator();
 			        while (iter.hasNext()) {
-			        	DocItem di = (DocItem)iter.next();
+			        	DocItem di = iter.next();
 			        	//System.out.println("Child: " + di.getName());
 			        }
 			    }
@@ -606,14 +607,14 @@ public class CFParser {
 			}
 			
 			// Take the top item off the stack.
-			topItem = (DocItem)matchStack.pop();	// Should be the opening item for this closer
+			topItem = matchStack.pop();	// Should be the opening item for this closer
 			//System.out..println("CFParser::handleClosingTag() - " + Util.GetTabs(matchStack) + "Parser: Does \'" + closerName + "\' match \'" + topItem.itemName + "\'");							
 			
 			//SPIKE: Made this case insensitive
 			if(topItem.getName().compareToIgnoreCase(closerName) == 0)
 			{
 			    //System.out.println("Found matcher at top of stack!!!");
-				DocItem parentItem = (DocItem)matchStack.pop();
+				DocItem parentItem = matchStack.pop();
 				try {
 					parentItem.addChild(topItem);
 				}
@@ -687,12 +688,10 @@ public class CFParser {
 	 * @param matchStack - the stack of tag items. This will have all of the new Script items added to it.
 	 */
 	
-	protected void handleCFScriptBlock(ParseItemMatch match, Stack matchStack)
+	protected void handleCFScriptBlock(ParseItemMatch match, Stack<DocItem> matchStack)
 	{
 		String mainData = match.match;
 		mainData = mainData.toLowerCase().substring("<cfscript>".length());
-		StringReader tempRdr =new StringReader(mainData);
-		CFScriptStatement rootElement = null;
 
 		if(!this.parseCFScript) {
 			return;
@@ -709,38 +708,45 @@ public class CFParser {
 	}
 
 	public class StdErrReporter implements IErrorReporter {
+		private int addLines = 0;
+		private int addOffset = 0;
+		public StdErrReporter(int addLines, int addOffset) {
+			this.addLines = addLines;
+			this.addOffset = addOffset;
+		}
+
 		public void reportError(String error) {
 			// System.err.println(error);
 			addParseError(new ParseError(0, 0, 0, error, error));
 		}
 		
 		public void reportError(RecognitionException re) {
-			int offset = getLineOffset(re.getOffendingToken().getLine()) + re.getOffendingToken().getCharPositionInLine();
+			int offset = getLineOffset(re.getOffendingToken().getLine()+ addLines) + re.getOffendingToken().getCharPositionInLine();
 			int endoffset = offset + 1;
 			if (re.getOffendingToken() != null) {
 				endoffset += re.getOffendingToken().getText().length();
 			}
-			addParseError(new ParseError(re.getOffendingToken().getLine(), offset,
+			addParseError(new ParseError(re.getOffendingToken().getLine() + addLines, offset,
 					endoffset, re.getMessage(), re.getMessage()));
 		}
 		
 		public void reportError(String[] tokenNames, RecognitionException re) {
-			int offset = getLineOffset(re.getOffendingToken().getLine()) + re.getOffendingToken().getCharPositionInLine();
+			int offset = getLineOffset(re.getOffendingToken().getLine()+ addLines) + re.getOffendingToken().getCharPositionInLine();
 			int endoffset = offset + 1;
 			if (re.getOffendingToken() != null) {
 				endoffset += re.getOffendingToken().getText().length();
 			}
-			addParseError(new ParseError(re.getOffendingToken().getLine(), offset,
+			addParseError(new ParseError(re.getOffendingToken().getLine() + addLines, offset,
 					endoffset, tokenNames.toString(), re.getMessage()));
 		}
 		
 		public void reportError(IntStream input, RecognitionException re, org.antlr.runtime.BitSet follow) {
-			int offset = getLineOffset(re.getOffendingToken().getLine()) + re.getOffendingToken().getCharPositionInLine();
+			int offset = getLineOffset(re.getOffendingToken().getLine()+ addLines) + re.getOffendingToken().getCharPositionInLine();
 			int endoffset = offset + 1;
 			if (re.getOffendingToken() != null) {
 				endoffset += re.getOffendingToken().getText().length();
 			}
-			addParseError(new ParseError(re.getOffendingToken().getLine(), offset,
+			addParseError(new ParseError(re.getOffendingToken().getLine() + addLines, offset,
 					endoffset, re.getMessage(), re.getMessage()));
 			// System.err.println(re.getMessage());
 		}
@@ -761,14 +767,17 @@ public class CFParser {
 		
 		public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine,
 				String msg, RecognitionException re) {
-			int offset = getLineOffset(line) + charPositionInLine;
+			int offset = addOffset + charPositionInLine;
 			int endoffset = offset + 1;
 			if (re != null && re.getOffendingToken() != null) {
-				endoffset += re.getOffendingToken().getText().length();
+				endoffset += re.getOffendingToken().getStartIndex() - re.getOffendingToken().getStopIndex();
 			}
-
+			if(recognizer instanceof Parser && ((Parser)recognizer).isExpectedToken(CFSCRIPTParser.SEMICOLON)){
+				msg = "There seems to be a missing semicolon; here bud";
+			}
 			addParseError(new ParseError(line, offset, endoffset, msg,
 					re == null ? null : re.getMessage()));
+
 					
 		}
 
@@ -793,9 +802,6 @@ public class CFParser {
 	}
 
 	protected void parseCFScript(String mainData, int addLines, int addOffset) {
-		mainData = mainData.replaceFirst("<cfscript>", "");
-		CFScriptStatement rootElement = null;
-
 		if (!this.parseCFScript) {
 			return;
 		}
@@ -803,17 +809,16 @@ public class CFParser {
 			initOrgCFParser();
 		} else {
 			parser.getMessages().removeAll(parser.getMessages());
-			parserState.getMessages().removeAll(parserState.getMessages());
+			parserState.clearMessages();
 		}
 		
 		try {
-			List<String> errors = new ArrayList<String>();
 			ANTLRInputStream input = new ANTLRInputStream(mainData);
 			lexer = new CFSCRIPTLexer(input);
 			tokenStream = new CommonTokenStream(lexer);
 			vocabulary = lexer.getVocabulary();
 			final CFSCRIPTParser parser = new CFSCRIPTParser(tokenStream);
-			parser.addErrorListener(new StdErrReporter());
+			parser.addErrorListener(new StdErrReporter(addLines,addOffset));
 			CFSCRIPTParser.ScriptBlockContext entry = null;
 			parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
 			try {
@@ -928,7 +933,7 @@ public class CFParser {
 	 * @param attrList - map of attributes that are for this tag
 	 * @param isACloser - whether it's a self-closer
 	 */
-	protected void handleCFTag(String tagName, ParseItemMatch match, Stack matchStack, ArrayList attrList, boolean isACloser)
+	protected void handleCFTag(String tagName, ParseItemMatch match, Stack<DocItem> matchStack, ArrayList<AttributeItem> attrList, boolean isACloser)
 	throws Exception
 	{
 		//
@@ -994,7 +999,7 @@ public class CFParser {
 	}
 
 	private void addDocItemToTree(DocItem item) {
-		DocItem topItem = (DocItem) matchStack.pop();
+		DocItem topItem = matchStack.pop();
 		topItem.addChild(item);
 		matchStack.push(topItem);
 	}
@@ -1015,7 +1020,7 @@ public class CFParser {
 	 * @param isACloser
 	 * @param newItem
 	 */
-	private void addTagItemToTree(ParseItemMatch match, Stack matchStack, boolean isACloser, TagItem newItem) {
+	private void addTagItemToTree(ParseItemMatch match, Stack<DocItem> matchStack, boolean isACloser, TagItem newItem) {
 		//
 		//	Either the syntax dictionary says it closes itself or the user has specified it will
 		
@@ -1026,7 +1031,7 @@ public class CFParser {
 			}
 			else
 			{ 	// It's a closing item, so we get the parent item and add this item to it's children.
-				DocItem top = (DocItem)matchStack.pop();
+				DocItem top = matchStack.pop();
 
 				top.addChild(newItem);
 				matchStack.push(top);
@@ -1104,7 +1109,7 @@ public class CFParser {
 		// Util.dumpMatches(matches);
 		// System.out.println("=============> Finishing match dump");
 		CFDocument newDoc = new CFDocument();
-		matchStack = new Stack();
+		matchStack = new Stack<DocItem>();
 		ArrayList rootElements = new ArrayList();
 		TagItem rootItem = new TagItem(0, 0, 0, "Doc Root");
 		int matchPos = 0;
@@ -1112,7 +1117,7 @@ public class CFParser {
 		matchStack.push(rootItem);
 		ParseItemMatch lastMatch = null;
 		// little hackish way to detect cfscript based cfcs TODO: something better
-		if (!inData.contains("cfcomponent") && inData.split("(?i).*component[^>]+\\{").length > 1) {
+		if (!inData.contains("cfcomponent") && inData.split("(?i).*component[^>\\(]+\\{").length > 1) {
 			parseCFScript(inData);
 			newDoc.setDocumentRoot(rootItem);
 			return newDoc;
@@ -1184,7 +1189,7 @@ public class CFParser {
 								if(tagName.startsWith("<cfif") || tagName.startsWith("<cfelseif") || tagName.startsWith("<cfmodule")
 										|| tagName.startsWith("<cfset"))								
 								{
-									handleCFTag(tagName, match, matchStack, new ArrayList(), isACloser);
+									handleCFTag(tagName, match, matchStack, new ArrayList<AttributeItem>(), isACloser);
 								} else {
 									handleCFTag(tagName, match, matchStack, stripAttributes(attributes, match.lineNumber, tagEnd, match), isACloser);									
 								}
@@ -1255,7 +1260,7 @@ public class CFParser {
 	}
 	
 	
-	private void handleUnclosedTags(Stack matchStack, DocItem defaultParent) {
+	private void handleUnclosedTags(Stack<DocItem> matchStack, DocItem defaultParent) {
 		try {
 			// If we've got more than one item left on the stack check if any of the remaining items are unclosed custom tags
 			if (matchStack.size() > 1) {
@@ -1279,8 +1284,8 @@ public class CFParser {
 							parent.addChild(t);
 	
 							CFNodeList childNodes = t.getChildNodes();
-							Iterator iter = childNodes.iterator();
-							ArrayList deletedChildren = new ArrayList();
+							Iterator<DocItem> iter = childNodes.iterator();
+							ArrayList<DocItem> deletedChildren = new ArrayList<DocItem>();
 							while (iter.hasNext()) {
 								Object o = iter.next();
 								if (o instanceof DocItem) {
@@ -1293,7 +1298,7 @@ public class CFParser {
 							}
 							iter = deletedChildren.iterator();
 							while(iter.hasNext()) {
-								t.removeChild((DocItem)iter.next());
+								t.removeChild(iter.next());
 							}
 						}
 					}
@@ -1413,8 +1418,7 @@ public class CFParser {
 												"Reached end of document before finding a closing cfscript tag.",
 												true )); // Fatal error
 		
-		//} else if(this.parseCFScript) {
-		} else if(true) {
+		} else if(this.parseCFScript) {
 			int scriptStart = currDocOffset + "<cfscript>".length();
 			String cfScriptData = inData.substring(currDocOffset, finalOffset);
 			cfScriptData = cfScriptData.trim();
@@ -1555,8 +1559,8 @@ public class CFParser {
 		int lastMatch = 0;
 		int currPos = 0;
 		int currState = 0;
-		Stack stateStack = new Stack();
-		Stack statePositionStack = new Stack();
+		Stack<Integer> stateStack = new Stack<Integer>();
+		Stack<Integer> statePositionStack = new Stack<Integer>();
 		
 		ArrayList matches = new ArrayList();
 		try {
@@ -1630,8 +1634,8 @@ public class CFParser {
 						&& next2Chars.compareTo("--") == 0 
 						&& inData.charAt(currPos+3) == '>')
 				{
-					currState = ((Integer)stateStack.pop()).intValue();
-					int lastStatePos = ((Integer)statePositionStack.pop()).intValue();
+					currState = stateStack.pop().intValue();
+					int lastStatePos = statePositionStack.pop().intValue();
 					if(currState == MATCHER_NOTHING)
 					{
 						
@@ -1745,11 +1749,11 @@ public class CFParser {
 		if(startNode.hasChildren())
 		{
 			CFNodeList children = startNode.getChildNodes();
-			Iterator nodeIter = children.iterator();
+			Iterator<DocItem> nodeIter = children.iterator();
 			//System.out.println("Node ("+startNode.getClass().getSimpleName()+ ") " + startNode.toString() + " has " + children.size() + " children");
 			while(nodeIter.hasNext())
 			{
-				DocItem item = (DocItem)nodeIter.next();
+				DocItem item = nodeIter.next();
 				//item.setParent(startNode);
 				messages.addAll(finalDocTreeTraversal(item));
 			}

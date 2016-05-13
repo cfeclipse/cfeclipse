@@ -37,17 +37,17 @@ import cfml.parsing.ParseMessage;
  */
 public class State 
 {
-	protected ArrayList messages = new ArrayList();
+	protected ArrayList<ParseMessage> messages = new ArrayList<ParseMessage>();
 	protected String filename;
 	protected int errCount = 0;
 	protected boolean hadFatal = false;
-	protected ArrayList matches = new ArrayList();
+	protected ArrayList<ParseItemMatch> matches = new ArrayList<ParseItemMatch>();
 	
 	//
 	// The following is to keep track of function & variable names
 	// TODO: I think the following should be a map so we can store the doc items against name for type recognition, etc.
-	protected HashMap functionNames = new HashMap();
-	protected HashMap variableNames = new HashMap();
+	protected HashMap<?, ?> functionNames = new HashMap<Object, Object>();
+	protected HashMap<?, ?> variableNames = new HashMap<Object, Object>();
 	
 	static public final int ADD_BEFORE = 0x01;
 	static public final int ADD_AFTER =  0x02;
@@ -58,7 +58,7 @@ public class State
 	 * 
 	 * @return ArrayList of ParseItemMatch'es
 	 */
-	public ArrayList getMatches()
+	public ArrayList<ParseItemMatch> getMatches()
 	{
 		return matches;
 	}
@@ -79,9 +79,19 @@ public class State
 	 * 
 	 * @return
 	 */
-	public ArrayList getMessages()
+	public ArrayList<ParseMessage> getMessages()
 	{
 		return messages;
+	}
+	
+	/**
+	 * clears parser messages.
+	 * @return
+	 */
+	public void clearMessages()
+	{
+		messages = null;
+		messages = new ArrayList<ParseMessage>();
 	}
 	
 	/**
@@ -147,9 +157,9 @@ public class State
 	 * 
 	 * @param newMessages ArrayList of ParseMessage's
 	 */
-	public void addMessages(ArrayList newMessages)
+	public void addMessages(ArrayList<?> newMessages)
 	{
-		Iterator msgIter = newMessages.iterator();
+		Iterator<?> msgIter = newMessages.iterator();
 		ParseMessage currMsg = null;
 		while(msgIter.hasNext())
 		{

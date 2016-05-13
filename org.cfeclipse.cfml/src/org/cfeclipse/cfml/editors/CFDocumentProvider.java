@@ -95,27 +95,14 @@ public class CFDocumentProvider extends FileDocumentProvider
 			if (document.getDocumentPartitioner(CFDocumentSetupParticipant.CFML_PARTITIONING) == null)
 				fCFDocumentSetupParticipant.setup(document);
 			
-			//REMOVED the following lines as we would never know which project it is in.
-			
-			//FileEditorInput input = (FileEditorInput)element;
-			
-			//This is what is WRONG! We need to know what project the document is in so we can get the right library...
-			
 			//try to load the proper dictionary syntax for this document			
 			CFMLPropertyManager pm = new CFMLPropertyManager();
-			
-			//How do we know which project this goes to?
-			//String currentDict = pm.getCurrentDictionary(input.getFile().getProject());
-			//if(currentDict == null || currentDict == "") 
-			
 			String currentDict = DictionaryManager.getFirstVersion(DictionaryManager.CFDIC);
-			
-				if(element instanceof FileEditorInput){
-					IProject project = ((FileEditorInput)element).getFile().getProject();
-					currentDict = pm.getCurrentDictionary(project);
-				}
-			
-			
+		
+			if(element instanceof FileEditorInput){
+				IProject project = ((FileEditorInput)element).getFile().getProject();
+				currentDict = pm.getCurrentDictionary(project);
+			}
 			
 			DictionaryManager.loadDictionaryFromCache(
 				currentDict,

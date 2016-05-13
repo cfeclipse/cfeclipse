@@ -375,7 +375,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		Pair squareBraces = new Pair("[", "]", 1);
 
 		//create the collection
-		LinkedList brackets = new LinkedList();
+		LinkedList<Pair> brackets = new LinkedList<Pair>();
 		brackets.add(parenthesis);
 		brackets.add(curlyBraces);
 		brackets.add(squareBraces);
@@ -717,7 +717,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 		// this is implemented by default in Eclipse 3.3, so we just exit out
 		// we do this by checking for JavaFileEditorInput, which 3.3 removed
-		Class c = null;
+		Class<?> c = null;
 		try
 		{
 			c = Class.forName("org.eclipse.ui.internal.editors.text.JavaFileEditorInput");

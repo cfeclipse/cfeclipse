@@ -106,9 +106,9 @@ public class CFEBuilder extends IncrementalProjectBuilder {
 				// cflint.addScanner(new CFLintPlugin());
 			}
 			cflint.getBugs().getBugList().clear();
-			File wee = res.getRawLocation().makeAbsolute().toFile();
-			System.out.println("Scanning " + wee.getAbsolutePath());
-			cflint.scan(wee);
+			File sourceFile = res.getRawLocation().makeAbsolute().toFile();
+			System.out.println("Scanning " + sourceFile.getAbsolutePath());
+			cflint.scan(sourceFile);
 			BugList bugList = cflint.getBugs();
 			for (BugInfo bugInfo : bugList) {
 				addMarker(res, bugInfo);
