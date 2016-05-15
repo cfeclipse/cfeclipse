@@ -28,7 +28,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.parser.CFNodeList;
@@ -36,6 +44,7 @@ import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.text.BadLocationException;
@@ -607,6 +616,10 @@ public class CodeFoldingSetter {
 	 * }
 	 */
 
+	private File getFoldStateFile(final IFile resource) {
+		return resource.getProject().getWorkingLocation(CFMLPlugin.PLUGIN_ID).append(resource.getName() + "_folds").toFile();
+	}
+	
 	public void persistFoldState() {
 		if (preferenceManager.persistFoldState() && resource != null && !resource.isPhantom()) {			
 			StringBuffer sb = new StringBuffer();
@@ -620,26 +633,30 @@ public class CodeFoldingSetter {
 				sb.append((annotation.isCollapsed())?1:0);
 				sb.append("\n");
 			}
-			if (positions < 300) {
-				try {
-					if (resource.isAccessible()) {
-						resource.setPersistentProperty(foldStateQN, sb.toString());
-					}
-				} catch (CoreException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			try {
+				File stateFile = getFoldStateFile(resource);
+				PrintWriter writer;
+				writer = new PrintWriter(new BufferedWriter(new FileWriter(stateFile)));
+				writer.write(sb.toString());
+				writer.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
 		}
 	}
 
+	static String readFile(File file) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
+		return new String(encoded, "UTF-8");
+	}
+	
 	public void loadSnapshotFromProperty() {
 		String foldStates = "";
 		storedFolds = new ArrayList();
+		File stateFile = getFoldStateFile(resource);
 		try {
-			foldStates = resource.getPersistentProperty(foldStateQN);
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
+			foldStates = readFile(stateFile);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		if (!preferenceManager.enableFolding() || foldStates == null) {

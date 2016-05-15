@@ -13,7 +13,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jsbeautify.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/javolution.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jericho-html-3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/CFLint-0.7.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/cflint.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.6.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-core-2.6.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jackson-annotations-2.6.0.jar"/>
