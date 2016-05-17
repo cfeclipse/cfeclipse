@@ -167,5 +167,15 @@ public class CFMLPropertyManager {
 		return store.getBoolean(CFMLPreferenceConstants.P_CFLINT_ENABLED_PROJECT);
 	}
 	
+	public boolean getCFLintStoreConfigInProject(IProject project){
+		IPreferenceStore store = new ProjectPropertyStore(project);
+		return store.getBoolean(CFMLPreferenceConstants.P_CFLINT_STOREINPROJECT_PROJECT);
+	}
+	
+	public void setCFLintStoreConfigInProject(Boolean enabled, IProject project){
+		IPreferenceStore store = new ProjectPropertyStore(project);
+		store.setValue(CFMLPreferenceConstants.P_CFLINT_STOREINPROJECT_PROJECT, enabled);
+		
+	}
 	
 }

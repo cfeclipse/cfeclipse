@@ -16,6 +16,7 @@ public class CFLintPreferenceConstants extends AbstractPreferenceConstants {
 	
 	/** enable cflint builder **/
 	public static final String P_CFLINT_ENABLED = "__cflint_enabled";
+	public static final String P_CFLINT_STOREINPROJECT = "__cflint_storeinproject";
 	
 
 	/**
@@ -24,6 +25,7 @@ public class CFLintPreferenceConstants extends AbstractPreferenceConstants {
 	
 	public static void setDefaults(IPreferenceStore store) { 
 		store.setDefault(P_CFLINT_ENABLED, false);
+		store.setDefault(P_CFLINT_STOREINPROJECT, false);
 	}
 
 }

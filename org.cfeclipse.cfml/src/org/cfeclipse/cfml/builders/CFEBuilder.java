@@ -1,16 +1,11 @@
 package org.cfeclipse.cfml.builders;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
-import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.parser.CFLintPlugin;
-import org.cfeclipse.cfml.preferences.CFLintPreferenceConstants;
-import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
+import org.cfeclipse.cfml.cflint.CFLintConfigUI;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -19,15 +14,11 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.preference.IPreferenceStore;
-
 import com.cflint.BugInfo;
 import com.cflint.BugList;
 import com.cflint.CFLint;
 import com.cflint.config.CFLintConfig;
-import com.cflint.plugins.CFLintScanner;
 import com.cflint.tools.CFLintFilter;
 
 /**
@@ -38,21 +29,29 @@ import com.cflint.tools.CFLintFilter;
  */
 public class CFEBuilder extends IncrementalProjectBuilder {
 
-	CFLintConfig config = null;
-	CFLint cflint;
-	CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+	private CFLint cflint;
+	private CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+	private HashMap<String, CFLintConfig> projectCFLintConfigs = new HashMap<String, CFLintConfig>();
+
+	@Override
+	protected void clean(IProgressMonitor monitor) throws CoreException {
+		super.clean(monitor);
+		projectCFLintConfigs = new HashMap<String, CFLintConfig>();
+	}
 
 	protected IProject[] build(int kind, Map args, IProgressMonitor monitor) {
 		if (!propertyManager.getCFLintEnabledProject(getProject())) {
 			try {
 				IResourceDelta delta = getDelta(getProject());
-				delta.getResource().deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
+				if(delta != null) {
+					delta.getResource().deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
+				}
 			} catch (CoreException e) {
 				e.printStackTrace();
 			}
 			return null;
 		}
-
+		
 		if (kind == IncrementalProjectBuilder.FULL_BUILD) {
 			fullBuild(monitor);
 		} else {
@@ -98,7 +97,15 @@ public class CFEBuilder extends IncrementalProjectBuilder {
 		try {
 			res.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
 //			res.deleteMarkers(null, true, IResource.DEPTH_ONE);
-			if (cflint == null) {
+			String projectName = getProject().getName();
+			CFLintConfig config = projectCFLintConfigs.get(projectName);
+			boolean reload = false;
+			if(config == null) {
+				config = CFLintConfigUI.getProjectCFLintConfig(getProject());
+				projectCFLintConfigs.put(projectName, config);
+				reload = true;
+			}
+			if (cflint == null || reload) {
 				cflint = new CFLint(config);
 				cflint.setVerbose(true);
 				cflint.setLogError(true);
@@ -139,8 +146,8 @@ public class CFEBuilder extends IncrementalProjectBuilder {
 		try {
 			IMarker marker = res.createMarker(MARKER_TYPE);
 			int lineNumber = bug.getLine();
-			marker.setAttribute(IMarker.MESSAGE, bug.getSeverity() + ": " + bug.getMessage());
-			if (bug.getSeverity().equals("WARNING")) {
+			marker.setAttribute(IMarker.MESSAGE, bug.getSeverity() + ": " + bug.getMessage() + " (" + bug.getMessageCode() + ")");
+			if (bug.getSeverity().startsWith("WARN")) {
 				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
 			}
 			else if (bug.getSeverity().equals("INFO")) {

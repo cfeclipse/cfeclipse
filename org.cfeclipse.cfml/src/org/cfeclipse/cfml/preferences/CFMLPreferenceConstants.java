@@ -70,9 +70,10 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	public static final String P_HELP_URL_USE_EXTERNAL_BROWSER = "_helpURLUseExternalBrowser";
 	
 	/**
-	 * the default help url 
+	 * the CFLint defaults 
 	 */
 	public static final String P_CFLINT_ENABLED_PROJECT = "_cflint_enabled_project";
+	public static final String P_CFLINT_STOREINPROJECT_PROJECT = "_cflint_storeinproject_project";
 	
 	/**
 	 * Sets up the default values for preferences managed by {@link CFMLPreferencesPage} .
@@ -102,6 +103,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_CFML_DICTIONARY, P_CFML_DICTIONARY_DEFAULT);
 		store.setDefault(P_TEMPLATE_PROJECT_PATH, "");
 		store.setDefault(P_CFLINT_ENABLED_PROJECT, store.getBoolean(CFLintPreferenceConstants.P_CFLINT_ENABLED));
+		store.setDefault(P_CFLINT_STOREINPROJECT_PROJECT, store.getBoolean(CFLintPreferenceConstants.P_CFLINT_STOREINPROJECT));
 	}
 	
 }

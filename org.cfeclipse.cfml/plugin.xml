@@ -1878,7 +1878,7 @@
          point="org.eclipse.ui.propertyPages">
       <page
             class="org.cfeclipse.cfml.properties.ProjectPropertyPage"
-            id="org.cfeclipse.cfml.properties.samplePropertyPage"
+            id="org.cfeclipse.cfml.properties.ProjectPropertyPage"
             name="%page.name.10"
             nameFilter="*">
          <filter name="projectNature" value="org.cfeclipse.cfml.CFENature" />
