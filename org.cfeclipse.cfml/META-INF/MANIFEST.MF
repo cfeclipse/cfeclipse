@@ -108,7 +108,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.browser,
  org.eclipse.search,
  org.eclipse.ecf.docshare;bundle-version="2.0.0";resolution:=optional,
- org.eclipse.e4.ui.workbench;bundle-version="1.0.2"
+ org.eclipse.e4.ui.workbench;bundle-version="1.0.2";resolution:=optional
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
 Import-Package: com.ibm.icu.text,
