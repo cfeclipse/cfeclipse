@@ -646,8 +646,12 @@ public class CodeFoldingSetter {
 	}
 
 	static String readFile(File file) throws IOException {
-		byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
-		return new String(encoded, "UTF-8");
+		if(file.exists()) {
+			byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
+			return new String(encoded, "UTF-8");
+		} else {
+			return "";
+		}
 	}
 	
 	public void loadSnapshotFromProperty() {
