@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Button;
 import com.cflint.config.CFLintConfig;
 import com.cflint.config.CFLintPluginInfo;
+import com.cflint.config.ConfigRuntime;
 import com.cflint.config.CFLintPluginInfo.PluginInfoRule;
 import com.cflint.config.CFLintPluginInfo.PluginInfoRule.PluginMessage;
 import com.cflint.config.ConfigUtils;
@@ -31,9 +32,9 @@ public class CFLintConfigUI {
 
 	private ArrayList<RuleEditor> ruleEditors;
 	private static CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+	private static final CFLintPluginInfo pluginInfo = ConfigUtils.loadDefaultPluginInfo();
 
 	public void buildGUI(Composite composite, IProject iProject) {
-		CFLintPluginInfo info = ConfigUtils.loadDefaultPluginInfo();
 		List<PluginInfoRule> enabledRules = getProjectCFLintConfig(iProject).getRules();
 		List<PluginMessage> excludeMessages = getProjectCFLintConfig(iProject).getExcludes();
 		Button enabledCheckbox = new Button(composite, SWT.CHECK);
@@ -51,7 +52,7 @@ public class CFLintConfigUI {
 		});
 		ruleEditors = new ArrayList<RuleEditor>();
 		HashMap<String, String> descriptions = ConfigUtils.loadDescriptions();
-		for (PluginInfoRule rule : info.getRules()) {
+		for (PluginInfoRule rule : pluginInfo.getRules()) {
 			RuleEditor ruleEdit;
 			if(enabledRules.contains(rule)){
 				rule = enabledRules.get(enabledRules.indexOf(rule));
@@ -75,6 +76,8 @@ public class CFLintConfigUI {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else {
+			currentConfig = new ConfigRuntime(null,pluginInfo);
 		}
 		return currentConfig;
 	}
