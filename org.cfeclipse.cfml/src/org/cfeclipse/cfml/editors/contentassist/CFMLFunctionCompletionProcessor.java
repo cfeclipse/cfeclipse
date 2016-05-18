@@ -782,7 +782,7 @@ public class CFMLFunctionCompletionProcessor extends AssistContributor implement
 				//the toLowerCase is because of the createobject hack, we need
 				//to either make a setting in prefs for upper/lower or find a
 				//better way to handle the createobject case
-				String name = fun.getName().toLowerCase();
+				String name = fun.getName();
 				//now remove chars so when they hit enter it wont write the whole
 				//word just the part they havent typed
 				if(name.length() > 0)
