@@ -29,7 +29,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.runtime.CoreException;
 
-public class MyResourceChangeReporter implements IResourceChangeListener {
+public class ResourceChangeReporter implements IResourceChangeListener {
 	
 	public void resourceChanged(IResourceChangeEvent event) 
 	{
@@ -40,10 +40,10 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 					//System.out.println(" is about to close.");
 					break;
 				case IResourceChangeEvent.PRE_DELETE:
+					// delete the fold state file
 					//System.out.println(" is about to be deleted.");
 					break;
 				case IResourceChangeEvent.POST_CHANGE:
-					//System.out.println("Resources have changed." + event.getSource());
 					event.getDelta().accept(new DeltaPrinter());
 					break;
 				/* these two seem to be deprecated... 
@@ -57,6 +57,7 @@ public class MyResourceChangeReporter implements IResourceChangeListener {
 					break;
 				*/
 			}
+			
 		}catch(CoreException temp) {
 			System.err.println("Caught a CoreException");
 		}

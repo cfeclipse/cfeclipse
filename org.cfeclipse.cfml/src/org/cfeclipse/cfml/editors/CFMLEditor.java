@@ -126,6 +126,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
+import org.cfeclipse.cfml.editors.codefolding.CodeFoldingResourceChangeReporter;
 
 /**
  * @author Rob
@@ -397,8 +398,11 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		// The following is to enable us to listen to changes. Mainly it's used
 		// for
 		// getting the document filename when a new document is opened.
-		IResourceChangeListener listener = new MyResourceChangeReporter();
+		IResourceChangeListener listener = new ResourceChangeReporter();
+		
 		CFMLPlugin.getWorkspace().addResourceChangeListener(listener);
+		// add the code folding state file handling
+		CFMLPlugin.getWorkspace().addResourceChangeListener(new CodeFoldingResourceChangeReporter());
 				
 	}
 

@@ -45,6 +45,11 @@ import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.jface.text.BadLocationException;
@@ -616,17 +621,15 @@ public class CodeFoldingSetter {
 	 * }
 	 */
 
-	private File getFoldStateFile(final IFile resource) {
+	public static File getFoldStateFile(final IFile resource) {
 		return resource.getProject().getWorkingLocation(CFMLPlugin.PLUGIN_ID).append(resource.getName() + "_folds").toFile();
 	}
-	
+
 	public void persistFoldState() {
-		if (preferenceManager.persistFoldState() && resource != null && !resource.isPhantom()) {			
+		if (preferenceManager.persistFoldState() && resource != null && !resource.isPhantom()) {
 			StringBuffer sb = new StringBuffer();
-			Iterator iter = model.getAnnotationIterator();
-			int positions = 0;
+			Iterator<?> iter = model.getAnnotationIterator();
 			while (iter.hasNext()) {
-				positions++;
 				ProjectionAnnotation annotation = (ProjectionAnnotation) iter.next();
 				Position position = model.getPosition(annotation);
 				sb.append(position.offset + "," + position.length + ",");
