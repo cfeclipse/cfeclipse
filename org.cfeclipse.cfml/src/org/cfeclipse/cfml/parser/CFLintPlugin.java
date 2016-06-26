@@ -20,7 +20,7 @@ public class CFLintPlugin extends CFLintScannerAdapter {
 		if (expression instanceof CFFuncDeclStatement) {
 			CFFuncDeclStatement function = (CFFuncDeclStatement) expression;
 			final int begLine = function.getLine();
-			final String functionType = function.getReturnType();
+			final String functionType = function.getReturnType().getName();
 
 			checkReturnType(functionType, begLine, context, bugs);
 		}
