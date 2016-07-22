@@ -31,12 +31,21 @@ import com.cflint.config.ConfigUtils;
 public class CFLintConfigUI {
 
 	private ArrayList<RuleEditor> ruleEditors;
+	private CFLintConfig cflintConfig;
 	private static CFMLPropertyManager propertyManager = new CFMLPropertyManager();
 	private static final CFLintPluginInfo pluginInfo = ConfigUtils.loadDefaultPluginInfo();
+	private Composite composite;
+	private IProject iProject;
 
 	public void buildGUI(Composite composite, IProject iProject) {
-		List<PluginInfoRule> enabledRules = getProjectCFLintConfig(iProject).getRules();
-		List<PluginMessage> excludeMessages = getProjectCFLintConfig(iProject).getExcludes();
+		this.composite = composite;
+		this.iProject = iProject;
+		setConfig(getProjectCFLintConfig(iProject));
+	}
+
+	public void buildRulesGUI(Composite composite, IProject iProject) {
+		List<PluginInfoRule> enabledRules = getConfig().getRules();
+		List<PluginMessage> excludeMessages = getConfig().getExcludes();
 		Button enabledCheckbox = new Button(composite, SWT.CHECK);
 		enabledCheckbox.setText("Enable/Disable All Rules");
 		enabledCheckbox.setSelection(false);
@@ -65,7 +74,15 @@ public class CFLintConfigUI {
 			ruleEditors.add(ruleEdit);
 		}
 	}
-
+	
+	private void setConfig(CFLintConfig projectCFLintConfig) {
+		this.cflintConfig = projectCFLintConfig;
+		buildRulesGUI(composite, iProject);
+	}
+	private CFLintConfig getConfig() {
+		return cflintConfig;
+	}
+	
 	public static CFLintConfig getProjectCFLintConfig(IProject iProject) {
 		CFLintConfig currentConfig = null;
 		File configFile = getConfigFile(iProject);
@@ -117,6 +134,10 @@ public class CFLintConfigUI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void resetProjectRules() {
+		setConfig(new ConfigRuntime(null,pluginInfo));
 	}
 
 }

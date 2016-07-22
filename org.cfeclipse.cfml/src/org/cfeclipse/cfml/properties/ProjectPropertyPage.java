@@ -247,7 +247,8 @@ public class ProjectPropertyPage extends PropertyPage {
 		projectURLField.setStringValue(DEFAULT_PROJECT_URL);
 		cflintEnabledField.loadDefault();
 		cflintStoreConfigInProjectField.loadDefault();
-		projectComponentRootField.setStringValue(((IResource) getElement()).getName());
+		cflintConfigUI.resetProjectRules();
+//		projectComponentRootField.setStringValue(((IResource) getElement()).getName());
 		this.cfmlSyntaxField.loadDefault();
 	}
 
