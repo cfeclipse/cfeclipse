@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -16,7 +15,20 @@
 		<site.suffix>-dev</site.suffix>
 		<plugin.p2.dir>target/repository-merged</plugin.p2.dir>
 		<merge.updates>false</merge.updates>
+		<jboss.tycho.tools.version>0.22.0</jboss.tycho.tools.version>
+	    <update.site.name>[dev] CFEclipse Update</update.site.name>
+	    <update.site.description>Development Build</update.site.description>
+	    <update.site.version>3.0.0.${BUILD_ALIAS}</update.site.version>
+	    <target.eclipse.version>4.3 (Mars)</target.eclipse.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>jboss</id>
+			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+		</repository>
+	</repositories>
+
 	<profiles>
 		<profile>
 			<id>merge-updates</id>
@@ -72,15 +84,73 @@
 							<target>
 								<copy todir="${plugin.p2.dir}">
 									<fileset dir="${project.basedir}" includes="web/**,cfeclipsecall/**,index.html" />
-									<fileset dir="${project.build.directory}/repository"
-										includes="*/**" />
+									<fileset dir="${project.build.directory}/repository" includes="*/**" />
 								</copy>
 							</target>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+					<plugin>
+						<groupId>org.jboss.tools.tycho-plugins</groupId>
+						<artifactId>repository-utils</artifactId>
+						<version>${jboss.tycho.tools.version}</version>
+						<executions>
+							<!-- creates index.html and other artifacts -->
+							<execution>
+								<id>generate-facade</id>
+								<phase>package</phase>
+								<goals>
+									<goal>generate-repository-facade</goal>
+								</goals>
+								<configuration>
+									<!-- configuration options for the generated HTML page -->
+									<symbols>
+										<siteTemplateFolder>siteTemplateFolder/</siteTemplateFolder>
+										<update.site.name>${update.site.name}</update.site.name>
+										<update.site.description>${update.site.description}</update.site.description>
+										<update.site.version>${update.site.version}</update.site.version>
+										<target.eclipse.version>${target.eclipse.version}</target.eclipse.version>
+									</symbols>
 
+									<!-- this adds repository references to the update site's content.xml -->
+									<associateSites>
+										<site>http://mxunit.org/update/</site>
+										<site>http://cfeclipse.org/cfparser/update/</site>
+										<site>http://cfeclipse.org/cflint/update/</site>
+									</associateSites>
+
+									<!-- to include other files in the update site zip, list them here -->
+									<additionalWebResources>
+										<resource>cfeclipsecall/cfeclipsecall.jar</resource>
+									</additionalWebResources>
+
+									<!-- to remove the default category created for any uncategorized features or bundles, set this to true -->
+									<removeDefaultCategory>true</removeDefaultCategory>
+								</configuration>
+							</execution>
+							<!-- fetches source zips and produces related metadata -->
+							<execution>
+								<id>fetch-sources</id>
+								<phase>package</phase>
+								<goals>
+									<goal>fetch-sources-from-manifests</goal>
+								</goals>
+								<configuration>
+									<!--
+										<zipCacheFolder>${basedir}/cache</zipCacheFolder>
+										<outputFolder>${project.build.directory}/fullSite</outputFolder>
+										<sourcesZip>${project.build.directory}/path/to/src.zip</sourcesZip>
+										<sourcesZipRootFolder>folder-at-root-of-src-zip</sourcesZipRootFolder>
+									-->
+									<sourceFetchMap>
+										<!-- pick a plugin available in the project's update site from which we can deduce the Eclipse-SourceReference -->
+										<cfeclipse>org.cfeclipse.cfml</cfeclipse>
+									</sourceFetchMap>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
 		</plugins>
 	</build>
 
