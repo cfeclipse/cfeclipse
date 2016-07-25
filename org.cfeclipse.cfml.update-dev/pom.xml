@@ -15,12 +15,20 @@
 		<site.suffix>-dev</site.suffix>
 		<plugin.p2.dir>target/repository-merged</plugin.p2.dir>
 		<merge.updates>false</merge.updates>
-		<jboss.tycho.tools.version>0.22.0</jboss.tycho.tools.version>
+		<jboss.tycho.tools.version>0.23.3</jboss.tycho.tools.version>
 	    <update.site.name>[dev] CFEclipse Update</update.site.name>
 	    <update.site.description>Development Build</update.site.description>
 	    <update.site.version>3.0.0.${BUILD_ALIAS}</update.site.version>
 	    <target.eclipse.version>4.3 (Mars)</target.eclipse.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>jboss</id>
+			<name>jboss</name>
+			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+		</repository>
+	</repositories>
 
 	<profiles>
 		<profile>

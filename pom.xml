@@ -23,6 +23,10 @@
 
 	<repositories>
 		<repository>
+			<id>jboss</id>
+			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+		</repository>
+		<repository>
 			<id>mars</id>
 			<url>${mars-repo.url}</url>
 			<layout>p2</layout>
@@ -51,10 +55,6 @@
 			<id>mylyn</id>
 			<url>${mylyn-repo.url}</url>
 			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>jboss</id>
-			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
 		</repository>
 	</repositories>
 
