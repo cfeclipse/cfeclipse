@@ -22,13 +22,6 @@
 	    <target.eclipse.version>4.3 (Mars)</target.eclipse.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>jboss</id>
-			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
-		</repository>
-	</repositories>
-
 	<profiles>
 		<profile>
 			<id>merge-updates</id>
