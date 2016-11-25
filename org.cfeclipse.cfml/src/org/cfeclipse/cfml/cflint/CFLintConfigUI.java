@@ -32,6 +32,7 @@ public class CFLintConfigUI {
 
 	private ArrayList<RuleEditor> ruleEditors;
 	private CFLintConfig cflintConfig;
+	private static String cflintVersion = com.cflint.Version.getVersion();
 	private static CFMLPropertyManager propertyManager = new CFMLPropertyManager();
 	private static final CFLintPluginInfo pluginInfo = ConfigUtils.loadDefaultPluginInfo();
 	private Composite composite;
@@ -47,7 +48,7 @@ public class CFLintConfigUI {
 		List<PluginInfoRule> enabledRules = getConfig().getRules();
 		List<PluginMessage> excludeMessages = getConfig().getExcludes();
 		Button enabledCheckbox = new Button(composite, SWT.CHECK);
-		enabledCheckbox.setText("Enable/Disable All Rules");
+		enabledCheckbox.setText("Enable/Disable All Rules for CFLint " + cflintVersion);
 		enabledCheckbox.setSelection(false);
 		enabledCheckbox.addSelectionListener(new SelectionAdapter() {
 			@Override

@@ -165,7 +165,12 @@ public class ProjectPropertyPage extends PropertyPage {
 	 * @param parent
 	 */
 	private void addCFMLSyntaxSection(Composite parent) {
-		Composite composite = createDefaultComposite(parent);
+		Group group = new Group(parent, SWT.NONE);
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gd.horizontalSpan = 2;
+		group.setLayoutData(gd);
+		group.setLayout(new GridLayout(2, false));
+		Composite composite = createDefaultComposite(group);
 
 		// get the supported types from the dictionary manager
 		String[][] options = DictionaryManager.getConfiguredDictionaries();
@@ -176,6 +181,9 @@ public class ProjectPropertyPage extends PropertyPage {
 		// this.cfmlSyntaxField.setPreferenceStore(this.propStore);
 		this.cfmlSyntaxField.setPreferenceStore(propertyManager.getStore((IProject) getElement()));
 		this.cfmlSyntaxField.load();
+		
+		Label parverVersionLabel = new Label(group, SWT.BOLD);
+		parverVersionLabel.setText("CFParser " + cfml.parsing.Version.getVersion());
 	}
 
 	/**
@@ -187,7 +195,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		addSeparator(parent);
 		Composite composite = createDefaultComposite(parent);
 		Label cflintLabel = new Label(composite, SWT.BOLD);
-		cflintLabel.setText("CFLint Configuration");
+		cflintLabel.setText("CFLint Configuration (" + com.cflint.Version.getVersion() + ")");
 		Group group = new Group(composite, SWT.NONE);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gd.horizontalSpan = 2;
