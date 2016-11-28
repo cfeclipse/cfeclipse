@@ -10,7 +10,6 @@
 	<packaging>eclipse-plugin</packaging>
 
 	<properties>
-		<cfparser.version>2.0.0</cfparser.version>
 	</properties>
 
 	<dependencies>

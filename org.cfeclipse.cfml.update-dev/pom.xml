@@ -18,7 +18,7 @@
 		<jboss.tycho.tools.version>0.23.3</jboss.tycho.tools.version>
 		<update.site.name>[dev] CFEclipse Update</update.site.name>
 		<update.site.description>Development Build</update.site.description>
-		<update.site.version>3.0.0.${BUILD_ALIAS}</update.site.version>
+		<update.site.version>${project.version}</update.site.version>
 		<target.eclipse.version>4.3 (Mars)</target.eclipse.version>
 	</properties>
 
@@ -107,8 +107,8 @@
 						</goals>
 						<configuration>
 							<!-- configuration options for the generated HTML page -->
+							<siteTemplateFolder>${project.basedir}</siteTemplateFolder>
 							<symbols>
-								<siteTemplateFolder>siteTemplateFolder/</siteTemplateFolder>
 								<update.site.name>${update.site.name}</update.site.name>
 								<update.site.description>${update.site.description}</update.site.description>
 								<update.site.version>${update.site.version}</update.site.version>
@@ -117,13 +117,14 @@
 
 							<!-- this adds repository references to the update site's content.xml -->
 							<associateSites>
-								<site>http://mxunit.org/update/</site>
-								<site>http://cfeclipse.org/cfparser/update/</site>
-								<site>http://cfeclipse.org/cflint/update/</site>
+								<site>http://mxunit.org/update${site.suffix}/</site>
+								<site>http://cfeclipse.org/cfparser/update${site.suffix}/</site>
+								<site>http://cfeclipse.org/cflint/update${site.suffix}/</site>
 							</associateSites>
 
 							<!-- to include other files in the update site zip, list them here -->
 							<additionalWebResources>
+								<resource>web/doc</resource>
 								<resource>cfeclipsecall/cfeclipsecall.jar</resource>
 							</additionalWebResources>
 
