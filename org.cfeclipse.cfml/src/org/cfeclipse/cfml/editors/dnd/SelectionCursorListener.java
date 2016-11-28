@@ -654,8 +654,8 @@ public class SelectionCursorListener implements MouseListener, MouseMoveListener
 		
 	protected void markBeginEndTags(CfmlTagItem tagItem) {
 		if(tagItem.getMatchingItem() != null) {			
-			Map<String, String> tagOpen = new HashMap<String, String>();
-			Map<String, String> tagClose = new HashMap<String, String>();
+			Map<String, Object> tagOpen = new HashMap<String, Object>();
+			Map<String, Object> tagClose = new HashMap<String, Object>();
 			MarkerUtilities.setMessage(tagOpen, "Open " + tagItem.getName());
 			MarkerUtilities.setLineNumber(tagOpen, tagItem.getLineNumber());
 			tagOpen.put(IMarker.LOCATION, "line " + tagItem.getLineNumber() + ", Chars " + tagItem.getStartPosition() + "-" + tagItem.getEndPosition());
