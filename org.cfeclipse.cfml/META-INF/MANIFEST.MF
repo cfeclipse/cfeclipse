@@ -101,7 +101,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.search,
  org.eclipse.ecf.docshare;bundle-version="2.0.0";resolution:=optional,
  org.eclipse.e4.ui.workbench;bundle-version="1.0.2";resolution:=optional,
- org.cfeclipse.cfparser,
+ org.cfeclipse.cfparser;bundle-version="2.2.11",
  org.cfeclipse.cflint
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
