@@ -10,8 +10,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho.version>0.24.0</tycho.version>
-		<tycho-extras.version>0.24.0</tycho-extras.version>
+		<tycho.version>0.26.0</tycho.version>
+		<tycho-extras.version>0.26.0</tycho-extras.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
 		<mxunit-repo.url>http://cfeclipse.org/mxunit-update</mxunit-repo.url>
