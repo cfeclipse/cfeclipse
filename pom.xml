@@ -53,6 +53,11 @@
 			<layout>p2</layout>
 		</repository>
 		<repository>
+			<id>cflint-dev</id>
+			<url>${cflint-dev-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
 			<id>ecf</id>
 			<url>${ecf-repo.url}</url>
 			<layout>p2</layout>

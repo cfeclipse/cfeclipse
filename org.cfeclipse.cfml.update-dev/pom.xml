@@ -34,27 +34,35 @@
 			<layout>default</layout>
 			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
 		</pluginRepository>
-		<pluginRepository>
-			<id>cflint-dev</id>
-			<layout>default</layout>
-			<url>${cflint-dev-repo.url}</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>cflint</id>
-			<layout>default</layout>
-			<url>${cflint-repo.url}</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>cfparser</id>
-			<layout>default</layout>
-			<url>${cfparser-repo.url}</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>cfparser-dev</id>
-			<layout>default</layout>
-			<url>${cfparser-dev-repo.url}</url>
-		</pluginRepository>
 	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>mars</id>
+			<url>${mars-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>cflint-dev</id>
+			<url>${cflint-dev-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>cflint</id>
+			<layout>p2</layout>
+			<url>${cflint-repo.url}</url>
+		</repository>
+		<repository>
+			<id>cfparser</id>
+			<layout>p2</layout>
+			<url>${cfparser-repo.url}</url>
+		</repository>
+		<repository>
+			<id>cfparser-dev</id>
+			<layout>p2</layout>
+			<url>${cfparser-dev-repo.url}</url>
+		</repository>
+	</repositories>
 
 	<profiles>
 		<profile>
