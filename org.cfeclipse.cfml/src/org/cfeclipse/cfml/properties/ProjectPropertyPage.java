@@ -1,7 +1,7 @@
 package org.cfeclipse.cfml.properties;
 
 import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cfml.cflint.CFLintConfigUI;
+import org.cfeclipse.cflint.config.CFLintConfigUI;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.eclipse.core.resources.IProject;
@@ -186,39 +186,6 @@ public class ProjectPropertyPage extends PropertyPage {
 		parverVersionLabel.setText("CFParser " + cfml.parsing.Version.getVersion());
 	}
 
-	/**
-	 * The project CFLint properties
-	 * 
-	 * @param parent
-	 */
-	private void addCFLintSection(Composite parent) {
-		addSeparator(parent);
-		Composite composite = createDefaultComposite(parent);
-		Label cflintLabel = new Label(composite, SWT.BOLD);
-		cflintLabel.setText("CFLint Configuration (" + com.cflint.Version.getVersion() + ")");
-		Group group = new Group(composite, SWT.NONE);
-		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd.horizontalSpan = 2;
-		group.setLayoutData(gd);
-		group.setLayout(new GridLayout(2, false));
-		Composite myC1= new Composite(group,SWT.NONE);
-		this.cflintEnabledField = new BooleanFieldEditor(CFMLPreferenceConstants.P_CFLINT_ENABLED_PROJECT,
-				"Enable CFLint for this project", myC1);
-		this.cflintEnabledField.setPreferenceStore(propertyManager.getStore((IProject) getElement()));
-		this.cflintEnabledField.load();
-		Composite myC2= new Composite(group,SWT.NONE);
-		this.cflintStoreConfigInProjectField = new BooleanFieldEditor(CFMLPreferenceConstants.P_CFLINT_STOREINPROJECT_PROJECT,
-				"Store CFLint config in project", myC2);
-		this.cflintStoreConfigInProjectField.setPreferenceStore(propertyManager.getStore((IProject) getElement()));
-		this.cflintStoreConfigInProjectField.load();
-		Group group2 = new Group(composite, SWT.NONE);
-		GridData gd2= new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		gd2.horizontalSpan = 2;
-		group2.setLayoutData(gd2);
-		group2.setLayout(new GridLayout(1, false));
-		cflintConfigUI = new CFLintConfigUI();
-		cflintConfigUI.buildGUI(group2, (IProject) getElement());
-	}
 
 	/**
 	 * @see PreferencePage#createContents(Composite)
@@ -228,7 +195,7 @@ public class ProjectPropertyPage extends PropertyPage {
 		GridLayout layout = new GridLayout();
 		composite.setLayout(layout);
 		GridData data = new GridData(GridData.FILL);
-		data.grabExcessHorizontalSpace = true;
+		data.grabExcessHorizontalSpace = false;
 		composite.setLayoutData(data);
 
 		addPathSection(composite);
@@ -238,7 +205,6 @@ public class ProjectPropertyPage extends PropertyPage {
 		addURLSection(composite);
 		// addComponentRootSection(composite);
 		addCFMLSyntaxSection(composite);
-		addCFLintSection(composite);
 		return composite;
 	}
 

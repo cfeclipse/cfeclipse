@@ -15,11 +15,16 @@
 		<site.suffix>-dev</site.suffix>
 		<plugin.p2.dir>target/repository-merged</plugin.p2.dir>
 		<merge.updates>false</merge.updates>
-		<jboss.tycho.tools.version>0.23.3</jboss.tycho.tools.version>
+		<jboss.tycho.tools.version>0.26.0</jboss.tycho.tools.version>
 		<update.site.name>[dev] CFEclipse Update</update.site.name>
 		<update.site.description>Development Build</update.site.description>
 		<update.site.version>${project.version}</update.site.version>
 		<target.eclipse.version>4.3 (Mars)</target.eclipse.version>
+		<mxunit-repo.url>http://mxunit.org/update</mxunit-repo.url>
+		<cfparser-repo.url>http://cfeclipse.org/cfparser/update</cfparser-repo.url>
+		<cfparser-dev-repo.url>http://cfeclipse.org/cfparser/update-dev</cfparser-dev-repo.url>
+		<cflint-repo.url>http://cfeclipse.org/cflint/update</cflint-repo.url>
+		<cflint-dev-repo.url>http://cfeclipse.org/cflint/update-dev</cflint-dev-repo.url>
 	</properties>
 
 	<pluginRepositories>
@@ -28,6 +33,26 @@
 			<name>jboss</name>
 			<layout>default</layout>
 			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>cflint-dev</id>
+			<layout>default</layout>
+			<url>${cflint-dev-repo.url}</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>cflint</id>
+			<layout>default</layout>
+			<url>${cflint-repo.url}</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>cfparser</id>
+			<layout>default</layout>
+			<url>${cfparser-repo.url}</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>cfparser-dev</id>
+			<layout>default</layout>
+			<url>${cfparser-dev-repo.url}</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -85,8 +110,7 @@
 						<configuration>
 							<target>
 								<copy todir="${plugin.p2.dir}">
-									<fileset dir="${project.basedir}" includes="web/**,cfeclipsecall/**,index.html" />
-									<fileset dir="${project.build.directory}/repository" includes="*/**" />
+									<fileset dir="${project.build.directory}/repository" includes="*/**" excludes="target/**"/>
 								</copy>
 							</target>
 						</configuration>
@@ -114,22 +138,27 @@
 								<update.site.version>${update.site.version}</update.site.version>
 								<target.eclipse.version>${target.eclipse.version}</target.eclipse.version>
 							</symbols>
-
+							<!-- 
+							<referenceStrategy>compositeReferences</referenceStrategy>
+							 -->
 							<!-- this adds repository references to the update site's content.xml -->
 							<associateSites>
-								<site>http://mxunit.org/update${site.suffix}/</site>
-								<site>http://cfeclipse.org/cfparser/update${site.suffix}/</site>
-								<site>http://cfeclipse.org/cflint/update${site.suffix}/</site>
+								<site>http://mxunit.org/update/</site>
+								<site>http://cfeclipse.org/cfparser/update/</site>
+								<site>http://cfeclipse.org/cfparser/update-dev/</site>
+								<site>http://cfeclipse.org/cflint/update/</site>
+								<site>http://cfeclipse.org/cflint/update-dev/</site>
 							</associateSites>
 
 							<!-- to include other files in the update site zip, list them here -->
 							<additionalWebResources>
-								<resource>web/doc</resource>
-								<resource>cfeclipsecall/cfeclipsecall.jar</resource>
+								<resource>web</resource>
+								<resource>cfeclipsecall</resource>
 							</additionalWebResources>
 
-							<!-- to remove the default category created for any uncategorized features or bundles, set this to true -->
+							<!-- to remove the default category created for any uncategorized features or bundles, set this to true 
 							<removeDefaultCategory>true</removeDefaultCategory>
+							-->
 						</configuration>
 					</execution>
 				</executions>

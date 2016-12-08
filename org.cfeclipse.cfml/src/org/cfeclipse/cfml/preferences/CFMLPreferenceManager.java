@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import org.cfeclipse.cflint.store.CFLintPreferenceConstants;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;

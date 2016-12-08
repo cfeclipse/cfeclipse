@@ -6,6 +6,7 @@ package org.cfeclipse.cfml.preferences;
 
 import java.io.IOException;
 
+import org.cfeclipse.cflint.store.CFLintPreferenceConstants;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.eclipse.core.runtime.FileLocator;
