@@ -215,6 +215,11 @@ public class CFScriptScanner extends RuleBasedScanner {
 		words.addWord("url", cfbuiltinscope);
 		words.addWord("variables",cfbuiltinscope);
 
+		words.addWord("function",cfkeyword);
+		words.addWord("private",cfkeyword);
+		words.addWord("void",cfkeyword);
+		words.addWord("public",cfkeyword);
+
 		rules.add(words);
 
 		IRule[] rulearry = new IRule[rules.size()];

@@ -6,11 +6,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.cfeclipse.cfml</artifactId>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.5.2-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
 	<properties>
-		<cfparser.version>2.0.0</cfparser.version>
 	</properties>
 
 	<dependencies>

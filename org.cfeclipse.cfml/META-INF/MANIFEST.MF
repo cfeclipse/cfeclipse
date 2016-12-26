@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CFML Plug-in
 Bundle-SymbolicName: org.cfeclipse.cfml; singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ClassPath: cfml.jar,
@@ -16,14 +16,7 @@ Bundle-ClassPath: cfml.jar,
  lib/jsbeautify.jar,
  lib/javolution.jar,
  lib/jericho-html-3.1.jar,
- lib/cflint.jar,
- lib/jackson-databind-2.6.3.jar,
- lib/jackson-core-2.6.3.jar,
- lib/jackson-annotations-2.6.0.jar,
- lib/jackson-module-jaxb-annotations-2.6.3.jar,
- lib/cfml.dictionary.jar,
  lib/cfml.formatting.jar,
- lib/cfml.parsing.jar,
  lib/jakarta-oro-2.0.8.jar,
  lib/commons-net-2.0.jar,
  lib/commons-net-ftp-2.0.jar,
@@ -32,8 +25,7 @@ Bundle-ClassPath: cfml.jar,
  lib/commons-collections-3.2.jar,
  lib/commons-vfs-2.0-SNAPSHOT.jar,
  lib/org.eclipse.nebula.widgets.gallery.jar,
- lib/org.eclipse.nebula.widgets.pshelf.jar,
- lib/antlr4-4.5.1-1.jar
+ lib/org.eclipse.nebula.widgets.pshelf.jar
 Bundle-Activator: org.cfeclipse.cfml.CFMLPlugin
 Export-Package: .,
  org.cfeclipse.cfml,
@@ -108,7 +100,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.browser,
  org.eclipse.search,
  org.eclipse.ecf.docshare;bundle-version="2.0.0";resolution:=optional,
- org.eclipse.e4.ui.workbench;bundle-version="1.0.2";resolution:=optional
+ org.eclipse.e4.ui.workbench;bundle-version="1.0.2";resolution:=optional,
+ org.cfeclipse.cfparser;bundle-version="2.2.11",
+ org.cfeclipse.cflint;bundle-version="1.0.10"
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
 Import-Package: com.ibm.icu.text,

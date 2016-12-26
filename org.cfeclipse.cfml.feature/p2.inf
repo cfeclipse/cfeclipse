@@ -1,5 +1,9 @@
 instructions.configure=org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//mxunit.org/update/,type:0,name:MXUnit,enabled:true); \
    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//mxunit.org/update/,type:1,name:MXUnit,enabled:true); \
+   org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/cfparser/update/,type:0,name:MXUnit CFE,enabled:true); \
+   org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/cfparser/update/,type:1,name:MXUnit CFE,enabled:true); \
+   org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/cflint/update/,type:0,name:MXUnit CFE,enabled:true); \
+   org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/cflint/update/,type:1,name:MXUnit CFE,enabled:true); \
    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/mxunit-update/,type:0,name:MXUnit CFE,enabled:true); \
    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/mxunit-update/,type:1,name:MXUnit CFE,enabled:true);
 
@@ -18,3 +22,11 @@ requires.3.range = [1.0.0, 9.9.9)
 requires.4.namespace = org.eclipse.equinox.p2.iu
 requires.4.name = org.cfeclipse.cfml.snippets.feature.feature.group
 requires.4.range = [1.0.0, 9.9.9)
+
+requires.5.namespace = org.eclipse.equinox.p2.iu
+requires.5.name = org.cfeclipse.cfparser
+requires.5.range = [1.0.0, 9.9.9)
+
+requires.5.namespace = org.eclipse.equinox.p2.iu
+requires.5.name = org.cfeclipse.cflint
+requires.5.range = [1.0.0, 9.9.9)

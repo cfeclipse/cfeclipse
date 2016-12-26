@@ -1,5 +1,6 @@
 package org.cfeclipse.cfml.preferences;
 
+import org.cfeclipse.cflint.store.CFLintPreferenceConstants;
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;

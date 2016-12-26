@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src/"/>
 	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jdom.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jaxen-core.jar"/>
@@ -13,14 +13,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jsbeautify.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/javolution.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jericho-html-3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/cflint.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.6.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-core-2.6.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-annotations-2.6.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-module-jaxb-annotations-2.6.3.jar"/>
-	<classpathentry kind="lib" path="lib/cfml.dictionary.jar" sourcepath="/cfml.dictionary"/>
 	<classpathentry exported="true" kind="lib" path="lib/cfml.formatting.jar"/>
-	<classpathentry kind="lib" path="lib/cfml.parsing.jar" sourcepath="/cfml.parsing"/>
 	<classpathentry exported="true" kind="lib" path="lib/jakarta-oro-2.0.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-net-2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-net-ftp-2.0.jar"/>
@@ -30,7 +23,5 @@
 	<classpathentry exported="true" kind="lib" path="lib/commons-vfs-2.0-SNAPSHOT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.nebula.widgets.gallery.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.nebula.widgets.pshelf.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/antlr4-4.5.1-1.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/cfml.parsing"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

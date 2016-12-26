@@ -2,7 +2,7 @@
 <feature
       id="org.cfeclipse.cfml.feature"
       label="CFEclipse (including MXUnit and Frameworks)"
-      version="1.5.1.qualifier"
+      version="1.5.2.qualifier"
       provider-name="CFEclipse Project"
       plugin="org.cfeclipse.cfml">
 
@@ -68,8 +68,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    <url>
       <update label="CFEclipse Update Site" url="http://www.cfeclipse.org/update"/>
       <discovery label="CFEclipse discovery site" url="http://cfeclipse.org/update"/>
+      <discovery label="CFParser discovery site" url="http://cfeclipse.org/cfparser/update"/>
+      <discovery label="[dev] CFParser discovery site" url="http://cfeclipse.org/cfparser/update-dev"/>
+      <discovery label="CFLint discovery site" url="http://cfeclipse.org/cflint/update"/>
+      <discovery label="[dev] CFLint discovery site" url="http://cfeclipse.org/cflint/update-dev"/>
       <discovery label="MXUnit discovery site" url="http://mxunit.org/update"/>
-      <discovery label="Snippets discovery site" url="http://www.cfeclipse.org/snippets/update"/>
+      <discovery label="Snippets discovery site" url="http://cfeclipse.org/snippets/update"/>
    </url>
 
    <includes
@@ -78,7 +82,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          search-location="both"/>
 
    <requires>
-      <import feature="org.mxunit.eclipseplugin.feature"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.jface.text"/>
@@ -88,11 +91,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.ui.views"/>
       <import plugin="org.eclipse.ui.browser"/>
-      <import plugin="com.ibm.icu"/>
-      <import plugin="org.eclipse.core.filesystem"/>
       <import plugin="org.eclipse.search"/>
+      <import plugin="org.cfeclipse.cfparser" version="2.2.11" match="greaterOrEqual"/>
+      <import plugin="org.cfeclipse.cflint" version="1.0.10" match="greaterOrEqual"/>
+      <import plugin="com.ibm.icu"/>
       <import plugin="org.eclipse.ui.console"/>
-      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.swt"/>
+      <import plugin="org.eclipse.core.filesystem"/>
+      <import feature="org.mxunit.eclipseplugin.feature" version="1.5.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
