@@ -163,10 +163,7 @@
 								<resource>web</resource>
 								<resource>cfeclipsecall</resource>
 							</additionalWebResources>
-
-							<!-- to remove the default category created for any uncategorized features or bundles, set this to true 
 							<removeDefaultCategory>true</removeDefaultCategory>
-							-->
 						</configuration>
 					</execution>
 				</executions>

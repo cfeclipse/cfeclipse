@@ -16,4 +16,7 @@
          CFEclipse DocShare Support (Optional)
       </description>
    </category-def>
+   <repository-reference location="http://mxunit.org/update" enabled="true" />
+   <repository-reference location="http://cfeclipse.org/cfparser/update" enabled="true" />
+   <repository-reference location="http://cfeclipse.org/cflint/update" enabled="true" />
 </site>
