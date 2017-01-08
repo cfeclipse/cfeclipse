@@ -8,6 +8,6 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>org.cfeclipse.cfml.feature</artifactId>
-  <version>1.5.2-SNAPSHOT</version>
+  <version>1.5.3-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 </project>
