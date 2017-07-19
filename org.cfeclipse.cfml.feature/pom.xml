@@ -10,4 +10,25 @@
   <artifactId>org.cfeclipse.cfml.feature</artifactId>
   <version>1.5.3-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
+  <build>
+  	<plugins>
+  		<plugin>
+			<groupId>org.eclipse.tycho</groupId>
+			<artifactId>tycho-versions-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>versions</id>
+					<phase>validate</phase>
+					<goals>
+						<goal>set-version</goal>
+					</goals>
+				</execution>
+			</executions>
+			<configuration>
+				<newVersion>${project.version}</newVersion>
+			</configuration>
+		</plugin>
+  	</plugins>
+  </build>  
+  
 </project>

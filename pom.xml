@@ -81,7 +81,7 @@
 		<module>org.cfeclipse.cfml.snippets.feature</module>
 		<module>org.cfeclipse.cfml.templates.fragment</module>
 	</modules>
-
+    
 	<profiles>
 		<profile>
 			<id>sign</id>
@@ -159,6 +159,17 @@
 	</profiles>
 
 	<build>
+	
+		<pluginManagement>
+	      <plugins>
+	        <plugin>
+	          <groupId>org.eclipse.tycho</groupId>
+	          <artifactId>tycho-versions-plugin</artifactId>
+			  <version>${tycho-version}</version>
+	        </plugin>
+	      </plugins>
+	    </pluginManagement>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
