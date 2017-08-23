@@ -10,10 +10,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho.version>0.26.0</tycho.version>
-		<tycho-extras.version>0.26.0</tycho-extras.version>
+		<tycho.version>1.0.0</tycho.version>
+		<tycho-extras.version>1.0.0</tycho-extras.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
+        <oxygen-repo.url>http://download.eclipse.org/releases/oxygen/201706281000/</oxygen-repo.url>
 		<!-- 
 		<mxunit-repo.url>http://cfeclipse.org/mxunit-update</mxunit-repo.url>
 		 -->
@@ -28,8 +29,8 @@
 
 	<repositories>
 		<repository>
-			<id>mars</id>
-			<url>${mars-repo.url}</url>
+			<id>oxygen</id>
+			<url>${oxygen-repo.url}</url>
 			<layout>p2</layout>
 		</repository>
 		<repository>
@@ -165,7 +166,7 @@
 	        <plugin>
 	          <groupId>org.eclipse.tycho</groupId>
 	          <artifactId>tycho-versions-plugin</artifactId>
-			  <version>${tycho-version}</version>
+			  <version>${tycho.version}</version>
 	        </plugin>
 	      </plugins>
 	    </pluginManagement>
