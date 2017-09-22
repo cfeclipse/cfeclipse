@@ -76,7 +76,6 @@ public class CFMLPreferenceManager {
 		ApplicationTemplatesPreferenceConstants.setDefaults(store);
 		SnipExPreferenceConstants.setDefaults(store);
 		TextSelectionPreferenceConstants.setDefaults(store);
-		CFLintPreferenceConstants.setDefaults(store);
 		CFMLPreferenceConstants.setDefaults(store);
 	}
 	

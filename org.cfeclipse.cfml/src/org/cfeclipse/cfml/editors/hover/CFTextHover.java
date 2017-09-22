@@ -16,10 +16,7 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************
  */
-package org.cfeclipse.cfml.editors;
-
-//import org.eclipse.jface.text.*;
-import java.util.StringTokenizer;
+package org.cfeclipse.cfml.editors.hover;
 
 import org.cfeclipse.cfml.dictionary.Function;
 import org.cfeclipse.cfml.dictionary.SyntaxDictionary;
@@ -30,7 +27,6 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Region;
-import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.graphics.Point;
 
 //import org.cfeclipse.coldfusionmx.dictionary.DictionaryManager;
@@ -38,7 +34,7 @@ import org.eclipse.swt.graphics.Point;
 /**
  * <b>Note</b> This file is under the </i>Common Public License v1.0</i>
  * Example implementation for an <code>ITextHover</code> which hovers over 
- * Java code.
+ * CFML code.
  * @author Oliver Tupman
  */
 public class CFTextHover implements ITextHover {
