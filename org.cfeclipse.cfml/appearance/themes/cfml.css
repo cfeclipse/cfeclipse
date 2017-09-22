@@ -1,0 +1,39 @@
+.comment { color: rgba(117, 113, 94, 1); }
+.string { color: rgba(230, 219, 116, 1); }
+.constant.numeric { color: rgba(174, 129, 255, 1); }
+.constant.language { color: rgba(174, 129, 255, 1); }
+.constant.character { color: rgba(174, 129, 255, 1); }
+.constant.other { color: rgba(174, 129, 255, 1); }
+.variable {  }
+.keyword { color: rgba(249, 38, 114, 1); }
+.storage { color: rgba(249, 38, 114, 1); }
+.storage.type { font-style: italic; color: rgba(102, 217, 239, 1); }
+.entity.name.type { text-decoration: underline; color: rgba(166, 226, 46, 1); }
+.entity.name.class { text-decoration: underline; color: rgba(166, 226, 46, 1); }
+.entity.other.inherited-class { font-style: italic; text-decoration: underline; color: rgba(166, 226, 46, 1); }
+.entity.name.function { color: rgba(166, 226, 46, 1); }
+.variable.parameter { font-style: italic; color: rgba(253, 151, 31, 1); }
+.entity.name.tag { color: rgba(249, 38, 114, 1); }
+.entity.other.attribute-name { color: rgba(166, 226, 46, 1); }
+.support.function { color: rgba(102, 217, 239, 1); }
+.support.constant { color: rgba(102, 217, 239, 1); }
+.support.type { font-style: italic; color: rgba(102, 217, 239, 1); }
+.support.class { font-style: italic; color: rgba(102, 217, 239, 1); }
+.support.other.variable {  }
+.invalid { color: rgba(248, 248, 240, 1); }
+.invalid.deprecated { color: rgba(248, 248, 240, 1); }
+.meta.structure.dictionary.json.string.quoted.double.json { color: rgba(207, 207, 194, 1); }
+.meta.diff { color: rgba(117, 113, 94, 1); }
+.meta.diff.header { color: rgba(117, 113, 94, 1); }
+.markup.deleted { color: rgba(249, 38, 114, 1); }
+.markup.inserted { color: rgba(166, 226, 46, 1); }
+.markup.changed { color: rgba(230, 219, 116, 1); }
+.constant.numeric.line-number.find-in-files.-.match { color: rgba(174, 129, 255, 0.63); }
+.entity.name.filename.find-in-files { color: rgba(230, 219, 116, 1); }
+.markup.quote { color: rgba(249, 38, 114, 1); }
+.markup.list { color: rgba(230, 219, 116, 1); }
+.markup.bold { color: rgba(102, 217, 239, 1); }
+.markup.italic { color: rgba(102, 217, 239, 1); }
+.markup.inline.raw { color: rgba(253, 151, 31, 1); }
+.markup.heading { color: rgba(166, 226, 46, 1); }
+.markup.heading.setext { color: rgba(166, 226, 46, 1); }

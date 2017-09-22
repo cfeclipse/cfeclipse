@@ -97,6 +97,19 @@
 		</content-type>
 	</extension>
 
+<!--this has it show up in the textmate preference, but wrong path and not sure if we can change colors there
+    <extension
+      point="org.eclipse.tm4e.registry.grammars">
+       <grammar
+            scopeName="source.cfml"
+            path="syntaxes/cfml.tmLanguage" >
+       </grammar>
+       <scopeNameContentTypeBinding
+             contentTypeId="org.cfeclipse.cfml.cfsource"
+             scopeName="source.cfml">
+       </scopeNameContentTypeBinding>
+    </extension>
+-->
    	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Editor -->
    <extension

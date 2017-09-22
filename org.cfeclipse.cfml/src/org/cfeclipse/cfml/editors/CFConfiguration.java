@@ -25,6 +25,7 @@
 package org.cfeclipse.cfml.editors;
 
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -59,9 +60,12 @@ import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
 import org.cfeclipse.cfml.preferences.HTMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
+import org.cfeclipse.cfml.util.FileLocator;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultInformationControl;
@@ -99,12 +103,20 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.tm4e.core.grammar.IGrammar;
+import org.eclipse.tm4e.core.registry.Registry;
+import org.eclipse.tm4e.ui.TMUIPlugin;
+import org.eclipse.tm4e.ui.text.TMPresentationReconciler;
+import org.eclipse.tm4e.ui.themes.Theme;
+import org.eclipse.tm4e.ui.themes.ThemeIdConstants;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.internal.themes.ThemeDescriptor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.MarkerAnnotation;
+import org.osgi.framework.Bundle;
 /**
  * <p>
  * This sets up the whole editor. Assigin partition damagers and repairers, and
@@ -604,167 +616,30 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
     }
 	
 	/**
-	 * get all the damager and repairers for the source type
+	 * The TextMate reconciler is used for styling
 	 */
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) 
 	{
-		PresentationReconciler reconciler = new PresentationReconciler();
-
-		//setup the partiton scanner to break and fix each part of the
-		//document
-		//
-		// WARNING order is important here - the document will be painted
-		// with the rules in this order - it seems anyway
-		
-		// CF script
-		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getCFScriptScanner());
-
-		reconciler.setDamager(dr, CFPartitionScanner.CF_SCRIPT);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_SCRIPT);
-
-		// cfset tag contents.
-		reconciler.setDamager(dr, CFPartitionScanner.CF_SET_STATEMENT);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_SET_STATEMENT);
-
-		// cfif and cfelseif tag contents.
-		reconciler.setDamager(dr, CFPartitionScanner.CF_BOOLEAN_STATEMENT);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_BOOLEAN_STATEMENT);
-
-		// cfreturn tag contents.
-		reconciler.setDamager(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_RETURN_STATEMENT);
-
-		//HTML part
-		dr = new DefaultDamagerRepairer(getHTMTagScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.HTM_END_TAG);
-		reconciler.setRepairer(dr, CFPartitionScanner.HTM_END_TAG);
-		
-		reconciler.setDamager(dr, CFPartitionScanner.HTM_START_TAG_BEGIN);
-		reconciler.setRepairer(dr, CFPartitionScanner.HTM_START_TAG_BEGIN);
-		
-		reconciler.setDamager(dr, CFPartitionScanner.HTM_START_TAG_END);
-		reconciler.setRepairer(dr, CFPartitionScanner.HTM_START_TAG_END);
-		
-		reconciler.setDamager(dr, CFPartitionScanner.HTM_TAG_ATTRIBS);
-		reconciler.setRepairer(dr, CFPartitionScanner.HTM_TAG_ATTRIBS);
-		
-		//javascript tag
-		dr = new DefaultDamagerRepairer(getScriptScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.J_SCRIPT);
-		reconciler.setRepairer(dr, CFPartitionScanner.J_SCRIPT);
-		
-		//style tag
-		dr = new DefaultDamagerRepairer(getStyleScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.CSS);
-		reconciler.setRepairer(dr, CFPartitionScanner.CSS);
-		dr = new DefaultDamagerRepairer(getTaglibTagScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.TAGLIB_TAG);
-		reconciler.setRepairer(dr, CFPartitionScanner.TAGLIB_TAG);
-		
-		//SQL
-		dr = new DefaultDamagerRepairer(getSQLScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.SQL);
-		reconciler.setRepairer(dr, CFPartitionScanner.SQL);
-		
-
-		//general CF
-		dr = new DefaultDamagerRepairer(getCFTagScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.CF_START_TAG_BEGIN);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_START_TAG_BEGIN);
-
-		reconciler.setDamager(dr, CFPartitionScanner.CF_START_TAG_END);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_START_TAG_END);
-
-		reconciler.setDamager(dr, CFPartitionScanner.CF_TAG_ATTRIBS);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_TAG_ATTRIBS);
-
-		//general end cftag
-		//dr = new DefaultDamagerRepairer(getCFTagScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.CF_END_TAG);
-		reconciler.setRepairer(dr, CFPartitionScanner.CF_END_TAG);
-		
-		dr = new DefaultDamagerRepairer(getFormScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.FORM_END_TAG);
-		reconciler.setRepairer(dr, CFPartitionScanner.FORM_END_TAG);
-		
-		reconciler.setDamager(dr, CFPartitionScanner.FORM_START_TAG_BEGIN);
-		reconciler.setRepairer(dr, CFPartitionScanner.FORM_START_TAG_BEGIN);
-		
-		reconciler.setDamager(dr, CFPartitionScanner.FORM_START_TAG_END);
-		reconciler.setRepairer(dr, CFPartitionScanner.FORM_START_TAG_END);
-		
-		reconciler.setDamager(dr, CFPartitionScanner.FORM_TAG_ATTRIBS);
-		reconciler.setRepairer(dr, CFPartitionScanner.FORM_TAG_ATTRIBS);
-		
-		dr = new DefaultDamagerRepairer(getTableScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.TABLE_END_TAG);
-		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_END_TAG);
-		
-		reconciler.setDamager(dr, CFPartitionScanner.TABLE_START_TAG_BEGIN);
-		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_START_TAG_BEGIN);
-		
-		reconciler.setDamager(dr, CFPartitionScanner.TABLE_START_TAG_END);
-		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_START_TAG_END);
-		
-		reconciler.setDamager(dr, CFPartitionScanner.TABLE_TAG_ATTRIBS);
-		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_TAG_ATTRIBS);
-		
-		//unknown tags
-		dr = new DefaultDamagerRepairer(getUNKTagScanner());
-		reconciler.setDamager(dr, CFPartitionScanner.UNK_TAG);
-		reconciler.setRepairer(dr, CFPartitionScanner.UNK_TAG);
-
-		NonRuleBasedDamagerRepairer ndr = new NonRuleBasedDamagerRepairer(new TextAttribute(colorManager.getColor(preferenceManager
-				.getColor(CFMLColorsPreferenceConstants.P_COLOR_JAVADOC)), colorManager.getColor(preferenceManager
-				.getColor(CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_JAVADOC)), tabWidth));
-		reconciler.setDamager(ndr, CFPartitionScanner.JAVADOC_COMMENT);
-		reconciler.setRepairer(ndr, CFPartitionScanner.JAVADOC_COMMENT);
-
-		// set up the cf comment section
-		ndr = new NonRuleBasedDamagerRepairer(new TextAttribute(colorManager.getColor(preferenceManager
-				.getColor(CFMLColorsPreferenceConstants.P_COLOR_CFCOMMENT)), colorManager.getColor(preferenceManager
-				.getColor(CFMLColorsPreferenceConstants.P_COLOR_BACKGROUND_CFCOMMENT)), tabWidth));
-		reconciler.setDamager(ndr, CFPartitionScanner.CF_COMMENT);
-		reconciler.setRepairer(ndr, CFPartitionScanner.CF_COMMENT);
-		reconciler.setDamager(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK);
-		reconciler.setRepairer(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK);
-		reconciler.setDamager(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT);
-		reconciler.setRepairer(ndr, CFPartitionScanner.CF_SCRIPT_COMMENT);
-
-		// .... the default text in the document
-		dr = new DefaultDamagerRepairer(getTextScanner());
-		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
-		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
-		
-		//set up the html comment section
-		NonRuleBasedDamagerRepairer ndr2 = new NonRuleBasedDamagerRepairer(
-			new TextAttribute(
-				colorManager.getColor(
-					preferenceManager.getColor(
-						HTMLColorsPreferenceConstants.P_COLOR_HTM_COMMENT
-					)
-				)
-			)
-		);
-		reconciler.setDamager(ndr2, CFPartitionScanner.HTM_COMMENT);
-		reconciler.setRepairer(ndr2, CFPartitionScanner.HTM_COMMENT);
-		
-		//set up the doctype section
-		NonRuleBasedDamagerRepairer ndr3 = new NonRuleBasedDamagerRepairer(
-			new TextAttribute(
-				colorManager.getColor(
-					preferenceManager.getColor(
-						HTMLColorsPreferenceConstants.P_COLOR_HTM_COMMENT
-					)
-				)
-			)
-		);
-		reconciler.setDamager(ndr3, CFPartitionScanner.DOCTYPE);
-		reconciler.setRepairer(ndr3, CFPartitionScanner.DOCTYPE);
-		
+		TMPresentationReconciler reconciler = new TMPresentationReconciler();
+		reconciler.setGrammar(getTextMateGrammar());
+//		reconciler.setThemeId(ThemeIdConstants.Monokai);
+//		reconciler.setThemeId("cfml");
 		return reconciler;
 	}
 	
+	private IGrammar getTextMateGrammar() {
+		Registry registry = new Registry();
+		Bundle cfmlBundle = CFMLPlugin.getDefault().getBundle();
+		URL appearanceURL = org.eclipse.core.runtime.FileLocator.find(cfmlBundle, new Path("appearance"), null);
+		URL fileURL = FileLocator.LocateURL(appearanceURL, "syntaxes/cfml.tmLanguage");
+		TMUIPlugin.getThemeManager().registerTheme(new Theme("cfml",FileLocator.LocateURL(appearanceURL, "themes/cfml.css").getFile(),"cfml",false,true));
+		try {
+			return registry.loadGrammarFromPathSync("syntaxes/cfml.tmLanguage",fileURL.openStream());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	/**
 	 * Define code insight stuff (mostly assign it to different sections)
 	 */
