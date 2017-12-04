@@ -110,6 +110,24 @@
        </scopeNameContentTypeBinding>
     </extension>
 -->
+<extension
+         point="org.eclipse.tm4e.ui.themes">
+      <!-- "Light" themes -->
+      <theme
+            id="org.cfeclipse.cfml.ui.themes.light"
+            name="cfml"
+            path="./appearance/themes/cfml.css"
+            default="true" >
+      </theme>
+      <!-- "Dark" themes -->
+      <theme
+            id="org.cfeclipse.cfml.ui.themes.dark"
+            name="cfml dark"
+            path="./appearance/themes/cfmldark.css"
+            dark="true"
+            default="true" >
+      </theme>         
+   </extension>
    	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Editor -->
    <extension

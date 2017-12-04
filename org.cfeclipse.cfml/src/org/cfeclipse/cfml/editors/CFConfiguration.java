@@ -107,6 +107,7 @@ import org.eclipse.tm4e.core.grammar.IGrammar;
 import org.eclipse.tm4e.core.registry.Registry;
 import org.eclipse.tm4e.ui.TMUIPlugin;
 import org.eclipse.tm4e.ui.text.TMPresentationReconciler;
+import org.eclipse.tm4e.ui.themes.ITheme;
 import org.eclipse.tm4e.ui.themes.Theme;
 import org.eclipse.tm4e.ui.themes.ThemeIdConstants;
 import org.eclipse.ui.IMarkerResolution;
@@ -623,7 +624,9 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		TMPresentationReconciler reconciler = new TMPresentationReconciler();
 		reconciler.setGrammar(getTextMateGrammar());
 //		reconciler.setThemeId(ThemeIdConstants.Monokai);
-//		reconciler.setThemeId("cfml");
+		boolean isDarkTheme = TMUIPlugin.getThemeManager().isDarkEclipseTheme();
+		reconciler.install(sourceViewer);
+		reconciler.setThemeId(isDarkTheme ? "org.cfeclipse.cfml.ui.themes.dark" : "org.cfeclipse.cfml.ui.themes.light");
 		return reconciler;
 	}
 	
@@ -632,7 +635,9 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		Bundle cfmlBundle = CFMLPlugin.getDefault().getBundle();
 		URL appearanceURL = org.eclipse.core.runtime.FileLocator.find(cfmlBundle, new Path("appearance"), null);
 		URL fileURL = FileLocator.LocateURL(appearanceURL, "syntaxes/cfml.tmLanguage");
-		TMUIPlugin.getThemeManager().registerTheme(new Theme("cfml",FileLocator.LocateURL(appearanceURL, "themes/cfml.css").getFile(),"cfml",false,true));
+		boolean isDarkTheme = TMUIPlugin.getThemeManager().isDarkEclipseTheme();
+//		TMUIPlugin.getThemeManager().registerTheme(new Theme("cfml",FileLocator.LocateURL(appearanceURL, "themes/cfml.css").getFile(), "cfml", false, !isDarkTheme));
+//		TMUIPlugin.getThemeManager().registerTheme(new Theme("cfmldark",FileLocator.LocateURL(appearanceURL, "themes/cfml.css").getFile(), "cfml dark", true, isDarkTheme));
 		try {
 			return registry.loadGrammarFromPathSync("syntaxes/cfml.tmLanguage",fileURL.openStream());
 		} catch (Exception e) {
