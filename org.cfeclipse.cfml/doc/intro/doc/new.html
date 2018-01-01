@@ -19,11 +19,16 @@
 		What's New in CFEclipse 1.5.3
 	</h1>
 
-	<section class="news">
-    <h2>Some</h2>
-    <p>stuphs!</p>
-	</section>
-  <section class="features">
+    <section class="news">
+      <h2>The major changes</h2>
+      <p>The mxunit.org domain is no more. The Eclipse update sites are now hosted on cfeclipse.org/mxunit/update and
+        cfeclipse.org/mxunit/update-dev (stable and dev, respectively).</p>
+      <p>We've switched to using TextMate (tm4e) grammars for handling the syntax color. The idea is to try to
+        standardize (see https://github.com/ilich/vscode-coldfusion and https://github.com/jcberquist/sublimetext-cfml)
+        across IDEs. As a bonus this also lets us leverage Eclipse theme stuff, e.g. light and dark.</p>
+      <p>This release adds hover-assist stuff to the editor, which lets us do things like provide QuickFixes and rich text (colors and links and such) inside hovers.</p>
+    </section>
+    <section class="features">
     <h2>New Features</h2>
 
     <table cellpadding="5" cellspacing="0" width="600">
@@ -36,7 +41,27 @@
           <td valign="top">
           <p align="right"><b>Color</b></p>
           </td>
-          <td valign="top"></td>
+          <td valign="top">We've switched to using TextMate (tm4e) grammars for handling the syntax color.  It's still a bit rough,
+          but on the whole, with the themes, and having it color mixed tags/script fine (hard bug to fix with our previous implementation), it's
+          at least a wash, if not an improvement.
+          <p><img src="../images/1.5/colors.png"></p>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+          <p align="right"><b>QuickFix</b></p>
+          </td>
+          <td valign="top">Initial implementation of Quick Fixes.  Currently only a few for CFLint are available.
+          Still needs quite a bit of fleshing out.  (As in, the global ignore is broken, and some ignores seem to be ignored, but hey-- Excelsior!)
+          <p><img src="../images/1.5/cflint_quickfix.png"></p>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+          <p align="right"><b>More Folding!</b></p>
+          </td>
+          <td valign="top">Several more tag options have been added to code-folding.
+          </td>
         </tr>
       </tbody>
     </table>

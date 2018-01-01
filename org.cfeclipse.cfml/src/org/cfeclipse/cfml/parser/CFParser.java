@@ -825,7 +825,7 @@ public class CFParser {
 			}
 			if (recognizer instanceof Parser && ((Parser) recognizer).isExpectedToken(CFSCRIPTParser.SEMICOLON)) {
 				System.out.println(msg);
-				msg = "There seems to be a missing semicolon (;) here friend (expected:";
+				msg = "There seems to be a missing semicolon (;) here friend! " + msg;
 			}
 			addParseError(new ParseError(line + addLines, offset, endoffset, msg, re == null ? null : re.getMessage()));
 			
