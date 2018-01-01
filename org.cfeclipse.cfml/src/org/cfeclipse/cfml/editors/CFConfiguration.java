@@ -27,6 +27,7 @@ package org.cfeclipse.cfml.editors;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.cfeclipse.cfml.CFMLPlugin;
@@ -141,6 +142,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	private FormattingPreferences formattingPreferences = new FormattingPreferences();
 	private int tabWidth;
 	private CFMLEditor editor;
+	private IInformationControlCreator informationControlCreator;
 	
 	/**
 	 * Configure the tag indent strategy
@@ -635,11 +637,12 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		Bundle cfmlBundle = CFMLPlugin.getDefault().getBundle();
 		URL appearanceURL = org.eclipse.core.runtime.FileLocator.find(cfmlBundle, new Path("appearance"), null);
 		URL fileURL = FileLocator.LocateURL(appearanceURL, "syntaxes/cfml.tmLanguage");
-		boolean isDarkTheme = TMUIPlugin.getThemeManager().isDarkEclipseTheme();
-//		TMUIPlugin.getThemeManager().registerTheme(new Theme("cfml",FileLocator.LocateURL(appearanceURL, "themes/cfml.css").getFile(), "cfml", false, !isDarkTheme));
-//		TMUIPlugin.getThemeManager().registerTheme(new Theme("cfmldark",FileLocator.LocateURL(appearanceURL, "themes/cfml.css").getFile(), "cfml dark", true, isDarkTheme));
+		URL jsFileURL = FileLocator.LocateURL(appearanceURL, "syntaxes/JavaScript.tmLanguage");
 		try {
-			return registry.loadGrammarFromPathSync("syntaxes/cfml.tmLanguage",fileURL.openStream());
+			registry.loadGrammarFromPathSync("syntaxes/JavaScript.tmLanguage",jsFileURL.openStream());
+			IGrammar grammar = registry.loadGrammarFromPathSync("syntaxes/cfml.tmLanguage",fileURL.openStream());
+			//IGrammar grammar = registry.grammarForScopeName("text.html.cfm");
+			return grammar;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -723,19 +726,17 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	 * @since 2.0
 	 */
 	public IInformationControlCreator getInformationControlCreator(ISourceViewer sourceViewer) {
-		return new IInformationControlCreator() {
-			public IInformationControl createInformationControl(Shell parent) {
-				return new DefaultInformationControl(parent,false);
-			}
-		};
+		if(informationControlCreator == null) {
+			informationControlCreator = new IInformationControlCreator() {
+				public IInformationControl createInformationControl(Shell parent) {
+					return new DefaultInformationControl(parent,false);
+				}
+			};
+		}
+		return informationControlCreator;
 	}
     private IInformationControlCreator getInformationPresenterControlCreator(ISourceViewer sourceViewer) {
-        return new IInformationControlCreator() {
-            @Override
-            public IInformationControl createInformationControl(Shell parent) {
-                return new DefaultInformationControl(parent, true);
-            }
-        };
+    	return getInformationControlCreator(sourceViewer);
     }	
     
     /*
@@ -875,8 +876,8 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		return new HTMLAnnotationHover(true) {
 			@Override
 			protected boolean isIncluded(Annotation annotation) {
-//				return isShowInOverviewRuler(annotation);
-				return true;
+				return isShowInOverviewRuler(annotation);
+//				return true;
 			}
 		};
 	}

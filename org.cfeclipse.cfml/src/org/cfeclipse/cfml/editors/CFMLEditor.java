@@ -475,32 +475,6 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 //		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
 
 		ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
-
-		this.fProjectionSupport = new ProjectionSupport(projectionViewer,
-				getAnnotationAccess(), getSharedColors());
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.task");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.cfeclipse.cfml.parserProblemAnnotation");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.cfeclipse.cfml.parserWarningAnnotation");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.cfeclipse.cfml.occurrenceAnnotation");
-		
-		this.fProjectionSupport.setHoverControlCreator(new IInformationControlCreator() {
-			public IInformationControl createInformationControl(Shell shell) {
-
-                IInformationControl returnIInformationControl = new DefaultInformationControl(
-                        shell);
-				return returnIInformationControl;
-			}
-		});
-		this.fProjectionSupport.install();
-		// ensure decoration support has been created and configured.
 		getSourceViewerDecorationSupport(getSourceViewer());
 		//Object lay = parent.getLayoutData();
 
@@ -1420,7 +1394,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		detectors[0] = cfhd;
 		sourceViewer.setHyperlinkDetectors(detectors, SWT.CONTROL);
 		
-		if (sourceViewer instanceof ProjectionViewer) {
+		if (sourceViewer instanceof ProjectionViewer && fProjectionSupport == null) {
             fProjectionSupport= new ProjectionSupport((ProjectionViewer)sourceViewer, getAnnotationAccess(), getSharedColors());
             MarkerAnnotationPreferences markerAnnotationPreferences= (MarkerAnnotationPreferences) getAdapter(MarkerAnnotationPreferences.class);
             if (markerAnnotationPreferences != null) {
@@ -1432,6 +1406,10 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
                         fProjectionSupport.addSummarizableAnnotationType((String)annotationType);
                 }
             } else {
+                fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.task");
+                fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.parserProblemAnnotation");
+                fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.parserWarningAnnotation");
+                fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.occurrenceAnnotation");
                 fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error"); //$NON-NLS-1$
                 fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning"); //$NON-NLS-1$
             }
