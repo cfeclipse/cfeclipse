@@ -140,7 +140,7 @@
 							 -->
 							<!-- this adds repository references to the update site's content.xml -->
 							<associateSites>
-								<site>http://mxunit.org/update/</site>
+								<site>http://cfeclipse.org/mxunit/update/</site>
 								<site>http://cfeclipse.org/cfparser/update/</site>
 								<site>http://cfeclipse.org/cflint/update/</site>
 							</associateSites>
