@@ -21,4 +21,5 @@
    <repository-reference location="http://cfeclipse.org/cfparser/update-dev" enabled="true" />
    <repository-reference location="http://cfeclipse.org/cflint/update" enabled="true" />
    <repository-reference location="http://cfeclipse.org/cflint/update-dev" enabled="true" />
+   <repository-reference location="http://download.eclipse.org/tm4e/snapshots" enabled="true" />
 </site>
