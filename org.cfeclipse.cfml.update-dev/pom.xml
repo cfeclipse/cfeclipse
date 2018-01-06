@@ -162,6 +162,7 @@
 								<site>http://cfeclipse.org/cfparser/update-dev/</site>
 								<site>http://cfeclipse.org/cflint/update/</site>
 								<site>http://cfeclipse.org/cflint/update-dev/</site>
+								<site>http://download.eclipse.org/tm4e/snapshots/</site>
 							</associateSites>
 
 							<!-- to include other files in the update site zip, list them here -->
