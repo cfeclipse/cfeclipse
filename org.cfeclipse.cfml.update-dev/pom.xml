@@ -163,6 +163,7 @@
 								<site>http://cfeclipse.org/cflint/update/</site>
 								<site>http://cfeclipse.org/cflint/update-dev/</site>
 								<site>http://download.eclipse.org/tm4e/snapshots/</site>
+								<site>http://download.eclipse.org/rt/ecf/3.13.8/site.p2/</site>
 							</associateSites>
 
 							<!-- to include other files in the update site zip, list them here -->

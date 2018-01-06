@@ -627,8 +627,13 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		reconciler.setGrammar(getTextMateGrammar());
 //		reconciler.setThemeId(ThemeIdConstants.Monokai);
 		boolean isDarkTheme = TMUIPlugin.getThemeManager().isDarkEclipseTheme();
+		String themeId = isDarkTheme ? "org.cfeclipse.cfml.ui.themes.dark" : "org.cfeclipse.cfml.ui.themes.light";
 		reconciler.install(sourceViewer);
-		reconciler.setThemeId(isDarkTheme ? "org.cfeclipse.cfml.ui.themes.dark" : "org.cfeclipse.cfml.ui.themes.light");
+		try {
+			reconciler.setThemeId(themeId);
+		} catch (Exception e) {
+			CFMLPlugin.logError("Unable to set theme: " + themeId);
+		}
 		return reconciler;
 	}
 	
@@ -644,6 +649,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 			//IGrammar grammar = registry.grammarForScopeName("text.html.cfm");
 			return grammar;
 		} catch (Exception e) {
+			CFMLPlugin.logError("Unable to load grammar: " + fileURL);
 			e.printStackTrace();
 			return null;
 		}
