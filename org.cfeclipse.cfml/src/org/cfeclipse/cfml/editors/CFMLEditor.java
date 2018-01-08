@@ -473,7 +473,6 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		super.createPartControl(parent);
 		IKeyBindingService service = this.getSite().getKeyBindingService();
 		service.setScopes(new String[]{EDITOR_CONTEXT});
-		this.setBackgroundColor();
 //		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
 
 		ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
@@ -1292,26 +1291,8 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 				
 			}
 		}
-		setBackgroundColor();
 
 		super.handlePreferenceStoreChanged(event);
-	}
-
-	/**
-	 * Set the background color of the editor window based on the user's
-	 * preferences
-	 */
-	private void setBackgroundColor() {
-		// Only try to set the background color when the source fViewer is
-		// available
-		if (this.getSourceViewer() != null
-				&& this.getSourceViewer().getTextWidget() != null) {
-			CFMLPreferenceManager manager = new CFMLPreferenceManager();
-			// Set the background color of the editor
-			this.getSourceViewer().getTextWidget().setBackground(
-					new org.eclipse.swt.graphics.Color(Display.getCurrent(), manager
-							.getColor(EditorPreferenceConstants.P_COLOR_BACKGROUND)));
-		}
 	}
 
 	/*

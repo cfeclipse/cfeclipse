@@ -667,7 +667,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//make our assistant and processor
 		assistant = new ContentAssistant();
 		
-		//The Mac Assistant looks a bit odd this is an attempt to fix it
+/*		//The Mac Assistant looks a bit odd this is an attempt to fix it
 		assistant.setContextSelectorBackground(
 			colorManager.getColor(new RGB(255,255,255))
 		);
@@ -678,7 +678,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		assistant.setContextInformationPopupBackground(
 			colorManager.getColor(new RGB(0,0,0))
 		);
-
+*/
 		setupPrimaryCFEContentAssist(sourceViewer);
 		
 		//in javascript tags - try to give js its own type of completion using the
@@ -708,13 +708,13 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 			getInformationControlCreator(sourceViewer)
 		);
 		
-		//I set the insights backgrounds to white because
+/*		//I set the insights backgrounds to white because
 		//the colors dont work quite right on osx. Even
 		//the default yellow looks stupid
 		
 		//this is the function insight in tag sections
 		assistant.setContextSelectorBackground(
-			colorManager.getColor(new RGB(255,255,255)	)		
+			colorManager.getColor(new RGB(255,255,255)	)
 		);
 		//this is the tag insight
 		assistant.setProposalSelectorBackground(
@@ -723,8 +723,8 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//the popup window when you hit enter on a function name
 		assistant.setContextInformationPopupBackground(
 			colorManager.getColor(new RGB(255,255,255)	)
-);
-		
+		);
+*/		
 		return assistant;
 	}
 	

@@ -109,7 +109,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.tm4e.core;bundle-version="0.1.0",
  org.eclipse.tm4e.ui;bundle-version="0.1.0",
  org.eclipse.tm4e.registry;bundle-version="0.1.0",
- com.ibm.icu;bundle-version="58.2.0"
+ com.ibm.icu;bundle-version="58.2.0",
+ org.eclipse.ui.themes;bundle-version="1.2.1"
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
 Import-Package: com.ibm.icu.text,
