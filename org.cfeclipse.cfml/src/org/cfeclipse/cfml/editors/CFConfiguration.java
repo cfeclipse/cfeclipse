@@ -611,7 +611,8 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	
 	
 	///////////////////////// SCANNERS /////////////////////////////////////////////
-    public IReconciler getReconciler(ISourceViewer sourceViewer) {
+
+	public IReconciler getReconciler(ISourceViewer sourceViewer) {
 	    NotifyingReconciler reconciler= new NotifyingReconciler(new CFMLReconcilingStrategy(editor));
 	    reconciler.setDelay(CFMLReconcilingStrategy.DELAY);
 	    reconciler.addReconcilingParticipant(editor);
@@ -627,12 +628,17 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		reconciler.setGrammar(getTextMateGrammar());
 //		reconciler.setThemeId(ThemeIdConstants.Monokai);
 		boolean isDarkTheme = TMUIPlugin.getThemeManager().isDarkEclipseTheme();
-		String themeId = isDarkTheme ? "org.cfeclipse.cfml.ui.themes.dark" : "org.cfeclipse.cfml.ui.themes.light";
 		reconciler.install(sourceViewer);
+		// the reconciler tm4e theme needs the document set.  TODO: tm4e is first to need this document set here, investigate
+		if(sourceViewer.getDocument() == null) {
+			sourceViewer.setDocument(editor.getDocumentProvider().getDocument(editor.getEditorInput()));
+		}
+		String themeId = isDarkTheme ? "org.cfeclipse.cfml.ui.themes.dark" : "org.cfeclipse.cfml.ui.themes.light";
 		try {
 			reconciler.setThemeId(themeId);
 		} catch (Exception e) {
-			CFMLPlugin.logError("Unable to set theme: " + themeId);
+			CFMLPlugin.logError("Unable to set theme: " + themeId + " : " + e.getMessage());
+			e.printStackTrace();
 		}
 		return reconciler;
 	}

@@ -97,20 +97,19 @@
 		</content-type>
 	</extension>
 
-<!--this has it show up in the textmate preference, but wrong path and not sure if we can change colors there
     <extension
       point="org.eclipse.tm4e.registry.grammars">
        <grammar
             scopeName="source.cfml"
-            path="syntaxes/cfml.tmLanguage" >
+            path="./appearance/syntaxes/cfml.tmLanguage" >
        </grammar>
        <scopeNameContentTypeBinding
              contentTypeId="org.cfeclipse.cfml.cfsource"
              scopeName="source.cfml">
        </scopeNameContentTypeBinding>
     </extension>
--->
-<extension
+
+    <extension
          point="org.eclipse.tm4e.ui.themes">
       <!-- "Light" themes -->
       <theme
@@ -125,7 +124,7 @@
             name="cfml dark"
             path="./appearance/themes/cfmldark.css"
             dark="true"
-            default="true" >
+            default="false" >
       </theme>         
    </extension>
    	<!-- ////////////////////////////////////////////////////////////// -->

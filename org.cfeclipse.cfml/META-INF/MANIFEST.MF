@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CFML Plug-in
 Bundle-SymbolicName: org.cfeclipse.cfml; singleton:=true
 Bundle-Version: 1.5.3.qualifier
-Bundle-Vendor: %providerName
+Bundle-Vendor: cfeclipse.org
 Bundle-Localization: plugin
 Bundle-ClassPath: cfml.jar,
  lib/log4j-1.2.17.jar,

@@ -404,12 +404,14 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		this.colorManager = new ColorManager();
 		//setup color coding and the damage repair stuff
 
-		this.configuration = new CFConfiguration(this.colorManager, this);
-		setSourceViewerConfiguration(this.configuration);
 		//assign the cfml document provider which does the partitioning
 		//and connects it to this Edtior
-
 		setDocumentProvider(new CFDocumentProvider());
+		getCFModel(); // set the document
+
+		this.configuration = new CFConfiguration(this.colorManager, this);
+		setSourceViewerConfiguration(this.configuration);
+
 
 		// The following is to enable us to listen to changes. Mainly it's used
 		// for
