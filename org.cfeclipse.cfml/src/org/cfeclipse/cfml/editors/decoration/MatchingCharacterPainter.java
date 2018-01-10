@@ -183,66 +183,67 @@ public final class MatchingCharacterPainter implements IPainter, PaintListener {
 	 * @param length the length of the widget region
 	 */
 	private void draw(GC gc, int offset, int length) {
-		if (gc != null) {
-			Point left= fTextWidget.getLocationAtOffset(offset);
-			Point right= fTextWidget.getLocationAtOffset(offset + length);
-			
-			IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
-			int style = store.getInt(EditorPreferenceConstants.P_BRACKET_MATCHING_STYLE);
-			
-			switch (style) {
-				case EditorPreferenceConstants.BRACKET_MATCHING_OUTLINE: 
-				{
-					//draw box around character
-					gc.setForeground(fColor);
-					gc.drawRectangle(left.x, left.y, right.x - left.x - 1, fTextWidget.getLineHeight() - 1);
-					break;
-				}
-				case EditorPreferenceConstants.BRACKET_MATCHING_BACKGROUND: 
-				{
-					//Paint a background on the character
-					gc.setBackground(fColor);
-					gc.drawText(fTextWidget.getText(offset,offset),left.x,left.y+1);
-					break;
-				}
-				case EditorPreferenceConstants.BRACKET_MATCHING_BOLD: 
-				{
-				    int caret= fTextWidget.getCaretOffset();
-				    int lineIndex = fTextWidget.getLineAtOffset(caret);
-				    int lineStart = fTextWidget.getOffsetAtLine(lineIndex);
-				    int lineEnd = -1;
-				    if (lineIndex == fTextWidget.getLineCount()) {
-				        lineEnd = fTextWidget.getText().length()-1;
-				    } else {
-				        lineEnd = fTextWidget.getText().indexOf(fTextWidget.getLineDelimiter(),lineStart);
-				    }
-				    if (offset >= lineStart && offset <= lineEnd) {
-				        RGB rgb= PreferenceConverter.getColor(store, EditorPreferenceConstants.P_CURRENT_LINE_COLOR);
-				        Color c = EditorsPlugin.getDefault().getSharedTextColors().getColor(rgb);
-				        gc.setBackground(c);    
-				    } else {
-				        gc.setBackground(fTextWidget.getBackground());
-				    }
-				    
-					gc.setForeground(fColor);
-					Font oldFont = gc.getFont();
-					FontData[] data = gc.getFont().getFontData();
-					data[0].setStyle(SWT.BOLD);
-					
-					Font font = new Font(fTextWidget.getDisplay(),data);
-					gc.setFont(font);
-					gc.drawText(fTextWidget.getText(offset,offset),left.x,left.y+1);
-					gc.setFont(oldFont);
-					font.dispose();
-					break;
-				}
-			}
-			
-			
-			
-							
-		} else {
-			fTextWidget.redrawRange(offset, length, true);
+		try {
+			if (gc != null) {
+    			Point left= fTextWidget.getLocationAtOffset(offset);
+    			Point right= fTextWidget.getLocationAtOffset(offset + length);
+    			
+    			IPreferenceStore store = CFMLPlugin.getDefault().getPreferenceStore();
+    			int style = store.getInt(EditorPreferenceConstants.P_BRACKET_MATCHING_STYLE);
+    			
+    			switch (style) {
+    				case EditorPreferenceConstants.BRACKET_MATCHING_OUTLINE: 
+    				{
+    					//draw box around character
+    					gc.setForeground(fColor);
+    					gc.drawRectangle(left.x, left.y, right.x - left.x - 1, fTextWidget.getLineHeight() - 1);
+    					break;
+    				}
+    				case EditorPreferenceConstants.BRACKET_MATCHING_BACKGROUND: 
+    				{
+    					//Paint a background on the character
+    					gc.setBackground(fColor);
+    					gc.drawText(fTextWidget.getText(offset,offset),left.x,left.y+1);
+    					break;
+    				}
+    				case EditorPreferenceConstants.BRACKET_MATCHING_BOLD: 
+    				{
+    				    int caret= fTextWidget.getCaretOffset();
+    				    int lineIndex = fTextWidget.getLineAtOffset(caret);
+    				    int lineStart = fTextWidget.getOffsetAtLine(lineIndex);
+    				    int lineEnd = -1;
+    				    if (lineIndex == fTextWidget.getLineCount()) {
+    				        lineEnd = fTextWidget.getText().length()-1;
+    				    } else {
+    				        lineEnd = fTextWidget.getText().indexOf(fTextWidget.getLineDelimiter(),lineStart);
+    				    }
+    				    if (offset >= lineStart && offset <= lineEnd) {
+    				        RGB rgb= PreferenceConverter.getColor(store, EditorPreferenceConstants.P_CURRENT_LINE_COLOR);
+    				        Color c = EditorsPlugin.getDefault().getSharedTextColors().getColor(rgb);
+    				        gc.setBackground(c);    
+    				    } else {
+    				        gc.setBackground(fTextWidget.getBackground());
+    				    }
+    				    
+    					gc.setForeground(fColor);
+    					Font oldFont = gc.getFont();
+    					FontData[] data = gc.getFont().getFontData();
+    					data[0].setStyle(SWT.BOLD);
+    					
+    					Font font = new Font(fTextWidget.getDisplay(),data);
+    					gc.setFont(font);
+    					gc.drawText(fTextWidget.getText(offset,offset),left.x,left.y+1);
+    					gc.setFont(oldFont);
+    					font.dispose();
+    					break;
+    				}
+    			}
+    		} else {
+    			fTextWidget.redrawRange(offset, length, true);
+    		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			CFMLPlugin.logError(e.getMessage());
 		}
 	}
 	
