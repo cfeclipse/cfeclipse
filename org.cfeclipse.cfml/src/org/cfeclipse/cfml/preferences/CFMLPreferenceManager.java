@@ -103,7 +103,6 @@ public class CFMLPreferenceManager {
 				// Force a stack trace to see what called this.
 				try {
 					rgbString = null;
-					System.out.println(rgbString.length());
 				}
 				catch (Exception e) {
 					e.printStackTrace();

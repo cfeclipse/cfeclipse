@@ -157,7 +157,6 @@ public class SnipDialog extends Dialog{
 		public void mouseDown(MouseEvent e) {
 			
 			if(button.getText().equals(">")){
-				System.out.println(text.getSize());
 				text.setSize(text.getSize().x, text.getSize().y + 40);
 				button.setText("V");
 			}

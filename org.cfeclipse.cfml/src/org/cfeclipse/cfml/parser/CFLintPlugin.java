@@ -15,7 +15,7 @@ public class CFLintPlugin extends CFLintScannerAdapter {
 
 	@Override
 	public void expression(final CFScriptStatement expression, final Context context, final BugList bugs) {
-		System.out.println(expression.Decompile(0));
+		//System.out.println(expression.Decompile(0));
 		if (expression instanceof CFFuncDeclStatement) {
 			CFFuncDeclStatement function = (CFFuncDeclStatement) expression;
 			final int begLine = function.getLine();

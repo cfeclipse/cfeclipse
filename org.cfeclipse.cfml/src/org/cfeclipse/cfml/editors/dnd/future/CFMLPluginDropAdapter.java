@@ -16,7 +16,6 @@ public class CFMLPluginDropAdapter implements IDropActionDelegate {
     * Method declared on IDropActionDelegate
     */
    public boolean run(Object source, Object target) {
-	   System.out.println("runmene");
       if (target instanceof IContainer) {
          CFMLTransfer transfer = CFMLTransfer.getInstance();
          File[] CFMLs = transfer.fromByteArray((byte[])source);

@@ -169,7 +169,7 @@ public class CodeFoldingSetter {
 			rootItem = doc.getCFDocument().getDocumentRoot();
 		} catch (NullPointerException e) {
 			// e.printStackTrace();
-			System.out.println("CodeFoldingSetter::foldTags got a null from doc.getCFDocument().");
+			CFMLPlugin.logError("CodeFoldingSetter::foldTags got a null from doc.getCFDocument().");
 			return;
 		}
 		// nodes =

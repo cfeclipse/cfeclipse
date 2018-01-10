@@ -169,7 +169,7 @@ public class CFDocumentProvider extends FileDocumentProvider
 				}
 			    else {
 			    	//org.eclipse.ui.ide.FileStoreEditorInput
-			    	System.out.println("I don't know how to handle: " + element.getClass().getName());
+			    	CFMLPlugin.logError("I don't know how to handle: " + element.getClass().getName());
 			    }
 			}
 			catch (Exception e)

@@ -625,9 +625,6 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		}		
 	}
 	
-	private void partActivated(){
-		System.out.println("I am activated" + this.getPartName());
-	}
 	public void setStatusLine(){
 		
 	/*	try{

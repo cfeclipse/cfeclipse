@@ -65,8 +65,6 @@ public class BestMatchHover extends AbstractCFMLEditorTextHover {
 			if (spec == null)
 				continue;
 			
-			System.out.println(spec.getId());
-
 			done= false;
 
 			ICFMLEditorTextHover hover= spec.createTextHover();

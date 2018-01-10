@@ -557,7 +557,7 @@ public class CFParser {
 			    //System.out.println(attributeName + " = " +attributeValue);
 		    }
 		    else {
-		        System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
+		    	CFMLPlugin.logError("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
 //		        for (int i = 0; i<=matcher.groupCount(); i++) {
 //		        	System.out.println("Match " + i + " : " + matcher.group(i));
 //		        }
@@ -824,7 +824,7 @@ public class CFParser {
 				}
 			}
 			if (recognizer instanceof Parser && ((Parser) recognizer).isExpectedToken(CFSCRIPTParser.SEMICOLON)) {
-				System.out.println(msg);
+//				System.out.println(msg);
 				msg = "There seems to be a missing semicolon (;) here friend! " + msg;
 			}
 			addParseError(new ParseError(line + addLines, offset, endoffset, msg, re == null ? null : re.getMessage()));

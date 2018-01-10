@@ -86,13 +86,11 @@ public abstract class AbstractCFEditorPreferencePage extends PreferencePage impl
 
 		public void widgetDefaultSelected(SelectionEvent e) {
 			if (fInitialized) {
-				System.out.println("fart");
 			}
 		}
 
 		public void widgetSelected(SelectionEvent e) {
 			if (fInitialized) {
-				System.out.println("knocker");
 				Button button = (Button) e.widget;
 				fOverlayStore.setValue((String) fRadioFields.get(button), button.getSelection());
 			}

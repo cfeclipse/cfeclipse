@@ -734,7 +734,6 @@ public abstract class AbstractAnnotationHover extends AbstractCFMLEditorTextHove
             int layer = -1;
             Annotation annotation = null;
             Position position = null;
-            System.out.println("annotations:");
             while (e.hasNext()) {
                 Annotation a = e.next();
                 

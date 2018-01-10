@@ -611,7 +611,7 @@ public class CFContentAssist extends CFEContentAssist{
 		
 		String prefix = state.getDataSoFar();
 		String attrText = state.getAttributeText().trim();
-		System.out.println(state.getOffsetPartition().getType());
+		//System.out.println(state.getOffsetPartition().getType());
 		
 		//System.out.println("Prefix is now  " + prefix);
 		// hacks hacks everywhere :) this looks to see if there are an

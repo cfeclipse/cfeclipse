@@ -101,7 +101,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 	}
 	
 	protected void fireSelectionChanged(ISelection selection) {
-		System.out.println("wee");
+//		System.out.println("wee");
 	}
 
 	/**
@@ -435,7 +435,7 @@ public class CFContentOutlineView extends ContentOutlinePage implements IPartLis
 				CFPluginImages.ICON_DELETE)) {
 			public void run() {
 				// this doesn't do nothing
-				System.out.println("this should delete");
+				//System.out.println("this should delete");
 			}
 		};
 
