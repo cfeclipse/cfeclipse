@@ -2196,6 +2196,9 @@
     	<type name="org.cfeclipse.cfml.parserWarningAnnotation"
     		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
 
+    	<type name="org.cfeclipse.cfml.parserWarningAnnotation"
+    		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
+
     	<type name="org.cfeclipse.cfml.occurrenceAnnotation"
     		super="org.eclipse.ui.workbench.texteditor.info"
     		markerType="org.cfeclipse.cfml.occurrencemarker"/>
