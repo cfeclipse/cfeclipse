@@ -116,9 +116,9 @@ public class EditTagAction implements IWorkbenchWindowActionDelegate,IEditorActi
 		
 		
 		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-			
-			this.editor = (CFMLEditor)targetEditor;
-	
+			if (targetEditor instanceof CFMLEditor) {
+				editor = (CFMLEditor) targetEditor;
+			}
 		}
 		
 		

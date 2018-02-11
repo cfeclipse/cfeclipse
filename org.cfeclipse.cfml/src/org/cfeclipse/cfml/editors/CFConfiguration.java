@@ -27,7 +27,6 @@ package org.cfeclipse.cfml.editors;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import org.cfeclipse.cfml.CFMLPlugin;
@@ -66,7 +65,6 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultInformationControl;
@@ -89,33 +87,25 @@ import org.eclipse.jface.text.information.IInformationPresenter;
 import org.eclipse.jface.text.information.IInformationProvider;
 import org.eclipse.jface.text.information.InformationPresenter;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
-import org.eclipse.jface.text.presentation.PresentationReconciler;
 import org.eclipse.jface.text.quickassist.IQuickAssistAssistant;
 import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
 import org.eclipse.jface.text.quickassist.IQuickAssistProcessor;
 import org.eclipse.jface.text.quickassist.QuickAssistAssistant;
 import org.eclipse.jface.text.reconciler.IReconciler;
-import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.tm4e.core.grammar.IGrammar;
 import org.eclipse.tm4e.core.registry.Registry;
-import org.eclipse.tm4e.ui.TMUIPlugin;
 import org.eclipse.tm4e.ui.text.TMPresentationReconciler;
-import org.eclipse.tm4e.ui.themes.ITheme;
-import org.eclipse.tm4e.ui.themes.Theme;
-import org.eclipse.tm4e.ui.themes.ThemeIdConstants;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.internal.themes.ThemeDescriptor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.MarkerAnnotation;
 import org.osgi.framework.Bundle;
@@ -190,7 +180,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//this.undoManager = new CFEUndoManager(preferenceManager.maxUndoSteps());
 		
 		indentCFScriptStrategy = new CFScriptIndentStrategy(editor);
-		this.indentTagStrategy = new TagIndentStrategy(editor);
+		indentTagStrategy = new TagIndentStrategy(editor);
 		
 		tabWidth = preferenceManager.tabWidth();
 		boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
@@ -625,7 +615,9 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) 
 	{
 		TMPresentationReconciler reconciler = new TMPresentationReconciler();
-		reconciler.setGrammar(getTextMateGrammar());
+		reconciler.install(sourceViewer);
+
+/*		reconciler.setGrammar(getTextMateGrammar());
 //		reconciler.setThemeId(ThemeIdConstants.Monokai);
 		boolean isDarkTheme = TMUIPlugin.getThemeManager().isDarkEclipseTheme();
 		reconciler.install(sourceViewer);
@@ -640,6 +632,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 			CFMLPlugin.logError("Unable to set theme: " + themeId + " : " + e.getMessage());
 			e.printStackTrace();
 		}
+*/
 		return reconciler;
 	}
 	

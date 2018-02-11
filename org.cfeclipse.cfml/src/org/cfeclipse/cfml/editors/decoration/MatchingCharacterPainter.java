@@ -243,7 +243,7 @@ public final class MatchingCharacterPainter implements IPainter, PaintListener {
     		}
 		} catch (Exception e) {
 			e.printStackTrace();
-			CFMLPlugin.logError(e.getMessage());
+			CFMLPlugin.logError("MatchingCharacterPainter#draw:" + e.getMessage());
 		}
 	}
 	

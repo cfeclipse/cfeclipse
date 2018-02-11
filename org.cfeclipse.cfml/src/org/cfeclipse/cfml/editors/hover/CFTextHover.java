@@ -185,7 +185,10 @@ public class CFTextHover implements ITextHover {
 				return message;
 			}
 		}
-		return "Unknown area at " + hoverRegion.getOffset() + " to " + hoverRegion.getLength();
+
+//		return "Unknown area at " + hoverRegion.getOffset() + " to " + hoverRegion.getLength();
+		return "";
+
 	} 
 	
 	/**

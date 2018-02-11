@@ -374,6 +374,10 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		ConsoleUtil.printError(CONSOLE_NAME, msg);
 	}
 
+	public static void log(Exception e) {
+		ConsoleUtil.printError(CONSOLE_NAME, e.getMessage() + "\n  cause: "+ e.getCause() != null ? e.getCause().getMessage() : "unknown");
+	}
+	
 	public void notifyCFModelListeners(CFModelChangeEvent cfModelChangeEvent) {
 		// TODO Auto-generated method stub
 		

@@ -304,7 +304,7 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 					try {
 						handlePreferenceStoreChanged(event);
 					} catch (Exception e) {
-						CFMLPlugin.logError(e.getMessage());
+						CFMLPlugin.logError("DecorationSupport#install: "+ e.getMessage() + '\n' + e.getStackTrace());
 					}
 				}
 			};

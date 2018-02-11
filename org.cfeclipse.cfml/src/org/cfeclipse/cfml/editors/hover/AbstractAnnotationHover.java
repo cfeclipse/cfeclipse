@@ -898,7 +898,8 @@ public abstract class AbstractAnnotationHover extends AbstractCFMLEditorTextHove
                 return message;
             }
         }
-        return "Unknown area at " + hoverRegion.getOffset() + " to " + hoverRegion.getLength();
+//        return "Unknown area at " + hoverRegion.getOffset() + " to " + hoverRegion.getLength();
+        return "";
     }
     
     private boolean IsNonAlpha(char character2test) {
