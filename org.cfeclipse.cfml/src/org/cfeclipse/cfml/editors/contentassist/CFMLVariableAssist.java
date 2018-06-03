@@ -145,9 +145,7 @@ public class CFMLVariableAssist extends AssistContributor //extends DefaultTagAs
     	}
 
     	//Check what partition we are in.
-    	System.out.println(state.getOffsetPartition().toString());
-    	    	
-    	
+    	//System.out.println(state.getOffsetPartition().toString());
         if (state.getTriggerData() == '#') {
             return getPageVariables(state, doc);
         }
@@ -221,7 +219,7 @@ public class CFMLVariableAssist extends AssistContributor //extends DefaultTagAs
         //Get the scopes we are looking for
 //      Get an initial set of possibilities.
         //These are set in VariablesParser so go check that out if your variable isnt found
-        System.out.println("pref"+prefix);
+        //System.out.println("pref"+prefix);
         //Find arguments in the document variable map
         VariableParserItem variableParserItem =  (VariableParserItem)varMap.get(varName);
        
@@ -233,7 +231,7 @@ public class CFMLVariableAssist extends AssistContributor //extends DefaultTagAs
     	   TagItem chosenTag = (TagItem)variableParserItem.getTagItem();
     	 //  System.out.println("Found Chosen Tag" + chosenTag);
     	   //Lets check we have a pre-defined scope for this type
-    	   System.out.println(chosenTag.getClass().getName());
+    	   //System.out.println(chosenTag.getClass().getName());
     	   if(chosenTag != null && (chosenTag instanceof TagItem || chosenTag instanceof CfmlTagItem)){
            	TagItem leTag = (TagItem)chosenTag;
            	String tagname  = leTag.getName();

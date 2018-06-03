@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.plugindebug.DebugSettings;
 import org.cfeclipse.cfml.plugindebug.DebugUtils;
@@ -778,7 +779,12 @@ public class CFEPartitioner implements IDocumentPartitioner,
                             int start = previous.offset+previous.length;
                             int length = current.offset - start;
                             if (isAttributePartition) {
-	                            String s = fDocument.get(start,length);
+                                String s = "";
+                                try {
+                                    s = fDocument.get(start,length);
+                                } catch (Exception e) {
+                                    CFMLPlugin.log(e);
+                                }
 	                            boolean singleQuoted = false;
 	                            boolean doubleQuoted = false;
 	                            for (int j=0;j<s.length();j++) {
@@ -1814,7 +1820,7 @@ public class CFEPartitioner implements IDocumentPartitioner,
 				
 		} catch (BadPositionCategoryException x) {
 		} catch (Exception e) {
-		    //System.out.println("Got an exception calculating partitioning. Resetting partitioner.");
+		    System.out.println("Got an exception calculating partitioning. Resetting partitioner.");
 		    /*
 		    CFEPartitioner partitioner = new CFEPartitioner(
 					new CFPartitionScanner(), PartitionTypes.ALL_PARTITION_TYPES);

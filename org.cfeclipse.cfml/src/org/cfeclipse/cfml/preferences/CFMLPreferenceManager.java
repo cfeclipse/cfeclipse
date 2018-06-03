@@ -76,7 +76,6 @@ public class CFMLPreferenceManager {
 		ApplicationTemplatesPreferenceConstants.setDefaults(store);
 		SnipExPreferenceConstants.setDefaults(store);
 		TextSelectionPreferenceConstants.setDefaults(store);
-		CFLintPreferenceConstants.setDefaults(store);
 		CFMLPreferenceConstants.setDefaults(store);
 	}
 	
@@ -86,6 +85,7 @@ public class CFMLPreferenceManager {
 	 * @param key
 	 * @return
 	 */
+	@SuppressWarnings("null")
 	public RGB getColor(String key)
 	{
 		//try to get the color as a string from the store

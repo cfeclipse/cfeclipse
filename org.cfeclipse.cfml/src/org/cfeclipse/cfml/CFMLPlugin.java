@@ -44,8 +44,10 @@ import org.cfeclipse.cfml.editors.contentassist.CFMLTagAssist;
 import org.cfeclipse.cfml.editors.contentassist.CFMLVariableAssist;
 import org.cfeclipse.cfml.editors.contentassist.HTMLTagAssistContributor;
 import org.cfeclipse.cfml.editors.contentassist.TemplateAssist;
+import org.cfeclipse.cfml.editors.hover.CFMLEditorTextHoverDescriptor;
 import org.cfeclipse.cfml.images.StartupHandler;
 import org.cfeclipse.cfml.model.CFModelChangeEvent;
+import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.properties.CFMLPropertyManager;
 import org.cfeclipse.cfml.templates.template.CFScriptTemplateContextType;
@@ -54,6 +56,7 @@ import org.cfeclipse.cfml.util.CFPluginImages;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -65,6 +68,7 @@ import org.eclipse.jface.text.templates.persistence.TemplateStore;
 import org.eclipse.ui.editors.text.templates.ContributionContextTypeRegistry;
 import org.eclipse.ui.editors.text.templates.ContributionTemplateStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.texteditor.ConfigurationElementSorter;
 import org.osgi.framework.BundleContext;
 
 import cfml.parsing.CFMLParser;
@@ -103,6 +107,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 	private static final String CUSTOM_TEMPLATES_KEY = "org.cfeclipse.cfml.customtemplates"; //$NON-NLS-1$
 	private static final String LAST_PLUGIN_VERSION = "__lastPluginVersion";
 	private static final String SHOW_WELCOME = "__showWelcome";
+    public static final boolean DEBUG_BREADCRUMB_ITEM_DROP_DOWN = false;
 	private TemplateStore fStore;
 	private ContributionContextTypeRegistry fRegistry;
 
@@ -287,6 +292,7 @@ public class CFMLPlugin extends AbstractUIPlugin {
 
 		try {
 			CFMLPropertyManager propertyManager = new CFMLPropertyManager();
+			assert(propertyManager != null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e);
@@ -368,9 +374,43 @@ public class CFMLPlugin extends AbstractUIPlugin {
 		ConsoleUtil.printError(CONSOLE_NAME, msg);
 	}
 
+	public static void log(Exception e) {
+		ConsoleUtil.printError(CONSOLE_NAME, e.getMessage() + "\n  cause: "+ e.getCause() != null ? e.getCause().getMessage() : "unknown");
+	}
+	
 	public void notifyCFModelListeners(CFModelChangeEvent cfModelChangeEvent) {
 		// TODO Auto-generated method stub
 		
 	}
+	private CFMLEditorTextHoverDescriptor[] fCFMLEditorTextHoverDescriptors;
 
+	public synchronized CFMLEditorTextHoverDescriptor[] getCFMLEditorTextHoverDescriptors() {
+		if (fCFMLEditorTextHoverDescriptors == null) {
+			fCFMLEditorTextHoverDescriptors= CFMLEditorTextHoverDescriptor.getContributedHovers();
+			ConfigurationElementSorter sorter= new ConfigurationElementSorter() {
+				/*
+				 * @see org.eclipse.ui.texteditor.ConfigurationElementSorter#getConfigurationElement(java.lang.Object)
+				 */
+				@Override
+				public IConfigurationElement getConfigurationElement(Object object) {
+					return ((CFMLEditorTextHoverDescriptor)object).getConfigurationElement();
+				}
+			};
+			sorter.sort(fCFMLEditorTextHoverDescriptors);
+
+			// Move Best Match hover to front
+			for (int i= 0; i < fCFMLEditorTextHoverDescriptors.length - 1; i++) {
+				if (CFMLPreferenceConstants.ID_BESTMATCH_HOVER.equals(fCFMLEditorTextHoverDescriptors[i].getId())) {
+					CFMLEditorTextHoverDescriptor hoverDescriptor= fCFMLEditorTextHoverDescriptors[i];
+					for (int j= i; j > 0; j--)
+						fCFMLEditorTextHoverDescriptors[j]= fCFMLEditorTextHoverDescriptors[j-1];
+					fCFMLEditorTextHoverDescriptors[0]= hoverDescriptor;
+					break;
+				}
+
+			}
+		}
+
+		return fCFMLEditorTextHoverDescriptors;
+	}
 }

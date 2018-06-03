@@ -318,7 +318,7 @@ public abstract class SyntaxDictionary {
 	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
 		 	       && !tag.toLowerCase().startsWith("cf"))
  	    {
- 	        System.err.println("SyntaxDictionarY::getFilteredAttributeValues() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + tag + "\'");
+ 	        CFMLPlugin.logError("SyntaxDictionarY::getFilteredAttributeValues() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + tag + "\'");
  	    }
 		
 		
@@ -359,7 +359,7 @@ public abstract class SyntaxDictionary {
 	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
 		 	       && !tag.toLowerCase().startsWith("cf"))
 	    {
-	        System.err.println("SyntaxDictionarY::getFilteredAttributes() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + tag + "\'");
+	    	CFMLPlugin.logError("SyntaxDictionarY::getFilteredAttributes() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + tag + "\'");
  	    }
 		
 		
@@ -434,7 +434,7 @@ public abstract class SyntaxDictionary {
 	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
 	 	       && !name.toLowerCase().startsWith("cf"))
  	    {
- 	        System.err.println("SyntaxDictionarY::tagExists() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + name + "\'");
+	    	CFMLPlugin.logError("SyntaxDictionarY::tagExists() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + name + "\'");
  	    }
 	    
 	    
@@ -562,7 +562,7 @@ public abstract class SyntaxDictionary {
 	    if(this.syntaxelements == DictionaryManager.getDictionary(DictionaryManager.CFDIC)
 		 	       && !elementname.toLowerCase().startsWith("cf"))
  	    {
- 	        System.err.println("SyntaxDictionarY::getElementAttributes() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + elementname + "\'");
+	    	CFMLPlugin.logError("SyntaxDictionarY::getElementAttributes() - WARNING: Tag name requested that does NOT begin with CF. Tag name was \'" + elementname + "\'");
  	    }
 
 		

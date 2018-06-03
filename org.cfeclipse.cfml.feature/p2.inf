@@ -1,5 +1,5 @@
-instructions.configure=org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//mxunit.org/update/,type:0,name:MXUnit,enabled:true); \
-   org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//mxunit.org/update/,type:1,name:MXUnit,enabled:true); \
+instructions.configure=org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/mxunit/update/,type:0,name:MXUnit,enabled:true); \
+   org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/mxunit/update/,type:1,name:MXUnit,enabled:true); \
    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/cfparser/update/,type:0,name:MXUnit CFE,enabled:true); \
    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/cfparser/update/,type:1,name:MXUnit CFE,enabled:true); \
    org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//cfeclipse.org/cflint/update/,type:0,name:MXUnit CFE,enabled:true); \

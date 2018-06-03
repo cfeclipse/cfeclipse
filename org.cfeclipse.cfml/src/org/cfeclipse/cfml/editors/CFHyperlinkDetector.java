@@ -9,7 +9,7 @@ public class CFHyperlinkDetector implements IHyperlinkDetector {
 
 	public IHyperlink[] detectHyperlinks(ITextViewer textViewer,
 			IRegion region, boolean canShowMultipleHyperlinks) {
-		System.out.println("trying to detect hyperlinks");
+//		System.out.println("trying to detect hyperlinks");
 		
 		return null;
 	}

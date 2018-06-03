@@ -396,7 +396,7 @@ public class CFCMethodsView extends ViewPart implements IPartListener, IProperty
 				IEditorPart iep = IDE.openEditor(page,CFCMethodsFile,true);
 				//IEditorPart iep = this.getViewSite().getWorkbenchWindow().getActivePage().getActiveEditor();
 				ITextEditor ite = (ITextEditor)iep;
-				System.out.println(selectedMethod.getDocumentOffset());
+				//System.out.println(selectedMethod.getDocumentOffset());
 				ite.setHighlightRange(selectedMethod.getDocumentOffset(),0,true);
 				ite.setFocus();}
 			catch (Exception e) {

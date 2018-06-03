@@ -8,9 +8,6 @@ public class BeanTests {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		System.out.println("Hello");
-		
-		
 		CFCBean appCFCBean = new CFCBean();
 		
 		appCFCBean.setDisplayName("Controller.cfc");
@@ -69,10 +66,8 @@ public class BeanTests {
 		CFCFileFactory cfcFactory = new CFCFileFactory();
 		
 		StringBuffer string = cfcFactory.getString(appCFCBean);
-		System.out.println(string.toString());
 
 		string = cfcFactory.getScriptString(appCFCBean);
-		System.out.println(string.toString());
 		
 	/*	
 		<cfcomponent displayname="Controller" extends="ModelGlue.unity.controller.Controller" output="false">

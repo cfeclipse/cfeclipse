@@ -1039,6 +1039,7 @@ public class TagIndentStrategy extends CFEIndentStrategy {
 		// Do NOT insert additional quote if the next char is the same type of quote
 		if (nextChar == quoteChar) {
 			shouldAddTwo = false;
+			shouldSkipNextChar = true;
 		} else if( nextChar == '"' || nextChar == '\'' ) {
 			// If the next character is a quote, but not the quote we are trying to enter then don't add two
 			shouldAddTwo = false;

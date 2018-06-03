@@ -297,8 +297,6 @@ public class NewCFMLWizardPage extends WizardPage {
 
 		fileText.setFocus();
 
-		System.out.println("setting the focus");
-
 		int textLen = fileText.getText().length() - 4;
 
 		fileText.setSelection(0,textLen);

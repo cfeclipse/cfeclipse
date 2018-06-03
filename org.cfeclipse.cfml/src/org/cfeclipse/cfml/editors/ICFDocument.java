@@ -54,6 +54,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 
@@ -80,6 +81,7 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
  */
 public class ICFDocument extends Document implements ICFEFileDocument {
 
+	public final static String CFECLIPSE_CONTENT_TYPE = "org.cfeclipse.cfml.editors.CFMLEditor";  //$NON-NLS-1$
     /** The parser that was/is run over this document */
 	protected CFParser docParser = null;
 	/** The resource that this document is derived from. Required for the parser */
@@ -493,5 +495,10 @@ public class ICFDocument extends Document implements ICFEFileDocument {
             ex.printStackTrace();
         }        
     }
-*/    
+*/
+
+    @Override
+	public IDocumentPartitioner getDocumentPartitioner() {
+		return getDocumentPartitioner(CFDocumentSetupParticipant.CFML_PARTITIONING);
+	}
 }

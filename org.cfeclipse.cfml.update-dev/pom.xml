@@ -15,16 +15,17 @@
 		<site.suffix>-dev</site.suffix>
 		<plugin.p2.dir>target/repository-merged</plugin.p2.dir>
 		<merge.updates>false</merge.updates>
-		<jboss.tycho.tools.version>0.26.0</jboss.tycho.tools.version>
+		<jboss.tycho.tools.version>1.0.0</jboss.tycho.tools.version>
 		<update.site.name>[dev] CFEclipse Update</update.site.name>
 		<update.site.description>Development Build</update.site.description>
 		<update.site.version>${project.version}</update.site.version>
-		<target.eclipse.version>4.3 (Mars)</target.eclipse.version>
-		<mxunit-repo.url>http://mxunit.org/update</mxunit-repo.url>
+		<oxygen-repo.url>http://download.eclipse.org/releases/oxygen/201706281000/</oxygen-repo.url>
+		<mxunit-repo.url>http://cfeclipse.org/mxunit/update</mxunit-repo.url>
 		<cfparser-repo.url>http://cfeclipse.org/cfparser/update</cfparser-repo.url>
 		<cfparser-dev-repo.url>http://cfeclipse.org/cfparser/update-dev</cfparser-dev-repo.url>
 		<cflint-repo.url>http://cfeclipse.org/cflint/update</cflint-repo.url>
 		<cflint-dev-repo.url>http://cfeclipse.org/cflint/update-dev</cflint-dev-repo.url>
+		<tm4e-dev-repo.url>http://download.eclipse.org/tm4e/snapshots</tm4e-dev-repo.url>
 	</properties>
 
 	<pluginRepositories>
@@ -38,8 +39,8 @@
 
 	<repositories>
 		<repository>
-			<id>mars</id>
-			<url>${mars-repo.url}</url>
+			<id>oxygen</id>
+			<url>${oxygen-repo.url}</url>
 			<layout>p2</layout>
 		</repository>
 		<repository>
@@ -61,6 +62,11 @@
 			<id>cfparser-dev</id>
 			<layout>p2</layout>
 			<url>${cfparser-dev-repo.url}</url>
+		</repository>
+		<repository>
+			<id>tm4e-dev</id>
+			<layout>p2</layout>
+			<url>${tm4e-dev-repo.url}</url>
 		</repository>
 	</repositories>
 
@@ -151,11 +157,13 @@
 							 -->
 							<!-- this adds repository references to the update site's content.xml -->
 							<associateSites>
-								<site>http://mxunit.org/update/</site>
+								<site>http://cfeclipse.org/mxunit/update</site>
 								<site>http://cfeclipse.org/cfparser/update/</site>
 								<site>http://cfeclipse.org/cfparser/update-dev/</site>
 								<site>http://cfeclipse.org/cflint/update/</site>
 								<site>http://cfeclipse.org/cflint/update-dev/</site>
+								<site>http://download.eclipse.org/tm4e/snapshots/</site>
+								<site>http://download.eclipse.org/rt/ecf/3.13.8/site.p2/</site>
 							</associateSites>
 
 							<!-- to include other files in the update site zip, list them here -->

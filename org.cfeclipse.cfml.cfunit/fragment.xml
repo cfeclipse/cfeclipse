@@ -9,7 +9,7 @@
             class="org.cfeclipse.cfml.cfunit.wizards.NewCFUnitWizard"
             finalPerspective="org.cfeclipse.cfml.perspective.CFML"
             hasPages="true"
-            helpHref="http://mxunit.org"
+            helpHref="http://cfeclipse.org/mxunit"
             icon="icons/obj16/mxunit.png"
             id="org.cfeclipse.cfml.cfunit.wizards.NewCFUnitWizard"
             name="MXUnit Test"

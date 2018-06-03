@@ -226,7 +226,7 @@ public class PackageViewTree extends TreeViewer
         {
             public void run()
             {
-            	System.out.println("Component Node");
+                 //System.out.println("Component Node");
                 ISelection selection = viewer.getSelection();
                 ComponentNode obj = (ComponentNode) ((IStructuredSelection) selection).getFirstElement();
                 insert(obj.getCreateObjectSnippet());
