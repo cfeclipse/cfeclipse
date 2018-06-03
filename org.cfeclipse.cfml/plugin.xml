@@ -2939,5 +2939,12 @@
             id="org.cfeclipse.cfml.CFMLSourceHover">
       </hover>
    </extension>
+   <extension
+         point="org.eclipse.tm4e.languageconfiguration.languageConfigurations">
+      <languageConfiguration
+            contentTypeId="org.cfeclipse.cfml.cfsource"
+            path="appearance/language-configurations/language-configuration.json">
+      </languageConfiguration>
+   </extension>
    
 </plugin>
