@@ -134,6 +134,14 @@
         <!-- <injection scopeName="text.html.basic" injectTo="text.html.cfm"/> -->
     </extension>
 
+   <extension
+         point="org.eclipse.ui.genericeditor.presentationReconcilers">
+      <presentationReconciler
+            class="org.eclipse.tm4e.ui.text.TMPresentationReconciler"
+            contentType="org.cfeclipse.cfml.cfsource">
+		</presentationReconciler>
+	</extension>
+
     <extension
           point="org.eclipse.tm4e.ui.snippets">
           <snippet
@@ -2938,6 +2946,13 @@
             class="org.cfeclipse.cfml.editors.hover.CFMLSourceHover"
             id="org.cfeclipse.cfml.CFMLSourceHover">
       </hover>
+   </extension>
+   <extension
+         point="org.eclipse.tm4e.languageconfiguration.languageConfigurations">
+      <languageConfiguration
+            contentTypeId="org.cfeclipse.cfml.cfsource"
+            path="appearance/language-configurations/language-configuration.json">
+      </languageConfiguration>
    </extension>
    
 </plugin>

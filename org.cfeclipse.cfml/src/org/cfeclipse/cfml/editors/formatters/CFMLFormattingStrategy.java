@@ -25,7 +25,7 @@ import cfml.formatting.Formatter;
 import cfml.formatting.preferences.FormatterPreferences;
 
 public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy implements IFormattingStrategyExtension {
-	private static final String lineSeparator = System.getProperty("line.separator");
+	//private static final String lineSeparator = System.getProperty("line.separator");
 	/** Documents to be formatted by this strategy */
 	private final LinkedList fDocuments = new LinkedList();
 	private final LinkedList fRegions = new LinkedList();
@@ -33,9 +33,9 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 	/** access to the preferences store * */
 	private FormattingPreferences prefs;
 	private Formatter fFormatter;
-	private static String fCurrentIndent;
-	private static int MAX_LENGTH = 0;
-	private static int col;
+	//private static String fCurrentIndent;
+	//private static int MAX_LENGTH = 0;
+	//private static int col;
 
 	public CFMLFormattingStrategy() {
 		this.prefs = new FormattingPreferences();
@@ -161,9 +161,6 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 	}
 
 	public String format(String contents, FormattingPreferences prefs, String currentIndent, boolean inCFScript) {
-		String indentation = prefs.getCanonicalIndent();
-		String newLine = org.eclipse.jface.text.TextUtilities.determineLineDelimiter(contents, lineSeparator);
-
 		boolean enforceMaxLineWidth = prefs.getEnforceMaximumLineWidth();
 		boolean tidyTags = prefs.tidyTags();
 		boolean collapseWhitespace = prefs.collapseWhiteSpace();
@@ -217,7 +214,6 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 		source.fullSequentialParse();
 		OutputDocument outputDocument = new OutputDocument(source);
 		List<Tag> tags = source.getAllTags();
-		int pos = 0;
 		for (Tag tag : tags) {
 			Element tagElement = tag.getElement();
 			if (tagElement == null) {
@@ -241,7 +237,6 @@ public class CFMLFormattingStrategy extends ContextBasedFormattingStrategy imple
 				} else {
 					outputDocument.replace(tag.getNameSegment(), tag.getNameSegment().toString().toLowerCase());
 				}
-				pos = tag.getEnd();
 			}
 		}
 		return outputDocument.toString();

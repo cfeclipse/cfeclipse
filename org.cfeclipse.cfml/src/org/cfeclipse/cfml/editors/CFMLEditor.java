@@ -862,7 +862,13 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 			Action act = new Action("Refresh syntax highlighting", null) {
 				public void run() {
 				   try {				      
-					new CFDocumentSetupParticipant().setup(doc);				  
+					//new CFDocumentSetupParticipant().setup(doc);
+						ICFDocument document = (ICFDocument) getDocumentProvider().getDocument(getEditorInput());
+						document.clearAllMarkers();
+						if (document.docParser == null) {
+							document.setParserResource(document.getResource());
+						}
+						document.parseDocument();				   
 				   } catch (Exception e) {
 				       e.printStackTrace();
 				   }
@@ -1269,7 +1275,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 	public void propertyChange(PropertyChangeEvent event) {
 		handlePreferenceStoreChanged(event);
-		System.out.println(event);
+//		System.out.println(event);
 		if(getViewer()!= null){
 			setStatusLine();
 			setSelectionCursorListener();			

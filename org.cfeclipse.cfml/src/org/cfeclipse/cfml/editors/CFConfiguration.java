@@ -25,7 +25,6 @@
 package org.cfeclipse.cfml.editors;
 
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -52,19 +51,15 @@ import org.cfeclipse.cfml.editors.partitioner.scanners.cfscript.CFScriptScanner;
 import org.cfeclipse.cfml.editors.partitioner.scanners.css.CSSScanner;
 import org.cfeclipse.cfml.editors.partitioner.scanners.jscript.JavaScriptScanner;
 import org.cfeclipse.cfml.editors.partitioner.scanners.sql.SQLScanner;
-import org.cfeclipse.cfml.editors.text.CFMLReconcilingStrategy;
-import org.cfeclipse.cfml.editors.text.NotifyingReconciler;
 import org.cfeclipse.cfml.preferences.AutoIndentPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
 import org.cfeclipse.cfml.preferences.HTMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
-import org.cfeclipse.cfml.util.FileLocator;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultInformationControl;
@@ -99,8 +94,6 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.tm4e.core.grammar.IGrammar;
-import org.eclipse.tm4e.core.registry.Registry;
 import org.eclipse.tm4e.ui.text.TMPresentationReconciler;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.editors.text.EditorsUI;
@@ -108,7 +101,6 @@ import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.MarkerAnnotation;
-import org.osgi.framework.Bundle;
 /**
  * <p>
  * This sets up the whole editor. Assigin partition damagers and repairers, and
@@ -236,23 +228,6 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//formatter.setSlaveStrategy(new XmlCommentFormattingStrategy(), AntEditorPartitionScanner.XML_COMMENT);
 		 
 		return formatter;
-	}
-
-	/**
-	 * Returns the prefixes to be used by the line-shift operation.
-	 * 
-	 * @param sourceViewer
-	 *            the source viewer to be configured by this configuration
-	 * @param contentType
-	 *            the content type for which the prefix is applicable
-	 * @return the prefixes or <code>null</code> if the prefix operation should not be supported
-	 */
-	public String[] getIndentPrefixes(ISourceViewer sourceViewer, String contentType) {
-		if (preferenceManager.insertSpacesForTabs()) {
-			return new String[] { preferenceManager.getCanonicalIndent(), " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		} else {
-			return new String[] { "\t", " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 	}
 
 	public IQuickAssistAssistant getQuickAssistAssistant(ISourceViewer sourceViewer) {
@@ -603,56 +578,23 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	///////////////////////// SCANNERS /////////////////////////////////////////////
 
 	public IReconciler getReconciler(ISourceViewer sourceViewer) {
+		/*
 	    NotifyingReconciler reconciler= new NotifyingReconciler(new CFMLReconcilingStrategy(editor));
 	    reconciler.setDelay(CFMLReconcilingStrategy.DELAY);
 	    reconciler.addReconcilingParticipant(editor);
 	    return reconciler;
+	    */
+		return null;
     }
 	
-	/**
-	 * The TextMate reconciler is used for styling
-	 */
-	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) 
-	{
+	@Override
+	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
+		// Defines a TextMate Presentation reconcilier
 		TMPresentationReconciler reconciler = new TMPresentationReconciler();
 		reconciler.install(sourceViewer);
-
-/*		reconciler.setGrammar(getTextMateGrammar());
-//		reconciler.setThemeId(ThemeIdConstants.Monokai);
-		boolean isDarkTheme = TMUIPlugin.getThemeManager().isDarkEclipseTheme();
-		reconciler.install(sourceViewer);
-		// the reconciler tm4e theme needs the document set.  TODO: tm4e is first to need this document set here, investigate
-		if(sourceViewer.getDocument() == null) {
-			sourceViewer.setDocument(editor.getDocumentProvider().getDocument(editor.getEditorInput()));
-		}
-		String themeId = isDarkTheme ? "org.cfeclipse.cfml.ui.themes.dark" : "org.cfeclipse.cfml.ui.themes.light";
-		try {
-			reconciler.setThemeId(themeId);
-		} catch (Exception e) {
-			CFMLPlugin.logError("Unable to set theme: " + themeId + " : " + e.getMessage());
-			e.printStackTrace();
-		}
-*/
-		return reconciler;
-	}
-	
-	private IGrammar getTextMateGrammar() {
-		Registry registry = new Registry();
-		Bundle cfmlBundle = CFMLPlugin.getDefault().getBundle();
-		URL appearanceURL = org.eclipse.core.runtime.FileLocator.find(cfmlBundle, new Path("appearance"), null);
-		URL fileURL = FileLocator.LocateURL(appearanceURL, "syntaxes/cfml.tmLanguage");
-		URL jsFileURL = FileLocator.LocateURL(appearanceURL, "syntaxes/JavaScript.tmLanguage");
-		try {
-			registry.loadGrammarFromPathSync("syntaxes/JavaScript.tmLanguage",jsFileURL.openStream());
-			IGrammar grammar = registry.loadGrammarFromPathSync("syntaxes/cfml.tmLanguage",fileURL.openStream());
-			//IGrammar grammar = registry.grammarForScopeName("text.html.cfm");
-			return grammar;
-		} catch (Exception e) {
-			CFMLPlugin.logError("Unable to load grammar: " + fileURL);
-			e.printStackTrace();
-			return null;
-		}
-	}
+		return reconciler;		
+	}	
+		
 	/**
 	 * Define code insight stuff (mostly assign it to different sections)
 	 */
