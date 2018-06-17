@@ -2945,6 +2945,12 @@
             contentTypeId="org.cfeclipse.cfml.cfsource"
             path="appearance/language-configurations/language-configuration.json">
       </languageConfiguration>
+   </extension>   
+   <extension
+         point="org.eclipse.e4.ui.css.swt.theme">
+         <stylesheet
+               uri="appearance/eclipse-themes/dark.css">
+               <themeid refid="org.eclipse.e4.ui.css.theme.e4_dark"/>
+         </stylesheet>
    </extension>
-   
 </plugin>
