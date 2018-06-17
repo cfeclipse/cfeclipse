@@ -230,6 +230,23 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		return formatter;
 	}
 
+	/**
+	 * Returns the prefixes to be used by the line-shift operation.
+	 * 
+	 * @param sourceViewer
+	 *            the source viewer to be configured by this configuration
+	 * @param contentType
+	 *            the content type for which the prefix is applicable
+	 * @return the prefixes or <code>null</code> if the prefix operation should not be supported
+	 */
+	public String[] getIndentPrefixes(ISourceViewer sourceViewer, String contentType) {
+		if (preferenceManager.insertSpacesForTabs()) {
+			return new String[] { preferenceManager.getCanonicalIndent(), " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		} else {
+			return new String[] { "\t", " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
+	}
+
 	public IQuickAssistAssistant getQuickAssistAssistant(ISourceViewer sourceViewer) {
 		IQuickAssistAssistant quickAssist = new QuickAssistAssistant();
 		quickAssist.setQuickAssistProcessor(new IQuickAssistProcessor() {
@@ -578,18 +595,17 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	///////////////////////// SCANNERS /////////////////////////////////////////////
 
 	public IReconciler getReconciler(ISourceViewer sourceViewer) {
-		/*
 	    NotifyingReconciler reconciler= new NotifyingReconciler(new CFMLReconcilingStrategy(editor));
 	    reconciler.setDelay(CFMLReconcilingStrategy.DELAY);
 	    reconciler.addReconcilingParticipant(editor);
 	    return reconciler;
-	    */
-		return null;
     }
 	
-	@Override
-	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
-		// Defines a TextMate Presentation reconcilier
+	/**
+	 * The TextMate reconciler is used for styling
+	 */
+	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) 
+	{
 		TMPresentationReconciler reconciler = new TMPresentationReconciler();
 		reconciler.install(sourceViewer);
 		return reconciler;		
