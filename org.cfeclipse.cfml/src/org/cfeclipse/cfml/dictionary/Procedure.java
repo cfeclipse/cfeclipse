@@ -126,6 +126,10 @@ public class Procedure implements Comparable {
 	public static final byte W3C = 0x4;
 	/** user defined tag */
 	public static final byte USR = 0x8;
+	/** form tag */
+	public static final byte FRM = 0x10;
+	/** table tag */
+	public static final byte TBL = 0x20;
 	
 	/** this procedure's name */
 	protected String name = "";

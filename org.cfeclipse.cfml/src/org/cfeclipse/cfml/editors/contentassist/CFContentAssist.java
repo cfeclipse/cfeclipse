@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 
 import org.cfeclipse.cfml.dictionary.Parameter;
 import org.cfeclipse.cfml.dictionary.Value;
+import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.ICFEFileDocument;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.util.CFDocUtils;
@@ -76,7 +77,7 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
  *
  */
 public class CFContentAssist extends CFEContentAssist{
-	 
+
 	/**
 	 * 
 	 */
@@ -390,6 +391,7 @@ public class CFContentAssist extends CFEContentAssist{
 	            CFPartitionScanner.HTM_START_TAG_BEGIN,
 	            CFPartitionScanner.HTM_START_TAG_END,
 	            CFPartitionScanner.HTM_TAG_ATTRIBS,
+	            ICFDocument.CFECLIPSE_CONTENT_TYPE,
 	            IDocument.DEFAULT_CONTENT_TYPE};
 	    
 	    return AssistUtils.isInCorrectPartitionTypes(state, partitions);

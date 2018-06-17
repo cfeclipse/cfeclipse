@@ -17,7 +17,10 @@ public class WordWrapAction implements IWorkbenchWindowActionDelegate,IEditorAct
 	
 	
 	public void setActiveEditor(IAction action, IEditorPart targetEditor) {
-		editor = (CFMLEditor)targetEditor;
+		if( targetEditor instanceof ITextEditor )
+		{
+			editor = (CFMLEditor)targetEditor;
+		}
 	}
 
 	public void run(IAction action) {

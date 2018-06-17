@@ -307,7 +307,6 @@ public class DictionaryView extends ViewPart {
 				}
 
 				public void mouseDown(MouseEvent e) {
-					System.out.println("button pressed");
 					String searchpattern = searchField.getText();
 					
 					if(searchpattern.trim().length() > 0){
@@ -464,7 +463,7 @@ public class DictionaryView extends ViewPart {
 		 //Object object = DictionaryManager.getDictionaries().get("CF_DICTIONARY");
 		// CFSyntaxDictionary cfmlDict = (CFSyntaxDictionary)object;
 		// String p_cfml_dictionary = CFMLPreferenceConstants.P_CFML_DICTIONARY;
-		 System.out.println(dictionaries);
+		//System.out.println(dictionaries);
 		 return null;
 	 }
 	 
@@ -503,7 +502,6 @@ public class DictionaryView extends ViewPart {
 		ISelection selection = viewer.getSelection();
 		Object obj = ((IStructuredSelection) selection).getFirstElement();
 		
-		System.out.println(obj.getClass());
 		if(obj instanceof TagItem){
 			Tag thistag = ((TagItem)obj).getTag();
 			

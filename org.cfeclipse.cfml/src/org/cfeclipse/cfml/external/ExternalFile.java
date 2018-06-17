@@ -53,6 +53,7 @@ import org.cfeclipse.cfml.util.EclipseAssert;
  * @author Stephen Milligan
  *
  */
+@SuppressWarnings("restriction")
 public class ExternalFile extends File {
 
     Workspace workspace;
@@ -65,7 +66,8 @@ public class ExternalFile extends File {
 		model = new ExternalMarkerAnnotationModel(this);
 	}
     
-    public Object getAdapter(Class adapter) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public Object getAdapter(Class adapter) {
 
         return super.getAdapter(adapter);
     }
@@ -89,7 +91,7 @@ public class ExternalFile extends File {
 			//return new ExternalMarker(this, info.getId());
 		} 
 		finally {
-			workspace.endOperation(rule, false, null);
+			workspace.endOperation(rule, false);
 		}
 	}
     

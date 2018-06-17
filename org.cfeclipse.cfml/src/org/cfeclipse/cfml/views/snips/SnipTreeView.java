@@ -395,7 +395,7 @@ public class SnipTreeView extends ViewPart
 		refreshSnipEx = new Action("Refresh SnipEx Server", CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_REFRESH)){
 			public void run(){
 				
-				System.out.println("Refreshing the snipex server");
+				CFMLPlugin.log("Refreshing the snipex server");
 			}
 		};
 		
@@ -687,7 +687,7 @@ public class SnipTreeView extends ViewPart
 							for (int i = 0; i < list.length; i++) {
 								File cacheFile = new File(dir + File.separatorChar +  list[i]);
 									boolean delete = cacheFile.delete();
-								System.out.println("deleting " + cacheFile + " " + delete);
+								CFMLPlugin.log("deleting " + cacheFile + " " + delete);
 								
 							}
 							

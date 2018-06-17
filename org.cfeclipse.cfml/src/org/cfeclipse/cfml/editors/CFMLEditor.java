@@ -29,6 +29,7 @@ package org.cfeclipse.cfml.editors;
 //import java.util.Iterator;
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -42,6 +43,7 @@ import org.cfeclipse.cfml.editors.actions.JumpToMatchingTagAction;
 import org.cfeclipse.cfml.editors.actions.LocateInFileSystemAction;
 import org.cfeclipse.cfml.editors.actions.LocateInTreeAction;
 import org.cfeclipse.cfml.editors.actions.RTrimAction;
+import org.cfeclipse.cfml.editors.breadcrumb.IBreadcrumb;
 import org.cfeclipse.cfml.editors.codefolding.CodeFoldingSetter;
 import org.cfeclipse.cfml.editors.decoration.DecorationSupport;
 import org.cfeclipse.cfml.editors.dnd.CFEDragDropListener;
@@ -84,7 +86,9 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ISynchronizable;
+import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.ITextViewerExtension2;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
@@ -102,6 +106,9 @@ import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -109,6 +116,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IKeyBindingService;
+import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.dnd.IDragAndDropService;
 import org.eclipse.ui.editors.text.EditorsUI;
@@ -118,11 +126,14 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInSource;
 import org.eclipse.ui.part.ResourceTransfer;
 import org.eclipse.ui.part.ShowInContext;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
+import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.IDocumentProviderExtension;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.texteditor.MarkerAnnotationPreferences;
 import org.eclipse.ui.texteditor.SourceViewerDecorationSupport;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.ui.views.navigator.LocalSelectionTransfer;
@@ -134,7 +145,7 @@ import org.cfeclipse.cfml.editors.codefolding.CodeFoldingResourceChangeReporter;
  * This is the start of the Editor. It loads up the configuration and starts up
  * the image manager and syntax dictionaries.
  */
-public class CFMLEditor extends TextEditor implements
+public class CFMLEditor extends AbstractDecoratedTextEditor implements
 IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSource {
 	/*
 	 * 
@@ -163,7 +174,11 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 	private boolean fInitialReconcile;
 	private CFDocument fCFDocument;
-
+    /**
+     * The editor breadcrumb.
+     */
+    private IBreadcrumb fBreadcrumb;
+    private Composite fBreadcrumbComposite;
 	/**
 	 * Returns the offset of the given source viewer's document that corresponds
 	 * to the given widget offset or <code>-1</code> if there is no such offset.
@@ -298,6 +313,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 	public static final String ID = "org.cfeclipse.cfml.editors.CFMLEditor";
 	
 	private static final String TEMPLATE_PROPOSALS= "template_proposals_action"; //$NON-NLS-1$
+    private static final String EDITOR_SHOW_BREADCRUMB = "cfeclipse.show.breadcrumbs";
 	
 	protected ColorManager colorManager;
 
@@ -388,12 +404,14 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		this.colorManager = new ColorManager();
 		//setup color coding and the damage repair stuff
 
-		this.configuration = new CFConfiguration(this.colorManager, this);
-		setSourceViewerConfiguration(this.configuration);
 		//assign the cfml document provider which does the partitioning
 		//and connects it to this Edtior
-
 		setDocumentProvider(new CFDocumentProvider());
+		getCFModel(); // set the document
+
+		this.configuration = new CFConfiguration(this.colorManager, this);
+		setSourceViewerConfiguration(this.configuration);
+
 
 		// The following is to enable us to listen to changes. Mainly it's used
 		// for
@@ -455,36 +473,9 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		super.createPartControl(parent);
 		IKeyBindingService service = this.getSite().getKeyBindingService();
 		service.setScopes(new String[]{EDITOR_CONTEXT});
-		this.setBackgroundColor();
 //		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
 
 		ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
-
-		this.fProjectionSupport = new ProjectionSupport(projectionViewer,
-				getAnnotationAccess(), getSharedColors());
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.task");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.cfeclipse.cfml.parserProblemAnnotation");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.cfeclipse.cfml.parserWarningAnnotation");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning");
-		this.fProjectionSupport
-				.addSummarizableAnnotationType("org.cfeclipse.cfml.occurrenceAnnotation");
-		
-		this.fProjectionSupport.setHoverControlCreator(new IInformationControlCreator() {
-			public IInformationControl createInformationControl(Shell shell) {
-
-                IInformationControl returnIInformationControl = new DefaultInformationControl(
-                        shell);
-				return returnIInformationControl;
-			}
-		});
-		this.fProjectionSupport.install();
-		// ensure decoration support has been created and configured.
 		getSourceViewerDecorationSupport(getSourceViewer());
 		//Object lay = parent.getLayoutData();
 
@@ -634,9 +625,6 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		}		
 	}
 	
-	private void partActivated(){
-		System.out.println("I am activated" + this.getPartName());
-	}
 	public void setStatusLine(){
 		
 	/*	try{
@@ -1300,26 +1288,8 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 				
 			}
 		}
-		setBackgroundColor();
 
 		super.handlePreferenceStoreChanged(event);
-	}
-
-	/**
-	 * Set the background color of the editor window based on the user's
-	 * preferences
-	 */
-	private void setBackgroundColor() {
-		// Only try to set the background color when the source fViewer is
-		// available
-		if (this.getSourceViewer() != null
-				&& this.getSourceViewer().getTextWidget() != null) {
-			CFMLPreferenceManager manager = new CFMLPreferenceManager();
-			// Set the background color of the editor
-			this.getSourceViewer().getTextWidget().setBackground(
-					new org.eclipse.swt.graphics.Color(Display.getCurrent(), manager
-							.getColor(EditorPreferenceConstants.P_COLOR_BACKGROUND)));
-		}
 	}
 
 	/*
@@ -1361,7 +1331,34 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 	protected ISourceViewer createSourceViewer(Composite parent,
 			IVerticalRuler ruler, int styles) {
 
-		ProjectionViewer viewer = new ProjectionViewer(parent, ruler,
+	    Composite composite= new Composite(parent, SWT.NONE);
+        GridLayout layout= new GridLayout(1, false);
+        layout.marginHeight= 0;
+        layout.marginWidth= 0;
+        layout.horizontalSpacing= 0;
+        layout.verticalSpacing= 0;
+        composite.setLayout(layout);
+
+        fBreadcrumbComposite= new Composite(composite, SWT.NONE);
+        GridData layoutData= new GridData(SWT.FILL, SWT.TOP, true, false);
+        fBreadcrumbComposite.setLayoutData(layoutData);
+        layout= new GridLayout(1, false);
+        layout.marginHeight= 0;
+        layout.marginWidth= 0;
+        layout.horizontalSpacing= 0;
+        layout.verticalSpacing= 0;
+        layoutData.exclude= true;
+        fBreadcrumbComposite.setLayout(layout);
+
+        Composite editorComposite= new Composite(composite, SWT.NONE);
+        editorComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        FillLayout fillLayout= new FillLayout(SWT.VERTICAL);
+        fillLayout.marginHeight= 0;
+        fillLayout.marginWidth= 0;
+        fillLayout.spacing= 0;
+        editorComposite.setLayout(fillLayout);
+        
+		ProjectionViewer sourceViewer = new ProjectionViewer(editorComposite, ruler,
 				getOverviewRuler(), isOverviewRulerVisible(), styles);
 	
 		/*
@@ -1375,12 +1372,138 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		CFHyperlinkDetector cfhd = new CFHyperlinkDetector();
 		
 		detectors[0] = cfhd;
-		viewer.setHyperlinkDetectors(detectors, SWT.CONTROL);
+		sourceViewer.setHyperlinkDetectors(detectors, SWT.CONTROL);
 		
-		return viewer;
+		if (sourceViewer instanceof ProjectionViewer && fProjectionSupport == null) {
+            fProjectionSupport= new ProjectionSupport((ProjectionViewer)sourceViewer, getAnnotationAccess(), getSharedColors());
+            MarkerAnnotationPreferences markerAnnotationPreferences= (MarkerAnnotationPreferences) getAdapter(MarkerAnnotationPreferences.class);
+            if (markerAnnotationPreferences != null) {
+                Iterator<AnnotationPreference> e= markerAnnotationPreferences.getAnnotationPreferences().iterator();
+                while (e.hasNext()) {
+                    AnnotationPreference annotationPreference= e.next();
+                    Object annotationType= annotationPreference.getAnnotationType();
+                    if (annotationType instanceof String)
+                        fProjectionSupport.addSummarizableAnnotationType((String)annotationType);
+                }
+            } else {
+                fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.task");
+                fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.parserProblemAnnotation");
+                fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.parserWarningAnnotation");
+                fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.occurrenceAnnotation");
+                fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error"); //$NON-NLS-1$
+                fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning"); //$NON-NLS-1$
+            }
+            fProjectionSupport.setHoverControlCreator(new IInformationControlCreator() {
+                @Override
+                public IInformationControl createInformationControl(Shell shell) {
+                    return new DefaultInformationControl(shell, false);
+                }
+            });
+            fProjectionSupport.setInformationPresenterControlCreator(new IInformationControlCreator() {
+                @Override
+                public IInformationControl createInformationControl(Shell shell) {
+                    return new DefaultInformationControl(shell, true);
+                }
+            });
+            fProjectionSupport.install();
+
+        }
+
+        // ensure source viewer decoration support has been created and configured
+        getSourceViewerDecorationSupport(sourceViewer);
+
+		return sourceViewer;
 
 	}
 
+	/**
+     * Creates the breadcrumb to be used by this editor.
+     * Returns <code>null</code> if this editor can not show a breadcrumb.
+     *
+     * @return the breadcrumb or <code>null</code>
+     * @since 3.4
+     */
+    protected IBreadcrumb createBreadcrumb() {
+        return new CFMLEditorBreadcrumb(this);
+    }
+
+    /**
+     * @return the breadcrumb used by this viewer if any.
+     * @since 3.4
+     */
+    public IBreadcrumb getBreadcrumb() {
+        return fBreadcrumb;
+    }
+
+    /**
+     * Returns the preference key for the breadcrumb. The
+     * value depends on the current perspective.
+     *
+     * @return the preference key or <code>null</code> if there's no perspective
+     * @since 3.4
+     */
+    String getBreadcrumbPreferenceKey() {
+        IPerspectiveDescriptor perspective= getSite().getPage().getPerspective();
+        if (perspective == null)
+            return null;
+        return CFMLEditor.EDITOR_SHOW_BREADCRUMB + "." + perspective.getId(); //$NON-NLS-1$
+    }
+
+    /**
+     * Returns true if the breadcrumb is active. If true
+     * then the breadcrumb has the focus if this part
+     * is the active part.
+     *
+     * @return true if the breadcrumb is active.
+     * @since 3.4
+     */
+    public boolean isBreadcrumbActive() {
+        return fBreadcrumb != null && fBreadcrumb.isActive();
+    }
+
+    /**
+     * Makes the breadcrumb visible. Creates its content
+     * if this is the first time it is made visible.
+     *
+     * @since 3.4
+     */
+    private void showBreadcrumb() {
+        if (fBreadcrumb == null)
+            return;
+
+        if (fBreadcrumbComposite.isDisposed()) {
+            // not expected
+            SWT.error(SWT.ERROR_WIDGET_DISPOSED, null,
+                    ". Editor not properly disposed;");
+        }
+        if (fBreadcrumbComposite.getChildren().length == 0) {
+            fBreadcrumb.createContent(fBreadcrumbComposite);
+        }
+
+        ((GridData) fBreadcrumbComposite.getLayoutData()).exclude= false;
+        fBreadcrumbComposite.setVisible(true);
+
+//        ISourceReference selection= computeHighlightRangeSourceReference();
+//        if (selection == null)
+//            selection= getInputJavaElement();
+//        setBreadcrumbInput(selection);
+        fBreadcrumbComposite.getParent().layout(true, true);
+    }
+
+    /**
+     * Hides the breadcrumb
+     *
+     * @since 3.4
+     */
+    private void hideBreadcrumb() {
+        if (fBreadcrumb == null)
+            return;
+        ((GridData) fBreadcrumbComposite.getLayoutData()).exclude= true;
+        fBreadcrumbComposite.setVisible(false);
+        fBreadcrumbComposite.getParent().layout(true, true);
+    }
+
+	
 	/**
 	 * Returns the source fViewer decoration support.
 	 * 
@@ -1411,7 +1534,7 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 
 	public void projectionEnabled() {
 		// TODO Auto-generated method stub
-		System.out.println("wee");
+		CFMLPlugin.log("projectionEnabled");
 	}
 
 	/**
@@ -1448,6 +1571,40 @@ IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSo
 		
 		//openTarget(target);
 	}	
+
+	   /*
+     * Update the hovering behavior depending on the preferences.
+     */
+    private void updateHoverBehavior() {
+        SourceViewerConfiguration configuration= getSourceViewerConfiguration();
+        String[] types= configuration.getConfiguredContentTypes(getSourceViewer());
+
+        for (int i= 0; i < types.length; i++) {
+
+            String t= types[i];
+
+            ISourceViewer sourceViewer= getSourceViewer();
+            if (sourceViewer instanceof ITextViewerExtension2) {
+                // Remove existing hovers
+                ((ITextViewerExtension2)sourceViewer).removeTextHovers(t);
+
+                int[] stateMasks= configuration.getConfiguredTextHoverStateMasks(getSourceViewer(), t);
+
+                if (stateMasks != null) {
+                    for (int j= 0; j < stateMasks.length; j++)  {
+                        int stateMask= stateMasks[j];
+                        ITextHover textHover= configuration.getTextHover(sourceViewer, t, stateMask);
+                        ((ITextViewerExtension2)sourceViewer).setTextHover(textHover, t, stateMask);
+                    }
+                } else {
+                    ITextHover textHover= configuration.getTextHover(sourceViewer, t);
+                    ((ITextViewerExtension2)sourceViewer).setTextHover(textHover, t, ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
+                }
+            } else
+                sourceViewer.setTextHover(configuration.getTextHover(sourceViewer, t), t);
+        }
+    }   
+
 	
 //	someday we'll use this
 //	public void saveState(IMemento memento) {

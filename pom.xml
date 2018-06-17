@@ -10,26 +10,25 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho.version>0.26.0</tycho.version>
-		<tycho-extras.version>0.26.0</tycho-extras.version>
+		<tycho.version>1.0.0</tycho.version>
+		<tycho-extras.version>1.0.0</tycho-extras.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
-		<!-- 
-		<mxunit-repo.url>http://cfeclipse.org/mxunit-update</mxunit-repo.url>
-		 -->
-		<mxunit-repo.url>http://mxunit.org/update</mxunit-repo.url>
+		<oxygen-repo.url>http://download.eclipse.org/releases/oxygen/201706281000/</oxygen-repo.url>
+		<mxunit-repo.url>http://cfeclipse.org/mxunit/update</mxunit-repo.url>
 		<cfparser-repo.url>http://cfeclipse.org/cfparser/update</cfparser-repo.url>
 		<cfparser-dev-repo.url>http://cfeclipse.org/cfparser/update-dev</cfparser-dev-repo.url>
 		<cflint-repo.url>http://cfeclipse.org/cflint/update</cflint-repo.url>
 		<cflint-dev-repo.url>http://cfeclipse.org/cflint/update-dev</cflint-dev-repo.url>
 		<ecf-repo.url>http://download.eclipse.org/rt/ecf/3.11.0/site.p2</ecf-repo.url>
+		<tm4e.url>http://download.eclipse.org/tm4e/snapshots</tm4e.url>
 		<mylyn-repo.url>http://download.eclipse.org/mylyn/releases/latest</mylyn-repo.url>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>mars</id>
-			<url>${mars-repo.url}</url>
+			<id>oxygen</id>
+			<url>${oxygen-repo.url}</url>
 			<layout>p2</layout>
 		</repository>
 		<repository>
@@ -67,6 +66,11 @@
 			<url>${mylyn-repo.url}</url>
 			<layout>p2</layout>
 		</repository>
+		<repository>
+			<id>tm4e</id>
+			<url>${tm4e.url}</url>
+			<layout>p2</layout>
+		</repository>
 	</repositories>
 
 	<modules>
@@ -81,7 +85,7 @@
 		<module>org.cfeclipse.cfml.snippets.feature</module>
 		<module>org.cfeclipse.cfml.templates.fragment</module>
 	</modules>
-
+    
 	<profiles>
 		<profile>
 			<id>sign</id>
@@ -159,6 +163,17 @@
 	</profiles>
 
 	<build>
+	
+		<pluginManagement>
+	      <plugins>
+	        <plugin>
+	          <groupId>org.eclipse.tycho</groupId>
+	          <artifactId>tycho-versions-plugin</artifactId>
+			  <version>${tycho.version}</version>
+	        </plugin>
+	      </plugins>
+	    </pluginManagement>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

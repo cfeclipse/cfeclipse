@@ -22,44 +22,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package org.cfeclipse.cfml.editors;
+package org.cfeclipse.cfml.editors.hover;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IInformationControl;
+import org.eclipse.jface.text.IInformationControlCreator;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextHoverExtension;
+import org.eclipse.jface.text.ITextHoverExtension2;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.texteditor.MarkerAnnotation;
 
 
 /**
  * @author Stephen Milligan This class handles the hover text for source viewer markers.
  */
-public class CFAnnotationHover implements IAnnotationHover
+public class CFAnnotationHover extends AbstractAnnotationHover
 {
-
-    public String getHoverInfo(ISourceViewer sourceViewer, int lineNumber)
-    {
-
-        String[] messages = getMessagesForLine(sourceViewer, lineNumber);
-
-        if (messages.length == 0)
-            return null;
-
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < messages.length; i++)
-        {
-            buffer.append(messages[i]);
-            if (i < messages.length - 1)
-                buffer.append(System.getProperty("line.separator")); //$NON-NLS-1$
-        }
-        return buffer.toString();
-    }
+	
+    public CFAnnotationHover(boolean allAnnotations) {
+		super(allAnnotations);
+	}
+//
+//	public String getHoverInfo(ISourceViewer sourceViewer, int lineNumber)
+//    {
+//
+//        String[] messages = getMessagesForLine(sourceViewer, lineNumber);
+//
+//        if (messages.length == 0)
+//            return null;
+//
+//        StringBuffer buffer = new StringBuffer();
+//        for (int i = 0; i < messages.length; i++)
+//        {
+//            buffer.append(messages[i]);
+//            if (i < messages.length - 1)
+//                buffer.append(System.getProperty("line.separator")); //$NON-NLS-1$
+//        }
+//        return buffer.toString();
+//    }
 
     private String[] getMessagesForLine(ISourceViewer viewer, int line)
     {
@@ -105,4 +118,6 @@ public class CFAnnotationHover implements IAnnotationHover
         }
         return false;
     }
+    
+
 }

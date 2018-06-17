@@ -78,7 +78,7 @@ public class VariablesParser {
 			CfmlTagSet setTag = new CfmlTagSet(tag.getLineNumber(), tag.getStartPosition(), tag.getEndPosition(), tag.getName());
 		//	System.out.println("Parsing cfset");
 			for (int i = 0; i < setTag.getAttributes().length; i++) {
-				System.out.println(setTag.getAttributes()[i].getName() + " = " + setTag.getAttributes()[i].getValue());
+				//System.out.println(setTag.getAttributes()[i].getName() + " = " + setTag.getAttributes()[i].getValue());
 			}
 		}
 		else if(tagname.equalsIgnoreCase("cfinvoke")){
