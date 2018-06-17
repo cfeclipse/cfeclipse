@@ -142,74 +142,70 @@ import org.cfeclipse.cfml.editors.codefolding.CodeFoldingResourceChangeReporter;
 /**
  * @author Rob
  * 
- *         This is the start of the Editor. It loads up the configuration and starts up the image manager and syntax
- *         dictionaries.
+ * This is the start of the Editor. It loads up the configuration and starts up
+ * the image manager and syntax dictionaries.
  */
-public class CFMLEditor extends AbstractDecoratedTextEditor
-		implements IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSource {
+public class CFMLEditor extends AbstractDecoratedTextEditor implements
+IReconcilingParticipant, IProjectionListener, IPropertyChangeListener, IShowInSource {
 	/*
 	 * 
 	 *Need to add mouse listeners
 	 * private MouseListener fMouseListener;
-	
-	    ...
-	    public void createPartControl(Composite parent) {
-	        super.createPartControl(parent);
-	        fMouseListener= new MouseAdaper() {
-	            <your implementation>
-	        });
-	        StyledText t= getSourceViewer().getTextWidget();
-	        t.addMouseListener(fMouseListener);
-	    }
-	
-	    public void dispose() {
-	        if (fMouseListener != null) {
-	            <cleanup fMouseListener related resources>
-	            fMouseListener= null;
-	        }
-	        super.dispose();
-	    }
+
+        ...
+        public void createPartControl(Composite parent) {
+            super.createPartControl(parent);
+            fMouseListener= new MouseAdaper() {
+                <your implementation>
+            });
+            StyledText t= getSourceViewer().getTextWidget();
+            t.addMouseListener(fMouseListener);
+        }
+
+        public void dispose() {
+            if (fMouseListener != null) {
+                <cleanup fMouseListener related resources>
+                fMouseListener= null;
+            }
+            super.dispose();
+        }
 	 * 
 	 */
-	
-	private boolean		fInitialReconcile;
-	private CFDocument	fCFDocument;
+
+	private boolean fInitialReconcile;
+	private CFDocument fCFDocument;
+    /**
+     * The editor breadcrumb.
+     */
+    private IBreadcrumb fBreadcrumb;
+    private Composite fBreadcrumbComposite;
 	/**
-	 * The editor breadcrumb.
-	 */
-	private IBreadcrumb	fBreadcrumb;
-	private Composite	fBreadcrumbComposite;
-	
-	/**
-	 * Returns the offset of the given source viewer's document that corresponds to the given widget offset or
-	 * <code>-1</code> if there is no such offset.
+	 * Returns the offset of the given source viewer's document that corresponds
+	 * to the given widget offset or <code>-1</code> if there is no such offset.
 	 *
-	 * @param viewer
-	 *            the source viewer
-	 * @param widgetOffset
-	 *            the widget offset
+	 * @param viewer the source viewer
+	 * @param widgetOffset the widget offset
 	 * @return the corresponding offset in the source viewer's document or <code>-1</code>
 	 * @since 2.1
 	 */
 	public static final int getWidgetOffset2ModelOffset(ISourceViewer viewer, int widgetOffset) {
 		return widgetOffset2ModelOffset(viewer, widgetOffset);
 	}
-	
+
 	/**
 	 * Returns the cf model for the current editor input of this editor.
-	 * 
 	 * @return the cf model for this editor or <code>null</code>
 	 */
 	public CFDocument getCFModel() {
 		if (fCFDocument == null) {
-			IDocumentProvider provider = getDocumentProvider();
-			if (provider instanceof CFDocumentProvider) {
-				CFDocumentProvider documentProvider = (CFDocumentProvider) provider;
-				fCFDocument = documentProvider.getCFDocument(getEditorInput());
-			}
-		}
+            IDocumentProvider provider= getDocumentProvider();
+            if (provider instanceof CFDocumentProvider) {
+                CFDocumentProvider documentProvider= (CFDocumentProvider) provider;
+                fCFDocument= documentProvider.getCFDocument(getEditorInput());
+            }
+        }
 		return fCFDocument;
-	}
+	}	
 	
 	/* (non-Javadoc)
 	 * @see org.cfeclipse.cfml.editors.text.IReconcilingParticipant#reconciled()
@@ -221,19 +217,19 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 			updateForInitialReconcile();
 		}
 		
-		SourceViewerConfiguration config = getSourceViewerConfiguration();
+		SourceViewerConfiguration config= getSourceViewerConfiguration();
 		if (config == null || getViewer() == null) {
-			return; // editor has been disposed.
+			return; //editor has been disposed.
 		}
-		IAutoEditStrategy[] strategies = config.getAutoEditStrategies(getViewer(), null);
+		IAutoEditStrategy[] strategies= config.getAutoEditStrategies(getViewer(), null);
 		for (int i = 0; i < strategies.length; i++) {
 			IAutoEditStrategy strategy = strategies[i];
 			if (strategy instanceof CFEIndentStrategy) {
-				((CFEIndentStrategy) strategy).reconciled();
+				((CFEIndentStrategy)strategy).reconciled();
 			}
 		}
-		if (getPreferenceStore().getBoolean(ParserPreferenceConstants.P_AUTO_RECONCILE)) {
-			Shell shell = getSite().getShell();
+		if(getPreferenceStore().getBoolean(ParserPreferenceConstants.P_AUTO_RECONCILE)){			
+			Shell shell= getSite().getShell();
 			if (shell != null && !shell.isDisposed()) {
 				shell.getDisplay().asyncExec(new Runnable() {
 					public void run() {
@@ -251,112 +247,115 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 			}
 		}
 	}
-	
+
 	private void updateForInitialReconcile() {
-		IDocumentProvider provider = getDocumentProvider();
-		if (provider == null) {// disposed
+		IDocumentProvider provider=  getDocumentProvider();
+		if (provider == null) {//disposed
 			return;
 		}
 		if (getCFModel() == null) {
 			return;
 		}
-		IDocument doc = provider.getDocument(getEditorInput());
-		if (doc == null) {
-			return; // disposed
-		}
-		Object lock = getLockObject(doc);
-		// ensure to synchronize so that the AntModel is not nulled out underneath in the AntEditorDocumentProvider
-		// when the editor/doc provider are disposed
-		if (lock == null) {
-			updateModelForInitialReconcile();
-		} else {
-			synchronized (lock) {
-				updateModelForInitialReconcile();
-			}
-		}
+        IDocument doc= provider.getDocument(getEditorInput());
+        if (doc == null) {
+            return; //disposed
+        }
+        Object lock= getLockObject(doc);
+		//ensure to synchronize so that the AntModel is not nulled out underneath in the AntEditorDocumentProvider
+		//when the editor/doc provider are disposed
+        if (lock == null) {
+            updateModelForInitialReconcile();
+        } else {
+            synchronized (lock) {
+                updateModelForInitialReconcile();
+            }
+        }
 	}
-	
-	private void updateModelForInitialReconcile() {
-		CFDocument model = getCFModel();
-		if (model == null) {
-			return;
-		}
-		
-		fInitialReconcile = false;
-		// model.updateForInitialReconcile();
-	}
-	
-	public Object getLockObject(IDocument doc) {
-		Object lock = null;
-		if (doc instanceof ISynchronizable) {
-			lock = ((ISynchronizable) doc).getLockObject();
-		} else {
+    
+    private void updateModelForInitialReconcile() {
+        CFDocument model= getCFModel();
+        if (model == null) {
+            return;
+        }
+
+        fInitialReconcile= false;
+        //model.updateForInitialReconcile();
+    }
+    
+    public Object getLockObject(IDocument doc) {
+        Object lock= null;
+        if (doc instanceof ISynchronizable) {
+            lock= ((ISynchronizable) doc).getLockObject();
+        } else {
 			lock = getCFModel();
-		}
-		return lock;
-	}
-	
+        }
+        return lock;
+    }
+
 	public ShowInContext getShowInContext() {
 		// TODO Auto-generated method stub
-		// getEditorInput()
-		
-		ShowInContext context = new ShowInContext(getEditorInput(), getSelectionProvider().getSelection());
-		
+    //getEditorInput()
+    	
+    	ShowInContext context = new ShowInContext(getEditorInput(), getSelectionProvider().getSelection());
+    	
 		return context;
 	}
-	
+
 	/**
-	 * Logger for this class
-	 */
-	// private static final Logger logger = Logger.getLogger(CFMLEditor.class);
-	// private final boolean DEBUG = DebugSettings.EDITORS;
-	
-	public static final String EDITOR_CONTEXT			 = "org.cfeclipse.cfml.cfmleditorcontext";
+     * Logger for this class
+     */
+    //private static final Logger logger = Logger.getLogger(CFMLEditor.class);
+    //private final boolean DEBUG = DebugSettings.EDITORS;
+    
+	public static final String EDITOR_CONTEXT = "org.cfeclipse.cfml.cfmleditorcontext";
 	public static final String EDITOR_HYPERLINKS_ENABLED = AbstractDecoratedTextEditorPreferenceConstants.EDITOR_HYPERLINKS_ENABLED;
 	
 	public static final String ID = "org.cfeclipse.cfml.editors.CFMLEditor";
 	
-	private static final String	TEMPLATE_PROPOSALS	   = "template_proposals_action"; //$NON-NLS-1$
-	private static final String	EDITOR_SHOW_BREADCRUMB = "cfeclipse.show.breadcrumbs";
+	private static final String TEMPLATE_PROPOSALS= "template_proposals_action"; //$NON-NLS-1$
+    private static final String EDITOR_SHOW_BREADCRUMB = "cfeclipse.show.breadcrumbs";
 	
 	protected ColorManager colorManager;
-	
+
 	protected CFConfiguration configuration;
-	
+
 	protected CFMLPairMatcher cfmlBracketMatcher;
-	
+
 	protected GenericEncloserAction testAction;
-	
+
 	final GotoFileAction gfa = new GotoFileAction();
-	
+
 	final JumpToDocPos jumpAction = new JumpToDocPos();
-	
+
 	private CodeFoldingSetter foldingSetter;
-	
+
+
 	/**
 	 * The change ruler column.
 	 */
-	
+
 	boolean fIsChangeInformationShown;
-	
+
 	private ProjectionSupport fProjectionSupport;
+
+	private DragSource dragsource;
+	private Object columnSupport;
+	private CFContentOutlineView cfcontentOutlineView;
+	private SelectionCursorListener SelectionCursorListener;
+	private boolean isMarkOccurrenceEnabled;
+
 	
-	private DragSource				dragsource;
-	private Object					columnSupport;
-	private CFContentOutlineView	cfcontentOutlineView;
-	private SelectionCursorListener	SelectionCursorListener;
-	private boolean					isMarkOccurrenceEnabled;
-	
+
 	/**
 	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		// TODO: On save parsing should apparently go into a builder.
-		
+		//TODO: On save parsing should apparently go into a builder.
+
 		// Trim trailing spaces if the option is turned on
 		if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_RTRIM_ON_SAVE)) {
-			
+
 			// Perform Trim Trailing Spaces
 			RTrimAction trimAction = new RTrimAction();
 			try {
@@ -365,54 +364,55 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		}
-		
+
 		try {
 			super.doSave(monitor);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		this.foldingSetter.docChanged(false);
-		
+
 	}
-	
+
 	@Override
 	public boolean isSaveAsAllowed() {
-		return true;
+	    return true;
 	}
 	
 	public CFMLEditor() {
 		super();
-		
-		// this is for bracket matching
-		// create the pairs for testing
+
+		//	this is for bracket matching
+		//create the pairs for testing
 		Pair parenthesis = new Pair("(", ")", 1);
 		Pair curlyBraces = new Pair("{", "}", 1);
 		Pair squareBraces = new Pair("[", "]", 1);
-		
-		// create the collection
+
+		//create the collection
 		LinkedList<Pair> brackets = new LinkedList<Pair>();
 		brackets.add(parenthesis);
 		brackets.add(curlyBraces);
 		brackets.add(squareBraces);
-		
-		// create the CFMLPairMatcher
+
+		//create the CFMLPairMatcher
 		this.cfmlBracketMatcher = new CFMLPairMatcher(brackets);
-		// end bracket matching stuff
-		
+		//end bracket matching stuff
+
 		this.colorManager = new ColorManager();
-		// setup color coding and the damage repair stuff
-		
-		// assign the cfml document provider which does the partitioning
-		// and connects it to this Edtior
+		//setup color coding and the damage repair stuff
+
+		//assign the cfml document provider which does the partitioning
+		//and connects it to this Edtior
 		setDocumentProvider(new CFDocumentProvider());
 		getCFModel(); // set the document
-		
+
 		this.configuration = new CFConfiguration(this.colorManager, this);
 		setSourceViewerConfiguration(this.configuration);
-		
+
+
 		// The following is to enable us to listen to changes. Mainly it's used
 		// for
 		// getting the document filename when a new document is opened.
@@ -421,9 +421,9 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 		CFMLPlugin.getWorkspace().addResourceChangeListener(listener);
 		// add the code folding state file handling
 		CFMLPlugin.getWorkspace().addResourceChangeListener(new CodeFoldingResourceChangeReporter());
-		
+				
 	}
-	
+
 	public StyledText getTextWidget() {
 		return this.getSourceViewer().getTextWidget();
 	}
@@ -431,91 +431,113 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * This method configures the editor but does not define a <code>SourceViewerConfiguration</code>. When only
-	 * interested in providing a custom source fViewer configuration, subclasses may extend this method.
+	 * This method configures the editor but does not define a
+	 * <code>SourceViewerConfiguration</code>. When only interested in
+	 * providing a custom source fViewer configuration, subclasses may extend this
+	 * method.
 	 */
 	@Override
 	protected void initializeEditor() {
-		IPreferenceStore generalTextStore = EditorsUI.getPreferenceStore();
+		IPreferenceStore generalTextStore= EditorsUI.getPreferenceStore();
 		IPreferenceStore cfmlStore = CFMLPlugin.getDefault().getPreferenceStore();
-		
-		IPreferenceStore combinedPreferenceStore = new ChainedPreferenceStore(
-				new IPreferenceStore[] { cfmlStore, generalTextStore });
+				
+		IPreferenceStore combinedPreferenceStore= new ChainedPreferenceStore(new 
+		IPreferenceStore[] { cfmlStore,generalTextStore  });		
 		setPreferenceStore(combinedPreferenceStore);
 		
 		// This ensures that we are notified when the preferences are saved
-		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
+		CFMLPlugin.getDefault().getPreferenceStore()
+				.addPropertyChangeListener(this);
 		setEditorContextMenuId("#CFMLEditorContext"); //$NON-NLS-1$
 		setRulerContextMenuId("#TextRulerContext"); //$NON-NLS-1$
 		setHelpContextId(ITextEditorHelpContextIds.TEXT_EDITOR);
 		configureInsertMode(SMART_INSERT, false);
-		setInsertMode(INSERT);
-		isMarkOccurrenceEnabled = getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES);
+		setInsertMode(INSERT);	
+		isMarkOccurrenceEnabled= getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES);
 	}
 	
+	
+
+
 	public void createPartControl(Composite parent) {
+	    
+		
 		
 		/* TODO: hook this up to a button
 		 * Check the preferences, and add a toolbar */
-		if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR)) {
+		if(getPreferenceStore().getBoolean(EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR)){
 			CFMLEditorToolbar editorWithToolbar = new CFMLEditorToolbar();
 			parent = editorWithToolbar.getTabs(parent);
 		}
 		
 		super.createPartControl(parent);
 		IKeyBindingService service = this.getSite().getKeyBindingService();
-		service.setScopes(new String[] { EDITOR_CONTEXT });
-		// this.fSourceViewerDecorationSupport.install(getPreferenceStore());
-		
+		service.setScopes(new String[]{EDITOR_CONTEXT});
+//		this.fSourceViewerDecorationSupport.install(getPreferenceStore());
+
 		ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
 		getSourceViewerDecorationSupport(getSourceViewer());
-		// Object lay = parent.getLayoutData();
+		//Object lay = parent.getLayoutData();
+
+		//System.out.println(lay.getClass());
 		
-		// System.out.println(lay.getClass());
+		 
+		    
+		    //one.setToolTipText("This is tab one");
+		  //  one.setControl(getTabOneControl(tabFolder));
+
+		    
+		    //two.setToolTipText("This is tab two");
+		  //  two.setControl(getTabTwoControl(tabFolder));
+
 		
-		// one.setToolTipText("This is tab one");
-		// one.setControl(getTabOneControl(tabFolder));
+		    //three.setToolTipText("This is tab three");
+		  //  three.setControl(getTabThreeControl(tabFolder));
+
+		   
+		    //four.setToolTipText("This is tab four");
 		
-		// two.setToolTipText("This is tab two");
-		// two.setControl(getTabTwoControl(tabFolder));
 		
-		// three.setToolTipText("This is tab three");
-		// three.setControl(getTabThreeControl(tabFolder));
-		
-		// four.setToolTipText("This is tab four");
 		
 		projectionViewer.doOperation(ProjectionViewer.TOGGLE);
-		
+
 		this.foldingSetter = new CodeFoldingSetter(this);
 		this.foldingSetter.docChanged(true);
-		
+
 		// TODO: If we set this directly the projection fViewer loses track of the
 		// line numbers.
 		// Need to create a class that extends projectionViewer so we can implement
 		// wrapped
 		// line tracking.
-		// projectionViewer.getTextWidget().setWordWrap(true);
+		//projectionViewer.getTextWidget().setWordWrap(true);
 		
+
 		try {
-			if (isEditorInputReadOnly()) {
-				
-				if (getPreferenceStore().getBoolean(EditorPreferenceConstants.P_WARN_READ_ONLY_FILES)
+			if (isEditorInputReadOnly()) {				
+			
+				if (getPreferenceStore().getBoolean(
+						EditorPreferenceConstants.P_WARN_READ_ONLY_FILES)
 						&& !getPreferenceStore().getBoolean("MAKE_WRITABLE")) {
 					
 					String[] labels = new String[2];
 					labels[0] = "OK";
 					labels[1] = "Make writable";
-					MessageDialogWithToggle msg = new MessageDialogWithToggle(this.getEditorSite().getShell(), "Warning!", null,
+					MessageDialogWithToggle msg = new MessageDialogWithToggle(
+							this.getEditorSite().getShell(),
+							"Warning!",
+							null,
 							"You are opening a read only file. You will not be able to make or save any changes.",
-							MessageDialog.WARNING, labels, 0, "Don't show this warning in future.", false);
-					// MessageBox msg = new MessageBox(this.getEditorSite().getShell());
-					// msg.setText("Warning!");
-					// msg.setMessage("You are opening a read only file. You will not be
+							MessageDialog.WARNING, labels, 0,
+							"Don't show this warning in future.", false);
+					//MessageBox msg = new MessageBox(this.getEditorSite().getShell());
+					//msg.setText("Warning!");
+					//msg.setMessage("You are opening a read only file. You will not be
 					// able to make or save any changes.");
 					if (msg.open() == 0) {
 						if (msg.getToggleState()) {
 							// Don't show warning in future.
-							getPreferenceStore().setValue(EditorPreferenceConstants.P_WARN_READ_ONLY_FILES, false);
+							getPreferenceStore().setValue(
+									EditorPreferenceConstants.P_WARN_READ_ONLY_FILES, false);
 						}
 					} else {
 						if (msg.getToggleState()) {
@@ -524,24 +546,27 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 						}
 						setReadOnly(false);
 					}
-				} else if (getPreferenceStore().getBoolean("MAKE_WRITABLE")) {
-					setReadOnly(false);
+				} else if (getPreferenceStore().getBoolean("MAKE_WRITABLE")){
+					setReadOnly(false);					
 				}
 			}
 			
-			// if (this.DEBUG) {
-			// IWorkbenchPage p = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			// System.out.println(p);
-			// }
+
+			//if (this.DEBUG) {
+			    //IWorkbenchPage p = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			    //System.out.println(p);
+			//}
 			
 		} catch (Exception e) {
-			
+            
+
 			e.printStackTrace();
 			
 		}
 		
 		setStatusLine();
 		setupSelectionListeners(projectionViewer);
+		
 		
 	}
 	
@@ -551,109 +576,112 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 		File file = new File(fileName);
 		
 		if (input instanceof CFJavaFileEditorInput) {
-			CFJavaFileEditorInput tmp;
+			CFJavaFileEditorInput tmp;			
 			tmp = (CFJavaFileEditorInput) input;
 			IPath path = tmp.getPath();
 			file = path.toFile();
 			if (!file.exists()) {
-				MessageDialog.openError(getEditorSite().getShell(), "Error",
-						"Cannot fetch " + fileName + " for attributes change.");
+				MessageDialog.openError(
+						getEditorSite().getShell(), "Error", "Cannot fetch " + fileName + " for attributes change.");					
 			} else {
-				
+								
 				try {
-					String command = "";
-					String osName = System.getProperty("os.name");
+					String command = "";					
+					String osName = System.getProperty("os.name");					
 					
 					if (osName.indexOf("Windows") > -1) {
 						if (mode)
 							command = "attrib +r " + path.toOSString();
-						else
-							command = "attrib -r " + path.toOSString();
+						else 
+							command = "attrib -r " + path.toOSString();							
 					} else if (osName.indexOf("Linux") > -1) {
 						if (mode)
 							command = "chmod 444 " + path.toOSString();
-						else
-							command = "chmod 644 " + path.toOSString();
+						else 
+							command = "chmod 644 " + path.toOSString();							
 					}
 					
 					Runtime rt = Runtime.getRuntime();
 					rt.exec(command);
 					setEditorInputModifiable();
 				} catch (Exception e) {
-					MessageDialog.openError(getEditorSite().getShell(), "Error",
-							"Unable to set read/write permission of file " + fileName);
+					MessageDialog.openError(
+							getEditorSite().getShell(), "Error", "Unable to set read/write permission of file " + fileName);					
 				}
 				
-			}
-		}
+				
+			}			
+		}		
 	}
-	
 	/**
 	 * Allow user to make change to current open document.
 	 *
 	 */
 	protected void setEditorInputModifiable() {
-		IDocumentProvider provider = getDocumentProvider();
+		IDocumentProvider provider= getDocumentProvider();
 		if (provider instanceof IDocumentProviderExtension) {
-			IDocumentProviderExtension extension = (IDocumentProviderExtension) provider;
+			IDocumentProviderExtension extension= (IDocumentProviderExtension) provider;
 			extension.setCanSaveDocument(getEditorInput());
-		}
+		}		
 	}
 	
-	public void setStatusLine() {
+	public void setStatusLine(){
 		
-		/*	try{
-			//		Sets the current file path to the status line
-			IEditorInput input= getEditorInput();
-			
-				if (getEditorInput() instanceof RemoteFileEditorInput) {
-					RemoteFileEditorInput rfd = (RemoteFileEditorInput) getEditorInput();
-					getEditorSite().getActionBars().getStatusLineManager().setMessage(rfd.getName());
-				}
-				else{
-					IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
-					getEditorSite().getActionBars().getStatusLineManager().setMessage(original.getLocation().toString());
-				}
+	/*	try{
+		//		Sets the current file path to the status line
+		IEditorInput input= getEditorInput();
+		
+			if (getEditorInput() instanceof RemoteFileEditorInput) {
+				RemoteFileEditorInput rfd = (RemoteFileEditorInput) getEditorInput();
+				getEditorSite().getActionBars().getStatusLineManager().setMessage(rfd.getName());
 			}
-			catch (Exception e){
-				e.printStackTrace();
-			}*/
-		
-		try {
-			// From Dean Harmon @ Adobe, to work with the RDS plugin
-			// Sets the current file path to the status line
-			
-			IEditorInput input = getEditorInput();
-			IFile original = (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
-			String message;
-			if (original != null)
-			
-			{
-				message = original.getLocation().toString();
-			} else {
-				message = input.getToolTipText();
+			else{
+				IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
+				getEditorSite().getActionBars().getStatusLineManager().setMessage(original.getLocation().toString());
 			}
-			
-			getEditorSite().getActionBars().getStatusLineManager().setMessage(message);
-			
-			// this.getEditorSite().getWorkbenchWindow().getShell().setToolTipText(original.getLocation().toString());
-			
 		}
+		catch (Exception e){
+			e.printStackTrace();
+		}*/
 		
-		catch (Exception e) {
-			
-			System.err.println(e);
-			
-		}
+		
+		
+		try{
+			//From Dean Harmon @ Adobe, to work with the RDS plugin
+            //          Sets the current file path to the status line
+
+            IEditorInput input= getEditorInput();
+            IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
+            String message;
+            if (original != null)
+
+            {
+                  message = original.getLocation().toString();
+            } else {
+                  message = input.getToolTipText();
+            }
+
+            getEditorSite().getActionBars().getStatusLineManager().setMessage(message);
+
+            //this.getEditorSite().getWorkbenchWindow().getShell().setToolTipText(original.getLocation().toString());
+
+            }
+
+            catch (Exception e){
+
+                  System.err.println(e);
+
+            }
+		
 		
 	}
+
 	
 	/**
-	 * Initializes the drag and drop support for the given viewer based on provided editor adapter for drop target
-	 * listeners.
+	 * Initializes the drag and drop support for the given viewer based on
+	 * provided editor adapter for drop target listeners.
 	 *
-	 * @param viewer
-	 *            the viewer
+	 * @param viewer the viewer
 	 * @since 3.0
 	 */
 	@Override
@@ -661,270 +689,294 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 		// TODO Auto-generated method stub
 		StyledText tw = getSourceViewer().getTextWidget();
 		int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT;
-		Transfer[] transfers = new Transfer[] { LocalSelectionTransfer.getTransfer(), TextTransfer.getInstance(),
-				ResourceTransfer.getInstance(), FileTransfer.getInstance() };
-		// installTextDragAndDrop(getSourceViewer());
-		CFEDragDropListener ddListener = new CFEDragDropListener(this, (ProjectionViewer) this.getSourceViewer(),
-				SelectionCursorListener);
+		Transfer[] transfers = new Transfer[] { LocalSelectionTransfer.getTransfer(),TextTransfer.getInstance(),ResourceTransfer.getInstance(),FileTransfer.getInstance() };
+		//installTextDragAndDrop(getSourceViewer());
+		CFEDragDropListener ddListener = new CFEDragDropListener(this,
+				(ProjectionViewer) this.getSourceViewer(), SelectionCursorListener);
 		IDragAndDropService dtSvc = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
 		dtSvc.addMergedDropTarget(tw, operations, transfers, ddListener);
-		final DragSource source = new DragSource(tw, DND.DROP_COPY | DND.DROP_MOVE);
-		source.setTransfer(new Transfer[] { TextTransfer.getInstance() });
-		source.addDragListener(ddListener);
+		final DragSource source= new DragSource(tw, DND.DROP_COPY | DND.DROP_MOVE);
+		source.setTransfer(new Transfer[] {TextTransfer.getInstance()});
+		source.addDragListener(ddListener);			
 	}
 	
 	/**
 	 * sets up seleciton listeners, like the TextSelection listener, and DND (eventually)
 	 *
 	 */
-	
+
 	private void setupSelectionListeners(ProjectionViewer projectionViewer) {
-		
+
 		// this is implemented by default in Eclipse 3.3, so we just exit out
 		// we do this by checking for JavaFileEditorInput, which 3.3 removed
 		Class<?> c = null;
-		try {
+		try
+		{
 			c = Class.forName("org.eclipse.ui.internal.editors.text.JavaFileEditorInput");
-		} catch (ClassNotFoundException cnfe) {
-			// nothing, we are already null;
+		} catch (ClassNotFoundException cnfe)
+		{
+			//nothing, we are already null;
 		}
-		
+
 		if (c == null) // ie we are on 3.3 or higher
 		{
 			setSelectionCursorListener();
 			if (isMarkOccurrenceEnabled) {
 				SelectionCursorListener.installOccurrencesFinder();
 			}
-			
+
 			return;
 		}
 		
 		setSelectionCursorListener();
-		
+
 		/*
 		 * moved to initializeDragAndDrop but not tested on <3.3
 		//Allow data to be copied or moved from the drag source
 		int operations = DND.DROP_MOVE | DND.DROP_COPY;
 		this.dragsource = new DragSource(this.getSourceViewer().getTextWidget(),
 				operations);
-		
+
 		//Allow data to be copied or moved to the drop target
 		operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT;
 		DropTarget target = new DropTarget(this.getSourceViewer().getTextWidget(),
 				operations);
-		
+
 		Transfer[] types = new Transfer[] { TextTransfer.getInstance() };
 		this.dragsource.setTransfer(types);
-		
+
 		//Receive data in Text or File format
 		final TextTransfer textTransfer = TextTransfer.getInstance();
 		final FileTransfer fileTransfer = FileTransfer.getInstance();
-		
+
 		types = new Transfer[] { fileTransfer, textTransfer };
 		target.setTransfer(types);
-		
+
 		CFEDragDropListener ddListener = new CFEDragDropListener(this,
 				(ProjectionViewer) this.getSourceViewer(), SelectionCursorListener);
-		
+
 		this.dragsource.addDragListener(ddListener);
-		
+
 		target.addDropListener(ddListener);
 		*/
+
+	}
+
+		protected void setSelectionCursorListener() {
+			String[] wordChars = {
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_ALT),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_ALT),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_SHIFT),
+					getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_SHIFT)
+			};
+			if (SelectionCursorListener != null) {
+				SelectionCursorListener.setWordSelectionChars(wordChars);
+			} else {
+				ProjectionViewer projectionViewer = (ProjectionViewer)getSourceViewer();
+				SelectionCursorListener = new SelectionCursorListener(this, projectionViewer, wordChars);
+				//projectionViewer.addSelectionChangedListener(SelectionCursorListener);
+				//projectionViewer.getTextWidget().addKeyListener(SelectionCursorListener);				
+				SelectionCursorListener.setWordSelectionChars(wordChars);
+				projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
+				projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);									
+			}
+		}			
+		public SelectionCursorListener getSelectionCursorListener() {
+				if (SelectionCursorListener == null) {
+					setSelectionCursorListener();
+				}
+				return SelectionCursorListener;
+		}	
 		
-	}
-	
-	protected void setSelectionCursorListener() {
-		String[] wordChars = { getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS),
-				getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS),
-				getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_ALT),
-				getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_ALT),
-				getPreferenceStore().getString(TextSelectionPreferenceConstants.P_PART_OF_WORD_CHARS_SHIFT),
-				getPreferenceStore().getString(TextSelectionPreferenceConstants.P_BREAK_WORD_CHARS_SHIFT) };
-		if (SelectionCursorListener != null) {
-			SelectionCursorListener.setWordSelectionChars(wordChars);
-		} else {
-			ProjectionViewer projectionViewer = (ProjectionViewer) getSourceViewer();
-			SelectionCursorListener = new SelectionCursorListener(this, projectionViewer, wordChars);
-			// projectionViewer.addSelectionChangedListener(SelectionCursorListener);
-			// projectionViewer.getTextWidget().addKeyListener(SelectionCursorListener);
-			SelectionCursorListener.setWordSelectionChars(wordChars);
-			projectionViewer.addPostSelectionChangedListener(SelectionCursorListener);
-			projectionViewer.getTextWidget().addMouseListener(SelectionCursorListener);
-		}
-	}
-	
-	public SelectionCursorListener getSelectionCursorListener() {
-		if (SelectionCursorListener == null) {
-			setSelectionCursorListener();
-		}
-		return SelectionCursorListener;
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */
 	protected void editorContextMenuAboutToShow(IMenuManager menu) {
-		
+
+
 		addTagSpecificMenuItems(menu);
-		
-		super.editorContextMenuAboutToShow(menu);
-		
-		// addAction(menu, ITextEditorActionConstants.FIND);
-		// this is the right way to do lower case stuff, but how do you get it
-		// on the menu?
-		// addAction(menu,ITextEditorActionConstants.UPPER_CASE);
-		// addAction(menu,ITextEditorActionConstants.LOWER_CASE);
+				
+		super.editorContextMenuAboutToShow(menu);		
+
+        //addAction(menu, ITextEditorActionConstants.FIND);
+		//this is the right way to do lower case stuff, but how do you get it
+		//on the menu?
+		//addAction(menu,ITextEditorActionConstants.UPPER_CASE);
+		//addAction(menu,ITextEditorActionConstants.LOWER_CASE);
 	}
 	
-	private CFEPartition getPartitionAtCursor() {
+	
+	
+	private CFEPartition getPartitionAtCursor(){
 		final IEditorPart iep = getSite().getPage().getActiveEditor();
 		final ITextEditor editor = (ITextEditor) iep;
-		final IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
-		
+		final IDocument doc = editor.getDocumentProvider().getDocument(
+				editor.getEditorInput());
+
 		final ICFDocument cfd = (ICFDocument) doc;
-		final ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
+		final ITextSelection sel = (ITextSelection) editor.getSelectionProvider()
+				.getSelection();
 		int startpos = sel.getOffset();
-		int len = Math.max(sel.getLength(), 1);
-		CFEPartitioner partitioner = (CFEPartitioner) cfd.getDocumentPartitioner();
+		int len = Math.max(sel.getLength(),1);
+		CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 		
 		CFEPartition part = partitioner.findClosestPartition(startpos);
 		return part;
 	}
-	
+
 	/**
-	 * Add menu items based on the tag that was right clicked on... doesnt work as I have no idea how to find out what
-	 * tag was just clicked on :) seems like perhaps the CFDocument could know...
+	 * Add menu items based on the tag that was right clicked on... doesnt work as
+	 * I have no idea how to find out what tag was just clicked on :) seems like
+	 * perhaps the CFDocument could know...
 	 * 
 	 * @param menu
 	 */
 	protected void addTagSpecificMenuItems(IMenuManager menu) {
 		
-		// Find out which version of Eclipse we are running in:
+		//Find out which version of Eclipse we are running in:
 		boolean inEclipse32 = false;
 		final String version = System.getProperty("osgi.framework.version"); //$NON-NLS-1$
-		if (version != null && version.startsWith("3.2")) //$NON-NLS-1$
-		{
-			inEclipse32 = true;
-		}
+		   if (version != null && version.startsWith("3.2")) //$NON-NLS-1$
+		   {
+		       inEclipse32 = true;
+		   }
 		
-		// all this mess is really just to get the offset and a handle to the
-		// CFDocument object attached to the Document...
+
+		
+		
+		//all this mess is really just to get the offset and a handle to the
+		//CFDocument object attached to the Document...
 		try {
 			final IEditorPart iep = getSite().getPage().getActiveEditor();
 			final ITextEditor editor = (ITextEditor) iep;
-			final IDocument doc = editor.getDocumentProvider().getDocument(editor.getEditorInput());
-			
+			final IDocument doc = editor.getDocumentProvider().getDocument(
+					editor.getEditorInput());
+
 			final ICFDocument cfd = (ICFDocument) doc;
-			final ITextSelection sel = (ITextSelection) editor.getSelectionProvider().getSelection();
-			
+			final ITextSelection sel = (ITextSelection) editor.getSelectionProvider()
+					.getSelection();
+
+
 			Action act = new Action("Refresh syntax highlighting", null) {
 				public void run() {
-					try {
-						new CFDocumentSetupParticipant().setup(doc);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				   try {				      
+					new CFDocumentSetupParticipant().setup(doc);				  
+				   } catch (Exception e) {
+				       e.printStackTrace();
+				   }
 				}
 			};
 			menu.add(act);
+
+			//Add programatically the locate in File Explorer and navigator for Eclipse 3.1 users
 			
-			// Add programatically the locate in File Explorer and navigator for Eclipse 3.1 users
-			
-			if (!inEclipse32) {
+			if(!inEclipse32){
 				
-				act = new Action("Show in File Explorer", null) {
-					public void run() {
+				act = new Action("Show in File Explorer", null){
+					public void run(){
 						LocateInFileSystemAction action = new LocateInFileSystemAction();
 						action.run(null);
 					}
 				};
-				menu.add(act);
-				
-				act = new Action("Show in Navigator", null) {
-					public void run() {
+					menu.add(act);
+					
+					
+				act = new Action("Show in Navigator", null){
+					public void run(){
 						LocateInTreeAction action = new LocateInTreeAction();
 						action.run(null);
 					}
 				};
-				menu.add(act);
+					menu.add(act);
+				
 				
 			}
 			
+			
+			
 			act = new Action("Show partition info", null) {
 				public void run() {
-					/*
-					IEditorPart iep = getSite().getPage().getActiveEditor();
+				    /*
+				    IEditorPart iep = getSite().getPage().getActiveEditor();
 					ITextEditor editor = (ITextEditor) iep;
 					IDocument doc = editor.getDocumentProvider().getDocument(
 							editor.getEditorInput());
-					
+
 					ICFDocument cfd = (ICFDocument) doc;
 					ITextSelection sel = (ITextSelection) editor.getSelectionProvider()
 							.getSelection();
 							*/
 					int startpos = sel.getOffset();
-					int len = Math.max(sel.getLength(), 1);
-					CFEPartitioner partitioner = (CFEPartitioner) cfd.getDocumentPartitioner();
-					CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos, startpos + len);
-					String info = "Partitioning info from offset " + startpos + " to " + Integer.toString(startpos + len)
-							+ "\n\n";
-					CFEPartition part = partitioner.findClosestPartition(startpos);
-					info += "(Closest partition: " + part.getType() + " = " + part.getTagName() + ")\n";
-					for (int i = 0; i < partitioning.length; i++) {
-						info += partitioning[i].getType();
-						info += " starting at ";
-						info += partitioning[i].getOffset();
-						info += " ending at ";
-						info += Integer.toString(partitioning[i].getOffset() + partitioning[i].getLength());
-						if (partitioning[i].getTagName() != null) {
-							info += " (";
-							info += partitioning[i].getTagName();
-							info += ") ";
-						}
-						info += "\n";
+					int len = Math.max(sel.getLength(),1);
+					CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
+					CFEPartition[] partitioning = partitioner.getCFEPartitions(startpos,startpos+len);
+				    String info = "Partitioning info from offset " + startpos + " to " + Integer.toString(startpos + len) + "\n\n";
+				    CFEPartition part = partitioner.findClosestPartition(startpos);
+				    info += "(Closest partition: " + part.getType() + " = " + part.getTagName() + ")\n";
+					for (int i=0;i<partitioning.length;i++) {
+					    info += partitioning[i].getType(); 
+					    info += " starting at ";
+					    info += partitioning[i].getOffset();
+					    info += " ending at "; 
+					    info += Integer.toString(partitioning[i].getOffset() + partitioning[i].getLength());
+					    if (partitioning[i].getTagName() != null) {
+					        info += " (";
+					        info += partitioning[i].getTagName();
+					        info += ") ";
+					    }
+					    info += "\n";
 					}
-					
-					String[] labels = new String[1];
+				    
+				    String[] labels = new String[1];
 					labels[0] = "OK";
-					MessageDialog msg = new MessageDialog(Display.getCurrent().getActiveShell(), "Partition info", null, info,
-							MessageDialog.WARNING, labels, 0);
-					msg.open();
+				    MessageDialog msg = new MessageDialog(
+							Display.getCurrent().getActiveShell(),
+							"Partition info",
+							null,
+							info,
+							MessageDialog.WARNING, 
+							labels, 
+							0);
+				    msg.open();
 				}
 			};
 			menu.add(act);
+
 			
 			/*
 			 * TODO: re-write this so the edit this tag action can be called from different places
 			 * Edit this tag action start
 			 */
-			act = new Action("Edit this tag", null) {
+			act = new Action("Edit this tag", null){
 				public void run() {
-					
-					EditTagAction eta = new EditTagAction();
-					eta.run();
-					
+				
+						EditTagAction eta = new EditTagAction();
+						eta.run();
+					 
 				}
 			};
 			
-			// Only display if you are at the start tag
+			//Only display if you are at the start tag
 			int startpos = sel.getOffset();
-			CFEPartitioner partitioner = (CFEPartitioner) cfd.getDocumentPartitioner();
+			CFEPartitioner partitioner = (CFEPartitioner)cfd.getDocumentPartitioner();
 			CFEPartition part = partitioner.findClosestPartition(startpos);
-			// ITypedRegion part =
-			// cfd.getDocumentPartitioner(CFDocumentSetupParticipant.CFML_PARTITIONING).getPartition(startpos);
+//			ITypedRegion part = cfd.getDocumentPartitioner(CFDocumentSetupParticipant.CFML_PARTITIONING).getPartition(startpos);
 			
-			if (part != null && EditableTags.isEditable(part.getType())) {
+			if(part != null && EditableTags.isEditable(part.getType())){
 				menu.add(act);
 			}
 			
-			// This is not only for
-			act = new Action("Genrate Getters and Setters", null) {
-				public void run() {
-					InsertGetAndSetAction insertGetSet = new InsertGetAndSetAction();
-					insertGetSet.setActiveEditor(null, getSite().getPage().getActiveEditor());
-					insertGetSet.run(null);
-				}
-			};
+			
+			//This is not only for
+			act = new Action("Genrate Getters and Setters", null){
+					public void run(){
+						InsertGetAndSetAction insertGetSet = new InsertGetAndSetAction();
+						insertGetSet.setActiveEditor(null, getSite().getPage().getActiveEditor());
+						insertGetSet.run(null);
+					}
+				};
 			
 			/*	TODO: Setup the Generate Getters and Setters, 
 			 * 	This might actually go into the suggest stuff
@@ -932,19 +984,19 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 			 *		1) If we are in a CFC
 			 *		2) If the cursor is in a cfproperty tag
 			 *		3) or if we are in a cfset tag who's parent tag is a cfcomponent tag  
-			 */
+			 */	
 			
-			if (getSelectionCursorListener().getSelectedTag() != null
-					&& getSelectionCursorListener().getSelectedTag().getName().equalsIgnoreCase("cfproperty")) {
+			if(getSelectionCursorListener().getSelectedTag() != null && 
+					getSelectionCursorListener().getSelectedTag().getName().equalsIgnoreCase("cfproperty")){
 				menu.add(act);
 			}
-			
+						
 			act = new Action("Jump to matching tag", null) {
-				public void run() {
-					JumpToMatchingTagAction matchTagAction = new JumpToMatchingTagAction();
-					matchTagAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
-					matchTagAction.run(null);
-				}
+			    public void run() {
+			        JumpToMatchingTagAction matchTagAction = new JumpToMatchingTagAction();
+			        matchTagAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
+			        matchTagAction.run(null);
+			    }
 			};
 			menu.add(act);
 			
@@ -952,70 +1004,76 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 			 * Start the logic to see if we are in a cfinclude or a cfmodule. get the tag.
 			 * Added the lines below to check the partition type and thus get the cfincluded file
 			 */
-			
+		
+		   
+		    
 			DocItem cti = null;
-			try {
-				cti = cfd.getTagAt(startpos, startpos);
-			} catch (Exception e) {
-				// do nothing.
+		    try {
+		        cti = cfd.getTagAt(startpos, startpos);
+		    }
+			catch (Exception e) {
+			    // do nothing.
 			}
-			
+
 			if (cti != null) {
-				
+
 				if (cti instanceof CfmlTagItem && ((CfmlTagItem) cti).matchingItem != null) {
-					
+
 					this.jumpAction.setDocPos(((CfmlTagItem) cti).matchingItem.getEndPosition());
-					this.jumpAction.setActiveEditor(null, getSite().getPage().getActiveEditor());
-					Action jumpNow = new Action("Jump to end tag",
-							CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_FORWARD)) {
+					this.jumpAction.setActiveEditor(null, getSite().getPage()
+							.getActiveEditor());
+					Action jumpNow = new Action("Jump to end tag", CFPluginImages
+							.getImageRegistry().getDescriptor(CFPluginImages.ICON_FORWARD)) {
 						public void run() {
-							CFMLEditor.this.jumpAction.run(null);
+						    CFMLEditor.this.jumpAction.run(null);
 						}
 					};
 					menu.add(jumpNow);
 				}
-				
+
 				System.out.println(part);
 				// this is a bit hokey - there has to be a way to load the
 				// action in the xml file then just call it here...
 				if (getSelectionCursorListener().getSelectedTag() != null
-						&& (getSelectionCursorListener().getSelectedTag().getName().equalsIgnoreCase("cfinclude")
+						&& (getSelectionCursorListener().getSelectedTag().getName().equalsIgnoreCase("cfinclude") 
 								|| getSelectionCursorListener().getSelectedTag().getName().equalsIgnoreCase("cfmodule"))) {
 					this.gfa.setActiveEditor(null, getSite().getPage().getActiveEditor());
-					
-					Action ack = new Action("Open/Create File",
-							CFPluginImages.getImageRegistry().getDescriptor(CFPluginImages.ICON_IMPORT)) {
+
+					Action ack = new Action("Open/Create File", CFPluginImages.getImageRegistry().getDescriptor(
+							CFPluginImages.ICON_IMPORT)) {
 						public void run() {
-							
-							CFMLEditor.this.gfa.run(null);
+
+						    CFMLEditor.this.gfa.run(null);
 						}
 					};
 					menu.add(ack);
 				}
-				
+
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @see IAdaptable#getAdapter(java.lang.Class)
 	 * @since 2.0
 	 */
 	public Object getAdapter(Class required) {
-		
+
 		if (this.fProjectionSupport != null) {
-			Object adapter = this.fProjectionSupport.getAdapter(getSourceViewer(), required);
+			Object adapter = this.fProjectionSupport.getAdapter(getSourceViewer(),
+					required);
 			if (adapter != null)
 				return adapter;
 		}
-		
-		// if they ask for the outline page send our implementation
-		if (required.getName().trim().equals("org.eclipse.ui.views.contentoutline.IContentOutlinePage")) {
+
+		//if they ask for the outline page send our implementation
+		if (required.getName().trim().equals(
+				"org.eclipse.ui.views.contentoutline.IContentOutlinePage")) {
 			try {
-				if (cfcontentOutlineView == null) {
+				if(cfcontentOutlineView == null) {	
 					cfcontentOutlineView = new CFContentOutlineView();
 				}
 				return cfcontentOutlineView;
@@ -1023,26 +1081,25 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 				e.printStackTrace(System.err);
 			}
 			return super.getAdapter(required);
-			// return super.getAdapter(adapter);
+			//return super.getAdapter(adapter);
 		}
 		
 		return super.getAdapter(required);
 		
 	}
-	
-	/**
-	 * Returns the viewer associated with this editor
-	 * 
-	 * @return The viewer associated with this editor
-	 */
-	public ISourceViewer getViewer() {
-		return getSourceViewer();
-	}
-	
-	public void createActions() {
+
+    /**
+     * Returns the viewer associated with this editor
+     * @return The viewer associated with this editor
+     */
+    public ISourceViewer getViewer() {
+        return getSourceViewer();
+    }
+
+    public void createActions() {
 		super.createActions();
-		
-		// this sets up the ctrl+space code insight stuff
+
+		//this sets up the ctrl+space code insight stuff
 		try {
 			/*
 			IAction action = new TextOperationAction(CFMLPlugin.getDefault()
@@ -1051,59 +1108,59 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 					this, ISourceViewer.CONTENTASSIST_PROPOSALS
 			//ISourceViewer.CONTENTASSIST_CONTEXT_INFORMATION
 			);
-			
+
 			action
 					.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS
 					//ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION
 					);
-			
+
 			setAction("ContentAssistAction", action);
-			
+
 			setActionActivationCode(
 					ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS, ' ', -1,
 					SWT.CTRL);
-			*/
-			
-			IAction action = new TextOperationAction(CFMLPlugin.getDefault().getResourceBundle(), "ContentFormat.", this, //$NON-NLS-1$
-					ISourceViewer.FORMAT);
+*/
+
+			IAction action = new TextOperationAction(CFMLPlugin.getDefault()
+					.getResourceBundle(), "ContentFormat.", this, ISourceViewer.FORMAT); //$NON-NLS-1$
 			action.setActionDefinitionId(CFMLPlugin.PLUGIN_ID + ".FormatAction");
 			action.setEnabled(true);
-			// for some reason this isn't getting picked up from the RB above. #517
+			// for some reason this isn't getting picked up from the RB above.  #517
 			action.setText("Format Source");
 			markAsStateDependentAction("ContentFormat", true); //$NON-NLS-1$
 			markAsSelectionDependentAction("ContentFormat", true); //$NON-NLS-1$
-			setAction("ContentFormat", action); //$NON-NLS-1$
+			setAction("ContentFormat", action); //$NON-NLS-1$			
 			
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
-		
+
 	}
-	
+
 	/**
-	 * Implementation copied from org.eclipse.ui.editors.text.TextEditor.
+	 *  Implementation copied from org.eclipse.ui.editors.text.TextEditor.
 	 */
 	protected void performSaveAs(IProgressMonitor progressMonitor) {
-		Shell shell = getSite().getShell();
-		IEditorInput input = getEditorInput();
-		String RESOURCE_BUNDLE = "org.eclipse.ui.editors.text.TextEditorMessages";//$NON-NLS-1$
+		Shell shell= getSite().getShell();
+		IEditorInput input= getEditorInput();
+		String RESOURCE_BUNDLE= "org.eclipse.ui.editors.text.TextEditorMessages";//$NON-NLS-1$
+
+		ResourceBundle fgResourceBundle= ResourceBundle.getBundle(RESOURCE_BUNDLE);
+
+		SaveAsDialog dialog= new SaveAsDialog(shell);
 		
-		ResourceBundle fgResourceBundle = ResourceBundle.getBundle(RESOURCE_BUNDLE);
-		
-		SaveAsDialog dialog = new SaveAsDialog(shell);
-		
-		IFile original = (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
+		IFile original= (input instanceof IFileEditorInput) ? ((IFileEditorInput) input).getFile() : null;
 		if (original != null)
 			dialog.setOriginalFile(original);
 		
 		dialog.create();
-		
-		IDocumentProvider provider = getDocumentProvider();
+			
+		IDocumentProvider provider= getDocumentProvider();
 		if (provider == null) {
-			// editor has programmatically been closed while the dialog was open
+			// editor has programmatically been  closed while the dialog was open
 			return;
 		}
-		
+
 		// fix for RSE linked files
 		if (provider.isDeleted(input) && original != null && original.exists()) {
 			provider.aboutToChange(input);
@@ -1112,13 +1169,12 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 			} catch (CoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}			
 			return;
 		}
 		
 		if (provider.isDeleted(input) && original != null) {
-			String message = MessageFormat.format(fgResourceBundle.getString("Editor.warning.save.delete"), //$NON-NLS-1$
-					new Object[] { original.getName() });
+			String message= MessageFormat.format(fgResourceBundle.getString("Editor.warning.save.delete"), new Object[] { original.getName() }); //$NON-NLS-1$
 			dialog.setErrorMessage(null);
 			dialog.setMessage(message, IMessageProvider.WARNING);
 		}
@@ -1128,42 +1184,41 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 				progressMonitor.setCanceled(true);
 			return;
 		}
-		
-		IPath filePath = dialog.getResult();
+			
+		IPath filePath= dialog.getResult();
 		if (filePath == null) {
 			if (progressMonitor != null)
 				progressMonitor.setCanceled(true);
 			return;
 		}
-		
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IFile file = workspace.getRoot().getFile(filePath);
-		final IEditorInput newInput = new FileEditorInput(file);
-		
-		boolean success = false;
+			
+		IWorkspace workspace= ResourcesPlugin.getWorkspace();
+		IFile file= workspace.getRoot().getFile(filePath);
+		final IEditorInput newInput= new FileEditorInput(file);
+				
+		boolean success= false;
 		try {
 			
 			provider.aboutToChange(newInput);
-			provider.saveDocument(progressMonitor, newInput, provider.getDocument(input), true);
-			success = true;
+			provider.saveDocument(progressMonitor, newInput, provider.getDocument(input), true);			
+			success= true;
 			
 		} catch (CoreException x) {
-			IStatus status = x.getStatus();
+			IStatus status= x.getStatus();
 			if (status == null || status.getSeverity() != IStatus.CANCEL) {
-				String title = fgResourceBundle.getString("Editor.error.save.title"); //$NON-NLS-1$
-				String msg = MessageFormat.format(fgResourceBundle.getString("Editor.error.save.message"), //$NON-NLS-1$
-						new Object[] { x.getMessage() });
+				String title= fgResourceBundle.getString("Editor.error.save.title"); //$NON-NLS-1$
+				String msg= MessageFormat.format(fgResourceBundle.getString("Editor.error.save.message"), new Object[] { x.getMessage() }); //$NON-NLS-1$
 				
 				if (status != null) {
 					switch (status.getSeverity()) {
-					case IStatus.INFO:
-						MessageDialog.openInformation(shell, title, msg);
+						case IStatus.INFO:
+							MessageDialog.openInformation(shell, title, msg);
 						break;
-					case IStatus.WARNING:
-						MessageDialog.openWarning(shell, title, msg);
+						case IStatus.WARNING:
+							MessageDialog.openWarning(shell, title, msg);
 						break;
-					default:
-						MessageDialog.openError(shell, title, msg);
+						default:
+							MessageDialog.openError(shell, title, msg);
 					}
 				} else {
 					MessageDialog.openError(shell, title, msg);
@@ -1179,127 +1234,133 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 			progressMonitor.setCanceled(!success);
 	}
 	
+	
 	public void dispose() {
-		this.colorManager.dispose();
+	    this.colorManager.dispose();
 		if (this.cfmlBracketMatcher != null) {
 			this.cfmlBracketMatcher.dispose();
 		}
-		CFMLPlugin.getDefault().getPreferenceStore().removePropertyChangeListener(this);
+		CFMLPlugin.getDefault().getPreferenceStore().removePropertyChangeListener(
+				this);
 		CFMLPlugin.getDefault().getLastActionManager().removeAction(this);
-		// remove the dnd listener
-		final IDragAndDropService dndService = (IDragAndDropService) getSite().getService(IDragAndDropService.class);
+		//remove the dnd listener
+		final IDragAndDropService dndService= (IDragAndDropService)getSite().getService(IDragAndDropService.class);
 		if (dndService == null)
 			return;
-		
-		StyledText st = getSourceViewer().getTextWidget();
-		if (st != null) {
+
+		StyledText st= getSourceViewer().getTextWidget();
+		if(st != null) {			
 			dndService.removeMergedDropTarget(st);
 			
-			DragSource dragSource = (DragSource) st.getData(DND.DRAG_SOURCE_KEY);
+			DragSource dragSource= (DragSource)st.getData(DND.DRAG_SOURCE_KEY);
 			if (dragSource != null) {
 				dragSource.dispose();
 				st.setData(DND.DRAG_SOURCE_KEY, null);
 			}
 		}
-		// Remove the listener
-		if (SelectionCursorListener != null) {
+		//Remove the listener
+		if(SelectionCursorListener!=null){			
 			SelectionCursorListener.uninstallOccurrencesFinder();
 		}
 		fCFDocument = null;
 		
 		super.dispose();
 	}
-	
+
 	public void propertyChange(PropertyChangeEvent event) {
 		handlePreferenceStoreChanged(event);
-		// System.out.println(event);
-		if (getViewer() != null) {
+		System.out.println(event);
+		if(getViewer()!= null){
 			setStatusLine();
-			setSelectionCursorListener();
-			isMarkOccurrenceEnabled = getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES);
+			setSelectionCursorListener();			
+			isMarkOccurrenceEnabled= getPreferenceStore().getBoolean(TextSelectionPreferenceConstants.P_MARK_OCCURRENCES);
 		}
 	}
-	
+
 	protected void handlePreferenceStoreChanged(PropertyChangeEvent event) {
 		if (event.getProperty().equals(EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS)
 				|| event.getProperty().equals(EditorPreferenceConstants.P_TAB_WIDTH)) {
-			
+
 			ISourceViewer sourceViewer = getSourceViewer();
 			if (sourceViewer != null) {
-				sourceViewer.getTextWidget().setTabs(this.configuration.getTabWidth(sourceViewer));
+				sourceViewer.getTextWidget().setTabs(
+				        this.configuration.getTabWidth(sourceViewer));
 				
 			}
 		}
-		
+
 		super.handlePreferenceStoreChanged(event);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.eclipse.ui.texteditor.AbstractDecoratedTextEditor#configureSourceViewerDecorationSupport(org.eclipse.ui.texteditor.SourceViewerDecorationSupport)
 	 */
-	protected void configureSourceViewerDecorationSupport(SourceViewerDecorationSupport support) {
-		
-		// register the pair matcher
+	protected void configureSourceViewerDecorationSupport(
+			SourceViewerDecorationSupport support) {
+
+		//register the pair matcher
 		support.setCharacterPairMatcher(this.cfmlBracketMatcher);
-		
-		// register the brackets and colors
-		support.setMatchingCharacterPainterPreferenceKeys(EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED,
+
+		//register the brackets and colors
+		support.setMatchingCharacterPainterPreferenceKeys(
+				EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED,
 				EditorPreferenceConstants.P_BRACKET_MATCHING_COLOR);
-		
+
 		super.configureSourceViewerDecorationSupport(support);
-		// switched to using the preference lookup within DecorationSupport
-		// Iterator e = getAnnotationPreferences().getAnnotationPreferenceFragments()
-		// .iterator();
-		// while (e.hasNext()) {
-		// AnnotationPreference pref = (AnnotationPreference) e.next();
-		// support.setAnnotationPainterPreferenceKeys(pref.getAnnotationType(), pref
-		// .getColorPreferenceKey(), pref.getTextPreferenceKey(), pref
-		// .getOverviewRulerPreferenceKey(), 4);
-		// }
+// switched to using the preference lookup within DecorationSupport		
+//		Iterator e = getAnnotationPreferences().getAnnotationPreferenceFragments()
+//				.iterator();
+//		while (e.hasNext()) {
+//			AnnotationPreference pref = (AnnotationPreference) e.next();
+//			support.setAnnotationPainterPreferenceKeys(pref.getAnnotationType(), pref
+//					.getColorPreferenceKey(), pref.getTextPreferenceKey(), pref
+//					.getOverviewRulerPreferenceKey(), 4);
+//		}
 		support.install(this.getPreferenceStore());
 		
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.eclipse.ui.texteditor.AbstractTextEditor#createSourceViewer(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.jface.text.source.IVerticalRuler, int)
 	 */
-	protected ISourceViewer createSourceViewer(Composite parent, IVerticalRuler ruler, int styles) {
-		
-		Composite composite = new Composite(parent, SWT.NONE);
-		GridLayout layout = new GridLayout(1, false);
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
-		layout.horizontalSpacing = 0;
-		layout.verticalSpacing = 0;
-		composite.setLayout(layout);
-		
-		fBreadcrumbComposite = new Composite(composite, SWT.NONE);
-		GridData layoutData = new GridData(SWT.FILL, SWT.TOP, true, false);
-		fBreadcrumbComposite.setLayoutData(layoutData);
-		layout = new GridLayout(1, false);
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
-		layout.horizontalSpacing = 0;
-		layout.verticalSpacing = 0;
-		layoutData.exclude = true;
-		fBreadcrumbComposite.setLayout(layout);
-		
-		Composite editorComposite = new Composite(composite, SWT.NONE);
-		editorComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		FillLayout fillLayout = new FillLayout(SWT.VERTICAL);
-		fillLayout.marginHeight = 0;
-		fillLayout.marginWidth = 0;
-		fillLayout.spacing = 0;
-		editorComposite.setLayout(fillLayout);
-		
-		ProjectionViewer sourceViewer = new ProjectionViewer(editorComposite, ruler, getOverviewRuler(), isOverviewRulerVisible(),
-				styles);
-		
+	protected ISourceViewer createSourceViewer(Composite parent,
+			IVerticalRuler ruler, int styles) {
+
+	    Composite composite= new Composite(parent, SWT.NONE);
+        GridLayout layout= new GridLayout(1, false);
+        layout.marginHeight= 0;
+        layout.marginWidth= 0;
+        layout.horizontalSpacing= 0;
+        layout.verticalSpacing= 0;
+        composite.setLayout(layout);
+
+        fBreadcrumbComposite= new Composite(composite, SWT.NONE);
+        GridData layoutData= new GridData(SWT.FILL, SWT.TOP, true, false);
+        fBreadcrumbComposite.setLayoutData(layoutData);
+        layout= new GridLayout(1, false);
+        layout.marginHeight= 0;
+        layout.marginWidth= 0;
+        layout.horizontalSpacing= 0;
+        layout.verticalSpacing= 0;
+        layoutData.exclude= true;
+        fBreadcrumbComposite.setLayout(layout);
+
+        Composite editorComposite= new Composite(composite, SWT.NONE);
+        editorComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        FillLayout fillLayout= new FillLayout(SWT.VERTICAL);
+        fillLayout.marginHeight= 0;
+        fillLayout.marginWidth= 0;
+        fillLayout.spacing= 0;
+        editorComposite.setLayout(fillLayout);
+        
+		ProjectionViewer sourceViewer = new ProjectionViewer(editorComposite, ruler,
+				getOverviewRuler(), isOverviewRulerVisible(), styles);
+	
 		/*
 		 * TODO: ADD hyperlink support
 		 * 
@@ -1307,175 +1368,179 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 		 */
 		CFHyperlinkDetector[] detectors = new CFHyperlinkDetector[1];
 		
+		
 		CFHyperlinkDetector cfhd = new CFHyperlinkDetector();
 		
 		detectors[0] = cfhd;
 		sourceViewer.setHyperlinkDetectors(detectors, SWT.CONTROL);
 		
 		if (sourceViewer instanceof ProjectionViewer && fProjectionSupport == null) {
-			fProjectionSupport = new ProjectionSupport((ProjectionViewer) sourceViewer, getAnnotationAccess(), getSharedColors());
-			MarkerAnnotationPreferences markerAnnotationPreferences = (MarkerAnnotationPreferences) getAdapter(
-					MarkerAnnotationPreferences.class);
-			if (markerAnnotationPreferences != null) {
-				Iterator<AnnotationPreference> e = markerAnnotationPreferences.getAnnotationPreferences().iterator();
-				while (e.hasNext()) {
-					AnnotationPreference annotationPreference = e.next();
-					Object annotationType = annotationPreference.getAnnotationType();
-					if (annotationType instanceof String)
-						fProjectionSupport.addSummarizableAnnotationType((String) annotationType);
-				}
-			} else {
-				fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.task");
-				fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.parserProblemAnnotation");
-				fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.parserWarningAnnotation");
-				fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.occurrenceAnnotation");
-				fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error"); //$NON-NLS-1$
-				fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning"); //$NON-NLS-1$
-			}
-			fProjectionSupport.setHoverControlCreator(new IInformationControlCreator() {
-				@Override
-				public IInformationControl createInformationControl(Shell shell) {
-					return new DefaultInformationControl(shell, false);
-				}
-			});
-			fProjectionSupport.setInformationPresenterControlCreator(new IInformationControlCreator() {
-				@Override
-				public IInformationControl createInformationControl(Shell shell) {
-					return new DefaultInformationControl(shell, true);
-				}
-			});
-			fProjectionSupport.install();
-			
-		}
-		
-		// ensure source viewer decoration support has been created and configured
-		getSourceViewerDecorationSupport(sourceViewer);
-		
+            fProjectionSupport= new ProjectionSupport((ProjectionViewer)sourceViewer, getAnnotationAccess(), getSharedColors());
+            MarkerAnnotationPreferences markerAnnotationPreferences= (MarkerAnnotationPreferences) getAdapter(MarkerAnnotationPreferences.class);
+            if (markerAnnotationPreferences != null) {
+                Iterator<AnnotationPreference> e= markerAnnotationPreferences.getAnnotationPreferences().iterator();
+                while (e.hasNext()) {
+                    AnnotationPreference annotationPreference= e.next();
+                    Object annotationType= annotationPreference.getAnnotationType();
+                    if (annotationType instanceof String)
+                        fProjectionSupport.addSummarizableAnnotationType((String)annotationType);
+                }
+            } else {
+                fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.task");
+                fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.parserProblemAnnotation");
+                fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.parserWarningAnnotation");
+                fProjectionSupport.addSummarizableAnnotationType("org.cfeclipse.cfml.occurrenceAnnotation");
+                fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.error"); //$NON-NLS-1$
+                fProjectionSupport.addSummarizableAnnotationType("org.eclipse.ui.workbench.texteditor.warning"); //$NON-NLS-1$
+            }
+            fProjectionSupport.setHoverControlCreator(new IInformationControlCreator() {
+                @Override
+                public IInformationControl createInformationControl(Shell shell) {
+                    return new DefaultInformationControl(shell, false);
+                }
+            });
+            fProjectionSupport.setInformationPresenterControlCreator(new IInformationControlCreator() {
+                @Override
+                public IInformationControl createInformationControl(Shell shell) {
+                    return new DefaultInformationControl(shell, true);
+                }
+            });
+            fProjectionSupport.install();
+
+        }
+
+        // ensure source viewer decoration support has been created and configured
+        getSourceViewerDecorationSupport(sourceViewer);
+
 		return sourceViewer;
-		
+
 	}
-	
+
 	/**
-	 * Creates the breadcrumb to be used by this editor. Returns <code>null</code> if this editor can not show a
-	 * breadcrumb.
-	 *
-	 * @return the breadcrumb or <code>null</code>
-	 * @since 3.4
-	 */
-	protected IBreadcrumb createBreadcrumb() {
-		return new CFMLEditorBreadcrumb(this);
-	}
-	
-	/**
-	 * @return the breadcrumb used by this viewer if any.
-	 * @since 3.4
-	 */
-	public IBreadcrumb getBreadcrumb() {
-		return fBreadcrumb;
-	}
-	
-	/**
-	 * Returns the preference key for the breadcrumb. The value depends on the current perspective.
-	 *
-	 * @return the preference key or <code>null</code> if there's no perspective
-	 * @since 3.4
-	 */
-	String getBreadcrumbPreferenceKey() {
-		IPerspectiveDescriptor perspective = getSite().getPage().getPerspective();
-		if (perspective == null)
-			return null;
-		return CFMLEditor.EDITOR_SHOW_BREADCRUMB + "." + perspective.getId(); //$NON-NLS-1$
-	}
-	
-	/**
-	 * Returns true if the breadcrumb is active. If true then the breadcrumb has the focus if this part is the active
-	 * part.
-	 *
-	 * @return true if the breadcrumb is active.
-	 * @since 3.4
-	 */
-	public boolean isBreadcrumbActive() {
-		return fBreadcrumb != null && fBreadcrumb.isActive();
-	}
-	
-	/**
-	 * Makes the breadcrumb visible. Creates its content if this is the first time it is made visible.
-	 *
-	 * @since 3.4
-	 */
-	private void showBreadcrumb() {
-		if (fBreadcrumb == null)
-			return;
-		
-		if (fBreadcrumbComposite.isDisposed()) {
-			// not expected
-			SWT.error(SWT.ERROR_WIDGET_DISPOSED, null, ". Editor not properly disposed;");
-		}
-		if (fBreadcrumbComposite.getChildren().length == 0) {
-			fBreadcrumb.createContent(fBreadcrumbComposite);
-		}
-		
-		((GridData) fBreadcrumbComposite.getLayoutData()).exclude = false;
-		fBreadcrumbComposite.setVisible(true);
-		
-		// ISourceReference selection= computeHighlightRangeSourceReference();
-		// if (selection == null)
-		// selection= getInputJavaElement();
-		// setBreadcrumbInput(selection);
-		fBreadcrumbComposite.getParent().layout(true, true);
-	}
-	
-	/**
-	 * Hides the breadcrumb
-	 *
-	 * @since 3.4
-	 */
-	private void hideBreadcrumb() {
-		if (fBreadcrumb == null)
-			return;
-		((GridData) fBreadcrumbComposite.getLayoutData()).exclude = true;
-		fBreadcrumbComposite.setVisible(false);
-		fBreadcrumbComposite.getParent().layout(true, true);
-	}
+     * Creates the breadcrumb to be used by this editor.
+     * Returns <code>null</code> if this editor can not show a breadcrumb.
+     *
+     * @return the breadcrumb or <code>null</code>
+     * @since 3.4
+     */
+    protected IBreadcrumb createBreadcrumb() {
+        return new CFMLEditorBreadcrumb(this);
+    }
+
+    /**
+     * @return the breadcrumb used by this viewer if any.
+     * @since 3.4
+     */
+    public IBreadcrumb getBreadcrumb() {
+        return fBreadcrumb;
+    }
+
+    /**
+     * Returns the preference key for the breadcrumb. The
+     * value depends on the current perspective.
+     *
+     * @return the preference key or <code>null</code> if there's no perspective
+     * @since 3.4
+     */
+    String getBreadcrumbPreferenceKey() {
+        IPerspectiveDescriptor perspective= getSite().getPage().getPerspective();
+        if (perspective == null)
+            return null;
+        return CFMLEditor.EDITOR_SHOW_BREADCRUMB + "." + perspective.getId(); //$NON-NLS-1$
+    }
+
+    /**
+     * Returns true if the breadcrumb is active. If true
+     * then the breadcrumb has the focus if this part
+     * is the active part.
+     *
+     * @return true if the breadcrumb is active.
+     * @since 3.4
+     */
+    public boolean isBreadcrumbActive() {
+        return fBreadcrumb != null && fBreadcrumb.isActive();
+    }
+
+    /**
+     * Makes the breadcrumb visible. Creates its content
+     * if this is the first time it is made visible.
+     *
+     * @since 3.4
+     */
+    private void showBreadcrumb() {
+        if (fBreadcrumb == null)
+            return;
+
+        if (fBreadcrumbComposite.isDisposed()) {
+            // not expected
+            SWT.error(SWT.ERROR_WIDGET_DISPOSED, null,
+                    ". Editor not properly disposed;");
+        }
+        if (fBreadcrumbComposite.getChildren().length == 0) {
+            fBreadcrumb.createContent(fBreadcrumbComposite);
+        }
+
+        ((GridData) fBreadcrumbComposite.getLayoutData()).exclude= false;
+        fBreadcrumbComposite.setVisible(true);
+
+//        ISourceReference selection= computeHighlightRangeSourceReference();
+//        if (selection == null)
+//            selection= getInputJavaElement();
+//        setBreadcrumbInput(selection);
+        fBreadcrumbComposite.getParent().layout(true, true);
+    }
+
+    /**
+     * Hides the breadcrumb
+     *
+     * @since 3.4
+     */
+    private void hideBreadcrumb() {
+        if (fBreadcrumb == null)
+            return;
+        ((GridData) fBreadcrumbComposite.getLayoutData()).exclude= true;
+        fBreadcrumbComposite.setVisible(false);
+        fBreadcrumbComposite.getParent().layout(true, true);
+    }
+
 	
 	/**
 	 * Returns the source fViewer decoration support.
 	 * 
 	 * @param fViewer
-	 *            the fViewer for which to return a decoration support
+	 *          the fViewer for which to return a decoration support
 	 * @return the source fViewer decoration support
 	 */
-	protected SourceViewerDecorationSupport getSourceViewerDecorationSupport(ISourceViewer viewer) {
-		
+	protected SourceViewerDecorationSupport getSourceViewerDecorationSupport(
+			ISourceViewer viewer) {
+
 		if (this.fSourceViewerDecorationSupport == null) {
-			this.fSourceViewerDecorationSupport = new DecorationSupport(viewer, getOverviewRuler(), getAnnotationAccess(),
-					getSharedColors());
+			this.fSourceViewerDecorationSupport = new DecorationSupport(viewer,
+					getOverviewRuler(), getAnnotationAccess(), getSharedColors());
 			configureSourceViewerDecorationSupport(this.fSourceViewerDecorationSupport);
 		}
 		return this.fSourceViewerDecorationSupport;
 	}
-	
+
 	public boolean isMarkingOccurrences() {
 		return isMarkOccurrenceEnabled;
 	}
-	
+
 	public void projectionDisabled() {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+
 	public void projectionEnabled() {
 		// TODO Auto-generated method stub
 		CFMLPlugin.log("projectionEnabled");
 	}
-	
+
 	/**
 	 * The editor has entered or exited linked mode.
-	 * 
-	 * @param inLinkedMode
-	 *            whether an enter or exit has occurred
-	 * @param effectsOccurrences
-	 *            whether to change the state of the occurrences finder
+	 * @param inLinkedMode whether an enter or exit has occurred
+	 * @param effectsOccurrences whether to change the state of the occurrences finder
 	 */
 	public void setInLinkedMode(boolean inLinkedMode, boolean effectsOccurrences) {
 		if (inLinkedMode) {
@@ -1490,61 +1555,63 @@ public class CFMLEditor extends AbstractDecoratedTextEditor
 			}
 		}
 	}
+
+	
 	
 	public void openReferenceElement() {
-		ISelection selection = getSelectionProvider().getSelection();
-		Object target = null;
+		ISelection selection= getSelectionProvider().getSelection();
+		Object target= null;
 		if (selection instanceof ITextSelection) {
-			ITextSelection textSelection = (ITextSelection) selection;
-			ISourceViewer viewer = getSourceViewer();
-			int textOffset = textSelection.getOffset();
-			// IRegion region= XMLTextHover.getRegion(viewer, textOffset);
-			// target= findTarget(region);
+			ITextSelection textSelection= (ITextSelection)selection;
+			ISourceViewer viewer= getSourceViewer();
+			int textOffset= textSelection.getOffset();
+			//IRegion region= XMLTextHover.getRegion(viewer, textOffset);
+			//target= findTarget(region);
 		}
 		
-		// openTarget(target);
-	}
+		//openTarget(target);
+	}	
+
+	   /*
+     * Update the hovering behavior depending on the preferences.
+     */
+    private void updateHoverBehavior() {
+        SourceViewerConfiguration configuration= getSourceViewerConfiguration();
+        String[] types= configuration.getConfiguredContentTypes(getSourceViewer());
+
+        for (int i= 0; i < types.length; i++) {
+
+            String t= types[i];
+
+            ISourceViewer sourceViewer= getSourceViewer();
+            if (sourceViewer instanceof ITextViewerExtension2) {
+                // Remove existing hovers
+                ((ITextViewerExtension2)sourceViewer).removeTextHovers(t);
+
+                int[] stateMasks= configuration.getConfiguredTextHoverStateMasks(getSourceViewer(), t);
+
+                if (stateMasks != null) {
+                    for (int j= 0; j < stateMasks.length; j++)  {
+                        int stateMask= stateMasks[j];
+                        ITextHover textHover= configuration.getTextHover(sourceViewer, t, stateMask);
+                        ((ITextViewerExtension2)sourceViewer).setTextHover(textHover, t, stateMask);
+                    }
+                } else {
+                    ITextHover textHover= configuration.getTextHover(sourceViewer, t);
+                    ((ITextViewerExtension2)sourceViewer).setTextHover(textHover, t, ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
+                }
+            } else
+                sourceViewer.setTextHover(configuration.getTextHover(sourceViewer, t), t);
+        }
+    }   
+
 	
-	/*
-	* Update the hovering behavior depending on the preferences.
-	*/
-	private void updateHoverBehavior() {
-		SourceViewerConfiguration configuration = getSourceViewerConfiguration();
-		String[] types = configuration.getConfiguredContentTypes(getSourceViewer());
-		
-		for (int i = 0; i < types.length; i++) {
-			
-			String t = types[i];
-			
-			ISourceViewer sourceViewer = getSourceViewer();
-			if (sourceViewer instanceof ITextViewerExtension2) {
-				// Remove existing hovers
-				((ITextViewerExtension2) sourceViewer).removeTextHovers(t);
-				
-				int[] stateMasks = configuration.getConfiguredTextHoverStateMasks(getSourceViewer(), t);
-				
-				if (stateMasks != null) {
-					for (int j = 0; j < stateMasks.length; j++) {
-						int stateMask = stateMasks[j];
-						ITextHover textHover = configuration.getTextHover(sourceViewer, t, stateMask);
-						((ITextViewerExtension2) sourceViewer).setTextHover(textHover, t, stateMask);
-					}
-				} else {
-					ITextHover textHover = configuration.getTextHover(sourceViewer, t);
-					((ITextViewerExtension2) sourceViewer).setTextHover(textHover, t,
-							ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
-				}
-			} else
-				sourceViewer.setTextHover(configuration.getTextHover(sourceViewer, t), t);
-		}
-	}
-	
-	// someday we'll use this
-	// public void saveState(IMemento memento) {
-	// System.out.println("ColdFusion Rocks!");
-	// }
-	//
-	// public void restoreState(IMemento memento) {
-	// System.out.println("ColdFusion Rolls!");
-	// }
+//	someday we'll use this
+//	public void saveState(IMemento memento) {
+//		System.out.println("ColdFusion Rocks!");
+//	}
+//	
+//	public void restoreState(IMemento memento) {
+//		System.out.println("ColdFusion Rolls!");
+//	}
 }
