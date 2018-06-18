@@ -1,0 +1,59 @@
+//@import url("platform:/plugin/org.eclipse.ui.themes/css/e4-dark.css");
+
+IEclipsePreferences#org-cfeclipse-cfml {
+	preferences:
+		'AbstractTextEditor.Color.Background.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionForeground.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionBackground.SystemDefault=false'
+		'AbstractTextEditor.Color.Background=30,30,30'
+		'AbstractTextEditor.Color.Foreground.SystemDefault=false'
+		'AbstractTextEditor.Color.SelectionBackground=33,66,131'
+		'AbstractTextEditor.Color.SelectionForeground=147,161,161'
+		'AbstractTextEditor.Color.Foreground=204,204,204'
+		'AbstractTextEditor.Color.FindScope=30,120,155'
+
+		'defaultTextColor=212,212,212'
+
+		'cfbuiltinScopeColor=103,140,177'
+		'cfcommentBackgroundColor=30,30,30'
+		'cfcommentColor=96,139,78'
+		'cfkeywordColor=156,220,254'
+		'cfmlOpperators=212,212,212'
+		'cfnumberColor=181,206,168'
+		'cfscopeColor=212,212,212'
+		'cfscriptfunctionColor=103,140,177'
+		'cfscriptKeywordColor=86,156,214'
+		'cfscriptTextColor=212,212,212'
+		'cfstringColor=206,145,120'
+		'cftagColor=215,186,125'
+
+		'cssTagColor=103,140,177'
+		'cssTextColor=212,212,212'
+
+		'currentLineColor=40,40,40'
+
+		'htmCommentColor=96,139,78'
+		'htmFormTagColor=86,156,214'
+		'htmTagColor=86,156,214'
+		'htmTableTagColor=86,156,214'
+
+		'javaDocStyeComments=96,139,78'
+		'javaDocStyeCommentsBackground=30,30,30'
+
+		'javascriptFunction=103,140,177'
+		'javascriptColor=212,212,212'
+
+		'occurrenceAnnotation.color=33,66,131'
+		'printMarginColor=212,212,212'
+
+		'SQLCommentColor=96,139,78'
+		'SQLKeywordColor=86,156,214'
+		'SQLOperatorColor=212,212,212'
+		'SQLStringColor=206,145,120'
+		'SQLTextColor=212,212,212'
+
+		'stringColor=206,145,120'
+
+		'unknowTagColors=212,212,212'
+}
+

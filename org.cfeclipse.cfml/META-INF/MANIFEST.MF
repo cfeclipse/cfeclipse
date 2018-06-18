@@ -106,9 +106,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.equinox.event;resolution:=optional,
  org.eclipse.equinox.ds;resolution:=optional,
  org.eclipse.ui.forms;bundle-version="3.7.100",
- org.eclipse.tm4e.core;bundle-version="0.1.0",
- org.eclipse.tm4e.ui;bundle-version="0.1.0",
- org.eclipse.tm4e.registry;bundle-version="0.1.0",
  com.ibm.icu;bundle-version="58.2.0",
  org.eclipse.ui.themes;bundle-version="1.2.1"
 Bundle-ActivationPolicy: lazy

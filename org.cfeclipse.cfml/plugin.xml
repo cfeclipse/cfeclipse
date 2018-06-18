@@ -97,83 +97,6 @@
 		</content-type>
 	</extension>
 
-    <extension
-        point="org.eclipse.tm4e.registry.grammars">
-    <!--
-        <grammar
-            scopeName="source.css"
-            path="./appearance/syntaxes/css.plist" >
-        </grammar>
-        <scopeNameContentTypeBinding
-            contentTypeId="org.cfeclipse.cfml.source.css"
-            scopeName="source.css">
-        </scopeNameContentTypeBinding>
-        <grammar
-            scopeName="text.html.basic"
-            path="./appearance/syntaxes/html.json" >
-        </grammar>
-        <grammar
-            scopeName="source.js"
-            path="./appearance/syntaxes/JavaScript.tmLanguage" >
-        </grammar>
-        <scopeNameContentTypeBinding
-            contentTypeId="org.cfeclipse.cfml.source.cfml"
-            scopeName="text.html.basic">
-        </scopeNameContentTypeBinding>
-    -->
-    
-        <grammar
-            scopeName="text.html.cfm"
-            path="./appearance/syntaxes/cfml.json" >
-        </grammar>
-        <scopeNameContentTypeBinding
-             contentTypeId="org.cfeclipse.cfml.cfsource"
-             scopeName="text.html.cfm">
-        </scopeNameContentTypeBinding>
-    
-        <!-- <injection scopeName="text.html.basic" injectTo="text.html.cfm"/> -->
-    </extension>
-
-    <extension
-          point="org.eclipse.tm4e.ui.snippets">
-          <snippet
-              name="CFML Sample"
-              path="./appearance/sample.cfml"
-              scopeName="text.html.cfm">
-          </snippet>
-    </extension>
-   
-    <extension
-         point="org.eclipse.tm4e.ui.themes">
-      <!-- "Light" themes -->
-      <theme
-            id="org.cfeclipse.cfml.ui.themes.tm4e.light"
-            name="cfml tm4e"
-            path="./appearance/themes/Light.css"
-            default="true" >
-      </theme>
-      <theme
-            id="org.cfeclipse.cfml.ui.themes.light"
-            name="cfml"
-            path="./appearance/themes/cfml_light.css"
-            default="false" >
-      </theme>
-      <!-- "Dark" themes -->
-      <theme
-            id="org.cfeclipse.cfml.ui.themes.tm4e.dark"
-            name="cfml dark tm4e"
-            path="./appearance/themes/Dark.css"
-            dark="true"
-            default="true" >
-      </theme>
-      <theme
-            id="org.cfeclipse.cfml.ui.themes.dark"
-            name="cfml dark"
-            path="./appearance/themes/cfml_dark.css"
-            dark="true"
-            default="false" >
-      </theme>
-   </extension>
    	<!-- ////////////////////////////////////////////////////////////// -->
 	<!-- Editor -->
    <extension
@@ -828,7 +751,7 @@
 		<menuContribution locationURI="popup:#CFMLEditorContext?before=group.open">
 	        <separator name="group.source"
 	                visible="true" />
-	        <menu id="org.cfeclipse.menues.source"
+	        <menu id="org.cfeclipse.menus.source"
 	                label="Source">
 				<command commandId="org.cfeclipse.cfml.FormatAction" style="push">
 						<visibleWhen checkEnabled="false">
@@ -2939,5 +2862,11 @@
             id="org.cfeclipse.cfml.CFMLSourceHover">
       </hover>
    </extension>
-   
+   <extension
+         point="org.eclipse.e4.ui.css.swt.theme">
+         <stylesheet
+               uri="appearance/eclipse-themes/dark.css">
+               <themeid refid="org.eclipse.e4.ui.css.theme.e4_dark"/>
+         </stylesheet>
+   </extension>
 </plugin>

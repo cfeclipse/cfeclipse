@@ -6,12 +6,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import org.eclipse.ui.themes.ITheme;
+
 import org.cfeclipse.cfml.CFMLPlugin;
+import org.cfeclipse.cfml.preferences.OverlayPreferenceStore.OverlayKey;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
@@ -19,6 +27,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -29,49 +38,54 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.themes.IThemeManager;
+import org.osgi.service.prefs.BackingStoreException;
 
 
 public class EditorPreferencePage extends PreferencePage
 	implements IWorkbenchPreferencePage
 {
 
+	// Eclipse 4 API
+	@Inject IThemeManager themeManager;
+
 	private final String fAppearanceColorListModel[][] = {
 		{
-			"Editor Background", EditorPreferenceConstants.P_COLOR_BACKGROUND, null
-		}, /*{
-			"Line numbers",  EditorPreferenceConstants.P_LINE_NUMBER_COLOR, null
-		},*/{
 			"Editor toolbars",  EditorPreferenceConstants.P_SHOW_EDITOR_TOOLBAR, null
-		}, {
+		},
+		{
 			"Current line highlight",  EditorPreferenceConstants.P_CURRENT_LINE_COLOR, null
 		}, {
 			"Bracket highlighting",  EditorPreferenceConstants.P_BRACKET_MATCHING_COLOR, null
-		}, {
+		},
+		{
 			"Print margin",  EditorPreferenceConstants.P_PRINT_MARGIN_COLOR, null
-		}, {
+		},
+		{
 			"Selection foreground color",  EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR, EditorPreferenceConstants.P_SELECTION_FOREGROUND_SYSTEM_DEFAULT
-		}, {
+		},
+		{
 			"Selection background color",  EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR, EditorPreferenceConstants.P_SELECTION_BACKGROUND_SYSTEM_DEFAULT
 		}
 	};
 	private OverlayPreferenceStore fOverlayStore = null;
-	private Map fCheckBoxes = null;
+	private Map<Button, String> fCheckBoxes = null;
 	private SelectionListener fCheckBoxListener = null;
-	private Map fTextFields = null;
+	private Map<Text, String> fTextFields = null;
 	private ModifyListener fTextFieldListener = null;
-	private ArrayList fNumberFields = null;
+	private ArrayList<Text> fNumberFields = null;
 	private ModifyListener fNumberFieldListener = null;
 	private List fAppearanceColorList = null;
 	private ColorEditor fAppearanceColorEditor = null;
 	private Button fAppearanceColorDefault = null;
 	private boolean fFieldsInitialized = false;
-	private ArrayList fMasterSlaveListeners = null;
-	private Map fComboBoxes = null;
+	private ArrayList<SelectionListener> fMasterSlaveListeners = null;
+	private Map<CCombo, String> fComboBoxes = null;
 	private SelectionListener fComboBoxListener = null;
-	
+
 	public EditorPreferencePage()
 	{
-		fCheckBoxes = new HashMap();
+		fCheckBoxes = new HashMap<Button, String>();
 		fCheckBoxListener = new SelectionListener() {
 
 			public void widgetDefaultSelected(SelectionEvent selectionevent)
@@ -81,37 +95,37 @@ public class EditorPreferencePage extends PreferencePage
 			public void widgetSelected(SelectionEvent e)
 			{
 				Button button = (Button)e.widget;
-				fOverlayStore.setValue((String)fCheckBoxes.get(button), button.getSelection());
+				fOverlayStore.setValue(fCheckBoxes.get(button), button.getSelection());
 			}
 
 		};
-		fTextFields = new HashMap();
+		fTextFields = new HashMap<Text, String>();
 		fTextFieldListener = new ModifyListener() {
 
 			public void modifyText(ModifyEvent e)
 			{
 				Text text = (Text)e.widget;
-				fOverlayStore.setValue((String)fTextFields.get(text), text.getText());
+				fOverlayStore.setValue(fTextFields.get(text), text.getText());
 			}
 
 		};
-		fComboBoxes = new HashMap();
+		fComboBoxes = new HashMap<CCombo, String>();
 		fComboBoxListener = new SelectionListener() {
 
 			public void widgetDefaultSelected(SelectionEvent e)
 			{
 				CCombo combo = (CCombo)e.widget;
-				fOverlayStore.setValue((String)fComboBoxes.get(combo), combo.getSelectionIndex());
+				fOverlayStore.setValue(fComboBoxes.get(combo), combo.getSelectionIndex());
 			}
 
 			public void widgetSelected(SelectionEvent e)
 			{
 				CCombo combo = (CCombo)e.widget;
-				fOverlayStore.setValue((String)fComboBoxes.get(combo), combo.getSelectionIndex());
+				fOverlayStore.setValue(fComboBoxes.get(combo), combo.getSelectionIndex());
 			}
 
 		};
-		fNumberFields = new ArrayList();
+		fNumberFields = new ArrayList<Text>();
 		fNumberFieldListener = new ModifyListener() {
 
 			public void modifyText(ModifyEvent e)
@@ -121,16 +135,16 @@ public class EditorPreferencePage extends PreferencePage
 
 		};
 		fFieldsInitialized = false;
-		fMasterSlaveListeners = new ArrayList();
+		fMasterSlaveListeners = new ArrayList<SelectionListener>();
 		setDescription("Editor Settings");
 		setPreferenceStore(CFMLPlugin.getDefault().getPreferenceStore());
 		fOverlayStore = createOverlayStore();
-	   
+
 	}
 
 	private OverlayPreferenceStore createOverlayStore()
 	{
-		ArrayList overlayKeys = new ArrayList();
+		ArrayList<OverlayKey> overlayKeys = new ArrayList<OverlayKey>();
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_COLOR_BACKGROUND));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_CURRENT_LINE_COLOR));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, EditorPreferenceConstants.P_CURRENT_LINE_COLOR));
@@ -164,15 +178,15 @@ public class EditorPreferencePage extends PreferencePage
 
 	public void init(IWorkbench iworkbench)
 	{
-	    
+
 	}
 
 	public void createControl(Composite parent)
 	{
-	   
+
 		super.createControl(parent);
-		
-	   
+
+
 	}
 
 	private void handleAppearanceColorListSelection()
@@ -180,7 +194,7 @@ public class EditorPreferencePage extends PreferencePage
 		int i = fAppearanceColorList.getSelectionIndex();
 		String key = fAppearanceColorListModel[i][1];
 		org.eclipse.swt.graphics.RGB rgb = PreferenceConverter.getColor(fOverlayStore, key);
-	
+
 		fAppearanceColorEditor.setColorValue(rgb);
 		updateAppearanceColorWidgets(fAppearanceColorListModel[i][2]);
 	}
@@ -208,7 +222,7 @@ public class EditorPreferencePage extends PreferencePage
 		layout.numColumns = 2;
 		appearanceComposite.setLayout(layout);
 		String label = "&Print margin column:";
-		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_PRINT_MARGIN_SIZE, 3, 0, true);
+//		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_PRINT_MARGIN_SIZE, 3, 0, true);
 		label = "Displayed &tab width:";
 		addTextField(appearanceComposite, label, EditorPreferenceConstants.P_TAB_WIDTH, 3, 0, true);
 		label = "Insight Delay:";
@@ -217,8 +231,8 @@ public class EditorPreferencePage extends PreferencePage
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_INSERT_SPACES_FOR_TABS, 0);
 		label = "Trim trailing spaces before saving";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_RTRIM_ON_SAVE, 0);
-		
-		
+
+
 		label = "Show overview &ruler";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_OVERVIEW_RULER, 0);
 		label = "Show Editor Toolbar";
@@ -228,7 +242,7 @@ public class EditorPreferencePage extends PreferencePage
 		label = "Tab indents current line";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_TAB_INDENTS_CURRENT_LINE, 0);
 		label = "Sho&w print margin";
-		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN, 0);
+//		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_SHOW_PRINT_MARGIN, 0);
 		label = "Warn when opening read only files";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_WARN_READ_ONLY_FILES, 0);
 		label = "Use c&ustom caret";
@@ -236,18 +250,18 @@ public class EditorPreferencePage extends PreferencePage
 		label = "Ena&ble thick caret";
 		Button slave = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_USE_WIDE_CARET, 0);
 		createDependency(master, EditorPreferenceConstants.P_ENABLE_CUSTOM_CARETS, slave);
-		
 
-		
+
+
 		label = "Enable bracket highlighting";
 		Button bracketMatchingBox = addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED, 0);
 		String items[] = new String[] {"Outline box", "Solid box", "Bold text"};
 		CCombo bracketStyleCombo  = addComboList(appearanceComposite,"Bracket matching style",EditorPreferenceConstants.P_BRACKET_MATCHING_STYLE,items);
 		createDependency(bracketMatchingBox, EditorPreferenceConstants.P_BRACKET_MATCHING_ENABLED, bracketStyleCombo);
-		
+
 		label = "Enable smart Home and End";
 		addCheckBox(appearanceComposite, label, EditorPreferenceConstants.P_NAVIGATION_SMART_HOME_END, 0);
-		
+
 		Label l = new Label(appearanceComposite, 16384);
 		GridData gd = new GridData(256);
 		gd.horizontalSpan = 2;
@@ -296,9 +310,9 @@ public class EditorPreferencePage extends PreferencePage
 				fAppearanceColorEditor.getButton().setEnabled(!systemDefault);
 				int i = fAppearanceColorList.getSelectionIndex();
 				String key = fAppearanceColorListModel[i][2];
-				if(key != null) 
+				if(key != null)
 					fOverlayStore.setValue(key, systemDefault);
-					
+
 			}
 
 			public void widgetDefaultSelected(SelectionEvent selectionevent)
@@ -340,18 +354,18 @@ public class EditorPreferencePage extends PreferencePage
 			}
 
 		});
-		
+
 		return appearanceComposite;
 	}
 
 	protected Control createContents(Composite parent)
 	{
-	   
+
 		initializeDefaultColors();
 		fOverlayStore.load();
 		fOverlayStore.start();
 		Control control = createAppearancePage(parent);
-		
+
 		initialize();
 		Dialog.applyDialogFont(control);
 
@@ -364,7 +378,7 @@ public class EditorPreferencePage extends PreferencePage
 		for(int i = 0; i < fAppearanceColorListModel.length; i++) {
 			fAppearanceColorList.add(fAppearanceColorListModel[i][0]);
 		}
-		
+
 		fAppearanceColorList.getDisplay().asyncExec(new Runnable() {
 
 			public void run()
@@ -383,56 +397,72 @@ public class EditorPreferencePage extends PreferencePage
 	{
 		Button b;
 		String key;
-		for(Iterator e = fCheckBoxes.keySet().iterator(); e.hasNext(); b.setSelection(fOverlayStore.getBoolean(key)))
+		for(Iterator<Button> e = fCheckBoxes.keySet().iterator(); e.hasNext(); b.setSelection(fOverlayStore.getBoolean(key)))
 		{
-			b = (Button)e.next();
-			key = (String)fCheckBoxes.get(b);
+			b = e.next();
+			key = fCheckBoxes.get(b);
 		}
 
 		Text t;
-		for(Iterator e = fTextFields.keySet().iterator(); e.hasNext(); t.setText(fOverlayStore.getString(key)))
+		for(Iterator<Text> e = fTextFields.keySet().iterator(); e.hasNext(); t.setText(fOverlayStore.getString(key)))
 		{
-			t = (Text)e.next();
-			key = (String)fTextFields.get(t);
+			t = e.next();
+			key = fTextFields.get(t);
 		}
 
 		CCombo c;
-		for(Iterator e = fComboBoxes.keySet().iterator(); e.hasNext(); c.select(fOverlayStore.getInt(key)))
+		for(Iterator<CCombo> e = fComboBoxes.keySet().iterator(); e.hasNext(); c.select(fOverlayStore.getInt(key)))
 		{
-			c = (CCombo)e.next();
-			key = (String)fComboBoxes.get(c);
+			c = e.next();
+			key = fComboBoxes.get(c);
 		}
 
 		fFieldsInitialized = true;
 		updateStatus(validatePositiveNumber("0"));
 		SelectionListener listener;
-		for(Iterator iter = fMasterSlaveListeners.iterator(); iter.hasNext(); listener.widgetSelected(null))
-			listener = (SelectionListener)iter.next();
-		
-	    
-
+		for(Iterator<SelectionListener> iter = fMasterSlaveListeners.iterator(); iter.hasNext(); listener.widgetSelected(null))
+			listener = iter.next();
 	}
 
 	private void initializeDefaultColors()
 	{
 		if(!getPreferenceStore().contains(EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR))
 		{
-			org.eclipse.swt.graphics.RGB rgb = getControl().getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION).getRGB();
+			ITheme currentTheme = themeManager.getCurrentTheme();
+			ColorRegistry colorRegistry = currentTheme.getColorRegistry();
+			RGB rgb= colorRegistry.getRGB(EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR);
 			PreferenceConverter.setDefault(fOverlayStore, EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR, rgb);
 			PreferenceConverter.setDefault(getPreferenceStore(), EditorPreferenceConstants.P_SELECTION_BACKGROUND_COLOR, rgb);
 		}
 		if(!getPreferenceStore().contains(EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR))
 		{
-			org.eclipse.swt.graphics.RGB rgb = getControl().getDisplay().getSystemColor(SWT.COLOR_LIST_SELECTION_TEXT).getRGB();
+			ITheme currentTheme = themeManager.getCurrentTheme();
+			ColorRegistry colorRegistry = currentTheme.getColorRegistry();
+			RGB rgb= colorRegistry.getRGB(EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR);
 			PreferenceConverter.setDefault(fOverlayStore, EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR, rgb);
 			PreferenceConverter.setDefault(getPreferenceStore(), EditorPreferenceConstants.P_SELECTION_FOREGROUND_COLOR, rgb);
 		}
+		if(!getPreferenceStore().contains(EditorPreferenceConstants.P_COLOR_BACKGROUND))
+		{
+			ITheme currentTheme = themeManager.getCurrentTheme();
+			ColorRegistry colorRegistry = currentTheme.getColorRegistry();
+			RGB rgb= colorRegistry.getRGB(EditorPreferenceConstants.P_COLOR_BACKGROUND);
+			PreferenceConverter.setDefault(fOverlayStore, EditorPreferenceConstants.P_COLOR_BACKGROUND, rgb);
+			PreferenceConverter.setDefault(getPreferenceStore(), EditorPreferenceConstants.P_COLOR_BACKGROUND, rgb);
+		}
+
 	}
 
 	public boolean performOk()
 	{
 		fOverlayStore.propagate();
-		CFMLPlugin.getDefault().savePluginPreferences();
+		IEclipsePreferences preferences = InstanceScope.INSTANCE.getNode(CFMLPlugin.PLUGIN_ID);
+		try {
+			preferences.flush();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 
@@ -441,7 +471,7 @@ public class EditorPreferencePage extends PreferencePage
 		fOverlayStore.loadDefaults();
 		initializeFields();
 		handleAppearanceColorListSelection();
-	    
+
 		super.performDefaults();
 	}
 
@@ -456,25 +486,25 @@ public class EditorPreferencePage extends PreferencePage
 	}
 
 	private CCombo addComboList(Composite parent, String label, String key, String[] items) {
-		
+
 		Label labelControl = new Label(parent,SWT.NONE);
 		labelControl.setText(label);
 		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
 		gd.horizontalIndent = 0;
-		
+
 		labelControl.setLayoutData(gd);
 		CCombo combo = new CCombo(parent,SWT.BORDER|SWT.SINGLE|SWT.READ_ONLY);
 		for (int i=0;i<items.length;i++) {
 			combo.add(items[i]);
 		}
 		combo.setBackground(new Color(parent.getDisplay(),255,255,255));
-		
+
 		combo.addSelectionListener(fComboBoxListener);
 		fComboBoxes.put(combo,key);
-		
+
 		return combo;
 	}
-	
+
 	private Button addCheckBox(Composite parent, String label, String key, int indentation)
 	{
 		Button checkBox = new Button(parent, SWT.CHECK);
@@ -545,7 +575,7 @@ public class EditorPreferencePage extends PreferencePage
 		String number = textControl.getText();
 		IStatus status = validatePositiveNumber(number);
 		if(!status.matches(4))
-			fOverlayStore.setValue((String)fTextFields.get(textControl), number);
+			fOverlayStore.setValue(fTextFields.get(textControl), number);
 		updateStatus(status);
 	}
 
@@ -576,7 +606,7 @@ public class EditorPreferencePage extends PreferencePage
 		{
 			for(int i = 0; i < fNumberFields.size(); i++)
 			{
-				Text text = (Text)fNumberFields.get(i);
+				Text text = fNumberFields.get(i);
 				IStatus s = validatePositiveNumber(text.getText());
 				status = s.getSeverity() <= status.getSeverity() ? status : s;
 			}

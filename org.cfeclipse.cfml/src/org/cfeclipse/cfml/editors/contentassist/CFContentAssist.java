@@ -391,7 +391,6 @@ public class CFContentAssist extends CFEContentAssist{
 	            CFPartitionScanner.HTM_START_TAG_BEGIN,
 	            CFPartitionScanner.HTM_START_TAG_END,
 	            CFPartitionScanner.HTM_TAG_ATTRIBS,
-	            ICFDocument.CFECLIPSE_CONTENT_TYPE,
 	            IDocument.DEFAULT_CONTENT_TYPE};
 	    
 	    return AssistUtils.isInCorrectPartitionTypes(state, partitions);

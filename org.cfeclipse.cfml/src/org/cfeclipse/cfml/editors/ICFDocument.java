@@ -45,7 +45,6 @@ import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.cfeclipse.cfml.util.ResourceUtils;
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
@@ -81,7 +80,6 @@ import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
  */
 public class ICFDocument extends Document implements ICFEFileDocument {
 
-	public final static String CFECLIPSE_CONTENT_TYPE = "org.cfeclipse.cfml.editors.CFMLEditor";  //$NON-NLS-1$
     /** The parser that was/is run over this document */
 	protected CFParser docParser = null;
 	/** The resource that this document is derived from. Required for the parser */

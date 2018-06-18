@@ -57,7 +57,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
     /**
 	 * this is public because the browser uses it on errors 
 	 */
-	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
+	public static final String DEFAULT_PROJECT_URL = "http://www.cfeclipse.org";
 	
 	/** Preference key identifier for the help url. */
 	public static final String P_DEFAULT_HELP_URL 				= "_helpURL";

@@ -28,7 +28,6 @@
  * ====================================================================
  */
 package org.cfeclipse.cfml.editors.partitioner;
-import org.cfeclipse.cfml.editors.ICFDocument;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.eclipse.jface.text.IDocument;
 
@@ -42,7 +41,6 @@ public final class PartitionTypes {
 
     public static final String[] ALL_PARTITION_TYPES  = new String[] {
         IDocument.DEFAULT_CONTENT_TYPE,
-        ICFDocument.CFECLIPSE_CONTENT_TYPE,
     	CFPartitionScanner.DOCTYPE,
     	CFPartitionScanner.CF_COMMENT,
     	CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK,
@@ -83,7 +81,6 @@ public final class PartitionTypes {
     // excludes comments
     public static final String[] ASSIST_PARTITION_TYPES  = new String[] {
         IDocument.DEFAULT_CONTENT_TYPE,
-        ICFDocument.CFECLIPSE_CONTENT_TYPE,
     	CFPartitionScanner.DOCTYPE,
     	CFPartitionScanner.CF_START_TAG,
     	CFPartitionScanner.CF_START_TAG_BEGIN,
