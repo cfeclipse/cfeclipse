@@ -31,8 +31,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.help.WorkbenchHelp;
-
 
 // Referenced classes of package org.eclipse.ui.internal.editors.text:
 //			TextEditorMessages, EditorsPlugin, OverlayPreferenceStore, ColorEditor, 
@@ -242,7 +240,6 @@ public class FoldingPreferencePage extends PreferencePage
 	public void createControl(Composite parent)
 	{
 		super.createControl(parent);
-		WorkbenchHelp.setHelp(getControl(), "org.eclipse.ui.text_editor_preference_page_context");
 	}
 	
 	
