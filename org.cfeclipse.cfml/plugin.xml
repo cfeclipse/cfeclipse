@@ -2869,4 +2869,24 @@
                <themeid refid="org.eclipse.e4.ui.css.theme.e4_dark"/>
          </stylesheet>
    </extension>
+   
+<extension point="org.eclipse.ui.themes">
+    <themeElementCategory
+        id="org.cfeclipse.cfml.themeElementCategory"
+        label="CFML Colours">
+        <description>
+            An example theme category
+        </description>
+    </themeElementCategory>
+    <colorDefinition
+        categoryId="org.cfeclipse.cfml.themeElementCategory"
+        id="org.cfeclipse.cfml.keyword"
+        label="Keywords"
+        value="COLOR_DARK_BLUE">
+        <description>
+            Your description goes here
+        </description>
+    </colorDefinition>
+</extension>   
+   
 </plugin>

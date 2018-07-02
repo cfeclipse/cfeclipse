@@ -19,7 +19,7 @@
 		<update.site.name>[dev] CFEclipse Update</update.site.name>
 		<update.site.description>Development Build</update.site.description>
 		<update.site.version>${project.version}</update.site.version>
-		<oxygen-repo.url>http://download.eclipse.org/releases/oxygen/201706281000/</oxygen-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/photon/</photon-repo.url>
 		<mxunit-repo.url>http://cfeclipse.org/mxunit/update</mxunit-repo.url>
 		<cfparser-repo.url>http://cfeclipse.org/cfparser/update</cfparser-repo.url>
 		<cfparser-dev-repo.url>http://cfeclipse.org/cfparser/update-dev</cfparser-dev-repo.url>
@@ -39,8 +39,8 @@
 
 	<repositories>
 		<repository>
-			<id>oxygen</id>
-			<url>${oxygen-repo.url}</url>
+			<id>photon</id>
+			<url>${photon-repo.url}</url>
 			<layout>p2</layout>
 		</repository>
 		<repository>

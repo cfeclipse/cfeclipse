@@ -1,6 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  	<parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
 		<groupId>org.cfeclipse.ide</groupId>
 		<artifactId>cfeclipse</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
@@ -9,11 +11,7 @@
 	<version>1.5.3-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
-	<properties>
-	</properties>
-
 	<dependencies>
-
 		<dependency>
 			<groupId>net.htmlparser.jericho</groupId>
 			<artifactId>jericho-html</artifactId>
@@ -42,43 +40,43 @@
 		</dependency>
 
 	</dependencies>
-  <build>
-    <sourceDirectory>src/</sourceDirectory>
-    <resources>
-      <resource>
-        <directory>src/</directory>
-        <excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-      </resource>
-    </resources>
+	<build>
+		<sourceDirectory>src/</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
 
-	<plugins>
-		<plugin>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.3</version>
-			<configuration>
-				<source>1.7</source>
-				<target>1.7</target>
-			</configuration>
-		</plugin>
-		<plugin>
-			<groupId>org.eclipse.tycho</groupId>
-			<artifactId>tycho-versions-plugin</artifactId>
-			<executions>
-				<execution>
-					<id>versions</id>
-					<phase>validate</phase>
-					<goals>
-						<goal>set-version</goal>
-					</goals>
-				</execution>
-			</executions>
-			<configuration>
-				<newVersion>${project.version}</newVersion>
-			</configuration>
-		</plugin>
-	</plugins>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-versions-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>versions</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>set-version</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<newVersion>${project.version}</newVersion>
+				</configuration>
+			</plugin>
+		</plugins>
 
-  </build>
+	</build>
 </project>
