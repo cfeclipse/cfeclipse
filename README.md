@@ -1,9 +1,9 @@
 PROJECT STATUS
 ==============
 
+* The project is currently unmaintained.  If you are able to assist, please log an issue.
 * The stable release will no longer install from https://cfeclipse.org/update 
 * The build at https://cfeclipse.org/update-nightly may work, but this is not guaranteed
-* The project is currently unmaintained.  If you are able to assist, please log an issue.
 
 CFEclipse Project
 =================
