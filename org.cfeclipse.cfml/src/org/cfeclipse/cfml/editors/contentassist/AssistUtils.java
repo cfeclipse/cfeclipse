@@ -414,7 +414,7 @@ public class AssistUtils {
 
 	public static Set<Function> getFunctions(IFile cfcresource, int offset) {
 		if (cfcresource == null) {
-			CFMLPlugin.logError("AssistUtil#getFunctions: Resource not found");
+			//CFMLPlugin.logError("AssistUtil#getFunctions: Resource not found");
 			return null;
 		}
 
