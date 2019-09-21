@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cfeclipse.ide</groupId>
 	<artifactId>cfeclipse</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.5.3.201909200956</version>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -75,45 +75,16 @@
 	</repositories>
 
 	<modules>
+		<module>org.cfeclipse.cfeclipsecall.plugin</module>
 		<module>org.cfeclipse.cfml</module>
 		<module>org.cfeclipse.cfml.feature</module>
-		<module>org.cfeclipse.cfml.update-local</module>
-		<module>org.cfeclipse.cfml.update-nightly</module>
+		<module>org.cfeclipse.cfml.frameworks</module>
+		<module>org.cfeclipse.cfml.snippets</module>
+		<module>org.cfeclipse.cfml.snippets.feature</module>
+		<module>org.cfeclipse.cfml.templates.fragment</module>
 	</modules>
-    
+
 	<profiles>
-		<profile>
-			<id>sign</id>
-			<activation>
-				<property>
-					<name>sign</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jarsigner-plugin</artifactId>
-						<version>1.2</version>
-						<configuration>
-							<keystore>${cfeclipse.keystore.path}</keystore>
-							<storepass>${cfeclipse.keystore.password}</storepass>
-							<alias>signing</alias>
-							<keypass>${cfeclipse.keystore.password}</keypass>
-						</configuration>
-						<executions>
-							<execution>
-								<id>sign</id>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 		<profile>
 			<id>dev</id>
 			<activation>
@@ -123,7 +94,6 @@
 				</property>
 			</activation>
 			<modules>
-				<module>org.cfeclipse.cfml.snippets.update</module>
 				<module>org.cfeclipse.cfml.update-dev</module>
 			</modules>
 		</profile>
@@ -136,59 +106,24 @@
 				</property>
 			</activation>
 			<modules>
-				<module>org.cfeclipse.cfml.snippets.update</module>
 				<module>org.cfeclipse.cfml.update</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>standalone</id>
-			<activation>
-				<property>
-					<name>build.type</name>
-					<value>standalone</value>
-				</property>
-			</activation>
-			<modules>
-				<module>org.cfeclipse.cfml.snippets.update</module>
-				<module>org.cfeclipse.cfml.update</module>
-				<module>org.cfeclipse.cfml.platform.feature</module>
-				<module>org.cfeclipse.cfml.product</module>
 			</modules>
 		</profile>
 	</profiles>
 
 	<build>
-	
+
 		<pluginManagement>
-	      <plugins>
-	        <plugin>
-	          <groupId>org.eclipse.tycho</groupId>
-	          <artifactId>tycho-versions-plugin</artifactId>
-			  <version>${tycho.version}</version>
-	        </plugin>
-	      </plugins>
-	    </pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-versions-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-				<version>1.0.0</version>
-				<executions>
-					<execution>
-						<phase>initialize</phase>
-						<goals>
-							<goal>read-project-properties</goal>
-						</goals>
-						<configuration>
-							<quiet>true</quiet>
-							<files>
-								<file>${user.home}/cfeclipse.properties</file>
-							</files>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
