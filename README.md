@@ -1,3 +1,10 @@
+PROJECT STATUS
+==============
+
+* The project is currently unmaintained.  If you are able to assist, please log an issue.
+* The stable release will no longer install from https://cfeclipse.org/update 
+* The build at https://cfeclipse.org/update-nightly may work, but this is not guaranteed
+
 CFEclipse Project
 =================
 The goal of the CFEclipse project is to create a plugin for the Eclipse platform that provides a professional quality IDE for CFML developers. CFEclipse offers all of the features found in traditional CFML editors and several that are unique to CFEclipse.
