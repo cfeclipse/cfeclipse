@@ -154,7 +154,7 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){
-		if(editor != null){
+		if (editor != null && editor.getSite() != null && editor.getSite().getPage() != null && editor.getSite().getPage().getActiveEditor() != null) {
 			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
 		}
 	}

@@ -118,7 +118,7 @@ public class AutoCommentAction extends Encloser implements IWorkbenchWindowActio
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){
-		if(editor != null){
+		if (editor != null && editor.getSite() != null && editor.getSite().getPage() != null) {
 			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
 		}
 	}
