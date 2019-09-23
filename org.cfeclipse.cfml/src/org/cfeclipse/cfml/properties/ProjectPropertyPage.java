@@ -233,24 +233,27 @@ public class ProjectPropertyPage extends PropertyPage {
 			e.printStackTrace();
 			return false;
 		}
-		/*
-		 * // Project URL try { ((IResource)
-		 * getElement()).setPersistentProperty( new QualifiedName("",
-		 * PROJECT_URL_PROPERTY), projectURLField.getStringValue() );
-		 * propertyManager.setProjectURL(projectURLField.getStringValue(),(
-		 * IProject)getElement()); } catch (CoreException e) {
-		 * //e.printStackTrace(System.err); return false; }
-		 * 
-		 * //Component Root try {
-		 * ((IResource)getElement()).setPersistentProperty( new
-		 * QualifiedName("",PROJECT_COMPONENT_ROOT_PROP),
-		 * projectComponentRootField.getStringValue() );
-		 * propertyManager.setComponentRoot(projectComponentRootField.
-		 * getStringValue(),(IProject)getElement()); } catch (CoreException e) {
-		 * return false; }
-		 * 
-		 * System.out.println("doing the syntax dictionary save");
-		 */
+		
+		// Project URL
+		try {
+			((IResource) getElement()).setPersistentProperty(new QualifiedName("", PROJECT_URL_PROPERTY),
+					projectURLField.getStringValue());
+			propertyManager.setProjectURL(projectURLField.getStringValue(), (IProject) getElement());
+		} catch (CoreException e) {
+			// e.printStackTrace(System.err); return false;
+		}
+		
+		// Component Root
+		/*		try {
+					((IResource) getElement()).setPersistentProperty(new QualifiedName("", PROJECT_COMPONENT_ROOT_PROP),
+							projectComponentRootField.getStringValue());
+					propertyManager.setComponentRoot(projectComponentRootField.getStringValue(), (IProject) getElement());
+				} catch (CoreException e) {
+					return false;
+				}*/
+		
+		// System.out.println("doing the syntax dictionary save");
+		
 		this.cfmlSyntaxField.store();
 		DictionaryManager.loadDictionaryFromCache(propertyManager.getCurrentDictionary((IProject) getElement()),
 				DictionaryManager.CFDIC);

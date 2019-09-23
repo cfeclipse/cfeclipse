@@ -344,7 +344,7 @@ public class ResourceUtils {
      * This function simply returns the URL setting (if any) for a resource. should return null if no defined mapping is there. 
      */
     private static String findURLSettingForResource(IResource resource){
-    	System.out.println("Checking " + resource.getName());
+    	//System.out.println("Checking " + resource.getName());
     	//Need to know when to stop
     	
     	
