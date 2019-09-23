@@ -8,5 +8,7 @@
          CFEclipse CFML Editor (Required)
       </description>
    </category-def>
+   <repository-reference location="http://cfeclipse.org/mxunit/update" enabled="true" />
    <repository-reference location="http://cfeclipse.org/cfparser/update" enabled="true" />
+   <repository-reference location="http://cfeclipse.org/cflint/update" enabled="true" />
 </site>
