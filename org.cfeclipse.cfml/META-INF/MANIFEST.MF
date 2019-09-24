@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CFML Plug-in
 Bundle-SymbolicName: org.cfeclipse.cfml; singleton:=true
-Bundle-Version: 1.5.3.qualifier
+Bundle-Version: 1.5.3
 Bundle-Vendor: cfeclipse.org
 Bundle-Localization: plugin
 Bundle-ClassPath: cfml.jar,

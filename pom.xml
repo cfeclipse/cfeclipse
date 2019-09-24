@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cfeclipse.ide</groupId>
 	<artifactId>cfeclipse</artifactId>
-	<version>1.5.3-SNAPSHOT</version>
+	<version>1.5.3</version>
 	<packaging>pom</packaging>
 
 	<properties>
