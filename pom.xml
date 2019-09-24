@@ -5,19 +5,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cfeclipse.ide</groupId>
 	<artifactId>cfeclipse</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.5.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho.version>0.26.0</tycho.version>
-		<tycho-extras.version>0.26.0</tycho-extras.version>
+		<tycho.version>1.1.0</tycho.version>
+		<tycho-extras.version>1.1.0</tycho-extras.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
-		<!-- 
-		<mxunit-repo.url>http://cfeclipse.org/mxunit-update</mxunit-repo.url>
-		 -->
-		<mxunit-repo.url>http://mxunit.org/update</mxunit-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/photon/</photon-repo.url>
 		<cfparser-repo.url>http://cfeclipse.org/cfparser/update</cfparser-repo.url>
 		<cfparser-dev-repo.url>http://cfeclipse.org/cfparser/update-dev</cfparser-dev-repo.url>
 		<cflint-repo.url>http://cfeclipse.org/cflint/update</cflint-repo.url>
@@ -28,13 +25,8 @@
 
 	<repositories>
 		<repository>
-			<id>mars</id>
-			<url>${mars-repo.url}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>mxunit</id>
-			<url>${mxunit-repo.url}</url>
+			<id>photon</id>
+			<url>${photon-repo.url}</url>
 			<layout>p2</layout>
 		</repository>
 		<repository>
@@ -70,11 +62,8 @@
 	</repositories>
 
 	<modules>
-		<module>org.cfeclipse.cfml</module>
 		<module>org.cfeclipse.cfeclipsecall.plugin</module>
-		<module>org.cfeclipse.cfml.cfunit</module>
-		<module>org.cfeclipse.cfml.docsharesupport</module>
-		<module>org.cfeclipse.cfml.docsharesupport.feature</module>
+		<module>org.cfeclipse.cfml</module>
 		<module>org.cfeclipse.cfml.feature</module>
 		<module>org.cfeclipse.cfml.frameworks</module>
 		<module>org.cfeclipse.cfml.snippets</module>
@@ -84,38 +73,6 @@
 
 	<profiles>
 		<profile>
-			<id>sign</id>
-			<activation>
-				<property>
-					<name>sign</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jarsigner-plugin</artifactId>
-						<version>1.2</version>
-						<configuration>
-							<keystore>${cfeclipse.keystore.path}</keystore>
-							<storepass>${cfeclipse.keystore.password}</storepass>
-							<alias>signing</alias>
-							<keypass>${cfeclipse.keystore.password}</keypass>
-						</configuration>
-						<executions>
-							<execution>
-								<id>sign</id>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
 			<id>dev</id>
 			<activation>
 				<property>
@@ -124,7 +81,6 @@
 				</property>
 			</activation>
 			<modules>
-				<module>org.cfeclipse.cfml.snippets.update</module>
 				<module>org.cfeclipse.cfml.update-dev</module>
 			</modules>
 		</profile>
@@ -137,48 +93,24 @@
 				</property>
 			</activation>
 			<modules>
-				<module>org.cfeclipse.cfml.snippets.update</module>
 				<module>org.cfeclipse.cfml.update</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>standalone</id>
-			<activation>
-				<property>
-					<name>build.type</name>
-					<value>standalone</value>
-				</property>
-			</activation>
-			<modules>
-				<module>org.cfeclipse.cfml.snippets.update</module>
-				<module>org.cfeclipse.cfml.update</module>
-				<module>org.cfeclipse.cfml.platform.feature</module>
-				<module>org.cfeclipse.cfml.product</module>
 			</modules>
 		</profile>
 	</profiles>
 
 	<build>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-versions-plugin</artifactId>
+					<version>${tycho.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-				<version>1.0.0</version>
-				<executions>
-					<execution>
-						<phase>initialize</phase>
-						<goals>
-							<goal>read-project-properties</goal>
-						</goals>
-						<configuration>
-							<quiet>true</quiet>
-							<files>
-								<file>${user.home}/cfeclipse.properties</file>
-							</files>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>

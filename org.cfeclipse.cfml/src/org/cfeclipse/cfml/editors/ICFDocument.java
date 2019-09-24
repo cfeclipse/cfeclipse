@@ -45,7 +45,6 @@ import org.cfeclipse.cfml.parser.docitems.CfmlTagItem;
 import org.cfeclipse.cfml.parser.docitems.DocItem;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
 import org.cfeclipse.cfml.util.ResourceUtils;
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.resources.IResource;
@@ -54,6 +53,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.Document;
+import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 
@@ -493,5 +493,10 @@ public class ICFDocument extends Document implements ICFEFileDocument {
             ex.printStackTrace();
         }        
     }
-*/    
+*/
+
+    @Override
+	public IDocumentPartitioner getDocumentPartitioner() {
+		return getDocumentPartitioner(CFDocumentSetupParticipant.CFML_PARTITIONING);
+	}
 }

@@ -55,6 +55,7 @@ import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
@@ -421,26 +422,23 @@ public class CFParser {
 				if(this.reportErrors && this.res != null) {
 
 				/*
-									IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
-				  						parserState.addMessage(new ParseError(
-												getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
-												message
-											));
+				IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
+					parserState.addMessage(new ParseError(
+							getLineNumber(match.getStartPos()), match.getStartPos(), match.getStartPos() + match.getMatch().length(), match.getMatch(), 
+							message
+						));
 				*/
 					try {					
-						//
-						// Not sure what the start & end positions are good for!
-						
 						//MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
 						IMarker marker = this.res.createMarker("org.cfeclipse.cfml.parserProblemMarker");
-						Map attrs = new HashMap();
+						Map<String, Object> attrs = new HashMap<String, Object>();
 						MarkerUtilities.setLineNumber(attrs, match.lineNumber+1);
 						MarkerUtilities.setMessage(attrs, message);
 						MarkerUtilities.setCharStart(attrs, match.startPos);
 						MarkerUtilities.setCharEnd(attrs, match.endPos);
 						marker.setAttributes(attrs);
 						marker.setAttribute(IMarker.MESSAGE,message);
-						MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+//						MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
 					}catch(CoreException excep) {
 						userMessage(0, "userMessage", "ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
 						}
@@ -453,6 +451,75 @@ public class CFParser {
 				break;
 		}
 	}	
+	
+	protected void processParseResultMessages()
+	{
+		ArrayList<?> messages = parserState.getMessages();
+
+		for(int i = 0; i < messages.size(); i++)
+		{
+			
+			ParseMessage currMsg = (ParseMessage)messages.get(i);
+			Map<String, Object> attrs = new HashMap<String, Object>();
+			MarkerUtilities.setLineNumber(attrs, currMsg.getLineNumber() + 1);
+			MarkerUtilities.setMessage(attrs, currMsg.getMessage());
+			// attrs.put(IMarker.CHAR_START, new Integer(currMsg.docStartOffset));
+			int endOffset = 0;
+			if (currMsg.getDocEndOffset() > currMsg.getDocStartOffset()) {
+				endOffset = currMsg.getDocEndOffset();
+				// System.out.println("End offset is: " + endOffset + " start is " + currMsg.docStartOffset);
+			} else {
+				endOffset = currMsg.getDocStartOffset() + currMsg.getDocData().length();
+			}
+			MarkerUtilities.setCharStart(attrs, currMsg.getDocStartOffset());
+			MarkerUtilities.setCharEnd(attrs, endOffset);
+			String type = "org.cfeclipse.cfml.parserProblemMarker";
+			if (currMsg instanceof ParseError) {
+				type = "org.cfeclipse.cfml.parserProblemMarker";
+			} else if (currMsg instanceof ParseWarning) {
+				type = "org.cfeclipse.cfml.parserWarningMarker";
+			}
+
+			try {
+				MarkerUtilities.createMarker(this.res, attrs, type);
+				// MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+			} catch (CoreException excep) {
+				userMessage(0, "userMessage",
+						"ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
+			} catch (Exception anyExcep) {
+				userMessage(0, "processParseResultMessage", "ERROR: Caught exception " + anyExcep.getMessage());
+			}
+
+		}
+	}
+
+	private CFMLParser parser;
+	private CFSCRIPTLexer lexer;
+	Vocabulary vocabulary;
+	private Stack<DocItem> matchStack;
+	private CommonTokenStream tokenStream;
+	
+	private void addParseError(ParseMessage parseMessage) {
+		IMarker marker;
+		try {
+			if (this.res != null) {
+				marker = this.res.createMarker("org.cfeclipse.cfml.parserProblemMarker");
+				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+				marker.setAttribute(IMarker.MESSAGE, parseMessage.getDocData());
+				marker.setAttribute(IMarker.LINE_NUMBER, parseMessage.getLineNumber());
+				if (parseMessage.getDocStartOffset() != 0) {
+				  marker.setAttribute(IMarker.CHAR_START,parseMessage.getDocStartOffset());
+				  marker.setAttribute(IMarker.CHAR_END,parseMessage.getDocEndOffset());
+				}
+			}
+			// MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 	
 	
 	/**
@@ -490,7 +557,7 @@ public class CFParser {
 			    //System.out.println(attributeName + " = " +attributeValue);
 		    }
 		    else {
-		        System.out.println("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
+		    	CFMLPlugin.logError("CFParser::stripAttributes() - failed on |" + inData + "| with " + matcher.groupCount() + " matches");
 //		        for (int i = 0; i<=matcher.groupCount(); i++) {
 //		        	System.out.println("Match " + i + " : " + matcher.group(i));
 //		        }
@@ -654,33 +721,6 @@ public class CFParser {
 		return true;
 	}
 	
-	private CFMLParser parser;
-	private CFSCRIPTLexer lexer;
-	Vocabulary vocabulary;
-	private Stack<DocItem> matchStack;
-	private CommonTokenStream tokenStream;
-	
-	private void addParseError(ParseMessage parseMessage) {
-		IMarker marker;
-		try {
-			if (this.res != null) {
-				marker = this.res.createMarker("org.cfeclipse.cfml.parserProblemMarker");
-				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
-				marker.setAttribute(IMarker.MESSAGE, parseMessage.getDocData());
-				marker.setAttribute(IMarker.LINE_NUMBER, parseMessage.getLineNumber());
-				if (parseMessage.getDocStartOffset() != 0) {
-				  marker.setAttribute(IMarker.CHAR_START,parseMessage.getDocStartOffset());
-				  marker.setAttribute(IMarker.CHAR_END,parseMessage.getDocEndOffset());
-				}
-			}
-			// MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
 
 	/**
 	 * <code>handleCFScriptBlock</code> - handles a CFScript'd block (at the moment it does nothing)
@@ -765,22 +805,32 @@ public class CFParser {
 			System.out.println("parse-error: CS");			
 		}
 		
-		public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine,
-				String msg, RecognitionException re) {
-			int offset = getLineOffset(line) + charPositionInLine;
+		public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg,
+				RecognitionException re) {
+			int offset = getLineOffset(line + addLines) + charPositionInLine;
 			int endoffset = offset + 1;
+			
 			if (re != null && re.getOffendingToken() != null) {
-				endoffset += re.getOffendingToken().getStopIndex() - re.getOffendingToken().getStartIndex();
+				Token previousToken = tokenStream.get(re.getOffendingToken().getTokenIndex()-1);
+				if (previousToken != null) {
+					while(previousToken.getChannel() == Token.HIDDEN_CHANNEL && tokenStream.get(previousToken.getTokenIndex()-1) != null) {
+						previousToken = tokenStream.get(previousToken.getTokenIndex()-1);
+					}
+					line = previousToken.getLine();
+					offset = addOffset + previousToken.getStopIndex();
+					endoffset = offset + 1;
+				} else {
+					endoffset += re.getOffendingToken().getStopIndex() - re.getOffendingToken().getStartIndex();
+				}
 			}
-			if(recognizer instanceof Parser && ((Parser)recognizer).isExpectedToken(CFSCRIPTParser.SEMICOLON)){
-				msg = "There seems to be a missing semicolon; here bud";
+			if (recognizer instanceof Parser && ((Parser) recognizer).isExpectedToken(CFSCRIPTParser.SEMICOLON)) {
+//				System.out.println(msg);
+				msg = "There seems to be a missing semicolon (;) here friend! " + msg;
 			}
-			addParseError(new ParseError(line, offset, endoffset, msg,
-					re == null ? null : re.getMessage()));
-
-					
+			addParseError(new ParseError(line + addLines, offset, endoffset, msg, re == null ? null : re.getMessage()));
+			
 		}
-
+		
 		@Override
 		public void reportAmbiguity(Parser arg0, DFA arg1, int arg2, int arg3, boolean arg4, java.util.BitSet arg5,
 				ATNConfigSet arg6) {
@@ -801,7 +851,7 @@ public class CFParser {
 		
 	}
 
-	protected void parseCFScript(String mainData, int addLines, int addOffset) {
+	protected void parseCFScript(String mainData, int startLine, int startOffset) {
 		if (!this.parseCFScript) {
 			return;
 		}
@@ -818,7 +868,7 @@ public class CFParser {
 			tokenStream = new CommonTokenStream(lexer);
 			vocabulary = lexer.getVocabulary();
 			final CFSCRIPTParser parser = new CFSCRIPTParser(tokenStream);
-			parser.addErrorListener(new StdErrReporter(addLines,addOffset));
+			parser.addErrorListener(new StdErrReporter(startLine, startOffset));
 			CFSCRIPTParser.ScriptBlockContext entry = null;
 			parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
 			try {
@@ -838,7 +888,7 @@ public class CFParser {
 					errorNode.setItemData("Error creating outline: " + parserState.getMessages().toString());
 					addDocItemToTree(errorNode);
 				} else {
-					scriptItemTree(entry, matchStack.peek(), addLines, addOffset, true);
+					scriptItemTree(entry, matchStack.peek(), startLine, startOffset, true);
 				}
 			} catch (org.antlr.runtime.tree.RewriteEmptyStreamException e) {
 				ScriptItem errorNode = new ScriptItem(0, 0, 0, "error");
@@ -846,9 +896,9 @@ public class CFParser {
 				addDocItemToTree(errorNode);
 			}
 		} catch (ParseException e) {
-			parserState.addMessage(new ParseError(e.getLine() + addLines, e.getCol() + addOffset, e.getCol() + addOffset, e.getMessage()
-					+ e.getLine(), e
-					.getMessage() + e.getLine() + ":" + e.getCol()));
+			parserState.addMessage(new ParseError(e.getLine() + startLine, e.getCol() + startOffset, e.getCol() + startOffset, 
+			        e.getMessage() + e.getLine(), 
+			        e.getMessage() + e.getLine() + ":" + e.getCol()));
 			e.printStackTrace();
 		} 
 
@@ -878,7 +928,7 @@ public class CFParser {
 	 * @param attrMap - map of attributes for this item
 	 * @param isACloser - whether the tag is a closer or not (or has been closed by the user)
 	 */
-	protected void handleHTMLTag(String tagName, ParseItemMatch match, Stack matchStack, ArrayList attrList, boolean isACloser)
+	protected void handleHTMLTag(String tagName, ParseItemMatch match, Stack<?> matchStack, ArrayList<?> attrList, boolean isACloser)
 	{
 		//System.err.println("CFParser::handleHTMLTag() - " +  Util.GetTabs(matchStack) + "Parser: Got an HTML tag called \'" + tagName + "\'. Ignoring for the moment");
 	}
@@ -1053,7 +1103,7 @@ public class CFParser {
 	 * @param isACloser
 	 * @return
 	 */
-	boolean isTagACloser(String tagName, ArrayList matches, int matchPos, boolean isACloser)
+	boolean isTagACloser(String tagName, ArrayList<?> matches, int matchPos, boolean isACloser)
 	{
 		if(tagName.compareToIgnoreCase("<cfinvoke") == 0)
 		{
@@ -1104,13 +1154,13 @@ public class CFParser {
 	 */
 	public CFDocument createDocTree(String inData)
 	{
-		ArrayList matches = parserState.getMatches();
+		ArrayList<?> matches = parserState.getMatches();
 		// System.out.println("=============> Beginning match dump" );
 		// Util.dumpMatches(matches);
 		// System.out.println("=============> Finishing match dump");
 		CFDocument newDoc = new CFDocument();
 		matchStack = new Stack<DocItem>();
-		ArrayList rootElements = new ArrayList();
+		ArrayList<?> rootElements = new ArrayList<Object>();
 		TagItem rootItem = new TagItem(0, 0, 0, "Doc Root");
 		int matchPos = 0;
 		StringBuffer nonParsedTextBuffer = new StringBuffer();
@@ -1552,7 +1602,7 @@ public class CFParser {
 	 * @param inData
 	 * @return
 	 */
-	protected ArrayList tagMatchingAttempts(String inData)
+	protected ArrayList<?> tagMatchingAttempts(String inData)
 	{
 		//String data = inData;
 		String data = this.data2Parse;
@@ -1562,7 +1612,7 @@ public class CFParser {
 		Stack<Integer> stateStack = new Stack<Integer>();
 		Stack<Integer> statePositionStack = new Stack<Integer>();
 		
-		ArrayList matches = new ArrayList();
+		ArrayList<?> matches = new ArrayList<Object>();
 		try {
 			for(currPos = 0; currPos < data.length(); currPos++)
 			{
@@ -1677,53 +1727,6 @@ public class CFParser {
 		return around;
 	}
 
-	protected void processParseResultMessages()
-	{
-		ArrayList messages = parserState.getMessages();
-		IWorkspaceRoot myWorkspaceRoot = CFMLPlugin.getWorkspace().getRoot();
-		
-		for(int i = 0; i < messages.size(); i++)
-		{
-			ParseMessage currMsg = (ParseMessage)messages.get(i);
-			Map attrs = new HashMap();
-			MarkerUtilities.setLineNumber(attrs, currMsg.getLineNumber() + 1);
-			MarkerUtilities.setMessage(attrs, currMsg.getMessage());
-			// attrs.put(IMarker.CHAR_START, new Integer(currMsg.docStartOffset));
-			int endOffset = 0;
-			if (currMsg.getDocEndOffset() > currMsg.getDocStartOffset()) {
-				endOffset = currMsg.getDocEndOffset();
-				// System.out.println("End offset is: " + endOffset + " start is " + currMsg.docStartOffset);
-			} else {
-				endOffset = currMsg.getDocStartOffset() + currMsg.getDocData().length();
-			}
-
-			//
-			// Not sure what the start & end positions are good for!
-			// MarkerUtilities.setCharStart(attrs, currMsg.getDocStartOffset());
-			// MarkerUtilities.setCharEnd(attrs, currMsg.getDocEndOffset());
-			//
-			// Not sure right now how to set the problem to be a warning or an error.
-			// There is IMarker.SEVERITY_ERROR & IMarker.SEVERITY_WARNING but I'm
-			// not sure how I set them.
-			String type = "org.cfeclipse.cfml.parserProblemMarker";
-			if (currMsg instanceof ParseError) {
-				type = "org.cfeclipse.cfml.parserProblemMarker";
-			} else if (currMsg instanceof ParseWarning) {
-				type = "org.cfeclipse.cfml.parserWarningMarker";
-			}
-
-			try {
-				MarkerUtilities.createMarker(this.res, attrs, type);
-				// MarkerUtilities.createMarker(this.res, attrs, IMarker.PROBLEM);
-			} catch (CoreException excep) {
-				userMessage(0, "userMessage",
-						"ERROR: Caught CoreException when creating a problem marker. Message: \'" + excep.getMessage() + "\'");
-			} catch (Exception anyExcep) {
-				userMessage(0, "processParseResultMessage", "ERROR: Caught exception " + anyExcep.getMessage());
-			}
-
-		}
-	}
 	
 	/**
 	 * Traverses the document tree for the final time, calling each document item's
@@ -1732,10 +1735,10 @@ public class CFParser {
 	 * @param startNode The node to start at.
 	 * @return an <code>ArrayList</code> of the messages retrieved.
 	 */
-	public ArrayList finalDocTreeTraversal(DocItem startNode)
+	public ArrayList<ParseMessage> finalDocTreeTraversal(DocItem startNode)
 	{
 		
-		ArrayList messages = new ArrayList();
+		ArrayList<ParseMessage> messages = new ArrayList<ParseMessage>();
 		
 		//
 		// Perform sanity check. Method adds to the object's message list which we shall gather next.
@@ -1772,12 +1775,12 @@ public class CFParser {
 			this.setData2Parse(inData);
 			// Code folding is performed by tagMatchingAttempts
 			// this code will cause a warning as codeFoldingMatches is never referenced again...
-			ArrayList codeFoldingMatches = tagMatchingAttempts(inData);
+			ArrayList<?> codeFoldingMatches = tagMatchingAttempts(inData);
 			
 			//parserState.getMatches() was called twice in succession, this should speed it up a bit.
 			docTree = createDocTree(inData);
 			DocItem documentRoot = docTree.getDocumentRoot();
-			ArrayList list = finalDocTreeTraversal(documentRoot);
+			ArrayList<?> list = finalDocTreeTraversal(documentRoot);
 			parserState.addMessages(list);
 			processParseResultMessages();
 			

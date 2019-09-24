@@ -12,7 +12,9 @@ import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.SWT;
 
 
 /**
@@ -55,7 +57,7 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
     /**
 	 * this is public because the browser uses it on errors 
 	 */
-	public static final String DEFAULT_PROJECT_URL = "http://livedocs.macromedia.com";
+	public static final String DEFAULT_PROJECT_URL = "http://www.cfeclipse.org";
 	
 	/** Preference key identifier for the help url. */
 	public static final String P_DEFAULT_HELP_URL 				= "_helpURL";
@@ -75,6 +77,9 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 	 */
 	public static final String P_CFLINT_ENABLED_PROJECT = "_cflint_enabled_project";
 	public static final String P_CFLINT_STOREINPROJECT_PROJECT = "_cflint_storeinproject_project";
+	public static final String EDITOR_TEXT_HOVER_MODIFIERS = "_cfml_text_hover_modifers";
+	public static final String EDITOR_TEXT_HOVER_MODIFIER_MASKS = "_cfml_text_hover_modifer_mask";
+	public static final String ID_BESTMATCH_HOVER = "org.cfeclipse.cfml.BestMatchHover";
 	
 	/**
 	 * Sets up the default values for preferences managed by {@link CFMLPreferencesPage} .
@@ -105,6 +110,19 @@ public class CFMLPreferenceConstants extends AbstractPreferenceConstants {
 		store.setDefault(P_TEMPLATE_PROJECT_PATH, "");
 		store.setDefault(P_CFLINT_ENABLED_PROJECT, store.getBoolean(CFLintPreferenceConstants.P_CFLINT_ENABLED));
 		store.setDefault(P_CFLINT_STOREINPROJECT_PROJECT, store.getBoolean(CFLintPreferenceConstants.P_CFLINT_STOREINPROJECT));
+
+		store.setDefault(P_CFLINT_STOREINPROJECT_PROJECT, store.getBoolean(CFLintPreferenceConstants.P_CFLINT_STOREINPROJECT));
+
+//		int sourceHoverModifier= SWT.MOD2;
+		int sourceHoverModifier= 0;
+		String sourceHoverModifierName= Action.findModifierString(sourceHoverModifier);	// Shift
+		int nlsHoverModifier= SWT.MOD1 + SWT.MOD3;
+		String nlsHoverModifierName= Action.findModifierString(SWT.MOD1) + "+" + Action.findModifierString(SWT.MOD3);	// Ctrl + Alt //$NON-NLS-1$
+		int javadocHoverModifier= SWT.MOD1 + SWT.MOD2;
+		String javadocHoverModifierName= Action.findModifierString(SWT.MOD1) + "+" + Action.findModifierString(SWT.MOD2); // Ctrl + Shift //$NON-NLS-1$
+		store.setDefault(EDITOR_TEXT_HOVER_MODIFIERS, "org.cfeclipse.cfml.BestMatchHover;0;org.cfeclipse.cfml.JavaSourceHover;" + sourceHoverModifierName + ";org.eclipse.jdt.ui.NLSStringHover;" + nlsHoverModifierName + ";org.cfeclipse.cfml.JavadocHover;" + javadocHoverModifierName); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		store.setDefault(EDITOR_TEXT_HOVER_MODIFIER_MASKS, "org.cfeclipse.cfml.BestMatchHover;0;org.cfeclipse.cfml.JavaSourceHover;" + sourceHoverModifier + ";org.eclipse.jdt.ui.NLSStringHover;" + nlsHoverModifier + ";org.cfeclipse.cfml.JavadocHover;" + javadocHoverModifier); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
 	}
 	
 }

@@ -424,7 +424,7 @@ public class CFEPrimaryAssist implements IContentAssistProcessor {
 				ICompletionProposal[] computed= cat.getTagProposals(fState);
 				proposals.addAll(arrayToCollection(computed));
 			} else {
-				System.out.println(assistor.getClass().getName());
+				//System.out.println(assistor.getClass().getName());
 			}
 			if (fErrorMessage == null)
 				fErrorMessage= cat.getErrorMessage();

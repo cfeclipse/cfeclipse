@@ -46,7 +46,7 @@ public class NewCFUnitWizard extends Wizard implements INewWizard {
 	public final static String PREFERENCES_PAGE_NAME = "preferencesPage";
 	public final static String METHODS_PAGE_NAME = "methodsPage";
 	public final static String PAGE_TITLE = "MXUnit Wizard";
-	public final static String PAGE_DESCRIPTION = "For help or documentation: http://mxunit.org";
+	public final static String PAGE_DESCRIPTION = "For help or documentation: http://cfeclipse.org/mxunit";
 	public final ImageDescriptor PAGE_TITLE_IMG = ImageDescriptor.createFromFile( getClass(), "../../../../../../icons/obj16/mxunit_descriptor.gif" );
 	
 	private NewCFUnitWizardPage1 preferencesPage;

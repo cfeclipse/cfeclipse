@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.cfeclipse.cfml.CFMLPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.resource.JFaceResources;
@@ -300,7 +301,11 @@ public class DecorationSupport extends SourceViewerDecorationSupport{
 		if (fPreferenceStore != null) {
 			fPropertyChangeListener= new IPropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent event) {
-					handlePreferenceStoreChanged(event);
+					try {
+						handlePreferenceStoreChanged(event);
+					} catch (Exception e) {
+						CFMLPlugin.logError("DecorationSupport#install: "+ e.getMessage() + '\n' + e.getStackTrace());
+					}
 				}
 			};
 			fPreferenceStore.addPropertyChangeListener(fPropertyChangeListener);

@@ -52,7 +52,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITypedRegion;
 import org.eclipse.ui.IEditorPart;
@@ -110,7 +109,7 @@ public class AssistUtils {
      */
     public static DefaultAssistState initialiseDefaultAssistState(ITextViewer viewer, int offset) {
         DefaultAssistState assistState = new DefaultAssistState();
-        IDocument document = viewer.getDocument();
+		ICFDocument document = (ICFDocument) viewer.getDocument();
 		//char invokerChar = ' ';
 		
 		try {
@@ -415,7 +414,7 @@ public class AssistUtils {
 
 	public static Set<Function> getFunctions(IFile cfcresource, int offset) {
 		if (cfcresource == null) {
-			System.out.println("Resource not found");
+			//CFMLPlugin.logError("AssistUtil#getFunctions: Resource not found");
 			return null;
 		}
 

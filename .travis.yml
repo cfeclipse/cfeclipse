@@ -1,0 +1,12 @@
+language: java
+jdk:
+  - openjdk8
+cache:
+  directories:
+  - $HOME/.m2/repository
+branches:
+  only:
+  - master
+  - develop 
+install:
+    mvn install -P$CFECLIPSE_BUILD_ENV -B -V

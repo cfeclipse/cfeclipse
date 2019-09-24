@@ -78,7 +78,7 @@ public class ComponentNode extends TreeParent
         }
         // Iterate over the nodes
 
-        System.out.println(this);
+        //System.out.println(this);
 
     }
 

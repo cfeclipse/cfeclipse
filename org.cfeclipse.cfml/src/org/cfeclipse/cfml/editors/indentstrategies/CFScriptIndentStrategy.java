@@ -418,10 +418,10 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 			String partType = partition.getType();
 			if (partType == CFPartitionScanner.CF_SCRIPT_COMMENT_BLOCK || partType == CFPartitionScanner.JAVADOC_COMMENT) {
 				if ((curText.equals("/**") || curText.equals("/*"))
-						&& (curChar == '\n' || curChar == '*' || (curChar == '/') && nextChar == '\n')) {
+						&& (curChar == '\n' || curChar == '\r' || curChar == '*' || (curChar == '/') && nextChar == '\n')) {
 					buf.append(" * ");
 					newCaretOffset += 3;
-					if (curChar == '*') {
+					if (curText.equals("/*")) {
 						buf.append(document.getLineDelimiter(line) + curIndent + " *");
 						newCaretOffset += curIndent.length();
 						if (nextChar != '/' && curChar != '/') {
@@ -434,7 +434,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 							buf.append('/');
 						}
 					}
-					command.caretOffset = newCaretOffset + 1;
+					command.caretOffset = newCaretOffset + document.getLineDelimiter(line).length();
 					command.shiftsCaret = false;
 				} else {
 					buf.append("* ");
@@ -495,7 +495,7 @@ public class CFScriptIndentStrategy extends CFEIndentStrategy {
 					}
 					buf.append(document.getLineDelimiter(line));
 					buf.append(curLineIndent);
-					command.caretOffset = cursorPos + 1 + curLineIndent.length() + fIndentString.length();
+					command.caretOffset = cursorPos + document.getLineDelimiter(line).length() + curLineIndent.length() + fIndentString.length();
 					command.shiftsCaret = false;
 				} else {
 					buf.append(fIndentString);

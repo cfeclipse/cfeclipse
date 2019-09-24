@@ -116,7 +116,7 @@ public class CFDocUtils {
 			  String fullAttributeAndValue = matcher.group();
 			  String[] strings = parseAttribute(fullAttributeAndValue);
 			  
-			  System.out.println(strings[0] + strings[1]);
+			  //System.out.println(strings[0] + strings[1]);
 			  String attribName = strings[0];
 			  String attribValue = strings[1];
 				

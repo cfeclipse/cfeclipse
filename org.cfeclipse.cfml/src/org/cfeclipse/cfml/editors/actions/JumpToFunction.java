@@ -161,7 +161,7 @@ public class JumpToFunction implements IWorkbenchWindowActionDelegate,IEditorAct
 	 * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction, org.eclipse.jface.viewers.ISelection)
 	 */
 	public void selectionChanged(IAction action, ISelection selection){
-		if(editor != null){
+		if (editor != null && editor.getSite() != null && editor.getSite().getPage() != null && editor.getSite().getPage().getActiveEditor() != null) {
 			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
 		}
 	}

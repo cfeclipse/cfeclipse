@@ -31,8 +31,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.eclipse.ui.help.WorkbenchHelp;
-
 
 // Referenced classes of package org.eclipse.ui.internal.editors.text:
 //			TextEditorMessages, EditorsPlugin, OverlayPreferenceStore, ColorEditor, 
@@ -134,6 +132,101 @@ public class FoldingPreferencePage extends PreferencePage
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG8_COLLAPSE));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG8_FOLD));
 		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG8_NAME));
+		
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG9_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG9_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG9_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG10_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG10_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG10_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG11_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG11_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG11_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG12_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG12_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG12_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG13_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG13_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG13_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG14_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG14_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG14_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG15_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG15_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG15_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG16_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG16_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG16_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG17_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG17_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG17_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG18_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG18_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG18_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG19_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG19_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG19_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG20_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG20_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG20_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG21_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG21_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG21_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG22_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG22_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG22_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG23_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG23_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG23_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG24_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG24_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG24_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG25_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG25_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG25_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG26_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG26_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG26_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG27_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG27_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG27_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG28_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG28_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG28_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG29_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG29_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG29_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG30_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG30_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG30_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG31_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG31_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG31_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG32_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG32_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG32_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG33_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG33_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG33_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG34_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG34_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG34_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG35_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG35_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG35_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG36_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG36_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG36_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG37_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG37_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG37_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG38_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG38_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG38_NAME));
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG39_COLLAPSE));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, FoldingPreferenceConstants.P_FOLDING_TAG39_FOLD));	
+		overlayKeys.add(new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, FoldingPreferenceConstants.P_FOLDING_TAG39_NAME));
+
 		OverlayPreferenceStore.OverlayKey keys[] = new OverlayPreferenceStore.OverlayKey[overlayKeys.size()];
 		overlayKeys.toArray(keys);
 		return new OverlayPreferenceStore(getPreferenceStore(), keys);
@@ -147,7 +240,6 @@ public class FoldingPreferencePage extends PreferencePage
 	public void createControl(Composite parent)
 	{
 		super.createControl(parent);
-		WorkbenchHelp.setHelp(getControl(), "org.eclipse.ui.text_editor_preference_page_context");
 	}
 	
 	
@@ -193,7 +285,10 @@ public class FoldingPreferencePage extends PreferencePage
 	
 	
 	private Table createTable(Composite parent) {
-		Table table = new Table(parent, SWT.MULTI | SWT.BORDER);
+		Table table = new Table(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL);
+		GridData gd_table = new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1);
+		gd_table.heightHint = 300;
+		table.setLayoutData(gd_table);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 
@@ -219,12 +314,42 @@ public class FoldingPreferencePage extends PreferencePage
 		createTableItems(table, "folding.tag7", true);
 		createTableItems(table, "folding.tag8", true);
 		
-		
+		createTableItems(table, "folding.tag9", true);
+		createTableItems(table, "folding.tag10", true);
+		createTableItems(table, "folding.tag11", true);
+		createTableItems(table, "folding.tag12", true);
+		createTableItems(table, "folding.tag13", true);
+		createTableItems(table, "folding.tag14", true);
+		createTableItems(table, "folding.tag15", true);
+		createTableItems(table, "folding.tag16", true);
+		createTableItems(table, "folding.tag17", true);
+		createTableItems(table, "folding.tag18", true);
+		createTableItems(table, "folding.tag19", true);
+		createTableItems(table, "folding.tag20", true);
+		createTableItems(table, "folding.tag21", true);
+		createTableItems(table, "folding.tag22", true);
+		createTableItems(table, "folding.tag23", true);
+		createTableItems(table, "folding.tag24", true);
+		createTableItems(table, "folding.tag25", true);
+		createTableItems(table, "folding.tag26", true);
+		createTableItems(table, "folding.tag27", true);
+		createTableItems(table, "folding.tag28", true);
+		createTableItems(table, "folding.tag29", true);
+		createTableItems(table, "folding.tag30", true);
+		createTableItems(table, "folding.tag31", true);
+		createTableItems(table, "folding.tag32", true);
+		createTableItems(table, "folding.tag33", true);
+		createTableItems(table, "folding.tag34", true);
+		createTableItems(table, "folding.tag35", true);
+		createTableItems(table, "folding.tag36", true);
+		createTableItems(table, "folding.tag37", true);
+		createTableItems(table, "folding.tag38", true);
+		createTableItems(table, "folding.tag39", true);
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			table.getColumn(i).pack();
 		}
-		table.setSize(table.computeSize(SWT.DEFAULT, 300));
+//		table.setSize(table.computeSize(SWT.DEFAULT, 300));
 
 		return table;
 

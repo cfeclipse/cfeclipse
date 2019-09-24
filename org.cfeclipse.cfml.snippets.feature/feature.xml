@@ -2,13 +2,14 @@
 <feature
       id="org.cfeclipse.cfml.snippets.feature"
       label="Snippets"
-      version="1.0.0.qualifier">
+      version="1.0.0.3">
 
    <description url="http://www.cfeclipse.org/snippets">
       A source code snippet plugin
    </description>
 
-   <copyright url="http://www.cfeclipse.org/copyright">Copyright (c) 2004-2014 The CFEclipse Crew (http://www.cfeclipse.org/)
+   <copyright url="http://www.cfeclipse.org/copyright">
+      Copyright (c) 2004-2014 The CFEclipse Crew (http://www.cfeclipse.org/)
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 &amp;amp;quot;Software&amp;amp;quot;), to deal in the Software without
@@ -27,9 +28,11 @@ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</copyright>
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+   </copyright>
 
-   <license url="http://www.jclark.com/xml/copying.txt">Copyright (c) 2004-2010 The CFEclipse Crew (http://www.cfeclipse.org/)
+   <license url="http://www.jclark.com/xml/copying.txt">
+      Copyright (c) 2004-2010 The CFEclipse Crew (http://www.cfeclipse.org/)
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
 &amp;amp;quot;Software&amp;amp;quot;), to deal in the Software without
@@ -48,7 +51,8 @@ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</license>
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+   </license>
 
    <url>
       <update label="Snippets Update Site" url="http://cfeclipse.org/snippets/update"/>

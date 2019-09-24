@@ -3,20 +3,11 @@
    <feature id="org.cfeclipse.cfml.feature" version="0.0.0">
       <category name="cfeclipse.category.id"/>
    </feature>
-   <feature id="org.cfeclipse.cfml.docsharesupport.feature" version="0.0.0">
-      <category name="cfeclipse.optional.category.id"/>
-   </feature>
    <category-def name="cfeclipse.category.id" label="CFEclipse CFML Editor (Required)">
       <description>
          CFEclipse CFML Editor (Required)
       </description>
    </category-def>
-   <category-def name="cfeclipse.optional.category.id" label="CFEclipse DocShare Support (Optional)">
-      <description>
-         CFEclipse DocShare Support (Optional)
-      </description>
-   </category-def>
-   <repository-reference location="http://mxunit.org/update" enabled="true" />
    <repository-reference location="http://cfeclipse.org/cfparser/update" enabled="true" />
    <repository-reference location="http://cfeclipse.org/cflint/update" enabled="true" />
 </site>

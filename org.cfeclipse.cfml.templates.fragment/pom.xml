@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.cfeclipse.ide</groupId>
     <artifactId>cfeclipse</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.5.3-SNAPSHOT</version>
   </parent>
   <groupId>org.cfeclipse.ide</groupId>
   <artifactId>org.cfeclipse.cfml.templates.fragment</artifactId>

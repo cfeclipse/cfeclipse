@@ -1,7 +1,6 @@
 package org.cfeclipse.cfml.properties;
 
 import org.cfeclipse.cfml.CFMLPlugin;
-import org.cfeclipse.cflint.config.CFLintConfigUI;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.preferences.CFMLPreferenceConstants;
 import org.eclipse.core.resources.IProject;
@@ -51,9 +50,6 @@ public class ProjectPropertyPage extends PropertyPage {
 	private ComboFieldEditor cfmlSyntaxField;
 
 	private ProjectPropertyStore propStore;
-	private BooleanFieldEditor cflintEnabledField;
-	private BooleanFieldEditor cflintStoreConfigInProjectField;
-	private CFLintConfigUI cflintConfigUI;
 
 	/**
 	 * Constructor for SamplePropertyPage.
@@ -219,9 +215,6 @@ public class ProjectPropertyPage extends PropertyPage {
 		// Populate the owner text field with the default value
 		snippetsPathField.setStringValue(DEFAULT_SNIPPETS_PATH);
 		projectURLField.setStringValue(DEFAULT_PROJECT_URL);
-		cflintEnabledField.loadDefault();
-		cflintStoreConfigInProjectField.loadDefault();
-		cflintConfigUI.resetProjectRules();
 //		projectComponentRootField.setStringValue(((IResource) getElement()).getName());
 		this.cfmlSyntaxField.loadDefault();
 	}
@@ -235,32 +228,32 @@ public class ProjectPropertyPage extends PropertyPage {
 					projectHelpURLField.getStringValue());
 			propertyManager.setHelpURL(projectHelpURLField.getStringValue(), (IProject) getElement());
 			propertyManager.setSnippetsPath(snippetsPathField.getStringValue(), (IProject) getElement());
-			propertyManager.setCFLintEnabledProject(cflintEnabledField.getBooleanValue(), (IProject) getElement());
-			propertyManager.setCFLintStoreConfigInProject(cflintStoreConfigInProjectField.getBooleanValue(), (IProject) getElement());
-			cflintConfigUI.setProjectRules((IProject) getElement());
 
 		} catch (CoreException e) {
 			e.printStackTrace();
 			return false;
 		}
-		/*
-		 * // Project URL try { ((IResource)
-		 * getElement()).setPersistentProperty( new QualifiedName("",
-		 * PROJECT_URL_PROPERTY), projectURLField.getStringValue() );
-		 * propertyManager.setProjectURL(projectURLField.getStringValue(),(
-		 * IProject)getElement()); } catch (CoreException e) {
-		 * //e.printStackTrace(System.err); return false; }
-		 * 
-		 * //Component Root try {
-		 * ((IResource)getElement()).setPersistentProperty( new
-		 * QualifiedName("",PROJECT_COMPONENT_ROOT_PROP),
-		 * projectComponentRootField.getStringValue() );
-		 * propertyManager.setComponentRoot(projectComponentRootField.
-		 * getStringValue(),(IProject)getElement()); } catch (CoreException e) {
-		 * return false; }
-		 * 
-		 * System.out.println("doing the syntax dictionary save");
-		 */
+		
+		// Project URL
+		try {
+			((IResource) getElement()).setPersistentProperty(new QualifiedName("", PROJECT_URL_PROPERTY),
+					projectURLField.getStringValue());
+			propertyManager.setProjectURL(projectURLField.getStringValue(), (IProject) getElement());
+		} catch (CoreException e) {
+			// e.printStackTrace(System.err); return false;
+		}
+		
+		// Component Root
+		/*		try {
+					((IResource) getElement()).setPersistentProperty(new QualifiedName("", PROJECT_COMPONENT_ROOT_PROP),
+							projectComponentRootField.getStringValue());
+					propertyManager.setComponentRoot(projectComponentRootField.getStringValue(), (IProject) getElement());
+				} catch (CoreException e) {
+					return false;
+				}*/
+		
+		// System.out.println("doing the syntax dictionary save");
+		
 		this.cfmlSyntaxField.store();
 		DictionaryManager.loadDictionaryFromCache(propertyManager.getCurrentDictionary((IProject) getElement()),
 				DictionaryManager.CFDIC);

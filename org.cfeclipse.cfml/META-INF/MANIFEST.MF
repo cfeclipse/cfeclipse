@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CFML Plug-in
 Bundle-SymbolicName: org.cfeclipse.cfml; singleton:=true
-Bundle-Version: 1.5.2.qualifier
-Bundle-Vendor: %providerName
+Bundle-Version: 1.5.3.qualifier
+Bundle-Vendor: cfeclipse.org
 Bundle-Localization: plugin
 Bundle-ClassPath: cfml.jar,
  lib/log4j-1.2.17.jar,
@@ -99,12 +99,17 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.filesystem;resolution:=optional,
  org.eclipse.ui.browser,
  org.eclipse.search,
- org.eclipse.ecf.docshare;bundle-version="2.0.0";resolution:=optional,
- org.eclipse.e4.ui.workbench;bundle-version="1.0.2";resolution:=optional,
- org.cfeclipse.cfparser;bundle-version="2.2.11",
- org.cfeclipse.cflint;bundle-version="1.0.10"
+ org.eclipse.ecf.docshare;resolution:=optional,
+ org.eclipse.e4.ui.workbench;resolution:=optional,
+ org.cfeclipse.cfparser;bundle-version="2.5.6",
+ org.cfeclipse.cflint;bundle-version="1.3.0",
+ org.eclipse.equinox.event;resolution:=optional,
+ org.eclipse.equinox.ds;resolution:=optional,
+ org.eclipse.ui.forms;bundle-version="3.7.100",
+ com.ibm.icu;bundle-version="58.2.0",
+ org.eclipse.ui.themes
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
 Import-Package: com.ibm.icu.text,
  org.eclipse.ui.console
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -22,6 +22,7 @@
     </extension>
     
    <extension-point id="cacorNatures" name="CACorContributingNatures" schema="schema/cacorNature.exsd"/>
+   <extension-point id="cfmlEditorTextHovers" name="%cfmlEditorTextHoversName" schema="schema/cfmlEditorTextHovers.exsd"/>
 
    <extension 
 	    point="org.eclipse.ui.decorators">
@@ -91,7 +92,7 @@
 			id="org.cfeclipse.cfml.cfsource"
 			base-type="org.eclipse.core.runtime.text"
 			name="ColdFusion Source File"
-			file-extensions="cfc,cfm,cfml"
+			file-extensions="cfc,cfm,cfml,html,htm,xhtml"
 			priority="high">
 		</content-type>
 	</extension>
@@ -107,9 +108,9 @@
             contributorClass="org.cfeclipse.cfml.editors.CFMLEditorActionContributor"
             class="org.cfeclipse.cfml.editors.CFMLEditor"
             id="org.cfeclipse.cfml.editors.CFMLEditor">
-            
-			<contentTypeBinding contentTypeId="org.cfeclipse.cfml.cfsource">
-			</contentTypeBinding>            
+
+			<contentTypeBinding contentTypeId="org.cfeclipse.cfml.cfsource"/>
+
       </editor>
 
 	<!-- CFC Editor
@@ -750,7 +751,7 @@
 		<menuContribution locationURI="popup:#CFMLEditorContext?before=group.open">
 	        <separator name="group.source"
 	                visible="true" />
-	        <menu id="org.cfeclipse.menues.source"
+	        <menu id="org.cfeclipse.menus.source"
 	                label="Source">
 				<command commandId="org.cfeclipse.cfml.FormatAction" style="push">
 						<visibleWhen checkEnabled="false">
@@ -1783,11 +1784,6 @@
             id="org.cfeclipse.cfml.preferences.HTMLColorsPreferencePage">
       </page>
       <page
-            class="org.cfeclipse.cfml.preferences.CFLintPreferencePage"
-            category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
-            name="%cflint.preference.page"
-            id="org.cfeclipse.cfml.preferences.CFlintPreferencePage"/>
-      <page
             class="org.cfeclipse.cfml.preferences.ParserPreferencePage"
             category="org.cfeclipse.cfml.preferences.CFMLPreferencePage"
             name="%page.name.4"
@@ -2109,13 +2105,7 @@
          </description>
       </filter>
    </extension>
-   <extension
-         point="org.eclipse.ui.ide.markerImageProviders">
-      <imageprovider
-            markertype="org.eclipse.core.resources.problemmarker"
-            icon="taskicon.gif"
-            id="org.cfeclipse.cfml.ui.ide.ProblemMarker"/>
-   </extension>
+
    <extension
          point="org.eclipse.ui.ide.projectNatureImages">
       <image
@@ -2169,9 +2159,13 @@
     <extension point="org.eclipse.ui.editors.annotationTypes">
 		<type
          name="org.cfeclipse.cfml.parserProblemMarkerAnnotation"
+         super="org.eclipse.ui.workbench.texteditor.error"
          markerType="org.cfeclipse.cfml.parserProblemMarker"
          markerSeverity="2" />
          
+    	<type name="org.cfeclipse.cfml.parserWarningAnnotation"
+    		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
+
     	<type name="org.cfeclipse.cfml.parserWarningAnnotation"
     		markerType="org.cfeclipse.cfml.parserWarningMarker"/>
 
@@ -2839,5 +2833,60 @@
             class="org.cfeclipse.cfml.images.StartupHandler"></startup>
    </extension>
    -->
+   
+      <!-- Note: Do not change the sequence of those hover contributions -->
+   <extension
+         point="org.cfeclipse.cfml.cfmlEditorTextHovers">
+      <hover
+            label="%sequentialHover"
+            description="%sequentialHoverDescription"
+            class="org.cfeclipse.cfml.editors.hover.BestMatchHover"
+            id="org.cfeclipse.cfml.BestMatchHover">
+      </hover>
+      <hover
+            label="%problemHover"
+            description="%problemHoverDescription"
+            class="org.cfeclipse.cfml.editors.hover.ProblemHover"
+            id="org.cfeclipse.cfml.ProblemHover">
+      </hover>
+      <hover
+            label="%annotationHover"
+            description="%annotationHoverDescription"
+            class="org.cfeclipse.cfml.editors.hover.AnnotationHover"
+            id="org.cfeclipse.cfml.AnnotationHover">
+      </hover>
+      <hover
+            label="%sourceHover"
+            description="%sourceHoverDescription"
+            class="org.cfeclipse.cfml.editors.hover.CFMLSourceHover"
+            id="org.cfeclipse.cfml.CFMLSourceHover">
+      </hover>
+   </extension>
+   <extension
+         point="org.eclipse.e4.ui.css.swt.theme">
+         <stylesheet
+               uri="appearance/eclipse-themes/dark.css">
+               <themeid refid="org.eclipse.e4.ui.css.theme.e4_dark"/>
+         </stylesheet>
+   </extension>
+   
+<extension point="org.eclipse.ui.themes">
+    <themeElementCategory
+        id="org.cfeclipse.cfml.themeElementCategory"
+        label="CFML Colours">
+        <description>
+            An example theme category
+        </description>
+    </themeElementCategory>
+    <colorDefinition
+        categoryId="org.cfeclipse.cfml.themeElementCategory"
+        id="org.cfeclipse.cfml.keyword"
+        label="Keywords"
+        value="COLOR_DARK_BLUE">
+        <description>
+            Your description goes here
+        </description>
+    </colorDefinition>
+</extension>   
    
 </plugin>

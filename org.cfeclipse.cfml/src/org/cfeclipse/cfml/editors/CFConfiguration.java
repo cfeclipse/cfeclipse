@@ -25,12 +25,21 @@
 package org.cfeclipse.cfml.editors;
 
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.dictionary.DictionaryManager;
 import org.cfeclipse.cfml.editors.contentassist.CFEPrimaryAssist;
 import org.cfeclipse.cfml.editors.formatters.CFMLFormattingStrategy;
 import org.cfeclipse.cfml.editors.formatters.FormattingPreferences;
 import org.cfeclipse.cfml.editors.formatters.SQLWordStrategy;
+import org.cfeclipse.cfml.editors.hover.CFMLEditorTextHoverDescriptor;
+import org.cfeclipse.cfml.editors.hover.CFMLEditorTextHoverProxy;
+import org.cfeclipse.cfml.editors.hover.CFMLInformationProvider;
+import org.cfeclipse.cfml.editors.hover.CFTextHover;
+import org.cfeclipse.cfml.editors.hover.HTMLAnnotationHover;
 import org.cfeclipse.cfml.editors.indentstrategies.CFEIndentStrategy;
 import org.cfeclipse.cfml.editors.indentstrategies.CFScriptIndentStrategy;
 import org.cfeclipse.cfml.editors.indentstrategies.TagIndentStrategy;
@@ -51,9 +60,13 @@ import org.cfeclipse.cfml.preferences.CFMLPreferenceManager;
 import org.cfeclipse.cfml.preferences.EditorPreferenceConstants;
 import org.cfeclipse.cfml.preferences.HTMLColorsPreferenceConstants;
 import org.cfeclipse.cfml.preferences.ParserPreferenceConstants;
+import org.cfeclipse.cfml.util.FileLocator;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IAutoEditStrategy;
 import org.eclipse.jface.text.IDocument;
@@ -61,27 +74,40 @@ import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextDoubleClickStrategy;
 import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.ITextViewerExtension2;
 import org.eclipse.jface.text.IUndoManager;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.TextViewerUndoManager;
 import org.eclipse.jface.text.contentassist.ContentAssistant;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistant;
 import org.eclipse.jface.text.formatter.IContentFormatter;
 import org.eclipse.jface.text.formatter.MultiPassContentFormatter;
+import org.eclipse.jface.text.information.IInformationPresenter;
+import org.eclipse.jface.text.information.IInformationProvider;
+import org.eclipse.jface.text.information.InformationPresenter;
 import org.eclipse.jface.text.presentation.IPresentationReconciler;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
+import org.eclipse.jface.text.quickassist.IQuickAssistAssistant;
+import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
+import org.eclipse.jface.text.quickassist.IQuickAssistProcessor;
+import org.eclipse.jface.text.quickassist.QuickAssistAssistant;
 import org.eclipse.jface.text.reconciler.IReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
+import org.eclipse.ui.texteditor.MarkerAnnotation;
+import org.osgi.framework.Bundle;
 /**
  * <p>
  * This sets up the whole editor. Assigin partition damagers and repairers, and
@@ -104,8 +130,8 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	protected CFMLPreferenceManager preferenceManager;
 	private FormattingPreferences formattingPreferences = new FormattingPreferences();
 	private int tabWidth;
-	//private CFMLEditor editor;
 	private CFMLEditor editor;
+	private IInformationControlCreator informationControlCreator;
 	
 	/**
 	 * Configure the tag indent strategy
@@ -153,7 +179,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//this.undoManager = new CFEUndoManager(preferenceManager.maxUndoSteps());
 		
 		indentCFScriptStrategy = new CFScriptIndentStrategy(editor);
-		this.indentTagStrategy = new TagIndentStrategy(editor);
+		indentTagStrategy = new TagIndentStrategy(editor);
 		
 		tabWidth = preferenceManager.tabWidth();
 		boolean insertSpacesForTabs = preferenceManager.insertSpacesForTabs();
@@ -165,7 +191,11 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		// This ensures that we are notified when the preferences are saved
 		CFMLPlugin.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 	}
-	
+
+	protected CFMLEditor getEditor() {
+		return editor;
+	}
+	 
 	public int getTabWidth(ISourceViewer sourceViewer) {
 		return tabWidth;
 	}
@@ -223,17 +253,80 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 			return new String[] { "\t", " ", "" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 	}
-	
-	/*
-	public IUndoManager getUndoManager(ISourceViewer sourceViewer) {
-		return this.undoManager;
-	}
-	*/
-	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
-	    return new CFAnnotationHover();
-	}
-	
 
+	public IQuickAssistAssistant getQuickAssistAssistant(ISourceViewer sourceViewer) {
+		IQuickAssistAssistant quickAssist = new QuickAssistAssistant();
+		quickAssist.setQuickAssistProcessor(new IQuickAssistProcessor() {
+
+			@Override
+			public boolean canAssist(IQuickAssistInvocationContext invocationContext) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean canFix(Annotation annotation) {
+
+				if (annotation instanceof MarkerAnnotation) {
+					// return ((MarkerAnnotation) annotation).isQuickFixable();
+					boolean hasResolution = IDE.getMarkerHelpRegistry()
+							.hasResolutions(((MarkerAnnotation) annotation).getMarker());
+					return hasResolution;
+				}
+				return false;
+			}
+
+			@Override
+			public ICompletionProposal[] computeQuickAssistProposals(IQuickAssistInvocationContext invocationContext) {
+				ISourceViewer viewer = invocationContext.getSourceViewer();
+				int currentLine = 0;
+				try {
+					currentLine = viewer.getDocument().getLineOfOffset(invocationContext.getOffset());
+				} catch (BadLocationException e1) {
+					e1.printStackTrace();
+				}
+				ArrayList<IMarker> targetMarkers = new ArrayList<IMarker>();
+
+				Iterator<Annotation> iter = viewer.getAnnotationModel().getAnnotationIterator();
+				while (iter.hasNext()) {
+					Annotation annotation = (Annotation) iter.next();
+					if (annotation instanceof MarkerAnnotation) {
+						int lineNumber;
+						try {
+							lineNumber = Integer.parseInt(
+									((MarkerAnnotation) annotation).getMarker().getAttribute("lineNumber").toString()) -1;
+							if (lineNumber == currentLine) {
+								targetMarkers.add(((MarkerAnnotation) annotation).getMarker());
+							}
+						} catch (NumberFormatException | CoreException e) {
+						}
+					}
+				}
+				if (targetMarkers.size() > 0) {
+					ArrayList<ICompletionProposal> proposals = new ArrayList<ICompletionProposal>();
+					IMarkerResolution[] resolutions = null;
+					for(IMarker targetMarker : targetMarkers) {
+						resolutions = IDE.getMarkerHelpRegistry().getResolutions(targetMarker);
+						for(IMarkerResolution resolution : resolutions) {
+							proposals.add(new org.cfeclipse.cflint.quickfix.MarkerResolutionProposal(resolution,
+									targetMarker));								
+						}
+					}
+					return proposals.toArray(new ICompletionProposal[proposals.size()]);
+				}
+				return null;
+			}
+
+			@Override
+			public String getErrorMessage() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
+		quickAssist.setInformationControlCreator(getInformationControlCreator(sourceViewer));
+		return quickAssist;
+	}
+	
 	/**
 	 * This defines what sections (partitions) are valid for the document
 	 */
@@ -507,7 +600,8 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	
 	
 	///////////////////////// SCANNERS /////////////////////////////////////////////
-    public IReconciler getReconciler(ISourceViewer sourceViewer) {
+
+	public IReconciler getReconciler(ISourceViewer sourceViewer) {
 	    NotifyingReconciler reconciler= new NotifyingReconciler(new CFMLReconcilingStrategy(editor));
 	    reconciler.setDelay(CFMLReconcilingStrategy.DELAY);
 	    reconciler.addReconcilingParticipant(editor);
@@ -526,7 +620,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//
 		// WARNING order is important here - the document will be painted
 		// with the rules in this order - it seems anyway
-		
+
 		// CF script
 		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getCFScriptScanner());
 
@@ -549,21 +643,21 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		dr = new DefaultDamagerRepairer(getHTMTagScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.HTM_END_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.HTM_END_TAG);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.HTM_START_TAG_BEGIN);
 		reconciler.setRepairer(dr, CFPartitionScanner.HTM_START_TAG_BEGIN);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.HTM_START_TAG_END);
 		reconciler.setRepairer(dr, CFPartitionScanner.HTM_START_TAG_END);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.HTM_TAG_ATTRIBS);
 		reconciler.setRepairer(dr, CFPartitionScanner.HTM_TAG_ATTRIBS);
-		
+
 		//javascript tag
 		dr = new DefaultDamagerRepairer(getScriptScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.J_SCRIPT);
 		reconciler.setRepairer(dr, CFPartitionScanner.J_SCRIPT);
-		
+
 		//style tag
 		dr = new DefaultDamagerRepairer(getStyleScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.CSS);
@@ -571,12 +665,12 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		dr = new DefaultDamagerRepairer(getTaglibTagScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.TAGLIB_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.TAGLIB_TAG);
-		
+
 		//SQL
 		dr = new DefaultDamagerRepairer(getSQLScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.SQL);
 		reconciler.setRepairer(dr, CFPartitionScanner.SQL);
-		
+
 
 		//general CF
 		dr = new DefaultDamagerRepairer(getCFTagScanner());
@@ -593,33 +687,33 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//dr = new DefaultDamagerRepairer(getCFTagScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.CF_END_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.CF_END_TAG);
-		
+
 		dr = new DefaultDamagerRepairer(getFormScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.FORM_END_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.FORM_END_TAG);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.FORM_START_TAG_BEGIN);
 		reconciler.setRepairer(dr, CFPartitionScanner.FORM_START_TAG_BEGIN);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.FORM_START_TAG_END);
 		reconciler.setRepairer(dr, CFPartitionScanner.FORM_START_TAG_END);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.FORM_TAG_ATTRIBS);
 		reconciler.setRepairer(dr, CFPartitionScanner.FORM_TAG_ATTRIBS);
-		
+
 		dr = new DefaultDamagerRepairer(getTableScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.TABLE_END_TAG);
 		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_END_TAG);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.TABLE_START_TAG_BEGIN);
 		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_START_TAG_BEGIN);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.TABLE_START_TAG_END);
 		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_START_TAG_END);
-		
+
 		reconciler.setDamager(dr, CFPartitionScanner.TABLE_TAG_ATTRIBS);
 		reconciler.setRepairer(dr, CFPartitionScanner.TABLE_TAG_ATTRIBS);
-		
+
 		//unknown tags
 		dr = new DefaultDamagerRepairer(getUNKTagScanner());
 		reconciler.setDamager(dr, CFPartitionScanner.UNK_TAG);
@@ -646,7 +740,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		dr = new DefaultDamagerRepairer(getTextScanner());
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
 		reconciler.setRepairer(dr, IDocument.DEFAULT_CONTENT_TYPE);
-		
+
 		//set up the html comment section
 		NonRuleBasedDamagerRepairer ndr2 = new NonRuleBasedDamagerRepairer(
 			new TextAttribute(
@@ -659,7 +753,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		);
 		reconciler.setDamager(ndr2, CFPartitionScanner.HTM_COMMENT);
 		reconciler.setRepairer(ndr2, CFPartitionScanner.HTM_COMMENT);
-		
+
 		//set up the doctype section
 		NonRuleBasedDamagerRepairer ndr3 = new NonRuleBasedDamagerRepairer(
 			new TextAttribute(
@@ -672,7 +766,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		);
 		reconciler.setDamager(ndr3, CFPartitionScanner.DOCTYPE);
 		reconciler.setRepairer(ndr3, CFPartitionScanner.DOCTYPE);
-		
+
 		return reconciler;
 	}
 	
@@ -683,7 +777,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//make our assistant and processor
 		assistant = new ContentAssistant();
 		
-		//The Mac Assistant looks a bit odd this is an attempt to fix it
+/*		//The Mac Assistant looks a bit odd this is an attempt to fix it
 		assistant.setContextSelectorBackground(
 			colorManager.getColor(new RGB(255,255,255))
 		);
@@ -694,7 +788,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		assistant.setContextInformationPopupBackground(
 			colorManager.getColor(new RGB(0,0,0))
 		);
-		
+*/
 		setupPrimaryCFEContentAssist(sourceViewer);
 		
 		//in javascript tags - try to give js its own type of completion using the
@@ -724,13 +818,13 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 			getInformationControlCreator(sourceViewer)
 		);
 		
-		//I set the insights backgrounds to white because
+/*		//I set the insights backgrounds to white because
 		//the colors dont work quite right on osx. Even
 		//the default yellow looks stupid
 		
 		//this is the function insight in tag sections
 		assistant.setContextSelectorBackground(
-			colorManager.getColor(new RGB(255,255,255)	)		
+			colorManager.getColor(new RGB(255,255,255)	)
 		);
 		//this is the tag insight
 		assistant.setProposalSelectorBackground(
@@ -739,8 +833,8 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		//the popup window when you hit enter on a function name
 		assistant.setContextInformationPopupBackground(
 			colorManager.getColor(new RGB(255,255,255)	)
-);
-		
+		);
+*/		
 		return assistant;
 	}
 	
@@ -754,13 +848,38 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 	 * @since 2.0
 	 */
 	public IInformationControlCreator getInformationControlCreator(ISourceViewer sourceViewer) {
-		return new IInformationControlCreator() {
-			public IInformationControl createInformationControl(Shell parent) {
-				return new DefaultInformationControl(parent,new InformationPresenter());
-			}
-		};
+		if(informationControlCreator == null) {
+			informationControlCreator = new IInformationControlCreator() {
+				public IInformationControl createInformationControl(Shell parent) {
+					return new DefaultInformationControl(parent,false);
+				}
+			};
+		}
+		return informationControlCreator;
 	}
-	
+    private IInformationControlCreator getInformationPresenterControlCreator(ISourceViewer sourceViewer) {
+    	return getInformationControlCreator(sourceViewer);
+    }	
+    
+    /*
+     * @see SourceViewerConfiguration#getInformationPresenter(ISourceViewer)
+     * @since 2.0
+     */
+    @Override
+    public IInformationPresenter getInformationPresenter(ISourceViewer sourceViewer) {
+        InformationPresenter presenter= new InformationPresenter(getInformationPresenterControlCreator(sourceViewer));
+        presenter.setDocumentPartitioning(getConfiguredDocumentPartitioning(sourceViewer));
+
+        // Register information provider
+        IInformationProvider provider= new CFMLInformationProvider(getEditor());
+        String[] contentTypes= getConfiguredContentTypes(sourceViewer);
+        for (int i= 0; i < contentTypes.length; i++)
+            presenter.setInformationProvider(provider, contentTypes[i]);
+
+        // sizes: see org.eclipse.jface.text.TextViewer.TEXT_HOVER_*_CHARS
+        presenter.setSizeConstraints(100, 12, false, true);
+        return presenter;
+    }
 	/**
      * Sets up the primary CFE Content Assistor. CFE now uses it's own series of
      * content assist code to future proof the content assist process. This should
@@ -776,33 +895,113 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
         }
     }
 
-    /**
-	 * Register the text hover
-	 * @author Oliver Tupman
+//    /**
+//	 * Register the text hover
+//	 * @author Oliver Tupman
+//	 */
+//	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType)
+//	{
+//		//keep the hover only in the parts where it should be
+//		//i.e. not in comments ... (we could add a javascript
+//		//css specific thing in the future...)
+//		if(contentType == CFPartitionScanner.HTM_END_TAG
+//		        || contentType == CFPartitionScanner.HTM_START_TAG_BEGIN
+//		        || contentType == CFPartitionScanner.HTM_START_TAG_END
+//		        || contentType == CFPartitionScanner.HTM_TAG_ATTRIBS)
+//		{
+//			return new CFTextHover(
+//				DictionaryManager.getDictionary(DictionaryManager.HTDIC)
+//			);
+//		}
+//		else if(!(contentType == CFPartitionScanner.HTM_COMMENT))
+//		{
+//			//load the text hover with the cf dictionary
+//			return new CFTextHover(
+//				DictionaryManager.getDictionary(DictionaryManager.CFDIC)
+//			);
+//		}
+//		
+//		return null;
+//	}
+
+	/*
+	 * @see SourceViewerConfiguration#getTextHover(ISourceViewer, String, int)
 	 */
-	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType)
-	{
-		//keep the hover only in the parts where it should be
-		//i.e. not in comments ... (we could add a javascript
-		//css specific thing in the future...)
-		if(contentType == CFPartitionScanner.HTM_END_TAG
-		        || contentType == CFPartitionScanner.HTM_START_TAG_BEGIN
-		        || contentType == CFPartitionScanner.HTM_START_TAG_END
-		        || contentType == CFPartitionScanner.HTM_TAG_ATTRIBS)
-		{
-			return new CFTextHover(
-				DictionaryManager.getDictionary(DictionaryManager.HTDIC)
-			);
+	@Override
+	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType, int stateMask) {
+		if (contentType == CFPartitionScanner.HTM_END_TAG || contentType == CFPartitionScanner.HTM_START_TAG_BEGIN
+				|| contentType == CFPartitionScanner.HTM_START_TAG_END || contentType == CFPartitionScanner.HTM_TAG_ATTRIBS) {
+			return new CFTextHover(DictionaryManager.getDictionary(DictionaryManager.HTDIC));
 		}
-		else if(!(contentType == CFPartitionScanner.HTM_COMMENT))
-		{
-			//load the text hover with the cf dictionary
-			return new CFTextHover(
-				DictionaryManager.getDictionary(DictionaryManager.CFDIC)
-			);
+		CFMLEditorTextHoverDescriptor[] hoverDescs= CFMLPlugin.getDefault().getCFMLEditorTextHoverDescriptors();
+		int i= 0;
+		while (i < hoverDescs.length) {
+			if (hoverDescs[i].isEnabled() &&  hoverDescs[i].getStateMask() == stateMask)
+				return new CFMLEditorTextHoverProxy(hoverDescs[i], getEditor());
+			i++;
 		}
-		
 		return null;
+	}
+
+	@Override
+	public int[] getConfiguredTextHoverStateMasks(ISourceViewer sourceViewer, String contentType) {
+		CFMLEditorTextHoverDescriptor[] hoverDescs= CFMLPlugin.getDefault().getCFMLEditorTextHoverDescriptors();
+		int stateMasks[]= new int[hoverDescs.length];
+		int stateMasksLength= 0;
+		for (int i= 0; i < hoverDescs.length; i++) {
+			if (hoverDescs[i].isEnabled()) {
+				int j= 0;
+				int stateMask= hoverDescs[i].getStateMask();
+				while (j < stateMasksLength) {
+					if (stateMasks[j] == stateMask)
+						break;
+					j++;
+				}
+				if (j == stateMasksLength)
+					stateMasks[stateMasksLength++]= stateMask;
+			}
+		}
+		if (stateMasksLength == hoverDescs.length)
+			return stateMasks;
+
+		int[] shortenedStateMasks= new int[stateMasksLength];
+		System.arraycopy(stateMasks, 0, shortenedStateMasks, 0, stateMasksLength);
+		return shortenedStateMasks;
+	}
+	
+    /*
+    public IUndoManager getUndoManager(ISourceViewer sourceViewer) {
+        return this.undoManager;
+    }
+    */
+
+	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
+//      return new CFAnnotationHover(true);
+//      return new DefaultAnnotationHover(false);
+        return new HTMLAnnotationHover(true);
+    }
+
+	/*
+	 * @see SourceViewerConfiguration#getTextHover(ISourceViewer, String)
+	 */
+	@Override
+	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
+		return getTextHover(sourceViewer, contentType, ITextViewerExtension2.DEFAULT_HOVER_STATE_MASK);
+	}	
+	
+	/*
+	 * @see SourceViewerConfiguration#getOverviewRulerAnnotationHover(ISourceViewer)
+	 * @since 3.0
+	 */
+	@Override
+	public IAnnotationHover getOverviewRulerAnnotationHover(ISourceViewer sourceViewer) {
+		return new HTMLAnnotationHover(true) {
+			@Override
+			protected boolean isIncluded(Annotation annotation) {
+				return isShowInOverviewRuler(annotation);
+//				return true;
+			}
+		};
 	}
 	
 	public IUndoManager getUndoManager(ISourceViewer sourceViewer) {
@@ -851,6 +1050,7 @@ public class CFConfiguration extends TextSourceViewerConfiguration implements IP
 		}
 		else {
 			settingObj = newValue;
+			CFMLPlugin.logError("Unhandled setting type: " + settingObj.getClass().getName());
 		}
     //	boolean setting = ((Boolean)event.getNewValue()).booleanValue();
 	//	System.out.println("The Property we are setting is: " + prop + " [" + setting + "]");

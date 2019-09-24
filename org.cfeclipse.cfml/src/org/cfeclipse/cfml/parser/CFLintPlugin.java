@@ -1,22 +1,21 @@
 package org.cfeclipse.cfml.parser;
 
-import net.htmlparser.jericho.Element;
-import cfml.parsing.cfscript.script.CFFuncDeclStatement;
-import cfml.parsing.cfscript.script.CFFunctionParameter;
-import cfml.parsing.cfscript.script.CFScriptStatement;
-
 import com.cflint.BugInfo;
 import com.cflint.BugList;
+import com.cflint.Levels;
 import com.cflint.plugins.CFLintScannerAdapter;
 import com.cflint.plugins.Context;
-import com.cflint.tools.CFTool;
+
+import cfml.parsing.cfscript.script.CFFuncDeclStatement;
+import cfml.parsing.cfscript.script.CFScriptStatement;
+import net.htmlparser.jericho.Element;
 
 public class CFLintPlugin extends CFLintScannerAdapter {
 	final String severity = "WARNING";
 
 	@Override
 	public void expression(final CFScriptStatement expression, final Context context, final BugList bugs) {
-		System.out.println(expression.Decompile(0));
+		//System.out.println(expression.Decompile(0));
 		if (expression instanceof CFFuncDeclStatement) {
 			CFFuncDeclStatement function = (CFFuncDeclStatement) expression;
 			final int begLine = function.getLine();
@@ -39,13 +38,13 @@ public class CFLintPlugin extends CFLintScannerAdapter {
 	protected void checkReturnType(final String functionType, final int lineNumber, final Context context, final BugList bugs) {
 		if (functionType == null || functionType.length() == 0) {
 			bugs.add(new BugInfo.BugInfoBuilder().setLine(lineNumber).setMessageCode("FUNCTION_TYPE_MISSING")
-				.setSeverity(severity).setFilename(context.getFilename())
+				.setSeverity(Levels.fromString(severity)).setFilename(context.getFilename())
 				.setMessage("Function " + context.getFunctionName() + " is missing a return type.")
 				.build());
 		}
 		else if (functionType.equals("any")) {
 			bugs.add(new BugInfo.BugInfoBuilder().setLine(lineNumber).setMessageCode("FUNCTION_TYPE_ANY")
-				.setSeverity(severity).setFilename(context.getFilename())
+				.setSeverity(Levels.fromString(severity)).setFilename(context.getFilename())
 				.setMessage("Function " + context.getFunctionName() + " return type is any. Please change to be the correct type.")
 				.build());
 		}

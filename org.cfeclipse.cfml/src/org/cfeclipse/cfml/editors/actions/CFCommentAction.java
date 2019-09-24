@@ -96,7 +96,7 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					String selection = doc.get().substring(partition.getOffset(), partition.getOffset() + partition.getLength());
 					
 					// Find the opening comment information with optional space at the end
-					Pattern pattern = Pattern.compile("^(" + openComment.replace("*", "[*]") + "[ ]?[" + lineEnding + "]?)");
+					Pattern pattern = Pattern.compile("^(" + openComment.replace("*", "[*]") + "[ ]?" + lineEnding + "?)");
 					Matcher matcher = pattern.matcher(selection);
 					
 					if(matcher.find()) {
@@ -105,7 +105,7 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					}
 					
 					// Find the closing comment information with optional space at the beginning
-					pattern = Pattern.compile("([" + lineEnding + "]?[ ]?" + closeComment.replace("*", "[*]") + ")$");
+					pattern = Pattern.compile("(" + lineEnding + "?[ ]?" + closeComment.replace("*", "[*]") + ")$");
 					matcher = pattern.matcher(selection);
 					
 					if(matcher.find()) {
@@ -130,10 +130,10 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 					finder.replace("", false);
 					selectionLength = selection.length() - openComment.length() - closeComment.length() + 1;
 				} else {
-					if(selectioner.getText().endsWith("\n") && !selectioner.getText().startsWith("\n")){						
+					if(selectioner.getText().endsWith(lineEnding) && !selectioner.getText().startsWith(lineEnding)){
 						// add newlines if this looks like a newline-to-newline comment, to be pretty
-						openComment = openComment.concat("\n");
-						closeComment = closeComment.concat("\n");
+						openComment = openComment.concat(lineEnding);
+						closeComment = closeComment.concat(lineEnding);
 					}
 					selectionLength = this.enclose(doc,(ITextSelection)sel, openComment, closeComment);
 					
@@ -154,7 +154,7 @@ public class CFCommentAction extends GenericEncloserAction implements IWorkbench
 	}
 
 	public void selectionChanged(IAction action, ISelection selection){
-		if(editor != null){
+		if (editor != null && editor.getSite() != null && editor.getSite().getPage() != null && editor.getSite().getPage().getActiveEditor() != null) {
 			setActiveEditor(null,  editor.getSite().getPage().getActiveEditor());
 		}
 	}
