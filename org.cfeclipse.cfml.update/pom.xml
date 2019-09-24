@@ -58,11 +58,6 @@
 			<layout>p2</layout>
 			<url>${cfparser-dev-repo.url}</url>
 		</repository>
-		<repository>
-			<id>mxunit</id>
-			<layout>p2</layout>
-			<url>${mxunit-repo.url}</url>
-		</repository>
 	</repositories>
 
 	<profiles>

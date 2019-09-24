@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.cfeclipse.cfml.feature"
-      label="CFEclipse (including MXUnit and Frameworks)"
+      label="CFEclipse (including Frameworks)"
       version="1.5.3.qualifier"
       provider-name="CFEclipse Project"
       plugin="org.cfeclipse.cfml">
@@ -72,7 +72,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       <discovery label="[dev] CFParser discovery site" url="http://cfeclipse.org/cfparser/update-dev"/>
       <discovery label="CFLint discovery site" url="http://cfeclipse.org/cflint/update"/>
       <discovery label="[dev] CFLint discovery site" url="http://cfeclipse.org/cflint/update-dev"/>
-      <discovery label="MXUnit discovery site" url="http://cfeclipse.org/mxunit/update"/>
       <discovery label="Snippets discovery site" url="http://cfeclipse.org/snippets/update"/>
    </url>
 
@@ -98,7 +97,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       <import plugin="org.eclipse.ui.console"/>
       <import plugin="org.eclipse.swt"/>
       <import plugin="org.eclipse.core.filesystem"/>
-      <import feature="org.mxunit.eclipseplugin.feature" version="1.5.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
