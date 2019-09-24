@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.cfeclipse.ide</groupId>
     <artifactId>cfeclipse</artifactId>
-    <version>1.5.3-SNAPSHOT</version>
+    <version>1.6.0-SNAPSHOT</version>
   </parent>
   <artifactId>org.cfeclipse.cfml.feature</artifactId>
-  <version>1.5.3-SNAPSHOT</version>
+  <version>1.6.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
   <build>
   	<plugins>
