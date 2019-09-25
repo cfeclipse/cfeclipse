@@ -10,6 +10,6 @@ public class BrowserPreferenceConstants {
 	public static void setDefaults(IPreferenceStore store) { 
 		store.setDefault(P_PRIMARY_BROWSER_PATH, "");
 		store.setDefault(P_SECONDARY_BROWSER_PATH, "");
-		store.setDefault(P_TESTCASE_QUERYSTRING,"?method=RunTestRemote");
+		store.setDefault(P_TESTCASE_QUERYSTRING,"?method=runRemote");
 	}
 }
