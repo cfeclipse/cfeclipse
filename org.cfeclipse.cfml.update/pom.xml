@@ -28,7 +28,7 @@
 			<id>jboss</id>
 			<name>jboss</name>
 			<layout>default</layout>
-			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -85,7 +85,7 @@
 								<configuration>
 									<source>
 										<repository>
-											<url>http://cfeclipse.org/update${site.suffix}</url>
+											<url>https://cfeclipse.org/update${site.suffix}</url>
 										</repository>
 									</source>
 									<destination>${project.build.directory}/repository</destination>
