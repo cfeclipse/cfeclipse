@@ -29,7 +29,7 @@
  */
 package org.cfeclipse.cfml.editors.partitioner;
 
-import org.eclipse.jface.text.Assert;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.text.TypedPosition;
 /**
  * Class description...

@@ -39,7 +39,7 @@ import org.cfeclipse.cfml.CFMLPlugin;
 import org.cfeclipse.cfml.editors.partitioner.scanners.CFPartitionScanner;
 import org.cfeclipse.cfml.plugindebug.DebugSettings;
 import org.cfeclipse.cfml.plugindebug.DebugUtils;
-import org.eclipse.jface.text.Assert;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.DocumentEvent;

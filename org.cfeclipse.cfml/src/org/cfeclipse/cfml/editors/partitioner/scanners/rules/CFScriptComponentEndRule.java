@@ -9,7 +9,7 @@ package org.cfeclipse.cfml.editors.partitioner.scanners.rules;
 import java.util.regex.Pattern;
 
 import org.cfeclipse.cfml.editors.partitioner.FakeTagData;
-import org.eclipse.jface.text.Assert;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.text.rules.ICharacterScanner;
 import org.eclipse.jface.text.rules.IPredicateRule;
 import org.eclipse.jface.text.rules.IToken;

@@ -11,7 +11,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.text.Assert;
+import org.eclipse.core.runtime.Assert;
 
 public class CFJavaFileStorage implements IStorage {
 
