@@ -1,3 +1,9 @@
+CFEclipse is no longer maintained
+=================================
+
+CFEclipse is no longer actively maintained.  
+
+
 CFEclipse Project
 =================
 The goal of the CFEclipse project is to create a plugin for the Eclipse platform that provides a professional quality IDE for CFML developers. CFEclipse offers all of the features found in traditional CFML editors and several that are unique to CFEclipse.
